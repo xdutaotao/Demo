@@ -104,10 +104,28 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     }
 
     private void getCodeAction(){
+        if (phoneInput.getText().length() == 0) {
+            ToastUtil.show("手机号不能为空");
+            return;
+        }
+
+        if (phoneInput.getText().length() != 11) {
+            ToastUtil.show("手机号填写错误");
+            return;
+        }
         presenter.checkPhone(this, phoneInput.getText().toString());
     }
 
     private void setCodeAction(){
+        if (phoneInput.getText().length() == 0) {
+            ToastUtil.show("手机号不能为空");
+            return;
+        }
+
+        if (phoneInput.getText().length() != 11) {
+            ToastUtil.show("手机号填写错误");
+            return;
+        }
         SMSSDK.submitVerificationCode("86", phoneInput.getText().toString(), codeInput.getText().toString());
     }
 
