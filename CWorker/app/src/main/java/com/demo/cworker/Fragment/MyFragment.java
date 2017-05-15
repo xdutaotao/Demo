@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.R;
@@ -16,7 +17,11 @@ import butterknife.ButterKnife;
 public class MyFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.login_btn)
-    Button loginBtn;
+    TextView loginBtn;
+    @BindView(R.id.head_icon)
+    ImageView headIcon;
+    @BindView(R.id.login_text)
+    TextView loginText;
     private String mParam1;
 
 
@@ -44,13 +49,17 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
 
         loginBtn.setOnClickListener(this);
+        loginText.setOnClickListener(this);
+        headIcon.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login_btn:
+            case R.id.login_text:
+            case R.id.head_icon:
                 LoginActivity.startActivity(getContext());
                 break;
         }

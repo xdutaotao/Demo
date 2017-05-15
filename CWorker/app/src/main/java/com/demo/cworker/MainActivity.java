@@ -9,12 +9,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MyFragment;
+import com.demo.cworker.Weight.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragments;
+    private Fragment preFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(0).setChecked(true);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
 
+        fragments = getFragments();
         setDefaultFragment(0);
     }
 
@@ -40,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(MyFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("我的"));
         fragments.add(MyFragment.newInstance("我的"));
         fragments.add(MyFragment.newInstance("我的"));
         return fragments;
@@ -52,15 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = fragments.get(position);
-                //解决快速点击 bug
-                if (fragment.isVisible())
-                    return;
-                if (fragment.isHidden()) {
+                if (fragment.isAdded()) {
+                    ft.hide(preFragment);
                     ft.show(fragment);
                 } else {
                     ft.add(R.id.content, fragment);
                 }
                 ft.commitAllowingStateLoss();
+                preFragment = fragment;
             }
         }
     }
@@ -74,11 +80,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     showFragment(0);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.search:
                     showFragment(1);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.add:
                     showFragment(2);
+                    return true;
+                case R.id.message:
+                    showFragment(3);
+                    return true;
+                case R.id.my:
+                    showFragment(4);
                     return true;
             }
             return false;
