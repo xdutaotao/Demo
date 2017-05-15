@@ -2,4 +2,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="default_font_size">18sp</dimen>
+    <dimen name="edit_text_size">40px</dimen>
+    <dimen name="home_text_size">30px</dimen>
+    <dimen name="dialog_msg_size">16px</dimen>
+    <dimen name="tool_bar_height">150px</dimen>
+    <dimen name="detail_item_size">40px</dimen>
+
+    <dimen name="history_search_line_padding">35px</dimen>
 </resources>
