@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MyFragment;
+import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Widget.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
@@ -53,9 +54,9 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("主页"));
-        fragments.add(HomeFragment.newInstance("我的"));
-        fragments.add(HomeFragment.newInstance("我的"));
-        fragments.add(MyFragment.newInstance("我的"));
+        fragments.add(SearchFragment.newInstance("我的"));
+        fragments.add(SearchFragment.newInstance("我的"));
+        fragments.add(SearchFragment.newInstance("我的"));
         fragments.add(MyFragment.newInstance("我的"));
         return fragments;
     }
