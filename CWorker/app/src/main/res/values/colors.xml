@@ -6,4 +6,6 @@
 
     <color name="activity_background">#f0f1f5</color>
     <color name="nav_gray">#959595</color>
+    <color name="red">#ffff0000</color>
+
 </resources>

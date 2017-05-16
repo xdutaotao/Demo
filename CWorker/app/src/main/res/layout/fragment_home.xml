@@ -1,14 +1,102 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.demo.cworker.Fragment.HomeFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/tool_bar_center" />
+
+    <com.gzfgeh.swipeheader.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.gzfgeh.viewpagecycle.ImageCycleView
+                    android:layout_width="match_parent"
+                    android:layout_height="500px"
+                    android:id="@+id/image_cycle_view"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50px"
+                    android:gravity="center_vertical"
+                    android:layout_margin="30px">
+
+                    <View
+                        android:layout_width="10px"
+                        android:layout_height="match_parent"
+                        android:background="@color/red"
+                        android:layout_margin="5px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="精华"
+                        android:layout_marginLeft="20px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="200px"
+                    android:id="@+id/recycler_view"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50px"
+                    android:gravity="center_vertical"
+                    android:layout_margin="30px">
+
+                    <View
+                        android:layout_width="10px"
+                        android:layout_height="match_parent"
+                        android:background="@color/red"
+                        android:layout_margin="5px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="经典"
+                        android:layout_marginLeft="20px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="200px"
+                    android:id="@+id/recycler_view_classic"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view_list"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.gzfgeh.swipeheader.SwipeRefreshLayout>
+
+
+
+</LinearLayout>

@@ -6,23 +6,27 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MyFragment;
-import com.demo.cworker.Weight.BottomNavigationViewHelper;
+import com.demo.cworker.Widget.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ArrayList<Fragment> fragments;
     private Fragment preFragment;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //禁止侧滑返回
+        setSwipeBackEnable(false);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         fragments = getFragments();
         setDefaultFragment(0);
+
+        imageView = (ImageView) findViewById(R.id.center_image);
+        imageView.setOnClickListener(v -> showFragment(2));
     }
 
     /**
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(HomeFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("主页"));
         fragments.add(HomeFragment.newInstance("我的"));
         fragments.add(HomeFragment.newInstance("我的"));
         fragments.add(MyFragment.newInstance("我的"));

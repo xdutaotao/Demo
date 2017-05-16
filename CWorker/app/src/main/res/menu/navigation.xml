@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/add"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:icon="@drawable/empty"
+        android:title=" " />
 
     <item
         android:id="@+id/message"

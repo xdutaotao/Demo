@@ -1,4 +1,4 @@
-package com.demo.cworker.Weight;
+package com.demo.cworker.Widget;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
