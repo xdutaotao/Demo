@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.demo.cworker.Model.LoginModel;
 import com.demo.cworker.Utils.RxSubUtils;
+import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.LoginView;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                     @Override
                     public void _onError() {
-                        getView().onFailure();
+                        ToastUtil.show("用户名或者密码错误");
                     }
                 }));
     }

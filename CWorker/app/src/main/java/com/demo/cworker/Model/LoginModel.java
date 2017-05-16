@@ -1,10 +1,12 @@
 package com.demo.cworker.Model;
 
-import com.demo.cworker.Bean.LoginBean;
-import com.demo.cworker.Bean.RegisterBean;
+import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.RxUtils;
-import com.demo.cworker.Utils.Utils;
+import com.demo.cworker.Utils.ShareUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,7 +21,6 @@ public class LoginModel extends BaseModel {
     @Inject
     public LoginModel() {}
 
-
     public Observable<String> checkPhone(String phone){
         return config.getRetrofitService().checkPhone(phone)
                 .compose(RxUtils.handleResult());
@@ -29,26 +30,38 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().checkEmail(email)
                 .compose(RxUtils.handleResultNoThread())
                 .flatMap(s -> {
-                    RegisterBean bean = new RegisterBean();
-                    bean.setName(name);
-                    bean.setPassword(pwd);
-                    bean.setMobile(phone);
-                    bean.setEmail(email);
-                    String param = JsonUtils.getInstance().RegisterBeanToJson(bean);
-                    return config.getRetrofitService().register(getBody(param))
+                    Map<String, String> map = new HashMap<>();
+                    map.put("name", name);
+                    map.put("password", pwd);
+                    map.put("mobile", phone);
+                    map.put("email", email);
+                    return config.getRetrofitService().register(map)
                             .compose(RxUtils.handleResultNoThread());
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     public Observable<String> login(String phone, String pwd, String cliendID){
-//        String s = String.format("{\"username\":\"%s\",\"password\":\"%s\",\"clientId\":\"%s\"}",phone, pwd, cliendID);
-        LoginBean bean = new LoginBean();
-        bean.setUsername(phone);
-        bean.setPassword(pwd);
-        bean.setClientId(cliendID);
-        String s = JsonUtils.getInstance().LoginBeanToJson(bean);
-        return config.getRetrofitService().login(getBody(s))
-                .compose(RxUtils.handleResult());
+        Map<String, String> map = new HashMap<>();
+        map.put("username", phone);
+        map.put("password", pwd);
+        map.put("clientId", cliendID);
+
+        return config.getRetrofitService().login(map)
+                .flatMap(testBean -> {
+                    String s = testBean.getResult().getToken();
+                    User.getInstance().setUserId(s);
+
+                    map.clear();
+                    map.put("token", s);
+                    return config.getRetrofitService().getUserInfo(map)
+                            .compose(RxUtils.handleResultNoThread())
+                            .map(userInfo -> {
+                                String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
+                                User.getInstance().setUserInfo(userInfoString);
+                                return userInfoString;
+                            });
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 }

@@ -1,7 +1,9 @@
 package com.demo.cworker.Utils;
 
 import com.demo.cworker.Bean.LoginBean;
+import com.demo.cworker.Bean.LoginResponseBean;
 import com.demo.cworker.Bean.RegisterBean;
+import com.demo.cworker.Model.UserInfo;
 import com.google.gson.Gson;
 
 /**
@@ -37,6 +39,18 @@ public class JsonUtils {
 
     public String LoginBeanToJson(LoginBean bean){
         return gson.toJson(bean);
+    }
+
+    public LoginResponseBean jsonToLoginResponseBean(String json){
+        return gson.fromJson(json, LoginResponseBean.class);
+    }
+
+    public UserInfo JsonToUserInfo(String json){
+        return gson.fromJson(json, UserInfo.class);
+    }
+
+    public String UserInfoToJson(UserInfo userInfo){
+        return gson.toJson(userInfo);
     }
 
 }

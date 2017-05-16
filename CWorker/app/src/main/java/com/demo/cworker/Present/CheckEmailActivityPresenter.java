@@ -33,7 +33,7 @@ public class CheckEmailActivityPresenter extends BasePresenter<CheckEmailActivit
 
                     @Override
                     public void _onError() {
-                        getView().onFailure();
+                        ToastUtil.show("注册失败");
                     }
                 }));
     }

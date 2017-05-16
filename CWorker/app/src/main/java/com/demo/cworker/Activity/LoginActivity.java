@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "登录");
 
+        name.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         login.setOnClickListener(this);
         registerTxt.setOnClickListener(this);
     }

@@ -52,25 +52,16 @@ public class RxSafeSubUtils<T> extends SafeSubscriber<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        if (!NetWorkUtils.isNetworkAvailable()) {
-            ToastUtil.show("网络错误");
-        } else if (e instanceof RxUtils.ServerException) {
-            String s = ((RxUtils.ServerException)e).getMsg();
-            //token 过期了
-//            if(TextUtils.equals(s, Constants.UPDATE_UI)){
-//                APPLike.getAPPLike().getActivityMgr().keepCurrentClass(MainActivity.class);
-//                Utils.startLoginActivity(APPLike.getContext());
-//            }
-            ToastUtil.show(s);
-        } else {
-            ToastUtil.show("网络错误");
-        }
-
         if (dialog!= null){
             dialog.dismiss();
             dialog = null;
         }
-        ((RxSubUtils)subscription)._onError();
+
+        if (!NetWorkUtils.isNetworkAvailable()) {
+            ToastUtil.show("网络错误");
+        }else{
+            ((RxSubUtils)subscription)._onError();
+        }
     }
 
     @Override

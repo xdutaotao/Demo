@@ -58,7 +58,11 @@ public class RxUtils {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
                         if (!result.isError()){
-                            return createData((T) result.getResult());
+                            if (result.getData() != null){
+                                return createData(result.getData());
+                            }else{
+                                return createData((T) result.getResult());
+                            }
                         }else {
                             return Observable.error(new ServerException(result.errorMsg()));
                         }
@@ -86,7 +90,11 @@ public class RxUtils {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
                         if (!result.isError()){
-                            return createData((T) result.getResult());
+                            if (result.getData() != null){
+                                return createData(result.getData());
+                            }else{
+                                return createData((T) result.getResult());
+                            }
                         }else {
                             return Observable.error(new ServerException(result.errorMsg()));
                         }
