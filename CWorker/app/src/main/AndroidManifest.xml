@@ -68,7 +68,8 @@
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.CheckPhoneActivity" />
         <activity android:name=".Activity.CheckEmailActivity" />
-        <activity android:name=".Activity.WebViewActivity"></activity>
+        <activity android:name=".Activity.WebViewActivity" />
+        <activity android:name=".Activity.HomeDetailActivity"></activity>
     </application>
 
 </manifest>

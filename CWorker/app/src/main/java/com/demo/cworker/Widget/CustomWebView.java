@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -234,8 +235,6 @@ public class CustomWebView extends FrameLayout {
         public SettingBuilder(Context context , WebView webView){
             webSettings = webView.getSettings();
             webSettings.setSupportMultipleWindows(true);// 支持多窗口
-//            webSettings.setSupportZoom(false);// 设置可以支持缩放
-//            webSettings.setBuiltInZoomControls(false); // 设置支持缩放
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
                 webSettings.setDisplayZoomControls(false); // 隐藏webview缩放按钮
             }
@@ -249,8 +248,6 @@ public class CustomWebView extends FrameLayout {
 //            webSettings.setLoadWithOverviewMode(true);
             webSettings.setDatabaseEnabled(true);// 启用数据库
             webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
-            String dir = context.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();  // 设置定位的数据库路径
-            webSettings.setGeolocationDatabasePath(dir);
             webSettings.setGeolocationEnabled(true);// 启用地理定位
             webSettings.setDomStorageEnabled(true);
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -263,6 +260,25 @@ public class CustomWebView extends FrameLayout {
             webSettings.setUseWideViewPort(false);
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
             webSettings.setLoadWithOverviewMode(true);
+            //刚进来不放大
+
+            int screenDensity = context.getResources().getDisplayMetrics().densityDpi;
+            WebSettings.ZoomDensity zoomDensity = WebSettings.ZoomDensity.MEDIUM;
+            switch (screenDensity) {
+                case DisplayMetrics.DENSITY_LOW:
+                    zoomDensity = WebSettings.ZoomDensity.CLOSE;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    zoomDensity = WebSettings.ZoomDensity.MEDIUM;
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                case DisplayMetrics.DENSITY_XHIGH:
+                case DisplayMetrics.DENSITY_XXHIGH:
+                default:
+                    zoomDensity = WebSettings.ZoomDensity.FAR;
+                    break;
+            }
+            webSettings.setDefaultZoom(zoomDensity);
         }
         public WebSettings build(){
             return this.webSettings;

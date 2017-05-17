@@ -4,6 +4,7 @@ package com.demo.cworker.Utils.Dagger.Component;
 import com.demo.cworker.Activity.CheckEmailActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
+import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Utils.Dagger.Module.ActivityModule;
@@ -18,4 +19,5 @@ public interface ActivityComponent {
     void inject(CheckEmailActivity activity);
     void inject(SearchFragment fragment);
     void inject(MyFragment fragment);
+    void inject(HomeFragment fragment);
 }

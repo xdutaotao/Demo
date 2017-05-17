@@ -1,5 +1,6 @@
 package com.demo.cworker.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -304,7 +305,7 @@ public class HomeResponseBean {
             this.groupData = groupData;
         }
 
-        public static class GroupDataBean {
+        public static class GroupDataBean implements Serializable {
             /**
              * groupType : 1
              * dateline : 0

@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="300px"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="500px"
+    android:padding="20px">
 
     <ImageView
         android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_height="260px"
         android:src="@drawable/ic_launcher_round"
         android:id="@+id/item_img"/>
 
@@ -15,6 +15,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_txt"
-        android:text="111"/>
+        android:text="111"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_author"
+        android:text="国标网"
+        android:textColor="@color/nav_gray"
+        android:textSize="30px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_vip"
+        android:text="VIP"
+        android:textSize="30px"
+        android:textColor="@android:color/holo_red_light"
+        android:background="@drawable/corner_seletor"/>
 
 </LinearLayout>

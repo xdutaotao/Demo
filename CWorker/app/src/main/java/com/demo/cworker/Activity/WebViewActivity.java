@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 
 public class WebViewActivity extends BaseActivity {
     private static final String INTENT_KEY = "intent_key";
+    private static final String TITLE_KEY = "title_key";
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -24,9 +25,10 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.web_view)
     CustomWebView webView;
 
-    public static void startActivity(Context context, String url) {
+    public static void startActivity(Context context, String url, String title) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(TITLE_KEY, title);
         context.startActivity(intent);
     }
 
@@ -35,7 +37,6 @@ public class WebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
-        showToolbarBack(toolBar, titleText, "详情");
 
         if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))) {
             webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
@@ -46,5 +47,18 @@ public class WebViewActivity extends BaseActivity {
                     }
                 });
         }
+
+        if (!TextUtils.isEmpty(getIntent().getStringExtra(TITLE_KEY))){
+            showToolbarBack(toolBar, titleText, getIntent().getStringExtra(TITLE_KEY));
+        }else{
+            showToolbarBack(toolBar, titleText, "详情");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.getWebView().destroy();
+        webView = null;
     }
 }

@@ -16,5 +16,7 @@
         android:layout_gravity="center"
         android:textColor="@android:color/white"
         android:id="@+id/title_text"
-        android:textSize="@dimen/default_font_size"/>
+        android:textSize="@dimen/default_font_size"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 </android.support.v7.widget.Toolbar>
