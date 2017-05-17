@@ -2,11 +2,13 @@ package com.demo.cworker.Common;
 
 
 import com.demo.cworker.Bean.BaseBean;
+import com.demo.cworker.Bean.HomeResponseBean;
 import com.demo.cworker.Bean.ResponseBean;
 import com.demo.cworker.Model.UserInfo;
 
 import java.util.Map;
 
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -45,4 +47,11 @@ public interface RetrofitService {
 
     @GET("user/changeThePassword")
     Observable<BaseBean<String>> changePwd(@Query("mobile") String mobile, @Query("newPassword") String newPassword);
+
+    @FormUrlEncoded
+    @POST("user/logout")
+    Observable<BaseBean<String>> logout(@Field("token") String token);
+
+    @GET("home/getFirstPage")
+    Observable<HomeResponseBean> getFirstPage();
 }

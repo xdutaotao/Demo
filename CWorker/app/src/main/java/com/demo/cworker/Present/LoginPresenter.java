@@ -36,4 +36,16 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     }
                 }));
     }
+
+    public void logout(Context context, String token){
+        mCompositeSubscription.add(model.logout(token)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+                }));
+    }
+
+
 }

@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,26 +14,33 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:gravity="center"
+        android:layout_height="500px"
         android:background="@color/colorPrimary"
         android:layout_gravity="center">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher_round"
             android:id="@+id/head_icon"
-            android:padding="20px"/>
+            android:scaleType="fitXY"
+            android:maxHeight="300px"
+            android:maxWidth="300px"
+            android:minHeight="300px"
+            android:minWidth="300px"
+            android:adjustViewBounds="true"
+            android:layout_centerInParent="true"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请登录"
             android:textColor="@android:color/white"
             android:layout_below="@+id/head_icon"
             android:gravity="center"
-            android:id="@+id/login_text"/>
+            android:id="@+id/login_text"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10px"/>
 
     </RelativeLayout>
 
@@ -148,7 +156,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:layout_marginTop="50px"
@@ -162,7 +171,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -174,7 +183,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:id="@+id/change_pwd">
@@ -187,7 +197,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -199,7 +209,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:id="@+id/personal_center">
@@ -212,7 +223,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -223,7 +234,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:layout_marginTop="50px"
@@ -237,7 +249,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -249,7 +261,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:id="@+id/help">
@@ -262,7 +275,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -274,7 +287,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:id="@+id/suggest">
@@ -287,7 +301,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
@@ -299,7 +313,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140px"
+        android:gravity="center_vertical"
         android:padding="30px"
         android:background="@android:color/white"
         android:id="@+id/about">
@@ -312,7 +327,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 

@@ -1,7 +1,6 @@
 package com.demo.cworker.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,24 +11,32 @@ import android.widget.TextView;
 
 import com.demo.cworker.Activity.WebViewActivity;
 import com.demo.cworker.Bean.HomeBean;
+import com.demo.cworker.Bean.HomeResponseBean;
+import com.demo.cworker.Present.HomePresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.View.HomeView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.gzfgeh.viewpagecycle.BannerInfo;
 import com.gzfgeh.viewpagecycle.ImageCycleView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment implements HomeView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view_classic)
     RecyclerView recyclerViewClassic;
     @BindView(R.id.recycler_view_list)
     RecyclerView recyclerViewList;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
     private String mParam1;
 
     @BindView(R.id.title_text)
@@ -40,6 +47,8 @@ public class HomeFragment extends Fragment {
     ImageCycleView imageCycleView;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @Inject
+    HomePresenter presenter;
 
     private RecyclerArrayAdapter<HomeBean> adapter;
     private RecyclerArrayAdapter<HomeBean> adapterClassic;
@@ -66,12 +75,16 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        presenter.attachView(this);
         titleText.setText(mParam1);
 
         initBanner();
         initCreamList();
         initClassicList();
         initList();
+
+        presenter.getFirstPage(getContext());
+        swipe.setOnRefreshListener(this);
         return view;
     }
 
@@ -84,7 +97,7 @@ public class HomeFragment extends Fragment {
             }
         };
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -162,8 +175,26 @@ public class HomeFragment extends Fragment {
         imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
             WebViewActivity.startActivity(getContext(), bannerInfo.getLink());
         }));
+    }
+
+    @Override
+    public void onFailure() {
 
     }
 
+    @Override
+    public void getData(HomeResponseBean bean) {
+        swipe.setRefreshing(false);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.getFirstPage(getContext());
+    }
 }

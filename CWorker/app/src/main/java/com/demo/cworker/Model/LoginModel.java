@@ -105,5 +105,15 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     * 修改密码
+     * @param token
+     * @return
+     */
+    public Observable<String> logout(String token){
+        return config.getRetrofitService().logout(token)
+                .compose(RxUtils.handleResult());
+    }
+
 
 }
