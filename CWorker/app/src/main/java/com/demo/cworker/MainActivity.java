@@ -8,16 +8,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
-import com.demo.cworker.Widget.BottomNavigationViewHelper;
+import com.demo.cworker.Widget.BottomNavigationViewEx;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseActivity {
+    @BindView(R.id.container)
+    LinearLayout container;
     private ArrayList<Fragment> fragments;
     private Fragment preFragment;
     private ImageView imageView;
@@ -26,13 +32,16 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         //禁止侧滑返回
         setSwipeBackEnable(false);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewEx navigation = (BottomNavigationViewEx) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().getItem(0).setChecked(true);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
+        navigation.enableAnimation(false);
+        navigation.enableShiftingMode(false);
+        navigation.enableItemShiftingMode(false);
+        navigation.addBadgeViewAt(this, container, 4, "9");
 
         fragments = getFragments();
         setDefaultFragment(0);
@@ -61,7 +70,7 @@ public class MainActivity extends BaseActivity {
         return fragments;
     }
 
-    private void showFragment(int position){
+    private void showFragment(int position) {
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
@@ -79,8 +88,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationViewEx.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
