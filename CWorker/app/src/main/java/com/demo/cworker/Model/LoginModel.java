@@ -21,11 +21,24 @@ public class LoginModel extends BaseModel {
     @Inject
     public LoginModel() {}
 
+    /**
+     * 登录验证手机号
+     * @param phone
+     * @return
+     */
     public Observable<String> checkPhone(String phone){
         return config.getRetrofitService().checkPhone(phone)
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     * 注册
+     * @param email
+     * @param pwd
+     * @param phone
+     * @param name
+     * @return
+     */
     public Observable<String> checkEmail(String email, String pwd, String phone, String name){
         return config.getRetrofitService().checkEmail(email)
                 .compose(RxUtils.handleResultNoThread())
@@ -41,6 +54,13 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
+    /**
+     * 登录
+     * @param phone
+     * @param pwd
+     * @param cliendID
+     * @return
+     */
     public Observable<String> login(String phone, String pwd, String cliendID){
         Map<String, String> map = new HashMap<>();
         map.put("username", phone);
@@ -64,4 +84,26 @@ public class LoginModel extends BaseModel {
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
+
+    /**
+     * 修改密码 检查手机号
+     * @param phone
+     * @return
+     */
+    public Observable<String> checkExistPhone(String phone){
+        return config.getRetrofitService().checkExistPhone(phone)
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 修改密码
+     * @param phone
+     * @return
+     */
+    public Observable<String> changePwd(String phone, String pwd){
+        return config.getRetrofitService().changePwd(phone, pwd)
+                .compose(RxUtils.handleResult());
+    }
+
+
 }

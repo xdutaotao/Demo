@@ -35,4 +35,22 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     }
                 }));
     }
+
+    /**
+     * 修改密码 检查手机号是否存在
+     */
+    public void changePwd(Context context, String phone){
+        mCompositeSubscription.add(model.checkExistPhone(phone)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError() {
+                        ToastUtil.show("手机号没有注册");
+                    }
+                }));
+    }
 }

@@ -27,6 +27,8 @@ import cn.smssdk.SMSSDK;
 import rx.Observable;
 import rx.Subscription;
 
+import static com.demo.cworker.Common.Constants.INTENT_KEY;
+
 public class CheckPhoneActivity extends BaseActivity implements RegisterView, View.OnClickListener {
 
     @Inject
@@ -46,9 +48,16 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
     private Subscription subscriber;
     private EventHandler eventHandler;
+    private boolean isChangePwd;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CheckPhoneActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, boolean intent_phone) {
+        Intent intent = new Intent(context, CheckPhoneActivity.class);
+        intent.putExtra(INTENT_KEY, intent_phone);
         context.startActivity(intent);
     }
 
@@ -72,7 +81,12 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
+                        if (isChangePwd){
+                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString(), isChangePwd);
+                        }else{
+                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
+                        }
+
                         finish();
 
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
@@ -87,6 +101,10 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             }
         };
         SMSSDK.registerEventHandler(eventHandler);
+
+        if (getIntent().getBooleanExtra(INTENT_KEY, false)){
+            isChangePwd = true;
+        }
     }
 
 
@@ -113,7 +131,12 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             ToastUtil.show("手机号填写错误");
             return;
         }
-        presenter.checkPhone(this, phoneInput.getText().toString());
+        if(isChangePwd){
+            presenter.changePwd(this, phoneInput.getText().toString());
+        }else{
+            presenter.checkPhone(this, phoneInput.getText().toString());
+        }
+
     }
 
     private void setCodeAction(){

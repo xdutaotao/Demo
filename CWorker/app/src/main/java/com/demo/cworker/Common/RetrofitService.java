@@ -39,4 +39,10 @@ public interface RetrofitService {
 
     @GET("user/checkEmail")
     Observable<BaseBean<String>> checkEmail(@Query("email") String email);
+
+    @GET("user/changePassword/checkMobile")
+    Observable<BaseBean<String>> checkExistPhone(@Query("mobile") String mobile);
+
+    @GET("user/changeThePassword")
+    Observable<BaseBean<String>> changePwd(@Query("mobile") String mobile, @Query("newPassword") String newPassword);
 }

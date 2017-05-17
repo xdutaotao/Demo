@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
  */
 public class CheckEmailActivity extends BaseActivity implements CheckEmailActivityView {
     private static final String INTENT_KEY = "intent_key";
+    private static final String PWD_KEY = "pwd_key";
     @Inject
     CheckEmailActivityPresenter presenter;
     @BindView(R.id.title_text)
@@ -46,10 +47,18 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
     Button registerBtn;
 
     private String phone;
+    private boolean isChangePwd;
 
     public static void startActivity(Context context, String phone) {
         Intent intent = new Intent(context, CheckEmailActivity.class);
         intent.putExtra(INTENT_KEY, phone);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, String phone, boolean isChangePwd) {
+        Intent intent = new Intent(context, CheckEmailActivity.class);
+        intent.putExtra(INTENT_KEY, phone);
+        intent.putExtra(PWD_KEY, isChangePwd);
         context.startActivity(intent);
     }
 
@@ -61,7 +70,6 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "注册");
         emailInput.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         emailInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,13 +97,43 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkEmailAction();
+                if(isChangePwd){
+                    checkChangePwd();
+                }else{
+                    checkEmailAction();
+                }
+
             }
         });
 
         if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))){
             phone = getIntent().getStringExtra(INTENT_KEY);
         }
+
+        if (getIntent().getBooleanExtra(PWD_KEY, false)){
+            isChangePwd = true;
+            nameInput.setVisibility(View.GONE);
+            emailInput.setVisibility(View.GONE);
+            registerBtn.setText("完成");
+            showToolbarBack(toolBar, titleText, "修改密码");
+        }else{
+            showToolbarBack(toolBar, titleText, "注册");
+        }
+
+    }
+
+    private void checkChangePwd(){
+        if (pwdInput.getText().length() == 0) {
+            ToastUtil.show("密码不能为空");
+            return;
+        }
+
+        if (!TextUtils.equals(pwdInput.getText().toString(), surePwd.getText().toString())) {
+            ToastUtil.show("两次密码不一致");
+            return;
+        }
+
+        presenter.changePwd(this, phone, pwdInput.getText().toString());
     }
 
     private void checkEmailAction(){
@@ -119,7 +157,11 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
 
     @Override
     public void getData(String data) {
-        ToastUtil.show("注册成功");
+        if (isChangePwd){
+            ToastUtil.show("修改成功");
+        }else{
+            ToastUtil.show("注册成功");
+        }
         finish();
     }
 

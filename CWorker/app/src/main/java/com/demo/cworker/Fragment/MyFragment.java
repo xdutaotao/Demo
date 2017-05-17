@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
@@ -35,6 +37,20 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     TextView year;
     @BindView(R.id.total)
     TextView total;
+    @BindView(R.id.personal_word)
+    RelativeLayout personalWord;
+    @BindView(R.id.change_pwd)
+    RelativeLayout changePwd;
+    @BindView(R.id.personal_center)
+    RelativeLayout personalCenter;
+    @BindView(R.id.setting)
+    RelativeLayout setting;
+    @BindView(R.id.help)
+    RelativeLayout help;
+    @BindView(R.id.suggest)
+    RelativeLayout suggest;
+    @BindView(R.id.about)
+    RelativeLayout about;
     private String mParam1;
 
     public static MyFragment newInstance(String param1) {
@@ -62,21 +78,24 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         loginBtn.setOnClickListener(this);
         loginText.setOnClickListener(this);
         headIcon.setOnClickListener(this);
+
+        changePwd.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             loginBtn.setText("点击登录");
-        }else{
+        } else {
             loginBtn.setText("退出登录");
-            if (User.getInstance().getUserInfo() != null){
+            if (User.getInstance().getUserInfo() != null) {
                 UserInfo userInfo = User.getInstance().getUserInfo();
-                if (!TextUtils.isEmpty(userInfo.getPerson().getFace())){
+                if (!TextUtils.isEmpty(userInfo.getPerson().getFace())) {
                     Glide.with(this)
                             .load(userInfo.getPerson().getFace())
+                            .placeholder(R.drawable.ic_launcher_round)
                             .bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(headIcon);
                 }
@@ -94,9 +113,21 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
+                User.getInstance().clearUser();
+                onResume();
+                break;
             case R.id.login_text:
             case R.id.head_icon:
-                LoginActivity.startActivity(getContext());
+                if(User.getInstance().getUserInfo() != null){
+                    
+                }else{
+                    LoginActivity.startActivity(getContext());
+                }
+
+                break;
+
+            case R.id.change_pwd:
+                CheckPhoneActivity.startActivity(getContext(), true);
                 break;
         }
     }

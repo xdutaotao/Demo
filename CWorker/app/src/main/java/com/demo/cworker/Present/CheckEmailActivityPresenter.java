@@ -37,4 +37,22 @@ public class CheckEmailActivityPresenter extends BasePresenter<CheckEmailActivit
                     }
                 }));
     }
+
+    /**
+     * 修改密码
+     */
+    public void changePwd(Context context, String phone, String pwd){
+        mCompositeSubscription.add(model.changePwd(phone, pwd)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError() {
+                        ToastUtil.show("没有此号码");
+                    }
+                }));
+    }
 }

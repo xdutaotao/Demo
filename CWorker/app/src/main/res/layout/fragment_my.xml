@@ -151,7 +151,8 @@
         android:layout_height="wrap_content"
         android:padding="30px"
         android:background="@android:color/white"
-        android:layout_marginTop="50px">
+        android:layout_marginTop="50px"
+        android:id="@+id/personal_word">
 
         <TextView
             android:layout_width="wrap_content"
@@ -175,7 +176,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30px"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:id="@+id/change_pwd">
 
         <TextView
             android:layout_width="wrap_content"
@@ -199,7 +201,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30px"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:id="@+id/personal_center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -223,7 +226,8 @@
         android:layout_height="wrap_content"
         android:padding="30px"
         android:background="@android:color/white"
-        android:layout_marginTop="50px">
+        android:layout_marginTop="50px"
+        android:id="@+id/setting">
 
         <TextView
             android:layout_width="wrap_content"
@@ -247,7 +251,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30px"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:id="@+id/help">
 
         <TextView
             android:layout_width="wrap_content"
@@ -271,7 +276,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30px"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:id="@+id/suggest">
 
         <TextView
             android:layout_width="wrap_content"
@@ -295,7 +301,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="30px"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:id="@+id/about">
 
         <TextView
             android:layout_width="wrap_content"
