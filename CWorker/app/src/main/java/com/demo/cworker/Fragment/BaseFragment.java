@@ -19,6 +19,7 @@ import rx.Subscription;
 
 public class BaseFragment extends Fragment {
     private ActivityComponent activityComponent;
+    public boolean isVisible;
 
     protected Subscription sub;
 
@@ -27,6 +28,16 @@ public class BaseFragment extends Fragment {
             activityComponent = ActivityComponentFactory.create(getActivity());
         }
         return activityComponent;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()){
+            isVisible = true;
+        }else{
+            isVisible = false;
+        }
     }
 
     @Override

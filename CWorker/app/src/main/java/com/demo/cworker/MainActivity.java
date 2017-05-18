@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.demo.cworker.Activity.BaseActivity;
+import com.demo.cworker.Fragment.AddFragment;
+import com.demo.cworker.Fragment.BaseFragment;
 import com.demo.cworker.Fragment.HomeFragment;
+import com.demo.cworker.Fragment.MessageFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Widget.BottomNavigationViewEx;
@@ -44,28 +47,18 @@ public class MainActivity extends BaseActivity {
         navigation.addBadgeViewAt(this, container, 4, "9");
 
         fragments = getFragments();
-        setDefaultFragment(0);
+        showFragment(0);
 
         imageView = (ImageView) findViewById(R.id.center_image);
         imageView.setOnClickListener(v -> showFragment(2));
-    }
-
-    /**
-     * 设置默认的
-     */
-    private void setDefaultFragment(int position) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.add(R.id.content, getFragments().get(position));
-        transaction.commit();
     }
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("主页"));
         fragments.add(SearchFragment.newInstance("我的"));
-        fragments.add(SearchFragment.newInstance("我的"));
-        fragments.add(SearchFragment.newInstance("我的"));
+        fragments.add(AddFragment.newInstance("我的"));
+        fragments.add(MessageFragment.newInstance("我的"));
         fragments.add(MyFragment.newInstance("我的"));
         return fragments;
     }
@@ -76,6 +69,8 @@ public class MainActivity extends BaseActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = fragments.get(position);
+                if (((BaseFragment)fragment).isVisible)
+                    return;
                 if (fragment.isAdded()) {
                     ft.hide(preFragment);
                     ft.show(fragment);

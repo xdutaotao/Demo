@@ -63,6 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         name.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         login.setOnClickListener(this);
         registerTxt.setOnClickListener(this);
+        forgetTxt.setOnClickListener(this);
     }
 
 
@@ -77,6 +78,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
             case R.id.forget_pwd:
                 actionRegister();
+                break;
+
+            case R.id.code_login:
+                CheckPhoneActivity.startActivity(this, true);
                 break;
         }
     }

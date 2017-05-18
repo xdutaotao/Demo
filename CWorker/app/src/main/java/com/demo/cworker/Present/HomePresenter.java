@@ -32,7 +32,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void _onError() {
-                        ToastUtil.show("用户名或者密码错误");
+                        ToastUtil.show("请求失败");
                     }
                 }));
     }
