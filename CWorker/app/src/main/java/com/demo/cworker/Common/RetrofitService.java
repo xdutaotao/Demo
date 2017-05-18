@@ -1,6 +1,7 @@
 package com.demo.cworker.Common;
 
 
+import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Bean.BaseBean;
 import com.demo.cworker.Bean.HomeResponseBean;
 import com.demo.cworker.Bean.ResponseBean;
@@ -54,4 +55,8 @@ public interface RetrofitService {
 
     @GET("home/getFirstPage")
     Observable<HomeResponseBean> getFirstPage();
+
+    @FormUrlEncoded
+    @POST("home/search")
+    Observable<SearchResponseBean> getSearchResult(@FieldMap Map<String, String> map, @FieldMap Map<String, Integer> intMap);
 }

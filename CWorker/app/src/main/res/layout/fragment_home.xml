@@ -52,7 +52,8 @@
                         android:layout_height="wrap_content"
                         android:text="更多"
                         android:drawableRight="@drawable/turn_right"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/more_one"/>
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -85,7 +86,8 @@
                         android:layout_height="wrap_content"
                         android:text="更多"
                         android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/turn_right"/>
+                        android:drawableRight="@drawable/turn_right"
+                        android:id="@+id/more_two"/>
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -118,7 +120,8 @@
                         android:layout_height="wrap_content"
                         android:text="更多"
                         android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/turn_right"/>
+                        android:drawableRight="@drawable/turn_right"
+                        android:id="@+id/more_three"/>
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView

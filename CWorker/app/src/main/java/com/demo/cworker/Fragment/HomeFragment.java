@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.demo.cworker.Activity.HomeDetailActivity;
+import com.demo.cworker.Activity.SearchResultActivity;
 import com.demo.cworker.Activity.WebViewActivity;
-import com.demo.cworker.Bean.HomeBean;
 import com.demo.cworker.Bean.HomeResponseBean;
+import com.demo.cworker.Bean.SearchBean;
+import com.demo.cworker.Model.User;
 import com.demo.cworker.Present.HomePresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.HomeView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
@@ -31,7 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends BaseFragment implements HomeView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements HomeView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view_classic)
     RecyclerView recyclerViewClassic;
@@ -45,6 +48,12 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     TextView typeTwo;
     @BindView(R.id.typeThree)
     TextView typeThree;
+    @BindView(R.id.more_one)
+    TextView moreOne;
+    @BindView(R.id.more_two)
+    TextView moreTwo;
+    @BindView(R.id.more_three)
+    TextView moreThree;
     private String mParam1;
 
     @BindView(R.id.title_text)
@@ -93,6 +102,9 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
         presenter.getFirstPage(getContext());
         swipe.setOnRefreshListener(this);
+        moreOne.setOnClickListener(this);
+        moreTwo.setOnClickListener(this);
+        moreThree.setOnClickListener(this);
         return view;
     }
 
@@ -102,7 +114,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
                 baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
                 baseViewHolder.setText(R.id.item_title, homeBean.getTitle());
-                baseViewHolder.setText(R.id.item_author, "作者:"+homeBean.getAuthor());
+                baseViewHolder.setText(R.id.item_author, "作者:" + homeBean.getAuthor());
                 baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
                 baseViewHolder.setText(R.id.item_txt, homeBean.getDescription());
             }
@@ -162,7 +174,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
     @Override
     public void onFailure() {
-
+        swipe.setRefreshing(false);
     }
 
     @Override
@@ -204,5 +216,37 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     @Override
     public void onRefresh() {
         presenter.getFirstPage(getContext());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (User.getInstance().getUserInfo() == null){
+            ToastUtil.show("请登录");
+            return;
+        }
+        SearchBean bean = new SearchBean();
+        switch (v.getId()){
+            case R.id.more_one:
+                bean.setGroupType(1);
+                break;
+
+            case R.id.more_two:
+                bean.setGroupType(2);
+                break;
+
+            case R.id.more_three:
+                bean.setGroupType(3);
+                break;
+        }
+
+        bean.setPageNo(1);
+        bean.setPageSize(15);
+        bean.setKeywords("");
+        bean.setToken(User.getInstance().getUserId());
+        bean.setType(User.getInstance().getUserInfo().getPerson().getType());  //?
+        bean.setVipRes(User.getInstance().getUserInfo().getPerson().getVIP());
+        bean.setSort(0);
+        bean.setProject("");
+        SearchResultActivity.startActivity(getContext(), bean);
     }
 }

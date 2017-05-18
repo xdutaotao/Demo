@@ -6,6 +6,7 @@ import com.demo.cworker.Activity.HomeDetailActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.PDFActivity;
+import com.demo.cworker.Activity.SearchResultActivity;
 import com.demo.cworker.Fragment.AddFragment;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MessageFragment;
@@ -28,4 +29,5 @@ public interface ActivityComponent {
     void inject(MessageFragment fragment);
     void inject(PDFActivity activity);
     void inject(HomeDetailActivity activity);
+    void inject(SearchResultActivity activity);
 }
