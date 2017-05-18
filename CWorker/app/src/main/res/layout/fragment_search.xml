@@ -2,14 +2,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:gzf="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/white"
     tools:context=".Fragment.SearchFragment">
 
+    <include layout="@layout/search_top" />
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="热门搜索"
+        android:layout_margin="50px"
+        android:textColor="@color/nav_gray"/>
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/flow_layout"
+        gzf:max_select="-1"
+        gzf:auto_select_effect="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Hello World" />
+        android:layout_height="wrap_content"
+        android:padding="50px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="搜索历史"
+        android:layout_margin="50px"
+        android:textColor="@android:color/black"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:layout_margin="50px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清空搜索历史"
+        android:textColor="@color/nav_gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="50px"
+        android:id="@+id/clear"/>
 
 </LinearLayout>
