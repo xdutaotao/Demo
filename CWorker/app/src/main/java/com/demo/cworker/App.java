@@ -6,6 +6,7 @@ import android.content.Context;
 import com.demo.cworker.Utils.Dagger.Component.ApplicationComponent;
 import com.demo.cworker.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.demo.cworker.Utils.Dagger.Module.ApplicationModule;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.smssdk.SMSSDK;
 
@@ -46,5 +47,7 @@ public class App  extends Application{
         super.onCreate();
         mContext = getApplicationContext();
         SMSSDK.initSDK(this, "1d79b47d1e280", "b4cfa85b04cfee6601067e1aa9b0b5d8");
+
+        CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", true);
     }
 }

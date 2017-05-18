@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.demo.cworker.R;
 import com.demo.cworker.View.MessageView;
 import com.demo.cworker.Present.MessagePresenter;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
 
@@ -45,6 +46,7 @@ public class MessageFragment extends BaseFragment implements MessageView {
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
         presenter.attachView(this);
+
         return view;
     }
 

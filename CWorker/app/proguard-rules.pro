@@ -29,3 +29,7 @@
 -keep public class android.support.design.internal.BottomNavigationMenuView { *; }
 -keep public class android.support.design.internal.BottomNavigationPresenter { *; }
 -keep public class android.support.design.internal.BottomNavigationItemView { *; }
+
+# Bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

@@ -69,7 +69,8 @@
         <activity android:name=".Activity.CheckPhoneActivity" />
         <activity android:name=".Activity.CheckEmailActivity" />
         <activity android:name=".Activity.WebViewActivity" />
-        <activity android:name=".Activity.HomeDetailActivity"></activity>
+        <activity android:name=".Activity.HomeDetailActivity" />
+        <activity android:name=".Activity.PDFActivity" />
     </application>
 
 </manifest>

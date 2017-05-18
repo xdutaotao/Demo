@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.demo.cworker.Activity.HomeDetailActivity;
 import com.demo.cworker.Activity.WebViewActivity;
 import com.demo.cworker.Bean.HomeBean;
 import com.demo.cworker.Bean.HomeResponseBean;
@@ -86,7 +87,6 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         presenter.attachView(this);
         titleText.setText(mParam1);
 
-        initBanner();
         initCreamList();
         initClassicList();
         initList();
@@ -116,6 +116,10 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         };
         recyclerViewList.setLayoutManager(linearLayoutManager);
         recyclerViewList.setAdapter(adapterList);
+
+        adapterList.setOnItemClickListener((view, i) -> {
+            HomeDetailActivity.startActivity(getContext(), adapterList.getAllData().get(i));
+        });
     }
 
     private void initClassicList() {
@@ -133,6 +137,8 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewClassic.setLayoutManager(linearLayoutManager);
         recyclerViewClassic.setAdapter(adapterClassic);
+
+        adapterClassic.setOnItemClickListener((view, i) -> HomeDetailActivity.startActivity(getContext(), adapterClassic.getAllData().get(i)));
     }
 
     private void initCreamList() {
@@ -150,10 +156,8 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-    }
 
-    private void initBanner() {
-
+        adapter.setOnItemClickListener((view, i) -> HomeDetailActivity.startActivity(getContext(), adapter.getAllData().get(i)));
     }
 
     @Override
