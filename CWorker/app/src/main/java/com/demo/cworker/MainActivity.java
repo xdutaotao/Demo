@@ -50,7 +50,10 @@ public class MainActivity extends BaseActivity {
         showFragment(0);
 
         imageView = (ImageView) findViewById(R.id.center_image);
-        imageView.setOnClickListener(v -> showFragment(2));
+        imageView.setOnClickListener(v -> {
+            
+            showFragment(2);
+        });
     }
 
     private ArrayList<Fragment> getFragments() {

@@ -1,6 +1,7 @@
 package com.demo.cworker.Fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.demo.cworker.Present.SearchPresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.SearchView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
@@ -20,6 +22,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -77,14 +80,22 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         presenter.attachView(this);
 
         for(int i=0; i< 10; i++){
-            list.add(i+"");
+            list.add(i+"123456789");
         }
         flowLayout.setAdapter(new TagAdapter<String>(list) {
             @Override
             public View getView(FlowLayout parent, int position, String o) {
-                TextView view = (TextView) LayoutInflater.from(parent.getContext()).inflate(android.R.layout.test_list_item, parent);
+                TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tv, flowLayout, false);
                 view.setText(list.get(position));
                 return view;
+            }
+        });
+
+        flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                ToastUtil.show(list.get(position));
+                return true;
             }
         });
 
@@ -92,12 +103,19 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.search_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.search_text, s);
+                baseViewHolder.setText(R.id.search_text, "123456789");
             }
         };
-        recyclerView.setAdapter(adapter);
         adapter.addAll(list);
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
         clear.setOnClickListener(this);
 
         return view;
