@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.demo.cworker.Bean.HomeResponseBean;
 import com.demo.cworker.Bean.SearchBean;
 import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Model.User;
@@ -43,7 +44,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
 
-    private RecyclerArrayAdapter<SearchResponseBean.DataBean> adapter;
+    private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapter;
 
     private SearchBean bean;
 
@@ -66,9 +67,9 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
             showToolbarBack(toolBar, titleText, titles[bean.getGroupType()-1]);
         }
 
-        adapter = new RecyclerArrayAdapter<SearchResponseBean.DataBean>(this, R.layout.home_vertical_list) {
+        adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(this, R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, SearchResponseBean.DataBean dataBean) {
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean dataBean) {
                 baseViewHolder.setImageUrl(R.id.item_img, dataBean.getPic(), R.drawable.ic_launcher_round);
                 baseViewHolder.setText(R.id.item_title, dataBean.getTitle());
                 baseViewHolder.setText(R.id.item_author, "作者:"+dataBean.getAuthor());

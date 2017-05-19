@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Fragment> fragments;
     private Fragment preFragment;
     private ImageView imageView;
+    private BottomNavigationViewEx navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity {
         //禁止侧滑返回
         setSwipeBackEnable(false);
 
-        BottomNavigationViewEx navigation = (BottomNavigationViewEx) findViewById(R.id.navigation);
+        navigation = (BottomNavigationViewEx) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.enableAnimation(false);
         navigation.enableShiftingMode(false);
@@ -51,7 +52,6 @@ public class MainActivity extends BaseActivity {
 
         imageView = (ImageView) findViewById(R.id.center_image);
         imageView.setOnClickListener(v -> {
-            
             showFragment(2);
         });
     }
@@ -82,8 +82,20 @@ public class MainActivity extends BaseActivity {
                 }
                 ft.commitAllowingStateLoss();
                 preFragment = fragment;
+                navigation.getBottomNavigationItemView(position).setChecked(true);
+                if (position == 2){
+                    setNavigationItemUnChecked();
+                }
             }
         }
+    }
+
+    private void setNavigationItemUnChecked(){
+        navigation.getBottomNavigationItemView(0).setChecked(false);
+        navigation.getBottomNavigationItemView(1).setChecked(false);
+        navigation.getBottomNavigationItemView(2).setChecked(false);
+        navigation.getBottomNavigationItemView(3).setChecked(false);
+        navigation.getBottomNavigationItemView(4).setChecked(false);
     }
 
     private BottomNavigationViewEx.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
