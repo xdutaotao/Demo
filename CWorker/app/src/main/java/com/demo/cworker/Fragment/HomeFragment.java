@@ -100,8 +100,8 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         initClassicList();
         initList();
 
-        presenter.getFirstPage(getContext());
         swipe.setOnRefreshListener(this);
+        swipe.showHead();
         moreOne.setOnClickListener(this);
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
@@ -215,7 +215,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
     @Override
     public void onRefresh() {
-        presenter.getFirstPage(getContext());
+        presenter.getFirstPage();
     }
 
     @Override

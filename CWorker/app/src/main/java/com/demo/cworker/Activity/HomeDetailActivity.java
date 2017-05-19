@@ -21,6 +21,7 @@ import com.demo.cworker.Model.User;
 import com.demo.cworker.Present.PDFPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.ToastUtil;
+import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.PDFView;
 import com.gzfgeh.iosdialog.IOSDialog;
 
@@ -85,7 +86,7 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
             Glide.with(this).load(bean.getPic()).placeholder(R.drawable.ic_launcher_round).into(image);
             title.setText(bean.getTitle());
             author.setText("作者:" + bean.getAuthor());
-            time.setText("上传时间:" + bean.getUpdateTime());
+            time.setText("上传时间:" + Utils.getStrTime(String.valueOf(bean.getUpdateTime())));
             vip.setVisibility(bean.getVipRes() != 0 ? View.VISIBLE : View.GONE);
             content.setText(bean.getDescription());
         }

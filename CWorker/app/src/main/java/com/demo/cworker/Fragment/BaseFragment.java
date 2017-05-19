@@ -7,10 +7,15 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Utils.Dagger.Component.ActivityComponent;
 import com.demo.cworker.Utils.Dagger.Component.ActivityComponentFactory;
+import com.demo.cworker.Utils.RxBus;
+import com.demo.cworker.Utils.RxUtils;
 
 import rx.Subscription;
+
+import static com.demo.cworker.Common.Constants.LOGIN_AGAIN;
 
 /**
  * Description:
@@ -43,13 +48,12 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        view.setOnTouchListener(this);
-//        sub = RxBus.getInstance().toObservable(String.class)
-//                .filter(s -> TextUtils.equals(s, Constants.UPDATE_UI))
-//                .compose(RxUtils.applyIOToMainThreadSchedulers())
-//                .subscribe(s -> {
-//                    updateData();
-//                });
+        sub = RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, LOGIN_AGAIN))
+                .compose(RxUtils.applyIOToMainThreadSchedulers())
+                .subscribe(s -> {
+                    updateData();
+                });
     }
 
 //    @Override

@@ -22,9 +22,9 @@ public class HomePresenter extends BasePresenter<HomeView> {
     @Inject
     HomePresenter() {}
 
-    public void getFirstPage(Context context){
+    public void getFirstPage(){
         mCompositeSubscription.add(model.getFirstPage()
-                .subscribe(new RxSubUtils<HomeResponseBean>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<HomeResponseBean>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(HomeResponseBean token) {
                         getView().getData(token);

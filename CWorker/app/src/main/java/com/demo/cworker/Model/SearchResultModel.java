@@ -26,17 +26,21 @@ public class SearchResultModel extends BaseModel {
 
     public Observable<SearchResponseBean> getSearchResult(SearchBean bean){
         Map<String, String> map = new HashMap<>();
-        map.put("keywords", bean.getKeywords());
+        if (!TextUtils.isEmpty(bean.getKeywords()))
+            map.put("keywords", bean.getKeywords());
         map.put("token", bean.getToken());
-        map.put("project", bean.getProject());
+        if (!TextUtils.isEmpty(bean.getProject()))
+            map.put("project", bean.getProject());
 
         Map<String, Integer> integerMap = new HashMap<>();
-        integerMap.put("groupType", bean.getGroupType());
+        if (bean.getGroupType() > 0)
+            integerMap.put("groupType", bean.getGroupType());
         integerMap.put("pageNo", bean.getPageNo());
         integerMap.put("pageSize", bean.getPageSize());
-        integerMap.put("type", bean.getType());
-        integerMap.put("vipRes", bean.getVipRes());
-        integerMap.put("sort", bean.getSort());
+
+        //integerMap.put("type", bean.getType());
+        //integerMap.put("vipRes", bean.getVipRes());
+        //integerMap.put("sort", bean.getSort());
 
         return config.getRetrofitService().getSearchResult(map, integerMap)
                 .flatMap(searchResponseBean -> {
@@ -49,7 +53,7 @@ public class SearchResultModel extends BaseModel {
                             }
                         });
                     }else{
-                        return Observable.error(new Throwable(searchResponseBean.getResult()));
+                        return Observable.error(new RxUtils.ServerException(searchResponseBean.getResult()));
                     }
                 }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }

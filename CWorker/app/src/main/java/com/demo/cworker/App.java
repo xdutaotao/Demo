@@ -48,6 +48,6 @@ public class App  extends Application{
         mContext = getApplicationContext();
         SMSSDK.initSDK(this, "1d79b47d1e280", "b4cfa85b04cfee6601067e1aa9b0b5d8");
 
-        CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", true);
+        CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", false);
     }
 }

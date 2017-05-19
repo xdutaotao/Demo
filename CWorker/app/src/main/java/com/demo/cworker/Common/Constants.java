@@ -9,4 +9,5 @@ public class Constants {
     public static final String TOKEN_KEY = "token_key";
     public static final String USER_INFO_KEY = "user_info_key";
     public static final String INTENT_KEY = "intent_key";
+    public static final String LOGIN_AGAIN = "login_again";
 }

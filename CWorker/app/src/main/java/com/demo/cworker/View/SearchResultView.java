@@ -7,4 +7,5 @@ import com.demo.cworker.Bean.SearchResponseBean;
  */
 public interface SearchResultView extends BaseView {
     void getData(SearchResponseBean bean);
+    void fail(String msg);
 }

@@ -129,6 +129,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     }
 
     @Override
+    public void updateData() {
+        super.updateData();
+        onResume();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:

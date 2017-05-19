@@ -47,33 +47,6 @@ import java.util.UUID;
 
 public class Utils {
 
-//    public static String getDeviceId(Context context) {
-//        String deviceId = "";
-//        if (deviceId == null || "".equals(deviceId)) {
-//            try {
-//                deviceId = getLocalMac(context).replace(":", "");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (deviceId == null || "".equals(deviceId)) {
-//            try {
-//                deviceId = getAndroidId(context);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        if (deviceId == null || "".equals(deviceId)) {
-//
-//            if (deviceId == null || "".equals(deviceId)) {
-//                UUID uuid = UUID.randomUUID();
-//                deviceId = uuid.toString().replace("-", "");
-//                writeDeviceID(deviceId);
-//            }
-//        }
-//        return deviceId;
-//    }
-
     // IMEI码
     public static String getIMIEStatus(Context context) {
         TelephonyManager tm = (TelephonyManager) context
@@ -81,50 +54,6 @@ public class Utils {
         String deviceId = tm.getDeviceId();
         return deviceId;
     }
-
-//    // Mac地址
-//    private static String getLocalMac(Context context) {
-//        WifiManager wifi = (WifiManager) context
-//                .getSystemService(Context.WIFI_SERVICE);
-//        WifiInfo info = wifi.getConnectionInfo();
-//        return info.getMacAddress();
-//    }
-//
-//    // Android Id
-//    private static String getAndroidId(Context context) {
-//        String androidId = Settings.Secure.getString(
-//                context.getContentResolver(), Settings.Secure.ANDROID_ID);
-//        return androidId;
-//    }
-
-//    public static void writeDeviceID(String str) {
-//        try {
-//            FileOutputStream fos = new FileOutputStream(file);
-//            Writer out = new OutputStreamWriter(fos, "UTF-8");
-//            out.write(str);
-//            out.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public static String readDeviceID() {
-//        StringBuffer buffer = new StringBuffer();
-//        try {
-//            FileInputStream fis = new FileInputStream(file);
-//            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
-//            Reader in = new BufferedReader(isr);
-//            int i;
-//            while ((i = in.read()) > -1) {
-//                buffer.append((char) i);
-//            }
-//            in.close();
-//            return buffer.toString();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
 
 
@@ -541,6 +470,20 @@ public class Utils {
         }catch(Exception e){
 
         }
+    }
+
+
+    /**
+     * 时间戳 转 Date 字符串
+     *  例如：cc_time=1291778220
+     */
+    public static String getStrTime(String cc_time) {
+        String re_StrTime = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        long lcc_time = Long.valueOf(cc_time);
+        re_StrTime = sdf.format(new Date(lcc_time * 1000L));
+        return re_StrTime;
     }
 
 }
