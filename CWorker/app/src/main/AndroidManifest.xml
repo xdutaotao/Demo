@@ -73,6 +73,11 @@
         <activity android:name=".Activity.HomeDetailActivity" />
         <activity android:name=".Activity.PDFActivity" />
         <activity android:name=".Activity.SearchResultActivity" />
+        <activity android:name=".Activity.CollectActivity" />
+        <activity android:name=".Activity.ScanActivity" />
+        <activity
+            android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
+            android:theme="@style/ImagePickerThemeFullScreen"/>
     </application>
 
 </manifest>

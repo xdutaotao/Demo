@@ -49,9 +49,9 @@ dependencies {
     compile name: 'SMSSDK-2.1.4', ext: 'aar'
     compile files('libs/MobCommons-2017.0321.1624.jar')
     compile files('libs/MobTools-2017.0321.1624.jar')
-    compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版
+    compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
     compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
@@ -77,8 +77,12 @@ dependencies {
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.github.barteksc:android-pdf-viewer:2.5.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
+    compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.lzy.widget:imagepicker:0.5.5'
 }

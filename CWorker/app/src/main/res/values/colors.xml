@@ -8,5 +8,6 @@
     <color name="nav_gray">#959595</color>
     <color name="red">#ffff0000</color>
     <color name="gray">#808080</color>
+    <color name="divider">#11000000</color>
 
 </resources>

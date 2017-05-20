@@ -2,6 +2,7 @@ package com.demo.cworker.Utils.Dagger.Component;
 
 
 import com.demo.cworker.Activity.CheckEmailActivity;
+import com.demo.cworker.Activity.CollectActivity;
 import com.demo.cworker.Activity.HomeDetailActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
@@ -30,4 +31,5 @@ public interface ActivityComponent {
     void inject(PDFActivity activity);
     void inject(HomeDetailActivity activity);
     void inject(SearchResultActivity activity);
+    void inject(CollectActivity activity);
 }

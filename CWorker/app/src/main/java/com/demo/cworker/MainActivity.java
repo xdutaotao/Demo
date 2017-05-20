@@ -11,13 +11,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.demo.cworker.Activity.BaseActivity;
+import com.demo.cworker.Activity.CollectActivity;
+import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Fragment.AddFragment;
 import com.demo.cworker.Fragment.BaseFragment;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MessageFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
+import com.demo.cworker.Model.User;
 import com.demo.cworker.Widget.BottomNavigationViewEx;
+import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
 
@@ -66,7 +70,24 @@ public class MainActivity extends BaseActivity {
         return fragments;
     }
 
+    @SuppressWarnings("RestrictedApi")
     private void showFragment(int position) {
+        if (position == 2 ){
+            if (User.getInstance().getUserInfo() != null){
+                new IOSDialog(this).builder()
+                        .setTitle("提示")
+                        .setMsg("登陆后才可使用此功能")
+                        .setPositiveButton("立即登陆", v -> LoginActivity.startActivity(this))
+                        .setPositiveBtnColor(R.color.colorPrimary)
+                        .setNegativeButton("暂不登陆", null)
+                        .setNegativeBtnColor(R.color.colorPrimary)
+                        .show();
+            }else{
+                CollectActivity.startActivity(this);
+            }
+            return;
+        }
+
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
@@ -90,6 +111,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @SuppressWarnings("RestrictedApi")
     private void setNavigationItemUnChecked(){
         navigation.getBottomNavigationItemView(0).setChecked(false);
         navigation.getBottomNavigationItemView(1).setChecked(false);
