@@ -24,7 +24,6 @@ public class GlideImageLoader implements ImageLoader {
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
         Glide.with(activity)
                 .load(Uri.fromFile(new File(path)))
-                .placeholder(R.drawable.ic_launcher_round)
                 .override(width, height)//
                 .centerCrop()
                 .skipMemoryCache(true)

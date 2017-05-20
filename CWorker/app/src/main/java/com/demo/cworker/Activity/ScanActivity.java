@@ -111,6 +111,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);
         imagePicker.setFocusWidth(600);
         imagePicker.setFocusHeight(600);
+        imagePicker.setShowCamera(false);
         Intent intent = new Intent(this, ImageGridActivity.class);
         startActivityForResult(intent, IMAGE_PICKER);
 
