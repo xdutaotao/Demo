@@ -2,10 +2,13 @@ package com.demo.cworker.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,12 +36,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.demo.cworker.Common.Constants.INTENT_KEY;
+
 /**
  * create by
  */
 public class CollectActivity extends BaseActivity implements CollectView, View.OnClickListener {
     private static final String ADD = "add";
     private static final int IMAGE_PICKER = 8888;
+    public static final int REQUEST_CODE = 6666;
 
     @Inject
     CollectPresenter presenter;
@@ -119,6 +125,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             view.findViewById(R.id.delete).setOnClickListener(v -> {
                 imageItems.remove(i);
                 adapter.remove(i);
+                if (i == 9){
+                    adapter.add(ADD);
+                }
             });
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)){
                 selectPhoto();
@@ -131,6 +140,31 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         submit.setOnClickListener(this);
         adapter.add(ADD);
         initImagePicker();
+
+        information.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int num = information.getText().toString().length();
+                if (num > 0){
+                    if (num < 100) {
+                        infoNum.setText(num + "/100");
+                        infoNum.setTextColor(getResources().getColor(R.color.nav_gray));
+                    }else{
+                        infoNum.setText("100/100");
+                        infoNum.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void initImagePicker() {
@@ -161,6 +195,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             } else {
                 ToastUtil.show("没有数据");
             }
+        }else if (resultCode == RESULT_OK){
+            if (data != null && requestCode == REQUEST_CODE){
+                String s = data.getStringExtra(INTENT_KEY);
+                number.setText(s);
+            }
         }
     }
 
@@ -179,7 +218,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
 
     private void actionScan() {
-        ScanActivity.startActivity(this);
+        ScanActivity.startActivityForResult(this);
     }
 
     @Override

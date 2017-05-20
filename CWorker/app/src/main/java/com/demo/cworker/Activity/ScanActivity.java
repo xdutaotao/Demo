@@ -1,5 +1,6 @@
 package com.demo.cworker.Activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +35,11 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 
+import static com.demo.cworker.Common.Constants.INTENT_KEY;
+
 public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     private static final int IMAGE_PICKER = 8888;
+
     @BindView(R.id.zxingview)
     ZXingView zxingview;
     @BindView(R.id.title_text)
@@ -48,9 +52,9 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     private boolean isOpened = false;
     private Subscription subscription;
 
-    public static void startActivity(Context context){
+    public static void startActivityForResult(Activity context){
         Intent intent = new Intent(context, ScanActivity.class);
-        context.startActivity(intent);
+        context.startActivityForResult(intent, CollectActivity.REQUEST_CODE);
     }
 
     @Override
@@ -158,7 +162,10 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                             .setNegativeButton("确定", null)
                             .show();
                 }else{
-                    ToastUtil.show(s);
+                    Intent intent = new Intent();
+                    intent.putExtra(INTENT_KEY, s);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
             }
         });
