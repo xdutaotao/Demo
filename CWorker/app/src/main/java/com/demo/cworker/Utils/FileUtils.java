@@ -122,7 +122,7 @@ public class FileUtils {
 	 * @param fileName
 	 * @return
 	 */
-	public static boolean writeFile(byte[] buffer, String folder,
+	public static String writeFile(byte[] buffer, String folder,
 			String fileName) {
 		boolean writeSucc = false;
 
@@ -158,7 +158,7 @@ public class FileUtils {
 			}
 		}
 
-		return writeSucc;
+		return file.getAbsolutePath();
 	}
 
 	/**

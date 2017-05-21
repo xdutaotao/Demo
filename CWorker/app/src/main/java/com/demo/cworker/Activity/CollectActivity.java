@@ -23,6 +23,7 @@ import com.demo.cworker.View.CollectView;
 import com.demo.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -45,6 +46,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private static final int IMAGE_PICKER = 8888;
     public static final int REQUEST_CODE = 6666;
     public static final int REQUEST_WRAP_CODE = 1111;
+    public static final int REQUEST_TAKE_PHOTO_CODE = 2222;
 
     @Inject
     CollectPresenter presenter;
@@ -132,7 +134,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 }
             });
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
-                selectPhoto();
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("拍照", v -> selectCamera())
+                        .setMsg("相册", v -> selectPhoto())
+                        .setNegativeButton("取消", null)
+                        .show();
             } else {
 
             }
@@ -181,6 +187,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         imagePicker.setSelectLimit(10);
     }
 
+    private void selectCamera(){
+        CameraActivity.startActivityForResult(this, imageItems.size());
+    }
+
     private void selectPhoto() {
         Intent intent = new Intent(this, ImageGridActivity.class);
         intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, imageItems);
@@ -205,6 +215,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 number.setText(s);
             }else if (data != null && requestCode == REQUEST_WRAP_CODE){
                 wrapText.setText(data.getStringExtra(INTENT_KEY));
+            }else if (data != null && requestCode == REQUEST_TAKE_PHOTO_CODE){
+                ArrayList<ImageItem> list = (ArrayList<ImageItem>) data.getSerializableExtra(INTENT_KEY);
+                imageItems.addAll(list);
+                setResultToAdapter(imageItems);
             }
         }
     }
