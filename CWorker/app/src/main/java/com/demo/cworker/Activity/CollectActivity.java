@@ -44,7 +44,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private static final String ADD = "add";
     private static final int IMAGE_PICKER = 8888;
     public static final int REQUEST_CODE = 6666;
-    public static final int REQUEST_WRAP_CODE = 66666;
+    public static final int REQUEST_WRAP_CODE = 1111;
 
     @Inject
     CollectPresenter presenter;

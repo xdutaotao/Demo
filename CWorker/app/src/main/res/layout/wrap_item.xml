@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/nav_gray">
+    android:layout_height="wrap_content"
+    android:background="@color/activity_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,12 +28,12 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="80px"
         android:paddingLeft="50px"
         android:paddingRight="50px"
-        android:paddingBottom="80px"
-        android:id="@+id/description"
-        android:text="11111111111111111555555555555555555555111111111111"/>
+        android:text="11111111111111111555555555555555555555111111111111" />
 
 </LinearLayout>
