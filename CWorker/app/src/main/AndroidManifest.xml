@@ -79,7 +79,9 @@
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:theme="@style/ImagePickerThemeFullScreen" />
         <activity android:name=".Activity.WrapActivity" />
-        <activity android:name=".Activity.CameraActivity"></activity>
+        <activity android:name=".Activity.CameraActivity" />
+        <activity android:name=".Activity.PersonalActivity" />
+        <activity android:name=".Activity.AddressActivity"></activity>
     </application>
 
 </manifest>

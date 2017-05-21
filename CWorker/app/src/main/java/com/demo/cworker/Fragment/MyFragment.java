@@ -94,6 +94,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
         headIcon.setOnClickListener(this);
 
         changePwd.setOnClickListener(this);
+        personalWord.setOnClickListener(this);
         return view;
     }
 
@@ -159,6 +160,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
 
             case R.id.change_pwd:
                 CheckPhoneActivity.startActivity(getContext(), true);
+                break;
+
+            case R.id.personal_word:
+                if (User.getInstance().getUserInfo() == null){
+                    ToastUtil.show("请登录");
+                }else{
+
+                }
                 break;
         }
     }
