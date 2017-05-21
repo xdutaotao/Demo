@@ -19,7 +19,7 @@
             android:layout_height="150px"
             android:paddingLeft="50px"
             android:paddingRight="50px"
-            android:gravity="center">
+            android:gravity="center" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,12 +131,15 @@
                 android:textColor="@android:color/black"
                 android:textSize="50px" />
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/cancle" />
+                android:id="@+id/wrap_text"
+                android:maxLength="8"
+                android:ellipsize="end"
+                android:drawableRight="@drawable/cancle" />
         </RelativeLayout>
 
         <View

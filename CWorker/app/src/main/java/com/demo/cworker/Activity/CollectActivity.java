@@ -2,7 +2,6 @@ package com.demo.cworker.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -45,6 +44,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private static final String ADD = "add";
     private static final int IMAGE_PICKER = 8888;
     public static final int REQUEST_CODE = 6666;
+    public static final int REQUEST_WRAP_CODE = 66666;
 
     @Inject
     CollectPresenter presenter;
@@ -90,6 +90,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     RecyclerView recyclerView;
     @BindView(R.id.submit)
     Button submit;
+    @BindView(R.id.wrap_text)
+    TextView wrapText;
 
     private RecyclerArrayAdapter<String> adapter;
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
@@ -111,10 +113,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_photo_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                if (TextUtils.equals(ADD, s)){
+                if (TextUtils.equals(ADD, s)) {
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.select_img, R.drawable.ic_launcher_round);
-                }else{
+                } else {
                     baseViewHolder.setVisible(R.id.delete, true);
                     baseViewHolder.setImageUrl(R.id.select_img, s);
                 }
@@ -125,13 +127,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             view.findViewById(R.id.delete).setOnClickListener(v -> {
                 imageItems.remove(i);
                 adapter.remove(i);
-                if (i == 9){
+                if (i == 9) {
                     adapter.add(ADD);
                 }
             });
-            if (TextUtils.equals(adapter.getAllData().get(i), ADD)){
+            if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
-            }else{
+            } else {
 
             }
         });
@@ -149,11 +151,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
-                if (num > 0){
+                if (num > 0) {
                     if (num < 100) {
                         infoNum.setText(num + "/100");
                         infoNum.setTextColor(getResources().getColor(R.color.nav_gray));
-                    }else{
+                    } else {
                         infoNum.setText("100/100");
                         infoNum.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                     }
@@ -165,6 +167,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             }
         });
+
+        wrapLayout.setOnClickListener(this);
     }
 
     private void initImagePicker() {
@@ -177,9 +181,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         imagePicker.setSelectLimit(10);
     }
 
-    private void selectPhoto(){
+    private void selectPhoto() {
         Intent intent = new Intent(this, ImageGridActivity.class);
-        intent.putExtra(ImageGridActivity.EXTRAS_IMAGES,imageItems);
+        intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, imageItems);
         startActivityForResult(intent, IMAGE_PICKER);
     }
 
@@ -195,10 +199,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             } else {
                 ToastUtil.show("没有数据");
             }
-        }else if (resultCode == RESULT_OK){
-            if (data != null && requestCode == REQUEST_CODE){
+        } else if (resultCode == RESULT_OK) {
+            if (data != null && requestCode == REQUEST_CODE) {
                 String s = data.getStringExtra(INTENT_KEY);
                 number.setText(s);
+            }else if (data != null && requestCode == REQUEST_WRAP_CODE){
+                wrapText.setText(data.getStringExtra(INTENT_KEY));
             }
         }
     }
@@ -210,7 +216,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 .subscribe(strings -> {
                     adapter.clear();
                     adapter.addAll(strings);
-                    if (strings.size() != 10){
+                    if (strings.size() != 10) {
                         adapter.add(ADD);
                     }
                 });
@@ -223,9 +229,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.submit:
 
+                break;
+
+            case R.id.wrap_layout:
+                WrapActivity.startActivityForResult(this, wrapText.getText().toString());
                 break;
         }
     }
