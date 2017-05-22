@@ -81,7 +81,9 @@
         <activity android:name=".Activity.WrapActivity" />
         <activity android:name=".Activity.CameraActivity" />
         <activity android:name=".Activity.PersonalActivity" />
-        <activity android:name=".Activity.AddressActivity"></activity>
+        <activity android:name=".Activity.AddressActivity" />
+        <activity android:name=".Activity.VIPActivity" />
+        <activity android:name=".Activity.BuyActivity"></activity>
     </application>
 
 </manifest>

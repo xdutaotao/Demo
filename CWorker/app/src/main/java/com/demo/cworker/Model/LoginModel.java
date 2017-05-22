@@ -115,5 +115,16 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     *  购买VIP
+     */
+    public Observable<UserInfo.PersonBean> addVipDuration(long time, long glod){
+        Map<String, Long> map = new HashMap<>();
+        map.put("vipDateline", time);
+        map.put("gold", glod);
+        return config.getRetrofitService().addVipDuration(User.getInstance().getUserInfo().getPerson().getToken(), map)
+                .compose(RxUtils.handleResult());
+    }
+
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.LoginActivity;
+import com.demo.cworker.Activity.VIPActivity;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.LoginPresenter;
@@ -95,6 +97,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
 
         changePwd.setOnClickListener(this);
         personalWord.setOnClickListener(this);
+        personalCenter.setOnClickListener(this);
         return view;
     }
 
@@ -169,6 +172,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
 
                 }
                 break;
+
+            case R.id.personal_center:
+//                if (User.getInstance().getUserInfo() == null){
+//                    ToastUtil.show("请登录");
+//                }else{
+//
+//                }
+                VIPActivity.startActivity(getContext());
+                break;
         }
     }
 
@@ -187,5 +199,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
     }
 }

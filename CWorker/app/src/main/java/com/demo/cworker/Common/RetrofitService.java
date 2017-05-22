@@ -1,6 +1,7 @@
 package com.demo.cworker.Common;
 
 
+import com.demo.cworker.Bean.BuyVipBean;
 import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Bean.BaseBean;
 import com.demo.cworker.Bean.HomeResponseBean;
@@ -59,4 +60,8 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("home/search")
     Observable<SearchResponseBean> getSearchResult(@FieldMap Map<String, String> map, @FieldMap Map<String, Integer> intMap);
+
+    @FormUrlEncoded
+    @POST("personalCenter/addVipDuration")
+    Observable<BaseBean<UserInfo.PersonBean>> addVipDuration(@Field("token") String token, @FieldMap Map<String, Long> intMap);
 }
