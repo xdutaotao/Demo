@@ -31,8 +31,8 @@ public class BuyPresenter extends BasePresenter<BuyView> {
                     }
 
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("请求失败");
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
                     }
                 }));
     }
