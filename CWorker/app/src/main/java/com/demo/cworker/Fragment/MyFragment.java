@@ -111,6 +111,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
             month.setText("0");
             year.setText("0");
             total.setText("0");
+            Glide.with(this)
+                    .load(R.drawable.ic_launcher_round)
+                    .bitmapTransform(new CropCircleTransformation(getContext()))
+                    .into(headIcon);
         } else {
             loginBtn.setText("退出登录");
             if (User.getInstance().getUserInfo() != null) {
@@ -174,12 +178,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 break;
 
             case R.id.personal_center:
-//                if (User.getInstance().getUserInfo() == null){
-//                    ToastUtil.show("请登录");
-//                }else{
-//
-//                }
-                VIPActivity.startActivity(getContext());
+                if (User.getInstance().getUserInfo() == null){
+                    ToastUtil.show("请登录");
+                }else{
+                    VIPActivity.startActivity(getContext());
+                }
+
                 break;
         }
     }

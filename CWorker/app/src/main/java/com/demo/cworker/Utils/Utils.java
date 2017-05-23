@@ -14,10 +14,12 @@ import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.App;
+import com.zhy.autolayout.utils.ScreenUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -485,5 +487,30 @@ public class Utils {
         re_StrTime = sdf.format(new Date(lcc_time * 1000L));
         return re_StrTime;
     }
+
+    /**
+     * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
+     * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
+     * @param contentView   window的内容布局
+     * @return window显示的左上角的xOff,yOff坐标
+     */
+    public static int[] calculatePopWindowPos( final View contentView) {
+        final int windowPos[] = new int[2];
+
+        // 获取屏幕的高宽
+        final int screenHeight = getScreenHeight(contentView.getContext());
+        final int screenWidth = getScreenWidth(contentView.getContext());
+        contentView.measure(View.MeasureSpec.EXACTLY, View.MeasureSpec.EXACTLY);
+        // 计算contentView的高宽
+        final int windowHeight = contentView.getMeasuredHeight();
+        final int windowWidth = contentView.getMeasuredWidth();
+
+        windowPos[0] = (screenWidth - windowWidth)/2;
+        windowPos[1] = (screenHeight - windowHeight)/2;
+
+        return windowPos;
+    }
+
+
 
 }

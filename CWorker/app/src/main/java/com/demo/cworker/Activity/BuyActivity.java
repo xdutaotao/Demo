@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.BuyPresenter;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class BuyActivity extends BaseActivity implements View.OnClickListener, BuyView {
 
@@ -83,6 +85,16 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
         monthLayout.setOnClickListener(this);
         payBtn.setOnClickListener(this);
         glod.setText(User.getInstance().getUserInfo().getPerson().getGold()+"");
+        number.setText(User.getInstance().getUserInfo().getPerson().getExperience()+"");
+        name.setText(User.getInstance().getUserInfo().getPerson().getName());
+        Glide.with(this)
+                .load(User.getInstance().getUserInfo().getPerson().getFace())
+                .placeholder(R.drawable.ic_launcher_round)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(headIcon);
+        if (User.getInstance().getUserInfo().getPerson().getVIP() != 0){
+            level.setImageResource(R.drawable.vip);
+        }
     }
 
     @Override
@@ -118,7 +130,7 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
 
             case R.id.pay_btn:
                 if (money > User.getInstance().getUserInfo().getPerson().getGold()){
-                    ToastUtil.show("金币不够");
+                    ToastUtil.show("金币不足，请联系管理员!");
                     return;
                 }
                 presenter.addVipDuration(this, getTime(money), money);

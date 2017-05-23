@@ -12,11 +12,11 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="300px"
+        android:layout_height="340px"
         android:gravity="center"
-        android:src="@drawable/ic_launcher_round"
+        android:src="@drawable/logo"
         android:scaleType="fitCenter"
-        android:padding="80px"/>
+        android:padding="40px"/>
 
 
     <LinearLayout
