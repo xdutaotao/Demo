@@ -1,7 +1,6 @@
 package com.demo.cworker.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,14 +12,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.demo.cworker.Activity.AboutActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.PersonalActivity;
+import com.demo.cworker.Activity.SettingActivity;
+import com.demo.cworker.Activity.SuggestActivity;
 import com.demo.cworker.Activity.VIPActivity;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.LoginPresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.Utils.ShareUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.LoginView;
 import com.demo.cworker.Widget.CustomDialog;
@@ -63,6 +66,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     RelativeLayout about;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
+    @BindView(R.id.level)
+    TextView level;
+    @BindView(R.id.sign)
+    TextView sign;
     private String mParam1;
 
     @Inject
@@ -100,6 +107,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
         personalWord.setOnClickListener(this);
         personalCenter.setOnClickListener(this);
         suggest.setOnClickListener(this);
+        about.setOnClickListener(this);
+        setting.setOnClickListener(this);
+        sign.setOnClickListener(this);
         return view;
     }
 
@@ -117,6 +127,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                     .load(R.drawable.ic_launcher_round)
                     .bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(headIcon);
+            level.setVisibility(View.GONE);
+            sign.setVisibility(View.GONE);
         } else {
             loginBtn.setText("退出登录");
             if (User.getInstance().getUserInfo() != null) {
@@ -134,6 +146,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 month.setText(userInfo.getUps().getMonth() + "");
                 year.setText(userInfo.getUps().getYear() + "");
                 total.setText(userInfo.getUps().getTotal() + "");
+                level.setText("LV"+User.getInstance().getUserInfo().getPerson().getVIP());
+                level.setVisibility(View.VISIBLE);
+                sign.setVisibility(View.VISIBLE);
+                sign.setText(ShareUtils.getValue("sign", false) ? "已签到" : "签到");
             }
         }
     }
@@ -148,9 +164,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                     LoginActivity.startActivity(getContext());
-                }else{
+                } else {
                     presenter.logout(getContext(), User.getInstance().getUserId());
                     User.getInstance().clearUser();
                     scrollView.scrollTo(0, 0);
@@ -172,24 +188,36 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 break;
 
             case R.id.personal_word:
-                if (User.getInstance().getUserInfo() == null){
+                if (User.getInstance().getUserInfo() == null) {
                     ToastUtil.show("请登录");
-                }else{
+                } else {
                     PersonalActivity.startActivity(getContext());
                 }
                 break;
 
             case R.id.personal_center:
-                if (User.getInstance().getUserInfo() == null){
+                if (User.getInstance().getUserInfo() == null) {
                     ToastUtil.show("请登录");
-                }else{
+                } else {
                     VIPActivity.startActivity(getContext());
                 }
 
                 break;
 
             case R.id.suggest:
+                SuggestActivity.startActivity(getContext());
+                break;
 
+            case R.id.about:
+                AboutActivity.startActivity(getContext());
+                break;
+
+            case R.id.setting:
+                SettingActivity.startActivity(getContext());
+                break;
+
+            case R.id.sign:
+                ShareUtils.putValue("sign", true);
                 break;
         }
     }
@@ -215,4 +243,5 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
     }
+
 }

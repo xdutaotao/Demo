@@ -59,4 +59,8 @@ public class AddFragment extends BaseFragment implements AddView {
         presenter.detachView();
     }
 
+    @Override
+    public void getData(String s) {
+
+    }
 }

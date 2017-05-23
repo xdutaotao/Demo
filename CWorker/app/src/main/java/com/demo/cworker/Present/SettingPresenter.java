@@ -11,6 +11,7 @@ import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.SettingView;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,10 +33,10 @@ public class SettingPresenter extends BasePresenter<SettingView> {
 
     public void updateVersion(Context context){
         mCompositeSubscription.add(model.updateVersion()
-                .subscribe(new RxSubUtils<UpdateVersionBean.DataBean>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<List<UpdateVersionBean.DataBean>>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(UpdateVersionBean.DataBean token) {
-                        getView().getUpdateVersion(token);
+                    protected void _onNext(List<UpdateVersionBean.DataBean> token) {
+                        getView().getUpdateVersion(token.get(0));
                     }
 
                     @Override
@@ -59,4 +60,16 @@ public class SettingPresenter extends BasePresenter<SettingView> {
                     }
                 }));
     }
+
+    public void clearCache(Context context){
+        mCompositeSubscription.add(model.clearCache()
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+                }));
+    }
+
+
 }

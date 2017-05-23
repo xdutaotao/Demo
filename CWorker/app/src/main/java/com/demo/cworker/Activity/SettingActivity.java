@@ -1,5 +1,7 @@
 package com.demo.cworker.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.demo.cworker.Bean.UpdateVersionBean;
 import com.demo.cworker.Present.SettingPresenter;
 import com.demo.cworker.R;
@@ -46,6 +49,11 @@ public class SettingActivity extends BaseActivity implements SettingView {
     private TextView progressText;
     private File file;
 
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, SettingActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +68,8 @@ public class SettingActivity extends BaseActivity implements SettingView {
         });
 
         clearCache.setOnClickListener(v -> {
-
+            Glide.get(SettingActivity.this).clearMemory();
+            presenter.clearCache(this);
         });
     }
 
@@ -75,9 +84,11 @@ public class SettingActivity extends BaseActivity implements SettingView {
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", v -> {
                         showDownloadDialog();
-                        file = new File(Environment.getExternalStorageDirectory(), "cworker"+bean.getVersion()+".apk");
+                        file = new File(Environment.getExternalStorageDirectory()
+                                + File.separator + "cworker" + File.separator, bean.getVersion()+".apk");
                         presenter.apkFileDownload(bean.getDownloadUrl(), file);
-                    });
+                    })
+                    .show();
         }
     }
 
@@ -90,6 +101,11 @@ public class SettingActivity extends BaseActivity implements SettingView {
             dialog.dismiss();
             Utils.installApk(this, file);
         }
+    }
+
+    @Override
+    public void getData(String data) {
+        ToastUtil.show(data);
     }
 
     private void showDownloadDialog(){

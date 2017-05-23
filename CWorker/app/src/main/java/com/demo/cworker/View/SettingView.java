@@ -9,4 +9,5 @@ import com.demo.cworker.View.BaseView;
 public interface SettingView extends BaseView {
     void getUpdateVersion(UpdateVersionBean.DataBean bean);
     void getProgress(float progress);
+    void getData(String data);
 }

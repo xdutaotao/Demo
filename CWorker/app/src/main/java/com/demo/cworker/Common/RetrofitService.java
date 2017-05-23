@@ -9,6 +9,7 @@ import com.demo.cworker.Bean.ResponseBean;
 import com.demo.cworker.Bean.UpdateVersionBean;
 import com.demo.cworker.Model.UserInfo;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -68,7 +69,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("personalCenter/addVipDuration")
-    Observable<BaseBean<UserInfo.PersonBean>> addVipDuration(@Field("token") String token, @FieldMap Map<String, Long> intMap);
+    Observable<BaseBean<UserInfo.PersonBean>> addVipDuration(@Field("token") String token, @Field("vipDateline") long vipDateline, @Field("gold") int gold);
 
     @FormUrlEncoded
     @POST("http://363600.cicp.net:8080")
@@ -86,7 +87,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("version/getVersionsByPlatform")
-    Observable<BaseBean<UpdateVersionBean.DataBean>> updateVersion(@Field("platform") String platform);
+    Observable<BaseBean<List<UpdateVersionBean.DataBean>>> updateVersion(@Field("platform") String platform);
 
     @FormUrlEncoded
     @POST("personalCenter/complaintsSuggestions")

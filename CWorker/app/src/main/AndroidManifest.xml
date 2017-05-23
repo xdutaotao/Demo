@@ -83,8 +83,11 @@
         <activity android:name=".Activity.PersonalActivity" />
         <activity android:name=".Activity.AddressActivity" />
         <activity android:name=".Activity.VIPActivity" />
-        <activity android:name=".Activity.BuyActivity"/>
-        <activity android:name=".Activity.SettingActivity"/>
+        <activity android:name=".Activity.BuyActivity" />
+        <activity android:name=".Activity.SettingActivity" />
+        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.SuggestActivity" />
+        <activity android:name=".Activity.HelpActivity"></activity>
     </application>
 
 </manifest>

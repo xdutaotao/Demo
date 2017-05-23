@@ -81,7 +81,7 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
         }
         name.setText(User.getInstance().getUserInfo().getPerson().getName());
 
-        int days = User.getInstance().getUserInfo().getPerson().getVipDateline()/(1000*60*60*24);
+        long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
         if (days == 0) {
             vipDays.setText("您的会员已过期");
         } else {

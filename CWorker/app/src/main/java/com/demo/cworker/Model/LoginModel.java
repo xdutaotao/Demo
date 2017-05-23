@@ -2,9 +2,12 @@ package com.demo.cworker.Model;
 
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+import com.demo.cworker.App;
 import com.demo.cworker.Bean.UpdateFileBean;
 import com.demo.cworker.Bean.UpdateVersionBean;
 import com.demo.cworker.Common.Constants;
+import com.demo.cworker.Utils.FileUtils;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.RxUtils;
 import com.demo.cworker.Utils.ShareUtils;
@@ -12,6 +15,7 @@ import com.demo.cworker.Utils.ShareUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -21,6 +25,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by
@@ -127,11 +132,11 @@ public class LoginModel extends BaseModel {
     /**
      *  购买VIP
      */
-    public Observable<UserInfo.PersonBean> addVipDuration(long time, long glod){
-        Map<String, Long> map = new HashMap<>();
-        map.put("vipDateline", time);
-        map.put("gold", glod);
-        return config.getRetrofitService().addVipDuration(User.getInstance().getUserInfo().getPerson().getToken(), map)
+    public Observable<UserInfo.PersonBean> addVipDuration(long time, int glod){
+//        Map<String, Long> map = new HashMap<>();
+//        map.put("vipDateline", time);
+//        map.put("gold", glod);
+        return config.getRetrofitService().addVipDuration(User.getInstance().getUserId(), time, glod)
                 .compose(RxUtils.handleResult());
     }
 
@@ -189,7 +194,7 @@ public class LoginModel extends BaseModel {
     /**
      *  检查更新
      */
-    public Observable<UpdateVersionBean.DataBean> updateVersion(){
+    public Observable<List<UpdateVersionBean.DataBean>> updateVersion(){
         return config.getRetrofitService().updateVersion("caiji")
                 .compose(RxUtils.handleResult());
     }
@@ -199,11 +204,23 @@ public class LoginModel extends BaseModel {
      */
     public Observable<String> submitSuggest(String phone, String content){
         Map<String, String> map = new HashMap<>();
-        map.put("token", User.getInstance().getUserInfo().getPerson().getToken());
+        map.put("token", User.getInstance().getUserId());
         map.put("mobile", phone);
         map.put("content", content);
         return config.getRetrofitService().submitSuggest(map)
                 .compose(RxUtils.handleResult());
+    }
+
+    public Observable<String> clearCache(){
+        return Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                Glide.get(App.getContext()).clearDiskCache();
+                FileUtils.deleteDirectory("cworker");
+                subscriber.onNext("清除成功");
+                subscriber.onCompleted();
+            }
+        }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
 }

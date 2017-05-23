@@ -22,7 +22,7 @@ public class BuyPresenter extends BasePresenter<BuyView> {
     @Inject
     BuyPresenter(){}
 
-    public void addVipDuration(Context context, long time, long gold){
+    public void addVipDuration(Context context, long time, int gold){
         mCompositeSubscription.add(model.addVipDuration(time, gold)
                 .subscribe(new RxSubUtils<UserInfo.PersonBean>(mCompositeSubscription, context) {
                     @Override

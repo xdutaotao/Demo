@@ -218,7 +218,7 @@ public class Utils {
      */
     public static String getNowDate(){
         SimpleDateFormat sd = new SimpleDateFormat("yyyy/MM/dd");
-        String date = sd.format(new Date());
+        String date = sd.format(new Date(System.currentTimeMillis()));
         return date;
     }
 

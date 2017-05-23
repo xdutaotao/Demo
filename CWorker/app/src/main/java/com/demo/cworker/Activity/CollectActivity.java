@@ -134,9 +134,16 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 }
             });
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
-                new IOSDialog(CollectActivity.this).builder()
-                        .setTitle("拍照", v -> selectCamera())
-                        .setMsg("相册", v -> selectPhoto())
+                new IOSDialog(this).builder()
+                        .setCancelable(true)
+                        .setTitle("拍照", v -> {
+                            selectCamera();
+                        })
+                        .setMsg("相册", v -> {
+                            selectPhoto();
+                        })
+                        .setMsgSize(R.dimen.dialog_msg_size)
+                        .setMsgColor("#333333")
                         .setNegativeButton("取消", null)
                         .show();
             } else {
