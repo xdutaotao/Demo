@@ -5,6 +5,6 @@ import com.demo.cworker.View.BaseView;
 /**
  * Created by
  */
-public interface AddView extends BaseView {
+public interface SuggestView extends BaseView {
     void getData(String s);
 }

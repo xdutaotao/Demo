@@ -1,16 +1,25 @@
 package com.demo.cworker.Model;
 
+import android.text.TextUtils;
+
+import com.demo.cworker.Bean.UpdateFileBean;
+import com.demo.cworker.Bean.UpdateVersionBean;
 import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.RxUtils;
 import com.demo.cworker.Utils.ShareUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -126,5 +135,75 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     *  更改个人地址
+     */
+    public Observable<String> changeAddress(String address){
+        Map<String, String> map = new HashMap<>();
+        map.put("address", address);
+        map.put("token", User.getInstance().getUserInfo().getPerson().getToken());
+        return config.getRetrofitService().changeAddress(map)
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 更改个人头像
+     */
+    public Observable<String> changeHeadIcon(String path){
+        File file = new File(path);
+        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", path.substring(path.lastIndexOf("/")+1), body);
+
+        return config.getRetrofitService().changeHeadIcon(part, User.getInstance().getUserInfo().getPerson().getToken())
+                .map( responseBody -> {
+                    try {
+                        String s = responseBody.string();
+                        UpdateFileBean bean = JsonUtils.getInstance().JsonToUpdateFile(s);
+                        if (TextUtils.equals(bean.getMsg(), "200")){
+                            return bean.getResult();
+                        }else if(TextUtils.equals(bean.getResult(), "请登录")){
+                            return bean.getResult();
+                        }else if(TextUtils.equals(bean.getMsg(), "501")){
+                            return "上传文件太大";
+                        }else{
+                            return "上传失败";
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return "上传失败";
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+
+    /**
+     *  更改性别
+     */
+    public Observable<String> changeSex(int sex){
+        return config.getRetrofitService().changeSex(sex, User.getInstance().getUserInfo().getPerson().getToken())
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  检查更新
+     */
+    public Observable<UpdateVersionBean.DataBean> updateVersion(){
+        return config.getRetrofitService().updateVersion("caiji")
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  检查更新
+     */
+    public Observable<String> submitSuggest(String phone, String content){
+        Map<String, String> map = new HashMap<>();
+        map.put("token", User.getInstance().getUserInfo().getPerson().getToken());
+        map.put("mobile", phone);
+        map.put("content", content);
+        return config.getRetrofitService().submitSuggest(map)
+                .compose(RxUtils.handleResult());
+    }
 
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.LoginActivity;
+import com.demo.cworker.Activity.PersonalActivity;
 import com.demo.cworker.Activity.VIPActivity;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
@@ -98,6 +99,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
         changePwd.setOnClickListener(this);
         personalWord.setOnClickListener(this);
         personalCenter.setOnClickListener(this);
+        suggest.setOnClickListener(this);
         return view;
     }
 
@@ -173,7 +175,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 if (User.getInstance().getUserInfo() == null){
                     ToastUtil.show("请登录");
                 }else{
-
+                    PersonalActivity.startActivity(getContext());
                 }
                 break;
 
@@ -183,6 +185,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 }else{
                     VIPActivity.startActivity(getContext());
                 }
+
+                break;
+
+            case R.id.suggest:
 
                 break;
         }

@@ -1,6 +1,7 @@
 package com.demo.cworker.Utils.Dagger.Component;
 
 
+import com.demo.cworker.Activity.AddressActivity;
 import com.demo.cworker.Activity.BuyActivity;
 import com.demo.cworker.Activity.CheckEmailActivity;
 import com.demo.cworker.Activity.CollectActivity;
@@ -9,6 +10,8 @@ import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.PDFActivity;
 import com.demo.cworker.Activity.SearchResultActivity;
+import com.demo.cworker.Activity.SettingActivity;
+import com.demo.cworker.Activity.SuggestActivity;
 import com.demo.cworker.Fragment.AddFragment;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MessageFragment;
@@ -34,4 +37,7 @@ public interface ActivityComponent {
     void inject(SearchResultActivity activity);
     void inject(CollectActivity activity);
     void inject(BuyActivity activity);
+    void inject(AddressActivity activity);
+    void inject(SettingActivity activity);
+    void inject(SuggestActivity activity);
 }

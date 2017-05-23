@@ -3,6 +3,7 @@ package com.demo.cworker.Utils;
 import com.demo.cworker.Bean.LoginBean;
 import com.demo.cworker.Bean.LoginResponseBean;
 import com.demo.cworker.Bean.RegisterBean;
+import com.demo.cworker.Bean.UpdateFileBean;
 import com.demo.cworker.Model.UserInfo;
 import com.google.gson.Gson;
 
@@ -51,6 +52,10 @@ public class JsonUtils {
 
     public String UserInfoToJson(UserInfo userInfo){
         return gson.toJson(userInfo);
+    }
+
+    public UpdateFileBean JsonToUpdateFile(String json){
+        return gson.fromJson(json, UpdateFileBean.class);
     }
 
 }

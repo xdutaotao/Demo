@@ -6,16 +6,21 @@ import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Bean.BaseBean;
 import com.demo.cworker.Bean.HomeResponseBean;
 import com.demo.cworker.Bean.ResponseBean;
+import com.demo.cworker.Bean.UpdateVersionBean;
 import com.demo.cworker.Model.UserInfo;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -64,4 +69,26 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("personalCenter/addVipDuration")
     Observable<BaseBean<UserInfo.PersonBean>> addVipDuration(@Field("token") String token, @FieldMap Map<String, Long> intMap);
+
+    @FormUrlEncoded
+    @POST("http://363600.cicp.net:8080")
+    Observable<BaseBean<String>> changeAddress(@FieldMap Map<String, String> map);
+
+    //上传图片
+    @Multipart
+    @POST("personalCenter/updateAvatar")
+    Observable<ResponseBody> changeHeadIcon(@Part MultipartBody.Part photo, @Field("token") String token);
+
+
+    @FormUrlEncoded
+    @POST("personalCenter/edit")
+    Observable<BaseBean<String>> changeSex(@Field("sex") int sex, @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("version/getVersionsByPlatform")
+    Observable<BaseBean<UpdateVersionBean.DataBean>> updateVersion(@Field("platform") String platform);
+
+    @FormUrlEncoded
+    @POST("personalCenter/complaintsSuggestions")
+    Observable<BaseBean<String>> submitSuggest(@FieldMap Map<String, String> map);
 }

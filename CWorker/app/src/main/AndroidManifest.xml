@@ -83,7 +83,8 @@
         <activity android:name=".Activity.PersonalActivity" />
         <activity android:name=".Activity.AddressActivity" />
         <activity android:name=".Activity.VIPActivity" />
-        <activity android:name=".Activity.BuyActivity"></activity>
+        <activity android:name=".Activity.BuyActivity"/>
+        <activity android:name=".Activity.SettingActivity"/>
     </application>
 
 </manifest>

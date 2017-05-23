@@ -2,12 +2,11 @@ package com.demo.cworker.Present;
 
 import android.content.Context;
 
-import com.demo.cworker.Model.AddModel;
 import com.demo.cworker.Model.LoginModel;
-import com.demo.cworker.Model.UserInfo;
+import com.demo.cworker.Model.SuggestModel;
 import com.demo.cworker.Utils.RxSubUtils;
 import com.demo.cworker.Utils.ToastUtil;
-import com.demo.cworker.View.AddView;
+import com.demo.cworker.View.SuggestView;
 
 import javax.inject.Inject;
 
@@ -16,16 +15,16 @@ import rx.Subscriber;
 /**
  * Created by
  */
-public class AddPresenter extends BasePresenter<AddView> {
+public class SuggestPresenter extends BasePresenter<SuggestView> {
     @Inject
     LoginModel model;
 
     @Inject
-    AddPresenter() {
+    SuggestPresenter() {
     }
 
-    public void changeAddress(Context context, String address){
-        mCompositeSubscription.add(model.changeAddress(address)
+    public void submitSuggest(Context context, String phone, String content){
+        mCompositeSubscription.add(model.submitSuggest(phone, content)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {

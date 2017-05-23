@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/activity_background"
-    tools:context="com.demo.cworker.Activity.PersonalActivity">
+    android:background="@color/activity_background">
 
     <include layout="@layout/tool_bar_center" />
 
@@ -65,7 +62,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -75,6 +72,7 @@
         android:layout_height="120px"
         android:paddingLeft="50px"
         android:paddingRight="50px"
+        android:id="@+id/sex_layout"
         android:background="@android:color/white">
 
         <TextView
@@ -95,7 +93,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -124,7 +122,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -153,7 +151,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -207,7 +205,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -236,7 +234,7 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="50px"/>
@@ -259,6 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:text=" "
             android:layout_marginRight="50px"
             android:drawableRight="@drawable/cancle"
             android:id="@+id/address"/>
