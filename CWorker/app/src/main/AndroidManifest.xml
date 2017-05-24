@@ -73,7 +73,7 @@
         <activity android:name=".Activity.HomeDetailActivity" />
         <activity android:name=".Activity.PDFActivity" />
         <activity android:name=".Activity.SearchResultActivity" />
-        <activity android:name=".Activity.CollectActivity" />
+        <activity android:name=".Activity.CollectActivity"/>
         <activity android:name=".Activity.ScanActivity" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
@@ -87,7 +87,8 @@
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.SuggestActivity" />
-        <activity android:name=".Activity.HelpActivity"></activity>
+        <activity android:name=".Activity.HelpActivity" />
+        <activity android:name=".Activity.TypeActivity"></activity>
     </application>
 
 </manifest>
