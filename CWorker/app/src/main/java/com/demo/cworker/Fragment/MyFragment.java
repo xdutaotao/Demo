@@ -23,10 +23,16 @@ import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.LoginPresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.Utils.NetWorkUtils;
 import com.demo.cworker.Utils.ShareUtils;
 import com.demo.cworker.Utils.ToastUtil;
+import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.LoginView;
 import com.demo.cworker.Widget.CustomDialog;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -74,6 +80,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
 
     @Inject
     LoginPresenter presenter;
+    private int continueDays;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
@@ -146,10 +153,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 month.setText(userInfo.getUps().getMonth() + "");
                 year.setText(userInfo.getUps().getYear() + "");
                 total.setText(userInfo.getUps().getTotal() + "");
-                level.setText("LV"+User.getInstance().getUserInfo().getPerson().getVIP());
+                level.setText("LV"+((int)(User.getInstance().getUserInfo().getPerson().getGold()/3500)));
                 level.setVisibility(View.VISIBLE);
                 sign.setVisibility(View.VISIBLE);
-                sign.setText(ShareUtils.getValue("sign", false) ? "已签到" : "签到");
+                sign.setText(TextUtils.equals(Utils.getNowDate(),ShareUtils.getValue("sign", "") ) ? "已签到" : "点击签到");
             }
         }
     }
@@ -217,7 +224,33 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 break;
 
             case R.id.sign:
-                ShareUtils.putValue("sign", true);
+                if(!NetWorkUtils.isNetworkAvailable()){
+                    ToastUtil.show("没有网络不能签到");
+                    return;
+                }
+                if (!TextUtils.isEmpty(ShareUtils.getValue("sign", ""))){
+                    long time = Utils.convert2long(ShareUtils.getValue("sign", ""));
+                    long now = Utils.convert2long(Utils.getNowDate());
+                    if (now - time > 3600*1000*24){
+                        ShareUtils.putValue("sign", Utils.getNowDate());
+                        ShareUtils.putValue("continue", 1);
+                        continueDays = 1;
+                    }else{
+                        if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())){
+                            continueDays = ShareUtils.getValue("continue", 0);
+                            continueDays++;
+                            ShareUtils.putValue("continue", continueDays);
+                            ShareUtils.putValue("sign", Utils.getNowDate());
+                        }
+
+                    }
+                }else{
+                    ShareUtils.putValue("continue", 1);
+                    continueDays = 1;
+                    ShareUtils.putValue("sign", Utils.getNowDate());
+                }
+                sign.setText("已签到");
+                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
                 break;
         }
     }

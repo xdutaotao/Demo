@@ -223,6 +223,24 @@ public class Utils {
     }
 
     /**
+     * 将日期格式的字符串转换为长整型
+     * @param date
+     * @return
+     */
+    public static long convert2long(String date) {
+        try {
+            if (!TextUtils.isEmpty(date)) {
+                String format = "yyyy/MM/dd";
+                SimpleDateFormat sf = new SimpleDateFormat(format);
+                return sf.parse(date).getTime();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0l;
+    }
+
+    /**
      * 获取版本号
      * @return
      */

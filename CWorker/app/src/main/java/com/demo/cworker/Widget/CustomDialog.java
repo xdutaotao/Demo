@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -58,16 +59,15 @@ public class CustomDialog {
         dialog.show();
     }
 
-    public static void showReboundDialog(Activity context, int resID, String text){
-        Dialog dialog = new Dialog(context, R.style.AlertDialogStyle);
-        WindowManager winManager = context.getWindowManager();
-        Display display = winManager.getDefaultDisplay();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int)(display.getWidth()*0.8), (int)(display.getHeight()*0.6));
-        View view = LayoutInflater.from(context).inflate(R.layout.rebound_dialog_layout, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.pop_image);
-        TextView textView = (TextView) view.findViewById(R.id.pop_tv);
-        imageView.setImageResource(resID);
-        textView.setText(text);
+    public static void showContinuePop(Activity context, int day, boolean isVip){
+        View view = LayoutInflater.from(context).inflate(R.layout.continue_pop, null);
+        TextView textView = (TextView) view.findViewById(R.id.days);
+        textView.setText(Html.fromHtml("<font color='#ffa400' size='30'><big><big>" + day + "</big></big></font>天"));
+        TextView ruleTV = (TextView) view.findViewById(R.id.rule_tv);
+        if (isVip)
+            ruleTV.setText("金币+6 积分+12");
+        else
+            ruleTV.setText("金币+5 积分+10");
         SpringSystem springSystem = SpringSystem.create();
         SpringConfig springConfig = SpringConfig.fromOrigamiTensionAndFriction(60, 7);
         Spring spring = springSystem.createSpring();
@@ -77,16 +77,19 @@ public class CustomDialog {
             public void onSpringUpdate(Spring spring) {
                 super.onSpringUpdate(spring);
                 float value = (float) spring.getCurrentValue();
-                float scale = 1f - (value*0.5f);
-                view.setScaleX(scale);
-                view.setScaleY(scale);
+                view.setScaleX(value);
+                view.setScaleY(value);
             }
         });
         spring.setEndValue(1);
 
-        dialog.setContentView(view, params);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+        PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*5/12, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        int x = Utils.getScreenWidth(context)/6;
+        int y = Utils.getScreenHeight(context)/4;
+        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y);
     }
 
 

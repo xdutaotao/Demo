@@ -85,7 +85,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
                     .setPositiveButton("确定", v -> {
                         showDownloadDialog();
                         file = new File(Environment.getExternalStorageDirectory()
-                                + File.separator + "cworker" + File.separator, bean.getVersion()+".apk");
+                                + File.separator + "cwork" + File.separator, bean.getVersion()+".apk");
                         presenter.apkFileDownload(bean.getDownloadUrl(), file);
                     })
                     .show();
