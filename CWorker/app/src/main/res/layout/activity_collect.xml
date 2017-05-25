@@ -1,441 +1,457 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
+    <include layout="@layout/tool_bar_center" />
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <include layout="@layout/tool_bar_center" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center" >
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件号"
-                android:textSize="50px"
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件号"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入零件号"
+                    android:maxLines="1"
+                    android:id="@+id/number"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件中文名称"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:maxLines="1"
+                    android:id="@+id/name"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="系统来源分配"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:maxLines="1"
+                    android:id="@+id/source"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
+
+            <RelativeLayout
+                android:id="@+id/wrap_layout"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
                 android:gravity="center"
-                android:textColor="@android:color/black"/>
+                android:paddingLeft="50px"
+                android:paddingRight="50px">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="请输入零件号"
-                android:maxLines="1"
-                android:id="@+id/number"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="到货包装形式"
+                    android:textColor="@android:color/black"
+                    android:textSize="50px" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/wrap_text"
+                    android:maxLength="8"
+                    android:ellipsize="end"
+                    android:drawableRight="@drawable/turn_right" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件中文名称"
-                android:textSize="50px"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
                 android:gravity="center"
-                android:textColor="@android:color/black"/>
+                android:id="@+id/type_layout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:maxLines="1"
-                android:id="@+id/name"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件材料类型"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="111"
+                    android:id="@+id/type_txt"
+                    android:drawableRight="@drawable/turn_right"/>
+            </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="系统来源分配"
-                android:textSize="50px"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
                 android:gravity="center"
-                android:textColor="@android:color/black"/>
+                android:id="@+id/modle_layout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:maxLines="1"
-                android:id="@+id/source"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件包装模数"
+                    android:id="@+id/modle_tv"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="right|center_vertical"
+                    android:digits="1234567890"
+                    android:maxLength="3"
+                    android:id="@+id/modle_num"
+                    android:drawableRight="@drawable/cancle"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/wrap_layout"
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:gravity="center"
-            android:paddingLeft="50px"
-            android:paddingRight="50px">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/divider"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="到货包装形式"
-                android:textColor="@android:color/black"
-                android:textSize="50px" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/wrap_text"
-                android:maxLength="8"
-                android:ellipsize="end"
-                android:drawableRight="@drawable/cancle" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件长"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/length"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center"
-            android:id="@+id/type_layout">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件材料类型"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/cancle"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件宽"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/width"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center"
-            android:id="@+id/modle_layout">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件包装模数"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/cancle"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="零件高"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:background="@color/divider"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/height"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件长"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/length"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="净重"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="kg"
+                    android:maxLines="1"
+                    android:id="@+id/weight"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/divider"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件宽"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/width"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="叠加长度"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/all_length"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="零件高"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/height"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="叠加宽度"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/all_width"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="净重"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="kg"
-                android:maxLines="1"
-                android:id="@+id/weight"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="叠加高度"
+                    android:textSize="50px"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:background="@color/divider"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="叠加长度"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/all_length"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="叠加宽度"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/all_width"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/nav_gray"
-            android:layout_marginLeft="40px"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="叠加高度"
-                android:textSize="50px"
-                android:gravity="center"
-                android:textColor="@android:color/black"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:hint="mm"
-                android:maxLines="1"
-                android:id="@+id/all_height"
-                android:maxLength="16"
-                android:ellipsize="end"
-                android:textSize="50px"
-                android:background="@android:color/transparent"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:hint="mm"
+                    android:maxLines="1"
+                    android:id="@+id/all_height"
+                    android:maxLength="16"
+                    android:ellipsize="end"
+                    android:textSize="50px"
+                    android:background="@android:color/transparent"/>
             </RelativeLayout>
 
             <View
@@ -464,7 +480,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/cancle" />
+                    android:src="@drawable/turn_right" />
             </RelativeLayout>
 
             <View
@@ -494,74 +510,77 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/cancle"/>
+                    android:src="@drawable/turn_right"/>
             </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:background="@color/divider"
-            android:text="备注信息"
-            android:gravity="bottom"
-            android:paddingLeft="50px"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/divider"
+                android:text="备注信息"
+                android:gravity="bottom"
+                android:paddingLeft="50px"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="500px"
-            android:hint="请输入备注信息"
-            android:id="@+id/information"
-            android:maxLength="100"
-            android:textColor="@color/nav_gray"
-            android:textSize="50px"
-            android:padding="50px"
-            android:gravity="start"
-            android:background="@android:color/transparent"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:hint="请输入备注信息"
+                android:id="@+id/information"
+                android:maxLength="100"
+                android:textColor="@color/nav_gray"
+                android:textSize="50px"
+                android:padding="50px"
+                android:gravity="start"
+                android:background="@android:color/transparent"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0/100"
-            android:paddingRight="50px"
-            android:gravity="end"
-            android:id="@+id/info_num"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0/100"
+                android:paddingRight="50px"
+                android:gravity="end"
+                android:id="@+id/info_num"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:background="@color/divider"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/divider"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/recycler_view"
-            android:choiceMode="singleChoice"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:listSelector="@android:color/transparent"
-            android:scrollbarStyle="outsideOverlay"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            app:spanCount="4"
-            android:background="@android:color/white"
-            tools:listitem="@layout/select_photo_item"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:fadingEdge="none"
+                android:listSelector="@android:color/transparent"
+                android:scrollbarStyle="outsideOverlay"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="4"
+                android:background="@android:color/white"
+                tools:listitem="@layout/select_photo_item"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="添加图片不超过10张，文字备注不超过100字"
-            android:gravity="center"
-            android:layout_marginTop="50px"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="添加图片不超过10张，文字备注不超过100字"
+                android:gravity="center"
+                android:layout_marginTop="50px"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="提交"
-            android:textColor="@android:color/white"
-            android:id="@+id/submit"
-            android:layout_margin="50px"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="提交"
+                android:textColor="@android:color/white"
+                android:id="@+id/submit"
+                android:layout_margin="50px"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+</LinearLayout>
+
 
