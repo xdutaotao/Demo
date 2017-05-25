@@ -5,6 +5,8 @@ import android.content.Context;
 import com.demo.cworker.App;
 import com.demo.cworker.Utils.LogUtils;
 import com.demo.cworker.Utils.NetWorkUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -154,10 +156,14 @@ public class RetrofitConfig {
                 .build();
         //.addInterceptor(loggingInterceptor)
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstants.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
 

@@ -5,7 +5,7 @@ package com.demo.cworker.Bean;
  * Created by GUZHENFU on 2017/5/23 17:18.
  */
 
-public class UpdateFileBean {
+public class BaseResponseBean {
     private String msg;
     private String result;
 

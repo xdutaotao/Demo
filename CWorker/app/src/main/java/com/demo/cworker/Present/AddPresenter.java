@@ -31,11 +31,6 @@ public class AddPresenter extends BasePresenter<AddView> {
                     protected void _onNext(String token) {
                         getView().getData(token);
                     }
-
-                    @Override
-                    public void _onError(String s) {
-                        ToastUtil.show(s);
-                    }
                 }));
     }
 }

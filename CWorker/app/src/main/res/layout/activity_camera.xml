@@ -34,13 +34,14 @@
             android:text="22222"
             android:textSize="60px"
             android:id="@+id/center_tv"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/photo_btn"
             android:id="@+id/take_photo"
             android:layout_centerInParent="true"/>
 

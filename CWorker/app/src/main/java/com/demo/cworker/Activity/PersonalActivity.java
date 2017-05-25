@@ -17,10 +17,12 @@ import com.demo.cworker.R;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.PersonalView;
+import com.demo.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 
 import java.util.ArrayList;
 
@@ -63,6 +65,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
     @Inject
     PersonalPresenter presenter;
+    @BindView(R.id.address_layout)
+    RelativeLayout addressLayout;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, PersonalActivity.class);
@@ -74,6 +78,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         ButterKnife.bind(this);
+        getActivityComponent().inject(this);
         showToolbarBack(toolBar, titleText, "个人资料");
         presenter.attachView(this);
 
@@ -85,18 +90,31 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 .into(headIcon);
         name.setText(userInfo.getPerson().getName());
         sex.setText(userInfo.getPerson().getSex() == 1 ? "男" : "女");
-        level.setText("LV" + userInfo.getPerson().getGold());
+        level.setText("LV" + userInfo.getPerson().getExperience() / 3500);
         createTime.setText(Utils.getStrTime(userInfo.getPerson().getDateline() + ""));
         project.setText(userInfo.getProject().getName());
         photo.setText(userInfo.getPerson().getMobile());
         email.setText(userInfo.getPerson().getEmail());
         address.setText(userInfo.getPerson().getAddress());
-        address.setOnClickListener(v -> {
+        addressLayout.setOnClickListener(v -> {
             AddressActivity.startActivityForResult(PersonalActivity.this, address.getText().toString());
         });
 
         headLayout.setOnClickListener(this);
         sexLayout.setOnClickListener(this);
+        initPicker();
+    }
+
+    private void initPicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setCrop(true);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setMultiMode(false);
+        imagePicker.setStyle(CropImageView.Style.CIRCLE);
+        imagePicker.setFocusWidth(600);
+        imagePicker.setFocusHeight(600);
+        imagePicker.setShowCamera(false);
     }
 
     @Override
@@ -151,9 +169,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void selectPhoto() {
-        ImagePicker.getInstance().setSelectLimit(1);
-        Intent intent1 = new Intent(this, ImageGridActivity.class);
-        startActivityForResult(intent1, REQUEST_CODE_SELECT);
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
     @Override

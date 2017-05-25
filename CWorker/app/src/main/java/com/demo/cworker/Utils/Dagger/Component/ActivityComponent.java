@@ -9,6 +9,7 @@ import com.demo.cworker.Activity.HomeDetailActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
 import com.demo.cworker.Activity.PDFActivity;
+import com.demo.cworker.Activity.PersonalActivity;
 import com.demo.cworker.Activity.SearchResultActivity;
 import com.demo.cworker.Activity.SettingActivity;
 import com.demo.cworker.Activity.SuggestActivity;
@@ -40,4 +41,5 @@ public interface ActivityComponent {
     void inject(AddressActivity activity);
     void inject(SettingActivity activity);
     void inject(SuggestActivity activity);
+    void inject(PersonalActivity activity);
 }

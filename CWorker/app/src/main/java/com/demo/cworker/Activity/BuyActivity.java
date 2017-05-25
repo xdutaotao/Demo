@@ -141,16 +141,16 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
     private long getTime(int money){
         switch (money){
             case 200:
-                return 30*24*60*60;
+                return 30*24*60*60L;
 
             case 540:
-                return 30*24*60*60*3;
+                return 30*24*60*60*3L;
 
             case 1190:
-                return 30*24*60*60*6;
+                return 30*24*60*60*6L;
 
             case 1800:
-                return 30*24*60*60*12;
+                return 30*24*60*60*12L;
         }
         return 0;
     }

@@ -1,7 +1,10 @@
 package com.demo.cworker.Activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import com.demo.cworker.R;
@@ -15,6 +18,13 @@ public class HelpActivity extends BaseActivity {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.text)
+    TextView text;
+
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, HelpActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

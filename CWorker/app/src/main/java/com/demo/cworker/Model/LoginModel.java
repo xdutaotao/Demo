@@ -4,13 +4,11 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.demo.cworker.App;
-import com.demo.cworker.Bean.UpdateFileBean;
+import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.UpdateVersionBean;
-import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Utils.FileUtils;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.RxUtils;
-import com.demo.cworker.Utils.ShareUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,11 +130,8 @@ public class LoginModel extends BaseModel {
     /**
      *  购买VIP
      */
-    public Observable<UserInfo.PersonBean> addVipDuration(long time, int glod){
-//        Map<String, Long> map = new HashMap<>();
-//        map.put("vipDateline", time);
-//        map.put("gold", glod);
-        return config.getRetrofitService().addVipDuration(User.getInstance().getUserId(), time, glod)
+    public Observable<UserInfo.PersonBean> addVipDuration(long time, int gold){
+        return config.getRetrofitService().addVipDuration(User.getInstance().getUserId(), time, gold)
                 .compose(RxUtils.handleResult());
     }
 
@@ -146,9 +141,16 @@ public class LoginModel extends BaseModel {
     public Observable<String> changeAddress(String address){
         Map<String, String> map = new HashMap<>();
         map.put("address", address);
-        map.put("token", User.getInstance().getUserInfo().getPerson().getToken());
+        map.put("token", User.getInstance().getUserId());
         return config.getRetrofitService().changeAddress(map)
-                .compose(RxUtils.handleResult());
+                .map(baseResponseBean -> {
+                    if (TextUtils.equals(baseResponseBean.getMsg(), "200")){
+                        return "操作成功";
+                    }else{
+                        return "操作失败";
+                    }
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
 
@@ -158,16 +160,19 @@ public class LoginModel extends BaseModel {
     public Observable<String> changeHeadIcon(String path){
         File file = new File(path);
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", path.substring(path.lastIndexOf("/")+1), body);
+        //MultipartBody.Part part = MultipartBody.Part.createFormData("photo", path.substring(path.lastIndexOf("/")+1), body);
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("photo\"; filename=\""+file.getName(), body);
+        map.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
 
-        return config.getRetrofitService().changeHeadIcon(part, User.getInstance().getUserInfo().getPerson().getToken())
+        return config.getRetrofitService().changeHeadIcon(map)
                 .map( responseBody -> {
                     try {
                         String s = responseBody.string();
-                        UpdateFileBean bean = JsonUtils.getInstance().JsonToUpdateFile(s);
+                        BaseResponseBean bean = JsonUtils.getInstance().JsonToUpdateFile(s);
                         if (TextUtils.equals(bean.getMsg(), "200")){
                             return bean.getResult();
-                        }else if(TextUtils.equals(bean.getResult(), "请登录")){
+                        }else if(TextUtils.equals(bean.getResult(), "请登录!")){
                             return bean.getResult();
                         }else if(TextUtils.equals(bean.getMsg(), "501")){
                             return "上传文件太大";
@@ -187,7 +192,7 @@ public class LoginModel extends BaseModel {
      *  更改性别
      */
     public Observable<String> changeSex(int sex){
-        return config.getRetrofitService().changeSex(sex, User.getInstance().getUserInfo().getPerson().getToken())
+        return config.getRetrofitService().changeSex(sex, User.getInstance().getUserId())
                 .compose(RxUtils.handleResult());
     }
 
@@ -211,6 +216,10 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     * 清除缓存
+     * @return
+     */
     public Observable<String> clearCache(){
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -221,6 +230,18 @@ public class LoginModel extends BaseModel {
                 subscriber.onCompleted();
             }
         }).compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+    /**
+     * 签到
+     * @return
+     */
+    public Observable<UserInfo.PersonBean> signToday(int gold, int experience){
+        Map<String, Integer> map = new HashMap<>();
+        map.put("gold", gold);
+        map.put("experience", experience);
+        return config.getRetrofitService().signToday(User.getInstance().getUserId(), map)
+                .compose(RxUtils.handleResult());
     }
 
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.demo.cworker.Activity.AboutActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
+import com.demo.cworker.Activity.HelpActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.PersonalActivity;
 import com.demo.cworker.Activity.SettingActivity;
@@ -22,12 +23,14 @@ import com.demo.cworker.Activity.VIPActivity;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.LoginPresenter;
+import com.demo.cworker.Present.MyPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.NetWorkUtils;
 import com.demo.cworker.Utils.ShareUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.LoginView;
+import com.demo.cworker.View.MyView;
 import com.demo.cworker.Widget.CustomDialog;
 
 import java.util.ArrayList;
@@ -40,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class MyFragment extends BaseFragment implements View.OnClickListener, LoginView {
+public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.login_btn)
     TextView loginBtn;
@@ -79,7 +82,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     private String mParam1;
 
     @Inject
-    LoginPresenter presenter;
+    MyPresenter presenter;
     private int continueDays;
 
     public static MyFragment newInstance(String param1) {
@@ -117,6 +120,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
         about.setOnClickListener(this);
         setting.setOnClickListener(this);
         sign.setOnClickListener(this);
+        help.setOnClickListener(this);
         return view;
     }
 
@@ -143,7 +147,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 if (!TextUtils.isEmpty(userInfo.getPerson().getFace())) {
                     Glide.with(this)
                             .load(userInfo.getPerson().getFace())
-                            .placeholder(R.drawable.ic_launcher_round)
                             .bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(headIcon);
                 }
@@ -153,7 +156,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                 month.setText(userInfo.getUps().getMonth() + "");
                 year.setText(userInfo.getUps().getYear() + "");
                 total.setText(userInfo.getUps().getTotal() + "");
-                level.setText("LV"+((int)(User.getInstance().getUserInfo().getPerson().getGold()/3500)));
+                level.setText("LV"+((int)(User.getInstance().getUserInfo().getPerson().getExperience()/3500)));
                 level.setVisibility(View.VISIBLE);
                 sign.setVisibility(View.VISIBLE);
                 sign.setText(TextUtils.equals(Utils.getNowDate(),ShareUtils.getValue("sign", "") ) ? "已签到" : "点击签到");
@@ -237,12 +240,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                         continueDays = 1;
                     }else{
                         if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())){
-                            continueDays = ShareUtils.getValue("continue", 0);
                             continueDays++;
                             ShareUtils.putValue("continue", continueDays);
                             ShareUtils.putValue("sign", Utils.getNowDate());
                         }
-
+                        continueDays = ShareUtils.getValue("continue", 0);
                     }
                 }else{
                     ShareUtils.putValue("continue", 1);
@@ -250,7 +252,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
                     ShareUtils.putValue("sign", Utils.getNowDate());
                 }
                 sign.setText("已签到");
-                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
+                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 1);
+                break;
+
+            case R.id.help:
+                HelpActivity.startActivity(getContext());
                 break;
         }
     }
@@ -264,6 +270,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Lo
     @Override
     public void getData(String data) {
         ToastUtil.show("退出成功");
+    }
+
+    @Override
+    public void signToday(UserInfo.PersonBean bean) {
+
     }
 
     @Override

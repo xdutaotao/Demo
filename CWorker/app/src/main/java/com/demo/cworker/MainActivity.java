@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
     @SuppressWarnings("RestrictedApi")
     private void showFragment(int position) {
         if (position == 2 ){
-            if (User.getInstance().getUserInfo() != null){
+            if (User.getInstance().getUserInfo() == null){
                 new IOSDialog(this).builder()
                         .setTitle("提示")
                         .setMsg("登陆后才可使用此功能")

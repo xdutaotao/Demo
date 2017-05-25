@@ -25,14 +25,14 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_launcher_round"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="50px"
+            android:layout_marginRight="20px"
             android:id="@+id/head_icon"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/cancle"
+            android:src="@drawable/turn_right"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
@@ -41,7 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:layout_marginTop="100px"
         android:background="@android:color/white">
 
@@ -71,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:id="@+id/sex_layout"
         android:background="@android:color/white">
 
@@ -88,7 +86,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="50px"
-            android:drawableRight="@drawable/cancle"
+            android:drawableRight="@drawable/turn_right"
             android:id="@+id/sex"/>
 
     </RelativeLayout>
@@ -102,7 +100,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:background="@android:color/white">
 
         <TextView
@@ -131,7 +128,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:background="@android:color/white">
 
         <TextView
@@ -160,7 +156,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:background="@android:color/white">
 
         <TextView
@@ -184,7 +179,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:background="@android:color/white"
         android:layout_marginTop="50px">
 
@@ -214,7 +208,6 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
         android:background="@android:color/white">
 
         <TextView
@@ -243,7 +236,7 @@
         android:layout_width="match_parent"
         android:layout_height="120px"
         android:paddingLeft="50px"
-        android:paddingRight="50px"
+        android:id="@+id/address_layout"
         android:background="@android:color/white">
 
         <TextView
@@ -259,7 +252,7 @@
             android:layout_centerVertical="true"
             android:text=" "
             android:layout_marginRight="50px"
-            android:drawableRight="@drawable/cancle"
+            android:drawableRight="@drawable/turn_right"
             android:id="@+id/address"/>
 
     </RelativeLayout>

@@ -62,7 +62,7 @@ public class CustomDialog {
     public static void showContinuePop(Activity context, int day, boolean isVip){
         View view = LayoutInflater.from(context).inflate(R.layout.continue_pop, null);
         TextView textView = (TextView) view.findViewById(R.id.days);
-        textView.setText(Html.fromHtml("<font color='#ffa400' size='30'><big><big>" + day + "</big></big></font>天"));
+        textView.setText(Html.fromHtml("<font color='#ffa400'><big><big><big><big><big><big>" + day + "</big></big></big></big></big></big></font>天"));
         TextView ruleTV = (TextView) view.findViewById(R.id.rule_tv);
         if (isVip)
             ruleTV.setText("金币+6 积分+12");
@@ -83,12 +83,12 @@ public class CustomDialog {
         });
         spring.setEndValue(1);
 
-        PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*5/12, true);
+        PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*1/2, true);
         popupWindow.setTouchable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         int x = Utils.getScreenWidth(context)/6;
-        int y = Utils.getScreenHeight(context)/4;
+        int y = Utils.getScreenHeight(context)/6;
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y);
     }
 

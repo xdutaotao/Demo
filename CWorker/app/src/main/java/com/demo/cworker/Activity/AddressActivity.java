@@ -71,7 +71,7 @@ public class AddressActivity extends BaseActivity implements AddView {
 
     @Override
     public void getData(String s) {
-        ToastUtil.show("修改成功");
+        ToastUtil.show(s);
         Intent intent = new Intent();
         intent.putExtra(INTENT_KEY, address.getText().toString());
         setResult(RESULT_OK, intent);

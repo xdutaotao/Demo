@@ -7,33 +7,38 @@ import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Utils.RxSubUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.LoginView;
+import com.demo.cworker.View.MyView;
 
 import javax.inject.Inject;
-
-import rx.Subscriber;
 
 /**
  * Created by
  */
-public class LoginPresenter extends BasePresenter<LoginView> {
+public class MyPresenter extends BasePresenter<MyView> {
     @Inject
     LoginModel model;
 
     @Inject
-    LoginPresenter() {
+    MyPresenter() {
     }
 
-    public void login(Context context, String phone, String pwd, String id){
-        mCompositeSubscription.add(model.login(phone, pwd, id)
+    public void logout(Context context, String token){
+        mCompositeSubscription.add(model.logout(token)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(String token) {
                         getView().getData(token);
                     }
+                }));
+    }
 
+
+    public void signToday(int gold, int exp){
+        mCompositeSubscription.add(model.signToday(gold, exp)
+                .subscribe(new RxSubUtils<UserInfo.PersonBean>(mCompositeSubscription) {
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("用户名或者密码错误");
+                    protected void _onNext(UserInfo.PersonBean token) {
+                        getView().signToday(token);
                     }
                 }));
     }

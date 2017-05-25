@@ -19,15 +19,11 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300px"
+            android:layout_height="300px"
             android:src="@drawable/ic_launcher_round"
             android:id="@+id/head_icon"
             android:scaleType="fitXY"
-            android:maxHeight="300px"
-            android:maxWidth="300px"
-            android:minHeight="300px"
-            android:minWidth="300px"
             android:adjustViewBounds="true"
             android:layout_centerInParent="true"/>
 
@@ -39,8 +35,8 @@
             android:textSize="30px"
             android:textColor="@android:color/white"
             android:background="@android:color/holo_red_light"
-            android:layout_marginTop="300px"
-            android:layout_marginLeft="600px"
+            android:layout_marginTop="340px"
+            android:layout_marginLeft="620px"
             android:padding="5px"/>
 
         <TextView
