@@ -91,7 +91,8 @@
         <activity android:name=".Activity.SuggestActivity" />
         <activity android:name=".Activity.HelpActivity" />
         <activity android:name=".Activity.TypeActivity" />
-        <activity android:name=".Activity.CheckActivity"></activity>
+        <activity android:name=".Activity.CheckActivity" />
+        <activity android:name=".Activity.RecommandActivity"></activity>
     </application>
 
 </manifest>

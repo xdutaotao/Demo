@@ -139,4 +139,96 @@
 方法2：设备老旧，更换后重试。
 方法3：很久没做应用更新了，需要立项了。
 </string>
+
+    <string-array name="tabNames">
+        <item>箱类</item>
+        <item>袋类</item>
+        <item>缓冲</item>
+        <item>打包</item>
+        <item>堆码</item>
+        <item>标识</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="typeOne">
+        <item>瓦楞纸箱</item>
+        <item>白纸盒</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
+    <string-array name="typeTwo">
+        <item>平口袋</item>
+        <item>夹链自封袋</item>
+        <item>气泡袋</item>
+        <item>气泡片</item>
+        <item>双层气泡袋</item>
+        <item>双层气泡片</item>
+        <item>自动包装袋</item>
+        <item>PE膜</item>
+        <item>防锈袋</item>
+        <item>防锈膜</item>
+        <item>防锈纸</item>
+        <item>长期防锈袋</item>
+    </string-array>
+
+    <string-array name="typeThree">
+        <item>气垫袋</item>
+        <item>AB发泡</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
+    <string-array name="typeFour">
+        <item>瓦楞纸箱</item>
+        <item>白纸盒</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
+    <string-array name="typeFive">
+        <item>瓦楞纸箱</item>
+        <item>白纸盒</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
+    <string-array name="typeSix">
+        <item>瓦楞纸箱</item>
+        <item>白纸盒</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
+    <string-array name="typeSeven">
+        <item>瓦楞纸箱</item>
+        <item>白纸盒</item>
+        <item>蜂窝箱</item>
+        <item>PE箱</item>
+        <item>木箱</item>
+        <item>铁料架</item>
+        <item>围板箱</item>
+        <item>彩印纸盒</item>
+    </string-array>
+
 </resources>

@@ -5,11 +5,9 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.widget.EditText;
 
 import com.demo.cworker.Utils.LogUtils;
-import com.demo.cworker.Utils.ToastUtil;
 
 /**
  * Description:

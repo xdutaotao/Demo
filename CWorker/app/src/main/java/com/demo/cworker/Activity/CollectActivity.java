@@ -52,6 +52,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public static final int REQUEST_WRAP_CODE = 1111;
     public static final int REQUEST_TYPE_CODE = 1112;
     public static final int REQUEST_CHECK_CODE = 1113;
+    public static final int REQUEST_RECOMMAND_CODE = 1114;
     public static final int REQUEST_TAKE_PHOTO_CODE = 2222;
 
     @Inject
@@ -164,6 +165,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     LinearLayout singleLayout;
     @BindView(R.id.check_tv)
     TextView checkTv;
+    @BindView(R.id.recommend_tv)
+    TextView recommendTv;
 
     private RecyclerArrayAdapter<String> adapter;
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
@@ -305,6 +308,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         dataLayout.setOnClickListener(v -> {
             CheckActivity.startActivityForResult(this, checkTv.getText().toString());
+        });
+
+
+        recommendLayout.setOnClickListener(v -> {
+            RecommandActivity.startActivityForResult(this,"");
         });
     }
 
