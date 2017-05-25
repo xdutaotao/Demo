@@ -57,4 +57,15 @@
         <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
 
+    <style name="collect_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textSize">50px</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
 </resources>

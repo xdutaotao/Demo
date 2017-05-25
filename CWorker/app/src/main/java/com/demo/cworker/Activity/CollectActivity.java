@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,9 +20,9 @@ import android.widget.TextView;
 
 import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
-import com.demo.cworker.Utils.LogUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.CollectView;
+import com.demo.cworker.Widget.CustomNumberKeyListener;
 import com.demo.cworker.Widget.CustomTextWatcher;
 import com.demo.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -47,7 +45,7 @@ import static com.demo.cworker.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class CollectActivity extends BaseActivity implements CollectView, View.OnClickListener, View.OnLayoutChangeListener {
+public class CollectActivity extends BaseActivity implements CollectView, View.OnClickListener, View.OnTouchListener, View.OnFocusChangeListener {
     private static final String ADD = "add";
     private static final int IMAGE_PICKER = 8888;
     public static final int REQUEST_CODE = 6666;
@@ -107,10 +105,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     EditText modleNum;
     @BindView(R.id.modle_tv)
     TextView modleTv;
+    @BindView(R.id.number_tv)
+    TextView numberTv;
+    @BindView(R.id.length_tv)
+    TextView lengthTv;
+    @BindView(R.id.width_tv)
+    TextView widthTv;
+    @BindView(R.id.hight_tv)
+    TextView hightTv;
+    @BindView(R.id.weight_tv)
+    TextView weightTv;
+    @BindView(R.id.all_length_tv)
+    TextView allLengthTv;
+    @BindView(R.id.all_width_tv)
+    TextView allWidthTv;
+    @BindView(R.id.all_height_tv)
+    TextView allHeightTv;
 
     private RecyclerArrayAdapter<String> adapter;
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
-    private View activityRootView;
+    private int checkedColor, normalColor;
+    private Drawable drawable;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
@@ -125,8 +140,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         getActivityComponent().inject(this);
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "采集");
-
-        activityRootView = findViewById(android.R.id.content);
+        checkedColor = getResources().getColor(R.color.colorPrimary);
+        normalColor = getResources().getColor(R.color.black);
+        drawable = getResources().getDrawable(R.drawable.cancle);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_photo_item) {
             @Override
@@ -172,7 +188,23 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         adapter.add(ADD);
         initImagePicker();
 
-        information.addTextChangedListener(new CustomTextWatcher() {
+        wrapLayout.setOnClickListener(this);
+        typeLayout.setOnClickListener(this);
+
+        modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        modleNum.setOnTouchListener(this);
+        modleNum.setOnFocusChangeListener(this);
+        number.setOnTouchListener(this);
+        number.setOnFocusChangeListener(this);
+
+        length.setKeyListener(new CustomNumberKeyListener());
+        length.setOnTouchListener(this);
+        length.setOnFocusChangeListener(this);
+        setEditTextChangedListener();
+    }
+
+    private void setEditTextChangedListener() {
+        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false) {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
@@ -188,63 +220,79 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }
         });
 
-
-
-        modleNum.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Drawable drawable = modleNum.getCompoundDrawables()[2];
-                //如果右边没有图片，不再处理
-                if (drawable == null)
-                    return false;
-                //如果不是按下事件，不再处理
-                if (event.getAction() != MotionEvent.ACTION_UP)
-                    return false;
-                LogUtils.d("getx" + event.getX());
-                LogUtils.d("modleNum" + (modleNum.getWidth()
-                        - modleNum.getPaddingRight()
-                        - drawable.getIntrinsicWidth()));
-
-                if (event.getX() > modleNum.getWidth()
-                        - modleNum.getPaddingRight()){
-                    modleNum.setText("");
-                }
-                return false;
-            }
-        });
-
-        modleNum.addTextChangedListener(new CustomTextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (modleNum.getText().length() > 0){
-                    modleNum.setCompoundDrawablePadding(20);
-                    modleNum.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.cancle), null);
-                }else{
-                    modleNum.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                }
-            }
-        });
-
-        modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-        modleLayout.setOnClickListener(this);
-        modleNum.setOnClickListener(this);
-        wrapLayout.setOnClickListener(this);
-        typeLayout.setOnClickListener(this);
+        modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
+        length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        modleNum.addOnLayoutChangeListener(this);
-    }
 
     @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        if (v instanceof AppCompatEditText){
-            ToastUtil.show(((EditText)v).getText().toString());
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.modle_num:
+                if (!hasFocus)
+                    modleTv.setTextColor(normalColor);
+                break;
+
+            case R.id.number:
+                if (!hasFocus)
+                    numberTv.setTextColor(normalColor);
+                break;
+
+            case R.id.length:
+                setEditText(length, lengthTv, hasFocus);
+                break;
         }
-        //ToastUtil.show("3333");
+
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            switch (v.getId()) {
+                case R.id.modle_num:
+                    changeUI(event, modleNum, modleTv);
+                    break;
+
+                case R.id.number:
+                    changeUI(event, number, numberTv);
+                    break;
+
+                case R.id.length:
+                    changeUI(event, length, lengthTv);
+                    break;
+            }
+        }
+        return false;
+    }
+
+    private void setEditText(EditText et, TextView tv, boolean hasFocus){
+        if (!hasFocus){
+            tv.setTextColor(normalColor);
+            if (et.getText().length() > 0){
+                et.setText(et.getText()+"mm");
+            }else{
+                et.setHint("mm");
+            }
+        }else{
+            if (et.getText().length() > 0){
+                String s = et.getText().toString();
+                int index = s.indexOf("mm");
+                String temp = s.substring(0, index);
+                et.setText(temp);
+            }
+        }
+    }
+
+    private void changeUI(MotionEvent event, EditText et, TextView tv) {
+        if (event.getX() > et.getWidth() - et.getPaddingRight() - drawable.getIntrinsicWidth()) {
+            et.setText("");
+        }
+        if (tv.getCurrentTextColor() != checkedColor) {
+            showSoftKeyboard(et, CollectActivity.this);
+            tv.setTextColor(checkedColor);
+        }
+    }
+
 
     private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
@@ -327,12 +375,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             case R.id.type_layout:
                 TypeActivity.startActivityForResult(this, typeTxt.getText().toString());
                 break;
-
-            case R.id.modle_layout:
-            case R.id.modle_num:
-                ToastUtil.show("dddd");
-                modleTv.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
         }
     }
 
@@ -363,6 +405,4 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         super.onDestroy();
         presenter.detachView();
     }
-
-
 }

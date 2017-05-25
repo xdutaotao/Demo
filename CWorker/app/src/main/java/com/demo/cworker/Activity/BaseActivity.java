@@ -1,9 +1,13 @@
 package com.demo.cworker.Activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.demo.cworker.Utils.Dagger.Component.ActivityComponent;
@@ -45,6 +49,28 @@ public class BaseActivity extends SwipeBackActivity {
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         title.setText(txt);
+    }
+
+    /**
+     * 手动控制键盘隐藏
+     * @param mEditText
+     * @param mContext
+     */
+    public void closeSoftKeyboard(EditText mEditText, Context mContext) {
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+    }
+
+    /**
+     * 手动控制键盘弹出
+     * @param view
+     * @param mContext
+     */
+    public void showSoftKeyboard(View view, Context mContext) {
+        if (view.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
 }

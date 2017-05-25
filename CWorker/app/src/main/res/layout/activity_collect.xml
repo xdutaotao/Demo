@@ -33,21 +33,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="零件号"
+                    android:id="@+id/number_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="请输入零件号"
-                    android:maxLines="1"
-                    android:id="@+id/number"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:id="@+id/number"/>
             </RelativeLayout>
 
             <View
@@ -177,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="111"
+                    android:text=""
                     android:id="@+id/type_txt"
                     android:drawableRight="@drawable/turn_right"/>
             </RelativeLayout>
@@ -206,16 +200,10 @@
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="right|center_vertical"
+                    style="@style/collect_edit"
                     android:digits="1234567890"
                     android:maxLength="3"
-                    android:id="@+id/modle_num"
-                    android:drawableRight="@drawable/cancle"
-                    android:background="@android:color/transparent"/>
+                    android:id="@+id/modle_num"/>
             </RelativeLayout>
 
             <View
@@ -234,21 +222,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="零件长"
+                    android:id="@+id/length_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
-                    android:id="@+id/length"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."
+                    android:id="@+id/length"/>
             </RelativeLayout>
 
             <View
@@ -268,21 +251,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="零件宽"
+                    android:id="@+id/width_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
                     android:id="@+id/width"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
@@ -302,21 +280,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="零件高"
+                    android:id="@+id/hight_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
                     android:id="@+id/height"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
@@ -336,21 +309,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="净重"
+                    android:id="@+id/weight_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="kg"
-                    android:maxLines="1"
                     android:id="@+id/weight"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
@@ -369,21 +337,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="叠加长度"
+                    android:id="@+id/all_length_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
                     android:id="@+id/all_length"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
@@ -403,21 +366,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="叠加宽度"
+                    android:id="@+id/all_width_tv"
                     android:textSize="50px"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
                     android:id="@+id/all_width"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
@@ -438,20 +396,15 @@
                     android:layout_height="match_parent"
                     android:text="叠加高度"
                     android:textSize="50px"
+                    android:id="@+id/all_height_tv"
                     android:gravity="center"
                     android:textColor="@android:color/black"/>
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    style="@style/collect_edit"
                     android:hint="mm"
-                    android:maxLines="1"
                     android:id="@+id/all_height"
-                    android:maxLength="16"
-                    android:ellipsize="end"
-                    android:textSize="50px"
-                    android:background="@android:color/transparent"/>
+                    android:digits="1234567890."/>
             </RelativeLayout>
 
             <View
