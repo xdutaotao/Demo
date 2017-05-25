@@ -139,7 +139,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:id="@+id/wrap_text"
-                    android:maxLength="8"
+                    android:maxLength="16"
                     android:ellipsize="end"
                     android:drawableRight="@drawable/turn_right" />
             </RelativeLayout>
@@ -206,6 +206,288 @@
                     android:id="@+id/modle_num"/>
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/out_layout"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="160px"
+                    android:background="@color/divider"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:paddingLeft="50px"
+                    android:paddingRight="50px"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="外包装长"
+                        android:id="@+id/out_length_tv"
+                        android:textSize="50px"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        style="@style/collect_edit"
+                        android:hint="mm"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/out_length"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/nav_gray"
+                    android:layout_marginLeft="40px"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:paddingLeft="50px"
+                    android:paddingRight="50px"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="外包装宽"
+                        android:id="@+id/out_width_tv"
+                        android:textSize="50px"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        style="@style/collect_edit"
+                        android:hint="mm"
+                        android:id="@+id/out_width"
+                        android:inputType="numberDecimal"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/nav_gray"
+                    android:layout_marginLeft="40px"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:paddingLeft="50px"
+                    android:paddingRight="50px"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="外包装高"
+                        android:id="@+id/out_height_tv"
+                        android:textSize="50px"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        style="@style/collect_edit"
+                        android:hint="mm"
+                        android:id="@+id/out_height"
+                        android:inputType="numberDecimal"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/nav_gray"
+                    android:layout_marginLeft="40px"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:paddingLeft="50px"
+                    android:paddingRight="50px"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="毛重"
+                        android:id="@+id/out_weight_tv"
+                        android:textSize="50px"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        style="@style/collect_edit"
+                        android:hint="kg"
+                        android:id="@+id/out_weight"
+                        android:inputType="numberDecimal"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/nav_gray"
+                    android:layout_marginLeft="40px"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:paddingLeft="50px"
+                    android:paddingRight="50px"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="单个包装信息"
+                        android:id="@+id/single_tv"
+                        android:textSize="50px"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"/>
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/single_switch"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/single_layout"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/nav_gray"
+                        android:layout_marginLeft="40px"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150px"
+                        android:paddingLeft="150px"
+                        android:paddingRight="50px"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="单个包装长"
+                            android:id="@+id/single_length_tv"
+                            android:textSize="50px"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"/>
+
+                        <EditText
+                            style="@style/collect_edit"
+                            android:hint="mm"
+                            android:inputType="numberDecimal"
+                            android:id="@+id/single_length"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/nav_gray"
+                        android:layout_marginLeft="40px"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150px"
+                        android:paddingLeft="150px"
+                        android:paddingRight="50px"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="单个包装宽"
+                            android:id="@+id/single_width_tv"
+                            android:textSize="50px"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"/>
+
+                        <EditText
+                            style="@style/collect_edit"
+                            android:hint="mm"
+                            android:id="@+id/single_width"
+                            android:inputType="numberDecimal"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/nav_gray"
+                        android:layout_marginLeft="40px"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150px"
+                        android:paddingLeft="150px"
+                        android:paddingRight="50px"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="单个包装高"
+                            android:id="@+id/single_height_tv"
+                            android:textSize="50px"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"/>
+
+                        <EditText
+                            style="@style/collect_edit"
+                            android:hint="mm"
+                            android:id="@+id/single_height"
+                            android:inputType="numberDecimal"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/nav_gray"
+                        android:layout_marginLeft="40px"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150px"
+                        android:paddingLeft="150px"
+                        android:paddingRight="50px"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="单个包装重"
+                            android:id="@+id/single_weight_tv"
+                            android:textSize="50px"
+                            android:gravity="center"
+                            android:textColor="@android:color/black"/>
+
+                        <EditText
+                            style="@style/collect_edit"
+                            android:hint="kg"
+                            android:id="@+id/single_weight"
+                            android:inputType="numberDecimal"/>
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/nav_gray"
+                        android:layout_marginLeft="40px"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="160px"
@@ -230,7 +512,7 @@
                 <EditText
                     style="@style/collect_edit"
                     android:hint="mm"
-                    android:digits="1234567890."
+                    android:inputType="numberDecimal"
                     android:id="@+id/length"/>
             </RelativeLayout>
 
@@ -260,7 +542,7 @@
                     style="@style/collect_edit"
                     android:hint="mm"
                     android:id="@+id/width"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -289,7 +571,7 @@
                     style="@style/collect_edit"
                     android:hint="mm"
                     android:id="@+id/height"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -318,7 +600,7 @@
                     style="@style/collect_edit"
                     android:hint="kg"
                     android:id="@+id/weight"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -346,7 +628,7 @@
                     style="@style/collect_edit"
                     android:hint="mm"
                     android:id="@+id/all_length"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -375,7 +657,7 @@
                     style="@style/collect_edit"
                     android:hint="mm"
                     android:id="@+id/all_width"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -404,7 +686,7 @@
                     style="@style/collect_edit"
                     android:hint="mm"
                     android:id="@+id/all_height"
-                    android:digits="1234567890."/>
+                    android:inputType="numberDecimal"/>
             </RelativeLayout>
 
             <View
@@ -428,12 +710,14 @@
                     android:textColor="@android:color/black"
                     android:textSize="50px" />
 
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/turn_right" />
+                    android:text=""
+                    android:id="@+id/check_tv"
+                    android:drawableRight="@drawable/turn_right" />
             </RelativeLayout>
 
             <View
@@ -465,6 +749,23 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/turn_right"/>
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/nav_gray"
+                android:layout_marginLeft="40px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:id="@+id/recommend_tv"
+                android:paddingLeft="50px"
+                android:paddingRight="50px"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text=""/>
 
             <TextView
                 android:layout_width="match_parent"

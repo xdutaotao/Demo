@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,14 +14,15 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.CollectView;
-import com.demo.cworker.Widget.CustomNumberKeyListener;
 import com.demo.cworker.Widget.CustomTextWatcher;
 import com.demo.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -51,6 +51,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public static final int REQUEST_CODE = 6666;
     public static final int REQUEST_WRAP_CODE = 1111;
     public static final int REQUEST_TYPE_CODE = 1112;
+    public static final int REQUEST_CHECK_CODE = 1113;
     public static final int REQUEST_TAKE_PHOTO_CODE = 2222;
 
     @Inject
@@ -121,6 +122,48 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     TextView allWidthTv;
     @BindView(R.id.all_height_tv)
     TextView allHeightTv;
+    @BindView(R.id.out_length_tv)
+    TextView outLengthTv;
+    @BindView(R.id.out_length)
+    EditText outLength;
+    @BindView(R.id.out_width_tv)
+    TextView outWidthTv;
+    @BindView(R.id.out_width)
+    EditText outWidth;
+    @BindView(R.id.out_height_tv)
+    TextView outHeightTv;
+    @BindView(R.id.out_height)
+    EditText outHeight;
+    @BindView(R.id.out_weight_tv)
+    TextView outWeightTv;
+    @BindView(R.id.out_weight)
+    EditText outWeight;
+    @BindView(R.id.single_tv)
+    TextView singleTv;
+    @BindView(R.id.single_switch)
+    Switch singleSwitch;
+    @BindView(R.id.out_layout)
+    LinearLayout outLayout;
+    @BindView(R.id.single_length_tv)
+    TextView singleLengthTv;
+    @BindView(R.id.single_length)
+    EditText singleLength;
+    @BindView(R.id.single_width_tv)
+    TextView singleWidthTv;
+    @BindView(R.id.single_width)
+    EditText singleWidth;
+    @BindView(R.id.single_height_tv)
+    TextView singleHeightTv;
+    @BindView(R.id.single_height)
+    EditText singleHeight;
+    @BindView(R.id.single_weight_tv)
+    TextView singleWeightTv;
+    @BindView(R.id.single_weight)
+    EditText singleWeight;
+    @BindView(R.id.single_layout)
+    LinearLayout singleLayout;
+    @BindView(R.id.check_tv)
+    TextView checkTv;
 
     private RecyclerArrayAdapter<String> adapter;
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
@@ -194,13 +237,75 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         modleNum.setOnTouchListener(this);
         modleNum.setOnFocusChangeListener(this);
+        modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
+
         number.setOnTouchListener(this);
         number.setOnFocusChangeListener(this);
 
-        length.setKeyListener(new CustomNumberKeyListener());
         length.setOnTouchListener(this);
         length.setOnFocusChangeListener(this);
+        length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
+
+        width.setOnTouchListener(this);
+        width.setOnFocusChangeListener(this);
+        width.addTextChangedListener(new CustomTextWatcher(width, drawable, true));
+
+        height.setOnTouchListener(this);
+        height.setOnFocusChangeListener(this);
+        height.addTextChangedListener(new CustomTextWatcher(height, drawable, true));
+
+        weight.setOnTouchListener(this);
+        weight.setOnFocusChangeListener(this);
+        weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true));
+
+        allLength.setOnTouchListener(this);
+        allLength.setOnFocusChangeListener(this);
+        allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true));
+
+        allWidth.setOnTouchListener(this);
+        allWidth.setOnFocusChangeListener(this);
+        allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true));
+
+        allHeight.setOnTouchListener(this);
+        allHeight.setOnFocusChangeListener(this);
+        allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true));
+
+        outLength.setOnTouchListener(this);
+        outLength.setOnFocusChangeListener(this);
+        outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true));
+
+        outWidth.setOnTouchListener(this);
+        outWidth.setOnFocusChangeListener(this);
+        outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true));
+
+        outHeight.setOnTouchListener(this);
+        outHeight.setOnFocusChangeListener(this);
+        outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true));
+
+        singleWeight.setOnTouchListener(this);
+        singleWeight.setOnFocusChangeListener(this);
+        singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true));
+
+        singleLength.setOnTouchListener(this);
+        singleLength.setOnFocusChangeListener(this);
+        singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true));
+
+        singleWidth.setOnTouchListener(this);
+        singleWidth.setOnFocusChangeListener(this);
+        singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true));
+
+        singleHeight.setOnTouchListener(this);
+        singleHeight.setOnFocusChangeListener(this);
+        singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true));
         setEditTextChangedListener();
+
+        singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            singleLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+        });
+
+        dataLayout.setOnClickListener(v -> {
+            CheckActivity.startActivityForResult(this, checkTv.getText().toString());
+        });
     }
 
     private void setEditTextChangedListener() {
@@ -219,9 +324,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 }
             }
         });
-
-        modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
-        length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
     }
 
 
@@ -241,6 +343,57 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             case R.id.length:
                 setEditText(length, lengthTv, hasFocus);
                 break;
+
+            case R.id.width:
+                setEditText(width, widthTv, hasFocus);
+                break;
+
+            case R.id.height:
+                setEditText(height, hightTv, hasFocus);
+                break;
+
+            case R.id.weight:
+                setEditText(weight, weightTv, hasFocus);
+                break;
+
+            case R.id.all_length:
+                setEditText(allLength, allLengthTv, hasFocus);
+                break;
+
+            case R.id.all_width:
+                setEditText(allWidth, allWidthTv, hasFocus);
+                break;
+
+            case R.id.all_height:
+                setEditText(allHeight, allHeightTv, hasFocus);
+                break;
+
+            case R.id.out_length:
+                setEditText(outLength, outLengthTv, hasFocus);
+                break;
+
+            case R.id.out_width:
+                setEditText(outWidth, outWidthTv, hasFocus);
+                break;
+
+            case R.id.out_height:
+                setEditText(outHeight, outHeightTv, hasFocus);
+                break;
+
+            case R.id.single_weight:
+                setEditText(singleWeight, singleWeightTv, hasFocus);
+                break;
+
+            case R.id.single_length:
+                setEditText(singleLength, singleLengthTv, hasFocus);
+                break;
+
+            case R.id.single_width:
+                setEditText(singleWidth, singleWidthTv, hasFocus);
+                break;
+
+            case R.id.single_height:
+                setEditText(singleHeight, singleHeightTv, hasFocus);
         }
 
     }
@@ -260,21 +413,73 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 case R.id.length:
                     changeUI(event, length, lengthTv);
                     break;
+
+                case R.id.width:
+                    changeUI(event, width, widthTv);
+                    break;
+
+                case R.id.height:
+                    changeUI(event, height, hightTv);
+                    break;
+
+                case R.id.weight:
+                    changeUI(event, weight, weightTv);
+                    break;
+
+                case R.id.all_length:
+                    changeUI(event, allLength, allLengthTv);
+                    break;
+
+                case R.id.all_width:
+                    changeUI(event, allWidth, allWidthTv);
+                    break;
+
+                case R.id.all_height:
+                    changeUI(event, allHeight, allHeightTv);
+                    break;
+
+                case R.id.out_length:
+                    changeUI(event, outLength, outLengthTv);
+                    break;
+
+                case R.id.out_width:
+                    changeUI(event, outWidth, outWidthTv);
+                    break;
+
+                case R.id.out_height:
+                    changeUI(event, outHeight, outHeightTv);
+                    break;
+
+                case R.id.single_weight:
+                    changeUI(event, singleWeight, singleWeightTv);
+                    break;
+
+                case R.id.single_length:
+                    changeUI(event, singleLength, singleLengthTv);
+                    break;
+
+                case R.id.single_width:
+                    changeUI(event, singleWidth, singleWidthTv);
+                    break;
+
+                case R.id.single_height:
+                    changeUI(event, singleHeight, singleHeightTv);
+                    break;
             }
         }
         return false;
     }
 
-    private void setEditText(EditText et, TextView tv, boolean hasFocus){
-        if (!hasFocus){
+    private void setEditText(EditText et, TextView tv, boolean hasFocus) {
+        if (!hasFocus) {
             tv.setTextColor(normalColor);
-            if (et.getText().length() > 0){
-                et.setText(et.getText()+"mm");
-            }else{
+            if (et.getText().length() > 0) {
+                et.setText(et.getText() + "mm");
+            } else {
                 et.setHint("mm");
             }
-        }else{
-            if (et.getText().length() > 0){
+        } else {
+            if (et.getText().length() > 0) {
                 String s = et.getText().toString();
                 int index = s.indexOf("mm");
                 String temp = s.substring(0, index);
@@ -332,6 +537,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 number.setText(s);
             } else if (data != null && requestCode == REQUEST_WRAP_CODE) {
                 wrapText.setText(data.getStringExtra(INTENT_KEY));
+                if (TextUtils.equals(data.getStringExtra(INTENT_KEY), "需包装的零件_PDC") ||
+                        TextUtils.equals(data.getStringExtra(INTENT_KEY), "供应商_裸包装")) {
+                    outLayout.setVisibility(View.GONE);
+                } else {
+                    outLayout.setVisibility(View.VISIBLE);
+                }
             } else if (data != null && requestCode == REQUEST_TAKE_PHOTO_CODE) {
                 ArrayList<ImageItem> list = (ArrayList<ImageItem>) data.getSerializableExtra(INTENT_KEY);
                 imageItems.addAll(list);
@@ -339,6 +550,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             } else if (data != null && requestCode == REQUEST_TYPE_CODE) {
                 String s = data.getStringExtra(INTENT_KEY);
                 typeTxt.setText(s);
+            } else if (data != null && requestCode == REQUEST_CHECK_CODE) {
+                String s = data.getStringExtra(INTENT_KEY);
+                checkTv.setText(s);
             }
         }
     }

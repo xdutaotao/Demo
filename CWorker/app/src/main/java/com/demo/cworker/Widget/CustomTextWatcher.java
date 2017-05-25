@@ -29,7 +29,6 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        LogUtils.d("beforeTextChanged: "+ s.toString());
     }
 
     @Override
@@ -40,7 +39,21 @@ public class CustomTextWatcher implements TextWatcher {
         } else {
             editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
-        if (isNumPoint && isPoint){
+        if (isNumPoint){
+            if (s.toString().length() == 6) {
+                //如果第六个不为小数点, 并且前面没有小数点
+                if (!TextUtils.equals(s.toString().substring(5, 6), ".") && !s.toString().substring(0,5).contains(".")) {
+                    editText.setText(s.toString().substring(0, 5));
+                    editText.setSelection(5);
+                    return;
+                }
+            }
+            //第一个不能是小数点
+            if (TextUtils.equals(s.toString(), ".")){
+                editText.setText(s.toString().substring(0, 0));
+                return;
+            }
+
             if (s.toString().contains(".")){
                 int index = s.toString().indexOf(".");
                 InputFilter[] filters = {new InputFilter.LengthFilter(index+4)};
@@ -49,6 +62,7 @@ public class CustomTextWatcher implements TextWatcher {
                 InputFilter[] filters = {new InputFilter.LengthFilter(6)};
                 editText.setFilters(filters);
             }
+            editText.setSelection(s.length());
         }
 
         LogUtils.d("onTextChanged: "+s.toString());
@@ -56,13 +70,5 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        LogUtils.d("afterTextChanged: "+s.toString());
-        if (s.toString().length() == 6 && !TextUtils.equals(s.toString().substring(5,5),".") ){
-            editText.setText(s.toString().substring(0, 5));
-            editText.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
-            isPoint = true;
-        }else{
-            isPoint = false;
-        }
     }
 }

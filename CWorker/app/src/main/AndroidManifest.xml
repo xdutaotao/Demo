@@ -66,15 +66,16 @@
             android:name="design_height"
             android:value="1920" />
 
-        <activity android:name=".Activity.LoginActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".Activity.CheckPhoneActivity" />
         <activity android:name=".Activity.CheckEmailActivity" />
         <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.HomeDetailActivity" />
         <activity android:name=".Activity.PDFActivity" />
         <activity android:name=".Activity.SearchResultActivity" />
-        <activity android:name=".Activity.CollectActivity"/>
+        <activity android:name=".Activity.CollectActivity" />
         <activity android:name=".Activity.ScanActivity" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
@@ -89,7 +90,8 @@
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.SuggestActivity" />
         <activity android:name=".Activity.HelpActivity" />
-        <activity android:name=".Activity.TypeActivity"></activity>
+        <activity android:name=".Activity.TypeActivity" />
+        <activity android:name=".Activity.CheckActivity"></activity>
     </application>
 
 </manifest>
