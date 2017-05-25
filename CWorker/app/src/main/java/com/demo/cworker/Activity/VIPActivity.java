@@ -81,13 +81,6 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
         }
         name.setText(User.getInstance().getUserInfo().getPerson().getName());
 
-        long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
-        if (days == 0) {
-            vipDays.setText("您的会员已过期");
-        } else {
-            vipDays.setText("尊敬的VIP用户,您的会员还有:" + days + "天");
-        }
-
         vipOne.setOnClickListener(this);
         vipTwo.setOnClickListener(this);
         vipThree.setOnClickListener(this);
@@ -97,6 +90,17 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
         vipSeven.setOnClickListener(this);
         vipEight.setOnClickListener(this);
         vipNine.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
+        if (days == 0) {
+            vipDays.setText("您的会员已过期");
+        } else {
+            vipDays.setText("尊敬的VIP用户,您的会员还有:" + days + "天");
+        }
     }
 
     @Override

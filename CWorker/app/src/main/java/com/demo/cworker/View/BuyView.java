@@ -8,5 +8,5 @@ import com.demo.cworker.Model.UserInfo;
  */
 
 public interface BuyView extends BaseView{
-    void getData(UserInfo.PersonBean s);
+    void getData(String s);
 }

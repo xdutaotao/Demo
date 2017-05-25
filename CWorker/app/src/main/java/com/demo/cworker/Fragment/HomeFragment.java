@@ -19,6 +19,7 @@ import com.demo.cworker.Model.User;
 import com.demo.cworker.Present.HomePresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.ToastUtil;
+import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.HomeView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
@@ -33,6 +34,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.demo.cworker.Common.Constants.LOGIN_AGAIN;
 
 public class HomeFragment extends BaseFragment implements HomeView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
@@ -105,6 +108,10 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         moreOne.setOnClickListener(this);
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
+
+        if (!TextUtils.isEmpty(User.getInstance().getUserId())){
+            presenter.checkToken();
+        }
         return view;
     }
 
@@ -205,6 +212,14 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
             WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
         }));
+    }
+
+    @Override
+    public void getTokenResult(String s) {
+        if (TextUtils.equals(s, LOGIN_AGAIN)){
+            ToastUtil.show("用户过期，请重新登录");
+            Utils.startLoginActivity();
+        }
     }
 
     @Override

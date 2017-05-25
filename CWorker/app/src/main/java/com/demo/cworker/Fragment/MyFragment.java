@@ -147,6 +147,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 if (!TextUtils.isEmpty(userInfo.getPerson().getFace())) {
                     Glide.with(this)
                             .load(userInfo.getPerson().getFace())
+                            .placeholder(R.drawable.ic_launcher_round)
                             .bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(headIcon);
                 }

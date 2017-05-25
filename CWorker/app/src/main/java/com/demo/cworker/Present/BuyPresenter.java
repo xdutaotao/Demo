@@ -24,9 +24,9 @@ public class BuyPresenter extends BasePresenter<BuyView> {
 
     public void addVipDuration(Context context, long time, int gold){
         mCompositeSubscription.add(model.addVipDuration(time, gold)
-                .subscribe(new RxSubUtils<UserInfo.PersonBean>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(UserInfo.PersonBean token) {
+                    protected void _onNext(String token) {
                         getView().getData(token);
                     }
 

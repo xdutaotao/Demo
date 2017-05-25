@@ -168,8 +168,9 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
     }
 
     @Override
-    public void getData(UserInfo.PersonBean s) {
-        glod.setText(s.getGold()+"");
+    public void getData(String s) {
+        glod.setText(User.getInstance().getUserInfo().getPerson().getGold()+"");
+        ToastUtil.show("购买成功");
     }
 
     @Override

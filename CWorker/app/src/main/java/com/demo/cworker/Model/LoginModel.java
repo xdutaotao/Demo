@@ -84,9 +84,7 @@ public class LoginModel extends BaseModel {
                     String s = testBean.getResult().getToken();
                     User.getInstance().setUserId(s);
 
-                    map.clear();
-                    map.put("token", s);
-                    return config.getRetrofitService().getUserInfo(map)
+                    return config.getRetrofitService().getUserInfo(s)
                             .compose(RxUtils.handleResultNoThread())
                             .map(userInfo -> {
                                 String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
@@ -130,9 +128,19 @@ public class LoginModel extends BaseModel {
     /**
      *  购买VIP
      */
-    public Observable<UserInfo.PersonBean> addVipDuration(long time, int gold){
+    public Observable<String> addVipDuration(long time, int gold){
         return config.getRetrofitService().addVipDuration(User.getInstance().getUserId(), time, gold)
-                .compose(RxUtils.handleResult());
+                .compose(RxUtils.handleResultNoThread())
+                .flatMap(personBean -> {
+                    return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
+                            .compose(RxUtils.handleResultNoThread());
+                })
+                .map(userInfo -> {
+                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
+                    User.getInstance().setUserInfo(userInfoString);
+                    return "操作成功";
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     /**
@@ -143,12 +151,18 @@ public class LoginModel extends BaseModel {
         map.put("address", address);
         map.put("token", User.getInstance().getUserId());
         return config.getRetrofitService().changeAddress(map)
-                .map(baseResponseBean -> {
+                .flatMap(baseResponseBean -> {
                     if (TextUtils.equals(baseResponseBean.getMsg(), "200")){
-                        return "操作成功";
+                        return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
+                                .compose(RxUtils.handleResultNoThread());
                     }else{
-                        return "操作失败";
+                        return Observable.error(new RxUtils.ServerException("操作失败")) ;
                     }
+                })
+                .map(userInfo -> {
+                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
+                    User.getInstance().setUserInfo(userInfoString);
+                    return "操作成功";
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
@@ -166,23 +180,29 @@ public class LoginModel extends BaseModel {
         map.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
 
         return config.getRetrofitService().changeHeadIcon(map)
-                .map( responseBody -> {
+                .flatMap( responseBody -> {
                     try {
                         String s = responseBody.string();
                         BaseResponseBean bean = JsonUtils.getInstance().JsonToUpdateFile(s);
                         if (TextUtils.equals(bean.getMsg(), "200")){
-                            return bean.getResult();
+                            return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
+                                    .compose(RxUtils.handleResultNoThread());
                         }else if(TextUtils.equals(bean.getResult(), "请登录!")){
-                            return bean.getResult();
+                            return Observable.error(new RxUtils.ServerException("请登录")) ;
                         }else if(TextUtils.equals(bean.getMsg(), "501")){
-                            return "上传文件太大";
+                            return Observable.error(new RxUtils.ServerException("上传文件太大")) ;
                         }else{
-                            return "上传失败";
+                            return Observable.error(new RxUtils.ServerException("操作失败")) ;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    return "上传失败";
+                    return Observable.error(new RxUtils.ServerException("操作失败")) ;
+                })
+                .map(userInfo -> {
+                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
+                    User.getInstance().setUserInfo(userInfoString);
+                    return "操作成功";
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }

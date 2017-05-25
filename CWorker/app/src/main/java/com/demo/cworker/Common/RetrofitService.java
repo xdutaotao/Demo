@@ -45,7 +45,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
-    Observable<BaseBean<UserInfo>> getUserInfo(@FieldMap Map<String, String> map);
+    Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);
 
     @GET("user/checkMobile")
     Observable<BaseBean<String>> checkPhone(@Query("mobile") String mobile);
@@ -58,6 +58,10 @@ public interface RetrofitService {
 
     @GET("user/changeThePassword")
     Observable<BaseBean<String>> changePwd(@Query("mobile") String mobile, @Query("newPassword") String newPassword);
+
+    @FormUrlEncoded
+    @POST("user/checkToken")
+    Observable<BaseResponseBean> checkToken(@Field("token") String token);
 
     @FormUrlEncoded
     @POST("user/logout")

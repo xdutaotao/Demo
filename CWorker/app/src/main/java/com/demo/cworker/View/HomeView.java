@@ -9,4 +9,5 @@ import com.demo.cworker.Bean.HomeResponseBean;
 
 public interface HomeView extends BaseView {
     void getData(HomeResponseBean bean);
+    void getTokenResult(String s);
 }

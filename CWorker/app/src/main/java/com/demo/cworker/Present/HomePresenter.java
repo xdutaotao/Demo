@@ -36,4 +36,14 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     }
                 }));
     }
+
+    public void checkToken(){
+        mCompositeSubscription.add(model.checkToken()
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getTokenResult(token);
+                    }
+                }));
+    }
 }

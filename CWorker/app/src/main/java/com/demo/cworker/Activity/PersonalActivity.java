@@ -32,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
+import static com.demo.cworker.Common.Constants.INTENT_KEY;
+
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, PersonalView {
     public static final int REQUEST_CODE_SELECT = 8888;
     public static final int REQUEST_CODE = 6666;
@@ -181,13 +183,12 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 if (images != null) {
-                    Glide.with(this)
-                            .load(images.get(0).path)
-                            .placeholder(R.drawable.ic_launcher_round)
-                            .bitmapTransform(new CropCircleTransformation(this))
-                            .into(headIcon);
                     presenter.changeHeadIcon(this, images.get(0).path);
                 }
+            }
+        }else if (resultCode == RESULT_OK){
+            if (data != null && requestCode == REQUEST_CODE){
+                address.setText(data.getStringExtra(INTENT_KEY));
             }
         }
     }
@@ -201,6 +202,11 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void getData(String s) {
         ToastUtil.show(s);
+        Glide.with(this)
+                .load(User.getInstance().getUserInfo().getPerson().getFace())
+                .placeholder(R.drawable.ic_launcher_round)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(headIcon);
     }
 
     @Override

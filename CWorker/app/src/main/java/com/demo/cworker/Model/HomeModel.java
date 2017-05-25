@@ -15,6 +15,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.observables.SyncOnSubscribe;
 import rx.schedulers.Schedulers;
 
+import static com.demo.cworker.Common.Constants.LOGIN_AGAIN;
+
 /**
  * Description:
  * Created by GUZHENFU on 2017/5/17 16:44.
@@ -40,4 +42,19 @@ public class HomeModel extends BaseModel {
                     }
                 }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
+
+
+    public Observable<String> checkToken(){
+        return config.getRetrofitService().checkToken(User.getInstance().getUserId())
+                .map(baseResponseBean -> {
+                    if (TextUtils.equals(baseResponseBean.getMsg(), "200")){
+                        return "ok";
+                    }else{
+                        User.getInstance().clearUser();
+                        return LOGIN_AGAIN;
+                    }
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
 }

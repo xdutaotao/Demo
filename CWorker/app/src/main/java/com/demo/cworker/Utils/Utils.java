@@ -76,13 +76,11 @@ public class Utils {
 
     /**
      * 启动登录页面
-     * @param mContext
      */
-    public static void startLoginActivity(Context mContext) {
-            Intent intent = new Intent(mContext, LoginActivity.class);
-//            intent.putExtra("login_activity", Constants.UPDATE_UI);
+    public static void startLoginActivity() {
+            Intent intent = new Intent(App.getContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
+            App.getContext().startActivity(intent);
     }
 
     /**
