@@ -77,4 +77,20 @@
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="my_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">140px</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">30px</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+    <style name="collect_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">150px</item>
+        <item name="android:paddingRight">50px</item>
+        <item name="android:paddingLeft">50px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
 </resources>

@@ -1,26 +1,25 @@
 package com.demo.cworker;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Activity.CollectActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Fragment.AddFragment;
-import com.demo.cworker.Fragment.BaseFragment;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MessageFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Model.User;
-import com.demo.cworker.Widget.BottomNavigationViewEx;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
@@ -28,13 +27,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.container)
     LinearLayout container;
     private ArrayList<Fragment> fragments;
-    private Fragment preFragment;
     private ImageView imageView;
-    private BottomNavigationViewEx navigation;
+    private BottomNavigationBar bottomNavigationBar;
+    private String[] strings = {"主页","搜索"," ","消息","我的"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +43,37 @@ public class MainActivity extends BaseActivity {
         //禁止侧滑返回
         setSwipeBackEnable(false);
 
-        navigation = (BottomNavigationViewEx) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.enableAnimation(false);
-        navigation.enableShiftingMode(false);
-        navigation.enableItemShiftingMode(false);
-        navigation.addBadgeViewAt(this, container, 4, "9");
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar_container);
+        bottomNavigationBar.setAutoHideEnabled(true);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
+        bottomNavigationBar.setInActiveColor(R.color.nav_gray);
+        bottomNavigationBar.setActiveColor(R.color.colorPrimary);
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[0]))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[1]))
+                .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[3]))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4])
+                    .setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText("9")));
 
         fragments = getFragments();
-        showFragment(0);
+        bottomNavigationBar.setFirstSelectedPosition(0).initialise();
+        setDefaultFragment();
+        bottomNavigationBar.setTabSelectedListener(this);
 
         imageView = (ImageView) findViewById(R.id.center_image);
         imageView.setOnClickListener(v -> {
-            showFragment(2);
+            showCenterFragment();
         });
+    }
+
+    private void setDefaultFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.add(R.id.content, getFragments().get(0));
+        transaction.commit();
     }
 
     private ArrayList<Fragment> getFragments() {
@@ -71,81 +87,67 @@ public class MainActivity extends BaseActivity {
     }
 
     @SuppressWarnings("RestrictedApi")
-    private void showFragment(int position) {
-        if (position == 2 ){
-            if (User.getInstance().getUserInfo() == null){
-                new IOSDialog(this).builder()
-                        .setTitle("提示")
-                        .setMsg("登陆后才可使用此功能")
-                        .setPositiveButton("立即登陆", v -> LoginActivity.startActivity(this))
-                        .setPositiveBtnColor(R.color.colorPrimary)
-                        .setNegativeButton("暂不登陆", null)
-                        .setNegativeBtnColor(R.color.colorPrimary)
-                        .show();
-            }else{
-                CollectActivity.startActivity(this);
-            }
+    private void showCenterFragment() {
+        if (User.getInstance().getUserInfo() == null){
+            new IOSDialog(this).builder()
+                    .setTitle("提示")
+                    .setMsg("登陆后才可使用此功能")
+                    .setPositiveButton("立即登陆", v -> LoginActivity.startActivity(this))
+                    .setPositiveBtnColor(R.color.colorPrimary)
+                    .setNegativeButton("暂不登陆", null)
+                    .setNegativeBtnColor(R.color.colorPrimary)
+                    .show();
+        }else{
+            CollectActivity.startActivity(this);
+        }
+    }
+
+
+
+
+    @Override
+    public void onTabSelected(int position) {
+        if (position == 2){
+            imageView.setImageResource(R.drawable.icon_512);
+            showCenterFragment();
             return;
         }
-
         if (fragments != null) {
             if (position < fragments.size()) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment fragment = fragments.get(position);
-                if (((BaseFragment)fragment).isVisible)
+                //解决快速点击 bug
+                if (fragment.isVisible())
                     return;
-                if (fragment.isAdded()) {
-                    ft.hide(preFragment);
+                if (fragment.isHidden()) {
                     ft.show(fragment);
                 } else {
                     ft.add(R.id.content, fragment);
                 }
                 ft.commitAllowingStateLoss();
-                preFragment = fragment;
-                navigation.getBottomNavigationItemView(position).setChecked(true);
+            }
+        }
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+        if (fragments != null) {
+            if (position < fragments.size()) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = fragments.get(position);
+                ft.hide(fragment);
+                ft.commitAllowingStateLoss();
                 if (position == 2){
-                    setNavigationItemUnChecked();
+                    imageView.setImageResource(R.drawable.icon_512);
                 }
             }
         }
     }
 
-    @SuppressWarnings("RestrictedApi")
-    private void setNavigationItemUnChecked(){
-        navigation.getBottomNavigationItemView(0).setChecked(false);
-        navigation.getBottomNavigationItemView(1).setChecked(false);
-        navigation.getBottomNavigationItemView(2).setChecked(false);
-        navigation.getBottomNavigationItemView(3).setChecked(false);
-        navigation.getBottomNavigationItemView(4).setChecked(false);
+    @Override
+    public void onTabReselected(int position) {
+
     }
-
-    private BottomNavigationViewEx.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    showFragment(0);
-                    return true;
-                case R.id.search:
-                    showFragment(1);
-                    return true;
-                case R.id.add:
-                    showFragment(2);
-                    return true;
-                case R.id.message:
-                    showFragment(3);
-                    return true;
-                case R.id.my:
-                    showFragment(4);
-                    return true;
-            }
-            return false;
-        }
-
-    };
-
-
 }

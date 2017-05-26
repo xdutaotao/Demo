@@ -20,14 +20,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center" >
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,12 +43,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,12 +72,7 @@
                 android:layout_marginLeft="40px"/>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,11 +102,7 @@
 
             <RelativeLayout
                 android:id="@+id/wrap_layout"
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:gravity="center"
-                android:paddingLeft="50px"
-                android:paddingRight="50px">
+                style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,11 +130,7 @@
                 android:layout_marginLeft="40px"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center"
+                style="@style/collect_item"
                 android:id="@+id/type_layout">
 
                 <TextView
@@ -183,11 +158,7 @@
                 android:layout_marginLeft="40px"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center"
+                style="@style/collect_item"
                 android:id="@+id/modle_layout">
 
                 <TextView
@@ -218,12 +189,7 @@
                     android:layout_height="160px"
                     android:background="@color/divider"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:paddingLeft="50px"
-                    android:paddingRight="50px"
-                    android:gravity="center">
+                <RelativeLayout style="@style/collect_item">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -247,12 +213,7 @@
                     android:background="@color/nav_gray"
                     android:layout_marginLeft="40px"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:paddingLeft="50px"
-                    android:paddingRight="50px"
-                    android:gravity="center">
+                <RelativeLayout style="@style/collect_item">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -276,12 +237,7 @@
                     android:background="@color/nav_gray"
                     android:layout_marginLeft="40px"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:paddingLeft="50px"
-                    android:paddingRight="50px"
-                    android:gravity="center">
+                <RelativeLayout style="@style/collect_item">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -305,12 +261,7 @@
                     android:background="@color/nav_gray"
                     android:layout_marginLeft="40px"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:paddingLeft="50px"
-                    android:paddingRight="50px"
-                    android:gravity="center">
+                <RelativeLayout style="@style/collect_item">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -334,12 +285,7 @@
                     android:background="@color/nav_gray"
                     android:layout_marginLeft="40px"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:paddingLeft="50px"
-                    android:paddingRight="50px"
-                    android:gravity="center">
+                <RelativeLayout style="@style/collect_item">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -398,12 +344,7 @@
                         android:background="@color/nav_gray"
                         android:layout_marginLeft="40px"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150px"
-                        android:paddingLeft="150px"
-                        android:paddingRight="50px"
-                        android:gravity="center">
+                    <RelativeLayout style="@style/collect_item">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -427,12 +368,7 @@
                         android:background="@color/nav_gray"
                         android:layout_marginLeft="40px"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150px"
-                        android:paddingLeft="150px"
-                        android:paddingRight="50px"
-                        android:gravity="center">
+                    <RelativeLayout style="@style/collect_item">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -456,12 +392,7 @@
                         android:background="@color/nav_gray"
                         android:layout_marginLeft="40px"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150px"
-                        android:paddingLeft="150px"
-                        android:paddingRight="50px"
-                        android:gravity="center">
+                    <RelativeLayout style="@style/collect_item">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -493,12 +424,7 @@
                 android:layout_height="160px"
                 android:background="@color/divider"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -522,12 +448,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -551,12 +472,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -580,12 +496,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -608,12 +519,7 @@
                 android:layout_height="160px"
                 android:background="@color/divider"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -637,12 +543,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -666,12 +567,7 @@
                 android:background="@color/nav_gray"
                 android:layout_marginLeft="40px"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center">
+            <RelativeLayout style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -696,11 +592,7 @@
 
             <RelativeLayout
                 android:id="@+id/data_layout"
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:gravity="center"
-                android:paddingLeft="50px"
-                android:paddingRight="50px">
+                style="@style/collect_item">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -727,11 +619,7 @@
                 android:layout_marginLeft="40px"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:paddingLeft="50px"
-                android:paddingRight="50px"
-                android:gravity="center"
+                style="@style/collect_item"
                 android:id="@+id/recommend_layout">
 
                 <TextView

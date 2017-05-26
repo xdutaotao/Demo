@@ -8,9 +8,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demo.cworker.Fragment.MyFragment"
     android:orientation="vertical"
-    android:background="@color/activity_background">
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -177,13 +176,13 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
-        android:layout_marginTop="50px"
+        android:layout_height="80px"
+        android:background="@color/activity_background"/>
+
+    <RelativeLayout
+        style="@style/my_item"
         android:id="@+id/personal_word">
 
         <TextView
@@ -205,11 +204,7 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
+        style="@style/my_item"
         android:id="@+id/change_pwd">
 
         <TextView
@@ -231,11 +226,7 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
+        style="@style/my_item"
         android:id="@+id/personal_center">
 
         <TextView
@@ -252,16 +243,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/nav_gray"/>
+        android:layout_height="80px"
+        android:background="@color/activity_background"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
-        android:layout_marginTop="50px"
+        style="@style/my_item"
         android:id="@+id/setting">
 
         <TextView
@@ -283,11 +269,7 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
+        style="@style/my_item"
         android:id="@+id/help">
 
         <TextView
@@ -309,11 +291,7 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
+        style="@style/my_item"
         android:id="@+id/suggest">
 
         <TextView
@@ -335,11 +313,7 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:gravity="center_vertical"
-        android:padding="30px"
-        android:background="@android:color/white"
+        style="@style/my_item"
         android:id="@+id/about">
 
         <TextView
@@ -356,8 +330,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/nav_gray"/>
+        android:layout_height="150px"
+        android:background="@color/activity_background"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -365,10 +339,12 @@
         android:text="点击登录"
         android:id="@+id/login_btn"
         android:gravity="center"
-        android:padding="50px"
-        android:layout_marginTop="30px"
-        android:layout_marginBottom="100px"
-        android:background="@android:color/white"/>
+        android:padding="30px"
+        android:background="?android:attr/selectableItemBackground"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@color/activity_background"/>
 </LinearLayout>
 </ScrollView>

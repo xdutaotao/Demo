@@ -12,4 +12,5 @@ public interface SearchView extends BaseView {
     void getData(SearchResponseBean bean);
     void getHistoryList(List<String> list);
     void fail(String msg);
+    void getHotWord(List<String> list);
 }

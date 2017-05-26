@@ -76,10 +76,11 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
     GRecyclerView resultRecyclerView;
     private String mParam1;
 
-    private List<String> list = new ArrayList<>();
+    private List<String> hotList = new ArrayList<>();
     private RecyclerArrayAdapter<String> adapter;
     private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> resultAdapter;
     private SearchBean bean = new SearchBean();
+    private TagAdapter<String> tagAdapter;
 
     public static SearchFragment newInstance(String param1) {
         SearchFragment fragment = new SearchFragment();
@@ -105,22 +106,10 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        for (int i = 0; i < 10; i++) {
-            list.add(i + "123456789");
-        }
-        flowLayout.setAdapter(new TagAdapter<String>(list) {
-            @Override
-            public View getView(FlowLayout parent, int position, String o) {
-                TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tv, flowLayout, false);
-                view.setText(list.get(position));
-                return view;
-            }
-        });
-
         flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                itemClickSearch(list.get(position));
+                itemClickSearch(hotList.get(position));
                 return true;
             }
         });
@@ -182,6 +171,7 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
         initResultRecyclerView();
         presenter.getHistoryData();
+        presenter.getHotWord(getContext());
         return view;
     }
 
@@ -300,6 +290,20 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
             User.getInstance().clearUser();
             RxBus.getInstance().post(LOGIN_AGAIN);
         }
+    }
+
+    @Override
+    public void getHotWord(List<String> list) {
+        hotList.addAll(list);
+        tagAdapter = new TagAdapter<String>(list) {
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tv, flowLayout, false);
+                view.setText(list.get(position));
+                return view;
+            }
+        };
+        flowLayout.setAdapter(tagAdapter);
     }
 
     @Override

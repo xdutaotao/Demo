@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="300px"
     android:layout_height="500px"
-    android:padding="20px">
+    android:padding="20px"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:layout_width="200px"

@@ -1,5 +1,7 @@
 package com.demo.cworker.Present;
 
+import android.content.Context;
+
 import com.demo.cworker.Bean.SearchBean;
 import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Model.SearchModel;
@@ -48,6 +50,21 @@ public class SearchPresenter extends BasePresenter<SearchView> {
                     @Override
                     protected void _onNext(List<String> token) {
                         getView().getHistoryList(token);
+                    }
+
+                    @Override
+                    public void _onError(String msg) {
+                        getView().fail(msg);
+                    }
+                }));
+    }
+
+    public void getHotWord(Context context){
+        mCompositeSubscription.add(model.getHotWord()
+                .subscribe(new RxSubUtils<List<String>>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(List<String> token) {
+                        getView().getHotWord(token);
                     }
 
                     @Override

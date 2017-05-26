@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.demo.cworker.Activity.HomeDetailActivity;
@@ -29,11 +31,13 @@ import com.gzfgeh.viewpagecycle.ImageCycleView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 import static com.demo.cworker.Common.Constants.LOGIN_AGAIN;
 
@@ -57,6 +61,8 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     TextView moreTwo;
     @BindView(R.id.more_three)
     TextView moreThree;
+    @BindView(R.id.scrollView)
+    LinearLayout scrollView;
     private String mParam1;
 
     @BindView(R.id.title_text)
@@ -109,7 +115,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
 
-        if (!TextUtils.isEmpty(User.getInstance().getUserId())){
+        if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
             presenter.checkToken();
         }
         return view;
@@ -182,6 +188,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     @Override
     public void onFailure() {
         swipe.setRefreshing(false);
+        scrollView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -212,11 +219,13 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
             WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
         }));
+
+        scrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void getTokenResult(String s) {
-        if (TextUtils.equals(s, LOGIN_AGAIN)){
+        if (TextUtils.equals(s, LOGIN_AGAIN)) {
             ToastUtil.show("用户过期，请重新登录");
             Utils.startLoginActivity();
         }
@@ -235,12 +244,12 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
     @Override
     public void onClick(View v) {
-        if (User.getInstance().getUserInfo() == null){
+        if (User.getInstance().getUserInfo() == null) {
             ToastUtil.show("请登录");
             return;
         }
         SearchBean bean = new SearchBean();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.more_one:
                 bean.setGroupType(1);
                 break;

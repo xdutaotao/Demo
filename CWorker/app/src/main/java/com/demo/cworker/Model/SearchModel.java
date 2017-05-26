@@ -31,4 +31,10 @@ public class SearchModel extends BaseModel {
             }
         }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
+
+
+    public Observable<List<String>> getHotWord(){
+        return config.getRetrofitService().getHotWord()
+                .compose(RxUtils.handleResult());
+    }
 }

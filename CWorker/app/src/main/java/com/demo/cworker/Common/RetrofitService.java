@@ -3,6 +3,7 @@ package com.demo.cworker.Common;
 
 import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.BuyVipBean;
+import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Bean.BaseBean;
 import com.demo.cworker.Bean.HomeResponseBean;
@@ -58,6 +59,12 @@ public interface RetrofitService {
 
     @GET("user/changeThePassword")
     Observable<BaseBean<String>> changePwd(@Query("mobile") String mobile, @Query("newPassword") String newPassword);
+
+    @GET("home/hotKeys")
+    Observable<BaseBean<List<String>>> getHotWord();
+
+    @GET("data/packagingForm")
+    Observable<PackageBean> packagingForm(@Query("project") String project);
 
     @FormUrlEncoded
     @POST("user/checkToken")
