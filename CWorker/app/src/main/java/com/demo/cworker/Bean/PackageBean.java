@@ -1,5 +1,6 @@
 package com.demo.cworker.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -136,7 +137,7 @@ public class PackageBean {
             }
         }
 
-        public static class PssBean {
+        public static class PssBean implements Serializable{
             /**
              * dateline : 0
              * packageWeight :

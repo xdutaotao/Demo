@@ -63,8 +63,9 @@ public interface RetrofitService {
     @GET("home/hotKeys")
     Observable<BaseBean<List<String>>> getHotWord();
 
-    @GET("data/packagingForm")
-    Observable<PackageBean> packagingForm(@Query("project") String project);
+    @FormUrlEncoded
+    @POST("data/packagingForm")
+    Observable<PackageBean> packagingForm(@Field("project") String project);
 
     @FormUrlEncoded
     @POST("user/checkToken")

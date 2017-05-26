@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.ToastUtil;
@@ -172,6 +173,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
     private int checkedColor, normalColor;
     private Drawable drawable;
+    private PackageBean.ResultBean resultBean;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
@@ -314,6 +316,95 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         recommendLayout.setOnClickListener(v -> {
             RecommandActivity.startActivityForResult(this,"");
         });
+        presenter.packagingForm(this);
+    }
+
+    @Override
+    public void getData(PackageBean.ResultBean bean) {
+        resultBean = bean;
+    }
+
+    private void selectCamera() {
+        CameraActivity.startActivityForResult(this, imageItems.size());
+    }
+
+    private void selectPhoto() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, imageItems);
+        startActivityForResult(intent, IMAGE_PICKER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                imageItems.clear();
+                imageItems.addAll(images);
+                setResultToAdapter(imageItems);
+            } else {
+                ToastUtil.show("没有数据");
+            }
+        } else if (resultCode == RESULT_OK) {
+            if (data != null && requestCode == REQUEST_CODE) {
+                String s = data.getStringExtra(INTENT_KEY);
+                number.setText(s);
+            } else if (data != null && requestCode == REQUEST_WRAP_CODE) {
+                wrapText.setText(data.getStringExtra(INTENT_KEY));
+                if (TextUtils.equals(data.getStringExtra(INTENT_KEY), "需包装的零件_PDC") ||
+                        TextUtils.equals(data.getStringExtra(INTENT_KEY), "供应商_裸包装")) {
+                    outLayout.setVisibility(View.GONE);
+                } else {
+                    outLayout.setVisibility(View.VISIBLE);
+                }
+            } else if (data != null && requestCode == REQUEST_TAKE_PHOTO_CODE) {
+                ArrayList<ImageItem> list = (ArrayList<ImageItem>) data.getSerializableExtra(INTENT_KEY);
+                imageItems.addAll(list);
+                setResultToAdapter(imageItems);
+            } else if (data != null && requestCode == REQUEST_TYPE_CODE) {
+                String s = data.getStringExtra(INTENT_KEY);
+                typeTxt.setText(s);
+            } else if (data != null && requestCode == REQUEST_CHECK_CODE) {
+                String s = data.getStringExtra(INTENT_KEY);
+                checkTv.setText(s);
+            }
+        }
+    }
+
+    private void setResultToAdapter(ArrayList<ImageItem> images) {
+        Observable.from(images)
+                .map(imageItem -> imageItem.path)
+                .toList()
+                .subscribe(strings -> {
+                    adapter.clear();
+                    adapter.addAll(strings);
+                    if (strings.size() != 10) {
+                        adapter.add(ADD);
+                    }
+                });
+    }
+
+
+    private void actionScan() {
+        ScanActivity.startActivityForResult(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.submit:
+
+                break;
+
+            case R.id.wrap_layout:
+                WrapActivity.startActivityForResult(this, resultBean.getPss(),wrapText.getText().toString());
+                break;
+
+            case R.id.type_layout:
+                TypeActivity.startActivityForResult(this, typeTxt.getText().toString());
+                break;
+        }
     }
 
     private void setEditTextChangedListener() {
@@ -515,89 +606,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         imagePicker.setMultiMode(true);
         imagePicker.setShowCamera(false);
         imagePicker.setSelectLimit(10);
-    }
-
-    private void selectCamera() {
-        CameraActivity.startActivityForResult(this, imageItems.size());
-    }
-
-    private void selectPhoto() {
-        Intent intent = new Intent(this, ImageGridActivity.class);
-        intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, imageItems);
-        startActivityForResult(intent, IMAGE_PICKER);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
-            if (data != null && requestCode == IMAGE_PICKER) {
-                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                imageItems.clear();
-                imageItems.addAll(images);
-                setResultToAdapter(imageItems);
-            } else {
-                ToastUtil.show("没有数据");
-            }
-        } else if (resultCode == RESULT_OK) {
-            if (data != null && requestCode == REQUEST_CODE) {
-                String s = data.getStringExtra(INTENT_KEY);
-                number.setText(s);
-            } else if (data != null && requestCode == REQUEST_WRAP_CODE) {
-                wrapText.setText(data.getStringExtra(INTENT_KEY));
-                if (TextUtils.equals(data.getStringExtra(INTENT_KEY), "需包装的零件_PDC") ||
-                        TextUtils.equals(data.getStringExtra(INTENT_KEY), "供应商_裸包装")) {
-                    outLayout.setVisibility(View.GONE);
-                } else {
-                    outLayout.setVisibility(View.VISIBLE);
-                }
-            } else if (data != null && requestCode == REQUEST_TAKE_PHOTO_CODE) {
-                ArrayList<ImageItem> list = (ArrayList<ImageItem>) data.getSerializableExtra(INTENT_KEY);
-                imageItems.addAll(list);
-                setResultToAdapter(imageItems);
-            } else if (data != null && requestCode == REQUEST_TYPE_CODE) {
-                String s = data.getStringExtra(INTENT_KEY);
-                typeTxt.setText(s);
-            } else if (data != null && requestCode == REQUEST_CHECK_CODE) {
-                String s = data.getStringExtra(INTENT_KEY);
-                checkTv.setText(s);
-            }
-        }
-    }
-
-    private void setResultToAdapter(ArrayList<ImageItem> images) {
-        Observable.from(images)
-                .map(imageItem -> imageItem.path)
-                .toList()
-                .subscribe(strings -> {
-                    adapter.clear();
-                    adapter.addAll(strings);
-                    if (strings.size() != 10) {
-                        adapter.add(ADD);
-                    }
-                });
-    }
-
-
-    private void actionScan() {
-        ScanActivity.startActivityForResult(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submit:
-
-                break;
-
-            case R.id.wrap_layout:
-                WrapActivity.startActivityForResult(this, wrapText.getText().toString());
-                break;
-
-            case R.id.type_layout:
-                TypeActivity.startActivityForResult(this, typeTxt.getText().toString());
-                break;
-        }
     }
 
     @Override

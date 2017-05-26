@@ -9,9 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.R;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +35,8 @@ public class WrapActivity extends BaseActivity {
             "供应商_管类包装&GG:该种零件到库时已进行有效的包装，一般工艺为：纸管、三角管、PVC管等。",
             "供应商_裸包装&GW:该种零件到库时已进行有效的包装，到库时为裸件，一般工艺为：栓挂、直接贴。"};
 
+    private static final String LIST_KEY = "LIST_KEY";
+
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.title_text)
@@ -39,10 +46,12 @@ public class WrapActivity extends BaseActivity {
 
     private RecyclerArrayAdapter<String> adapter;
     private String intentData;
+    private List<PackageBean.ResultBean.PssBean> listBean;
 
-    public static void startActivityForResult(Activity context, String s) {
+    public static void startActivityForResult(Activity context, List<PackageBean.ResultBean.PssBean> list, String s) {
         Intent intent = new Intent(context, WrapActivity.class);
         intent.putExtra(INTENT_KEY, s);
+        intent.putExtra(LIST_KEY, (Serializable) list);
         context.startActivityForResult(intent, CollectActivity.REQUEST_WRAP_CODE);
     }
 
@@ -55,6 +64,10 @@ public class WrapActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))) {
             intentData = getIntent().getStringExtra(INTENT_KEY);
+        }
+
+        if (getIntent().getSerializableExtra(LIST_KEY) != null){
+            listBean = (List<PackageBean.ResultBean.PssBean>) getIntent().getSerializableExtra(LIST_KEY);
         }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.wrap_item) {
