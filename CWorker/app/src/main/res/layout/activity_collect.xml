@@ -619,7 +619,7 @@
                 android:layout_marginLeft="40px"/>
 
             <RelativeLayout
-                style="@style/collect_item"
+            style="@style/collect_item"
                 android:id="@+id/recommend_layout">
 
                 <TextView

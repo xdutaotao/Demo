@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
@@ -326,6 +327,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         resultBean = bean;
     }
 
+    @Override
+    public void getPostTxt(String s) {
+
+    }
+
     private void selectCamera() {
         CameraActivity.startActivityForResult(this, imageItems.size());
     }
@@ -402,7 +408,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-
+                postCollectTxt();
                 break;
 
             case R.id.wrap_layout:
@@ -413,6 +419,82 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 TypeActivity.startActivityForResult(this, resultBean.getMts(),typeTxt.getText().toString());
                 break;
         }
+    }
+
+    private void postCollectTxt(){
+        if (TextUtils.isEmpty(numberTv.getText())){
+            ToastUtil.show("零件号不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(name.getText())){
+            ToastUtil.show("零件中文名称不能为空");
+            return;
+        }
+//        if (TextUtils.isEmpty(source.getText())){
+//            ToastUtil.show("系统来源分配不能为空");
+//            return;
+//        }
+        if (TextUtils.isEmpty(wrapText.getText())){
+            ToastUtil.show("到货包装形式不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(typeTxt.getText())){
+            ToastUtil.show("零件材料类型不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(modleNum.getText())){
+            ToastUtil.show("零件包装模数不能为空");
+            return;
+        }
+        if (outLayout.getVisibility() == View.VISIBLE){
+            if (TextUtils.isEmpty(outLength.getText())){
+                ToastUtil.show("外包装长不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(outWidth.getText())){
+                ToastUtil.show("外包装宽不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(outHeight.getText())){
+                ToastUtil.show("外包装高不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(outHeight.getText())){
+                ToastUtil.show("毛重不能为空");
+                return;
+            }
+        }
+
+        if (singleLayout.getVisibility() == View.VISIBLE){
+            if (TextUtils.isEmpty(singleLength.getText())){
+                ToastUtil.show("单个包装长不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(singleWidth.getText())){
+                ToastUtil.show("单个包装宽不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(singleHeight.getText())){
+                ToastUtil.show("单个包装高不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(singleWeight.getText())){
+                ToastUtil.show("单个包装重不能为空");
+                return;
+            }
+        }
+
+        CollectBean bean = new CollectBean();
+        bean.setPartCode(numberTv.getText().toString());
+        bean.setPartName(name.getText().toString());
+        bean.setPackageStypeName(wrapText.getText().toString());
+        bean.setPartMaterialName(typeTxt.getText().toString());
+        bean.setPackageModelCount(Integer.valueOf(modleNum.getText().toString()));
+        bean.setPackageLength(Double.valueOf(outLength.getText().toString()));
+        bean.setPackageWidth(Double.valueOf(outWidth.getText().toString()));
+        bean.setPackageHeight(Double.valueOf(outHeight.getText().toString()));
+        bean.setRoughWeight(Double.valueOf(outWeight.getText().toString()));
+
     }
 
     private void setEditTextChangedListener() {

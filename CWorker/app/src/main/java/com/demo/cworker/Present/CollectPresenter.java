@@ -2,9 +2,11 @@ package com.demo.cworker.Present;
 
 import android.content.Context;
 
+import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Model.CollectModel;
 import com.demo.cworker.Utils.RxSubUtils;
+import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.CollectView;
 
 import javax.inject.Inject;
@@ -29,7 +31,25 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                     protected void _onNext(PackageBean.ResultBean token) {
                         getView().getData(token);
                     }
+                }));
+    }
 
+    /**
+     * 采集文字信息
+     * @param context
+     */
+    public void packagingForm(Context context, CollectBean bean){
+        mCompositeSubscription.add(model.postCollectTxt(bean)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getPostTxt(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
                 }));
     }
 }

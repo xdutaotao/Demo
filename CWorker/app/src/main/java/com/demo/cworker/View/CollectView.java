@@ -7,4 +7,5 @@ import com.demo.cworker.Bean.PackageBean;
  */
 public interface CollectView extends BaseView {
     void getData(PackageBean.ResultBean bean);
+    void getPostTxt(String s);
 }

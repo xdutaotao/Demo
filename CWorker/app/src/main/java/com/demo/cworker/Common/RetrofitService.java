@@ -111,4 +111,13 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("personalCenter/goldAndExp")
     Observable<BaseBean<UserInfo.PersonBean>> signToday(@Field("String") String token, @FieldMap Map<String, Integer> map);
+
+    @FormUrlEncoded
+    @POST("data/collect")
+    Observable<BaseResponseBean> postCollectTxt(@FieldMap Map<String, String> map, @FieldMap Map<String, Double> doubleMap, @FieldMap Map<String, Integer> integerMap);
+
+    //上传图片
+    @Multipart
+    @POST("data/collect")
+    Observable<ResponseBody> postCollectImg(@PartMap Map<String, RequestBody> map);
 }
