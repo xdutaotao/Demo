@@ -3,6 +3,7 @@ package com.demo.cworker.Present;
 import android.content.Context;
 
 import com.demo.cworker.Bean.CollectBean;
+import com.demo.cworker.Bean.NumberBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Model.CollectModel;
 import com.demo.cworker.Utils.RxSubUtils;
@@ -35,6 +36,27 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                     }
                 }));
     }
+
+
+    /**
+     * 搜索文字信息
+     * @param context
+     */
+    public void getPartInfoByCode(Context context, String code, String project){
+        mCompositeSubscription.add(model.getPartInfoByCode(code, project)
+                .subscribe(new RxSubUtils<NumberBean>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(NumberBean token) {
+                        getView().getSearchData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
+                }));
+    }
+
 
     /**
      * 采集文字信息

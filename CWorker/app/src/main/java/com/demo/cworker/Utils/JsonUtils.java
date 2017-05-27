@@ -7,6 +7,7 @@ import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.UploadBean;
 import com.demo.cworker.Model.UserInfo;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -67,6 +68,10 @@ public class JsonUtils {
 
     public UploadBean JsonToUploadBean(String json){
         return gson.fromJson(json, UploadBean.class);
+    }
+
+    public List<String> JsonToList(String json){
+        return gson.fromJson(json, new TypeToken<List<String>>() {}.getType());
     }
 
 }

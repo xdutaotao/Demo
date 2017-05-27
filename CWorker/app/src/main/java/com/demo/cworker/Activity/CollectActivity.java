@@ -25,6 +25,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.demo.cworker.Bean.CollectBean;
+import com.demo.cworker.Bean.NumberBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Present.CollectPresenter;
@@ -359,7 +360,55 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getPostTxt(String s) {
+        ToastUtil.show(s);
+    }
 
+    @Override
+    public void getSearchData(NumberBean s) {
+        if (s.getData() == null){
+            ToastUtil.show("没有这个零件号");
+            return;
+        }else{
+            name.setText(s.getData().getCnName());
+            source.setText(s.getData().getSourceDistribution());
+        }
+
+        if (s.getHasOldData() == 1 && s.getOldData() != null){
+            wrapText.setText(s.getOldData().getPackageStypeName());
+            typeTxt.setText(s.getOldData().getPartMaterialName());
+            number.setText(s.getOldData().getPackageModelCount()+"");
+            length.setText(String.valueOf(s.getOldData().getPartLength()));
+            width.setText(String.valueOf(s.getOldData().getPartWidth()));
+            height.setText(String.valueOf(s.getOldData().getPartHeight()));
+            weight.setText(String.valueOf(s.getOldData().getNetWeight()));
+
+            outLength.setText(String.valueOf(s.getOldData().getPackageLength()));
+            outWidth.setText(String.valueOf(s.getOldData().getPackageWidth()));
+            outHeight.setText(String.valueOf(s.getOldData().getPackageHeight()));
+            outWeight.setText(String.valueOf(s.getOldData().getRoughWeight()));
+
+            singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength()));
+            singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth()));
+            singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight()));
+            singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight()));
+            singleSwitch.setChecked(true);
+
+            checkTv.setText(s.getOldData().getAuditType());
+            recommendTv.setText(s.getOldData().getProcessRecommendation());
+            information.setText(s.getOldData().getRemark());
+            List<String> paths = JsonUtils.getInstance().JsonToList(s.getOldData().getDocumentCodes());
+            Observable.from(paths)
+                    .map(s1 -> {
+                        ImageItem imageItem = new ImageItem();
+                        imageItem.path = s1;
+                        return imageItem;
+                    }).toList()
+                    .subscribe(imageItems1 -> {
+                        imageItems.clear();
+                        imageItems.addAll(imageItems1);
+                        setResultToAdapter(imageItems);
+                    });
+        }
     }
 
     private void selectCamera() {
@@ -617,13 +666,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         //获取Location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return null;
         }
         Location location = locationManager.getLastKnownLocation(locationProvider);
@@ -664,8 +706,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 break;
 
             case R.id.number:
-                if (!hasFocus)
+                if (!hasFocus) {
                     numberTv.setTextColor(normalColor);
+                    if (!TextUtils.isEmpty(number.getText().toString()))
+                        presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
+                }
                 break;
 
             case R.id.length:

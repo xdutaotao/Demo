@@ -3,6 +3,7 @@ package com.demo.cworker.Common;
 
 import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.BuyVipBean;
+import com.demo.cworker.Bean.NumberBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Bean.SearchResponseBean;
 import com.demo.cworker.Bean.BaseBean;
@@ -120,4 +121,9 @@ public interface RetrofitService {
     @Multipart
     @POST("data/uploadPublicPhoto")
     Observable<ResponseBody> postCollectImg(@PartMap Map<String, RequestBody> map);
+
+    @FormUrlEncoded
+    @POST("data/getPartInfoByCode")
+    Observable<NumberBean> getPartInfoByCode(@FieldMap Map<String, String> map);
+
 }

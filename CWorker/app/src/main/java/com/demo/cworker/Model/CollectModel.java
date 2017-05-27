@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.CollectBean;
+import com.demo.cworker.Bean.NumberBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Bean.UploadBean;
 import com.demo.cworker.Utils.JsonUtils;
@@ -49,6 +50,30 @@ public class CollectModel extends BaseModel {
                     }
                 }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
+
+    public Observable<NumberBean> getPartInfoByCode(String code, String project){
+        Map<String, String> map = new HashMap<>();
+        map.put("code", code);
+        map.put("project", project);
+        return config.getRetrofitService().getPartInfoByCode(map)
+                .flatMap(numberBean -> {
+                    if (TextUtils.equals(numberBean.getMsg(), "200")){
+                        return Observable.create(new Observable.OnSubscribe<NumberBean>(){
+
+                            @Override
+                            public void call(Subscriber<? super NumberBean> subscriber) {
+                                subscriber.onNext(numberBean);
+                                subscriber.onCompleted();
+                            }
+                        });
+                    }else{
+                        return Observable.error(new RxUtils.ServerException(numberBean.getResult()));
+                    }
+                }).compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+
+
 
     /**
      * 上传采集信息
