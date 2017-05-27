@@ -10,30 +10,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.demo.cworker.Activity.RecommandActivity;
+import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.R;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.demo.cworker.Common.Constants.INTENT_KEY;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TabFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
+    private static final String SELECT_KEY = "SELECT_KEY";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
 
     private RecyclerArrayAdapter<String> adapter;
+    private ArrayList<String> listBean;
+    private ArrayList<String> selectList;
 
-    public static TabFragment newInstance(String param1) {
+    private List<String> changeSelectList = new ArrayList<>();
+
+    public static TabFragment newInstance(String param1, ArrayList<String> list, ArrayList<String> selectList) {
         TabFragment fragment = new TabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putStringArrayList(SELECT_KEY, selectList);
+        args.putStringArrayList(INTENT_KEY, list);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,6 +58,8 @@ public class TabFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            selectList = getArguments().getStringArrayList(SELECT_KEY);
+            listBean = getArguments().getStringArrayList(INTENT_KEY);
         }
     }
 
@@ -50,7 +67,6 @@ public class TabFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
         unbinder = ButterKnife.bind(this, view);
 
@@ -58,33 +74,46 @@ public class TabFragment extends BaseFragment {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.recommend_tv, s);
+                for(String item: selectList){
+                    if (TextUtils.equals(s, item)){
+                        baseViewHolder.setVisible(R.id.recommend_img, true);
+                        return;
+                    }
+                }
+                baseViewHolder.setVisible(R.id.recommend_img, false);
             }
         };
+
+        adapter.setOnItemClickListener((view1, i) -> {
+            if (selectList != null && selectList.size() > 0){
+                int length = selectList.size();
+                for(int j=0; j<length; j++){
+                    String temp = selectList.get(j);
+                    if (TextUtils.equals(temp, listBean.get(i))){
+                        selectList.remove(temp);
+                        ((RecommandActivity)getActivity()).changeList.remove(temp);
+                        view1.findViewById(R.id.recommend_img).setVisibility(View.GONE);
+                        return;
+                    }
+                }
+                selectList.add(listBean.get(i));
+                ((RecommandActivity)getActivity()).changeList.add(listBean.get(i));
+                view1.findViewById(R.id.recommend_img).setVisibility(View.VISIBLE);
+            }else{
+                selectList.add(listBean.get(i));
+                ((RecommandActivity)getActivity()).changeList.add(listBean.get(i));
+                view1.findViewById(R.id.recommend_img).setVisibility(View.VISIBLE);
+            }
+
+        });
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
-        setList();
+        adapter.addAll(listBean);
         return view;
     }
 
-    private void setList(){
-        String[] list = getResources().getStringArray(R.array.tabNames);
-        if (TextUtils.equals(list[0], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeOne));
-        }else if (TextUtils.equals(list[1], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeTwo));
-        }else if (TextUtils.equals(list[2], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeThree));
-        }else if (TextUtils.equals(list[3], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeFour));
-        }else if (TextUtils.equals(list[4], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeFive));
-        }else if (TextUtils.equals(list[5], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeSix));
-        }else if (TextUtils.equals(list[6], mParam1)){
-            adapter.addAll(getResources().getStringArray(R.array.typeSeven));
-        }
-    }
 
     public String getTitle() {
         return mParam1;

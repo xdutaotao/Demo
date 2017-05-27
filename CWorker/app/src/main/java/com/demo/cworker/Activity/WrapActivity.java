@@ -24,19 +24,7 @@ import butterknife.ButterKnife;
 import static com.demo.cworker.Common.Constants.INTENT_KEY;
 
 public class WrapActivity extends BaseActivity {
-    public static final String[] NAMES = {
-            "需包装的零件_PDC&PDC:该种零件到库时未进行有效的包装，或者因特殊情况需要变更包装。",
-            "箱类包装_GH&GH:该种零件到库时已进行有效的包装，且可进行安全有效的码托，一般工艺为：纸箱、木箱、钙塑箱等。",
-            "袋类包装_GS&GS:该种零件到库时已进行有效的包装，一般工艺为：平口袋、气泡袋(片)、防绣袋(膜、纸)、纸袋(含纸箱夹扁)等。",
-            "管类包装_GG&GG:该种零件到库时已进行有效的包装，一般工艺为：纸管、三角管、PVC管等。",
-            "裸包装_GW&GW:该种零件到库时已进行有效的包装，到库时为裸件，一般工艺为：栓挂、直接贴。",
-            "供应商_箱类包装&GH:该种零件到库时已进行有效的包装，且可进行安全有效的码托，一般工艺为：纸箱、木箱、钙塑箱等。",
-            "供应商_袋类包装&GS:该种零件到库时已进行有效的包装，一般工艺为：平口袋、气泡袋(片)、防绣袋(膜、纸)、纸袋(含纸箱夹扁)等。",
-            "供应商_管类包装&GG:该种零件到库时已进行有效的包装，一般工艺为：纸管、三角管、PVC管等。",
-            "供应商_裸包装&GW:该种零件到库时已进行有效的包装，到库时为裸件，一般工艺为：栓挂、直接贴。"};
-
     private static final String LIST_KEY = "LIST_KEY";
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.title_text)
@@ -44,7 +32,7 @@ public class WrapActivity extends BaseActivity {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<PackageBean.ResultBean.PssBean> adapter;
     private String intentData;
     private List<PackageBean.ResultBean.PssBean> listBean;
 
@@ -70,24 +58,23 @@ public class WrapActivity extends BaseActivity {
             listBean = (List<PackageBean.ResultBean.PssBean>) getIntent().getSerializableExtra(LIST_KEY);
         }
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.wrap_item) {
+        adapter = new RecyclerArrayAdapter<PackageBean.ResultBean.PssBean>(this, R.layout.wrap_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                String[] datas = s.split("&");
-                baseViewHolder.setText(R.id.top_name, datas[0]);
-                baseViewHolder.setText(R.id.description, datas[1]);
-                baseViewHolder.setVisible(R.id.wrap_select, TextUtils.equals(datas[0], intentData));
-
-                baseViewHolder.setOnClickListener(R.id.top_layout, v -> {
-                    Intent intent = new Intent();
-                    intent.putExtra(INTENT_KEY, ((TextView)v.findViewById(R.id.top_name)).getText().toString());
-                    setResult(RESULT_OK, intent);
-                    finish();
-                });
+            protected void convert(BaseViewHolder baseViewHolder, PackageBean.ResultBean.PssBean s) {
+                baseViewHolder.setText(R.id.top_name, s.getName());
+                baseViewHolder.setText(R.id.description, s.getDescription());
+                baseViewHolder.setVisible(R.id.wrap_select, TextUtils.equals(s.getName(), intentData));
             }
         };
 
-        adapter.addAll(NAMES);
+        adapter.setOnItemClickListener((view, i) -> {
+            Intent intent = new Intent();
+            intent.putExtra(INTENT_KEY, listBean.get(i));
+            setResult(RESULT_OK, intent);
+            finish();
+        });
+
+        adapter.addAll(listBean);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);

@@ -15,7 +15,8 @@
         android:paddingLeft="50px"
         android:paddingRight="50px"
         android:gravity="center"
-        android:id="@+id/normal_layout">
+        android:id="@+id/normal_layout"
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,12 +27,12 @@
             android:textColor="@android:color/black"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/normal_img"
-            android:src="@drawable/cancle"/>
+            android:src="@drawable/select"/>
     </RelativeLayout>
 
     <View
@@ -46,7 +47,8 @@
         android:paddingLeft="50px"
         android:paddingRight="50px"
         android:gravity="center"
-        android:id="@+id/out_layout">
+        android:id="@+id/out_layout"
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,12 +59,12 @@
             android:textColor="@android:color/black"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/out_img"
-            android:src="@drawable/cancle"/>
+            android:src="@drawable/select"/>
     </RelativeLayout>
 
     <View
@@ -77,7 +79,8 @@
         android:paddingLeft="50px"
         android:paddingRight="50px"
         android:gravity="center"
-        android:id="@+id/other_layout">
+        android:id="@+id/other_layout"
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,12 +91,12 @@
             android:textColor="@android:color/black"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/other_img"
-            android:src="@drawable/cancle"/>
+            android:src="@drawable/select"/>
     </RelativeLayout>
 
     <View

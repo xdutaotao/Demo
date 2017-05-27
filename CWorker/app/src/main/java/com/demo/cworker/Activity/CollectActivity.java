@@ -34,6 +34,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -174,6 +175,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private int checkedColor, normalColor;
     private Drawable drawable;
     private PackageBean.ResultBean resultBean;
+    private ArrayList<String> recommandChangeList = new ArrayList<>();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
@@ -309,12 +311,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         dataLayout.setOnClickListener(v -> {
-            CheckActivity.startActivityForResult(this, checkTv.getText().toString());
+            CheckActivity.startActivityForResult(this, resultBean.getAts() ,checkTv.getText().toString());
         });
 
 
         recommendLayout.setOnClickListener(v -> {
-            RecommandActivity.startActivityForResult(this,"");
+            RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
         });
         presenter.packagingForm(this);
     }
@@ -351,9 +353,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 String s = data.getStringExtra(INTENT_KEY);
                 number.setText(s);
             } else if (data != null && requestCode == REQUEST_WRAP_CODE) {
-                wrapText.setText(data.getStringExtra(INTENT_KEY));
-                if (TextUtils.equals(data.getStringExtra(INTENT_KEY), "需包装的零件_PDC") ||
-                        TextUtils.equals(data.getStringExtra(INTENT_KEY), "供应商_裸包装")) {
+                PackageBean.ResultBean.PssBean bean = (PackageBean.ResultBean.PssBean) data.getSerializableExtra(INTENT_KEY);
+                wrapText.setText(bean.getName());
+                if (bean.getHasOutPackage() == 0) {
                     outLayout.setVisibility(View.GONE);
                 } else {
                     outLayout.setVisibility(View.VISIBLE);
@@ -363,11 +365,17 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 imageItems.addAll(list);
                 setResultToAdapter(imageItems);
             } else if (data != null && requestCode == REQUEST_TYPE_CODE) {
-                String s = data.getStringExtra(INTENT_KEY);
-                typeTxt.setText(s);
+                PackageBean.ResultBean.MtsBean bean = (PackageBean.ResultBean.MtsBean) data.getSerializableExtra(INTENT_KEY);
+                typeTxt.setText(bean.getName());
             } else if (data != null && requestCode == REQUEST_CHECK_CODE) {
-                String s = data.getStringExtra(INTENT_KEY);
-                checkTv.setText(s);
+                PackageBean.ResultBean.AtsBean bean = (PackageBean.ResultBean.AtsBean) data.getSerializableExtra(INTENT_KEY);
+                checkTv.setText(bean.getName());
+            }else if (data != null && requestCode == REQUEST_RECOMMAND_CODE){
+                recommandChangeList.clear();
+                recommandChangeList.addAll((List <String>)data.getSerializableExtra(INTENT_KEY));
+                String tempOne = recommandChangeList.toString().replace("[", "");
+                String tempTwo = tempOne.replace("]", "");
+                recommendTv.setText(tempTwo);
             }
         }
     }
@@ -402,7 +410,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 break;
 
             case R.id.type_layout:
-                TypeActivity.startActivityForResult(this, typeTxt.getText().toString());
+                TypeActivity.startActivityForResult(this, resultBean.getMts(),typeTxt.getText().toString());
                 break;
         }
     }

@@ -81,7 +81,7 @@ public class PackageBean {
             this.ats = ats;
         }
 
-        public static class MtsBean {
+        public static class MtsBean implements Serializable{
             /**
              * dateline : 0
              * name : 玻璃
@@ -263,7 +263,7 @@ public class PackageBean {
             }
         }
 
-        public static class PmtsBean {
+        public static class PmtsBean implements Serializable{
             /**
              * id : 类型; id用于搜索包材列表
              * project : 所属项目
@@ -309,7 +309,7 @@ public class PackageBean {
             }
         }
 
-        public static class PmsBean {
+        public static class PmsBean implements Serializable{
             /**
              * englishName :
              * dateline : 0
@@ -435,7 +435,7 @@ public class PackageBean {
             }
         }
 
-        public static class AtsBean {
+        public static class AtsBean implements Serializable{
             /**
              * name : 名称
              * project : 所属项目

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/activity_background">
+    android:background="?android:attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,10 +20,10 @@
             android:textColor="@android:color/black"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:id="@+id/wrap_select"
-            android:src="@drawable/cancle"
+            android:src="@drawable/select"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
