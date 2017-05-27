@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <permission
         android:name="com.demo.cworker.permission.MIPUSH_RECEIVE"
@@ -92,7 +95,7 @@
         <activity android:name=".Activity.HelpActivity" />
         <activity android:name=".Activity.TypeActivity" />
         <activity android:name=".Activity.CheckActivity" />
-        <activity android:name=".Activity.RecommandActivity"></activity>
+        <activity android:name=".Activity.RecommandActivity"/>
     </application>
 
 </manifest>

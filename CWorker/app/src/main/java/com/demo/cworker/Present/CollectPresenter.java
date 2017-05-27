@@ -9,6 +9,8 @@ import com.demo.cworker.Utils.RxSubUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.CollectView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Subscriber;
@@ -38,8 +40,8 @@ public class CollectPresenter extends BasePresenter<CollectView> {
      * 采集文字信息
      * @param context
      */
-    public void packagingForm(Context context, CollectBean bean){
-        mCompositeSubscription.add(model.postCollectTxt(bean)
+    public void postCollectData(Context context, CollectBean bean, List<String> imgList){
+        mCompositeSubscription.add(model.postCollectTxt(bean, imgList)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {

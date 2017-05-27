@@ -4,8 +4,11 @@ import com.demo.cworker.Bean.LoginBean;
 import com.demo.cworker.Bean.LoginResponseBean;
 import com.demo.cworker.Bean.RegisterBean;
 import com.demo.cworker.Bean.BaseResponseBean;
+import com.demo.cworker.Bean.UploadBean;
 import com.demo.cworker.Model.UserInfo;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 /**
  * Description:
@@ -56,6 +59,14 @@ public class JsonUtils {
 
     public BaseResponseBean JsonToUpdateFile(String json){
         return gson.fromJson(json, BaseResponseBean.class);
+    }
+
+    public String ListToJson(List<String> data){
+        return gson.toJson(data);
+    }
+
+    public UploadBean JsonToUploadBean(String json){
+        return gson.fromJson(json, UploadBean.class);
     }
 
 }

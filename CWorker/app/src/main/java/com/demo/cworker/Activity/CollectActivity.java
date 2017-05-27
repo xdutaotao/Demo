@@ -1,9 +1,14 @@
 package com.demo.cworker.Activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -21,8 +26,10 @@ import android.widget.TextView;
 
 import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.PackageBean;
+import com.demo.cworker.Model.User;
 import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
+import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.View.CollectView;
 import com.demo.cworker.Widget.CustomTextWatcher;
@@ -171,12 +178,35 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @BindView(R.id.recommend_tv)
     TextView recommendTv;
 
+    /**
+     * 图片adapter
+     */
     private RecyclerArrayAdapter<String> adapter;
+    /**
+     * 图片返回的items
+     */
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
+    /**
+     * 选中颜色，正常颜色
+     */
     private int checkedColor, normalColor;
+    /**
+     * EditText 末尾 x号
+     */
     private Drawable drawable;
+    /**
+     * 本页获取的网络数据
+     */
     private PackageBean.ResultBean resultBean;
+    /**
+     * 选中的类型
+     */
     private ArrayList<String> recommandChangeList = new ArrayList<>();
+    /**
+     * 地理位置
+     */
+    private LocationManager locationManager;
+    private String locationProvider;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
@@ -312,7 +342,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         dataLayout.setOnClickListener(v -> {
-            CheckActivity.startActivityForResult(this, resultBean.getAts() ,checkTv.getText().toString());
+            CheckActivity.startActivityForResult(this, resultBean.getAts(), checkTv.getText().toString());
         });
 
 
@@ -376,9 +406,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             } else if (data != null && requestCode == REQUEST_CHECK_CODE) {
                 PackageBean.ResultBean.AtsBean bean = (PackageBean.ResultBean.AtsBean) data.getSerializableExtra(INTENT_KEY);
                 checkTv.setText(bean.getName());
-            }else if (data != null && requestCode == REQUEST_RECOMMAND_CODE){
+            } else if (data != null && requestCode == REQUEST_RECOMMAND_CODE) {
                 recommandChangeList.clear();
-                recommandChangeList.addAll((List <String>)data.getSerializableExtra(INTENT_KEY));
+                recommandChangeList.addAll((List<String>) data.getSerializableExtra(INTENT_KEY));
                 String tempOne = recommandChangeList.toString().replace("[", "");
                 String tempTwo = tempOne.replace("]", "");
                 recommendTv.setText(tempTwo);
@@ -412,76 +442,116 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 break;
 
             case R.id.wrap_layout:
-                WrapActivity.startActivityForResult(this, resultBean.getPss(),wrapText.getText().toString());
+                WrapActivity.startActivityForResult(this, resultBean.getPss(), wrapText.getText().toString());
                 break;
 
             case R.id.type_layout:
-                TypeActivity.startActivityForResult(this, resultBean.getMts(),typeTxt.getText().toString());
+                TypeActivity.startActivityForResult(this, resultBean.getMts(), typeTxt.getText().toString());
                 break;
         }
     }
 
-    private void postCollectTxt(){
-        if (TextUtils.isEmpty(numberTv.getText())){
+    private void postCollectTxt() {
+        if (TextUtils.isEmpty(numberTv.getText())) {
             ToastUtil.show("零件号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(name.getText())){
+        if (TextUtils.isEmpty(name.getText())) {
             ToastUtil.show("零件中文名称不能为空");
             return;
         }
-//        if (TextUtils.isEmpty(source.getText())){
-//            ToastUtil.show("系统来源分配不能为空");
-//            return;
-//        }
-        if (TextUtils.isEmpty(wrapText.getText())){
+        if (TextUtils.isEmpty(source.getText())) {
+            ToastUtil.show("系统来源分配不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(wrapText.getText())) {
             ToastUtil.show("到货包装形式不能为空");
             return;
         }
-        if (TextUtils.isEmpty(typeTxt.getText())){
+        if (TextUtils.isEmpty(typeTxt.getText())) {
             ToastUtil.show("零件材料类型不能为空");
             return;
         }
-        if (TextUtils.isEmpty(modleNum.getText())){
+        if (TextUtils.isEmpty(modleNum.getText())) {
             ToastUtil.show("零件包装模数不能为空");
             return;
         }
-        if (outLayout.getVisibility() == View.VISIBLE){
-            if (TextUtils.isEmpty(outLength.getText())){
+        if (outLayout.getVisibility() == View.VISIBLE) {
+            if (TextUtils.isEmpty(outLength.getText())) {
                 ToastUtil.show("外包装长不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outWidth.getText())){
+            if (TextUtils.isEmpty(outWidth.getText())) {
                 ToastUtil.show("外包装宽不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outHeight.getText())){
+            if (TextUtils.isEmpty(outHeight.getText())) {
                 ToastUtil.show("外包装高不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outHeight.getText())){
+            if (TextUtils.isEmpty(outHeight.getText())) {
                 ToastUtil.show("毛重不能为空");
                 return;
             }
         }
 
-        if (singleLayout.getVisibility() == View.VISIBLE){
-            if (TextUtils.isEmpty(singleLength.getText())){
+        if (singleLayout.getVisibility() == View.VISIBLE) {
+            if (TextUtils.isEmpty(singleLength.getText())) {
                 ToastUtil.show("单个包装长不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(singleWidth.getText())){
+            if (TextUtils.isEmpty(singleWidth.getText())) {
                 ToastUtil.show("单个包装宽不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(singleHeight.getText())){
+            if (TextUtils.isEmpty(singleHeight.getText())) {
                 ToastUtil.show("单个包装高不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(singleWeight.getText())){
+            if (TextUtils.isEmpty(singleWeight.getText())) {
                 ToastUtil.show("单个包装重不能为空");
                 return;
             }
+        }
+
+        if (TextUtils.isEmpty(length.getText())) {
+            ToastUtil.show("零件长不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(width.getText())) {
+            ToastUtil.show("零件宽不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(height.getText())) {
+            ToastUtil.show("零件高不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(weight.getText())) {
+            ToastUtil.show("净重不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(allLength.getText())) {
+            ToastUtil.show("叠加长度不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(allWidth.getText())) {
+            ToastUtil.show("叠加宽度不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(allHeight.getText())) {
+            ToastUtil.show("叠加高度不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(checkTv.getText())) {
+            ToastUtil.show("数据核查不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(recommendTv.getText())) {
+            ToastUtil.show("工艺推荐不能为空");
+            return;
         }
 
         CollectBean bean = new CollectBean();
@@ -490,11 +560,80 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         bean.setPackageStypeName(wrapText.getText().toString());
         bean.setPartMaterialName(typeTxt.getText().toString());
         bean.setPackageModelCount(Integer.valueOf(modleNum.getText().toString()));
-        bean.setPackageLength(Double.valueOf(outLength.getText().toString()));
-        bean.setPackageWidth(Double.valueOf(outWidth.getText().toString()));
-        bean.setPackageHeight(Double.valueOf(outHeight.getText().toString()));
-        bean.setRoughWeight(Double.valueOf(outWeight.getText().toString()));
 
+        if (outLayout.getVisibility() == View.VISIBLE) {
+            bean.setPackageLength(Double.valueOf(outLength.getText().toString()));
+            bean.setPackageWidth(Double.valueOf(outWidth.getText().toString()));
+            bean.setPackageHeight(Double.valueOf(outHeight.getText().toString()));
+            bean.setRoughWeight(Double.valueOf(outWeight.getText().toString()));
+        }
+
+        bean.setPartLength(Double.valueOf(length.getText().toString()));
+        bean.setPartWidth(Double.valueOf(width.getText().toString()));
+        bean.setPartHeigth(Double.valueOf(height.getText().toString()));
+        bean.setNetWeight(Double.valueOf(weight.getText().toString()));
+
+        if (singleLayout.getVisibility() == View.VISIBLE) {
+            bean.setSinglePackageLength(Double.valueOf(singleLength.getText().toString()));
+            bean.setSinglePackageWidth(Double.valueOf(singleWidth.getText().toString()));
+            bean.setSinglePackageHeight(Double.valueOf(singleHeight.getText().toString()));
+            bean.setSinglePackageWeight(Double.valueOf(singleWeight.getText().toString()));
+        }
+
+        bean.setAddedLength(Double.valueOf(allLength.getText().toString()));
+        bean.setAddedWidth(Double.valueOf(allWidth.getText().toString()));
+        bean.setAddedHeight(Double.valueOf(allHeight.getText().toString()));
+
+        bean.setSystemResource(source.getText().toString());
+        bean.setAuditType(checkTv.getText().toString());
+        bean.setProcessRecommendation(JsonUtils.getInstance().ListToJson(recommandChangeList));
+        bean.setRemark(information.getText().toString());
+        bean.setIsHistory(0);
+        bean.setProject(User.getInstance().getUserInfo().getPerson().getProject());
+        bean.setLocations(getLocation());
+
+        List<String> pathList = new ArrayList<>();
+        Observable.from(imageItems)
+                .map(imageItem -> imageItem.path)
+                .toList()
+                .subscribe(list -> {
+                    pathList.addAll(list);
+                });
+        presenter.postCollectData(this, bean, pathList);
+    }
+
+    private String getLocation() {
+        //获取地理位置管理器
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //获取所有可用的位置提供器
+        List<String> providers = locationManager.getProviders(true);
+        if (providers.contains(LocationManager.GPS_PROVIDER)) {
+            //如果是GPS
+            locationProvider = LocationManager.GPS_PROVIDER;
+        } else if (providers.contains(LocationManager.NETWORK_PROVIDER)) {
+            //如果是Network
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+        }
+
+        //获取Location
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+        if(location!=null){
+            //不为空,显示地理位置经纬度
+            String locationStr = "" + location.getLatitude() +","
+                                +location.getLongitude();
+            return locationStr;
+        }
+        return null;
     }
 
     private void setEditTextChangedListener() {

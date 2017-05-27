@@ -118,6 +118,6 @@ public interface RetrofitService {
 
     //上传图片
     @Multipart
-    @POST("data/collect")
+    @POST("data/uploadPublicPhoto")
     Observable<ResponseBody> postCollectImg(@PartMap Map<String, RequestBody> map);
 }
