@@ -57,6 +57,7 @@ dependencies {
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版
     compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-vector-drawable:25.0.1'
