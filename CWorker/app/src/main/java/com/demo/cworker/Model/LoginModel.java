@@ -25,6 +25,8 @@ import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 
+import static com.demo.cworker.Common.Constants.CACHE_DIR;
+
 /**
  * Created by
  */
@@ -245,7 +247,7 @@ public class LoginModel extends BaseModel {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 Glide.get(App.getContext()).clearDiskCache();
-                FileUtils.deleteDirectory("cworker");
+                FileUtils.deleteDirectory(CACHE_DIR);
                 subscriber.onNext("清除成功");
                 subscriber.onCompleted();
             }

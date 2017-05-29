@@ -11,4 +11,8 @@ public class Constants {
     public static final String INTENT_KEY = "intent_key";
     public static final String LOGIN_AGAIN = "login_again";
     public static final String SEARCH_KEY = "SEARCH_KEY";
+    public static final String CACHE_DIR = "cwork";
+    public static final String POST_COLLECT_TIME = "POST_COLLECT_TIME";
+    public static final String COLLECT_LIST = "COLLECT_LIST";
+
 }

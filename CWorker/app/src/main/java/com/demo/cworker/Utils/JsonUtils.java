@@ -1,5 +1,6 @@
 package com.demo.cworker.Utils;
 
+import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.LoginBean;
 import com.demo.cworker.Bean.LoginResponseBean;
 import com.demo.cworker.Bean.RegisterBean;
@@ -72,6 +73,14 @@ public class JsonUtils {
 
     public List<String> JsonToList(String json){
         return gson.fromJson(json, new TypeToken<List<String>>() {}.getType());
+    }
+
+    public List<CollectBean> JsonToCollectList(String json){
+        return gson.fromJson(json, new TypeToken<List<CollectBean>>() {}.getType());
+    }
+
+    public String CollectListToJson(List<CollectBean> list){
+        return gson.toJson(list);
     }
 
 }

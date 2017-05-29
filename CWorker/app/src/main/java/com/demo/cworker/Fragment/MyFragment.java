@@ -20,6 +20,7 @@ import com.demo.cworker.Activity.PersonalActivity;
 import com.demo.cworker.Activity.SettingActivity;
 import com.demo.cworker.Activity.SuggestActivity;
 import com.demo.cworker.Activity.VIPActivity;
+import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.LoginPresenter;
@@ -121,6 +122,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         setting.setOnClickListener(this);
         sign.setOnClickListener(this);
         help.setOnClickListener(this);
+        today.setOnClickListener(this);
         return view;
     }
 
@@ -153,7 +155,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 }
 
                 loginText.setText(userInfo.getPerson().getName());
-                today.setText(userInfo.getUps().getToday() + "");
+
+                if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, null) != null){
+                    today.setText(ShareUtils.getValue(Constants.POST_COLLECT_TIME, null));
+                }else{
+                    today.setText("0");
+                }
+
+
                 month.setText(userInfo.getUps().getMonth() + "");
                 year.setText(userInfo.getUps().getYear() + "");
                 total.setText(userInfo.getUps().getTotal() + "");
@@ -258,6 +267,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
             case R.id.help:
                 HelpActivity.startActivity(getContext());
+                break;
+
+            case R.id.today:
+
                 break;
         }
     }

@@ -2,16 +2,20 @@ package com.demo.cworker.Model;
 
 import android.text.TextUtils;
 
+import com.demo.cworker.App;
 import com.demo.cworker.Bean.BaseResponseBean;
 import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.NumberBean;
 import com.demo.cworker.Bean.PackageBean;
 import com.demo.cworker.Bean.UploadBean;
+import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.RxUtils;
+import com.demo.cworker.Utils.ShareUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,7 @@ import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.observables.SyncOnSubscribe;
+import top.zibin.luban.Luban;
 
 /**
  * Created by
@@ -124,22 +129,44 @@ public class CollectModel extends BaseModel {
         intMap.put("isHistory", bean.getIsHistory());
 
 
-        Map<String, RequestBody> requestBodyMap = new HashMap<>();
-        requestBodyMap.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
+//        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+//        requestBodyMap.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
+//
+//        for(String path: list){
+//            File file = new File(path);
+//            RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
+//            requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
+//        }
 
-        for(String path: list){
-            File file = new File(path);
-            RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-            requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
-        }
-
-        return config.getRetrofitService().postCollectImg(requestBodyMap)
+        return resizeFile(list)
+                .flatMap(stringRequestBodyMap -> {
+                    return config.getRetrofitService().postCollectImg(stringRequestBodyMap);
+                })
                 .flatMap(responseBody -> {
                     try {
                         String s = responseBody.string();
                         UploadBean uploadBean = JsonUtils.getInstance().JsonToUploadBean(s);
                         if (TextUtils.equals(uploadBean.getMsg(), "200")){
                             map.put("documentCodes", uploadBean.getData());
+
+                            List<CollectBean> collectBeanList = new ArrayList<>();
+                            bean.setSuccess(true);
+                            bean.setDocumentCodes(uploadBean.getData());
+                            if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
+                                collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
+                            }
+                            collectBeanList.add(bean);
+                            String listJson = JsonUtils.getInstance().CollectListToJson(collectBeanList);
+                            ShareUtils.putValue(Constants.COLLECT_LIST, listJson);
+                            if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
+                                int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);
+                                ++time;
+                                ShareUtils.putValue(Constants.POST_COLLECT_TIME, time);
+                            }else{
+                                ShareUtils.putValue(Constants.POST_COLLECT_TIME, 1);
+                            }
+
+
                             return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap);
                         }else{
                             return Observable.error(new RxUtils.ServerException(uploadBean.getResult())) ;
@@ -164,24 +191,28 @@ public class CollectModel extends BaseModel {
                     }
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
 
 
+    private Observable<Map<String, RequestBody>> resizeFile(List<String> list){
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        return Observable.from(list)
+                .flatMap(s -> {
+                    return Luban.get(App.getContext())
+                            .load(new File(s))                     //传人要压缩的图片
+                            .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
+                            .asObservable();
 
-//        return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap)
-//                .flatMap( bean1 -> {
-//                    if (TextUtils.equals(bean1.getMsg(), "200")){
-//                        return Observable.create(new Observable.OnSubscribe<String>() {
-//                            @Override
-//                            public void call(Subscriber<? super String> subscriber) {
-//                                subscriber.onNext(bean1.getResult());
-//                                subscriber.onCompleted();
-//                            }
-//                        });
-//                    }else{
-//                        return Observable.error(new RxUtils.ServerException(bean1.getResult())) ;
-//                    }
-//                })
-//                .compose(RxUtils.applyIOToMainThreadSchedulers());
+                })
+                .map(file -> {
+                    RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
+                    return requestBodyMap;
+                })
+                .map(stringRequestBodyMap -> {
+                    stringRequestBodyMap.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
+                    return stringRequestBodyMap;
+                });
     }
 
     /**

@@ -6,7 +6,7 @@ package com.demo.cworker.Bean;
  */
 
 public class CollectBean {
-    private String token;
+    private boolean isSuccess;
     private String partCode;
     private String partName;
     private String packageStypeName;
@@ -36,12 +36,12 @@ public class CollectBean {
     private String project;
     private String documentCodes;
 
-    public String getToken() {
-        return token;
+    public boolean getIsSuccess() {
+        return isSuccess;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setSuccess(boolean isSuccess) {
+        this.isSuccess = isSuccess;
     }
 
     public String getPartCode() {

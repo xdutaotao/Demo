@@ -376,7 +376,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getPostTxt(String s) {
-        ToastUtil.show(s);
+        ToastUtil.show("上传成功");
+        finish();
     }
 
     @Override
@@ -649,27 +650,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         bean.setPackageModelCount(Integer.valueOf(modleNum.getText().toString()));
 
         if (outLayout.getVisibility() == View.VISIBLE) {
-            bean.setPackageLength(Double.valueOf(outLength.getText().toString()));
-            bean.setPackageWidth(Double.valueOf(outWidth.getText().toString()));
-            bean.setPackageHeight(Double.valueOf(outHeight.getText().toString()));
-            bean.setRoughWeight(Double.valueOf(outWeight.getText().toString()));
+            bean.setPackageLength(Double.valueOf(Utils.subText(outLength.getText().toString())));
+            bean.setPackageWidth(Double.valueOf(Utils.subText(outWidth.getText().toString())));
+            bean.setPackageHeight(Double.valueOf(Utils.subText(outHeight.getText().toString())));
+            bean.setRoughWeight(Double.valueOf(Utils.subText(outWeight.getText().toString())));
         }
 
-        bean.setPartLength(Double.valueOf(length.getText().toString()));
-        bean.setPartWidth(Double.valueOf(width.getText().toString()));
-        bean.setPartHeigth(Double.valueOf(height.getText().toString()));
-        bean.setNetWeight(Double.valueOf(weight.getText().toString()));
+        bean.setPartLength(Double.valueOf(Utils.subText(length.getText().toString())));
+        bean.setPartWidth(Double.valueOf(Utils.subText(width.getText().toString())));
+        bean.setPartHeigth(Double.valueOf(Utils.subText(height.getText().toString())));
+        bean.setNetWeight(Double.valueOf(Utils.subText(weight.getText().toString())));
 
         if (singleLayout.getVisibility() == View.VISIBLE) {
-            bean.setSinglePackageLength(Double.valueOf(singleLength.getText().toString()));
-            bean.setSinglePackageWidth(Double.valueOf(singleWidth.getText().toString()));
-            bean.setSinglePackageHeight(Double.valueOf(singleHeight.getText().toString()));
-            bean.setSinglePackageWeight(Double.valueOf(singleWeight.getText().toString()));
+            bean.setSinglePackageLength(Double.valueOf(Utils.subText(singleLength.getText().toString())));
+            bean.setSinglePackageWidth(Double.valueOf(Utils.subText(singleWidth.getText().toString())));
+            bean.setSinglePackageHeight(Double.valueOf(Utils.subText(singleHeight.getText().toString())));
+            bean.setSinglePackageWeight(Double.valueOf(Utils.subText(singleWeight.getText().toString())));
         }
 
-        bean.setAddedLength(Double.valueOf(allLength.getText().toString()));
-        bean.setAddedWidth(Double.valueOf(allWidth.getText().toString()));
-        bean.setAddedHeight(Double.valueOf(allHeight.getText().toString()));
+        bean.setAddedLength(Double.valueOf(Utils.subText(allLength.getText().toString())));
+        bean.setAddedWidth(Double.valueOf(Utils.subText(allWidth.getText().toString())));
+        bean.setAddedHeight(Double.valueOf(Utils.subText(allHeight.getText().toString())));
 
         bean.setSystemResource(source.getText().toString());
         bean.setAuditType(checkTv.getText().toString());
