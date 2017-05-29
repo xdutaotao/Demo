@@ -17,7 +17,6 @@ public class CustomTextWatcher implements TextWatcher {
     private EditText editText;
     private Drawable drawable;
     private boolean isNumPoint;
-    private boolean isPoint;
 
     public CustomTextWatcher(EditText et, Drawable d, boolean b) {
         this.editText = et;
@@ -62,8 +61,6 @@ public class CustomTextWatcher implements TextWatcher {
             }
             editText.setSelection(s.length());
         }
-
-        LogUtils.d("onTextChanged: "+s.toString());
     }
 
     @Override

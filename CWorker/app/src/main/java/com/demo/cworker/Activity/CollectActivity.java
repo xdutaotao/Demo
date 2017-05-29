@@ -32,6 +32,7 @@ import com.demo.cworker.Present.CollectPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.JsonUtils;
 import com.demo.cworker.Utils.ToastUtil;
+import com.demo.cworker.Utils.Utils;
 import com.demo.cworker.View.CollectView;
 import com.demo.cworker.Widget.CustomTextWatcher;
 import com.demo.cworker.Widget.GlideImageLoader;
@@ -179,6 +180,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @BindView(R.id.recommend_tv)
     TextView recommendTv;
 
+    @BindView(R.id.number_layout)
+    RelativeLayout numberLayout;
+
     /**
      * 图片adapter
      */
@@ -222,6 +226,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         getActivityComponent().inject(this);
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "采集");
+
         checkedColor = getResources().getColor(R.color.colorPrimary);
         normalColor = getResources().getColor(R.color.black);
         drawable = getResources().getDrawable(R.drawable.cancle);
@@ -270,6 +275,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         adapter.add(ADD);
         initImagePicker();
 
+        numberLayout.setOnTouchListener((v, event) -> {
+            numberLayout.setFocusable(true);
+            numberLayout.setFocusableInTouchMode(true);
+            numberLayout.requestLayout();
+            closeSoftKeyboard(numberLayout, this);
+            return false;
+        });
+
         wrapLayout.setOnClickListener(this);
         typeLayout.setOnClickListener(this);
 
@@ -280,6 +293,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         number.setOnTouchListener(this);
         number.setOnFocusChangeListener(this);
+        number.addTextChangedListener(new CustomTextWatcher(number, drawable, false));
 
         length.setOnTouchListener(this);
         length.setOnFocusChangeListener(this);
@@ -365,18 +379,17 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getSearchData(NumberBean s) {
-        if (s.getData() == null){
-            ToastUtil.show("没有这个零件号");
+        if (s.getData() == null) {
             return;
-        }else{
+        } else {
             name.setText(s.getData().getCnName());
             source.setText(s.getData().getSourceDistribution());
         }
 
-        if (s.getHasOldData() == 1 && s.getOldData() != null){
+        if (s.getHasOldData() == 1 && s.getOldData() != null) {
             wrapText.setText(s.getOldData().getPackageStypeName());
             typeTxt.setText(s.getOldData().getPartMaterialName());
-            number.setText(s.getOldData().getPackageModelCount()+"");
+            number.setText(s.getOldData().getPackageModelCount() + "");
             length.setText(String.valueOf(s.getOldData().getPartLength()));
             width.setText(String.valueOf(s.getOldData().getPartWidth()));
             height.setText(String.valueOf(s.getOldData().getPartHeight()));
@@ -501,18 +514,20 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void postCollectTxt() {
+        String dialogMsg = "";
+
         if (TextUtils.isEmpty(numberTv.getText())) {
             ToastUtil.show("零件号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(name.getText())) {
-            ToastUtil.show("零件中文名称不能为空");
-            return;
-        }
-        if (TextUtils.isEmpty(source.getText())) {
-            ToastUtil.show("系统来源分配不能为空");
-            return;
-        }
+//        if (TextUtils.isEmpty(name.getText())) {
+//            ToastUtil.show("零件中文名称不能为空");
+//            return;
+//        }
+//        if (TextUtils.isEmpty(source.getText())) {
+//            ToastUtil.show("系统来源分配不能为空");
+//            return;
+//        }
         if (TextUtils.isEmpty(wrapText.getText())) {
             ToastUtil.show("到货包装形式不能为空");
             return;
@@ -542,6 +557,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 ToastUtil.show("毛重不能为空");
                 return;
             }
+
+            if (Utils.subText(outLength.getText().toString()) < Utils.subText(outWidth.getText().toString())
+                    || Utils.subText(outWidth.getText().toString()) < Utils.subText(outHeight.getText().toString())) {
+                dialogMsg = "外包装长宽高不满足测量规则！";
+            }
+
         }
 
         if (singleLayout.getVisibility() == View.VISIBLE) {
@@ -560,6 +581,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             if (TextUtils.isEmpty(singleWeight.getText())) {
                 ToastUtil.show("单个包装重不能为空");
                 return;
+            }
+
+            if (Utils.subText(singleLength.getText().toString()) < Utils.subText(singleWidth.getText().toString())
+                    || Utils.subText(singleWidth.getText().toString()) < Utils.subText(singleHeight.getText().toString())) {
+                dialogMsg = "单个包装长宽高不满足测量规则！";
             }
         }
 
@@ -580,6 +606,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return;
         }
 
+        if (Utils.subText(length.getText().toString()) < Utils.subText(width.getText().toString())
+                || Utils.subText(width.getText().toString()) < Utils.subText(height.getText().toString())) {
+            dialogMsg = "零件长宽高不满足测量规则！";
+        }
+
         if (TextUtils.isEmpty(allLength.getText())) {
             ToastUtil.show("叠加长度不能为空");
             return;
@@ -591,6 +622,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         if (TextUtils.isEmpty(allHeight.getText())) {
             ToastUtil.show("叠加高度不能为空");
             return;
+        }
+
+        if (Utils.subText(allLength.getText().toString()) < Utils.subText(allWidth.getText().toString())
+                || Utils.subText(allWidth.getText().toString()) < Utils.subText(allHeight.getText().toString())) {
+            dialogMsg = "叠加长宽高不满足测量规则！";
         }
 
         if (TextUtils.isEmpty(checkTv.getText())) {
@@ -648,7 +684,19 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 .subscribe(list -> {
                     pathList.addAll(list);
                 });
-        presenter.postCollectData(this, bean, pathList);
+
+        if (TextUtils.isEmpty(dialogMsg)) {
+            dialogMsg = "数据将上传到用户所在的项目组中";
+        }
+
+        new IOSDialog(this).builder()
+                .setTitle("是否确定上传当前数据？")
+                .setMsg(dialogMsg)
+                .setPositiveButton("取消")
+                .setNegativeButton("确定", v -> {
+                    presenter.postCollectData(this, bean, pathList);
+                })
+                .show();
     }
 
     private String getLocation() {
@@ -669,10 +717,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return null;
         }
         Location location = locationManager.getLastKnownLocation(locationProvider);
-        if(location!=null){
+        if (location != null) {
             //不为空,显示地理位置经纬度
-            String locationStr = "" + location.getLatitude() +","
-                                +location.getLongitude();
+            String locationStr = "" + location.getLatitude() + ","
+                    + location.getLongitude();
             return locationStr;
         }
         return null;
@@ -701,8 +749,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
             case R.id.modle_num:
-                if (!hasFocus)
+                if (!hasFocus) {
                     modleTv.setTextColor(normalColor);
+                }
                 break;
 
             case R.id.number:
@@ -767,8 +816,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             case R.id.single_height:
                 setEditText(singleHeight, singleHeightTv, hasFocus);
+                break;
         }
-
+        clearImg(v);
+        if (hasFocus){
+            ((EditText)v).setSelection(((EditText) v).getText().length());
+        }
     }
 
     @Override
@@ -844,6 +897,24 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void setEditText(EditText et, TextView tv, boolean hasFocus) {
+        if (TextUtils.equals("净重", tv.getText().toString())) {
+            if (!hasFocus) {
+                tv.setTextColor(normalColor);
+                if (et.getText().length() > 0) {
+                    et.setText(et.getText() + "kg");
+                } else {
+                    et.setHint("kg");
+                }
+            } else {
+                if (et.getText().length() > 0) {
+                    String s = et.getText().toString();
+                    int index = s.indexOf("kg");
+                    String temp = s.substring(0, index);
+                    et.setText(temp);
+                }
+            }
+            return;
+        }
         if (!hasFocus) {
             tv.setTextColor(normalColor);
             if (et.getText().length() > 0) {
@@ -859,6 +930,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 et.setText(temp);
             }
         }
+    }
+
+    private void clearImg(View view) {
+        if (view instanceof EditText) {
+            ((EditText) view).setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        }
+
     }
 
     private void changeUI(MotionEvent event, EditText et, TextView tv) {
@@ -897,7 +975,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onFailure() {

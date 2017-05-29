@@ -33,6 +33,10 @@ public class CollectModel extends BaseModel {
     @Inject
     public CollectModel() {}
 
+    /**
+     * 扫描
+     * @return
+     */
     public Observable<PackageBean.ResultBean> packagingForm(){
         return config.getRetrofitService().packagingForm(User.getInstance().getUserInfo().getPerson().getProject())
                 .flatMap(packageBean -> {
@@ -51,6 +55,12 @@ public class CollectModel extends BaseModel {
                 }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
+    /**
+     * 搜索
+     * @param code
+     * @param project
+     * @return
+     */
     public Observable<NumberBean> getPartInfoByCode(String code, String project){
         Map<String, String> map = new HashMap<>();
         map.put("code", code);

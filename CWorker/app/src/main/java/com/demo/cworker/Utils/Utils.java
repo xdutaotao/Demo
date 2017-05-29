@@ -10,6 +10,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -525,6 +526,18 @@ public class Utils {
         windowPos[1] = (screenHeight - windowHeight)/2;
 
         return windowPos;
+    }
+
+    /**
+     * 截取字符串 去掉后面单位
+     */
+    public static int subText(@NonNull String s){
+        if (s.length() < 3){
+            return 0;
+        }
+
+        int length = s.length();
+        return Integer.valueOf(s.substring(0, length-2));
     }
 
 

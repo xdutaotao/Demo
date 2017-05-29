@@ -53,12 +53,12 @@ public class BaseActivity extends SwipeBackActivity {
 
     /**
      * 手动控制键盘隐藏
-     * @param mEditText
+     * @param view
      * @param mContext
      */
-    public void closeSoftKeyboard(EditText mEditText, Context mContext) {
+    public void closeSoftKeyboard(View view, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
