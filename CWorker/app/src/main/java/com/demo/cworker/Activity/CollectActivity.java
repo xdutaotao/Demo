@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -180,8 +181,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @BindView(R.id.recommend_tv)
     TextView recommendTv;
 
-    @BindView(R.id.number_layout)
-    RelativeLayout numberLayout;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
 
     /**
      * 图片adapter
@@ -275,11 +276,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         adapter.add(ADD);
         initImagePicker();
 
-        numberLayout.setOnTouchListener((v, event) -> {
-            numberLayout.setFocusable(true);
-            numberLayout.setFocusableInTouchMode(true);
-            numberLayout.requestLayout();
-            closeSoftKeyboard(numberLayout, this);
+        scrollView.setOnTouchListener((v, event) -> {
+            scrollView.setFocusable(true);
+            scrollView.setFocusableInTouchMode(true);
+            scrollView.requestLayout();
+            clearFocus();
+            closeSoftKeyboard(scrollView, this);
             return false;
         });
 
@@ -820,7 +822,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
         clearImg(v);
         if (hasFocus){
-            ((EditText)v).setSelection(((EditText) v).getText().length());
+            v.post(new Runnable() {
+                @Override
+                public void run() {
+                    ((EditText)v).setSelection(((EditText) v).getText().length());
+                }
+            });
+
         }
     }
 
@@ -893,11 +901,26 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     break;
             }
         }
+
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                ((EditText)v).setSelection(((EditText) v).getText().length());
+            }
+        });
+
         return false;
     }
 
+    /**
+     * 获取焦点和失去焦点事件
+     * @param et
+     * @param tv
+     * @param hasFocus
+     */
     private void setEditText(EditText et, TextView tv, boolean hasFocus) {
-        if (TextUtils.equals("净重", tv.getText().toString())) {
+        if (TextUtils.equals("净重", tv.getText().toString()) ||
+                TextUtils.equals("毛重", tv.getText().toString())) {
             if (!hasFocus) {
                 tv.setTextColor(normalColor);
                 if (et.getText().length() > 0) {
@@ -932,6 +955,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
     }
 
+    /**
+     * 失去焦点 去除右边 x 号
+     * @param view
+     */
     private void clearImg(View view) {
         if (view instanceof EditText) {
             ((EditText) view).setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
@@ -939,17 +966,32 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     }
 
+    /**
+     * EditText 获取焦点，改变字体颜色
+     * @param event
+     * @param et
+     * @param tv
+     */
     private void changeUI(MotionEvent event, EditText et, TextView tv) {
-        if (event.getX() > et.getWidth() - et.getPaddingRight() - drawable.getIntrinsicWidth()) {
+        if ((event.getX() > et.getWidth() - et.getPaddingRight() - drawable.getIntrinsicWidth())
+                && (et.getCompoundDrawables()[2] != null) && (et.getCompoundDrawables()[2].isVisible())) {
             et.setText("");
         }
         if (tv.getCurrentTextColor() != checkedColor) {
             showSoftKeyboard(et, CollectActivity.this);
             tv.setTextColor(checkedColor);
+            if (et.getText().length() > 0) {
+                et.setCompoundDrawablePadding(20);
+                et.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            } else {
+                et.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            }
         }
     }
 
-
+    /**
+     * 照相图片选择
+     */
     private void initImagePicker() {
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
@@ -958,6 +1000,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         imagePicker.setMultiMode(true);
         imagePicker.setShowCamera(false);
         imagePicker.setSelectLimit(10);
+    }
+
+    /**
+     * scrollView 获取焦点，所有edittext 失去焦点
+     * @return
+     */
+    private void clearFocus(){
+        number.clearFocus();
+        modleNum.clearFocus();
+        length.clearFocus();
+        width.clearFocus();
+        height.clearFocus();
+        weight.clearFocus();
+        outLength.clearFocus();
+        outWidth.clearFocus();
+        outHeight.clearFocus();
+        outWeight.clearFocus();
+        singleLength.clearFocus();
+        singleWidth.clearFocus();
+        singleHeight.clearFocus();
+        singleWeight.clearFocus();
     }
 
     @Override
