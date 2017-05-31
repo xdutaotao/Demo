@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingRight="@dimen/common_margin">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/common_margin"
+        android:button="@drawable/check_box_state"/>
+
+    <TextView
+        android:id="@+id/light_local_status"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:minWidth="48dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:text="@string/local"
+        android:textSize="11dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/checkbox"
+        android:layout_toEndOf="@+id/checkbox" />
+
+    <View
+        android:id="@+id/light_controll"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_toRightOf="@id/light_local_status"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/key"
+        android:layout_alignBottom="@id/light_local_status" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/hello_world"
+        android:id="@+id/title"
+        android:layout_below="@id/light_local_status"
+        android:layout_toRightOf="@+id/checkbox"
+        android:layout_toEndOf="@+id/checkbox"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="6dp">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/model"
+                android:paddingRight="8dp"
+                android:textColor="@color/SecondaryTextColor"
+                android:textStyle="bold"
+                android:id="@+id/label1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/model_text"
+                android:textColor="@color/SecondaryTextColor"
+                android:id="@+id/data1"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/model"
+                android:paddingRight="8dp"
+                android:textColor="@color/SecondaryTextColor"
+                android:textStyle="bold"
+                android:id="@+id/label2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/model_text"
+                android:textColor="@color/SecondaryTextColor"
+                android:id="@+id/data2"
+                android:layout_column="1" />
+        </TableRow>
+    </TableLayout>
+
+    <ToggleButton
+        android:id="@+id/switch_button"
+        style="@style/ToggleButton"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <View
+        android:id="@+id/info"
+        android:visibility="gone"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/ic_action_about"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_background">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:minHeight="?android:attr/listPreferredItemHeight"
+                android:paddingLeft="@dimen/common_margin"
+                android:paddingRight="@dimen/common_margin"
+                android:layout_marginBottom="@dimen/common_margin"
+                android:gravity="bottom"
+                android:background="@color/myPrimaryColor80">
+
+                <View
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/ic_brightness"
+                    android:visibility="gone"/>
+
+                <com.gc.materialdesign.views.Slider
+                    android:id="@+id/seekbar_brightness"
+                    android:background="#f9ce1d"
+                    materialdesign:max="100"
+                    materialdesign:min="0"
+                    materialdesign:showNumberIndicator="false"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ToggleButton
+                    android:id="@+id/light_switch"
+                    style="@style/ToggleButton"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

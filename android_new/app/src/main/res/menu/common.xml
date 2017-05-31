@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.yankon.smart.MainActivity">
+
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:title="@string/menu_new"
+        android:icon="@drawable/ic_action_new" />
+
+</menu>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:id="@+id/light_item"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/light_icon"
+        android:id="@+id/light_icon"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:background="@drawable/circle_bg"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/light_icon"
+        android:id="@+id/view_icon"
+        android:padding="5dp">
+
+        <View
+            android:id="@+id/light_controll"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/key"
+            android:layout_alignParentTop="true"/>
+
+        <View
+            android:id="@+id/remote"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/cloud"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/view_icon"
+        android:text="@string/hello_world"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"
+        android:id="@+id/title"
+        android:singleLine="true"
+        android:maxLength="16"/>
+
+    <ToggleButton
+        android:id="@+id/toggle_btn"
+        style="@style/ToggleButton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:focusable="false"/>
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:background="@drawable/info_bg"
+        android:layout_toLeftOf="@+id/toggle_btn"
+        android:id="@+id/light_info"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
+    <!--<FrameLayout
+        android:id="@+id/light_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true">
+
+        <CheckBox
+            android:id="@+id/light_checkbox"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </FrameLayout>
+
+    <ToggleButton
+        android:id="@+id/light_switch"
+        style="@style/ToggleButton"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="12dp" />
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_toRightOf="@id/light_icon"
+        android:layout_toLeftOf="@id/light_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:layout_marginLeft="12dp"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@android:id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/text1"
+        android:layout_alignLeft="@android:id/text1"
+        android:layout_alignRight="@android:id/text1"
+        android:textAppearance="?android:attr/textAppearanceSmall" />-->
+</RelativeLayout>

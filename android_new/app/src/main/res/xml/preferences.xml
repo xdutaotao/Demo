@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout="@layout/activity_settings">
+    <ListPreference
+        android:key="win_policy"
+        android:title="@string/sync_configurations"
+        android:dialogTitle="@string/sync_configurations"
+        android:entries="@array/sync_policies"
+        android:entryValues="@array/sync_policy_values"
+        android:defaultValue="0"
+        />
+    <PreferenceScreen
+        android:key="check_firmware_update"
+        android:title="@string/check_firmware_update">
+        <intent android:targetPackage="com.yankon.smart"
+            android:targetClass="com.yankon.smart.activities.CheckUpdateActivity"/>
+    </PreferenceScreen>
+</PreferenceScreen>
