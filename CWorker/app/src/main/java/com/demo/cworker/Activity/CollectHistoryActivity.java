@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.demo.cworker.Bean.CollectBean;
@@ -84,21 +85,22 @@ public class CollectHistoryActivity extends BaseActivity {
             list.addAll(JsonUtils.getInstance()
                     .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null)));
 
-            if(Utils.isZeroTime()){
-                List<CollectBean> collectBeanList = new ArrayList<>();
-                for(CollectBean bean : list){
-                    if (!bean.getIsSuccess()){
+
+            List<CollectBean> collectBeanList = new ArrayList<>();
+            for(CollectBean bean : list){
+                if (bean.getIsSuccess()) {
+                    if(TextUtils.equals(Utils.getNowTime(), bean.getTime())) {
                         collectBeanList.add(bean);
                     }
+
+                }else {
+                    collectBeanList.add(bean);
                 }
-                adapter.clear();
-                adapter.addAll(collectBeanList);
-                ShareUtils.putValue(COLLECT_LIST, JsonUtils.getInstance().CollectListToJson(collectBeanList));
-                ShareUtils.putValue(POST_COLLECT_TIME, collectBeanList.size());
-            }else{
-                adapter.clear();
-                adapter.addAll(list);
             }
+            adapter.clear();
+            adapter.addAll(collectBeanList);
+            ShareUtils.putValue(COLLECT_LIST, JsonUtils.getInstance().CollectListToJson(collectBeanList));
+            ShareUtils.putValue(POST_COLLECT_TIME, collectBeanList.size());
         }
 
     }
