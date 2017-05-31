@@ -281,7 +281,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             scrollView.setFocusableInTouchMode(true);
             scrollView.requestLayout();
             clearFocus();
-            closeSoftKeyboard(scrollView, this);
             return false;
         });
 
@@ -377,7 +376,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void getPostTxt(String s) {
         ToastUtil.show("上传成功");
-        finish();
+        scrollView.scrollTo(0, 0);
     }
 
     @Override

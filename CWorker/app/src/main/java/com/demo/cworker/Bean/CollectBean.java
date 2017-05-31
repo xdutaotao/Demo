@@ -35,6 +35,16 @@ public class CollectBean {
     private String auditType;
     private String project;
     private String documentCodes;
+    private String time;
+
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public boolean getIsSuccess() {
         return isSuccess;

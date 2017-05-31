@@ -148,25 +148,7 @@ public class CollectModel extends BaseModel {
                         UploadBean uploadBean = JsonUtils.getInstance().JsonToUploadBean(s);
                         if (TextUtils.equals(uploadBean.getMsg(), "200")){
                             map.put("documentCodes", uploadBean.getData());
-
-                            List<CollectBean> collectBeanList = new ArrayList<>();
-                            bean.setSuccess(true);
-                            bean.setDocumentCodes(uploadBean.getData());
-                            if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
-                                collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
-                            }
-                            collectBeanList.add(bean);
-                            String listJson = JsonUtils.getInstance().CollectListToJson(collectBeanList);
-                            ShareUtils.putValue(Constants.COLLECT_LIST, listJson);
-                            if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
-                                int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);
-                                ++time;
-                                ShareUtils.putValue(Constants.POST_COLLECT_TIME, time);
-                            }else{
-                                ShareUtils.putValue(Constants.POST_COLLECT_TIME, 1);
-                            }
-
-
+                            recodeMark(bean, true);
                             return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap);
                         }else{
                             return Observable.error(new RxUtils.ServerException(uploadBean.getResult())) ;
@@ -250,6 +232,27 @@ public class CollectModel extends BaseModel {
                     return "操作成功";
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+    /**
+     * 记录上次
+     */
+    public void recodeMark(CollectBean bean, boolean isSuccess){
+        List<CollectBean> collectBeanList = new ArrayList<>();
+        bean.setSuccess(isSuccess);
+        if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
+            collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
+        }
+        collectBeanList.add(bean);
+        String listJson = JsonUtils.getInstance().CollectListToJson(collectBeanList);
+        ShareUtils.putValue(Constants.COLLECT_LIST, listJson);
+        if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
+            int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);
+            ++time;
+            ShareUtils.putValue(Constants.POST_COLLECT_TIME, time);
+        }else{
+            ShareUtils.putValue(Constants.POST_COLLECT_TIME, 1);
+        }
     }
 
 

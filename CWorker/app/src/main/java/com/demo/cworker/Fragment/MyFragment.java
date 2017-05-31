@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.demo.cworker.Activity.AboutActivity;
 import com.demo.cworker.Activity.CheckPhoneActivity;
+import com.demo.cworker.Activity.CollectHistoryActivity;
 import com.demo.cworker.Activity.HelpActivity;
 import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.Activity.PersonalActivity;
@@ -23,20 +25,14 @@ import com.demo.cworker.Activity.VIPActivity;
 import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
-import com.demo.cworker.Present.LoginPresenter;
 import com.demo.cworker.Present.MyPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.NetWorkUtils;
 import com.demo.cworker.Utils.ShareUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.Utils.Utils;
-import com.demo.cworker.View.LoginView;
 import com.demo.cworker.View.MyView;
 import com.demo.cworker.Widget.CustomDialog;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -80,6 +76,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     TextView level;
     @BindView(R.id.sign)
     TextView sign;
+    @BindView(R.id.today_layout)
+    LinearLayout todayLayout;
     private String mParam1;
 
     @Inject
@@ -122,7 +120,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         setting.setOnClickListener(this);
         sign.setOnClickListener(this);
         help.setOnClickListener(this);
-        today.setOnClickListener(this);
+        todayLayout.setOnClickListener(this);
         return view;
     }
 
@@ -156,20 +154,19 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 loginText.setText(userInfo.getPerson().getName());
 
-                if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, null) != null){
-                    today.setText(ShareUtils.getValue(Constants.POST_COLLECT_TIME, null));
-                }else{
+                if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
+                    today.setText(String.valueOf(ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0)));
+                } else {
                     today.setText("0");
                 }
-
 
                 month.setText(userInfo.getUps().getMonth() + "");
                 year.setText(userInfo.getUps().getYear() + "");
                 total.setText(userInfo.getUps().getTotal() + "");
-                level.setText("LV"+((int)(User.getInstance().getUserInfo().getPerson().getExperience()/3500)));
+                level.setText("LV" + ((int) (User.getInstance().getUserInfo().getPerson().getExperience() / 3500)));
                 level.setVisibility(View.VISIBLE);
                 sign.setVisibility(View.VISIBLE);
-                sign.setText(TextUtils.equals(Utils.getNowDate(),ShareUtils.getValue("sign", "") ) ? "已签到" : "点击签到");
+                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("sign", "")) ? "已签到" : "点击签到");
             }
         }
     }
@@ -237,26 +234,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.sign:
-                if(!NetWorkUtils.isNetworkAvailable()){
+                if (!NetWorkUtils.isNetworkAvailable()) {
                     ToastUtil.show("没有网络不能签到");
                     return;
                 }
-                if (!TextUtils.isEmpty(ShareUtils.getValue("sign", ""))){
+                if (!TextUtils.isEmpty(ShareUtils.getValue("sign", ""))) {
                     long time = Utils.convert2long(ShareUtils.getValue("sign", ""));
                     long now = Utils.convert2long(Utils.getNowDate());
-                    if (now - time > 3600*1000*24){
+                    if (now - time > 3600 * 1000 * 24) {
                         ShareUtils.putValue("sign", Utils.getNowDate());
                         ShareUtils.putValue("continue", 1);
                         continueDays = 1;
-                    }else{
-                        if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())){
+                    } else {
+                        if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())) {
                             continueDays++;
                             ShareUtils.putValue("continue", continueDays);
                             ShareUtils.putValue("sign", Utils.getNowDate());
                         }
                         continueDays = ShareUtils.getValue("continue", 0);
                     }
-                }else{
+                } else {
                     ShareUtils.putValue("continue", 1);
                     continueDays = 1;
                     ShareUtils.putValue("sign", Utils.getNowDate());
@@ -269,8 +266,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 HelpActivity.startActivity(getContext());
                 break;
 
-            case R.id.today:
-
+            case R.id.today_layout:
+                if (!TextUtils.equals(today.getText().toString(), "0"))
+                    CollectHistoryActivity.startActivity(getContext());
                 break;
         }
     }
