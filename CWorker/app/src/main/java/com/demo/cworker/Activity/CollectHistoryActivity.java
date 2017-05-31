@@ -67,9 +67,10 @@ public class CollectHistoryActivity extends BaseActivity {
             }
         };
 
-        if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
-            list.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
-        }
+        adapter.setOnItemClickListener((view, i) -> {
+            if(!list.get(i).getIsSuccess())
+                CollectActivity.startActivity(this, list.get(i));
+        });
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

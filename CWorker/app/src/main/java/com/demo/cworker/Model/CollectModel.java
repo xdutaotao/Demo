@@ -148,7 +148,6 @@ public class CollectModel extends BaseModel {
                         UploadBean uploadBean = JsonUtils.getInstance().JsonToUploadBean(s);
                         if (TextUtils.equals(uploadBean.getMsg(), "200")){
                             map.put("documentCodes", uploadBean.getData());
-                            recodeMark(bean, true);
                             return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap);
                         }else{
                             return Observable.error(new RxUtils.ServerException(uploadBean.getResult())) ;
@@ -184,11 +183,13 @@ public class CollectModel extends BaseModel {
                             .load(new File(s))                     //传人要压缩的图片
                             .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
                             .asObservable();
-
                 })
-                .map(file -> {
-                    RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-                    requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
+                .toList()
+                .map(files -> {
+                    for(File file: files){
+                        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
+                        requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
+                    }
                     return requestBodyMap;
                 })
                 .map(stringRequestBodyMap -> {
@@ -244,6 +245,7 @@ public class CollectModel extends BaseModel {
             collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
         }
         collectBeanList.add(bean);
+
         String listJson = JsonUtils.getInstance().CollectListToJson(collectBeanList);
         ShareUtils.putValue(Constants.COLLECT_LIST, listJson);
         if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){

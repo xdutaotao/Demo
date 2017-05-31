@@ -59,6 +59,7 @@ public class RxSafeSubUtils<T> extends SafeSubscriber<T> {
 
         if (!NetWorkUtils.isNetworkAvailable()) {
             ToastUtil.show("网络错误");
+            ((RxSubUtils)subscription)._onError();
         }else if(e instanceof RxUtils.ServerException){
             ((RxSubUtils)subscription)._onError(((RxUtils.ServerException) e).getMsg());
         }else{

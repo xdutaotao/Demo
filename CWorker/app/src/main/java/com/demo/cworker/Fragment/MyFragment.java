@@ -28,6 +28,7 @@ import com.demo.cworker.Model.UserInfo;
 import com.demo.cworker.Present.MyPresenter;
 import com.demo.cworker.R;
 import com.demo.cworker.Utils.NetWorkUtils;
+import com.demo.cworker.Utils.RxBus;
 import com.demo.cworker.Utils.ShareUtils;
 import com.demo.cworker.Utils.ToastUtil;
 import com.demo.cworker.Utils.Utils;
@@ -156,6 +157,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
                     today.setText(String.valueOf(ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0)));
+                    RxBus.getInstance().post(Constants.POST_COLLECT_TIME);
                 } else {
                     today.setText("0");
                 }

@@ -1,11 +1,13 @@
 package com.demo.cworker.Bean;
 
+import java.io.Serializable;
+
 /**
  * Description:
  * Created by GUZHENFU on 2017/5/27 16:38.
  */
 
-public class CollectBean {
+public class CollectBean implements Serializable{
     private boolean isSuccess;
     private String partCode;
     private String partName;

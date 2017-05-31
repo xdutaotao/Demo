@@ -79,13 +79,14 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {
+                        model.recodeMark(bean, true);
                         getView().getPostTxt(token);
                     }
 
                     @Override
-                    protected void _onError(String msg) {
+                    protected void _onError() {
                         model.recodeMark(bean, false);
-                        ToastUtil.show(msg);
+                        getView().onFailure();
                     }
                 }));
     }

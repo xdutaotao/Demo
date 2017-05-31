@@ -44,7 +44,9 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -214,8 +216,17 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private LocationManager locationManager;
     private String locationProvider;
 
+    private CollectBean collectBean;
+    private List<String> historyPathList = new ArrayList<>();
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, CollectBean bean) {
+        Intent intent = new Intent(context, CollectActivity.class);
+        intent.putExtra(INTENT_KEY, (Serializable) bean);
         context.startActivity(intent);
     }
 
@@ -244,128 +255,164 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 }
             }
         };
-
-        adapter.setOnItemClickListener((view, i) -> {
-            view.findViewById(R.id.delete).setOnClickListener(v -> {
-                imageItems.remove(i);
-                adapter.remove(i);
-                if (i == 9) {
-                    adapter.add(ADD);
-                }
-            });
-            if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
-                new IOSDialog(this).builder()
-                        .setCancelable(true)
-                        .setTitle("拍照", v -> {
-                            selectCamera();
-                        })
-                        .setMsg("相册", v -> {
-                            selectPhoto();
-                        })
-                        .setMsgSize(R.dimen.dialog_msg_size)
-                        .setMsgColor("#333333")
-                        .setNegativeButton("取消", null)
-                        .show();
-            } else {
-
-            }
-        });
-
         recyclerView.setAdapter(adapter);
         submit.setOnClickListener(this);
         adapter.add(ADD);
-        initImagePicker();
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+            adapter.setOnItemClickListener((view, i) -> {
+                view.findViewById(R.id.delete).setOnClickListener(v -> {
+                    imageItems.remove(i);
+                    adapter.remove(i);
+                    if (i == 9) {
+                        adapter.add(ADD);
+                    }
+                });
+                if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
+                    new IOSDialog(this).builder()
+                            .setCancelable(true)
+                            .setTitle("拍照", v -> {
+                                selectCamera();
+                            })
+                            .setMsg("相册", v -> {
+                                selectPhoto();
+                            })
+                            .setMsgSize(R.dimen.dialog_msg_size)
+                            .setMsgColor("#333333")
+                            .setNegativeButton("取消", null)
+                            .show();
+                } else {
 
-        scrollView.setOnTouchListener((v, event) -> {
-            scrollView.setFocusable(true);
-            scrollView.setFocusableInTouchMode(true);
-            scrollView.requestLayout();
-            clearFocus();
-            return false;
-        });
+                }
+            });
+            initImagePicker();
 
-        wrapLayout.setOnClickListener(this);
-        typeLayout.setOnClickListener(this);
+            scrollView.setOnTouchListener((v, event) -> {
+                scrollView.setFocusable(true);
+                scrollView.setFocusableInTouchMode(true);
+                scrollView.requestLayout();
+                clearFocus();
+                return false;
+            });
 
-        modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-        modleNum.setOnTouchListener(this);
-        modleNum.setOnFocusChangeListener(this);
-        modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
+            wrapLayout.setOnClickListener(this);
+            typeLayout.setOnClickListener(this);
 
-        number.setOnTouchListener(this);
-        number.setOnFocusChangeListener(this);
-        number.addTextChangedListener(new CustomTextWatcher(number, drawable, false));
+            modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+            modleNum.setOnTouchListener(this);
+            modleNum.setOnFocusChangeListener(this);
+            modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
 
-        length.setOnTouchListener(this);
-        length.setOnFocusChangeListener(this);
-        length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
+            number.setOnTouchListener(this);
+            number.setOnFocusChangeListener(this);
+            number.addTextChangedListener(new CustomTextWatcher(number, drawable, false));
 
-        width.setOnTouchListener(this);
-        width.setOnFocusChangeListener(this);
-        width.addTextChangedListener(new CustomTextWatcher(width, drawable, true));
+            length.setOnTouchListener(this);
+            length.setOnFocusChangeListener(this);
+            length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
 
-        height.setOnTouchListener(this);
-        height.setOnFocusChangeListener(this);
-        height.addTextChangedListener(new CustomTextWatcher(height, drawable, true));
+            width.setOnTouchListener(this);
+            width.setOnFocusChangeListener(this);
+            width.addTextChangedListener(new CustomTextWatcher(width, drawable, true));
 
-        weight.setOnTouchListener(this);
-        weight.setOnFocusChangeListener(this);
-        weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true));
+            height.setOnTouchListener(this);
+            height.setOnFocusChangeListener(this);
+            height.addTextChangedListener(new CustomTextWatcher(height, drawable, true));
 
-        allLength.setOnTouchListener(this);
-        allLength.setOnFocusChangeListener(this);
-        allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true));
+            weight.setOnTouchListener(this);
+            weight.setOnFocusChangeListener(this);
+            weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true));
 
-        allWidth.setOnTouchListener(this);
-        allWidth.setOnFocusChangeListener(this);
-        allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true));
+            allLength.setOnTouchListener(this);
+            allLength.setOnFocusChangeListener(this);
+            allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true));
 
-        allHeight.setOnTouchListener(this);
-        allHeight.setOnFocusChangeListener(this);
-        allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true));
+            allWidth.setOnTouchListener(this);
+            allWidth.setOnFocusChangeListener(this);
+            allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true));
 
-        outLength.setOnTouchListener(this);
-        outLength.setOnFocusChangeListener(this);
-        outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true));
+            allHeight.setOnTouchListener(this);
+            allHeight.setOnFocusChangeListener(this);
+            allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true));
 
-        outWidth.setOnTouchListener(this);
-        outWidth.setOnFocusChangeListener(this);
-        outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true));
+            outLength.setOnTouchListener(this);
+            outLength.setOnFocusChangeListener(this);
+            outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true));
 
-        outHeight.setOnTouchListener(this);
-        outHeight.setOnFocusChangeListener(this);
-        outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true));
+            outWidth.setOnTouchListener(this);
+            outWidth.setOnFocusChangeListener(this);
+            outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true));
 
-        singleWeight.setOnTouchListener(this);
-        singleWeight.setOnFocusChangeListener(this);
-        singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true));
+            outHeight.setOnTouchListener(this);
+            outHeight.setOnFocusChangeListener(this);
+            outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true));
 
-        singleLength.setOnTouchListener(this);
-        singleLength.setOnFocusChangeListener(this);
-        singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true));
+            singleWeight.setOnTouchListener(this);
+            singleWeight.setOnFocusChangeListener(this);
+            singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true));
 
-        singleWidth.setOnTouchListener(this);
-        singleWidth.setOnFocusChangeListener(this);
-        singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true));
+            singleLength.setOnTouchListener(this);
+            singleLength.setOnFocusChangeListener(this);
+            singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true));
 
-        singleHeight.setOnTouchListener(this);
-        singleHeight.setOnFocusChangeListener(this);
-        singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true));
-        setEditTextChangedListener();
+            singleWidth.setOnTouchListener(this);
+            singleWidth.setOnFocusChangeListener(this);
+            singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true));
 
-        singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            singleLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-        });
+            singleHeight.setOnTouchListener(this);
+            singleHeight.setOnFocusChangeListener(this);
+            singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true));
+            setEditTextChangedListener();
 
-        dataLayout.setOnClickListener(v -> {
-            CheckActivity.startActivityForResult(this, resultBean.getAts(), checkTv.getText().toString());
-        });
+            singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                singleLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            });
+
+            dataLayout.setOnClickListener(v -> {
+                CheckActivity.startActivityForResult(this, resultBean.getAts(), checkTv.getText().toString());
+            });
 
 
-        recommendLayout.setOnClickListener(v -> {
-            RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
-        });
-        presenter.packagingForm(this);
+            recommendLayout.setOnClickListener(v -> {
+                RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
+            });
+            presenter.packagingForm(this);
+        }else{
+            collectBean = (CollectBean) getIntent().getSerializableExtra(INTENT_KEY);
+            number.setText(collectBean.getPartCode());
+            name.setText(collectBean.getPartName());
+            source.setText(collectBean.getSystemResource());
+            wrapText.setText(collectBean.getPackageStypeName());
+            typeTxt.setText(collectBean.getPartMaterialName());
+            modleNum.setText(collectBean.getPackageModelCount()+"");
+            length.setText(collectBean.getPartLength()+"");
+            width.setText(collectBean.getPartWidth()+"");
+            height.setText(collectBean.getPartHeigth()+"");
+            weight.setText(collectBean.getNetWeight()+"");
+
+            outLength.setText(collectBean.getPackageLength()+"");
+            outWidth.setText(collectBean.getPackageWidth()+"");
+            outHeight.setText(collectBean.getPackageHeight()+"");
+            outWeight.setText(collectBean.getRoughWeight()+"");
+
+            singleLength.setText(collectBean.getSinglePackageLength()+"");
+            singleWidth.setText(collectBean.getSinglePackageWidth()+"");
+            singleHeight.setText(collectBean.getSinglePackageHeight()+"");
+            singleWeight.setText(collectBean.getSinglePackageWeight()+"");
+
+            allLength.setText(collectBean.getAddedLength()+"");
+            allWidth.setText(collectBean.getAddedWidth()+"");
+            allHeight.setText(collectBean.getAddedHeight()+"");
+
+            checkTv.setText(collectBean.getAuditType());
+            recommendTv.setText(collectBean.getProcessRecommendation());
+            information.setText(collectBean.getRemark());
+            historyPathList.addAll(Arrays.asList(collectBean.getDocumentCodes().split(",")));
+            adapter.addAll(historyPathList);
+            if (historyPathList.size() < 10){
+                adapter.add(ADD);
+            }
+        }
+
     }
 
     @Override
@@ -377,6 +424,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void getPostTxt(String s) {
         ToastUtil.show("上传成功");
         scrollView.scrollTo(0, 0);
+        finish();
     }
 
     @Override
@@ -473,8 +521,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             } else if (data != null && requestCode == REQUEST_RECOMMAND_CODE) {
                 recommandChangeList.clear();
                 recommandChangeList.addAll((List<String>) data.getSerializableExtra(INTENT_KEY));
-                String tempOne = recommandChangeList.toString().replace("[", "");
-                String tempTwo = tempOne.replace("]", "");
+                String tempTwo = recommandChangeList.toString().replace("[", "").replace("]", "");
                 recommendTv.setText(tempTwo);
             }
         }
@@ -502,7 +549,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-                postCollectTxt();
+                if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+                    postCollectTxt();
+                }else{
+                    postHistoryCollect();
+                }
+
                 break;
 
             case R.id.wrap_layout:
@@ -513,6 +565,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 TypeActivity.startActivityForResult(this, resultBean.getMts(), typeTxt.getText().toString());
                 break;
         }
+    }
+
+    private void postHistoryCollect(){
+        presenter.postCollectData(this, collectBean, historyPathList);
     }
 
     private void postCollectTxt() {
@@ -642,7 +698,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
 
         CollectBean bean = new CollectBean();
-        bean.setPartCode(numberTv.getText().toString());
+        bean.setPartCode(number.getText().toString());
         bean.setPartName(name.getText().toString());
         bean.setPackageStypeName(wrapText.getText().toString());
         bean.setPartMaterialName(typeTxt.getText().toString());
@@ -673,7 +729,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         bean.setSystemResource(source.getText().toString());
         bean.setAuditType(checkTv.getText().toString());
-        bean.setProcessRecommendation(JsonUtils.getInstance().ListToJson(recommandChangeList));
+        bean.setProcessRecommendation(recommandChangeList.toString().replace("[", "").replace("]", ""));
         bean.setRemark(information.getText().toString());
         bean.setIsHistory(0);
         bean.setProject(User.getInstance().getUserInfo().getPerson().getProject());
@@ -694,10 +750,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         new IOSDialog(this).builder()
                 .setTitle("是否确定上传当前数据？")
                 .setMsg(dialogMsg)
-                .setPositiveButton("取消")
-                .setNegativeButton("确定", v -> {
+                .setPositiveButton("确定", v -> {
                     presenter.postCollectData(this, bean, pathList);
                 })
+                .setNegativeButton("取消", null)
                 .show();
     }
 
@@ -716,7 +772,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         //获取Location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
+            return "";
         }
         Location location = locationManager.getLastKnownLocation(locationProvider);
         if (location != null) {
@@ -725,7 +781,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     + location.getLongitude();
             return locationStr;
         }
-        return null;
+        return "";
     }
 
     private void setEditTextChangedListener() {
@@ -1041,7 +1097,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onFailure() {
-
+        ToastUtil.show("上传失败");
     }
 
     @Override

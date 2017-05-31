@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -14,12 +15,14 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Activity.CollectActivity;
 import com.demo.cworker.Activity.LoginActivity;
+import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Fragment.AddFragment;
 import com.demo.cworker.Fragment.HomeFragment;
 import com.demo.cworker.Fragment.MessageFragment;
 import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Model.User;
+import com.demo.cworker.Utils.RxBus;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
@@ -47,6 +50,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setAutoHideEnabled(true);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 
+        BottomNavigationItem myItem = new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4]);
+
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
         bottomNavigationBar.setInActiveColor(R.color.nav_gray);
@@ -55,8 +60,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[1]))
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[3]))
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4])
-                    .setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText("9")));
+                .addItem(myItem.setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText("0")));
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.POST_COLLECT_TIME))
+                .subscribe(s -> myItem.setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText(s)));
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
