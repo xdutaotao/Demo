@@ -239,22 +239,49 @@ public class CollectModel extends BaseModel {
      * 记录上次
      */
     public void recodeMark(CollectBean bean, boolean isSuccess){
+
+        if (bean.getIsHistory() == 0){
+            if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
+                int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);
+                ++time;
+                ShareUtils.putValue(Constants.POST_COLLECT_TIME, time);
+            }else{
+                ShareUtils.putValue(Constants.POST_COLLECT_TIME, 1);
+            }
+        }
+
+
         List<CollectBean> collectBeanList = new ArrayList<>();
         bean.setSuccess(isSuccess);
-        if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
-            collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
+
+        if (bean.getIsHistory() == 1){
+            List<CollectBean> list = JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null));
+            if (list != null){
+                for(CollectBean collectBean: list){
+                    if (!TextUtils.equals(collectBean.getTime(), bean.getTime())){
+                        collectBeanList.add(collectBean);
+                    }else{
+                        collectBeanList.add(bean);
+                    }
+                }
+            }else{
+                collectBeanList.add(bean);
+            }
+
+        }else{
+            if (!isSuccess)
+                bean.setIsHistory(1);
+
+            if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
+                collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
+            }
+            collectBeanList.add(bean);
         }
-        collectBeanList.add(bean);
+
 
         String listJson = JsonUtils.getInstance().CollectListToJson(collectBeanList);
         ShareUtils.putValue(Constants.COLLECT_LIST, listJson);
-        if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
-            int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);
-            ++time;
-            ShareUtils.putValue(Constants.POST_COLLECT_TIME, time);
-        }else{
-            ShareUtils.putValue(Constants.POST_COLLECT_TIME, 1);
-        }
+
     }
 
 

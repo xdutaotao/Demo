@@ -236,6 +236,21 @@ public class Utils {
         return date;
     }
 
+
+    /**
+     * 格式：2016/12/13
+     * @return
+     */
+    public static boolean isZeroTime(){
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sd.format(new Date(System.currentTimeMillis()));
+        String[] strings = date.split(" ");
+        if (TextUtils.equals(strings[1], "00:00:00")){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 将日期格式的字符串转换为长整型
      * @param date

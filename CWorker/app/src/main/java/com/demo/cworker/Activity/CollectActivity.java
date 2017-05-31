@@ -1,6 +1,7 @@
 package com.demo.cworker.Activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -224,10 +225,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, CollectBean bean) {
+    public static void startActivityForResult(Activity context, CollectBean bean) {
         Intent intent = new Intent(context, CollectActivity.class);
         intent.putExtra(INTENT_KEY, (Serializable) bean);
-        context.startActivity(intent);
+        context.startActivityForResult(intent, CollectHistoryActivity.REQUEST_CODE);
     }
 
     @Override
@@ -424,7 +425,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void getPostTxt(String s) {
         ToastUtil.show("上传成功");
-        scrollView.scrollTo(0, 0);
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+            setResult(RESULT_OK);
+        }
         finish();
     }
 
@@ -752,7 +755,19 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 .setTitle("是否确定上传当前数据？")
                 .setMsg(dialogMsg)
                 .setPositiveButton("确定", v -> {
+
+                    StringBuilder sb = new StringBuilder();
+                    Observable.from(pathList)
+                            .map(s -> {
+                                sb.append(s).append(",");
+                                String paths = sb.toString().substring(0, sb.toString().length()-1);
+                                return paths;
+                            })
+                            .subscribe(s -> bean.setDocumentCodes(s));
+                    if (TextUtils.isEmpty(bean.getTime()))
+                        bean.setTime(Utils.getNowTime());
                     presenter.postCollectData(this, bean, pathList);
+
                 })
                 .setNegativeButton("取消", null)
                 .show();

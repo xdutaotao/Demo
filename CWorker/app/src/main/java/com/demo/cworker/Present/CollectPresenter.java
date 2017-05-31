@@ -1,6 +1,7 @@
 package com.demo.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.demo.cworker.Bean.CollectBean;
 import com.demo.cworker.Bean.NumberBean;
@@ -65,15 +66,6 @@ public class CollectPresenter extends BasePresenter<CollectView> {
      * @param context
      */
     public void postCollectData(Context context, CollectBean bean, List<String> imgList){
-        StringBuilder sb = new StringBuilder();
-        Observable.from(imgList)
-                .map(s -> {
-                    sb.append(s).append(",");
-                    String paths = sb.toString().substring(0, sb.toString().length()-1);
-                    return paths;
-                })
-                .subscribe(s -> bean.setDocumentCodes(s));
-        bean.setTime(Utils.getNowTime());
 
         mCompositeSubscription.add(model.postCollectTxt(bean, imgList)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
