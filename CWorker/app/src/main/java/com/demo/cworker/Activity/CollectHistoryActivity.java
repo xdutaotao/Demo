@@ -62,8 +62,8 @@ public class CollectHistoryActivity extends BaseActivity {
             protected void convert(BaseViewHolder baseViewHolder, CollectBean bean) {
                 baseViewHolder.setText(R.id.item_txt, bean.getPartCode());
                 baseViewHolder.setText(R.id.item_right_txt, bean.getTime());
-                baseViewHolder.setTextColor(R.id.item_txt, bean.getIsSuccess() ? R.color.red : R.color.black);
-                baseViewHolder.setTextColor(R.id.item_right_txt, bean.getIsSuccess() ? R.color.red : R.color.black);
+                baseViewHolder.setTextColor(R.id.item_txt, bean.getIsSuccess() ? R.color.red : android.R.color.black);
+                baseViewHolder.setTextColor(R.id.item_right_txt, bean.getIsSuccess() ? R.color.red : android.R.color.black);
             }
         };
 

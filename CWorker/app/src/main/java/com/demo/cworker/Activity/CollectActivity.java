@@ -257,8 +257,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         };
         recyclerView.setAdapter(adapter);
         submit.setOnClickListener(this);
-        adapter.add(ADD);
+
         if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+            adapter.add(ADD);
             adapter.setOnItemClickListener((view, i) -> {
                 view.findViewById(R.id.delete).setOnClickListener(v -> {
                     imageItems.remove(i);
