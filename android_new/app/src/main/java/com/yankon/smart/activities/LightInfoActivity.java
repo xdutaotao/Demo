@@ -32,7 +32,6 @@ import com.yankon.smart.widget.OnColorChangedListener;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -55,25 +54,16 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
 
     ToggleButton mSwitch;
     Slider mBrightnessSeekBar;
-    @BindView(R.id.title_text)
+
     TextView titleText;
-    @BindView(R.id.type)
     EditText type;
-    @BindView(R.id.number)
     EditText number;
-    @BindView(R.id.emulator)
     ToggleButton emulator;
-    @BindView(R.id.light)
     Slider light;
-    @BindView(R.id.setting_layout)
     LinearLayout settingLayout;
-    @BindView(R.id.send)
     Button send;
-    @BindView(R.id.toolbar_actionbar)
     Toolbar toolbarActionbar;
-    @BindView(R.id.seekbar_brightness)
     Slider seekbarBrightness;
-    @BindView(R.id.light_switch)
     ToggleButton lightSwitch;
 
     private int color;
@@ -94,7 +84,19 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_light_info);
         ButterKnife.bind(this);
-        initAcitivityUI();
+        initActivityUI();
+
+        titleText = (TextView) findViewById(R.id.title_text);
+        toolbarActionbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        type = (EditText) findViewById(R.id.type);
+        number = (EditText) findViewById(R.id.number);
+        emulator = (ToggleButton) findViewById(R.id.emulator);
+        light = (Slider) findViewById(R.id.light);
+        settingLayout = (LinearLayout) findViewById(R.id.setting_layout);
+        send = (Button) findViewById(R.id.send);
+        seekbarBrightness = (Slider) findViewById(R.id.seekbar_brightness);
+        lightSwitch = (ToggleButton) findViewById(R.id.light_switch);
+
 
         light_id = getIntent().getIntExtra(EXTRA_LIGHT_ID, -1);
         group_id = getIntent().getIntExtra(EXTRA_GROUP_ID, -1);

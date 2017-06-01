@@ -24,7 +24,7 @@ import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.KiiSync;
 import com.yankon.smart.utils.Settings;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -35,19 +35,19 @@ public class LogInFragment extends BaseFragment implements View.OnClickListener 
 
     private static final int REQUEST_RESET_PASSWORD = 0x8001;
 
-    @BindView(R.id.email_edit)
+    @Bind(R.id.email_edit)
     EditText emailEdit;
 
-    @BindView(R.id.password_edit)
+    @Bind(R.id.password_edit)
     EditText passwordEdit;
 
-    @BindView(R.id.forgot_password)
+    @Bind(R.id.forgot_password)
     TextView forgetPasswordButton;
 
-    @BindView(R.id.button_register)
+    @Bind(R.id.button_register)
     Button registerButton;
 
-    @BindView(R.id.button_log_in)
+    @Bind(R.id.button_log_in)
     Button logInButton;
 
     public LogInFragment() {

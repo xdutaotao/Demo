@@ -13,7 +13,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/common_margin"
-        android:button="@drawable/check_box_state"/>
+        android:button="@drawable/check_box_state"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/light_local_status"

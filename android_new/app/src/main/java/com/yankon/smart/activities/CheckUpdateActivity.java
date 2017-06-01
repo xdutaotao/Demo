@@ -42,7 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class CheckUpdateActivity extends BaseActivity implements OnClickListener,
@@ -58,7 +58,7 @@ public class CheckUpdateActivity extends BaseActivity implements OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_update);
-        initAcitivityUI();
+        initActivityUI();
         ListView listView = (ListView) findViewById(R.id.list);
         mAdapter = new UpdateAdapter();
         listView.setAdapter(mAdapter);
@@ -282,16 +282,16 @@ public class CheckUpdateActivity extends BaseActivity implements OnClickListener
      */
     static class ViewHolder {
 
-        @BindView(R.id.light_icon)
+        @Bind(R.id.light_icon)
         ImageView lightIcon;
 
-        @BindView(R.id.light_checkbox)
+        @Bind(R.id.light_checkbox)
         CheckBox lightCheckbox;
 
-        @BindView(android.R.id.text1)
+        @Bind(android.R.id.text1)
         TextView text1;
 
-        @BindView(android.R.id.text2)
+        @Bind(android.R.id.text2)
         TextView text2;
 
         ViewHolder(View view) {

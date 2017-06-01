@@ -27,6 +27,14 @@ public class Light {
     public boolean connected;
     public boolean selected;
 
+    public boolean mediaState = false;
+    public String uid = null;
+
+    public boolean ap_state = false;
+    public String ap_bssid;
+    public String ap_ssid;
+    public String ap_pass;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || !(o instanceof Light)) {

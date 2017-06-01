@@ -1,0 +1,182 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pro_bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar_default"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"/>
+
+
+   <RelativeLayout
+       android:id="@+id/visaContactsNameRL"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:background="@color/content_background"
+       android:paddingLeft="10dp"
+       android:paddingRight="10dp"
+       android:layout_weight="16">
+       <TextView
+           android:id="@+id/tv_light_name"
+           style="@style/visa_contacts_textview_style"
+           android:text="@string/light_name"
+           android:paddingRight="60dp"/>
+
+       <EditText
+           android:id="@+id/et_light_name"
+           android:layout_toRightOf="@id/tv_light_name"
+           style="@style/visa_contacts_edittext_style"
+           android:focusable="true"
+           android:maxLength="16"/>
+
+       <View
+           android:id="@+id/visaContactsNameView"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_name"
+           android:visibility="invisible"/>
+
+       <TextView
+           android:id="@+id/visaContactsPhoneNumTv"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/visaContactsNameView"
+           android:text="@string/mac"
+           android:layout_alignRight="@id/tv_light_name"/>
+
+       <EditText
+           android:id="@+id/et_light_mac"
+           android:layout_toRightOf="@id/visaContactsPhoneNumTv"
+           android:layout_alignLeft="@id/et_light_name"
+           android:layout_below="@id/visaContactsNameView"
+           style="@style/visa_contacts_edittext_style"
+           android:enabled="false"
+           />
+
+       <View
+           android:id="@+id/visaContactsPhoneNumView"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_mac"
+           android:visibility="invisible"/>
+
+       <TextView
+           android:id="@+id/visaContactsEmailTv"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/visaContactsPhoneNumView"
+           android:text="@string/ip"
+           android:layout_alignRight="@id/tv_light_name"/>
+
+       <EditText
+           android:id="@+id/et_light_ip"
+           android:layout_toRightOf="@id/visaContactsEmailTv"
+           android:layout_alignLeft="@id/et_light_mac"
+           android:layout_below="@id/visaContactsPhoneNumView"
+           style="@style/visa_contacts_edittext_style"
+           android:enabled="false"
+           android:singleLine="true"/>
+
+       <View
+           android:id="@+id/visaContactsEmailView"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_ip"
+           android:visibility="invisible"/>
+
+
+       <TextView
+           android:id="@+id/visaContactsAddrTv"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/visaContactsEmailView"
+           android:text="@string/ssid"
+           android:layout_alignRight="@id/tv_light_name"/>
+
+       <EditText
+           android:id="@+id/et_light_ssid"
+           android:layout_toRightOf="@id/visaContactsAddrTv"
+           android:layout_alignLeft="@id/et_light_ip"
+           android:layout_below="@id/visaContactsEmailView"
+           style="@style/visa_contacts_edittext_style"
+           android:singleLine="true"/>
+
+
+       <View
+           android:id="@+id/visaContactsAddrView"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_ssid"
+           />
+
+
+       <TextView
+           android:id="@+id/tv_light_info_pwd"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/visaContactsAddrView"
+           android:text="@string/pwd"
+           android:layout_alignRight="@id/tv_light_name"/>
+
+       <TextView
+           android:id="@+id/et_light_pwd"
+           android:layout_toRightOf="@id/visaContactsAddrTv"
+           android:layout_alignLeft="@id/et_light_ssid"
+           android:layout_below="@id/visaContactsAddrView"
+           style="@style/visa_contacts_edittext_style"
+           android:singleLine="true"
+           android:digits="@string/edit_type"/>
+
+       <View
+           android:id="@+id/pwd_line"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_pwd"
+           />
+
+       <TextView
+           android:id="@+id/tv_light_info_remote"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/pwd_line"
+           android:text="@string/is_remote"
+           android:layout_alignRight="@id/tv_light_name"
+           android:singleLine="true"/>
+
+       <EditText
+           android:id="@+id/et_light_remote"
+           android:layout_toRightOf="@id/tv_light_info_remote"
+           android:layout_alignLeft="@id/et_light_pwd"
+           android:layout_below="@id/pwd_line"
+           style="@style/visa_contacts_edittext_style"
+           android:enabled="false"/>
+
+       <View
+           android:id="@+id/remote_line"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/et_light_remote"
+           android:visibility="invisible"/>
+
+       <TextView
+           android:id="@+id/tv_enable_ssid"
+           style="@style/visa_contacts_textview_style"
+           android:layout_below="@id/remote_line"
+           android:text="@string/enable_ssid"
+           android:layout_alignRight="@id/tv_light_name"
+           android:singleLine="true"/>
+
+       <ToggleButton
+           android:id="@+id/tb_enable_ssid"
+           style="@style/ToggleButton"
+           android:layout_alignBottom="@+id/tv_enable_ssid"
+           android:layout_centerHorizontal="true"
+           android:focusable="false"/>
+
+       <View
+           android:id="@+id/enable_ssid_line"
+           style="@style/visa_contacts_view_under_line_style"
+           android:layout_below="@id/tb_enable_ssid"
+           />
+
+   </RelativeLayout>
+
+</LinearLayout>

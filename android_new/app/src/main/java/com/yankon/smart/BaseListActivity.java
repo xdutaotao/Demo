@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,11 @@ import android.widget.TextView;
 import com.squareup.leakcanary.RefWatcher;
 import com.yankon.smart.R;
 import com.yankon.smart.activities.LightInfoActivity;
+import com.yankon.smart.activities.SwipeBackListActivity;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.LogUtils;
+import com.yankon.smart.widget.DialogArrayItemAdapter;
 import com.yankon.smart.widget.DialogItemsAdapter;
 import com.yankon.smart.widget.Effectstype;
 import com.yankon.smart.widget.NiftyDialogBuilder;
@@ -45,6 +48,8 @@ public class BaseListActivity extends ListActivity implements View.OnClickListen
     private View backLayout;
     public Cursor cursor = null;
     private int mDownX, mDownY;
+    public SparseArray<String> array = new SparseArray<>();
+    public int arrayIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,29 @@ public class BaseListActivity extends ListActivity implements View.OnClickListen
     public void showListViewDialog(String title, List<Map<String, Object>> data){
         ListView listView= new ListView(this);
         DialogItemsAdapter adapter = new DialogItemsAdapter(this, data);
+        listView.setAdapter(adapter);
+
+        dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        Effectstype effect= Effectstype.Fadein;
+
+        dialogBuilder
+                .withMessage(null)
+                .withTitle(title)                                  //.withTitle(null)  no title
+                .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+                .withDuration(300)                                          //def
+                .withEffect(effect)                                 //def gone
+                .setCustomView(listView, this)         //.setCustomView(View or ResId,context)
+                .setButton1Visibility(View.GONE)
+                .setButton2Visibility(View.GONE)
+                .show();
+
+        listView.setOnItemClickListener(this);
+    }
+
+    public void showListViewDialog(String title, SparseArray data){
+        ListView listView= new ListView(this);
+//        DialogItemsAdapter adapter = new DialogItemsAdapter(this, data);
+        DialogArrayItemAdapter adapter = new DialogArrayItemAdapter(this, data);
         listView.setAdapter(adapter);
 
         dialogBuilder = NiftyDialogBuilder.getInstance(this);

@@ -21,5 +21,15 @@
         <attr name="layout_minHeightPercent" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="EdgeSize" format="dimension"/>
+        <attr name="EdgeFlag" format="enum"/>
+        <attr name="ShadowLeft" format="reference"/>
+        <attr name="ShadowRight" format="reference"/>
+        <attr name="ShadowBottom" format="reference"/>
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference"/>
+
 
 </resources>

@@ -1,8 +1,6 @@
 package com.yankon.smart.activities;
 
-import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,97 +8,193 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.yankon.smart.App;
 import com.yankon.smart.BaseActivity;
 import com.yankon.smart.DaemonHandler;
 import com.yankon.smart.R;
-import com.yankon.smart.fragments.AlertDialogFragment;
+import com.yankon.smart.model.BuildNetworkThread;
 import com.yankon.smart.model.Command;
 import com.yankon.smart.model.Light;
+import com.yankon.smart.model.NewBuildNetworkThread;
 import com.yankon.smart.providers.YanKonProvider;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.Utils;
 import com.yankon.smart.widget.CardItemViewHolder;
 import com.yankon.smart.widget.LightItemViewHolder;
+import com.yankon.smart.widget.NiftyDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddLightsActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, AlertDialogFragment.AlertDialogListener {
+public class AddLightsActivity extends BaseActivity {
+    public static final String SSID = "SSID";
+    public static final String PWD = "SSID_PWD";
+    private static final int TIME = 1000;
+    private String mPass, mSsid;
+    private ImageView ImScan;
+    private ImageView ImDian;
+    private RotateAnimation animation;
+    private RotateAnimation animation2;
+    private TextView TxtDebug, tvLightNum;
+    private BuildNetworkThread mBuildNetworkThread;
+    private NewBuildNetworkThread mNetBuildNetworkThread;
 
     private List<Light> mLights = new ArrayList<>();
     private LightsAdapter mAdapter;
     private ListView mList;
     private View emptyView;
+    private int num = 0, times = 1;
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lights);
-        initAcitivityUI();
+        initActivityUI();
 
         Global.gLightsMacMap.clear();
+        tvLightNum = (TextView) findViewById(R.id.tv_light_num);
+        tvLightNum.setText(String.format(getString(R.string.light_num), 0));
 
+        TxtDebug = (TextView) findViewById(R.id.tvdebug);
+        TxtDebug.setText("0");
+        ImScan = (ImageView) findViewById(R.id.im_scan);
+        ImDian = (ImageView) findViewById(R.id.im_dian);
+
+        mSsid = getIntent().getStringExtra(SSID);
+        mPass = getIntent().getStringExtra(PWD);
         mAdapter = new LightsAdapter(this);
         mList = (ListView) findViewById(android.R.id.list);
         emptyView = findViewById(android.R.id.empty);
         mList.setAdapter(mAdapter);
         mList.setEmptyView(emptyView);
-
+        initAnim();
         IntentFilter filter = new IntentFilter(Constants.ACTION_UPDATED);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
 
-        queryLight();
+        setTitle(getString(R.string.searching));
+        handler.postDelayed(runnable, TIME); //每隔1s执行
+        buildNetwork();
     }
 
-    private void queryLight(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mLights.size() == 0) {  // && !AddLightsActivity.this.isDestroyed()
-                    try {
-                        DialogFragment dialogFragment = AlertDialogFragment.newInstance(AlertDialogFragment.TYPE_BUILD_NETWORK);
-                        dialogFragment.show(getFragmentManager(), "dialog");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                handler.postDelayed(this, TIME);
+                TxtDebug.setText(Integer.toString(times++));
+                if (times == 120){
+                    //showWarningDialog();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }, 5000L);
+        }
+    };
+
+    private void showWarningDialog(){
+        final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        dialogBuilder
+                .withMessage(R.string.all_light_stop)
+                .withTitle(null)                                  //.withTitle(null)  no title
+                .isCancelableOnTouchOutside(false)                           //def    | isCancelable(true)
+                .withDuration(300)                                          //def
+                .withButton1Text(getString(android.R.string.ok))
+                .withButton2Text(getString(android.R.string.cancel))
+                .setButton1Click(v ->  {
+                        dialogBuilder.dismiss();
+                        finish();
+                    })
+                .setButton2Click(v1 -> {
+                        dialogBuilder.dismiss();
+                        Toast toast = Toast.makeText(App.getApp(), getString(R.string.build_net_again), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                   })
+                .show();
+    }
+
+    private void buildNetwork() {
+        if (mBuildNetworkThread == null)
+            mBuildNetworkThread = new BuildNetworkThread(this, mPass);
+        mBuildNetworkThread.start();
+
+//        if (mNetBuildNetworkThread == null){
+//            mNetBuildNetworkThread = new NewBuildNetworkThread(this, mPass);
+//        }
+//        mNetBuildNetworkThread.start();
+        startAnim();
+    }
+
+    private void initAnim() {
+        animation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF,
+                0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(2000);
+        animation.setRepeatCount(Animation.INFINITE);
+        animation2 = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF,
+                0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(2000);
+        animation2.setRepeatCount(Animation.INFINITE);
+    }
+
+    private void stopAnim(){
+        if(ImScan!=null)
+            ImScan.clearAnimation();
+        if(ImDian!=null)
+        ImDian.clearAnimation();
+    }
+    private void startAnim(){
+
+        ImScan.startAnimation(animation);
+        ImDian.startAnimation(animation2);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Toast toast = Toast.makeText(this, getString(R.string.start_build_net), Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         Global.gScanLightsType = Constants.SCAN_LIGHTS_ADDLIGHTS;
         Global.gDaemonHandler.sendEmptyMessage(DaemonHandler.MSG_SCAN_LIGHTS);
-        //queryLight();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(mBuildNetworkThread != null) {
+            mBuildNetworkThread.interrupt();
+            mBuildNetworkThread = null;
+        }
+
+//        if(mNetBuildNetworkThread != null) {
+//            mNetBuildNetworkThread.interrupt();
+//            mNetBuildNetworkThread = null;
+//        }
+        stopAnim();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        handler.removeCallbacks(runnable);
     }
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-//            String type = intent.getStringExtra(Constants.SEND_TYPE);
-//            if ( !TextUtils.isEmpty(type) && TextUtils.equals(type, "light")){
-//                for (Light light : Global.gLightsMacMap.values()) {
-//                    addLightToList(light);
-//                }
-//            }
             for (Light light : Global.gLightsMacMap.values()) {
                 addLightToList(light);
             }
@@ -122,27 +216,7 @@ public class AddLightsActivity extends BaseActivity implements CompoundButton.On
         cursor.close();
         mLights.add(light);
         mAdapter.notifyDataSetChanged();
-    }
-
-    /* 只在这里把接受的数据 添加到数据库 */
-    void addLightToDB(Light light) {
-        ContentValues values = new ContentValues();
-        values.put("MAC", light.mac);
-        values.put("model", light.model);
-        values.put("connected", true);
-        values.put("state", light.state);
-        values.put("IP", light.ip);
-        values.put("subIP", light.subIP);
-        values.put("color", light.color);
-        values.put("brightness", Math.max(light.brightness, Constants.MIN_BRIGHTNESS));
-        values.put("CT", Math.max(light.CT, Constants.MIN_CT));
-        values.put("mode", 0);
-        values.put("name", light.name);
-        values.put("owned_time", System.currentTimeMillis());
-        values.put("deleted", false);
-        values.put("firmware_version", light.firmwareVersion);
-
-        getContentResolver().insert(YanKonProvider.URI_LIGHTS, values);
+        tvLightNum.setText(String.format(getString(R.string.light_num), ++num));
     }
 
     @Override
@@ -157,81 +231,15 @@ public class AddLightsActivity extends BaseActivity implements CompoundButton.On
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.action_select_all: {
-                boolean isAllSelected = true;
-                for (Light l : mLights) {
-                    if (!l.added) {
-                        if (!l.selected) {
-                            l.selected = true;
-                            isAllSelected = false;
-                        }
-                    }
-                }
-                if (isAllSelected) {
-                    for (Light l : mLights) {
-                        if (!l.added) {
-                            l.selected = false;
-                        }
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
-            }
-            break;
-            case R.id.action_done: {
-                for (Light l : mLights) {
-                    if (!l.added && l.selected) {
-                        addLightToDB(l);
-                    }
-                }
-                finish();
-            }
-            break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    void resetAllWifi() {
-//                NetworkSenderService.sendCmd(this, Constants.BROADCAST_IP, Constants.RESET_ALL_WIFI);
-        Command cmd = new Command(Command.CommandType.CommandTypeResetWifi, 0);
-        for (Light light : mLights) {
-            if (light.subIP > 0)
-                Utils.sendCmdToLocalLight(this, light, cmd);
-        }
-        for (Light light : mLights) {
-            if (light.subIP == 0)
-                Utils.sendCmdToLocalLight(this, light, cmd);
-        }
-        Global.gLightsMacMap.clear();
-        Utils.setAllLightsOffline(this);
-        mLights.clear();
-    }
-
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Light light = (Light) buttonView.getTag();
-        if (light != null) {
-            light.selected = isChecked;
-        }
+    protected void onStop() {
+        super.onStop();
     }
-
-    @Override
-    public void onOk(int type) {
-        switch (type) {
-            case AlertDialogFragment.TYPE_BUILD_NETWORK:
-                startActivity(new Intent(this, NetworkBuildActivity.class));
-                break;
-            case AlertDialogFragment.TYPE_RESET_NETWORK:
-                resetAllWifi();
-                break;
-        }
-    }
-
-    @Override
-    public void onCancel(int type) {
-        //queryLight();
-    }
-
 
     class LightsAdapter extends BaseAdapter {
         Context mContext = null;
@@ -273,11 +281,12 @@ public class AddLightsActivity extends BaseActivity implements CompoundButton.On
             holder.textView2.setText(Utils.formatMac(light.mac));
             holder.switchButton.setOnCheckedChangeListener(null);
             holder.switchButton.setChecked(light.state);
-            holder.checkBox.setTag(light);
-            holder.checkBox.setChecked(light.selected || light.added);
-            holder.checkBox.setEnabled(!light.added);
-            holder.checkBox.setVisibility(View.VISIBLE);
-            holder.checkBox.setOnCheckedChangeListener(AddLightsActivity.this);
+//            holder.checkBox.setTag(light);
+            holder.checkBox.setVisibility(View.GONE);
+//            holder.checkBox.setChecked(light.selected || light.added);
+//            holder.checkBox.setEnabled(!light.added);
+//            holder.checkBox.setVisibility(View.VISIBLE);
+//            holder.checkBox.setOnCheckedChangeListener(AddLightsActivity.this);
             holder.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

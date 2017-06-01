@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.kii.cloud.storage.KiiUser;
 import com.kii.cloud.storage.callback.KiiUserCallBack;
+import com.yankon.smart.App;
+import com.yankon.smart.BaseActivity;
 import com.yankon.smart.R;
 import com.yankon.smart.fragments.InputDialogFragment;
 import com.yankon.smart.utils.Constants;
@@ -26,11 +28,12 @@ import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.KiiSync;
 import com.yankon.smart.utils.LogUtils;
 import com.yankon.smart.utils.Settings;
+import com.yankon.smart.utils.Utils;
 
 /**
  * Created by guzhenfu on 2015/8/19.
  */
-public class LoginActivity extends Activity implements View.OnClickListener, InputDialogFragment.InputDialogInterface {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogInterface {
     private EditText emailEdit, passwordEdit;
     protected ProgressDialog progressDialog;
     private int mDownX, mDownY;
@@ -96,20 +99,28 @@ public class LoginActivity extends Activity implements View.OnClickListener, Inp
                 break;
 
             case R.id.button_register:
-                if (isInputValid()) {
-                    String email = emailEdit.getText().toString();
-                    String username = email.replace("@", "_");
-                    KiiUser.builderWithEmail(email).withName(username).build()
-                            .register(mUserCallBack, passwordEdit.getText().toString());
-                    showProgress();
+                if (Utils.isNetworkConnected()) {
+                    if (isInputValid()) {
+                        String email = emailEdit.getText().toString();
+                        String username = email.replace("@", "_");
+                        KiiUser.builderWithEmail(email).withName(username).build()
+                                .register(mUserCallBack, passwordEdit.getText().toString());
+                        showProgress();
+                    }
+                }else{
+                    Toast.makeText(this, getString(R.string.check_net), Toast.LENGTH_SHORT).show();
                 }
                 break;
 
             case R.id.button_log_in:
-                if (isInputValid()) {
-                    KiiUser.logIn(mUserCallBack, emailEdit.getText().toString(),
-                            passwordEdit.getText().toString());
-                    showProgress();
+                if (Utils.isNetworkConnected()) {
+                    if (isInputValid()) {
+                        KiiUser.logIn(mUserCallBack, emailEdit.getText().toString(),
+                                passwordEdit.getText().toString());
+                        showProgress();
+                    }
+                }else{
+                    Toast.makeText(this, getString(R.string.check_net), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -176,7 +187,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Inp
                 KiiSync.asyncFullSync();
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+                Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT)
                         .show();
             }
         }
@@ -196,7 +207,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Inp
                 KiiSync.asyncFullSync();
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT)
+                Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT)
                         .show();
             }
         }

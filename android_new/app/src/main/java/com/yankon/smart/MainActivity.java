@@ -9,32 +9,40 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.umeng.update.UmengUpdateAgent;
+import com.yankon.smart.activities.AudioActivity;
+import com.yankon.smart.activities.VideoActivity;
+import com.yankon.smart.music.dlna.DLNAContainer;
+import com.yankon.smart.music.dlna.DLNAService;
 import com.kii.cloud.storage.KiiUser;
 import com.kii.cloud.storage.callback.LoginCallBack;
 import com.yankon.smart.activities.ChooseSiteActivity;
 import com.yankon.smart.activities.LightActivity;
 import com.yankon.smart.activities.LightGroupsActivity;
 import com.yankon.smart.activities.LoginActivity;
-import com.yankon.smart.activities.NetworkBuildActivity;
+import com.yankon.smart.activities.NetworkBuildPreActivity;
 import com.yankon.smart.activities.ProfileActivity;
 import com.yankon.smart.activities.ScenesActivity;
 import com.yankon.smart.activities.ScheduleActivity;
 import com.yankon.smart.activities.SettingsActivity;
 import com.yankon.smart.fragments.AlertDialogFragment;
 import com.yankon.smart.fragments.AlertDialogFragment.AlertDialogListener;
-import com.yankon.smart.fragments.LogInFragment;
 import com.yankon.smart.services.NetworkReceiverService;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.KiiSync;
 import com.yankon.smart.utils.Settings;
 import com.yankon.smart.widget.NiftyDialogBuilder;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,10 +52,10 @@ import java.util.Map;
 
 public class MainActivity extends Activity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
 
-    private int[] icons = {-1, R.drawable.control_light, -1, R.drawable.build_net, R.drawable.schedule, R.drawable.lights,
+    private int[] icons = {R.drawable.music, R.drawable.control_light, R.drawable.movie, R.drawable.build_net, R.drawable.schedule, R.drawable.lights,
             R.drawable.scene, R.drawable.login, R.drawable.setting};
 
-    private int[] text = {R.string.space, R.string.control_light, R.string.space, R.string.action_addlights_network, R.string.title_schedule, R.string.light_groups, R.string.scene,
+    private int[] text = {R.string.audio, R.string.control_light, R.string.video, R.string.action_addlights_network, R.string.title_schedule, R.string.light_groups, R.string.scene,
             R.string.log_in, R.string.action_settings};
 
     private GridView gridView;
@@ -56,7 +64,10 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_function);
+        setupWindowAnimations();
         initView();
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
 
         IntentFilter filter = new IntentFilter(Constants.INTENT_LOGGED_IN);
         filter.addAction(Constants.INTENT_LOGGED_OUT);
@@ -74,6 +85,16 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
         if (!KiiUser.isLoggedIn()) {
             loginKii();
         }
+//        startDLNAService();
+    }
+
+    private void setupWindowAnimations() {
+    }
+
+    private void startDLNAService() {
+        DLNAContainer.getInstance().clear();
+        Intent intent = new Intent(this, DLNAService.class);
+        startService(intent);
     }
 
     private void initView() {
@@ -102,6 +123,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i){
             case 0:
+                startActivity(new Intent(MainActivity.this, AudioActivity.class));
                 break;
 
             case 1:
@@ -109,10 +131,11 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
                 break;
 
             case 2:
+                startActivity(new Intent(MainActivity.this, VideoActivity.class));
                 break;
 
             case 3:
-                startActivity(new Intent(MainActivity.this, NetworkBuildActivity.class));
+                startActivity(new Intent(MainActivity.this, NetworkBuildPreActivity.class));
                 break;
 
             case 4:
@@ -148,17 +171,6 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
 
     @Override
     public void onBackPressed() {
-//        AlertDialog.Builder ab = new AlertDialog.Builder(this);
-//        ab.setMessage(R.string.exit_prompt);
-//        ab.setNegativeButton(android.R.string.cancel, null);
-//        ab.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                finish();
-//            }
-//        });
-//        ab.show();
-
         final NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(this);
         dialogBuilder
                 .withMessage(R.string.exit_prompt)
@@ -184,9 +196,35 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (Global.mMusicSaveDao != null) {
+            int mVolume = Global.mMusicSaveDao.getVolume();
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    mVolume = mVolume - 5;
+                    if (mVolume <= 0)
+                        mVolume = 0;
+                    Global.mMusicSaveDao.dao.setVoice(mVolume);
+                    Global.mMusicSaveDao.setVolume(mVolume);
+                    return true;
+
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    mVolume = mVolume + 5;
+                    if (mVolume >= 100)
+                        mVolume = 100;
+                    Global.mMusicSaveDao.dao.setVoice(mVolume);
+                    Global.mMusicSaveDao.setVolume(mVolume);
+                    return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         stopService(new Intent(this, NetworkReceiverService.class));
+//        stopService(new Intent(this, DLNAService.class));
         super.onDestroy();
     }
 
@@ -229,4 +267,5 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     @Override
     public void onCancel(int type) {
     }
+
 }

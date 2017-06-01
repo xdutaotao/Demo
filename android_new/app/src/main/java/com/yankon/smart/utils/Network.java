@@ -56,7 +56,7 @@ public class Network {
                 }
             }
             DatagramPacket dataPacket = new DatagramPacket(cmd, cmd.length, broadcastAddr, Constants.DEFAULT_PORT);
-            if (App.isWifiConnected())
+            if (Utils.isWifiConnected())
                 SWDefineConst.udpSocket.send(dataPacket);
 
             LogUtils.e(LOG_TAG, "Send out cmd:" + ipStr + " data:" + Utils.byteArrayToString(cmd));

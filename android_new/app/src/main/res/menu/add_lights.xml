@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.yankon.smart.activities.AddLightsActivity">
 
-    <item
+<!--    <item
         android:id="@+id/action_done"
         android:title="@string/action_addlights_done"
         android:icon="@drawable/ic_action_accept"
@@ -14,15 +14,5 @@
         android:title="@string/action_select_all"
         android:icon="@drawable/ic_action_select_all"
         android:orderInCategory="101"
-        app:showAsAction="always" />
-<!--    <item
-        android:id="@+id/action_network"
-        android:title="@string/action_addlights_network"
-        android:orderInCategory="102"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_unnetwork"
-        android:title="@string/action_addlights_unnetwork"
-        android:orderInCategory="102"
-        app:showAsAction="never" />-->
+        app:showAsAction="always" />-->
 </menu>

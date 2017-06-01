@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yankon.smart.BaseActivity;
 import com.yankon.smart.R;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.Global;
@@ -23,31 +24,9 @@ import com.yankon.smart.utils.SyncUITask;
 /**
  * Created by guzhenfu on 2015/8/21.
  */
-public class ProfileActivity extends Activity implements View.OnClickListener {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener {
     private TextView email;
     private Button logOutButton, syncButton;
-    private int mDownX, mDownY;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                mDownX = (int) event.getX();
-                mDownY = (int) event.getY();
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                break;
-
-            case MotionEvent.ACTION_UP:
-                LogUtils.i("MOVE", mDownX + "----" + event.getX() + "MOVE---------" + mDownY + "----" + event.getY());
-                if (event.getX() - mDownX > Global.X_DISTANCE && Math.abs(event.getY() - mDownY) < Global.Y_DISTANCE)
-                    finish();
-                break;
-
-        }
-        return super.onTouchEvent(event);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

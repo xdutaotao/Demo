@@ -19,7 +19,7 @@ public class RepeatDaysActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repeat_days);
-        initAcitivityUI();
+        initActivityUI();
         mList = (ListView) findViewById(android.R.id.list);
         repeatDays = getIntent().getBooleanArrayExtra("days");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice);

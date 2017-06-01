@@ -9,7 +9,6 @@ import android.net.wifi.WifiManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.yankon.smart.App;
 import com.yankon.smart.SWDefineConst;
@@ -21,7 +20,6 @@ import com.yankon.smart.providers.YanKonProvider;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.LogUtils;
-import com.yankon.smart.utils.RxBus;
 import com.yankon.smart.utils.Utils;
 
 import java.io.IOException;
@@ -38,7 +36,7 @@ import java.util.Objects;
  * 创建一个接收socket。一直接受数据
  */
 public class UdpHelper implements Runnable {
-    private static final String LOG_TAG = "UdpHelper";
+    private static final String LOG_TAG = "YanKon_Network";
     public Boolean IsThreadDisable = false;
     private static WifiManager.MulticastLock lock;      /* 实例化一个Lock，解决有些手机可能接受不到UDP包的问题 */
     //    DatagramSocket datagramSocket;
@@ -61,19 +59,21 @@ public class UdpHelper implements Runnable {
                     SWDefineConst.udpSocket.bind(new InetSocketAddress(Constants.DEFAULT_PORT));
                     SWDefineConst.udpSocket.setBroadcast(true);
                 }
+                LogUtils.i(LOG_TAG, "socket open-------");
                 DatagramPacket datagramPacket = new DatagramPacket(message, message.length);
                 try {
-                    while (!IsThreadDisable && App.isWifiConnected()) {
+                    while (!IsThreadDisable && Utils.isWifiConnected()) {
                         SWDefineConst.udpSocket.receive(datagramPacket);        //block
                         byte[] full_data = datagramPacket.getData();
                         byte[] data = Arrays.copyOf(full_data, datagramPacket.getLength());
                         String str = Utils.byteArrayToString(data);
-                        LogUtils.i(LOG_TAG, "Get data source:" + datagramPacket.getAddress().toString()+":"+datagramPacket.getPort() + " len:" + datagramPacket.getLength() + " data:" + str);
+                        LogUtils.i(LOG_TAG, "Get data source:" + datagramPacket.getAddress().toString() + ":" + datagramPacket.getPort() + " len:" + datagramPacket.getLength() + " data:" + str);
                         InetAddress addr = datagramPacket.getAddress();
                         handleData(data, addr);
                     }
-                } catch (IOException e) {
-                    LogUtils.e(LOG_TAG, e.getMessage());
+                    LogUtils.i(LOG_TAG, "jump while ------------------");
+                } catch (Exception e) {
+//                    LogUtils.e(LOG_TAG, e.getMessage());
                 }
             } catch (SocketException e) {
                 e.printStackTrace();
@@ -92,6 +92,7 @@ public class UdpHelper implements Runnable {
         if (SWDefineConst.udpSocket != null) {
             SWDefineConst.udpSocket.close();
             SWDefineConst.udpSocket = null;
+            LogUtils.i(LOG_TAG, "jump while socket close-------");
         }
     }
 
@@ -121,165 +122,6 @@ public class UdpHelper implements Runnable {
             handleTransNo(data, trans_no);
         }
 
-//        if (data[1] == 0){
-//            while (pos < data.length && pos < start_point + len) {
-//                int dev_id = Utils.unsignedByteToInt(data[pos]);
-//                int attr_id = Utils.unsignedByteToInt(data[pos + 1]);
-//                int cmd = Utils.unsignedByteToInt(data[pos + 2]);
-//                int data_len = Utils.readInt16(data, pos + 3);
-//                byte[] sub_data = null;
-//                if (data_len > 0) {
-//                    sub_data = new byte[data_len];
-//                    for (int i = 0; i < data_len; i++) {
-//                        sub_data[i] = data[i + pos + 5];
-//                    }
-//                }
-//                pos += 5 + data_len;
-//                if (dev_id == 0 && attr_id == 7){
-//                    String modeType = Utils.stringFromBytes(sub_data);
-//                    if (Utils.getModelType(modeType) == Utils.LIGHTS_MODEL){
-//                        Log.i(LOG_TAG, "灯具···························" );
-//                        handleScanLightResult(data, address);
-//                        return;
-//                    }else{
-//                        Log.i(LOG_TAG, "开关 ······························" );
-//                        handleScanSwitchResult(data, address);
-//                        return;
-//                    }
-//                }
-//            }
-//        }else{
-//            int trans_no = Utils.unsignedByteToInt(data[1]);
-//            handleTransNo(data, trans_no);
-//        }
-
-    }
-
-    private void handleScanSwitchResult(byte[] data, InetAddress address) {
-        byte[] ipaddr = address.getAddress();
-        int ip = Utils.readIP(ipaddr, 0);
-        int start_point = 6;
-        ContentValues values = new ContentValues();
-        values.put("connected", true);
-        values.put("IP", ip);
-        values.put("subIP", 0);
-        int len;
-
-        /* 以后要改 */
-        if (data[3] == 1) {
-            len = Utils.readInt16(data, 8);
-            start_point = 10;
-        } else {
-            len = Utils.readInt16(data, 4);
-        }
-        int pos = start_point;                                  /* 解析PDU */
-        Switchs switchs = null;
-        while (pos < data.length && pos < start_point + len) {
-            int dev_id = Utils.unsignedByteToInt(data[pos]);
-            int attr_id = Utils.unsignedByteToInt(data[pos + 1]);
-            int cmd = Utils.unsignedByteToInt(data[pos + 2]);
-            int data_len = Utils.readInt16(data, pos + 3);
-            byte[] sub_data = null;
-            if (data_len > 0) {
-                sub_data = new byte[data_len];
-                for (int i = 0; i < data_len; i++) {
-                    sub_data[i] = data[i + pos + 5];
-                }
-            }
-            pos += 5 + data_len;
-            switch (dev_id) {
-                case 0:
-                    switch (attr_id) {
-                        case 3:
-                            if (switchs != null && TextUtils.isEmpty(switchs.name))
-                                switchs.name = Utils.stringFromBytes(sub_data);
-                            break;
-                        case 5:
-                            if (switchs != null) {
-                                switchs.firmwareVersion = Utils.stringFromBytes(sub_data);
-                                values.put("firmware_version", switchs.firmwareVersion);
-                            }
-                            break;
-                        case 7:                                         /* 区别灯和开关 */
-                            if (switchs != null) {
-                                switchs.model = Utils.stringFromBytes(sub_data);
-                                values.put("model", switchs.model);
-                            }
-                            break;
-                    }
-                    break;
-                case 1:
-                    if (attr_id == 2) {
-                        if (sub_data != null && sub_data.length >= 4) {
-                            int selfIP = Utils.readIP(sub_data, 0);
-                            if (selfIP != ip) {
-                                values.put("subIP", selfIP);
-                                switchs.subIP = selfIP;
-                            }
-                        }
-                    } else if (attr_id == 1) {
-                        String mac = Utils.byteArrayToString(sub_data, (char) 0);
-                        values.put("MAC", mac);
-                        switchs = Global.gSwitchsMacMap.get(mac);
-
-                        if (switchs == null) {
-                            switchs = new Switchs();
-                            switchs.mac = mac;
-                            switchs.ip = ip;
-                            Global.gSwitchsMacMap.put(mac, switchs);
-                        }
-                    }
-                    break;
-
-                case 12: {
-                    if (switchs == null) {
-                        break;
-                    }
-
-                    switch (attr_id) {
-                        case 1:
-                            switchs.key1 = sub_data[0] > 0;
-                            values.put("key1", switchs.key1);
-                            break;
-                        case 2:
-                            switchs.key2 = sub_data[0] > 0;
-                            values.put("key2", switchs.key2);
-                            break;
-                        case 3:
-                            switchs.key3 = sub_data[0] > 0;
-                            values.put("key3", switchs.key3);
-                            break;
-                    }
-                }
-                break;
-            }
-        }
-
-        //Update to light
-        if (switchs != null) {
-            if (TextUtils.isEmpty(switchs.model)) {
-                switchs.model = "Unknown";
-            }
-
-            if (switchs.id < 0) {
-                Cursor c = mContext.getContentResolver().query(YanKonProvider.URI_SWITCHS, new String[]{"_id"}, "MAC=(?)", new String[]{switchs.mac}, null);
-                if (c != null) {
-                    if (c.moveToFirst()) {
-                        switchs.id = c.getInt(0);
-                    }
-                    c.close();
-                }
-            }
-            /* 保存active状态 */
-            if (switchs.id >= 0) {
-                values.put("last_active", System.currentTimeMillis());
-                mContext.getContentResolver().update(YanKonProvider.URI_SWITCHS, values, "_id=" + switchs.id, null);
-            }
-            /* add switch to db */
-            Intent intent = new Intent(Constants.ACTION_UPDATED);
-            intent.putExtra(Constants.SEND_TYPE, "switch");
-            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-        }
     }
 
     /* 处理服务端 ！主动！ 发送过来的数据 */
@@ -301,6 +143,7 @@ public class UdpHelper implements Runnable {
             len = Utils.readInt16(data, 4);
         }
         int pos = start_point;
+        int mMediaStateLength = 0;
         while (pos < data.length && pos < start_point + len) {
             int dev_id = Utils.unsignedByteToInt(data[pos]);
             int attr_id = Utils.unsignedByteToInt(data[pos + 1]);
@@ -312,6 +155,9 @@ public class UdpHelper implements Runnable {
                 for (int i = 0; i < data_len; i++) {
                     sub_data[i] = data[i + pos + 5];
                 }
+            }else {
+                pos += 5 + data_len;
+                continue;
             }
             pos += 5 + data_len;
             switch (dev_id) {
@@ -333,7 +179,6 @@ public class UdpHelper implements Runnable {
                                 values.put("model", light.model);
                             }
                             break;
-
                         case 9:
                             if (light != null) {
                                 light.type = Utils.unsignedByteToInt(sub_data[0]);
@@ -374,6 +219,7 @@ public class UdpHelper implements Runnable {
                         }
                     }
                     break;
+
                 case 10: {
                     if (light == null) {
                         break;
@@ -392,11 +238,43 @@ public class UdpHelper implements Runnable {
                             values.put("brightness", light.brightness);
                             break;
                         case 3:
-                            //light.CT = Utils.unsignedByteToInt(sub_data[0]);
-                            //values.put("CT", light.CT);
+                            light.CT = Utils.unsignedByteToInt(sub_data[0]);
+                            values.put("CT", light.CT);
                             break;
                     }
                 }
+                break;
+
+                case 11: {
+                    if (light == null) {
+                        break;
+                    }
+                    switch (attr_id) {
+                        case 0:
+//                            Utils.saveSSIDState(mContext, light.mac, sub_data[0] > 0);
+                            light.ap_state = sub_data[0] > 0;
+                            values.put("AP_state", light.ap_state);
+                            break;
+
+                        case 1:
+                            light.ap_bssid = Utils.stringFromBytes(sub_data);
+                            values.put("AP_BSSID", light.ap_bssid);
+                            break;
+
+                        case 2:
+//                            Utils.saveSSID(mContext, light.mac, Utils.stringFromBytes(sub_data));
+                            light.ap_ssid = Utils.stringFromBytes(sub_data);
+                            values.put("AP_SSID", light.ap_ssid);
+                            break;
+
+                        case 3:
+//                            Utils.saveSSIDPWD(mContext, light.mac, Utils.stringFromBytes(sub_data));
+                            light.ap_pass = Utils.stringFromBytes(sub_data);
+                            values.put("AP_Pass", light.ap_pass);
+                            break;
+                    }
+                }
+                break;
 
                 case 14: {
                     if (light == null || sub_data == null) {
@@ -416,11 +294,14 @@ public class UdpHelper implements Runnable {
                     }
                 }
                 break;
-
-
             }
 
         }
+        if (drop) {
+            LogUtils.i("update:", "drop return----------------");
+            return;
+        }
+
         //Update to light
         if (light != null) {
             if (TextUtils.isEmpty(light.model)) {
@@ -435,22 +316,53 @@ public class UdpHelper implements Runnable {
                     c.close();
                 }
             }
-            if (light.id >= 0) {
+            if (light.id >= 0) {    //更新已经有的数据
                 values.put("last_active", System.currentTimeMillis());
+                values.put("deleted", 0);
                 mContext.getContentResolver().update(YanKonProvider.URI_LIGHTS, values, "_id=" + light.id, null);
+                LogUtils.i("update:", "update----------" + light.id + "------" );
+            }else{                  //搜索到新灯
+                addLightToList(mContext, light);
             }
-            if (drop)
-                return;
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(Constants.ACTION_UPDATED));
         }
-            /* add light to db */
-//            Intent intent = new Intent(Constants.ACTION_UPDATED);
-//            intent.putExtra(Constants.SEND_TYPE, "light");
-//            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-//            LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(Constants.ACTION_UPDATED));
-//        }
+
     }
 
+    void addLightToList(Context context, Light light) {
+        Cursor cursor = context.getContentResolver().query(YanKonProvider.URI_LIGHTS, null, "MAC=(?) AND deleted=0", new String[]{light.mac}, null);
+        if (cursor.moveToFirst()) {
+            light.added = true;
+        }
+        cursor.close();
+
+        if (!light.added){
+            addLightToDB(context, light);
+        }
+    }
+
+    void addLightToDB(Context context, Light light) {
+        ContentValues values = new ContentValues();
+        values.put("MAC", light.mac);
+        values.put("model", light.model);
+        values.put("connected", true);
+        values.put("state", light.state);
+        values.put("IP", light.ip);
+        values.put("subIP", light.subIP);
+        values.put("color", light.color);
+        values.put("brightness", Math.max(light.brightness, Constants.MIN_BRIGHTNESS));
+        values.put("CT", Math.max(light.CT, Constants.MIN_CT));
+        values.put("mode", 0);
+        values.put("name", light.name);
+        values.put("owned_time", System.currentTimeMillis());
+        values.put("deleted", 0);
+        values.put("firmware_version", light.firmwareVersion);
+        values.put("media_state", light.mediaState);
+        values.put("UID", light.uid);
+
+        context.getContentResolver().insert(YanKonProvider.URI_LIGHTS, values);
+        LogUtils.i("update:", "update ---add light ------------------------------------------");
+    }
 
     /* 处理服务端的回包 发送过来的数据 ，只要发送包有 回包就证明上次发送包是成功的！*/
     void handleTransNo(byte[] data, int trans_no) {
@@ -478,7 +390,11 @@ public class UdpHelper implements Runnable {
                 for (int i = 0; i < data_len; i++) {
                     sub_data[i] = data[i + pos + 5];
                 }
+            }else {
+                pos += 5 + data_len;
+                continue;
             }
+
             pos += 5 + data_len;
             int ret_vel = sub_data[0];
             if (sub_data[0] > 127) {
@@ -536,54 +452,5 @@ public class UdpHelper implements Runnable {
                 break;
             }
         }
-
-//            if (dev_id == 1 && attr_id == 1) {
-//                mac = Utils.byteArrayToString(sub_data, (char) 0);
-//                Global.gCommandTransactions.remove(mac + "," + trans_no);
-//                break;
-//            }
-
-
-//            if (dev_id == 1 && attr_id == 1){
-//                mac = Utils.byteArrayToString(sub_data, (char) 0);
-//            }
-//
-//            if (dev_id == 10 && attr_id == 0){
-//                flag = 1;
-//            }else if(dev_id == 10 && attr_id == 1){
-//                flag = 2;
-//            }else if(dev_id == 10 && attr_id == 2){
-//                flag = 3;
-//            }else if(dev_id == 10 && attr_id == 3){
-//                flag = 4;
-//            }
-
-//                if (Global.gLightsMacMap.containsKey(mac)){
-//                    Global.transLightsList.remove(Command.currentLightKey);
-//                    Global.gCommandTransactions.remove(Command.currentLightKey);
-//                }else if(Global.gSwitchsMacMap.containsKey(mac)){
-//                    Global.transSwitchsList.remove(Command.currentSwitchKey);
-//                    Global.gCommandTransactions.remove(Command.currentLightKey);
-//                }else
-//                    ;
-//                break;
-
-//                if (Global.gLightsMacMap.containsKey(mac))
-//                    Global.gCommandTransactions.remove(Command.lastLightKey);   /* 删除待确认包的状态 */
-//                else if (Global.gSwitchsMacMap.containsKey(mac))
-//                    Global.gCommandTransactions.remove(Command.lastSwitchKey);
-//                else
-//                    ;
-//                break;
-
-//        if (flag == 0)
-//            flag = 5;
-//
-//        if (Global.gCommandTransactions.containsKey(mac + "," + flag + "," + trans_no)){
-//            Global.gCommandTransactions.remove(mac + "," + flag + "," + trans_no);
-//            Global.transLightsMap.remove(mac + "," + flag);
-//        }
-
-
     }
 }

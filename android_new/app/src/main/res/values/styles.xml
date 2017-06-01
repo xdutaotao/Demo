@@ -8,9 +8,12 @@
         <item name="colorAccent">@color/myAccentColor</item>
         <item name="android:textColorPrimary">@color/myTextPrimaryColor</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-
-        <item name="android:windowBackground">@color/myWindowBackground</item>
         <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="SplashActivity" parent="@android:style/Theme.Light">
@@ -83,6 +86,33 @@
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="visa_contacts_textview_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="visa_contacts_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="visa_contacts_view_under_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@android:color/background_dark</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 
 </resources>

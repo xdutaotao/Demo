@@ -1,13 +1,10 @@
 package com.yankon.smart.activities;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +17,11 @@ import android.widget.ToggleButton;
 import com.yankon.smart.R;
 import com.yankon.smart.model.Command;
 import com.yankon.smart.providers.YanKonProvider;
-import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.DataHelper;
 import com.yankon.smart.utils.Utils;
 import com.yankon.smart.BaseListActivity;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Created by guzhenfu on 2015/8/19.
@@ -107,15 +102,18 @@ public class LightGroupsActivity extends BaseListActivity {
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         cursor = (Cursor) mAdapter.getItem(position);
         String title = cursor.getString(cursor.getColumnIndex("name"));
-        contextMenuData.clear();
+//        contextMenuData.clear();
+        arrayIndex = 0;
         cursorDataPos = position;
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("value", getString(R.string.scene_edit));
-        contextMenuData.add(hashMap);
-        HashMap<String, Object> hashMap5 = new HashMap<>();
-        hashMap5.put("value", getString(R.string.menu_delete));
-        contextMenuData.add(hashMap5);
-        showListViewDialog(title, contextMenuData);
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("value", getString(R.string.scene_edit));
+//        contextMenuData.add(hashMap);
+        array.put(arrayIndex++, getString(R.string.scene_edit));
+//        HashMap<String, Object> hashMap5 = new HashMap<>();
+//        hashMap5.put("value", getString(R.string.menu_delete));
+//        contextMenuData.add(hashMap5);
+        array.put(arrayIndex++, getString(R.string.menu_delete));
+        showListViewDialog(title, array);
         return true;
     }
 

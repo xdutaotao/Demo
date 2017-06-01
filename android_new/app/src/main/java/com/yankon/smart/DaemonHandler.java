@@ -27,9 +27,7 @@ public class DaemonHandler extends Handler {
     public static final int MSG_CHECK_TRANS_FIRE = 1;
     public static final int MSG_SCAN_LIGHTS = 2;
     public static final int MSG_CHECK_ACTIVE = 3;
-
-    public static final int MSG_SCAN_SWITCHS = 4;
-    public static final int MSG_CHECK_SWITCHS_ACTIVE = 5;
+    public static final int MSG_QUICK_SEARCH = 4;
 
     public static final int MSG_SET_SCAN_TYPE = 10001;
     static final String LOG_TAG = DaemonHandler.class.getSimpleName();
@@ -64,6 +62,7 @@ public class DaemonHandler extends Handler {
 
             //发送搜索消息开始进行搜灯操作
             case MSG_SCAN_LIGHTS:
+                LogUtils.i("TAG", Global.gScanLightsType + "---------------------" + Global.mQuickTime + "--------------");
                 removeMessages(MSG_SCAN_LIGHTS);
                 LogUtils.i("MSG_SCAN_LIGHTS-jack","start search");
                 scanLights(context);
@@ -80,15 +79,21 @@ public class DaemonHandler extends Handler {
                 checkLightsActive(context);
                 break;
 
-            case MSG_CHECK_SWITCHS_ACTIVE:
-                checkSwitchsActive(context);
-                break;
+            case MSG_QUICK_SEARCH:
+                Global.gScanLightsType = Constants.SCAN_LIGHTS_QUICK;
+                Global.mQuickTime++;
+                if (Global.mQuickTime >= 3){
+                    Global.mQuickTime = 0;
+                    Global.gScanLightsType = Constants.SCAN_LIGHTS_NORMAL;
+                    sendEmptyMessage(MSG_SCAN_LIGHTS);
+                    break;
+                }
+                LogUtils.i("TAG", Global.gScanLightsType + "---------------------" + Global.mQuickTime + "--------------");
 
-            case MSG_SCAN_SWITCHS:
-                removeMessages(MSG_SCAN_SWITCHS);
-                scanSwitchs(context);
-                sendEmptyMessageDelayed(MSG_CHECK_SWITCHS_ACTIVE, Constants.SCAN_ACTIVE_CHECK_PERIOD);
-                sendEmptyMessageDelayed(MSG_SCAN_SWITCHS, Constants.SCAN_PERIOD[Global.gScanSwitchsType]);
+                removeMessages(MSG_QUICK_SEARCH);
+                scanLights(context);
+                sendEmptyMessageDelayed(MSG_CHECK_ACTIVE, Constants.SCAN_ACTIVE_CHECK_PERIOD);
+                sendEmptyMessageDelayed(MSG_QUICK_SEARCH, Constants.SCAN_PERIOD[Global.gScanLightsType]);
                 break;
         }
     }

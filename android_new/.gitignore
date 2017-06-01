@@ -3,7 +3,5 @@
 .gradle
 .idea
 build
-thermostat
-.DS_Store
-
 app/build
+local.properties

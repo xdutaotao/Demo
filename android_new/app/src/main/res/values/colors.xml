@@ -29,4 +29,7 @@
     <color name="divider_color">#AAFFCC00</color>
     <color name="msg_color">#e74c3c</color>
     <color name="content_background">#AAFFFFFF</color>
+    <color name="transparent_gray">#8000</color>
+
+    <color name="black_p50">#7f000000</color>
 </resources>

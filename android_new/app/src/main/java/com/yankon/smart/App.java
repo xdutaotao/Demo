@@ -1,37 +1,31 @@
 package com.yankon.smart;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Debug;
-import android.util.Log;
 
+import com.github.moduth.blockcanary.BlockCanary;
+import com.yankon.smart.music.dlna.DMCApplication;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.LogUtils;
 import com.yankon.smart.utils.Utils;
+import com.yankon.smart.widget.AppBlockCanaryContext;
+
 
 import java.util.List;
 
 /**
  * Created by  on 14/11/20:上午11:30.
  */
-public class App extends Application {
+public class App extends DMCApplication {
     private static App mApp;
     private static Context context;
     private RefWatcher refWatcher;
 
     public static App getApp() {
         return mApp;
-    }
-
-    public static Context getContext(){
-        return context;
     }
 
     public static RefWatcher getRefWatcher(){
@@ -42,10 +36,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        context = getApplicationContext();
+
         ApplicationInfo info = getApplicationInfo();
         if ((info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             refWatcher = LeakCanary.install(this);
+            BlockCanary.install(this, new AppBlockCanaryContext()).start();
             LogUtils.LEVEL = 0;
         }
         else {
@@ -67,14 +62,6 @@ public class App extends Application {
         */
     }
 
-    public static boolean isWifiConnected() {
-        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if(wifiNetworkInfo.isConnected()) {
-            return true ;
-        }
-        return false ;
-    }
 
     /**
      * 判断某个服务是否正在运行的方法

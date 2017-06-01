@@ -20,14 +20,21 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createDB(db);
-        createSwitchsDB(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch(oldVersion){
+            case 0:
+                db.execSQL("alter table lights add column media_state BOOL");
+                db.execSQL("alter table lights add column UID TEXT");
+                break;
+
             case 1:
-                createSwitchsDB(db);
+                db.execSQL("alter table lights add column AP_state BOOL");
+                db.execSQL("alter table lights add column AP_BSSID TEXT");
+                db.execSQL("alter table lights add column AP_SSID TEXT");
+                db.execSQL("alter table lights add column AP_Pass TEXT");
                 break;
         }
     }
@@ -60,7 +67,13 @@ public class DBHelper extends SQLiteOpenHelper {
                         + "synced BOOL,"
                         + "owned_time INTEGER,"
                         + "last_active INTEGER,"
-                        + "deleted INTEGER DEFAULT 0"
+                        + "deleted INTEGER DEFAULT 0,"
+                        + "media_state BOOL DEFAULT 0,"
+                        + "UID TEXT DEFAULT NULL,"
+                        + "AP_state BOOL DEFAULT 0,"
+                        + "AP_BSSID TEXT,"
+                        + "AP_SSID TEXT,"
+                        + "AP_Pass TEXT"
                         + ");"
         );
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS lights_mac ON lights (MAC);");
@@ -94,10 +107,6 @@ public class DBHelper extends SQLiteOpenHelper {
                         + "color INTEGER,"
                         + "brightness INTEGER,"
                         + "CT INTEGER,"
-                        + "type INTEGER,"
-                        + "number INTEGER,"
-                        + "sens INTEGER,"
-                        + "lux INTEGER,"
                         + "mode INTEGER,"
                         + "synced BOOL,"
                         + "created_time INTEGER,"

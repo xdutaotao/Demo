@@ -19,7 +19,7 @@ import com.yankon.smart.utils.LogUtils;
 import com.yankon.smart.utils.Settings;
 import com.yankon.smart.utils.SyncUITask;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -27,13 +27,13 @@ import butterknife.ButterKnife;
  */
 public class ProfileFragment extends BaseFragment {
 
-    @BindView(R.id.email)
+    @Bind(R.id.email)
     TextView email;
 
-    @BindView(R.id.log_out_button)
+    @Bind(R.id.log_out_button)
     Button logOutButton;
 
-    @BindView(R.id.sync_button)
+    @Bind(R.id.sync_button)
     Button syncButton;
 
     public ProfileFragment() {

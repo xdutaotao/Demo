@@ -39,6 +39,7 @@ import com.yankon.smart.R;
 import com.yankon.smart.activities.AddLightsActivity;
 import com.yankon.smart.activities.ChangePasswordActivity;
 import com.yankon.smart.activities.LightInfoActivity;
+import com.yankon.smart.activities.SwitchInfoActivity;
 import com.yankon.smart.model.Command;
 import com.yankon.smart.providers.YanKonProvider;
 import com.yankon.smart.utils.Constants;
@@ -312,6 +313,7 @@ public class LightsFragment extends BaseListFragment implements CompoundButton.O
             if (inMultipleMode)
                 clearSelectionWhenSwitchMode();
         }
+        selectAll(true);
     }
 
     @Override
@@ -680,6 +682,8 @@ public class LightsFragment extends BaseListFragment implements CompoundButton.O
         super.onListItemClick(l, v, position, id);
         String name = null;
         Intent intent = new Intent(getActivity(), LightInfoActivity.class);
+
+
         if (position == 0) {
             if (mSelectedLights.size() == 0) {
                 Toast.makeText(getActivity(), R.string.lights_multiple_empty, Toast.LENGTH_SHORT).show();
@@ -746,6 +750,7 @@ public class LightsFragment extends BaseListFragment implements CompoundButton.O
             intent.putExtra(LightInfoActivity.EXTRA_LIGHT_ID, (int) id);
         }
         intent.putExtra(LightInfoActivity.EXTRA_NAME, name);
+
         startActivity(intent);
     }
 

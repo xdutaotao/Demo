@@ -88,12 +88,14 @@ public class ScheduleActivity extends BaseListActivity {
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         cursor = (Cursor) mAdapter.getItem(position);
         String title = cursor.getString(cursor.getColumnIndex("name"));
-        contextMenuData.clear();
+//        contextMenuData.clear();
+        arrayIndex = 0;
         cursorDataPos = position;
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("value", getString(R.string.menu_delete));
-        contextMenuData.add(hashMap);
-        showListViewDialog(title, contextMenuData);
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("value", getString(R.string.menu_delete));
+//        contextMenuData.add(hashMap);
+        array.put(arrayIndex++, getString(R.string.menu_delete));
+        showListViewDialog(title, array);
         return true;
     }
 

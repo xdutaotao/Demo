@@ -57,7 +57,7 @@ public class AddScheduleActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
-        initAcitivityUI();
+        initActivityUI();
         mTargetBtn = (Button) findViewById(R.id.target_btn);
         mTargetBtn.setOnClickListener(this);
         mSettingsBtn = (Button) findViewById(R.id.settings_btn);

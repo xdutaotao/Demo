@@ -36,7 +36,7 @@ public class PickTargetActivity extends BaseActivity implements ExpandableListVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_target);
-        initAcitivityUI();
+        initActivityUI();
 
         mList = (ExpandableListView) findViewById(R.id.target_list);
         loadContents();

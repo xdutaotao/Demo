@@ -49,7 +49,7 @@ public class AddSwitchsActivity extends BaseActivity implements CompoundButton.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_switchs);
-        initAcitivityUI();
+        initActivityUI();
 
         Global.gSwitchsMacMap.clear();
 
@@ -84,7 +84,7 @@ public class AddSwitchsActivity extends BaseActivity implements CompoundButton.O
     protected void onResume() {
         super.onResume();
         Global.gScanSwitchsType = Constants.SCAN_SWITCHS_ADDSWITCHS;
-        Global.gDaemonHandler.sendEmptyMessage(DaemonHandler.MSG_SCAN_SWITCHS);
+        //Global.gDaemonHandler.sendEmptyMessage(DaemonHandler.MSG_SCAN_SWITCHS);
         querySwitchs();
     }
 

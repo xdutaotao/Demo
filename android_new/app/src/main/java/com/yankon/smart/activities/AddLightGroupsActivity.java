@@ -47,7 +47,7 @@ public class AddLightGroupsActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_light_groups);
-        initAcitivityUI();
+        initActivityUI();
         mGroupNameEdit = (EditText) findViewById(R.id.group_name);
         mList = (ListView) findViewById(R.id.group_list);
         findViewById(R.id.group_cancel).setOnClickListener(this);

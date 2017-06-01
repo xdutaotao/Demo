@@ -11,28 +11,36 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.yankon.smart.App;
+import com.yankon.smart.DaemonHandler;
 import com.yankon.smart.R;
 import com.yankon.smart.fragments.InputDialogFragment;
 import com.yankon.smart.fragments.ProgressDialogFragment;
+import com.yankon.smart.fragments.WarningDialogFragment;
 import com.yankon.smart.model.Command;
 import com.yankon.smart.providers.YanKonProvider;
 import com.yankon.smart.utils.Constants;
 import com.yankon.smart.utils.DataHelper;
+import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.KiiSync;
 import com.yankon.smart.utils.LogUtils;
+import com.yankon.smart.utils.Settings;
 import com.yankon.smart.utils.Utils;
 import com.yankon.smart.BaseListActivity;
 import com.yankon.smart.widget.CardItemViewHolder;
@@ -43,22 +51,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
+
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * Created by guzhenfu on 2015/8/17.
  */
-public class LightActivity extends BaseListActivity implements InputDialogFragment.InputDialogInterface {
+public class LightActivity extends BaseListActivity implements InputDialogFragment.InputDialogInterface, WarningDialogFragment.WarningDialogInterface {
     public static final int MENU_EDIT = 0;
     public static final int MENU_DELETE = 4;
     public static final int MENU_SET_REMOTE_PWD = 1;
     public static final int MENU_CHANGE_PWD = 2;
     public static final int MENU_RESET_NETWORK = 3;
     public static final int MENU_TRANSFER =5;
+    public static final int RESET_NETWORK_DIALOG = 6;
+    public static final int DELETE_DIALOG = 7;
 
     private static boolean isFirstLaunch = false;
     private View headerView;
     private TextView tv;
+    private TextView tvEmptyTextView;
+    private PtrClassicFrameLayout mPtrFrame;
     private ToggleButton multi_state_switch;
     HashSet<String> mSelectedLights = new HashSet<>();
 
@@ -72,8 +88,8 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_light);
-
+        setContentView(R.layout.activity_light_pull);
+        setupWindowAnimations();
         initTitleView();
         mAdapter = new LightsAdapter(this);
         initHeaderView();
@@ -122,10 +138,6 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                                     intent.putExtra("brightness", brightness);
                                     intent.putExtra("CT", CT);
                                     intent.putExtra("mode", mode);
-                                    intent.putExtra("type", c.getInt(c.getColumnIndex("type")));
-                                    intent.putExtra("number", c.getInt(c.getColumnIndex("number")));
-                                    intent.putExtra("sens", c.getInt(c.getColumnIndex("sens")));
-                                    intent.putExtra("lux", c.getInt(c.getColumnIndex("lux")));
                                 } else {
                                     int tmp = c.getInt(c.getColumnIndex("state"));
                                     if (tmp != state)
@@ -142,21 +154,6 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                                     tmp = c.getInt(c.getColumnIndex("mode"));
                                     if (tmp != mode)
                                         intent.putExtra("mode", Constants.DEFAULT_MODE);
-                                    tmp = c.getInt(c.getColumnIndex("type"));
-                                    if (tmp != mode)
-                                        intent.putExtra("type", Constants.DEFAULT_MODE);
-
-                                    tmp = c.getInt(c.getColumnIndex("number"));
-                                    if (tmp != mode)
-                                        intent.putExtra("number", Constants.DEFAULT_MODE);
-
-                                    tmp = c.getInt(c.getColumnIndex("sens"));
-                                    if (tmp != mode)
-                                        intent.putExtra("sens", Constants.DEFAULT_MODE);
-
-                                    tmp = c.getInt(c.getColumnIndex("lux"));
-                                    if (tmp != mode)
-                                        intent.putExtra("lux", Constants.DEFAULT_MODE);
                                 }
                             }
                             c.close();
@@ -165,20 +162,100 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                 } else {
                     cursor = (Cursor) mAdapter.getItem(position - 1);
                     name = cursor.getString(cursor.getColumnIndex("name"));
+                    String ver = cursor.getString(cursor.getColumnIndex("firmware_version"));
+                    String mac = cursor.getString(cursor.getColumnIndex("MAC"));
+                    int ip = cursor.getInt(cursor.getColumnIndex("IP"));
+                    boolean remote = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
+                    String model = cursor.getString(cursor.getColumnIndex("model"));
+                    boolean apState = cursor.getInt(cursor.getColumnIndex("AP_state")) > 0;
+                    String apSsid = cursor.getString(cursor.getColumnIndex("AP_SSID"));
+                    String apPass = cursor.getString(cursor.getColumnIndex("AP_Pass"));
                     intent.putExtra(LightInfoActivity.EXTRA_LIGHT_ID, (int) id);
+//                    intent.putExtra(LightInfoActivity.MENU_EDIT, true);
+//                    intent.putExtra(LightInfoActivity.MAC, mac);
+//                    intent.putExtra(LightInfoActivity.IP, ip);
+//                    intent.putExtra(LightInfoActivity.REMOTE, remote);
+//                    intent.putExtra(LightInfoActivity.FIRMWARE_VERSION, ver);
+//                    intent.putExtra(LightInfoActivity.MODEL, model);
+//                    intent.putExtra(LightInfoActivity.AP_STATE, apState);
+//                    intent.putExtra(LightInfoActivity.AP_SSID, apSsid);
+//                    intent.putExtra(LightInfoActivity.AP_PASS, apPass);
                 }
                 intent.putExtra(LightInfoActivity.EXTRA_NAME, name);
                 startActivity(intent);
             }
         });
         isFirstLaunch = true;
+    }
 
+    private void setupWindowAnimations() {
+//        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+//        getWindow().setEnterTransition(fade);
+    }
+
+    @Override
+    public void initTitleView() {
+        super.initTitleView();
+        ImageView add = (ImageView) findViewById(R.id.add);
+        add.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void initListView() {
+        super.initListView();
+        tvEmptyTextView = (TextView) findViewById(android.R.id.empty);
+        mPtrFrame = (PtrClassicFrameLayout)findViewById(R.id.list_view_with_empty_view_fragment_ptr_frame);
+//        if (mAdapter.getCount() != 0){
+//            mPtrFrame.setVisibility(View.VISIBLE);
+//            tvEmptyTextView.setVisibility(View.GONE);
+//        }else{
+//            mPtrFrame.setVisibility(View.GONE);
+//            tvEmptyTextView.setVisibility(View.VISIBLE);
+//        }
+
+        tvEmptyTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPtrFrame.setVisibility(View.VISIBLE);
+                tvEmptyTextView.setVisibility(View.GONE);
+                mPtrFrame.autoRefresh();
+            }
+        });
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, getListView(), header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                Global.gDaemonHandler.sendEmptyMessage(DaemonHandler.MSG_QUICK_SEARCH);
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPtrFrame.refreshComplete();
+//                        if (mAdapter.getCount() != 0){
+//                            mPtrFrame.setVisibility(View.VISIBLE);
+//                            tvEmptyTextView.setVisibility(View.GONE);
+//                        }else{
+//                            mPtrFrame.setVisibility(View.GONE);
+//                            tvEmptyTextView.setVisibility(View.VISIBLE);
+//                        }
+                        if (mAdapter != null)
+                            mAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //updateMutliState();
+        Global.gDaemonHandler.sendEmptyMessage(DaemonHandler.MSG_QUICK_SEARCH);
+        updateMutliState();
     }
 
     void updateMutliState() {
@@ -213,18 +290,6 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         super.onLoadFinished(loader, cursor);
-        if (isFirstLaunch){
-            isFirstLaunch = false;
-            int num = 0;
-            Cursor c = getContentResolver().query(YanKonProvider.URI_LIGHTS, new String[]{"_id"}, null, null, null);
-            if (c != null) {
-                num = c.getCount();
-                c.close();
-            }
-            if (num == 0) {
-                startActivity(new Intent(this, AddLightsActivity.class));
-            }
-        }
         selectAll();
     }
 
@@ -276,7 +341,6 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
             }
         }
         updateHeaderView();
-        updateMutliState();
     }
 
 
@@ -335,12 +399,43 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
         newFragment.show(getFragmentManager(), "dialog");
     }
 
+    void showWarningDialog(int type) {
+        String title = null;
+        if (type == DELETE_DIALOG){
+            title = getString(R.string.delete_dialog_title);
+        }else if (type == RESET_NETWORK_DIALOG){
+            title = getString(R.string.reset_network_dialog_title);
+        }else
+            ;
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        WarningDialogFragment newFragment = WarningDialogFragment.newInstance(title,type);
+        newFragment.setWarningDialogInterface(this);
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         if (cursorDataPos == -1){
-            position += 1;
-        }else if (!connected && position == 3){
             position ++;
+            if (!Settings.isLoggedIn())
+                position ++;
+        }else if (Settings.isLoggedIn()) {
+            if (!connected && position == 3) {
+                position++;
+            }
+        }else{
+            if (position >= 1){
+                position++;
+            }
+            if (!connected && position == 3) {
+                position++;
+            }
         }
 
         switch (position) {
@@ -355,19 +450,7 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
             }
             break;
             case MENU_DELETE: {
-                if (cursorDataPos == -1){
-                    for (String lid : mSelectedLights) {
-                        DataHelper.deleteLightById(Integer.parseInt(lid));
-                    }
-                    mSelectedLights.clear();
-                }else{
-                    cursor = (Cursor) mAdapter.getItem(cursorDataPos);
-                    int cid = cursor.getInt(cursor.getColumnIndex("_id"));
-                    String lid = cursor.getString(cursor.getColumnIndex("_id"));
-                    DataHelper.deleteLightById(cid);
-                    mSelectedLights.remove(lid);
-                }
-                updateHeaderView();
+                showWarningDialog(DELETE_DIALOG);
             }
             break;
             case MENU_SET_REMOTE_PWD: {
@@ -385,6 +468,10 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                         cursor = (Cursor) mAdapter.getItem(cursorDataPos);
                         int cid = cursor.getInt(cursor.getColumnIndex("_id"));
                         currLightIds = new String[]{String.valueOf(cid)};
+                        if (!TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex("remote_pwd")))) {
+                            Toast.makeText(LightActivity.this, getString(R.string.pwd_again), Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                     }
                 }
                 menuType = MENU_SET_REMOTE_PWD;
@@ -406,36 +493,7 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
             }
             break;
             case MENU_RESET_NETWORK: {
-                if (cursorDataPos == -1){
-                    currLightIds = mSelectedLights.toArray(new String[mSelectedLights.size()]);
-                    Command cmd = new Command(Command.CommandType.CommandTypeResetWifi, 0);
-                    Utils.controlLightsById(App.getApp(), currLightIds, cmd, true);
-                    cursor = this.getContentResolver().query(YanKonProvider.URI_LIGHTS, null,
-                            "_id in " + Utils.buildNumsInSQL(currLightIds), null, null);
-                    if (cursor != null) {
-                        while (cursor.moveToNext()) {
-                            boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
-                            if (connected){
-                                String lid = cursor.getString(cursor.getColumnIndex("_id"));
-                                DataHelper.deleteLightById(Integer.parseInt(lid));
-                                mSelectedLights.remove(lid);
-                            }
-                        }
-                        cursor.close();
-                    }
-                }else{
-                    cursor = (Cursor) mAdapter.getItem(cursorDataPos);
-                    int cid = cursor.getInt(cursor.getColumnIndex("_id"));
-                    currLightIds = new String[]{String.valueOf(cid)};
-                    Command cmd = new Command(Command.CommandType.CommandTypeResetWifi, 0);
-                    Utils.controlLightsById(App.getApp(), currLightIds, cmd, true);
-
-                    boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
-                    if (connected){
-                        DataHelper.deleteLightById(cid);
-                        mSelectedLights.remove(String.valueOf(cid));
-                    }
-                }
+                showWarningDialog(RESET_NETWORK_DIALOG);
             }
             break;
         }
@@ -476,7 +534,9 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        contextMenuData.clear();
+//        contextMenuData.clear();
+//        array.clear();
+        arrayIndex = 0;
         String name = null;
         if (position == 0){
             if (mSelectedLights.size() == 0) {
@@ -488,46 +548,118 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
             } else {
                 name = getString(R.string.lights_multiple_title, mSelectedLights.size());
             }
-            HashMap<String, Object> hashMap1 = new HashMap<>();
-            hashMap1.put("value", getString(R.string.set_remote_pwd));
-            contextMenuData.add(hashMap1);
+            if (Settings.isLoggedIn()) {
+//                HashMap<String, Object> hashMap1 = new HashMap<>();
+//                hashMap1.put("value", getString(R.string.set_remote_pwd));
+//                contextMenuData.add(hashMap1);
+                array.put(arrayIndex++, getString(R.string.set_remote_pwd));
+            }
             cursorDataPos = -1;
             connected = true;
         }else{
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("value", getString(R.string.menu_edit));
-            contextMenuData.add(hashMap);
+//            HashMap<String, Object> hashMap = new HashMap<>();
+//            hashMap.put("value", getString(R.string.menu_edit));
+//            contextMenuData.add(hashMap);
+            array.put(arrayIndex++, getString(R.string.menu_edit));
             position -= 1;
             cursorDataPos = position;
             cursor = (Cursor) mAdapter.getItem(position);
             name = cursor.getString(cursor.getColumnIndex("name"));
             connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
-            if (TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex("remote")))) {
-                HashMap<String, Object> hashMap1 = new HashMap<>();
-                hashMap1.put("value", getString(R.string.set_remote_pwd));
-                contextMenuData.add(hashMap1);
-                transfer = false;
-            } else {
-                HashMap<String, Object> hashMap2 = new HashMap<>();
-                hashMap2.put("value", getString(R.string.transfer_server));
-                contextMenuData.add(hashMap2);
-                transfer = true;
+            if (Settings.isLoggedIn()) {
+                if (TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex("remote")))) {
+//                    HashMap<String, Object> hashMap1 = new HashMap<>();
+//                    hashMap1.put("value", getString(R.string.set_remote_pwd));
+//                    contextMenuData.add(hashMap1);
+                    array.put(arrayIndex++, getString(R.string.set_remote_pwd));
+                    transfer = false;
+                } else {
+//                    HashMap<String, Object> hashMap2 = new HashMap<>();
+//                    hashMap2.put("value", getString(R.string.transfer_server));
+//                    contextMenuData.add(hashMap2);
+                    array.put(arrayIndex++, getString(R.string.transfer_server));
+                    transfer = true;
+                }
             }
         }
 
-        HashMap<String, Object> hashMap3 = new HashMap<>();
-        hashMap3.put("value", getString(R.string.change_password));
-        contextMenuData.add(hashMap3);
+//        HashMap<String, Object> hashMap3 = new HashMap<>();
+//        hashMap3.put("value", getString(R.string.change_password));
+//        contextMenuData.add(hashMap3);
+        array.put(arrayIndex++, getString(R.string.change_password));
         if (connected){
-            HashMap<String, Object> hashMap4 = new HashMap<>();
-            hashMap4.put("value", getString(R.string.action_addlights_unnetwork));
-            contextMenuData.add(hashMap4);
+//            HashMap<String, Object> hashMap4 = new HashMap<>();
+//            hashMap4.put("value", getString(R.string.action_addlights_unnetwork));
+//            contextMenuData.add(hashMap4);
+            array.put(arrayIndex++, getString(R.string.action_addlights_unnetwork));
+        }else{
+//            HashMap<String, Object> hashMap5 = new HashMap<>();
+//            hashMap5.put("value", getString(R.string.menu_delete));
+//            contextMenuData.add(hashMap5);
+            array.put(arrayIndex++, getString(R.string.menu_delete));
         }
-        HashMap<String, Object> hashMap5 = new HashMap<>();
-        hashMap5.put("value", getString(R.string.menu_delete));
-        contextMenuData.add(hashMap5);
-        showListViewDialog(name, contextMenuData);
+
+        if (cursorDataPos == -1){
+//            HashMap<String, Object> hashMap5 = new HashMap<>();
+//            hashMap5.put("value", getString(R.string.menu_delete));
+//            contextMenuData.add(hashMap5);
+            array.put(arrayIndex++, getString(R.string.menu_delete));
+        }
+
+        showListViewDialog(name, array);
         return true;
+    }
+
+    @Override
+    public void onWarningDialogDone(int type) {
+        if (type == RESET_NETWORK_DIALOG){
+            if (cursorDataPos == -1){
+                currLightIds = mSelectedLights.toArray(new String[mSelectedLights.size()]);
+                Command cmd = new Command(Command.CommandType.CommandTypeResetWifi, 0);
+                Utils.controlLightsById(App.getApp(), currLightIds, cmd, true);
+                cursor = this.getContentResolver().query(YanKonProvider.URI_LIGHTS, null,
+                        "_id in " + Utils.buildNumsInSQL(currLightIds), null, null);
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
+                        if (connected){
+                            String lid = cursor.getString(cursor.getColumnIndex("_id"));
+                            DataHelper.deleteLightById(Integer.parseInt(lid));
+                            mSelectedLights.remove(lid);
+                        }
+                    }
+                    cursor.close();
+                }
+            }else{
+                cursor = (Cursor) mAdapter.getItem(cursorDataPos);
+                int cid = cursor.getInt(cursor.getColumnIndex("_id"));
+                currLightIds = new String[]{String.valueOf(cid)};
+                Command cmd = new Command(Command.CommandType.CommandTypeResetWifi, 0);
+                Utils.controlLightsById(App.getApp(), currLightIds, cmd, true);
+
+                boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
+                if (connected){
+                    DataHelper.deleteLightById(cid);
+                    mSelectedLights.remove(String.valueOf(cid));
+                }
+            }
+
+        }else if (type == DELETE_DIALOG){
+            if (cursorDataPos == -1){
+                for (String lid : mSelectedLights) {
+                    DataHelper.deleteLightById(Integer.parseInt(lid));
+                }
+                mSelectedLights.clear();
+            }else{
+                cursor = (Cursor) mAdapter.getItem(cursorDataPos);
+                int cid = cursor.getInt(cursor.getColumnIndex("_id"));
+                String lid = cursor.getString(cursor.getColumnIndex("_id"));
+                DataHelper.deleteLightById(cid);
+                mSelectedLights.remove(lid);
+            }
+            updateHeaderView();
+        }else
+            ;
     }
 
     class SetRemotePwdTask extends AsyncTask<Void, Void, Void> {
@@ -691,12 +823,10 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
         public void bindView(final View view, Context context, Cursor cursor) {
             CardItemViewHolder holder = (CardItemViewHolder) view.getTag();
             String name = cursor.getString(cursor.getColumnIndex("name"));
-            if (!TextUtils.equals(holder.title.getText(), name)){
-                holder.setIconColor();
-            }
             holder.title.setText(name);
             boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
             String remotePwd = cursor.getString(cursor.getColumnIndex("remote_pwd"));
+//            String model = cursor.getString(cursor.getColumnIndex("remote_pwd"));
             if (connected) {
                 holder.updateStatus(CardItemViewHolder.STATUS_LOCAL, remotePwd != null && remotePwd.length() == 4);
             }else{

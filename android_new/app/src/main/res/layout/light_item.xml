@@ -47,7 +47,8 @@
         android:layout_centerVertical="true"
         android:id="@+id/title"
         android:singleLine="true"
-        android:maxLength="16"/>
+        android:maxLength="16"
+        android:textColor="@android:color/black"/>
 
     <ToggleButton
         android:id="@+id/toggle_btn"

@@ -40,7 +40,7 @@ public class SwitchInfoActivity extends BaseActivity implements CompoundButton.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_switch_info);
-        initAcitivityUI();
+        initActivityUI();
         parseIntent();
         initView();
     }
@@ -58,7 +58,7 @@ public class SwitchInfoActivity extends BaseActivity implements CompoundButton.O
         Cursor c = null;
         if (!getIntent().hasExtra("state")) {
             if (light_id > 0) {
-                c = getContentResolver().query(YanKonProvider.URI_SWITCHS, null, "_id=" + light_id, null, null);
+                c = getContentResolver().query(YanKonProvider.URI_LIGHTS, null, "_id=" + light_id, null, null);
             }
         }
 

@@ -55,7 +55,7 @@ public class AddScenesActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_scenes);
-        initAcitivityUI();
+        initActivityUI();
         mSceneNameEdit = (EditText) findViewById(R.id.scene_name);
         mList = (ExpandableListView) findViewById(R.id.scene_list);
         findViewById(R.id.scene_cancel).setOnClickListener(this);

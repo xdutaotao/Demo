@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yankon.smart"
-    android:versionCode="2"
-    android:versionName="2.0.1">
+    package="com.yankon.smart">
 
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <application
         android:name=".App"
@@ -24,12 +19,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <receiver android:name=".WifiStateReceiver">
-            <intent-filter>
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".activities.SplashActivity"
@@ -46,8 +35,27 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
+        <meta-data android:value="567a6e3967e58efa8100198f" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <receiver android:name=".WifiStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
         <provider
-            android:name=".providers.YanKonProvider"
+            android:name="com.yankon.smart.providers.YanKonProvider"
             android:authorities="com.yankon.smart"
             android:enabled="true"
             android:exported="false" />
@@ -58,7 +66,7 @@
 
         <activity android:name=".activities.LightActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".activities.LightGroupsActivity"
             android:screenOrientation="portrait"
@@ -149,6 +157,30 @@
             android:name=".activities.SwitchInfoActivity"
             android:label="@string/on_off"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.EditLightInfoActivity"
+            android:label="@string/on_off"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.NetworkBuildPreActivity"
+            android:label="@string/on_off"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".music.dlna.DLNAService" />
+        <service android:name="com.yankon.smart.music.PlayerService"/>
+        <activity android:name=".activities.AudioActivity"
+            android:label="@string/on_off"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.VideoActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <activity android:name="com.kii.tutk.TUTKVideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

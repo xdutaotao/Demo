@@ -16,7 +16,8 @@
         android:id="@+id/switch_button_1"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="12dp" />
+        android:layout_margin="12dp"
+        />
 
     <ToggleButton
         android:id="@+id/switch_button_2"
@@ -24,7 +25,8 @@
         style="@style/ToggleButton"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="12dp" />
+        android:layout_margin="12dp"
+        android:visibility="gone"/>
 
     <ToggleButton
         android:id="@+id/switch_button_3"
@@ -32,6 +34,7 @@
         style="@style/ToggleButton"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="12dp" />
+        android:layout_margin="12dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

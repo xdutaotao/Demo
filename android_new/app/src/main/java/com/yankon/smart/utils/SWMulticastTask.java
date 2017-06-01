@@ -27,7 +27,7 @@ public class SWMulticastTask extends AsyncTask<String, Void, String> {
 	public Handler handler;
 	Context mContext;
 	private int state, substate;
-	
+	private MulticastSocket ms = null;
 	
 	
 	
@@ -39,18 +39,19 @@ public class SWMulticastTask extends AsyncTask<String, Void, String> {
 		this.mContext = mContext;
 	}
 	private void xmitRaw(int u, int m, int l) {
-		MulticastSocket ms = null;
+
 		InetAddress sessAddr;
 		DatagramPacket dp;
 		byte[] data = new byte[2];
 		data = "a".getBytes();
 		u = u & 0x7f; /* multicast's uppermost byte has only 7 chr */
 		try {
-			//Log.d("jack-" + count, "225." + u + "." + m + "." + l);
+			LogUtils.d("xmitRaw-" + count, "225." + u + "." + m + "." + l);
 			count++;
 			sessAddr = InetAddress
 					.getByName("225." + u + "." + m + "." + l);
-			ms = new MulticastSocket(9059);
+			if(ms==null) {
+				ms = new MulticastSocket(9059);}
 			dp = new DatagramPacket(data, data.length, sessAddr, 5500);
 			ms.send(dp);
 			//Log.d("UdpHelper", "------------------------225." + u + "." + m + "." + l);
@@ -62,8 +63,7 @@ public class SWMulticastTask extends AsyncTask<String, Void, String> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
-			if(ms != null)
-				ms.close();
+
 		}
 		
 	}
@@ -164,16 +164,16 @@ public class SWMulticastTask extends AsyncTask<String, Void, String> {
 			if (state == 0 && substate == 0)
 				i++;
 
-			if (i % 5 == 0) {
+			//if (i % 5 == 0) {
 				Message msg = handler.obtainMessage();
 				msg.what = 43;
 				msg.arg1 = i;
 				handler.sendMessage(msg);
-			}
+			//}
 
 			/* Stop trying after doing 50 iterations. Let user retry. */
-			if (i >= SWDefineConst.MulticastCount)
-				break;
+//			if (i >= SWDefineConst.MulticastCount)
+//				break;
 
 			if (isCancelled())
 				break;
@@ -185,14 +185,27 @@ public class SWMulticastTask extends AsyncTask<String, Void, String> {
 				break;
 			}
 		}
-
+		if(ms != null)
+			ms.close();
 		mcastLock.release();
 
-		if (i >= SWDefineConst.MulticastCount) {
-			Message msg = handler.obtainMessage();
-			msg.what = 42;
-			handler.sendMessage(msg);
-		}
+//		if (i >= SWDefineConst.MulticastCount) {
+//			Message msg = handler.obtainMessage();
+//			msg.what = 42;
+//			handler.sendMessage(msg);
+//		}
+
+//		if (i >= SWDefineConst.MulticastCount) {
+//			Message msg = handler.obtainMessage();
+//			msg.what = 42;
+//			handler.sendMessage(msg);
+//		}
+		LogUtils.i("sunup-SWMulticastTask","SWMulticastTask stop");
+//		if (i >= SWDefineConst.MulticastCount) {
+//			Message msg = handler.obtainMessage();
+//			msg.what = 42;
+//			handler.sendMessage(msg);
+//		}
 		return null;
 	}
 

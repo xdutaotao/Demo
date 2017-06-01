@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_action_accept"
         android:orderInCategory="100"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_edit"
+        android:title="@string/action_done"
+        android:icon="@drawable/ic_edit_white"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
 </menu>

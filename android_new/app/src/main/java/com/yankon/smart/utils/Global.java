@@ -1,14 +1,21 @@
 package com.yankon.smart.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.kii.cloud.storage.Kii;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.yankon.smart.DaemonHandler;
 import com.yankon.smart.model.Light;
 import com.yankon.smart.model.Switchs;
 import com.yankon.smart.model.TransData;
+import com.yankon.smart.music.MusicSaveDao;
+
+import org.cybergarage.upnp.Device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +43,16 @@ public class Global {
     public static int gScanSwitchsType = 0;
     public static int isQuickSeach = 1;
     public static long oldTime = 1;
-
+    public static int mQuickTime = 0;
 
     public static boolean hasFullSynced = false;
     public static boolean kiiInited = false;
 
     public static int X_DISTANCE = 300;
     public static int Y_DISTANCE = 400;
+
+    public static MusicSaveDao mMusicSaveDao;
+    public static byte[] lastBuffer = null;
 
     public static void init(Context context) {
         String site = PreferenceManager.getDefaultSharedPreferences(context)
@@ -63,4 +73,5 @@ public class Global {
             }
         }
     }
+
 }
