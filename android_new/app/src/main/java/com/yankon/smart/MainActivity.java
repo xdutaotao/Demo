@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.update.UmengUpdateAgent;
@@ -52,19 +53,25 @@ import java.util.Map;
 
 public class MainActivity extends Activity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
 
-    private int[] icons = {R.drawable.music, R.drawable.control_light, R.drawable.movie, R.drawable.build_net, R.drawable.schedule, R.drawable.lights,
+    private int[] icons = {-1, R.drawable.control_light, -1, R.drawable.build_net, R.drawable.schedule, R.drawable.lights,
             R.drawable.scene, R.drawable.login, R.drawable.setting};
 
-    private int[] text = {R.string.audio, R.string.control_light, R.string.video, R.string.action_addlights_network, R.string.title_schedule, R.string.light_groups, R.string.scene,
+    private int[] text = {R.string.space, R.string.control_light, R.string.space, R.string.action_addlights_network, R.string.title_schedule, R.string.light_groups, R.string.scene,
             R.string.log_in, R.string.action_settings};
 
     private GridView gridView;
+
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_function);
         setupWindowAnimations();
+
+        textView = (TextView) findViewById(R.id.title_text);
+        textView.setText("主页");
+
         initView();
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
@@ -123,7 +130,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i){
             case 0:
-                startActivity(new Intent(MainActivity.this, AudioActivity.class));
+                //startActivity(new Intent(MainActivity.this, AudioActivity.class));
                 break;
 
             case 1:
@@ -131,7 +138,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
                 break;
 
             case 2:
-                startActivity(new Intent(MainActivity.this, VideoActivity.class));
+                //startActivity(new Intent(MainActivity.this, VideoActivity.class));
                 break;
 
             case 3:

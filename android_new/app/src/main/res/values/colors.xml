@@ -8,10 +8,10 @@
         http://www.google.com/design/spec/style/color.html#color-ui-color-palette
     -->
     <color name="black">#000000</color>
-    <color name="myPrimaryColor">#FFCC00</color>
-    <color name="myPrimaryColor80">#FFCC00</color>
+    <color name="myPrimaryColor">#3F51B5</color>
+    <color name="myPrimaryColor80">#303F9F</color>
     <color name="myPrimaryDarkColor">#5C546B</color>
-    <color name="myAccentColor">#FFCC00</color>
+    <color name="myAccentColor">#3F51B5</color>
     <color name="myDrawerBackground">#F2F2F2</color>
     <color name="myWindowBackground">#F4F5F5</color>
     <color name="myTextPrimaryColor">#000000</color>
