@@ -370,12 +370,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             });
 
             dataLayout.setOnClickListener(v -> {
-                CheckActivity.startActivityForResult(this, resultBean.getAts(), checkTv.getText().toString());
+                if (resultBean != null)
+                    CheckActivity.startActivityForResult(this, resultBean.getAts(), checkTv.getText().toString());
             });
 
 
             recommendLayout.setOnClickListener(v -> {
-                RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
+                if (resultBean != null)
+                    RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
             });
             presenter.packagingForm(this);
         }else{
@@ -562,11 +564,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 break;
 
             case R.id.wrap_layout:
-                WrapActivity.startActivityForResult(this, resultBean.getPss(), wrapText.getText().toString());
+                if (resultBean != null)
+                    WrapActivity.startActivityForResult(this, resultBean.getPss(), wrapText.getText().toString());
                 break;
 
             case R.id.type_layout:
-                TypeActivity.startActivityForResult(this, resultBean.getMts(), typeTxt.getText().toString());
+                if (resultBean != null)
+                    TypeActivity.startActivityForResult(this, resultBean.getMts(), typeTxt.getText().toString());
                 break;
         }
     }
