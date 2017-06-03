@@ -247,18 +247,28 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                         ShareUtils.putValue("sign", Utils.getNowDate());
                         ShareUtils.putValue("continue", 1);
                         continueDays = 1;
+                        setSign(0);
                     } else {
                         if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())) {
+                            continueDays = ShareUtils.getValue("continue", 0);
                             continueDays++;
+                            if (continueDays % 7 == 0){
+                                setSign(continueDays/7);
+                            }else{
+                                setSign(0);
+                            }
+
                             ShareUtils.putValue("continue", continueDays);
                             ShareUtils.putValue("sign", Utils.getNowDate());
+                        }else{
+                            continueDays = ShareUtils.getValue("continue", 0);
                         }
-                        continueDays = ShareUtils.getValue("continue", 0);
                     }
                 } else {
                     ShareUtils.putValue("continue", 1);
                     continueDays = 1;
                     ShareUtils.putValue("sign", Utils.getNowDate());
+                    setSign(0);
                 }
                 sign.setText("已签到");
                 CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 1);
@@ -273,6 +283,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     CollectHistoryActivity.startActivity(getContext());
                 break;
         }
+    }
+
+    private void setSign(int days){
+        if (User.getInstance().getUserInfo().getPerson().getVIP() != 1){
+            presenter.signToday(6 + days*10, 12);
+        }else{
+            presenter.signToday(5 + days*10, 10);
+        }
+
     }
 
 

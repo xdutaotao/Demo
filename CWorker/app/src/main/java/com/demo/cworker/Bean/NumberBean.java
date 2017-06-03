@@ -12,7 +12,7 @@ public class NumberBean {
      * result : 获取成功
      * data : {"englishName":"a","code":"1","providerCode":"1","cnName":"中文名称a","dateline":0,"price":0,"sourceDistribution":"good","project":"1","disabled":0,"model":"1","providerName":"zz"}
      * hasOldData : 1
-     * oldData : {"dateline":1489342322,"packageWidth":123,"project":"1","addedLength":123,"remark":"123123","auditType":"","partCode":"1","partName":"123","processRecommendation":"123","packageStypeName":"123","singlePackageHeight":0,"packageLength":123,"disabled":0,"roughWeight":123,"collectorName":"Kenny2","addedWidth":123,"partMaterialName":"123","singlePackageWeight":0,"partLength":123,"partWidth":123,"singlePackageWidth":0,"addedHeight":123,"netWeight":123,"packageHeight":123,"packageModelCount":123,"singlePackageLength":0,"location":"","locations":"123123","isHistory":"1","systemResource":"","user":null,"pmJsona":"","documentCodes":"[]","partHeight":123}
+     * oldData : {"dateline":1489342322,"packageWidth":demo,"project":"1","addedLength":demo,"remark":"123123","auditType":"","partCode":"1","partName":"demo","processRecommendation":"demo","packageStypeName":"demo","singlePackageHeight":0,"packageLength":demo,"disabled":0,"roughWeight":demo,"collectorName":"Kenny2","addedWidth":demo,"partMaterialName":"demo","singlePackageWeight":0,"partLength":demo,"partWidth":demo,"singlePackageWidth":0,"addedHeight":demo,"netWeight":demo,"packageHeight":demo,"packageModelCount":demo,"singlePackageLength":0,"location":"","locations":"123123","isHistory":"1","systemResource":"","user":null,"pmJsona":"","documentCodes":"[]","partHeight":demo}
      */
 
     private String msg;
@@ -180,30 +180,30 @@ public class NumberBean {
     public static class OldDataBean {
         /**
          * dateline : 1489342322
-         * packageWidth : 123
+         * packageWidth : demo
          * project : 1
-         * addedLength : 123
+         * addedLength : demo
          * remark : 123123
          * auditType :
          * partCode : 1
-         * partName : 123
-         * processRecommendation : 123
-         * packageStypeName : 123
+         * partName : demo
+         * processRecommendation : demo
+         * packageStypeName : demo
          * singlePackageHeight : 0
-         * packageLength : 123
+         * packageLength : demo
          * disabled : 0
-         * roughWeight : 123
+         * roughWeight : demo
          * collectorName : Kenny2
-         * addedWidth : 123
-         * partMaterialName : 123
+         * addedWidth : demo
+         * partMaterialName : demo
          * singlePackageWeight : 0
-         * partLength : 123
-         * partWidth : 123
+         * partLength : demo
+         * partWidth : demo
          * singlePackageWidth : 0
-         * addedHeight : 123
-         * netWeight : 123
-         * packageHeight : 123
-         * packageModelCount : 123
+         * addedHeight : demo
+         * netWeight : demo
+         * packageHeight : demo
+         * packageModelCount : demo
          * singlePackageLength : 0
          * location :
          * locations : 123123
@@ -212,7 +212,7 @@ public class NumberBean {
          * user : null
          * pmJsona :
          * documentCodes : []
-         * partHeight : 123
+         * partHeight : demo
          */
 
         private int dateline;

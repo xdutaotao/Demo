@@ -11,7 +11,7 @@ import java.util.List;
 public class HomeResponseBean {
 
     /**
-     * banner : [{"groupType":0,"dateline":0,"keywords":"","author":"","bannerPicUrl":"","description":"","pageSize":0,"updateTime":0,"pic":"http://363600.cicp.net:8080/static/home/1.png","sort":0,"authorId":0,"title":"","type":1,"url":"http: //www.123.com2.http: //363600.cicp.net: 8080/static/document/123.xls","urlType":1,"vipRes":0,"pageNo":0,"price":0,"disabled":0,"id":1,"user":null}]
+     * banner : [{"groupType":0,"dateline":0,"keywords":"","author":"","bannerPicUrl":"","description":"","pageSize":0,"updateTime":0,"pic":"http://363600.cicp.net:8080/static/home/1.png","sort":0,"authorId":0,"title":"","type":1,"url":"http: //www.demo.com2.http: //363600.cicp.net: 8080/static/document/demo.xls","urlType":1,"vipRes":0,"pageNo":0,"price":0,"disabled":0,"id":1,"user":null}]
      * topic : [{"groupTitle":"jingHua","groupType":1,"groupData":[{"groupType":1,"dateline":0,"keywords":"","author":"","bannerPicUrl":"","description":"","pageSize":0,"updateTime":0,"pic":"http://363600.cicp.net:8080/static/home/16.jpg","sort":0,"authorId":0,"title":"","type":6,"url":"http://363600.cicp.net:8080/static/home/16.jpg","urlType":1,"vipRes":0,"pageNo":0,"price":0,"disabled":0,"id":8,"user":null}]},{"groupTitle":"caiNiXiHuan","groupType":2,"groupData":[]},{"groupTitle":"jingDian","groupType":3,"groupData":[]}]
      * msg : 200
      * result : success
@@ -69,7 +69,7 @@ public class HomeResponseBean {
          * authorId : 0
          * title :
          * type : 1
-         * url : http: //www.123.com2.http: //363600.cicp.net: 8080/static/document/123.xls
+         * url : http: //www.demo.com2.http: //363600.cicp.net: 8080/static/document/demo.xls
          * urlType : 1
          * vipRes : 0
          * pageNo : 0

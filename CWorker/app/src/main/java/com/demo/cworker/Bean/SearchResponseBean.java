@@ -13,7 +13,7 @@ public class SearchResponseBean {
      * msg : 200
      * result : success
      * count : 2
-     * data : [{"groupType":0,"dateline":1487174531,"keywords":"","author":"海火科技","bannerPicUrl":"http: //363600.cicp.net: 8080/static/home/banner/b1.jpg","description":"三生三世，共守相思，开启桃花新纪元。那一世，大荒之中一处荒山，成就她与他的初见。桃花灼灼，枝叶蓁蓁，妖娆伤眼。记忆可以封存，可心有时也会背叛，忘得了前世情缘，忘不了桃林十里，亦忘不了十里桃林中玄衣的少年。这一世，东海水晶宫，他们不期而遇。不是每个人都能看透这三生三世的爱恨交织，只要你还在，只要我还爱，那么，这世间，刀山火海，毫不畏惧。有些爱，藏在嘴边，挂在心尖。浮生若梦，情如流水，爱似桃花\u2026\u2026","pageSize":0,"project":"1","updateTime":1487179531,"pic":"http: //363600.cicp.net: 8080/static/home/banner/b1.jpg","sort":0,"authorId":0,"title":"123%","type":7,"url":"https: //m.baidu.com","urlType":1,"vipRes":1,"pageNo":0,"price":0,"disabled":0,"id":1,"user":null},{"groupType":3,"dateline":1487174531,"keywords":"","author":"海火科技","bannerPicUrl":"","description":"三生三世，共守相思，开启桃花新纪元。那一世，大荒之中一处荒山，成就她与他的初见。桃花灼灼，枝叶蓁蓁，妖娆伤眼。记忆可以封存，可心有时也会背叛，忘得了前世情缘，忘不了桃林十里，亦忘不了十里桃林中玄衣的少年。这一世，东海水晶宫，他们不期而遇。不是每个人都能看透这三生三世的爱恨交织，只要你还在，只要我还爱，那么，这世间，刀山火海，毫不畏惧。有些爱，藏在嘴边，挂在心尖。浮生若梦，情如流水，爱似桃花\u2026\u2026","pageSize":0,"project":"","updateTime":1487179531,"pic":"http: //363600.cicp.net: 8080/static/home/7.jpg","sort":0,"authorId":0,"title":"123%","type":1,"url":"http: //363600.cicp.net: 8080/static/document/教程1.ppt","urlType":2,"vipRes":0,"pageNo":0,"price":0,"disabled":0,"id":15,"user":null}]
+     * data : [{"groupType":0,"dateline":1487174531,"keywords":"","author":"海火科技","bannerPicUrl":"http: //363600.cicp.net: 8080/static/home/banner/b1.jpg","description":"三生三世，共守相思，开启桃花新纪元。那一世，大荒之中一处荒山，成就她与他的初见。桃花灼灼，枝叶蓁蓁，妖娆伤眼。记忆可以封存，可心有时也会背叛，忘得了前世情缘，忘不了桃林十里，亦忘不了十里桃林中玄衣的少年。这一世，东海水晶宫，他们不期而遇。不是每个人都能看透这三生三世的爱恨交织，只要你还在，只要我还爱，那么，这世间，刀山火海，毫不畏惧。有些爱，藏在嘴边，挂在心尖。浮生若梦，情如流水，爱似桃花\u2026\u2026","pageSize":0,"project":"1","updateTime":1487179531,"pic":"http: //363600.cicp.net: 8080/static/home/banner/b1.jpg","sort":0,"authorId":0,"title":"demo%","type":7,"url":"https: //m.baidu.com","urlType":1,"vipRes":1,"pageNo":0,"price":0,"disabled":0,"id":1,"user":null},{"groupType":3,"dateline":1487174531,"keywords":"","author":"海火科技","bannerPicUrl":"","description":"三生三世，共守相思，开启桃花新纪元。那一世，大荒之中一处荒山，成就她与他的初见。桃花灼灼，枝叶蓁蓁，妖娆伤眼。记忆可以封存，可心有时也会背叛，忘得了前世情缘，忘不了桃林十里，亦忘不了十里桃林中玄衣的少年。这一世，东海水晶宫，他们不期而遇。不是每个人都能看透这三生三世的爱恨交织，只要你还在，只要我还爱，那么，这世间，刀山火海，毫不畏惧。有些爱，藏在嘴边，挂在心尖。浮生若梦，情如流水，爱似桃花\u2026\u2026","pageSize":0,"project":"","updateTime":1487179531,"pic":"http: //363600.cicp.net: 8080/static/home/7.jpg","sort":0,"authorId":0,"title":"demo%","type":1,"url":"http: //363600.cicp.net: 8080/static/document/教程1.ppt","urlType":2,"vipRes":0,"pageNo":0,"price":0,"disabled":0,"id":15,"user":null}]
      */
 
     private String msg;
@@ -67,7 +67,7 @@ public class SearchResponseBean {
 //         * pic : http: //363600.cicp.net: 8080/static/home/banner/b1.jpg
 //         * sort : 0
 //         * authorId : 0
-//         * title : 123%
+//         * title : demo%
 //         * type : 7
 //         * url : https: //m.baidu.com
 //         * urlType : 1

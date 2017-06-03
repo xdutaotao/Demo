@@ -9,6 +9,11 @@ import android.widget.TextView;
 
 import com.demo.cworker.R;
 
+import org.textmining.text.extraction.WordExtractor;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,5 +37,19 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_help);
         ButterKnife.bind(this);
         showToolbarBack(toolBar, titleText, "使用帮助");
+        text.setText(readWord());
+    }
+
+    private String readWord() {
+        String text = "";
+        try {
+            //FileInputStream in = (FileInputStream) getResources().openRawResource(R.raw.demo);
+            InputStream inputStream = getAssets().open("demo.docx");
+            WordExtractor extractor = new WordExtractor();
+            text = extractor.extractText(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 }

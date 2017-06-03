@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/text"
-            android:text="@string/help_txt"
             android:textColor="@android:color/black"
             android:padding="50px"/>
     </ScrollView>

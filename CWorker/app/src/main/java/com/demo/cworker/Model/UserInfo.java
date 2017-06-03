@@ -8,7 +8,7 @@ package com.demo.cworker.Model;
 public class UserInfo {
 
     /**
-     * person : {"address":"123","dateline":1488040189,"vipDateline":20,"sex":1,"mobile":"17091260755","project":"1","experience":2,"type":0,"deviceToken":"","token":"F525A704742F0C3A26D9293B6DD1109F","gold":3,"lastLoginTime":1489069120,"deviceRemark":"","face":"http://363600.cicp.net:8080/static/attachment/avatar/201703/20170309081028343_1489018228343.png","password":"","lastPasswordModifiedTime":0,"appid":"1","name":"Kenny2","disabled":0,"id":15,"VIP":false,"locked":0,"email":"Rrrrt@qq.com"}
+     * person : {"address":"demo","dateline":1488040189,"vipDateline":20,"sex":1,"mobile":"17091260755","project":"1","experience":2,"type":0,"deviceToken":"","token":"F525A704742F0C3A26D9293B6DD1109F","gold":3,"lastLoginTime":1489069120,"deviceRemark":"","face":"http://363600.cicp.net:8080/static/attachment/avatar/201703/20170309081028343_1489018228343.png","password":"","lastPasswordModifiedTime":0,"appid":"1","name":"Kenny2","disabled":0,"id":15,"VIP":false,"locked":0,"email":"Rrrrt@qq.com"}
      * project : {"queryKey":"哈哈","address":"","contacter":"","dateline":0,"mobile":"","name":"通用","project":"2","disabled":0,"serviceScope":"","shortname":"哈"}
      * ups : {"today":2,"month":2,"year":2,"total":2}
      */
@@ -43,7 +43,7 @@ public class UserInfo {
 
     public static class PersonBean {
         /**
-         * address : 123
+         * address : demo
          * dateline : 1488040189
          * vipDateline : 20
          * sex : 1

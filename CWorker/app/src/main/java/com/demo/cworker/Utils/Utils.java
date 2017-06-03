@@ -206,7 +206,7 @@ public class Utils {
     /**
      * 金额加逗号
      * @param number 123456.00
-     * @return 123,456.00
+     * @return demo,456.00
      */
     public static String moneyNumberFormat(double number) {
         if(number < 1){
