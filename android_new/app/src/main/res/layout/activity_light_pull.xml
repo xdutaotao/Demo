@@ -12,10 +12,6 @@
         android:layout_height="0dp"
         sunup:layout_heightPercent="8%h"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        sunup:layout_heightPercent="20%h"/>
 
     <com.yankon.smart.widget.PercentLinearLayout
         android:layout_width="match_parent"

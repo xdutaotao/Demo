@@ -21,12 +21,59 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="运行模式: "
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"/>
+
+            <ToggleButton
+                android:id="@+id/run_modle"
+                style="@style/ToggleButton" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开关: "
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"/>
+
+            <ToggleButton
+                android:id="@+id/light_switch"
+                style="@style/ToggleButton" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            android:paddingLeft="@dimen/common_margin"
+            android:paddingLeft="10dp"
             android:paddingRight="@dimen/common_margin"
             android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="亮度: "
+                android:layout_marginRight="20dp"
+                android:textSize="20sp"/>
 
             <View
                 android:layout_width="28dp"
@@ -35,7 +82,7 @@
 
             <com.gc.materialdesign.views.Slider
                 android:id="@+id/seekbar_brightness"
-                android:background="#f9ce1d"
+                android:background="#3F51B5"
                 materialdesign:max="100"
                 materialdesign:min="0"
                 materialdesign:showNumberIndicator="false"
@@ -45,17 +92,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <ToggleButton
-                android:id="@+id/light_switch"
-                style="@style/ToggleButton" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/setting_layout">
+            android:id="@+id/setting_layout"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"

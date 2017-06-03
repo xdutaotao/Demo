@@ -281,16 +281,24 @@ public class UdpHelper implements Runnable {
                         break;
                     }
                     switch (attr_id) {
+                        case 0:
+                            if (light != null) {
+                                light.runmodel = sub_data[0] > 0;
+                                values.put("runmodel", light.runmodel);
+                            }
+                            break;
                         case 1:
                             if (light != null) {
                                 light.sens = Utils.unsignedByteToInt(sub_data[0]);
                                 values.put("sens", light.sens);
                             }
+                            break;
                         case 2:
                             if (light != null) {
                                 light.lux = Utils.unsignedByteToInt(sub_data[0]);
                                 values.put("lux", light.lux);
                             }
+                            break;
                     }
                 }
                 break;

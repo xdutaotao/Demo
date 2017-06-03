@@ -57,6 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         + "number INTEGER,"
                         + "sens INTEGER,"
                         + "lux INTEGER,"
+                        + "runmodel BOOL DEFAULT 0,"
                         + "mode INTEGER,"
                         + "IP INTEGER DEFAULT 0,"
                         + "subIP INTEGER DEFAULT 0,"

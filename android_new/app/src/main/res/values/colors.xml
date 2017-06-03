@@ -10,7 +10,7 @@
     <color name="black">#000000</color>
     <color name="myPrimaryColor">#3F51B5</color>
     <color name="myPrimaryColor80">#303F9F</color>
-    <color name="myPrimaryDarkColor">#5C546B</color>
+    <color name="myPrimaryDarkColor">#303F9F</color>
     <color name="myAccentColor">#3F51B5</color>
     <color name="myDrawerBackground">#F2F2F2</color>
     <color name="myWindowBackground">#F4F5F5</color>
@@ -23,10 +23,10 @@
     <color name="status_remote_bg">#f03a76</color>
     <color name="translucent_background">#000000</color>
 
-    <color name="main_background_color">#AAFFCC00</color>
+    <color name="main_background_color">#3F51B5</color>
     <color name="title_bg">#33CCFF</color>
     <color name="bottom_bg">#E0E0E0</color>
-    <color name="divider_color">#AAFFCC00</color>
+    <color name="divider_color">#3F51B5</color>
     <color name="msg_color">#e74c3c</color>
     <color name="content_background">#AAFFFFFF</color>
     <color name="transparent_gray">#8000</color>

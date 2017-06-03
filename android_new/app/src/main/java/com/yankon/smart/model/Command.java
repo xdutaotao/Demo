@@ -25,7 +25,8 @@ public class Command {
         CommandTypeType(7),
         CommandTypeID(8),
         CommandTypeSENS(9),
-        CommandTypeLux(10);
+        CommandTypeLux(10),
+        CommandRunModel(11);
 
         private int value;
 
@@ -52,6 +53,8 @@ public class Command {
                     return "sens";
                 case 10:
                     return "lux";
+                case 11:
+                    return "runmodel";
 
                 default:
                     return "";
@@ -147,6 +150,7 @@ public class Command {
             case CommandTypeID:
             case CommandTypeSENS:
             case CommandTypeLux:
+            case CommandRunModel:
                 values.put(type.getColumnName(), value);
                 break;
 
@@ -241,6 +245,13 @@ public class Command {
                 data[0] = (byte) (value > 0 ? 1 : 0);
                 cb.append((byte) 10, (byte) 0, (byte) 1, data);     /* wirte light status into db */
                 break;
+
+            case CommandRunModel:
+                data = new byte[1];
+                data[0] = (byte) (value > 0 ? 1 : 0);
+                cb.append((byte) 14, (byte) 0, (byte) 1, data);     /* wirte light status into db */
+                break;
+
 
             case CommandTypeColor: {
                 int color = value & 0x00FFFFFF;

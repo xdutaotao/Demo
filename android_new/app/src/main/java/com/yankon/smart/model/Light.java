@@ -21,6 +21,7 @@ public class Light {
     public int number;
     public int sens;
     public int lux;
+    public boolean runmodel;
 
     public int id = -1;
     public boolean added;

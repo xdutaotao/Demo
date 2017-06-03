@@ -32,6 +32,7 @@ import com.yankon.smart.widget.OnColorChangedListener;
 
 import java.lang.ref.WeakReference;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -65,6 +66,8 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
     Toolbar toolbarActionbar;
     Slider seekbarBrightness;
     ToggleButton lightSwitch;
+    @Bind(R.id.run_modle)
+    ToggleButton runModle;
 
     private int color;
     private int brightness;
@@ -209,6 +212,11 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
                 Command cmd = new Command(Command.CommandType.CommandTypeSENS, isChecked ? 1 : 0);
                 applyChanges(cmd, true);
             }
+        });
+
+        runModle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Command cmd = new Command(Command.CommandType.CommandRunModel, isChecked ? 1 : 0);
+            applyChanges(cmd, true);
         });
 
         send.setOnClickListener(new View.OnClickListener() {
