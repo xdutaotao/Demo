@@ -7,5 +7,5 @@ import com.demo.cworker.Model.UserInfo;
  */
 public interface MyView extends BaseView {
     void getData(String data);
-    void signToday(UserInfo.PersonBean bean);
+    void signToday(String bean);
 }

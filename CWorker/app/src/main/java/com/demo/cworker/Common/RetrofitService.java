@@ -111,7 +111,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("personalCenter/goldAndExp")
-    Observable<BaseBean<UserInfo.PersonBean>> signToday(@Field("String") String token, @FieldMap Map<String, Integer> map);
+    Observable<BaseBean<UserInfo.PersonBean>> signToday(@Field("token") String token, @FieldMap Map<String, Integer> map);
 
     @FormUrlEncoded
     @POST("data/collect")

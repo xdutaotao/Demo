@@ -306,8 +306,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     }
 
     @Override
-    public void signToday(UserInfo.PersonBean bean) {
-
+    public void signToday(String bean) {
+        ToastUtil.show("签到成功");
     }
 
     @Override

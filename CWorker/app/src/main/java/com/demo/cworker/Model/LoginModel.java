@@ -258,12 +258,22 @@ public class LoginModel extends BaseModel {
      * 签到
      * @return
      */
-    public Observable<UserInfo.PersonBean> signToday(int gold, int experience){
+    public Observable<String> signToday(int gold, int experience){
         Map<String, Integer> map = new HashMap<>();
         map.put("gold", gold);
         map.put("experience", experience);
         return config.getRetrofitService().signToday(User.getInstance().getUserId(), map)
-                .compose(RxUtils.handleResult());
+                .compose(RxUtils.handleResultNoThread())
+                .flatMap(personBean -> {
+                    return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
+                            .compose(RxUtils.handleResultNoThread());
+                })
+                .map(userInfoBaseBean -> {
+                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfoBaseBean);
+                    User.getInstance().setUserInfo(userInfoString);
+                    return "操作成功";
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
 }

@@ -35,9 +35,9 @@ public class MyPresenter extends BasePresenter<MyView> {
 
     public void signToday(int gold, int exp){
         mCompositeSubscription.add(model.signToday(gold, exp)
-                .subscribe(new RxSubUtils<UserInfo.PersonBean>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(UserInfo.PersonBean token) {
+                    protected void _onNext(String token) {
                         getView().signToday(token);
                     }
                 }));
