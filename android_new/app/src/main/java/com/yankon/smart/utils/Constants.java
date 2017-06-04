@@ -13,7 +13,8 @@ public class Constants {
 
     public static final String INTENT_LOGGED_OUT = "com.yankon.smart.intent.log_out";
 
-    public static final int DEFAULT_PORT = 5015;
+//    public static final int DEFAULT_PORT = 5015;
+    public static final int DEFAULT_PORT = 8755;
 
     public static final int DEFAULT_COLOR = Color.BLUE;
 
