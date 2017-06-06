@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">阳光小智</string>
+    <string name="app_name">豪迈照明</string>
     <string name="drawer_open">菜单已打开</string>
     <string name="drawer_close">菜单已关闭</string>
-    <string name="action_settings">设置  </string>
+    <string name="action_settings">系统设置</string>
     <string name="title_lights">灯具</string>
     <string name="title_groups">灯组</string>
     <string name="title_scenes">场景</string>
@@ -28,7 +28,7 @@
     <string name="email_colon">电子邮箱：</string>
     <string name="password_colon">密码：</string>
     <string name="forget_password_question_mark"><u>忘记密码？</u></string>
-    <string name="log_in">登陆  </string>
+    <string name="log_in">登录注册</string>
     <string name="register">注册</string>
     <string name="log_in_success">登陆成功</string>
     <string name="register_success">注册成功</string>

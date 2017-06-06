@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
 
             case 1:
                 startActivity(new Intent(MainActivity.this, ScenesActivity.class));
-
+                break;
 
             case 2:
                 startActivity(new Intent(MainActivity.this, LightGroupsActivity.class));

@@ -145,6 +145,10 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
 
                 if (c.getInt(c.getColumnIndex("lux")) != 0)
                     light.setValue(c.getInt(c.getColumnIndex("lux")));
+
+                if (c.getInt(c.getColumnIndex("runmodel")) > 0){
+                    runModle.setChecked(true);
+                }
             }
             c.close();
         } else {
@@ -158,6 +162,7 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
             number.setText(String.valueOf(getIntent().getIntExtra("number", Constants.DEFAULT_MODE)));
             emulator.setChecked(getIntent().getIntExtra("sens", Constants.DEFAULT_MODE) == 0x80);
             light.setValue(getIntent().getIntExtra("lux", Constants.DEFAULT_MODE));
+            runModle.setChecked(getIntent().getIntExtra("runmodel", 0) > 0);
         }
         isForReturnValue = getIntent().getBooleanExtra(EXTRA_RETURN, false);
 
