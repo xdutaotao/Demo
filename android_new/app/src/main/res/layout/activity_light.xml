@@ -12,14 +12,9 @@
         android:layout_height="0dp"
         sunup:layout_heightPercent="8%h"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        sunup:layout_heightPercent="20%h"/>
-
     <com.yankon.smart.widget.PercentLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/content_background"
         android:orientation="horizontal">
 

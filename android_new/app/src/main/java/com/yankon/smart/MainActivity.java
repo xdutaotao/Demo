@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
@@ -51,12 +52,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends Activity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
+public class MainActivity extends BaseActivity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
 
-    private int[] icons = {-1, R.drawable.control_light, -1, R.drawable.build_net, R.drawable.schedule, R.drawable.lights,
-            R.drawable.scene, R.drawable.login, R.drawable.setting};
+    private int[] icons = { R.drawable.control_light, R.drawable.scene, R.drawable.lights,
+            R.drawable.build_net, R.drawable.login, R.drawable.setting};
 
-    private int[] text = {R.string.space, R.string.control_light, R.string.space, R.string.action_addlights_network, R.string.title_schedule, R.string.light_groups, R.string.scene,
+    private int[] text = {R.string.control_light, R.string.scene_control, R.string.groups, R.string.package_network,
             R.string.log_in, R.string.action_settings};
 
     private GridView gridView;
@@ -69,6 +70,8 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
         setContentView(R.layout.choose_function);
         setupWindowAnimations();
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mToolbar);
         textView = (TextView) findViewById(R.id.title_text);
         textView.setText("主页");
 
@@ -130,22 +133,19 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i){
             case 0:
-                //startActivity(new Intent(MainActivity.this, AudioActivity.class));
-                break;
-
-            case 1:
                 startActivity(new Intent(MainActivity.this, LightActivity.class));
                 break;
 
-            case 2:
-                //startActivity(new Intent(MainActivity.this, VideoActivity.class));
-                break;
-
-            case 3:
+            case 1:
                 startActivity(new Intent(MainActivity.this, NetworkBuildPreActivity.class));
                 break;
 
-            case 4:
+
+            case 2:
+                startActivity(new Intent(MainActivity.this, LightGroupsActivity.class));
+                break;
+
+            case 3:
                 if (Settings.isLoggedIn()){
                     startActivity(new Intent(MainActivity.this, ScheduleActivity.class));
                 }else{
@@ -154,15 +154,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
                 }
                 break;
 
-            case 5:
-                startActivity(new Intent(MainActivity.this, LightGroupsActivity.class));
-                break;
-
-            case 6:
-                startActivity(new Intent(MainActivity.this, ScenesActivity.class));
-                break;
-
-            case 7:
+            case 4:
                 if (Settings.isLoggedIn()){
                     startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 }else{
@@ -170,7 +162,7 @@ public class MainActivity extends Activity implements LoginCallBack, AlertDialog
                 }
                 break;
 
-            case 8:
+            case 5:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
         }

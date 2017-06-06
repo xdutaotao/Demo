@@ -5,23 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/pro_bg">
 
-    <RelativeLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        sunup:layout_heightPercent="25%h">
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/function"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:textSize="@dimen/title_size"-->
-            <!--android:textColor="@android:color/white"/>-->
-
-        <include layout="@layout/toolbar_default"/>
-
-    </RelativeLayout>
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="主页"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:id="@+id/title_text"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:background="@color/myPrimaryColor"/>
 
 
     <RelativeLayout
@@ -33,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:numColumns="3"
+            android:numColumns="2"
             android:verticalSpacing="10dp"
             android:id="@+id/grid_view"
             android:gravity="center"
