@@ -823,6 +823,9 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
         public void bindView(final View view, Context context, Cursor cursor) {
             CardItemViewHolder holder = (CardItemViewHolder) view.getTag();
             String name = cursor.getString(cursor.getColumnIndex("name"));
+            if (TextUtils.equals(name, "sunlight")){
+                name = "hmzm";
+            }
             holder.title.setText(name);
             boolean connected = cursor.getInt(cursor.getColumnIndex("connected")) > 0;
             String remotePwd = cursor.getString(cursor.getColumnIndex("remote_pwd"));

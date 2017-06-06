@@ -3,27 +3,27 @@ package com.yankon.smart.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yankon.smart.R;
 import com.yankon.smart.utils.Global;
 import com.yankon.smart.utils.LogUtils;
-import com.yankon.smart.widget.Effectstype;
-import com.yankon.smart.widget.ListPreferenceEx;
-import com.yankon.smart.widget.NiftyDialogBuilder;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by guzhenfu on 2015/8/19.
  */
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    @Bind(R.id.back_layout)
+    RelativeLayout backLayout;
     private ListPreference mSyncConfigPref;
 
     private SharedPreferences mPref;
@@ -48,16 +48,19 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
     private void initView() {
         View back = findViewById(R.id.back_layout);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        ImageView add = (ImageView) findViewById(R.id.add);
-        add.setVisibility(View.INVISIBLE);
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText(getString(R.string.action_settings));
+        if (back != null) {
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+            ImageView add = (ImageView) findViewById(R.id.add);
+            add.setVisibility(View.INVISIBLE);
+            TextView title = (TextView) findViewById(R.id.title);
+            title.setText(getString(R.string.action_settings));
+        }
+
     }
 
     private void setupSyncPolicy() {
@@ -89,7 +92,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDownX = (int) event.getX();
                 mDownY = (int) event.getY();
