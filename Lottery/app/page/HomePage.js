@@ -30,6 +30,11 @@ let projectImage = [
     require('./../image/Homea@2x.png'), require('./../image/Homea@2x.png')
 ];
 
+let cycleImage = [
+    require('./../image/banner1.png') , require('./../image/banner2.png') ,
+    require('./../image/banner3.png') ,
+]
+
 export default class HomePage extends React.Component{
     // 构造
       constructor(props) {
@@ -61,17 +66,6 @@ export default class HomePage extends React.Component{
      * 请求网络数据
      */
     _getNetWorkData(resolve){
-        /**
-         * 轮播图
-         */
-        HomeModle.getInstance().getTopInformList(ApiContant.CATOGOTY_ID)
-            .then(data => {
-                this.setState({
-                    imageViewsData: JSON.parse(data.DATA)
-                });
-            }, error => {
-
-            });
 
         /**
          * 公告
@@ -139,9 +133,10 @@ export default class HomePage extends React.Component{
                     <TouchableHighlight style={{flex: 1}} key={index}
                                 onPress = {() => {
                                 this.props.navigator.push({component: WebViewPage,
-                                                            args: {url: ds.InfoLinkId}})}}>
+                                                            args: {url: 'http://www.baidu.com'}})}}>
                         <Image style={{flex: 1}}
-                               source={{uri: ApiContant.DOWNLOAD_URL + ds.FileID}}/>
+                               source={cycleImage[index]}
+                                resizeMode='repeat'/>
                     </TouchableHighlight>
 
                 )
@@ -327,6 +322,22 @@ export default class HomePage extends React.Component{
                         {this._renderSwipeImage()}
                     </Swiper>
 
+                    <View style={styles.lotteryStyle}>
+                        <View style={styles.styleLine}>
+
+                        </View>
+
+                        <Text style={styles.styleText}>
+                            彩票种类
+                        </Text>
+
+                        <View style={styles.styleLine}>
+
+                        </View>
+                    </View>
+
+                        <View style={styles.divider}></View>
+
                     <View style={styles.imageWrapperStyle}>
                         {this._renderProject()}
                         <View style={{height: 1, width: '100%',backgroundColor:"#EBEBEB"}} />
@@ -434,5 +445,29 @@ const styles = StyleSheet.create({
     },
     listItemTextRed:{
         color: '#c84a4a',
+    },
+
+    lotteryStyle:{
+        height: '20%',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+
+    styleLine:{
+        backgroundColor: 'red',
+        width: 20,
+        height: 2,
+    },
+
+    styleText:{
+        color: 'black',
+        margin: 20,
+    },
+
+    dividerLine:{
+        width: '100%',
+
     }
+
 });
