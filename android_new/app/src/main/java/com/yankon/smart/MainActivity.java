@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends BaseActivity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
+public class MainActivity extends Activity implements LoginCallBack, AlertDialogListener, AdapterView.OnItemClickListener {
 
     private int[] icons = { R.drawable.control_light, R.drawable.scene, R.drawable.lights,
             R.drawable.build_net, R.drawable.login, R.drawable.setting};
@@ -69,11 +69,6 @@ public class MainActivity extends BaseActivity implements LoginCallBack, AlertDi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_function);
         setupWindowAnimations();
-
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-        setSupportActionBar(mToolbar);
-        textView = (TextView) findViewById(R.id.title_text);
-        textView.setText("主页");
 
         initView();
         UmengUpdateAgent.setUpdateOnlyWifi(false);
@@ -137,8 +132,7 @@ public class MainActivity extends BaseActivity implements LoginCallBack, AlertDi
                 break;
 
             case 1:
-                startActivity(new Intent(MainActivity.this, NetworkBuildPreActivity.class));
-                break;
+                startActivity(new Intent(MainActivity.this, ScenesActivity.class));
 
 
             case 2:
@@ -146,12 +140,7 @@ public class MainActivity extends BaseActivity implements LoginCallBack, AlertDi
                 break;
 
             case 3:
-                if (Settings.isLoggedIn()){
-                    startActivity(new Intent(MainActivity.this, ScheduleActivity.class));
-                }else{
-                    DialogFragment dialogFragment = AlertDialogFragment.newInstance(0);
-                    dialogFragment.show(getFragmentManager(), "dialog");
-                }
+                startActivity(new Intent(MainActivity.this, NetworkBuildPreActivity.class));
                 break;
 
             case 4:

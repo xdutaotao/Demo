@@ -3,7 +3,8 @@
     android:layout_width="320px"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="#66ccff"
+    android:background="@color/myPrimaryColor"
+    android:alpha="0.5"
     android:gravity="center_vertical"
     android:layout_gravity="center"
     android:padding="10dp">
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:text="@string/function"
         android:textColor="#ffffff"
-        android:layout_marginLeft="10dp"/>
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"/>
 
 </LinearLayout>
