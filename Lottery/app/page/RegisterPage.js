@@ -75,7 +75,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='请输入手机号'
@@ -92,7 +92,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='手机验证码'
@@ -109,7 +109,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='邮箱(可选)'
@@ -126,7 +126,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='用户名'
@@ -143,7 +143,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='密码'
@@ -160,7 +160,7 @@ export default class RegisterPage extends BasePage{
               <View style={styles.inputWrap}>
                   <Image
                       style={styles.imageStyle}
-                      source={require('./../image/msg.png')}
+                      source={require('./../image/Homeb@2x.png')}
                       resizeMode="contain"/>
                   <TextInput style={styles.input}
                              placeholder='请确认密码'

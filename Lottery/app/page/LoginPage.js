@@ -75,7 +75,7 @@ export default class LoginPage extends BasePage{
                 <NavigationBar title="登录"
                     backOnPress={this._handleBack.bind(this)}/>
                 <Image style={styles.logoStyle}
-                       source={require('./../image/msg.png')}
+                       source={require('./../image/Homeb@2x.png')}
                        resizeMode="contain"
                        ref="logo"/>
                 <View style={{height: 1, width: '100%',backgroundColor:Utils.dividerBgColor}} />
@@ -83,7 +83,7 @@ export default class LoginPage extends BasePage{
                 <View style={styles.inputWrap}>
                     <Image
                         style={styles.imageStyle}
-                        source={require('./../image/msg.png')}
+                        source={require('./../image/Homeb@2x.png')}
                         resizeMode="contain"/>
                     <TextInput style={styles.input}
                         placeholder='请输入手机号'
@@ -100,7 +100,7 @@ export default class LoginPage extends BasePage{
                 <View style={styles.inputWrap}>
                     <Image
                         style={styles.imageStyle}
-                        source={require('./../image/msg.png')}
+                        source={require('./../image/Homeb@2x.png')}
                         resizeMode="contain"/>
                     <TextInput style={styles.input}
                                placeholder='请输入密码'

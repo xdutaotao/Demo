@@ -14,10 +14,40 @@ import {
 
 import LoginPage from './LoginPage'
 import Utils from './../common/theme'
-import RefreshFlatList from './../component/RefreshFlatList'
+import RefreshList from 'react-native-refreshlist'
 
-const preData = [{keysss: 1},{keysss:2},{keysss:3},{keysss:4},{keysss:5},{keysss:6},{keysss:7},{keysss:8},{keysss:9},{keysss:10}];
-const newData = [{keysss: 12},{keysss:23},{keysss:34},{keysss:45},{keysss:56},{keysss:67},{keysss:78},{keysss:89},{keysss:90},{keysss:10}];
+const preData = [
+    {name: '双色球', time: '- 第2017055期',
+        number: ['07', '12', '13', '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:685895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['16', '29', '30', '32', '33', '04', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:5895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['6', '2', '3', '20', '24'],
+        date: '2017-05-14 21:15:00', money: '奖池:895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['06', '12', '13', '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:685895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['08', '4', '16', '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:195820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['07', '15', '13', '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:2895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: [ '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:8858920元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['07', '12', '13', '83', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:123895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['07', '44', '13', '20', '24', '31', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:665895820元'},
+    {name: '双色球', time: '- 第2017055期',
+        number: ['07', '12', '13', '55', '05'],
+        date: '2017-05-14 21:15:00', money: '奖池:26795820元'},
+    ];
 
 export default class MallPage extends React.Component{
     constructor(props){
@@ -28,14 +58,9 @@ export default class MallPage extends React.Component{
         this.moreTime = 0;
 
         setTimeout(() => {
-            this._listRef.setData([]);
+            this._listRef.setData(preData);
 
         }, 3000);
-
-        // setTimeout(() => {
-        //     this._listRef.setError();
-        //
-        // }, 2000);
     }
 
     /**
@@ -46,7 +71,7 @@ export default class MallPage extends React.Component{
         setTimeout(() => {
             resolve();
             this.moreTime = 0;
-            this._listRef.setData(newData);
+            this._listRef.setData(preData);
         }, 3000);
     }
 
@@ -65,14 +90,21 @@ export default class MallPage extends React.Component{
      */
     _loadMore(){
         setTimeout(() => {
-            if (this.moreTime < 3){
-                this._listRef.addData(preData);
-                this.moreTime ++;
-            }else{
-                this._listRef.addData([]);
-            }
-
+            this._listRef.addData([]);
         }, 3000);
+    }
+
+
+    _renderItemCenter(numbers){
+        let list = [];
+        for (let i=0; i<numbers.length; i++){
+            list.push(
+                <View style={styles.listItemCenter} key={i}>
+                    <Text style={styles.listItemCenterText}>{numbers[i]}</Text>
+                </View>
+            )
+        }
+        return list;
     }
 
     /**
@@ -87,25 +119,29 @@ export default class MallPage extends React.Component{
                 underlayColor={Utils.underClickColor}
                 onPress={()=> {this._onItemPress(item)}}>
                 <View style={styles.listWrapper}>
-                    <View style={styles.listItemWrapper}><Text >{item.index + "1"}</Text></View>
-                    <View style={styles.listItemWrapper}><Text >{item.item.keysss+"2"}</Text></View>
-                    <View style={styles.listItemWrapper}><Text style={styles.listItemTextBlue}>{"sddsd"}</Text></View>
-                    <View style={styles.listItemWrapper}><Text style={styles.listItemTextRed}>{"sddsd"}</Text></View>
+
+                    <View style={styles.listItemTop}>
+                        <Text style={styles.listItemName}>{item.item.name}</Text>
+                        <Text style={styles.listItemTime}>{item.item.time}</Text>
+                    </View>
+                    <View style={styles.listItemCenterWrap}>
+                        {this._renderItemCenter(item.item.number)}
+                    </View>
+                    <View style={styles.listItemBottom}>
+                        <Text style={styles.listItemBottomText}>{item.item.date}</Text>
+                        <Text style={styles.listItemBottomTextRight}>{item.item.money}</Text>
+                    </View>
                 </View>
             </TouchableHighlight>
         )
     }
 
-    /**
-     * 点击搜索框
-     * @private
-     */
-    _searchAction(){
-        ToastLog("search")
-    }
-
-    _searchBack(){
-        ToastLog("back")
+    _renderHead(){
+        return (
+            <View style={styles.top}>
+                <Text style={styles.topText}>开奖记录</Text>
+            </View>
+        )
     }
 
 
@@ -113,12 +149,14 @@ export default class MallPage extends React.Component{
     render(){
         return(
             <View style={styles.container}>
-                <RefreshFlatList
+                <RefreshList
                     ref={(list)=> this._listRef = list}
                     onPullRelease={(resolve)=> this._onPullRelease(resolve)}
-                    ItemHeight={120}
+                    ItemHeight={200}
                     onEndReached={()=> this._loadMore()}
-                    renderItem={(item)=> this._renderItem(item)}/>
+                    renderItem={(item)=> this._renderItem(item)}
+                    renderMore={false}
+                    ListHeaderComponent={()=> this._renderHead()}/>
             </View>
         );
     }
@@ -129,13 +167,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         marginBottom: Utils.pixToDpSize(150),
+        flexDirection: 'column',
     },
     listWrapper:{
         width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        height: 100,
+        flexDirection: 'column',
+        height: 200,
         borderTopWidth: 1,
         borderTopColor: Utils.dividerBgColor,
     },
@@ -145,10 +182,57 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 10
     },
-    listItemTextBlue:{
-        color: '#45a162',
+    listItemCenterText:{
+        color: 'red',
+        fontSize: 20,
     },
-    listItemTextRed:{
-        color: '#c84a4a',
+    listItemBottomText:{
+        color: Utils.navColor,
+    },
+    listItemBottomTextRight:{
+        color: Utils.navColor,
+        marginLeft: 20,
+    },
+    listItemTop:{
+        marginTop: 10,
+        marginLeft: 20,
+        flexDirection: 'row',
+    },
+    listItemName:{
+        color: 'black',
+        fontSize: 20,
+    },
+    listItemTime:{
+        color: Utils.navColor,
+        fontSize: 18,
+    },
+    listItemCenter:{
+        borderRadius: 90,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: 'red',
+        margin: 10,
+        height: 40,
+        width: 40,
+    },
+    listItemCenterWrap:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        padding: 8,
+    },
+    listItemBottom:{
+        flexDirection: 'row',
+        paddingLeft: 20,
+    },
+    top:{
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: Utils.actionBar.height,
+        backgroundColor: Utils.actionBar.backgroundColor,
+    },
+    topText:{
+        color: 'white',
     }
 });

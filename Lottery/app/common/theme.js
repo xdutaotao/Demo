@@ -45,6 +45,7 @@ const btnActiveOpacity = 0.7;
 const underClickColor = "rgba(34, 26, 38, 0.1)";
 const dividerBgColor = '#EBEBEB';
 const themeColor = '#ea5251';
+const navColor = '#8b8b8b';
 
 const actionBar = {
     height: (Platform.OS === 'android') ? pixToDpSize(150) : pixToDpSize(160),
@@ -66,4 +67,5 @@ module.exports = {
     dividerBgColor,
     themeColor,
     isIOS,
+    navColor,
 };
