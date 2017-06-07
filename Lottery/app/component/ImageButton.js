@@ -8,6 +8,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactNative, {Text, View, StyleSheet, Platform, TouchableOpacity, TouchableNativeFeedback, Image} from 'react-native';
 import Utils from './../common/theme';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class ImageButton extends Component{
 
@@ -79,7 +80,7 @@ export default class ImageButton extends Component{
         const {text, icon, color, imgSize, fontSize, btnStyle} = this.props;
         return(
             <View style={[styles.view, btnStyle]}>
-                <Image source={image} style={{width: imgSize, height: imgSize}}/>
+                <Icon name={icon} size={imgSize} color={color}/>
                 {text ?
                     <Text style={[styles.text, {fontSize: fontSize, color: color}]}>{text}</Text>
                     :

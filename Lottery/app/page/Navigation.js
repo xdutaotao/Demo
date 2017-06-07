@@ -14,6 +14,7 @@ import Utils from '../common/theme'
 import HomePage from './HomePage'
 import MallPage from './MallPage'
 import OrderPage from './OrderPage'
+import TrendPage from './TrendPage'
 
 const tabNames = ['home', 'mall', 'order','info'];
 
@@ -81,7 +82,7 @@ export default class Navigation extends React.Component{
                     renderIcon={() => <Image style={styles.tab} source={require('./../image/Homea@2x.png')} />}
                     renderSelectedIcon={() => <Image style={styles.tab} source={require('./../image/Homeb@2x.png')} />}
                     onPress={() => this.setState({ selectedTab: tabNames[3] })}>
-                    {<HomePage navigator={this.props.navigator}/>}
+                    {<TrendPage navigator={this.props.navigator}/>}
                 </TabNavigator.Item>
             </TabNavigator>
         );

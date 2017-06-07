@@ -141,7 +141,7 @@ export default class HomePage extends React.Component{
                     <TouchableHighlight style={styles.projectClickStyle}
                                 key={i}
                                 underlayColor={Utils.underClickColor}
-                                onPress={()=>{this.refs.dialog.show("确定要取消订单吗");}}>
+                                onPress={()=>{}}>
                         <View style={styles.imageStyle} >
                             <Image source={projectImage[i]}
                                    style={styles.imageStyleView}
