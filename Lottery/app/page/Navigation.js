@@ -13,6 +13,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import Utils from '../common/theme'
 import HomePage from './HomePage'
 import MallPage from './MallPage'
+import OrderPage from './OrderPage'
 
 const tabNames = ['home', 'mall', 'order','info'];
 
@@ -70,7 +71,7 @@ export default class Navigation extends React.Component{
                     renderIcon={() => <Image style={styles.tab} source={require('./../image/Homea@2x.png')} />}
                     renderSelectedIcon={() => <Image style={styles.tab} source={require('./../image/Homeb@2x.png')} />}
                     onPress={() => this.setState({ selectedTab: tabNames[2] })}>
-                    {<HomePage navigator={this.props.navigator}/>}
+                    {<OrderPage navigator={this.props.navigator}/>}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     tabStyle={styles.tabStyle}

@@ -81,7 +81,7 @@ export default class MallPage extends React.Component{
      * @private
      */
     _onItemPress(item){
-        this.props.navigator.push({component: LoginPage})
+        //this.props.navigator.push({component: LoginPage})
     }
 
     /**

@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d1d3f39-e3a2-4eb6-a94d-a9a00ba6f2d3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/image/topBanner.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/common/theme.js" afterPath="$PROJECT_DIR$/app/common/theme.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/LoginPage.js" afterPath="$PROJECT_DIR$/app/page/LoginPage.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/MallPage.js" afterPath="$PROJECT_DIR$/app/page/MallPage.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/Navigation.js" afterPath="$PROJECT_DIR$/app/page/Navigation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/RegisterPage.js" afterPath="$PROJECT_DIR$/app/page/RegisterPage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/OrderPage.js" afterPath="$PROJECT_DIR$/app/page/OrderPage.js" />
     </list>
     <ignored path="Lottery.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MallPage.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/page/MallPage.js">
+      <file leaf-file-name="HomePage.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/page/HomePage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+            <state relative-caret-position="261">
+              <caret line="293" column="4" selection-start-line="293" selection-start-column="4" selection-end-line="309" selection-end-column="6" />
               <folding>
                 <element signature="e#43#68#0" expanded="true" />
               </folding>
@@ -42,13 +41,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="theme.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/common/theme.js">
+      <file leaf-file-name="Navigation.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/page/Navigation.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
-              <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+            <state relative-caret-position="228">
+              <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderPage.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/page/OrderPage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="160" column="51" selection-start-line="160" selection-start-column="51" selection-end-line="160" selection-end-column="51" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <element signature="e#43#68#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -76,11 +86,12 @@
         <option value="$PROJECT_DIR$/index.ios.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app/page/HomePage.js" />
-        <option value="$PROJECT_DIR$/app/page/Navigation.js" />
         <option value="$PROJECT_DIR$/app/page/LoginPage.js" />
         <option value="$PROJECT_DIR$/app/page/RegisterPage.js" />
         <option value="$PROJECT_DIR$/app/common/theme.js" />
+        <option value="$PROJECT_DIR$/app/page/Navigation.js" />
         <option value="$PROJECT_DIR$/app/page/MallPage.js" />
+        <option value="$PROJECT_DIR$/app/page/OrderPage.js" />
       </list>
     </option>
   </component>
@@ -93,8 +104,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="47" />
-    <option name="y" value="37" />
+    <option name="x" value="5" />
+    <option name="y" value="35" />
     <option name="width" value="1365" />
     <option name="height" value="907" />
   </component>
@@ -265,15 +276,15 @@
       <workItem from="1496726181118" duration="46000" />
       <workItem from="1496726259392" duration="5659000" />
       <workItem from="1496732755422" duration="9087000" />
-      <workItem from="1496800045298" duration="15365000" />
+      <workItem from="1496800045298" duration="19666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31760000" />
+    <option name="totallyTimeSpent" value="36061000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="37" width="1365" height="907" extended-state="0" />
+    <frame x="5" y="35" width="1365" height="907" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17142858" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -502,32 +513,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/page/OrderPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/page/LoginPage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="102" column="60" selection-start-line="102" selection-start-column="60" selection-end-line="102" selection-end-column="60" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/page/Navigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
-          <folding>
-            <element signature="e#43#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -550,16 +541,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/page/HomePage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="152" column="9" selection-start-line="152" selection-start-column="9" selection-end-line="152" selection-end-column="9" />
-          <folding>
-            <element signature="e#43#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/common/theme.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="613">
@@ -570,11 +551,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/image/topBanner.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/page/MallPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        <state relative-caret-position="480">
+          <caret line="83" column="10" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="10" />
           <folding>
+            <element signature="e#43#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/page/Navigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/page/HomePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="293" column="4" selection-start-line="293" selection-start-column="4" selection-end-line="309" selection-end-column="6" />
+          <folding>
+            <element signature="e#43#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/page/OrderPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="160" column="51" selection-start-line="160" selection-start-column="51" selection-end-line="160" selection-end-column="51" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="e#43#68#0" expanded="true" />
           </folding>
         </state>
