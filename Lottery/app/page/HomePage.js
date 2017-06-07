@@ -10,30 +10,48 @@ import {
     Image,
     TouchableHighlight,
     FlatList,
-    RefreshControl} from 'react-native'
+    RefreshControl,
+    ScrollView} from 'react-native'
 
 import Swiper from 'react-native-swiper'
 import ApiContant from './../common/ApiContant'
 import './../common/ToastLog'
 import HomeModle from './../modle/HomeModle'
-import PullView from './../component/PullView'
 import Utils from '../common/theme'
 import WebViewPage from './WebViewPage'
 import Loading from './../component/Loading'
-import Dialog from './../component/Dialog'
 
-let projectText = ['现货交易', '我的交易', '我的询盘', '交易规则', '化交价格', '化交资讯', '化交报告', '资金详情'];
+let projectText = ['三分时时彩', '重庆时时彩', '北京PK拾',
+                    'PC蛋蛋', '三分PK拾', '香港六合彩', '广东11选5', '新疆时时彩',
+                    '天津时时彩', '上海11选5', '安徽快3', '福彩3D' ];
 let projectImage = [
-    require('./../image/Homea@2x.png'), require('./../image/Homea@2x.png'),
-    require('./../image/Homea@2x.png'), require('./../image/Homea@2x.png'),
-    require('./../image/Homea@2x.png'), require('./../image/Homea@2x.png'),
-    require('./../image/Homea@2x.png'), require('./../image/Homea@2x.png')
+    require('./../image/photo01.png'), require('./../image/photo02.png'),
+    require('./../image/photo03.png'), require('./../image/photo04.png'),
+    require('./../image/photo05.png'), require('./../image/photo06.png'),
+    require('./../image/photo07.png'), require('./../image/photo08.png'),
+    require('./../image/photo09.png'), require('./../image/photo10.png'),
+    require('./../image/photo11.png'), require('./../image/photo12.png')
 ];
 
 let cycleImage = [
     require('./../image/banner1.png') , require('./../image/banner2.png') ,
     require('./../image/banner3.png') ,
-]
+];
+
+
+let nameLeft = ['472938*****', '972938*****', '672938*****',
+    '372938*****', '8234938*****', '872938*****', '572938*****', '462938*****',
+    '472938*****', '972938*****', '672938*****', '372938*****' ];
+
+
+let nameCenter = ['喜中748元', '喜中48元', '喜中248元',
+    '喜中458元', '喜中645元', '喜中748元', '喜中756元', '喜中548元',
+    '喜中748元', '喜中48元', '喜中248元', '喜中458元' ];
+
+
+let nameRight = ['购买幸运28', '购买幸运28', '购买幸运28',
+    '购买幸运28', '购买幸运28', '购买幸运28', '购买幸运28', '购买幸运28',
+    '购买幸运28', '购买幸运28', '购买幸运28', '购买幸运28' ];
 
 export default class HomePage extends React.Component{
     // 构造
@@ -58,7 +76,8 @@ export default class HomePage extends React.Component{
      */
     componentWillMount(){
         if (!this.state.loaded) {
-            this._getNetWorkData();
+            // this._getNetWorkData();
+            this.setState({loaded: true});
         }
     }
 
@@ -83,42 +102,9 @@ export default class HomePage extends React.Component{
                     this.setState({loaded: true});
                 }
             });
-
-        /**
-         * 报盘列表
-         */
-        this._getListData(-1);
-
-        /**
-         * 成交列表
-         */
-        HomeModle.getInstance().getDetailListData()
-            .then(data => {
-                this.setState({
-                    detailDataSource: JSON.parse(data.DATA).list
-                });
-                if (resolve != null)
-                    resolve();
-            }, error => {
-
-            })
     }
 
-    /**
-     * Array.from(JSON.parse(data.DATA),
-     (item, index)=> {item.key = index})
-     * 报盘列表
-     */
-    _getListData(id){
-        HomeModle.getInstance().getListData(id)
-            .then(data => {
-                this.setState({
-                    dataSource: JSON.parse(data.DATA)
-                });
-            }, error => {
 
-            });
-    }
 
     /**
      * 渲染轮播图UI
@@ -128,22 +114,20 @@ export default class HomePage extends React.Component{
     _renderSwipeImage(){
         let imageViews = [];
         if (this.state.loaded){
-            Array.from(this.state.imageViewsData).map((ds, index) => {
+            for(let index=0; index<3; index++){
                 imageViews.push(
                     <TouchableHighlight style={{flex: 1}} key={index}
-                                onPress = {() => {
-                                this.props.navigator.push({component: WebViewPage,
-                                                            args: {url: 'http://www.baidu.com'}})}}>
+                                        onPress = {() => {
+                                            this.props.navigator.push({component: WebViewPage,
+                                                args: {url: 'http://www.baidu.com'}})}}>
                         <Image style={{flex: 1}}
                                source={cycleImage[index]}
-                                resizeMode='repeat'/>
+                               resizeMode='repeat'/>
                     </TouchableHighlight>
-
                 )
-            });
+            }
             return imageViews;
         }
-
     }
 
     /**
@@ -152,14 +136,16 @@ export default class HomePage extends React.Component{
      */
     _renderProject(){
         let project = [];
-        for(let i=0; i<8; i++){
+        for(let i=0; i<12; i++){
             project.push(
                     <TouchableHighlight style={styles.projectClickStyle}
                                 key={i}
                                 underlayColor={Utils.underClickColor}
                                 onPress={()=>{this.refs.dialog.show("确定要取消订单吗");}}>
                         <View style={styles.imageStyle} >
-                            <Image source={projectImage[i]} style={styles.imageStyleView}/>
+                            <Image source={projectImage[i]}
+                                   style={styles.imageStyleView}
+                                    resizeMode='stretch'/>
                             <Text>{projectText[i]}</Text>
                         </View>
                     </TouchableHighlight>
@@ -168,143 +154,31 @@ export default class HomePage extends React.Component{
         return project;
     }
 
-    _dialogCallBack(){
-
-    }
 
 
-    /**
-     * 渲染 notice UI
-     * @private
-     */
-    _renderNoticeText(){
-        let result = [];
+    _renderName(){
+        let imageViews = [];
         if (this.state.loaded){
-            Array.from(this.state.noticeData).map((ds, index) => {
-                result.push(
-                    <Text style={{flex: 1}}
-                           key={index}>
-                        {ds.InfoTitle}</Text>
-
+            for(let index=0; index<3; index++){
+                imageViews.push(
+                    <TouchableHighlight style={{flex: 1}} key={index}
+                                        onPress = {() => {
+                                            this.props.navigator.push({component: WebViewPage,
+                                                args: {url: 'http://www.baidu.com'}})}}>
+                        <View style={styles.nameStyle} >
+                            <Text>{nameLeft[index]}</Text>
+                            <Text style={styles.nameCenter}>{nameCenter[index]}</Text>
+                            <Text>{nameRight[index]}</Text>
+                        </View>
+                    </TouchableHighlight>
                 )
-            });
-            return result;
+            }
+            return imageViews;
         }
     }
 
-    /**
-     * 切换列表种类
-     * @private
-     */
-    _changeTradeAll(){
-        this.refs.alls.setNativeProps({
-            style:styles.tradeTextActive
-        });
-
-        this.refs.pp.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-
-        this.refs.pe.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-        this._getListData(-1);
-    }
-
-    _changeTradePP(){
-        this.refs.alls.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-
-        this.refs.pp.setNativeProps({
-            style:styles.tradeTextActive
-        });
-
-        this.refs.pe.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-        this._getListData(ApiContant.PP_ID);
-    }
-
-    _changeTradePE(){
-        this.refs.alls.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-
-        this.refs.pp.setNativeProps({
-            style:styles.tradeTextInAct
-        });
-
-        this.refs.pe.setNativeProps({
-            style:styles.tradeTextActive
-        });
-        this._getListData(ApiContant.PE_ID);
-    }
-
-    /**
-     * 更多
-     * @returns {XML}
-     */
-    _changeMore(){
-
-    }
-
-    /**
-     * 报盘 item 点击事件
-     */
-    _onOrderListItemPress(item){
-        ToastLog("item")
-    }
-
-    /**
-     * 下拉刷新
-     * @param resolve
-     */
-    _onPullRelease(resolve) {
-        // //do something
-        setTimeout(() => {
-
-            resolve();
-        }, 10000);
-
-        // this._getNetWorkData(resolve);
-    }
-
-    /**
-     * 下拉头
-     * @returns {XML}
-     */
-    _topIndicatorRender(pulling, pullok, pullrelease, position) {
-        return (
-            <View style={{flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 90,
-                backgroundColor:'red'}}>
-                <Text>After Push up!</Text>
-            </View>
-        );
-
-
-    }
-
-    /**
-     * 正在刷新状态
-     * @param position
-     * @returns {boolean}
-     * @private
-     */
-    _onPushing(position) {
-        if (!this.state.isPushOk) {
-            this.setState({isPushOk: true});
-            return false;
-        }
-        return true;
-    }
 
     render(){
-
         if (!this.state.loaded){
             return(
                 <Loading />
@@ -312,9 +186,8 @@ export default class HomePage extends React.Component{
         }else{
             return(
                 <View style={styles.container}>
-                    <PullView
-                        style={{flex: 1}}
-                        onPullRelease={this._onPullRelease}>
+                    <ScrollView
+                        horizontal={false}>
                     <Swiper height={150}
                             paginationStyle={{bottom:10}}
                             autoplay={true}
@@ -336,26 +209,40 @@ export default class HomePage extends React.Component{
                         </View>
                     </View>
 
-                        <View style={styles.divider}></View>
+                    <View style={styles.dividerLine}/>
 
                     <View style={styles.imageWrapperStyle}>
                         {this._renderProject()}
-                        <View style={{height: 1, width: '100%',backgroundColor:"#EBEBEB"}} />
 
-                        <View style={styles.announceWrapStyle}>
-                            <Swiper height={20}
-                                    width={310}
-                                    horizontal={false}
-                                    autoplay={true}
-                                    showsPagination={false}>
-                                {this._renderNoticeText()}
-                            </Swiper>
+                    </View>
+
+                     <View style={[styles.dividerLine, {marginTop: 20}]} />
+
+                     <View style={styles.lotteryStyle}>
+                        <View style={styles.styleLine}>
+
+                        </View>
+
+                        <Text style={styles.styleText}>
+                            中奖名单
+                        </Text>
+
+                        <View style={styles.styleLine}>
+
                         </View>
                     </View>
 
-                        <Dialog ref="dialog" callback={()=>{this._dialogCallBack()}}/>
+                        <View style={styles.dividerLine}></View>
 
-                    </PullView>
+                    <Swiper height={50}
+                            horizontal={false}
+                            paginationStyle={{right:-20}}
+                            autoplay={true}
+                            loop={true}>
+                        {this._renderName()}
+                    </Swiper>
+
+                    </ScrollView>
 
                 </View>
             );
@@ -370,7 +257,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        marginBottom: Utils.pixToDpSize(150),
     },
     imageWrapperStyle:{
         height:250,
@@ -390,11 +276,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10
     },
     imageStyleView:{
         height: '60%',
-        width: '52%',
+        width: '55%',
+        margin: 5,
     },
     announceWrapStyle:{
         width:'100%',
@@ -402,53 +288,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingLeft:20,
-        paddingRight:10,
         marginTop:20
-    },
-    listStyle:{
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-    },
-    tradeTextInAct:{
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: 'white',
-        color: '#000'
-    },
-    tradeTextActive:{
-        color: 'white',
-        backgroundColor: '#EA5251',
-        borderRadius: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-    },
-    listWrapper:{
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        height: 40,
-    },
-    listItemWrapper:{
-        width: '25%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10
-    },
-    listItemTextBlue:{
-        color: '#45a162',
-    },
-    listItemTextRed:{
-        color: '#c84a4a',
     },
 
     lotteryStyle:{
-        height: '20%',
+        height: 60,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center'
@@ -467,7 +311,20 @@ const styles = StyleSheet.create({
 
     dividerLine:{
         width: '100%',
+        backgroundColor: Utils.dividerBgColor,
+        height: 2,
+    },
+    nameStyle:{
+        height: '100%',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+    },
 
+    nameCenter:{
+        color: 'red',
     }
 
 });

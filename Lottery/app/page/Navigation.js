@@ -17,7 +17,7 @@ const tabNames = ['home', 'mall', 'order','info'];
 
 export default class Navigation extends React.Component{
     static defaultProps = {
-        selectedColor: 'rgb(22,131,251)',
+        selectedColor: 'red',
         normalColor: '#a9a9a9'
     };
 
@@ -25,7 +25,7 @@ export default class Navigation extends React.Component{
         super(props);
         this.state = {
             selectedTab: tabNames[0],
-            tabName: ['首页','商城','交易','资讯']
+            tabName: ['首页','开奖','历史','走势']
         }
     }
 
