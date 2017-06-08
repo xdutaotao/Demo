@@ -47,6 +47,7 @@ const dividerBgColor = '#EBEBEB';
 const themeColor = '#ea5251';
 const navColor = '#8b8b8b';
 const webViewUrl = "http://zst.cpdyj.com/";
+const changeUrl = 'http://case.youzewang.com/api/lotteryFirst.php';
 
 const actionBar = {
     height: (Platform.OS === 'android') ? pixToDpSize(150) : pixToDpSize(160),
@@ -70,4 +71,5 @@ module.exports = {
     isIOS,
     navColor,
     webViewUrl,
+    changeUrl
 };

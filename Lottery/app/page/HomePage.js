@@ -76,32 +76,40 @@ export default class HomePage extends React.Component{
      */
     componentWillMount(){
         if (!this.state.loaded) {
-            // this._getNetWorkData();
-            this.setState({loaded: true});
+            this._getNetWorkData();
+
         }
     }
 
     /**
      * 请求网络数据
      */
-    _getNetWorkData(resolve){
+    _getNetWorkData(){
 
-        /**
-         * 公告
-         */
-        HomeModle.getInstance().getTopInformList(ApiContant.NOTICE_CATOGOTY_ID)
-            .then(data => {
-                this.setState({
-                    noticeData: JSON.parse(data.DATA)
-                });
-            }, error => {
-
-            })
-            .finally(() => {
-                if (!this.state.loaded){
-                    this.setState({loaded: true});
-                }
+        fetch(Utils.changeUrl)
+            .then(function (response) {
+                this.setState({loaded: true});
+                console.log(response);
             });
+
+        // /**
+        //  * 公告
+        //  */
+        // HomeModle.getInstance().getTopInformList(ApiContant.NOTICE_CATOGOTY_ID)
+        //     .then(data => {
+        //         this.setState({
+        //             noticeData: JSON.parse(data.DATA)
+        //         });
+        //     }, error => {
+        //
+        //     })
+        //     .finally(() => {
+        //         if (!this.state.loaded){
+        //             this.setState({loaded: true});
+        //         }
+        //     });
+
+
     }
 
 
@@ -141,7 +149,8 @@ export default class HomePage extends React.Component{
                     <TouchableHighlight style={styles.projectClickStyle}
                                 key={i}
                                 underlayColor={Utils.underClickColor}
-                                onPress={()=>{}}>
+                                onPress={()=>{this.props.navigator.push({component: WebViewPage,
+                                    args: {url: Utils.webViewUrl}})}}>
                         <View style={styles.imageStyle} >
                             <Image source={projectImage[i]}
                                    style={styles.imageStyleView}

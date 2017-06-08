@@ -11,7 +11,7 @@ import Utils from '../common/theme'
 export default class SplashScreen extends React.Component{
     render(){
         return(
-            <Image source={require('./../image/splash_bg.png')}
+            <Image source={require('./../image/launch.png')}
                 style={styles.splashStyle}/>
         );
     }

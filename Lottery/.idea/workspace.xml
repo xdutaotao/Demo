@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d1d3f39-e3a2-4eb6-a94d-a9a00ba6f2d3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/image/launch.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/LaunchImage.launchimage/LaunchImage-568@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/LaunchImage.launchimage/LaunchImage-800-667h@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/LaunchImage.launchimage/LaunchImage-800-Portrait-736h@3x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/LaunchImage.launchimage/LaunchImage@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/Contents.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/LaunchImage.launchimage/Contents.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/image/splash_bg.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/Lottery.xcodeproj/project.xcworkspace/xcuserdata/guzhenfu.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/ios/Lottery.xcodeproj/project.xcworkspace/xcuserdata/guzhenfu.xcuserdatad/UserInterfaceState.xcuserstate" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/common/theme.js" afterPath="$PROJECT_DIR$/app/common/theme.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/HomePage.js" afterPath="$PROJECT_DIR$/app/page/HomePage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/MallPage.js" afterPath="$PROJECT_DIR$/app/page/MallPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/OrderPage.js" afterPath="$PROJECT_DIR$/app/page/OrderPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/TrendPage.js" afterPath="$PROJECT_DIR$/app/page/TrendPage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/WebViewPage.js" afterPath="$PROJECT_DIR$/app/page/WebViewPage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/page/SplashScreen.js" afterPath="$PROJECT_DIR$/app/page/SplashScreen.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/Lottery.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/ios/Lottery.xcodeproj/project.pbxproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/AppIcon.appiconset/Contents.json" afterPath="$PROJECT_DIR$/ios/Lottery/Images.xcassets/AppIcon.appiconset/Contents.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ios/Lottery/Info.plist" afterPath="$PROJECT_DIR$/ios/Lottery/Info.plist" />
     </list>
     <ignored path="Lottery.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,11 +40,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="HomeModle.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/modle/HomeModle.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="HomePage.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/page/HomePage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+            <state relative-caret-position="247">
+              <caret line="85" column="7" selection-start-line="85" selection-start-column="7" selection-end-line="85" selection-end-column="7" />
               <folding>
                 <element signature="e#43#68#0" expanded="true" />
               </folding>
@@ -43,12 +62,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MallPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/page/MallPage.js">
+      <file leaf-file-name="MainPage.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/MainPage.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="39" />
-              <folding />
+              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+              <folding>
+                <element signature="e#1#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,32 +77,8 @@
       <file leaf-file-name="theme.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/common/theme.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="689">
-              <caret line="71" column="15" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrendPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/page/TrendPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3021">
-              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-              <folding>
-                <element signature="e#43#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WebViewPage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/page/WebViewPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="727">
+              <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -112,11 +109,12 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app/component/ImageButton.js" />
         <option value="$PROJECT_DIR$/app/page/WebViewPage.js" />
-        <option value="$PROJECT_DIR$/app/common/theme.js" />
-        <option value="$PROJECT_DIR$/app/page/HomePage.js" />
         <option value="$PROJECT_DIR$/app/page/MallPage.js" />
         <option value="$PROJECT_DIR$/app/page/OrderPage.js" />
         <option value="$PROJECT_DIR$/app/page/TrendPage.js" />
+        <option value="$PROJECT_DIR$/app/page/SplashScreen.js" />
+        <option value="$PROJECT_DIR$/app/common/theme.js" />
+        <option value="$PROJECT_DIR$/app/page/HomePage.js" />
       </list>
     </option>
   </component>
@@ -129,8 +127,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="15" />
-    <option name="y" value="25" />
+    <option name="x" value="326" />
+    <option name="y" value="44" />
     <option name="width" value="1255" />
     <option name="height" value="907" />
   </component>
@@ -209,6 +207,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Lottery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Lottery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -216,7 +232,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../JueJinClient" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/LotteryFirst" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -225,8 +241,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ios/Lottery" />
       <recent name="$PROJECT_DIR$/app/image" />
+      <recent name="$PROJECT_DIR$/ios/Lottery" />
       <recent name="$PROJECT_DIR$/app/page" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -304,15 +320,15 @@
       <workItem from="1496726259392" duration="5659000" />
       <workItem from="1496732755422" duration="9087000" />
       <workItem from="1496800045298" duration="29772000" />
-      <workItem from="1496884737955" duration="714000" />
+      <workItem from="1496884737955" duration="4194000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46881000" />
+    <option name="totallyTimeSpent" value="50361000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="15" y="25" width="1255" height="907" extended-state="0" />
+    <frame x="326" y="44" width="1255" height="907" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18645418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -386,7 +402,7 @@
         <state relative-caret-position="817">
           <caret line="43" column="22" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="22" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -420,6 +436,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#89#130#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -481,13 +501,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.ios.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-native/ReactAndroid/src/androidTest/assets/AndroidTestBundle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -514,13 +527,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/MainPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -569,16 +575,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/page/Navigation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-883">
-          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-          <folding>
-            <element signature="e#43#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/component/CustomTabBar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="395">
@@ -616,23 +612,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/common/theme.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="689">
-          <caret line="71" column="15" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/page/OrderPage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#43#68#0" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#43#68#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -642,8 +628,35 @@
         <state relative-caret-position="-3021">
           <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
           <folding>
-            <element signature="e#43#68#0" expanded="true" />
+            <element signature="e#43#68#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/page/Navigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-655">
+          <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.ios.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#89#130#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/page/SplashScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="13" column="57" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -655,10 +668,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/MainPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+          <folding>
+            <element signature="e#1#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/common/FetchUtil.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modle/HomeModle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/common/theme.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="727">
+          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/page/HomePage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+        <state relative-caret-position="247">
+          <caret line="85" column="7" selection-start-line="85" selection-start-column="7" selection-end-line="85" selection-end-column="7" />
           <folding>
             <element signature="e#43#68#0" expanded="true" />
           </folding>
