@@ -61,6 +61,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  AP : "
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"/>
+
+            <ToggleButton
+                android:id="@+id/ap"
+                style="@style/ToggleButton" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:minHeight="?android:attr/listPreferredItemHeight"

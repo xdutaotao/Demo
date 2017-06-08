@@ -26,7 +26,8 @@ public class Command {
         CommandTypeID(8),
         CommandTypeSENS(9),
         CommandTypeLux(10),
-        CommandRunModel(11);
+        CommandRunModel(11),
+        CommandAPSTATE(12);
 
         private int value;
 
@@ -55,6 +56,9 @@ public class Command {
                     return "lux";
                 case 11:
                     return "runmodel";
+
+                case 12:
+                    return "AP_state";
 
                 default:
                     return "";
@@ -151,6 +155,7 @@ public class Command {
             case CommandTypeSENS:
             case CommandTypeLux:
             case CommandRunModel:
+            case CommandAPSTATE:
                 values.put(type.getColumnName(), value);
                 break;
 
@@ -244,6 +249,12 @@ public class Command {
                 data = new byte[1];
                 data[0] = (byte) (value > 0 ? 1 : 0);
                 cb.append((byte) 10, (byte) 0, (byte) 1, data);     /* wirte light status into db */
+                break;
+
+            case CommandAPSTATE:
+                data = new byte[1];
+                data[0] = (byte) (value > 0 ? 1 : 0);
+                cb.append((byte) 11, (byte) 0, (byte) 1, data);     /* wirte light status into db */
                 break;
 
             case CommandRunModel:

@@ -133,11 +133,13 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                                     brightness = c.getInt(c.getColumnIndex("brightness"));
                                     CT = c.getInt(c.getColumnIndex("CT"));
                                     mode = c.getInt(c.getColumnIndex("mode"));
+
                                     intent.putExtra("state", state > 0);
                                     intent.putExtra("color", color);
                                     intent.putExtra("brightness", brightness);
                                     intent.putExtra("CT", CT);
                                     intent.putExtra("mode", mode);
+                                    intent.putExtra(LightInfoActivity.AP_STATE, cursor.getInt(cursor.getColumnIndex("AP_state")) > 0);
                                 } else {
                                     int tmp = c.getInt(c.getColumnIndex("state"));
                                     if (tmp != state)
@@ -154,6 +156,11 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
                                     tmp = c.getInt(c.getColumnIndex("mode"));
                                     if (tmp != mode)
                                         intent.putExtra("mode", Constants.DEFAULT_MODE);
+
+                                    tmp = c.getInt(cursor.getColumnIndex("AP_state"));
+                                    if (tmp != 0){
+                                        intent.putExtra(LightInfoActivity.AP_STATE, true);
+                                    }
                                 }
                             }
                             c.close();
@@ -177,7 +184,7 @@ public class LightActivity extends BaseListActivity implements InputDialogFragme
 //                    intent.putExtra(LightInfoActivity.REMOTE, remote);
 //                    intent.putExtra(LightInfoActivity.FIRMWARE_VERSION, ver);
 //                    intent.putExtra(LightInfoActivity.MODEL, model);
-//                    intent.putExtra(LightInfoActivity.AP_STATE, apState);
+                    intent.putExtra(LightInfoActivity.AP_STATE, apState);
 //                    intent.putExtra(LightInfoActivity.AP_SSID, apSsid);
 //                    intent.putExtra(LightInfoActivity.AP_PASS, apPass);
                 }

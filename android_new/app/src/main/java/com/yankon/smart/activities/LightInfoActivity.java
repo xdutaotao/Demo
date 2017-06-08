@@ -45,6 +45,7 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_LIGHTS = "lights";
     public static final String EXTRA_RETURN = "return_data";
+    public static final String AP_STATE = "return_data";
     public static final int DATA_CHANGE = 4;
 
     int light_id = -1;
@@ -68,6 +69,8 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
     ToggleButton lightSwitch;
     @Bind(R.id.run_modle)
     ToggleButton runModle;
+    @Bind(R.id.ap)
+    ToggleButton ap;
 
     private int color;
     private int brightness;
@@ -146,8 +149,13 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
                 if (c.getInt(c.getColumnIndex("lux")) != 0)
                     light.setValue(c.getInt(c.getColumnIndex("lux")));
 
-                if (c.getInt(c.getColumnIndex("runmodel")) > 0){
+                if (c.getInt(c.getColumnIndex("runmodel")) > 0) {
                     runModle.setChecked(true);
+                }
+
+
+                if (c.getInt(c.getColumnIndex("AP_state")) > 0){
+                    ap.setChecked(true);
                 }
             }
             c.close();
@@ -163,6 +171,7 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
             emulator.setChecked(getIntent().getIntExtra("sens", Constants.DEFAULT_MODE) == 0x80);
             light.setValue(getIntent().getIntExtra("lux", Constants.DEFAULT_MODE));
             runModle.setChecked(getIntent().getIntExtra("runmodel", 0) > 0);
+            ap.setChecked(getIntent().getBooleanExtra(AP_STATE, true));
         }
         isForReturnValue = getIntent().getBooleanExtra(EXTRA_RETURN, false);
 
@@ -221,6 +230,11 @@ public class LightInfoActivity extends BaseActivity implements CompoundButton.On
 
         runModle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Command cmd = new Command(Command.CommandType.CommandRunModel, isChecked ? 1 : 0);
+            applyChanges(cmd, true);
+        });
+
+        ap.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Command cmd = new Command(Command.CommandType.CommandAPSTATE, isChecked ? 1 : 0);
             applyChanges(cmd, true);
         });
 
