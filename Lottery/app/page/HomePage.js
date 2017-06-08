@@ -119,7 +119,7 @@ export default class HomePage extends React.Component{
                     <TouchableHighlight style={{flex: 1}} key={index}
                                         onPress = {() => {
                                             this.props.navigator.push({component: WebViewPage,
-                                                args: {url: 'http://www.baidu.com'}})}}>
+                                                args: {url: Utils.webViewUrl}})}}>
                         <Image style={{flex: 1}}
                                source={cycleImage[index]}
                                resizeMode='repeat'/>

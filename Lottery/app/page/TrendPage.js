@@ -14,6 +14,7 @@ import {
     ScrollView} from 'react-native'
 
 import Utils from './../common/theme'
+import WebViewPage from './WebViewPage'
 
 let cycleImage = [
     require('./../image/trend1.png') , require('./../image/trend2.png') ,

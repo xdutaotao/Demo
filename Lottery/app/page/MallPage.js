@@ -12,7 +12,7 @@ import {
     ActivityIndicator,
     ScrollView} from 'react-native'
 
-import LoginPage from './LoginPage'
+import WebViewPage from './WebViewPage'
 import Utils from './../common/theme'
 import RefreshList from 'react-native-refreshlist'
 
@@ -82,6 +82,8 @@ export default class MallPage extends React.Component{
      */
     _onItemPress(item){
         //this.props.navigator.push({component: LoginPage})
+        this.props.navigator.push({component: WebViewPage,
+            args: {url: Utils.webViewUrl}})
     }
 
     /**

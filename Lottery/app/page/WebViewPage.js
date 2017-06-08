@@ -24,7 +24,7 @@ import Utils from './../common/theme'
      _renderLoading(){
          return(
              <View style={{justifyContent: 'center', paddingTop: Utils.pixToDpSize(40)}}>
-                 <ActivityIndicator color='rgb(22,131,251)' size="large"/>
+                 <ActivityIndicator color='#ea5251' size="large"/>
              </View>
          );
      }

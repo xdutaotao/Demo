@@ -14,6 +14,7 @@ import {
     ScrollView} from 'react-native'
 
 import Utils from './../common/theme'
+import WebViewPage from './WebViewPage'
 
 const preData = [
     {name: '时时彩', time: '- 第2017055期',
@@ -66,6 +67,8 @@ export default class OrderPage extends React.Component{
      */
     _onItemPress(item){
         //this.props.navigator.push({component: LoginPage})
+        this.props.navigator.push({component: WebViewPage,
+            args: {url: Utils.webViewUrl}})
     }
 
 

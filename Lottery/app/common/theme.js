@@ -46,6 +46,7 @@ const underClickColor = "rgba(34, 26, 38, 0.1)";
 const dividerBgColor = '#EBEBEB';
 const themeColor = '#ea5251';
 const navColor = '#8b8b8b';
+const webViewUrl = "http://zst.cpdyj.com/";
 
 const actionBar = {
     height: (Platform.OS === 'android') ? pixToDpSize(150) : pixToDpSize(160),
@@ -68,4 +69,5 @@ module.exports = {
     themeColor,
     isIOS,
     navColor,
+    webViewUrl,
 };
