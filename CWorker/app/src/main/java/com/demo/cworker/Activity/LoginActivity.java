@@ -110,7 +110,9 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             ToastUtil.show("密码长度必须不少于6位");
             return;
         }
-        presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(), Utils.getIMIEStatus(this));
+
+        presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
+                Utils.getIMIEStatus(this) == null ?  "" : Utils.getIMIEStatus(this));
     }
 
     @Override

@@ -59,8 +59,12 @@ public class Utils {
     public static String getIMIEStatus(Context context) {
         TelephonyManager tm = (TelephonyManager) context
                 .getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceId = tm.getDeviceId();
-        return deviceId;
+        if (tm != null) {
+            String deviceId = tm.getDeviceId();
+            return deviceId;
+        }else{
+            return null;
+        }
     }
 
 
