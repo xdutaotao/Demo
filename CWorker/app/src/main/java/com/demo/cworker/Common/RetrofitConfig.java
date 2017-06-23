@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -58,6 +59,7 @@ public class RetrofitConfig {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request().newBuilder()
+                    .addHeader("User-Agent", URLEncoder.encode("CWorker", "UTF-8"))
                     .addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
                     .build();
             return chain.proceed(request);
