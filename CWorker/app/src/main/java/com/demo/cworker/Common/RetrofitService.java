@@ -76,7 +76,7 @@ public interface RetrofitService {
     @POST("user/logout")
     Observable<BaseBean<String>> logout(@Field("token") String token);
 
-    @POST("home/getFirstPage")
+    @GET("home/getFirstPage")
     Observable<HomeResponseBean> getFirstPage();
 
     @FormUrlEncoded
