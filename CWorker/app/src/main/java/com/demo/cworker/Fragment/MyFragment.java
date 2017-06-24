@@ -22,6 +22,7 @@ import com.demo.cworker.Activity.PersonalActivity;
 import com.demo.cworker.Activity.SettingActivity;
 import com.demo.cworker.Activity.SuggestActivity;
 import com.demo.cworker.Activity.VIPActivity;
+import com.demo.cworker.Bean.RxBusEvent;
 import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Model.UserInfo;
@@ -157,7 +158,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
                     today.setText(String.valueOf(ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0)));
-                    RxBus.getInstance().post(Constants.POST_COLLECT_TIME);
+                    RxBus.getInstance().post(new RxBusEvent(Constants.POST_COLLECT_TIME, today.getText().toString()));
                 } else {
                     today.setText("0");
                 }
@@ -240,6 +241,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     ToastUtil.show("没有网络不能签到");
                     return;
                 }
+
+
                 if (!TextUtils.isEmpty(ShareUtils.getValue("sign", ""))) {
                     long time = Utils.convert2long(ShareUtils.getValue("sign", ""));
                     long now = Utils.convert2long(Utils.getNowDate());

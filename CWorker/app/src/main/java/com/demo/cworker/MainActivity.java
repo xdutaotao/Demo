@@ -15,6 +15,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.demo.cworker.Activity.BaseActivity;
 import com.demo.cworker.Activity.CollectActivity;
 import com.demo.cworker.Activity.LoginActivity;
+import com.demo.cworker.Bean.RxBusEvent;
 import com.demo.cworker.Common.Constants;
 import com.demo.cworker.Fragment.AddFragment;
 import com.demo.cworker.Fragment.HomeFragment;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setAutoHideEnabled(true);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 
-        BottomNavigationItem myItem = new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4]);
+        BadgeItem badgeItem = new BadgeItem();
 
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
@@ -60,11 +61,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[1]))
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[3]))
-                .addItem(myItem.setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText("0")));
+                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4])
+                        .setBadgeItem(badgeItem.setBackgroundColor(Color.RED).setText("0")));
 
-        RxBus.getInstance().toObservable(String.class)
-                .filter(s -> TextUtils.equals(s, Constants.POST_COLLECT_TIME))
-                .subscribe(s -> myItem.setBadgeItem(new BadgeItem().setBackgroundColor(Color.RED).setText(s)));
+        RxBus.getInstance().toObservable(RxBusEvent.class)
+                .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
+                .subscribe(s -> badgeItem.show().setText(s.getMsg()));
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
