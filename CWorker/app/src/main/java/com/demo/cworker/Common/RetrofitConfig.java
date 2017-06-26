@@ -1,6 +1,7 @@
 package com.demo.cworker.Common;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.demo.cworker.App;
 import com.demo.cworker.Utils.LogUtils;
@@ -147,6 +148,9 @@ public class RetrofitConfig {
             e.printStackTrace();
         }
 
+        //
+        disableConnectionReuseIfNecessary();
+
         OkHttpClient okHttpClient = okHttpBuilder
                 .connectTimeout(20000, TimeUnit.MILLISECONDS)
                 .readTimeout(20000, TimeUnit.MILLISECONDS)
@@ -176,6 +180,11 @@ public class RetrofitConfig {
         return retrofitService;
     }
 
+
+    private void disableConnectionReuseIfNecessary() {
+        // Work around pre-Froyo bugs in HTTP connection reuse.
+        System.setProperty("http.keepAlive", "false");
+    }
 
     //Request to String
     private String bodyToString(final Request request){
