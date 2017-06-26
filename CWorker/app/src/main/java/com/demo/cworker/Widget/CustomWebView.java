@@ -127,6 +127,7 @@ public class CustomWebView extends FrameLayout {
 
     private void initWebView(View v) {
         webview = (WebView) v.findViewById(R.id.web_view_in);
+        //webview.setInitialScale(100);
         settingBuilder = new SettingBuilder(getContext() , webview);
         mObservable = Observable.timer(timeOut, TimeUnit.SECONDS);
         setWebChromeClient(new GWebChromeClient());
@@ -245,7 +246,7 @@ public class CustomWebView extends FrameLayout {
             webSettings.setLoadsImagesAutomatically(true); // 设置自动加载图片
             //webview无限向下滑动 webview大量空白区域 内容无法填充webview
 //            webSettings.setUseWideViewPort(true); // 将图片调整到适合WebView大小
-//            webSettings.setLoadWithOverviewMode(true);
+
             webSettings.setDatabaseEnabled(true);// 启用数据库
             webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
             webSettings.setGeolocationEnabled(true);// 启用地理定位
@@ -257,7 +258,7 @@ public class CustomWebView extends FrameLayout {
                 webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             webSettings.setSupportZoom(true);
             webSettings.setBuiltInZoomControls(true);
-            webSettings.setUseWideViewPort(false);
+            webSettings.setUseWideViewPort(true);
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
             webSettings.setLoadWithOverviewMode(true);
             //刚进来不放大

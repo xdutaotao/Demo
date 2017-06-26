@@ -66,7 +66,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         RxBus.getInstance().toObservable(RxBusEvent.class)
                 .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
-                .subscribe(s -> badgeItem.show().setText(s.getMsg()));
+                .subscribe(s -> {
+                    if (TextUtils.equals("0", s.getMsg())){
+                        badgeItem.hide();
+                    }else{
+                        badgeItem.show().setText(s.getMsg());
+                    }
+                });
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();

@@ -43,10 +43,10 @@ public class HelpActivity extends BaseActivity {
     private String readWord() {
         String text = "";
         try {
-            //FileInputStream in = (FileInputStream) getResources().openRawResource(R.raw.demo);
-            InputStream inputStream = getAssets().open("demo.docx");
+            InputStream in = getResources().openRawResource(R.raw.demo);
+//            InputStream inputStream = getAssets().open("demo.doc");
             WordExtractor extractor = new WordExtractor();
-            text = extractor.extractText(inputStream);
+            text = extractor.extractText(in);
         } catch (Exception e) {
             e.printStackTrace();
         }
