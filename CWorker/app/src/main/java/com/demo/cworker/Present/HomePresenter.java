@@ -33,6 +33,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     public void _onError() {
                         ToastUtil.show("请求失败");
+                        getView().onFailure();
                     }
                 }));
     }

@@ -188,7 +188,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     @Override
     public void onFailure() {
         swipe.setRefreshing(false);
-        scrollView.setVisibility(View.INVISIBLE);
+        //scrollView.setVisibility(View.INVISIBLE);
     }
 
     @Override
