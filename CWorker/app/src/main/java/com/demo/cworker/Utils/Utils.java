@@ -15,6 +15,7 @@ import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Xml;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -22,11 +23,15 @@ import com.demo.cworker.Activity.LoginActivity;
 import com.demo.cworker.App;
 import com.zhy.autolayout.utils.ScreenUtils;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -44,6 +49,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 import rx.Observable;
 import top.zibin.luban.Luban;
@@ -572,6 +580,93 @@ public class Utils {
 
         int length = s.length();
         return Integer.valueOf(s.substring(0, length-2));
+    }
+
+    /**
+     * 读取xlsx
+     * @param path
+     * @return
+     */
+    public static String readXLSX(String path) {
+        String str = "";
+        String v = null;
+        boolean flat = false;
+        List<String> ls = new ArrayList<String>();
+        try {
+            ZipFile xlsxFile = new ZipFile(new File(path));
+            ZipEntry sharedStringXML = xlsxFile
+                    .getEntry("xl/sharedStrings.xml");
+            InputStream inputStream = xlsxFile.getInputStream(sharedStringXML);
+            XmlPullParser xmlParser = Xml.newPullParser();
+            xmlParser.setInput(inputStream, "utf-8");
+            int evtType = xmlParser.getEventType();
+            while (evtType != XmlPullParser.END_DOCUMENT) {
+                switch (evtType) {
+                    case XmlPullParser.START_TAG:
+                        String tag = xmlParser.getName();
+                        if (tag.equalsIgnoreCase("t")) {
+                            ls.add(xmlParser.nextText());
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        break;
+                    default:
+                        break;
+                }
+                evtType = xmlParser.next();
+            }
+            ZipEntry sheetXML = xlsxFile.getEntry("xl/worksheets/sheet1.xml");
+            InputStream inputStreamsheet = xlsxFile.getInputStream(sheetXML);
+            XmlPullParser xmlParsersheet = Xml.newPullParser();
+            xmlParsersheet.setInput(inputStreamsheet, "utf-8");
+            int evtTypesheet = xmlParsersheet.getEventType();
+            while (evtTypesheet != XmlPullParser.END_DOCUMENT) {
+                switch (evtTypesheet) {
+                    case XmlPullParser.START_TAG:
+                        String tag = xmlParsersheet.getName();
+                        if (tag.equalsIgnoreCase("row")) {
+                        } else if (tag.equalsIgnoreCase("c")) {
+                            String t = xmlParsersheet.getAttributeValue(null, "t");
+                            if (t != null) {
+                                flat = true;
+                                System.out.println(flat + "有");
+                            } else {
+                                System.out.println(flat + "没有");
+                                flat = false;
+                            }
+                        } else if (tag.equalsIgnoreCase("v")) {
+                            v = xmlParsersheet.nextText();
+                            if (v != null) {
+                                if (flat) {
+                                    str += ls.get(Integer.parseInt(v)) + "  ";
+                                } else {
+                                    str += v + "  ";
+                                }
+                            }
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (xmlParsersheet.getName().equalsIgnoreCase("row")
+                                && v != null) {
+                            str += "\n";
+                        }
+                        break;
+                }
+                evtTypesheet = xmlParsersheet.next();
+            }
+            System.out.println(str);
+        } catch (ZipException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        if (str == null) {
+            str = "解析文件出现问题";
+        }
+
+        return str;
     }
 
 
