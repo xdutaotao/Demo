@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -24,6 +25,7 @@ import com.demo.cworker.Fragment.MyFragment;
 import com.demo.cworker.Fragment.SearchFragment;
 import com.demo.cworker.Model.User;
 import com.demo.cworker.Utils.RxBus;
+import com.demo.cworker.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
                 .addItem(new BottomNavigationItem(R.drawable.message, strings[3]))
                 .addItem(new BottomNavigationItem(R.drawable.my, strings[4])
-                        .setBadgeItem(badgeItem.setBackgroundColor(Color.RED).setText("0")));
+                        .setBadgeItem(badgeItem.setBackgroundColor(Color.RED).hide().setText("0")));
 
         RxBus.getInstance().toObservable(RxBusEvent.class)
                 .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
@@ -95,9 +97,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("主页"));
-        fragments.add(SearchFragment.newInstance("我的"));
-        fragments.add(AddFragment.newInstance("我的"));
-        fragments.add(MessageFragment.newInstance("我的"));
+        fragments.add(SearchFragment.newInstance("搜索"));
+        fragments.add(AddFragment.newInstance(""));
+        fragments.add(MessageFragment.newInstance("消息"));
         fragments.add(MyFragment.newInstance("我的"));
         return fragments;
     }
@@ -165,5 +167,29 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabReselected(int position) {
 
+    }
+
+    /**
+     * 双击返回键退出
+     **/
+    private long mExitTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    protected void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtil.show("再按一次退出");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }
