@@ -18,7 +18,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
@@ -59,6 +59,7 @@ dependencies {
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版
 
     //noinspection GradleCompatible
+    compile files('libs/tm-extractors-0.4.jar')
     compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
@@ -95,5 +96,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile files('libs/tm-extractors-0.4.jar')
 }

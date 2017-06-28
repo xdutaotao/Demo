@@ -135,14 +135,26 @@ public class RetrofitConfig {
         File cacheFile = new File(App.getContext().getCacheDir(), "OkHttpCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100);
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
+        okHttpBuilder.hostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String s, SSLSession sslSession) {
+                return true;
+            }
+        });
+        SSLSocketFactory sslSocketFactory = null;
+        try {
+            sslSocketFactory = getSocketFactory(App.getContext(), "BKS");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        System.setProperty("http.keepAlive", "false");
+        //
+        //disableConnectionReuseIfNecessary();
 
         OkHttpClient okHttpClient = okHttpBuilder
-                .connectTimeout(200, TimeUnit.SECONDS)
-                .readTimeout(200, TimeUnit.SECONDS)
-                .writeTimeout(200, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(false)
+                .connectTimeout(20000, TimeUnit.MILLISECONDS)
+                .readTimeout(20000, TimeUnit.MILLISECONDS)
+                .retryOnConnectionFailure(true)
                 .addInterceptor(httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(cacheInterceptor)
@@ -166,6 +178,12 @@ public class RetrofitConfig {
 
     public RetrofitService getRetrofitService() {
         return retrofitService;
+    }
+
+
+    private void disableConnectionReuseIfNecessary() {
+        // Work around pre-Froyo bugs in HTTP connection reuse.
+        System.setProperty("http.keepAlive", "false");
     }
 
     //Request to String

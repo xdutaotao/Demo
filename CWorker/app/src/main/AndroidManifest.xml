@@ -52,7 +52,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.SplashActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -69,6 +69,7 @@
             android:name="design_height"
             android:value="1920" />
 
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".Activity.LoginActivity"
             android:launchMode="singleTask" />
@@ -96,7 +97,8 @@
         <activity android:name=".Activity.TypeActivity" />
         <activity android:name=".Activity.CheckActivity" />
         <activity android:name=".Activity.RecommandActivity" />
-        <activity android:name=".Activity.CollectHistoryActivity"></activity>
+        <activity android:name=".Activity.CollectHistoryActivity" />
+        <activity android:name=".Activity.LaunchActivity" />
     </application>
 
 </manifest>

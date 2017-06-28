@@ -14,5 +14,6 @@ public class Constants {
     public static final String CACHE_DIR = "cwork";
     public static final String POST_COLLECT_TIME = "POST_COLLECT_TIME";
     public static final String COLLECT_LIST = "COLLECT_LIST";
+    public static final String IS_COME_OVER = "IS_COME_OVER";
 
 }

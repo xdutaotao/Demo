@@ -57,11 +57,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
         bottomNavigationBar.setInActiveColor(R.color.nav_gray);
         bottomNavigationBar.setActiveColor(R.color.colorPrimary);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[0]))
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[1]))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home, strings[0]))
+                .addItem(new BottomNavigationItem(R.drawable.search, strings[1]))
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[3]))
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, strings[4])
+                .addItem(new BottomNavigationItem(R.drawable.message, strings[3]))
+                .addItem(new BottomNavigationItem(R.drawable.my, strings[4])
                         .setBadgeItem(badgeItem.setBackgroundColor(Color.RED).setText("0")));
 
         RxBus.getInstance().toObservable(RxBusEvent.class)
