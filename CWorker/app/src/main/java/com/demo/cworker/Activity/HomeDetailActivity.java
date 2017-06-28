@@ -118,9 +118,14 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
                 name = "pdf.pdf";
             }
 
-            file = new File(Environment.getExternalStorageDirectory(), name);
-            showDownloadDialog();
-            presenter.apkFileDownload(bean.getUrl(), file);
+            file = new File(Environment.getExternalStorageDirectory()+"/cwork/", name);
+            if(file.exists()){
+                startNewActivity();
+            }else{
+                showDownloadDialog();
+                presenter.apkFileDownload(bean.getUrl(), file);
+            }
+
         }
     }
 
