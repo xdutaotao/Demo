@@ -107,15 +107,19 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
 
     private void openPDF(){
         if (!TextUtils.isEmpty(bean.getUrl())){
+            String name;
             String[] temp = bean.getUrl().split("/");
             String[] names = temp[temp.length - 1].split(" ");
-            String name;
+
+            String[] suffix = bean.getUrl().split("\\.");
+            String suffixName = suffix[suffix.length-1];
+
             if (names.length == 3){
-                name = names[0] + names[1] + ".pdf";
+                name = names[0] + names[1] + "." + suffixName;
             }else if (names.length == 2){
-                name = names[0] + ".pdf";
+                name = names[0] + "." + suffixName;
             }else{
-                name = "pdf.pdf";
+                name = suffixName + "." + suffixName;
             }
 
             file = new File(Environment.getExternalStorageDirectory()+"/cwork/", name);
@@ -168,12 +172,14 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
     }
 
     private void startNewActivity(){
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-            startActivity(intent);
-        }catch (Exception e){
-            ToastUtil.show("请安装pdf阅读器查看");
-        }
+//        try {
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+//            startActivity(intent);
+//        }catch (Exception e){
+//            ToastUtil.show("请安装pdf阅读器查看");
+//        }
+
+        DocActivity.startActivity(this, file.getAbsolutePath());
 
     }
 }

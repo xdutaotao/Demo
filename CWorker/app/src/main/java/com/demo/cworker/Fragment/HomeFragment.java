@@ -217,7 +217,26 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         }
 
         imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
-            WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
+            if (bannerInfo.getLink().contains(".xlsx") ||
+                    bannerInfo.getLink().contains(".xls")){
+                HomeResponseBean.TopicBean.GroupDataBean groupDataBean = new HomeResponseBean.TopicBean.GroupDataBean();
+                HomeResponseBean.BannerBean bannerBean = bean.getBanner().get(i);
+                groupDataBean.setAuthor(bannerBean.getAuthor());
+                groupDataBean.setBannerPicUrl(bannerBean.getBannerPicUrl());
+                groupDataBean.setDateline(bannerBean.getDateline());
+                groupDataBean.setDescription(bannerBean.getDescription());
+                groupDataBean.setUpdateTime(bannerBean.getUpdateTime());
+                groupDataBean.setTitle(bannerBean.getTitle());
+                groupDataBean.setPic(bannerBean.getPic());
+                groupDataBean.setVipRes(bannerBean.getVipRes());
+                groupDataBean.setUrl(bannerBean.getUrl());
+
+
+                HomeDetailActivity.startActivity(getContext(), groupDataBean);
+            }else{
+                WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
+            }
+
         }));
 
         scrollView.setVisibility(View.VISIBLE);

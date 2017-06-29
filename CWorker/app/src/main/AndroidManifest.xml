@@ -99,6 +99,7 @@
         <activity android:name=".Activity.RecommandActivity" />
         <activity android:name=".Activity.CollectHistoryActivity" />
         <activity android:name=".Activity.LaunchActivity" />
+        <activity android:name=".Activity.DocActivity" />
     </application>
 
 </manifest>
