@@ -15,7 +15,7 @@ import cn.smssdk.SMSSDK;
  * Created by GUZHENFU on 2017/5/15 11:16.
  */
 
-public class App  extends Application{
+public class App  extends android.support.multidex.MultiDexApplication{
     private static App mAPPLike;
     private static Application mApplication;
     private static Context mContext;

@@ -5,19 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.demo.cworker.R;
 import com.github.barteksc.pdfviewer.PDFView;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +25,8 @@ public class DocActivity extends BaseActivity {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.content)
+    TextView content;
 
     public static void startActivity(Context context, String filePath) {
         Intent intent = new Intent(context, DocActivity.class);
@@ -48,27 +44,33 @@ public class DocActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(getIntent().getStringExtra(FILE_PATH))) {
             String path = getIntent().getStringExtra(FILE_PATH);
-            if (path.contains(".pdf") || path.contains(".PDF")){
+            if (path.contains(".pdf") || path.contains(".PDF")) {
                 File file = new File(path);
                 if (file.exists()) {
+                    content.setVisibility(View.GONE);
                     pdfView.fromFile(file)
                             .load();
                 }
-            }else if (path.contains(".xls") || path.contains(".xlsx")){
-                Workbook wb = null;
-                try {
-                    //wb = WorkbookFactory.create(new FileInputStream(path));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                for (Sheet sheet : wb ) {
-                    for (Row row : sheet) {
-                        for (Cell cell : row) {
-                            String a =cell.getStringCellValue();// Do something here
-                            a=a;
-                        }
-                    }
-                }
+            } else if (path.contains(".xls") || path.contains(".xlsx")) {
+//                Workbook wb = null;
+//                String s = "";
+//                try {
+//                    InputStream is = new FileInputStream(path);
+//                    wb = new HSSFWorkbook(is);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                for (Sheet sheet : wb) {
+//                    for (Row row : sheet) {
+//                        for (Cell cell : row) {
+//                            s = cell.getStringCellValue() + "";// Do something here
+//                        }
+//                        s+="/n";
+//                    }
+//                }
+//                pdfView.setVisibility(View.GONE);
+//                content.setVisibility(View.VISIBLE);
+//                content.setText(s);
             }
 
         }
