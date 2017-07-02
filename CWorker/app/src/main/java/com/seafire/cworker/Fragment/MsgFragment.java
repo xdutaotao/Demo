@@ -12,14 +12,6 @@ import android.view.ViewGroup;
 
 import com.seafire.cworker.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MsgFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MsgFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MsgFragment extends Fragment {
 
     public static MsgFragment newInstance() {

@@ -94,4 +94,13 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="consult_text_view_selector">
+        <item name="android:layout_width">200px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@drawable/consult_text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:button">@null</item>
+    </style>
+
 </resources>

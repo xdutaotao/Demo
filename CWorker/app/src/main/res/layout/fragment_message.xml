@@ -1,47 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.MessageFragment"
-    android:background="@android:color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        android:gravity="center">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="400px"
-            android:layout_height="120px"
+        <com.seafire.cworker.Widget.AutoRadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="165px"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:padding="30px"
+            android:background="@color/colorPrimary">
 
-            <TextView
-                android:layout_width="200px"
-                android:layout_height="100px"
+            <RadioButton
+                android:id="@+id/pe_btn"
+                style="@style/consult_text_view_selector"
+                android:checked="true"
                 android:text="消息"
                 android:gravity="center"
-                android:textColor="@android:color/white"
-                android:id="@+id/msg"
-                android:background="@drawable/switch_left_seletor"/>
+                android:background="@drawable/left_circle_seletor"/>
 
-            <TextView
-                android:layout_width="200px"
-                android:layout_height="100px"
+            <RadioButton
+                android:id="@+id/pv_btn"
+                style="@style/consult_text_view_selector"
                 android:text="联系人"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:id="@+id/contact"
-                android:background="@drawable/switch_right_seletor"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:background="@drawable/right_circle_seletor"/>
+        </com.seafire.cworker.Widget.AutoRadioGroup>
+
+
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_marginRight="50px"
+            android:id="@+id/add"
+            android:src="@drawable/add"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#2a64ac" />
 
     <FrameLayout
-        android:id="@+id/content"
+        android:id="@+id/consult_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        android:background="@android:color/white"/>
 </LinearLayout>

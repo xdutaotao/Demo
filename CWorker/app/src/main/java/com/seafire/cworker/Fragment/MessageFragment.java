@@ -8,13 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.seafire.cworker.Present.MessagePresenter;
 import com.seafire.cworker.R;
 import com.seafire.cworker.View.MessageView;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -24,19 +23,30 @@ import butterknife.ButterKnife;
 /**
  * create by
  */
-public class MessageFragment extends BaseFragment implements MessageView {
+public class MessageFragment extends BaseFragment implements MessageView, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     @Inject
     MessagePresenter presenter;
-    @BindView(R.id.msg)
-    TextView msg;
-    @BindView(R.id.contact)
-    TextView contact;
-    @BindView(R.id.content)
-    FrameLayout content;
+    @BindView(R.id.pe_btn)
+    RadioButton peBtn;
+    @BindView(R.id.pv_btn)
+    RadioButton pvBtn;
+    @BindView(R.id.consult_content)
+    FrameLayout consultContent;
+    @BindView(R.id.add)
+    ImageView add;
     private String mParam1;
 
-    private ArrayList<Fragment> fragments;
+    private static final String SAVE_TYPE = "save_type";
+    public static final int PE_FRAGMENT = 1;
+    public static final int PV_FRAGMENT = 3;
+    private static final String PE_TAG = "pe_tag";
+    private static final String PV_TAG = "pv_tag";
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private Fragment peFragment, ppFragment, pvFragment;
+    private int currentFragmentType = -1;
 
     public static MessageFragment newInstance(String param1) {
         MessageFragment fragment = new MessageFragment();
@@ -62,36 +72,79 @@ public class MessageFragment extends BaseFragment implements MessageView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        fragments = new ArrayList<>();
-        fragments.add(MsgFragment.newInstance());
-        fragments.add(ContactFragment.newInstance());
+        fragmentManager = getActivity().getSupportFragmentManager();
 
-        msg.setOnClickListener(v -> {
-            v.setBackgroundResource(android.R.color.white);
-            msg.setTextColor(getResources().getColor(R.color.colorPrimary));
+        if (savedInstanceState != null) {
+            int type = savedInstanceState.getInt(SAVE_TYPE);
+            peFragment = fragmentManager.findFragmentByTag(PE_TAG);
+            pvFragment = fragmentManager.findFragmentByTag(PV_TAG);
+            if (type > 0) {
+                loadFragment(type);
+            }
+        } else {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            peFragment = fragmentManager.findFragmentByTag(PE_TAG);
+            if (peFragment != null) {
+                fragmentTransaction.replace(R.id.consult_content, peFragment);
+                fragmentTransaction.commit();
+            } else {
+                loadFragment(PE_FRAGMENT);
+            }
+        }
 
-            contact.setBackgroundResource(R.color.colorPrimary);
-            contact.setTextColor(getResources().getColor(android.R.color.white));
-            setFragment(0);
-        });
-
-        contact.setOnClickListener(v -> {
-            v.setBackgroundResource(android.R.color.white);
-            contact.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-            msg.setBackgroundResource(R.color.colorPrimary);
-            msg.setTextColor(getResources().getColor(android.R.color.white));
-            setFragment(1);
-        });
+        peBtn.setOnClickListener(this);
+        pvBtn.setOnClickListener(this);
 
         return view;
     }
 
-    private void setFragment(int index) {
-        FragmentManager fm = getChildFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.add(R.id.content, fragments.get(index));
-        transaction.commit();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pe_btn:
+                loadFragment(PE_FRAGMENT);
+                break;
+
+            case R.id.pv_btn:
+                loadFragment(PV_FRAGMENT);
+                break;
+        }
+    }
+
+    private void loadFragment(int type) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (type == PE_FRAGMENT) {
+            if (peFragment == null) {
+                peFragment = new MsgFragment();
+                fragmentTransaction.add(R.id.consult_content, peFragment, PE_TAG);
+            } else {
+                fragmentTransaction.show(peFragment);
+            }
+
+            if (ppFragment != null) {
+                fragmentTransaction.hide(ppFragment);
+            }
+
+            if (pvFragment != null) {
+                fragmentTransaction.hide(pvFragment);
+            }
+        } else {
+            if (pvFragment == null) {
+                pvFragment = new MsgFragment();
+                fragmentTransaction.add(R.id.consult_content, pvFragment, PV_TAG);
+            } else {
+                fragmentTransaction.show(pvFragment);
+            }
+
+            if (peFragment != null) {
+                fragmentTransaction.hide(peFragment);
+            }
+
+            if (ppFragment != null) {
+                fragmentTransaction.hide(ppFragment);
+            }
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
