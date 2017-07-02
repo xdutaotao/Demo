@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context="com.demo.cworker.Activity.VIPActivity">
+    tools:context="com.seafire.cworker.Activity.VIPActivity">
 
     <include layout="@layout/tool_bar_center" />
 

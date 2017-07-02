@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.demo.cworker.Activity.CheckActivity">
+    tools:context="com.seafire.cworker.Activity.CheckActivity">
 
     <include layout="@layout/tool_bar_center" />
 

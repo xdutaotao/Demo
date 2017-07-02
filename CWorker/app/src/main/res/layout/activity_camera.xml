@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/black"
-    tools:context="com.demo.cworker.Activity.CameraActivity">
+    tools:context="com.seafire.cworker.Activity.CameraActivity">
 
-    <com.demo.cworker.Widget.camera.CameraSurfaceView
+    <com.seafire.cworker.Widget.camera.CameraSurfaceView
         android:layout_width="match_parent"
         android:layout_height="1300px"
         android:id="@+id/camera"/>
