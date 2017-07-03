@@ -5,4 +5,13 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="default_font_size">18sp</dimen>
+    <dimen name="edit_text_size">40px</dimen>
+    <dimen name="home_text_size">30px</dimen>
+    <dimen name="dialog_msg_size">16px</dimen>
+    <dimen name="tool_bar_height">150px</dimen>
+    <dimen name="detail_item_size">40px</dimen>
+
+    <dimen name="history_search_line_padding">35px</dimen>
 </resources>
