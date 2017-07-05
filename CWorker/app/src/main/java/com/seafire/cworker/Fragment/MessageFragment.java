@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.jchat.android.activity.ConversationListFragment;
 
 /**
  * create by
@@ -115,7 +116,7 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (type == PE_FRAGMENT) {
             if (peFragment == null) {
-                peFragment = new MsgFragment();
+                peFragment = new ConversationListFragment();
                 fragmentTransaction.add(R.id.consult_content, peFragment, PE_TAG);
             } else {
                 fragmentTransaction.show(peFragment);
