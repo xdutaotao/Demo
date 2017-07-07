@@ -29,10 +29,25 @@ android {
 
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            storeFile file('fitness.jks')
+            storePassword 'fitness'
+            keyAlias 'fitness'
+            keyPassword 'fitness'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 
@@ -93,4 +108,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    compile 'com.firebase:firebase-jobdispatcher:0.6.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
