@@ -56,7 +56,7 @@ public class MenuItemController implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_group_ll:
-                mContext.dismissPopWindow();
+//                mContext.dismissPopWindow();
 //                mContext.StartCreateGroupActivity();
                 mLoadingDialog = DialogCreator.createLoadingDialog(mContext.getActivity(),
                         mContext.getString(R.string.creating_hint));
@@ -85,7 +85,7 @@ public class MenuItemController implements View.OnClickListener {
                 break;
             // 无好友模式添加好友，添加后可以直接创建会话
             case R.id.add_friend_direct_ll:
-                mContext.dismissPopWindow();
+//                mContext.dismissPopWindow();
                 mAddFriendDialog = new Dialog(mContext.getActivity(), R.style.jmui_default_dialog_style);
                 final View view = LayoutInflater.from(mContext.getActivity())
                         .inflate(R.layout.dialog_add_friend_to_conv_list, null);

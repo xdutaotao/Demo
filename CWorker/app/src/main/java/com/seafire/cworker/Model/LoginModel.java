@@ -57,9 +57,6 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().checkEmail(email)
                 .compose(RxUtils.handleResultNoThread())
                 .flatMap(s -> {
-                    //注册JPush
-                    JMessageClient.register(name, pwd, null);
-
                     Map<String, String> map = new HashMap<>();
                     map.put("name", name);
                     map.put("password", pwd);
@@ -94,9 +91,6 @@ public class LoginModel extends BaseModel {
                             .map(userInfo -> {
                                 String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
                                 User.getInstance().setUserInfo(userInfoString);
-
-                                //登录 JPush
-                                JMessageClient.login(userInfo.getPerson().getName(), pwd, null);
 
                                 return userInfoString;
                             });

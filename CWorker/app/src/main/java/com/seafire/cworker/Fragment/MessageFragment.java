@@ -47,7 +47,6 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private Fragment peFragment, ppFragment, pvFragment;
-    private int currentFragmentType = -1;
 
     public static MessageFragment newInstance(String param1) {
         MessageFragment fragment = new MessageFragment();

@@ -54,10 +54,6 @@ public class ConversationListFragment extends BaseFragment {
     private View mRootView;
     private ConversationListView mConvListView;
     private ConversationListController mConvListController;
-    private PopupWindow mMenuPopWindow;
-    private View mMenuView;
-    private MenuItemView mMenuItemView;
-    private MenuItemController mMenuController;
     private NetworkReceiver mReceiver;
     private Activity mContext;
     private BackgroundHandler mBackgroundHandler;
@@ -66,33 +62,27 @@ public class ConversationListFragment extends BaseFragment {
     private static final int DISMISS_REFRESH_HEADER = 0x3001;
     private static final int ROAM_COMPLETED = 0x3002;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        mRootView = inflater.inflate(R.layout.fragment_conv_list, container
+                , false);
+
         mContext = this.getActivity();
         org.greenrobot.eventbus.EventBus.getDefault().register(this);
-        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        mRootView = layoutInflater.inflate(R.layout.fragment_contacts,
-                (ViewGroup) getActivity().findViewById(R.id.main_view), false);
+
         mConvListView = new ConversationListView(mRootView, this.getActivity());
         mConvListView.initModule();
 
         mThread = new HandlerThread("Work on MainActivity");
         mThread.start();
         mBackgroundHandler = new BackgroundHandler(mThread.getLooper());
-        //mMenuView = getActivity().getLayoutInflater().inflate(R.layout.drop_down_menu, null);
         mConvListController = new ConversationListController(mConvListView, this, mWidth);
         mConvListView.setListener(mConvListController);
         mConvListView.setItemListeners(mConvListController);
         mConvListView.setLongClickListener(mConvListController);
-        mMenuPopWindow = new PopupWindow(mMenuView, WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT, true);
-        mMenuItemView = new MenuItemView(mMenuView);
-        mMenuItemView.initModule();
-        mMenuController = new MenuItemController(mMenuItemView, this, mConvListController, mWidth);
-        mMenuItemView.setListeners(mMenuController);
+
         ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeInfo = manager.getActiveNetworkInfo();
         if (null == activeInfo) {
@@ -103,6 +93,15 @@ public class ConversationListFragment extends BaseFragment {
             mBackgroundHandler.sendEmptyMessageDelayed(DISMISS_REFRESH_HEADER, 1000);
         }
         initReceiver();
+
+        return mRootView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+
 
     }
 
@@ -138,17 +137,17 @@ public class ConversationListFragment extends BaseFragment {
 
     }
 
-    //显示下拉菜单
-    public void showMenuPopWindow() {
-        mMenuPopWindow.setTouchable(true);
-        mMenuPopWindow.setOutsideTouchable(true);
-        mMenuPopWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
-                (Bitmap) null));
-        if (mMenuPopWindow.isShowing()) {
-            mMenuPopWindow.dismiss();
-        } else
-            mMenuPopWindow.showAsDropDown(mRootView.findViewById(R.id.create_group_btn), -10, -5);
-    }
+//    //显示下拉菜单
+//    public void showMenuPopWindow() {
+//        mMenuPopWindow.setTouchable(true);
+//        mMenuPopWindow.setOutsideTouchable(true);
+//        mMenuPopWindow.setBackgroundDrawable(new BitmapDrawable(getResources(),
+//                (Bitmap) null));
+//        if (mMenuPopWindow.isShowing()) {
+//            mMenuPopWindow.dismiss();
+//        } else
+//            mMenuPopWindow.showAsDropDown(mRootView.findViewById(R.id.create_group_btn), -10, -5);
+//    }
 
     /**
      * 在会话列表中接收在线消息
@@ -292,28 +291,9 @@ public class ConversationListFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        ViewGroup p = (ViewGroup) mRootView.getParent();
-        if (p != null) {
-            p.removeAllViewsInLayout();
-        }
-        return mRootView;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        dismissPopWindow();
-        mMenuItemView.showAddFriend();
         mConvListController.getAdapter().notifyDataSetChanged();
-    }
-
-    public void dismissPopWindow() {
-        if (mMenuPopWindow.isShowing()) {
-            mMenuPopWindow.dismiss();
-        }
     }
 
 

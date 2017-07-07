@@ -52,6 +52,9 @@ public class ConversationListController implements OnClickListener,
     private void initConvListAdapter() {
         mDatas = JMessageClient.getConversationList();
         //对会话列表进行时间排序
+        if (mDatas == null)
+            mDatas = new ArrayList<>();
+
         if (mDatas.size() > 1) {
             SortConvList sortList = new SortConvList();
             Collections.sort(mDatas, sortList);
@@ -65,7 +68,7 @@ public class ConversationListController implements OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_group_btn:
-                mContext.showMenuPopWindow();
+//                mContext.showMenuPopWindow();
                 break;
         }
     }

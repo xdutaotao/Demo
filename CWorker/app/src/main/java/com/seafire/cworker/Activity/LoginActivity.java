@@ -1,9 +1,11 @@
 package com.seafire.cworker.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
+import io.jchat.android.chatting.utils.DialogCreator;
+import io.jchat.android.chatting.utils.HandleResponseCode;
+import io.jchat.android.database.UserEntry;
 
 /**
  * create by
@@ -118,7 +125,30 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     @Override
     public void getData(String data) {
         ToastUtil.show("登录成功");
-        finish();
+        loginJMessage();
+    }
+
+    private void loginJMessage() {
+        final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.login_hint));
+        dialog.show();
+        JMessageClient.login(name.getText().toString(), pwd.getText().toString(), new BasicCallback() {
+            @Override
+            public void gotResult(final int status, final String desc) {
+                dialog.dismiss();
+                if (status == 0) {
+                    String username = JMessageClient.getMyInfo().getUserName();
+                    String appKey = JMessageClient.getMyInfo().getAppKey();
+                    UserEntry user = UserEntry.getUser(username, appKey);
+                    if (null == user) {
+                        user = new UserEntry(username, appKey);
+                        user.save();
+                    }
+                    finish();
+                } else {
+                    HandleResponseCode.onHandle(LoginActivity.this, status, false);
+                }
+            }
+        });
     }
 
     @Override

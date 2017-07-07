@@ -1,5 +1,6 @@
 package com.seafire.cworker.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
+import io.jchat.android.chatting.utils.DialogCreator;
+import io.jchat.android.chatting.utils.HandleResponseCode;
+import io.jchat.android.database.UserEntry;
 
 /**
  * create by
@@ -157,12 +163,51 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
 
     @Override
     public void getData(String data) {
+
         if (isChangePwd){
             ToastUtil.show("修改成功");
+            finish();
         }else{
             ToastUtil.show("注册成功");
+            //JMessage 注册成功
+            registerJMessage();
         }
-        finish();
+    }
+
+    private void registerJMessage(){
+        final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.registering_hint));
+        dialog.show();
+        JMessageClient.register(nameInput.getText().toString(), pwdInput.getText().toString(), new BasicCallback() {
+
+            @Override
+            public void gotResult(final int status, final String desc) {
+
+                if (status == 0) {
+                    JMessageClient.login(nameInput.getText().toString(),
+                            pwdInput.getText().toString(), new BasicCallback() {
+                        @Override
+                        public void gotResult(final int status, String desc) {
+                            dialog.dismiss();
+                            if (status == 0) {
+                                String username = JMessageClient.getMyInfo().getUserName();
+                                String appKey = JMessageClient.getMyInfo().getAppKey();
+                                UserEntry user = UserEntry.getUser(username, appKey);
+                                if (null == user) {
+                                    user = new UserEntry(username, appKey);
+                                    user.save();
+                                }
+                                finish();
+                            } else {
+                                HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
+                            }
+                        }
+                    });
+                } else {
+                    dialog.dismiss();
+                    HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
+                }
+            }
+        });
     }
 
 
