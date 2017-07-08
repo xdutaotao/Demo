@@ -132,14 +132,14 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mMyInfo = JMessageClient.getMyInfo();
         if (!TextUtils.isEmpty(mTargetId)) {
             //单聊
-            mIsSingle = true;
-            mConv = JMessageClient.getSingleConversation(mTargetId, mTargetAppKey);
-            mChatView.setChatTitle(mTitle);
-            if (mConv == null) {
-                mConv = Conversation.createSingleConversation(mTargetId, mTargetAppKey);
-            }
-            mUserInfo = (UserInfo) mConv.getTargetInfo();
-            mChatAdapter = new MsgListAdapter(mContext, mConv, longClickListener);
+//            mIsSingle = true;
+//            mConv = JMessageClient.getSingleConversation(mTargetId, mTargetAppKey);
+//            mChatView.setChatTitle(mTitle);
+//            if (mConv == null) {
+//                mConv = Conversation.createSingleConversation(mTargetId, mTargetAppKey);
+//            }
+//            mUserInfo = (UserInfo) mConv.getTargetInfo();
+//            mChatAdapter = new MsgListAdapter(mContext, mConv, longClickListener);
         } else {
             //群聊
             mIsSingle = false;

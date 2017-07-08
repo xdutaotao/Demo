@@ -61,6 +61,7 @@ public class RxSafeSubUtils<T> extends SafeSubscriber<T> {
             ((RxSubUtils)subscription)._onError();
         }else if(e instanceof RxUtils.ServerException){
             ((RxSubUtils)subscription)._onError(((RxUtils.ServerException) e).getMsg());
+            ((RxSubUtils)subscription)._onError();
         }else{
             ((RxSubUtils)subscription)._onError();
         }

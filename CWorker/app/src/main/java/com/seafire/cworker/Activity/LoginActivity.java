@@ -169,6 +169,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
     private void actionRegister(){
         CheckPhoneActivity.startActivity(this);
+        //CheckEmailActivity.startActivity(this, "18513212904");
     }
 
     @Override

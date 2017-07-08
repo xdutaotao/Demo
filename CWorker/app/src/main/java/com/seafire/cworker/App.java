@@ -3,6 +3,7 @@ package com.seafire.cworker;
 import android.app.Application;
 import android.content.Context;
 
+import com.activeandroid.ActiveAndroid;
 import com.seafire.cworker.Utils.Dagger.Component.ApplicationComponent;
 import com.seafire.cworker.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.seafire.cworker.Utils.Dagger.Module.ApplicationModule;
@@ -92,8 +93,8 @@ public class App  extends android.support.multidex.MultiDexApplication{
     public static final String DRAFT = "draft";
     public static final String DELETE_MODE = "deleteMode";
     public static final String MEMBERS_COUNT = "membersCount";
-    public static String PICTURE_DIR = "sdcard/JChatDemo/pictures/";
-    public static String FILE_DIR = "sdcard/JChatDemo/recvFiles/";
+    public static String PICTURE_DIR = "sdcard/cworker/pictures/";
+    public static String FILE_DIR = "sdcard/cworker/recvFiles/";
     public static boolean isNeedAtMsg = true;
 
 
@@ -113,13 +114,15 @@ public class App  extends android.support.multidex.MultiDexApplication{
         JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
         //注册Notification点击的接收器
         new NotificationClickEventReceiver(getApplicationContext());
+
+        ActiveAndroid.initialize(this);
     }
 
 
     public static void setPicturePath(String appKey) {
         if (!SharePreferenceManager.getCachedAppKey().equals(appKey)) {
             SharePreferenceManager.setCachedAppKey(appKey);
-            PICTURE_DIR = "sdcard/JChatDemo/pictures/" + appKey + "/";
+            PICTURE_DIR = "sdcard/cworker/pictures/" + appKey + "/";
         }
     }
 

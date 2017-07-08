@@ -36,11 +36,15 @@ import com.seafire.cworker.Utils.Utils;
 import com.seafire.cworker.View.MyView;
 import com.seafire.cworker.Widget.CustomDialog;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jpush.im.android.api.JMessageClient;
+import io.jchat.android.chatting.utils.FileHelper;
+import io.jchat.android.chatting.utils.SharePreferenceManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
@@ -170,7 +174,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 level.setText("LV" + ((int) (User.getInstance().getUserInfo().getPerson().getExperience() / 3500)));
                 level.setVisibility(View.VISIBLE);
                 sign.setVisibility(View.VISIBLE);
-                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("sign", "")) ? "已签到" : "点击签到");
+                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("main_sign", "")) ? "已签到" : "点击签到");
             }
         }
     }
@@ -191,7 +195,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     presenter.logout(getContext(), User.getInstance().getUserId());
                     User.getInstance().clearUser();
                     scrollView.scrollTo(0, 0);
-                    JMessageClient.logout();
+                    jMessageLogout();
                     onResume();
                 }
                 break;
@@ -245,16 +249,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 }
 
 
-                if (!TextUtils.isEmpty(ShareUtils.getValue("sign", ""))) {
-                    long time = Utils.convert2long(ShareUtils.getValue("sign", ""));
+                if (!TextUtils.isEmpty(ShareUtils.getValue("main_sign", ""))) {
+                    long time = Utils.convert2long(ShareUtils.getValue("main_sign", ""));
                     long now = Utils.convert2long(Utils.getNowDate());
                     if (now - time > 3600 * 1000 * 24) {
-                        ShareUtils.putValue("sign", Utils.getNowDate());
+                        ShareUtils.putValue("main_sign", Utils.getNowDate());
                         ShareUtils.putValue("continue", 1);
                         continueDays = 1;
                         setSign(0);
                     } else {
-                        if (!TextUtils.equals(ShareUtils.getValue("sign", ""), Utils.getNowDate())) {
+                        if (!TextUtils.equals(ShareUtils.getValue("main_sign", ""), Utils.getNowDate())) {
                             continueDays = ShareUtils.getValue("continue", 0);
                             continueDays++;
                             if (continueDays % 7 == 0){
@@ -264,7 +268,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                             }
 
                             ShareUtils.putValue("continue", continueDays);
-                            ShareUtils.putValue("sign", Utils.getNowDate());
+                            ShareUtils.putValue("main_sign", Utils.getNowDate());
                         }else{
                             continueDays = ShareUtils.getValue("continue", 0);
                         }
@@ -272,7 +276,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 } else {
                     ShareUtils.putValue("continue", 1);
                     continueDays = 1;
-                    ShareUtils.putValue("sign", Utils.getNowDate());
+                    ShareUtils.putValue("main_sign", Utils.getNowDate());
                     setSign(0);
                 }
                 sign.setText("已签到");
@@ -288,6 +292,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     CollectHistoryActivity.startActivity(getContext());
                 break;
         }
+    }
+
+    private void jMessageLogout(){
+        cn.jpush.im.android.api.model.UserInfo info = JMessageClient.getMyInfo();
+        File file = info.getAvatarFile();
+        if (file != null && file.isFile()) {
+
+        } else {
+            String path = FileHelper.getUserAvatarPath(info.getUserName());
+            file = new File(path);
+        }
+
+        SharePreferenceManager.setCachedUsername(info.getUserName());
+        SharePreferenceManager.setCachedAvatarPath(file.getAbsolutePath());
+        JMessageClient.logout();
     }
 
     private void setSign(int days){

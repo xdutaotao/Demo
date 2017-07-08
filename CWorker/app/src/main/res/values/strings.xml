@@ -232,7 +232,6 @@
     </string-array>
 
 
-
     <string name="username_hit">用户名</string>
     <string name="password_hit">用户密码</string>
     <!-- ReLogin/login/register界面中使用到的字符串 -->
@@ -455,7 +454,7 @@
     <string name="change_password_re_hit">再次填写密码</string>
     <string name="password_not_match_toast">两次输入的密码不一致</string>
     <string name="password_change_success_toast">修改成功，请牢记新密码</string>
-    <string name="set_do_not_disturb" >消息免打扰</string>
+    <string name="set_do_not_disturb">消息免打扰</string>
     <string name="set_to_block">屏蔽群消息</string>
     <string name="block_dialog_title">屏蔽后将不能收到群消息</string>
     <string name="set_block_succeed_hint">群消息屏蔽成功</string>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,12 +25,16 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
+import io.jchat.android.chatting.utils.HandleResponseCode;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.seafire.cworker.Common.Constants.INTENT_KEY;
@@ -183,7 +188,25 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 if (images != null) {
-                    presenter.changeHeadIcon(this, images.get(0).path);
+
+                    //JMessage
+                    JMessageClient.updateUserAvatar(new File(images.get(0).path), new BasicCallback() {
+                        @Override
+                        public void gotResult(final int status, final String desc) {
+
+                            if (status == 0) {
+
+                                presenter.changeHeadIcon(PersonalActivity.this, images.get(0).path);
+                                //如果头像上传失败，删除剪裁后的文件
+                            }else {
+                                HandleResponseCode.onHandle(PersonalActivity.this, status, false);
+                                File file = new File(images.get(0).path);
+                                file.delete();
+
+
+                            }
+                        }
+                    });
                 }
             }
         }else if (resultCode == RESULT_OK){
@@ -207,6 +230,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 .placeholder(R.drawable.ic_launcher_round)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(headIcon);
+
     }
 
     @Override

@@ -1,0 +1,8 @@
+Mobile Push:
+	API KEY: AIzaSyCm-7elHOAST6tr3UN2FYW6glRKeKuzTa4
+	Sender ID: 579435089014
+
+amaze:
+	URL：https://91training.signin.aws.amazon.com/console	用户名：iosdev 密码 iosdeviosdev
+
+https://console.aws.amazon.com/mobilehub/home#/

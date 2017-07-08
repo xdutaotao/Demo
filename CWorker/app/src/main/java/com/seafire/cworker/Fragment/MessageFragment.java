@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.jchat.android.activity.ConversationListFragment;
+import io.jchat.android.activity.CreateGroupNameActivity;
 
 /**
  * create by
@@ -95,6 +96,9 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
         peBtn.setOnClickListener(this);
         pvBtn.setOnClickListener(this);
 
+        add.setOnClickListener(v -> {
+            CreateGroupNameActivity.startActivity(MessageFragment.this.getContext());
+        });
         return view;
     }
 

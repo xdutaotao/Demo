@@ -25,8 +25,8 @@ public class ConversationListView {
 	
 	private View mConvListFragment;
 	private ListView mConvListView = null;
-	private TextView mTitle;
-	private ImageButton mCreateGroup;
+//	private TextView mTitle;
+//	private ImageButton mCreateGroup;
 	private LinearLayout mHeader;
 	private RelativeLayout mLoadingHeader;
     private ImageView mLoadingIv;
@@ -38,10 +38,10 @@ public class ConversationListView {
 	}
 
 	public void initModule() {
-		mTitle = (TextView) mConvListFragment.findViewById(R.id.main_title_bar_title);
-		mTitle.setText(mContext.getString(R.string.actionbar_conversation));
+//		mTitle = (TextView) mConvListFragment.findViewById(R.id.main_title_bar_title);
+//		mTitle.setText(mContext.getString(R.string.actionbar_conversation));
 		mConvListView = (ListView) mConvListFragment.findViewById(R.id.conv_list_view);
-		mCreateGroup = (ImageButton) mConvListFragment.findViewById(R.id.create_group_btn);
+		//mCreateGroup = (ImageButton) mConvListFragment.findViewById(R.id.create_group_btn);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mHeader = (LinearLayout) inflater.inflate(R.layout.conv_list_head_view, mConvListView, false);
         mLoadingHeader = (RelativeLayout) inflater.inflate(R.layout.jmui_drop_down_list_header, mConvListView, false);
@@ -55,7 +55,7 @@ public class ConversationListView {
 	}
 	
 	public void setListener(OnClickListener onClickListener) {
-		mCreateGroup.setOnClickListener(onClickListener);
+		//mCreateGroup.setOnClickListener(onClickListener);
 	}
 	
 	public void setItemListeners(OnItemClickListener onClickListener) {

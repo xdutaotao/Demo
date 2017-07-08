@@ -35,6 +35,7 @@ import cn.jpush.im.api.BasicCallback;
 
 import io.jchat.android.activity.ChatDetailActivity;
 import io.jchat.android.activity.FriendInfoActivity;
+import io.jchat.android.activity.MeInfoActivity;
 import io.jchat.android.activity.MembersInChatActivity;
 import io.jchat.android.activity.SearchFriendDetailActivity;
 import io.jchat.android.adapter.GroupMemberGridAdapter;
@@ -277,7 +278,7 @@ public class ChatDetailController implements OnClickListener, OnItemClickListene
             // 点击群成员项时
             if (position < mCurrentNum) {
                 if (mMemberInfoList.get(position).getUserName().equals(mMyUsername)) {
-                    //intent.setClass(mContext, MeInfoActivity.class);
+                    intent.setClass(mContext, MeInfoActivity.class);
                 } else {
                     UserInfo userInfo = mMemberInfoList.get(position);
                     if (userInfo.isFriend()) {

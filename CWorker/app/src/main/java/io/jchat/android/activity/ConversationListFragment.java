@@ -79,7 +79,7 @@ public class ConversationListFragment extends BaseFragment {
         mThread.start();
         mBackgroundHandler = new BackgroundHandler(mThread.getLooper());
         mConvListController = new ConversationListController(mConvListView, this, mWidth);
-        mConvListView.setListener(mConvListController);
+        //mConvListView.setListener(mConvListController);
         mConvListView.setItemListeners(mConvListController);
         mConvListView.setLongClickListener(mConvListController);
 

@@ -30,7 +30,7 @@ import io.jchat.android.chatting.utils.DialogCreator;
 import io.jchat.android.tools.SortConvList;
 import io.jchat.android.view.ConversationListView;
 
-public class ConversationListController implements OnClickListener,
+public class ConversationListController implements
         OnItemClickListener, OnItemLongClickListener {
 
     private ConversationListView mConvListView;
@@ -64,14 +64,7 @@ public class ConversationListController implements OnClickListener,
         mConvListView.setConvListAdapter(mListAdapter);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.create_group_btn:
-//                mContext.showMenuPopWindow();
-                break;
-        }
-    }
+
 
     // 点击会话列表
     @Override

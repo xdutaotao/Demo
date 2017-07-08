@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seafire.cworker.Present.CheckEmailActivityPresenter;
 import com.seafire.cworker.R;
@@ -24,7 +25,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import io.jchat.android.activity.ResetNickNameActivity;
 import io.jchat.android.chatting.utils.DialogCreator;
 import io.jchat.android.chatting.utils.HandleResponseCode;
 import io.jchat.android.database.UserEntry;
@@ -157,7 +160,7 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
             ToastUtil.show("两次密码不一致");
             return;
         }
-
+        //registerJMessage();
         presenter.checkEmail(this, emailInput.getText().toString(), pwdInput.getText().toString(), phone, nameInput.getText().toString());
     }
 
@@ -177,31 +180,27 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
     private void registerJMessage(){
         final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.registering_hint));
         dialog.show();
-        JMessageClient.register(nameInput.getText().toString(), pwdInput.getText().toString(), new BasicCallback() {
+        JMessageClient.register(phone, pwdInput.getText().toString(), new BasicCallback() {
 
             @Override
             public void gotResult(final int status, final String desc) {
 
                 if (status == 0) {
-                    JMessageClient.login(nameInput.getText().toString(),
-                            pwdInput.getText().toString(), new BasicCallback() {
+                    String nickName = nameInput.getText().toString();
+                    UserInfo myUserInfo = JMessageClient.getMyInfo();
+                    myUserInfo.setNickname(nickName);
+                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, myUserInfo, new BasicCallback() {
                         @Override
-                        public void gotResult(final int status, String desc) {
+                        public void gotResult(final int status, final String desc) {
                             dialog.dismiss();
                             if (status == 0) {
-                                String username = JMessageClient.getMyInfo().getUserName();
-                                String appKey = JMessageClient.getMyInfo().getAppKey();
-                                UserEntry user = UserEntry.getUser(username, appKey);
-                                if (null == user) {
-                                    user = new UserEntry(username, appKey);
-                                    user.save();
-                                }
                                 finish();
                             } else {
                                 HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
                             }
                         }
                     });
+
                 } else {
                     dialog.dismiss();
                     HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
