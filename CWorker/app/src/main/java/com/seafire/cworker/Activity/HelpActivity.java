@@ -35,7 +35,8 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_help);
         ButterKnife.bind(this);
         showToolbarBack(toolBar, titleText, "使用帮助");
-        text.setText(readWord());
+        String content = readWord();
+        text.setText(content.substring(0, content.length()-30));
     }
 
     private String readWord() {

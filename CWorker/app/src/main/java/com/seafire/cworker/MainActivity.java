@@ -87,6 +87,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //VIP 到期 重新登录
+        if (User.getInstance().getUserInfo() != null){
+            long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
+            if (days <= 0) {
+                User.getInstance().clearUser();
+            }
+        }
+
+    }
+
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

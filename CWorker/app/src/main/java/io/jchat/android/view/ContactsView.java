@@ -43,8 +43,8 @@ public class ContactsView extends LinearLayout{
 	}
 	
 	public void initModule(float ratio, float density){
-        mTitle = (TextView) findViewById(R.id.title_bar_title);
-        mTitle.setText(mContext.getString(R.string.actionbar_contact));
+//        mTitle = (TextView) findViewById(R.id.title_bar_title);
+//        mTitle.setText(mContext.getString(R.string.actionbar_contact));
         mSearchEt = (EditText) findViewById(R.id.search_et);
         mDeleteBtn = (ImageButton) findViewById(R.id.delete_ib);
         mHint = (TextView) findViewById(R.id.contact_hint);

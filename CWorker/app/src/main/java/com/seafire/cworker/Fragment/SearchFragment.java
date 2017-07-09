@@ -104,20 +104,6 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-//        for(int i=0; i< 10; i++){
-//            hotList.add(i+"123456789");
-//        }
-//
-//        tagAdapter = new TagAdapter<String>(hotList) {
-//            @Override
-//            public View getView(FlowLayout parent, int position, String s) {
-//                TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.tv, flowLayout, false);
-//                view.setText(hotList.get(position));
-//                return view;
-//            }
-//        };
-//        flowLayout.setAdapter(tagAdapter);
-
         flowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
@@ -306,7 +292,11 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void getHotWord(List<String> list) {
-        hotList.addAll(list);
+        for(String s : list){
+            if (!TextUtils.isEmpty(s)){
+                hotList.add(s);
+            }
+        }
 
         if (hotList.get(0).length() < 1)
             return;

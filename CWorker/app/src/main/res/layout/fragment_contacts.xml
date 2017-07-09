@@ -6,7 +6,7 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <include layout="@layout/base_title_bar" />
+    <!--<include layout="@layout/base_title_bar" />-->
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.jchat.android.activity.ContactsFragment;
 import io.jchat.android.activity.ConversationListFragment;
 import io.jchat.android.activity.CreateGroupNameActivity;
 
@@ -134,7 +135,7 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
             }
         } else {
             if (pvFragment == null) {
-                pvFragment = new MsgFragment();
+                pvFragment = new ContactsFragment();
                 fragmentTransaction.add(R.id.consult_content, pvFragment, PV_TAG);
             } else {
                 fragmentTransaction.show(pvFragment);

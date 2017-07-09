@@ -170,6 +170,11 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
     public void getData(String s) {
         glod.setText(User.getInstance().getUserInfo().getPerson().getGold()+"");
         ToastUtil.show("购买成功");
+        Glide.with(this)
+                .load(User.getInstance().getUserInfo().getPerson().getFace())
+                .placeholder(R.drawable.ic_launcher_round)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(headIcon);
     }
 
     @Override

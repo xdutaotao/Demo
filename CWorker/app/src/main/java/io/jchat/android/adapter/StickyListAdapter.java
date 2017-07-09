@@ -19,9 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.seafire.cworker.App;
+import com.seafire.cworker.Model.User;
 import com.seafire.cworker.R;
 
 import java.util.ArrayList;
@@ -218,11 +220,27 @@ public class StickyListAdapter extends BaseAdapter implements StickyListHeadersA
             holder.itemLl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, FriendInfoActivity.class);
-                    intent.putExtra("fromContact", true);
-                    intent.putExtra(App.TARGET_ID, friend.username);
-                    intent.putExtra(App.TARGET_APP_KEY, friend.appKey);
-                    mContext.startActivity(intent);
+                    UserInfo userInfo = JMessageClient.getMyInfo();
+                    StringBuilder sb = new StringBuilder("\n性别:");
+                    sb.append(userInfo.getGender().name())
+                            .append("\n所属项目:")
+                            .append(User.getInstance().getUserInfo().getPerson().getProject())
+                            .append("\n手机:")
+                            .append(User.getInstance().getUserInfo().getPerson().getMobile());
+
+                    new IOSDialog(mContext).builder()
+                            .setTitle(friend.username)
+                            .setMsg(sb.toString())
+                            .setNegativeButton("确定", null)
+                            .show();
+
+
+
+//                    Intent intent = new Intent(mContext, FriendInfoActivity.class);
+//                    intent.putExtra("fromContact", true);
+//                    intent.putExtra(App.TARGET_ID, friend.username);
+//                    intent.putExtra(App.TARGET_APP_KEY, friend.appKey);
+//                    mContext.startActivity(intent);
                 }
             });
         }

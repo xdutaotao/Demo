@@ -14,7 +14,7 @@
     <!-- JMessage Demo required for record jmui_audio-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    
+
     <!-- 友盟分享权限 -->
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -140,7 +140,15 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         recyclerViewList.setAdapter(adapterList);
 
         adapterList.setOnItemClickListener((view, i) -> {
-            HomeDetailActivity.startActivity(getContext(), adapterList.getAllData().get(i));
+            String url = adapterList.getAllData().get(i).getUrl();
+            if (url.contains(".png") || url.contains(".jpeg") ||
+                    url.contains(".jpg")){
+                WebViewActivity.startActivity(getContext(), url,
+                        adapterList.getAllData().get(i).getTitle());
+            }else{
+                HomeDetailActivity.startActivity(getContext(), adapterList.getAllData().get(i));
+            }
+
         });
     }
 
@@ -160,7 +168,18 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         recyclerViewClassic.setLayoutManager(linearLayoutManager);
         recyclerViewClassic.setAdapter(adapterClassic);
 
-        adapterClassic.setOnItemClickListener((view, i) -> HomeDetailActivity.startActivity(getContext(), adapterClassic.getAllData().get(i)));
+        adapterClassic.setOnItemClickListener((view, i) -> {
+            String url = adapterClassic.getAllData().get(i).getUrl();
+            if (url.contains(".png") || url.contains(".jpeg") ||
+                    url.contains(".jpg")){
+                WebViewActivity.startActivity(getContext(), url,
+                        adapterClassic.getAllData().get(i).getTitle());
+            }else{
+                HomeDetailActivity.startActivity(getContext(), adapterClassic.getAllData().get(i));
+            }
+
+
+        });
     }
 
     private void initCreamList() {
@@ -179,7 +198,17 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((view, i) -> HomeDetailActivity.startActivity(getContext(), adapter.getAllData().get(i)));
+        adapter.setOnItemClickListener((view, i) -> {
+            String url = adapter.getAllData().get(i).getUrl();
+            if (url.contains(".png") || url.contains(".jpeg") ||
+                    url.contains(".jpg")){
+                WebViewActivity.startActivity(getContext(), url,
+                        adapter.getAllData().get(i).getTitle());
+            }else{
+                HomeDetailActivity.startActivity(getContext(), adapter.getAllData().get(i));
+            }
+
+        });
     }
 
     @Override

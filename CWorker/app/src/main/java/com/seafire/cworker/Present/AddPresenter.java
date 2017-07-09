@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.seafire.cworker.Model.LoginModel;
 import com.seafire.cworker.Utils.RxSubUtils;
+import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.View.AddView;
 
 import javax.inject.Inject;
@@ -25,6 +26,11 @@ public class AddPresenter extends BasePresenter<AddView> {
                     @Override
                     protected void _onNext(String token) {
                         getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
                     }
                 }));
     }
