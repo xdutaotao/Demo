@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.ToastUtil;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -124,6 +125,7 @@ public class MeInfoView extends LinearLayout {
     }
 
     public void refreshUserInfo(UserInfo userInfo) {
+
         if (userInfo != null) {
             if (!TextUtils.isEmpty(userInfo.getNickname()))
                 mNicknameTv.setText(userInfo.getNickname());

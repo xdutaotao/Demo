@@ -44,6 +44,7 @@ import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 import io.jchat.android.activity.FriendInfoActivity;
 
+import io.jchat.android.activity.MeInfoActivity;
 import io.jchat.android.activity.SearchFriendDetailActivity;
 
 import io.jchat.android.chatting.utils.DialogCreator;
@@ -539,9 +540,9 @@ public class MsgListAdapter extends BaseAdapter {
                 public void onClick(View arg0) {
                     Intent intent = new Intent();
                     if (msg.getDirect() == MessageDirect.send) {
-//                        intent.putExtra(App.TARGET_ID, JMessageClient.getMyInfo().getUserName());
-//                        intent.setClass(mContext, MeInfoActivity.class);
-//                        mContext.startActivity(intent);
+                        intent.putExtra(App.TARGET_ID, JMessageClient.getMyInfo().getUserName());
+                        intent.setClass(mContext, MeInfoActivity.class);
+                        mContext.startActivity(intent);
                     } else {
                         String targetID = userInfo.getUserName();
                         intent.putExtra(App.TARGET_ID, targetID);
