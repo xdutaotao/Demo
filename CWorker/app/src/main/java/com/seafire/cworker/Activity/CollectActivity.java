@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -70,6 +71,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public static final int REQUEST_CHECK_CODE = 1113;
     public static final int REQUEST_RECOMMAND_CODE = 1114;
     public static final int REQUEST_TAKE_PHOTO_CODE = 2222;
+    public static final int REQUEST_SCAN_CODE = 2223;
 
     @Inject
     CollectPresenter presenter;
@@ -379,7 +381,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (resultBean != null)
                     RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
             });
-            presenter.packagingForm(this);
+            presenter.packagingForm();
         }else{
             collectBean = (CollectBean) getIntent().getSerializableExtra(INTENT_KEY);
             number.setText(collectBean.getPartCode());
@@ -417,6 +419,73 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }
         }
 
+        number.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId==EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+                clearData();
+                presenter.getPartInfoByCode(CollectActivity.this, number.getText().toString(),
+                        User.getInstance().getUserInfo().getPerson().getProject());
+                return true;
+            }else{
+                return false;
+            }
+        });
+
+        name.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(name.getText().toString())){
+                return;
+            }else{
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("详情")
+                        .setMsg(name.getText().toString())
+                        .setNegativeButton("确定", null)
+                        .builder();
+            }
+        });
+
+        source.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(source.getText().toString())){
+                return;
+            }else{
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("详情")
+                        .setMsg(source.getText().toString())
+                        .setNegativeButton("确定", null)
+                        .builder();
+            }
+        });
+    }
+
+    private void clearData(){
+        name.clearComposingText();
+        source.clearComposingText();
+        wrapText.clearComposingText();
+        typeTxt.clearComposingText();
+        modleNum.clearComposingText();
+        outLength.clearComposingText();
+        outHeight.clearComposingText();
+        outWeight.clearComposingText();
+        outWidth.clearComposingText();
+
+        singleHeight.clearComposingText();
+        singleLength.clearComposingText();
+        singleWeight.clearComposingText();
+        singleWidth.clearComposingText();
+
+
+        length.clearComposingText();
+        width.clearComposingText();
+        height.clearComposingText();
+        weight.clearComposingText();
+
+        allHeight.clearComposingText();
+        allLength.clearComposingText();
+        allWidth.clearComposingText();
+
+        checkTv.clearComposingText();
+        information.clearComposingText();
+        recommendTv.clearComposingText();
+
+        adapter.clear();
     }
 
     @Override
@@ -529,6 +598,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 recommandChangeList.addAll((List<String>) data.getSerializableExtra(INTENT_KEY));
                 String tempTwo = recommandChangeList.toString().replace("[", "").replace("]", "");
                 recommendTv.setText(tempTwo);
+            }else if (data != null && requestCode == REQUEST_SCAN_CODE){
+                String result = data.getStringExtra("scan");
+                number.setText(result);
+                if (!TextUtils.isEmpty(number.getText().toString()))
+                    presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
+
             }
         }
     }
@@ -705,6 +780,24 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return;
         }
 
+        if ((Utils.subText(outLength.getText().toString()) < Utils.subText(singleLength.getText().toString())) ||
+                (Utils.subText(singleLength.getText().toString()) < Utils.subText(length.getText().toString())) ||
+                (Utils.subText(outHeight.getText().toString()) < Utils.subText(singleHeight.getText().toString())) ||
+                (Utils.subText(singleHeight.getText().toString()) < Utils.subText(height.getText().toString())) ||
+                (Utils.subText(outWidth.getText().toString()) < Utils.subText(singleWidth.getText().toString())) ||
+                (Utils.subText(singleWidth.getText().toString()) < Utils.subText(width.getText().toString())) ||
+                (Utils.subText(outWeight.getText().toString()) < Utils.subText(singleWeight.getText().toString())) ||
+                (Utils.subText(singleWeight.getText().toString()) < Utils.subText(weight.getText().toString()))
+                ){
+            ToastUtil.show("外包装大于单个包装，单个包装大于零件包装");
+            return;
+        }
+
+        if (imageItems.size() <= 3){
+            ToastUtil.show("照片数量要大于3个");
+            return;
+        }
+
         CollectBean bean = new CollectBean();
         bean.setPartCode(number.getText().toString());
         bean.setPartName(name.getText().toString());
@@ -773,7 +866,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     presenter.postCollectData(this, bean, pathList);
 
                 })
-                .setNegativeButton("取消", null)
                 .show();
     }
 

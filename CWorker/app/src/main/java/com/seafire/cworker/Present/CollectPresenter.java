@@ -25,9 +25,9 @@ public class CollectPresenter extends BasePresenter<CollectView> {
     CollectPresenter() {
     }
 
-    public void packagingForm(Context context){
+    public void packagingForm(){
         mCompositeSubscription.add(model.packagingForm()
-                .subscribe(new RxSubUtils<PackageBean.ResultBean>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<PackageBean.ResultBean>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(PackageBean.ResultBean token) {
                         getView().getData(token);

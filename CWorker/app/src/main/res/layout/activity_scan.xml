@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.seafire.cworker.Activity.ScanActivity">
+    android:background="#01FFFFFF">
 
     <cn.bingoogolapple.qrcode.zxing.ZXingView
         android:id="@+id/zxingview"
@@ -36,7 +36,8 @@
         app:qrcv_tipTextColor="@android:color/white"
         app:qrcv_tipTextSize="12sp"
         app:qrcv_toolbarHeight="56dp"
-        app:qrcv_topOffset="50dp"/>
+        app:qrcv_topOffset="50dp"
+        android:visibility="invisible"/>
 
     <include layout="@layout/tool_bar_center" />
 

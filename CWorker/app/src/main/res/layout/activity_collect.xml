@@ -34,7 +34,9 @@
                 <EditText
                     android:id="@+id/number"
                     style="@style/collect_edit"
-                    android:hint="请输入零件号" />
+                    android:hint="请输入零件号"
+                    android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:imeOptions="actionSearch" />
             </RelativeLayout>
 
             <View

@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -76,6 +77,13 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         zxingview.startCamera();
         zxingview.showScanRect();
         zxingview.startSpot();
+
+        zxingview.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                zxingview.setVisibility(View.VISIBLE);
+            }
+        }, 100);
     }
 
 
@@ -94,8 +102,13 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
     public void onScanQRCodeSuccess(String result) {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        ToastUtil.show(result);
-        zxingview.startSpot();
+
+        zxingview.stopCamera();
+        zxingview.stopSpot();
+        Intent intent = new Intent();
+        intent.putExtra("scan", result);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
