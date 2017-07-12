@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html class="no-js" lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -23,6 +23,31 @@
             <p v-if="seen">看到我了</p>
         </div>
 
+        <div id="app-4">
+            <ol>
+                <li v-for="todo in todos">{{todo.text}}</li>
+            </ol>
+        </div>
+
+        <div id="app-5">
+            <p>{{message}}</p>
+            <button v-on:click="reverseMessage">点击翻转</button>
+        </div>
+
+        <div id="app-6">
+            <p>{{message}}</p>
+            <input type="text" v-model="message">
+        </div>
+
+        <div id="app-7">
+            <ol>
+                <todo-item v-for="item in groceryList"
+                           v-bind:todo="item">
+                </todo-item>
+            </ol>
+        </div>
+
+
     <script>
 
         new Vue({
@@ -43,6 +68,52 @@
             el: '#app-3',
             data: {
                 seen: true
+            }
+        })
+
+        new Vue({
+            el: '#app-4',
+            data: {
+                todos: [
+                    {text: "javascript"},
+                    {text: "vue"},
+                    {text: "java"}
+                ]
+            }
+        });
+
+        new Vue({
+            el: '#app-5',
+            data: {
+                message: "hello vue js"
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+
+        new Vue({
+            el: "#app-6",
+            data: {
+                message: 'hello vue js'
+            }
+        })
+
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+
+        new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                    { id: 0, text: '蔬菜' },
+                    { id: 1, text: '奶酪' },
+                    { id: 2, text: '随便其他什么人吃的东西' }
+                ]
             }
         })
 
