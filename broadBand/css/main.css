@@ -7,6 +7,13 @@ a,button,input,optgroup,select,textarea {
     -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
+.main-div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .divide-line {
     width: 100%;
     height: 1px;
@@ -14,12 +21,30 @@ a,button,input,optgroup,select,textarea {
 }
 
 .row-padding{
-    padding: 10px;
+    display: flex;
     height: 5%;
-    text-align: justify;
+    padding-left: 10px;
+    align-items: center;
+    flex: 1;
+    background-color: white;
+    border-top: 1px solid #999;
 }
 
 .input-trans{
     background-color: transparent;
     border: 0px;
+    margin-left: 10px;
+    height: 100%;
+}
+
+
+
+.row-main{
+    display: flex;
+    height: 5%;
+    padding-left: 10px;
+    align-items: center;
+    flex: 2;
+    background-color: white;
+    border-top: 1px solid #999;
 }
