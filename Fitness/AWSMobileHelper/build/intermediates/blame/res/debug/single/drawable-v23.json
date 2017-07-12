@@ -1,10 +1,6 @@
 [
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/drawable-v23/abc_control_background_material.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/drawable-v23/abc_control_background_material.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\debug\\drawable-v23\\abc_control_background_material.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\drawable-v23\\abc_control_background_material.xml"
     }
 ]

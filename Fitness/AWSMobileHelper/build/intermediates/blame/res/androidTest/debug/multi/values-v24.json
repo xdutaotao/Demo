@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v24/values-v24.xml",
+        "outputFile": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v24\\values-v24.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 119
                 },
                 "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
+                    "file": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\values-v24\\values-v24.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 183
                 },
                 "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
+                    "file": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\values-v24\\values-v24.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 252
                 },
                 "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
+                    "file": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\values-v24\\values-v24.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,88 +68,7 @@
                     "endOffset": 322
                 },
                 "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 257,
-                        "endColumn": 69,
-                        "endOffset": 322
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-v24/values-v24.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 68,
-                    "endOffset": 119
-                },
-                "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 68,
-                        "endOffset": 119
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 124,
-                    "endColumn": 63,
-                    "endOffset": 183
-                },
-                "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 124,
-                        "endColumn": 63,
-                        "endOffset": 183
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 188,
-                    "endColumn": 68,
-                    "endOffset": 252
-                },
-                "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 188,
-                        "endColumn": 68,
-                        "endOffset": 252
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 5,
-                    "startColumn": 4,
-                    "startOffset": 257,
-                    "endColumn": 69,
-                    "endOffset": 322
-                },
-                "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-v24/values-v24.xml",
+                    "file": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\values-v24\\values-v24.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,

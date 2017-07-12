@@ -1,0 +1,31 @@
+.guess-bg{background: url("../img/guessBg.jpg") repeat-y;background-size:100% auto;}
+.guess-col{padding:0 0.2rem;position: relative;margin-top:-0.8rem;}
+.guess-col li{background: rgba(255,255,255,0.9);padding:0.1rem 0.1rem 0.16rem 0.1rem;border-radius: 4px;margin-bottom:0.16rem;box-shadow: 0 0 90px #2f602c;}
+.guess-col li .title{margin-left:-0.1rem;padding-bottom:0.06rem;}
+.guess-col li .title .number{background: #2f602c;color:#fff;display: inline-block;text-align: center;width:0.2rem;line-height:0.2rem;font-style: italic;font-size:0.12rem;}
+.guess-col li .title .text{color:#2f602c;font-weight: bold;font-size:0.15rem;display: inline-block;}
+
+.guess-col li .btn{background:#e8b204;width:1rem;color:#fff;padding:0.05rem 0;margin:0.08rem auto 0.02rem auto;text-align: center;border-radius: 0.16rem;display: inline-block;}
+
+.guess-col .rule{color:#fff;padding-bottom:0.3rem;}
+.guess-col .rule .title{font-size:0.16rem;padding:0.1rem 0 0.06rem 0.1rem;}
+.guess-col .rule p{position: relative;padding-left:0.1rem;}
+.guess-col .rule p span{position: absolute;left:0;}
+
+.guess-col .btn-col{text-align: center;padding:0.1rem 0 0.06rem 0;}
+.guess-col .btn-col .view-btn{background: #2f602c;color:#fff;width:1.3rem;text-align: center;margin:0 0.05rem;padding:0.06rem 0;border-radius: 1rem;position: relative;display: inline-block;}
+.guess-col .btn-col .view-btn img{position: absolute;right:0.02rem;width:0.18rem;}
+
+.guess-col .view-btn img{position: absolute;right:0.05rem;width:0.18rem;top:0.06rem;}
+
+.guess-col .btn--list{text-align: right;padding:0.12rem 0.05rem 0 0.05rem;}
+.guess-col .btn--list .btn{display: inline-block;margin:0 0.05rem;}
+.guess-col .btn--list .result-btn{background: #2f602c;}
+.layui-m-layerchild h3{background: #2f602c;color:#fff;}
+.layui-m-layerchild h3{line-height:42px!important;height:42px!important;}
+
+.layui-m-layerbtn span[yes]{color:#2f602c!important;}
+.dialog-form input[type=text]{border:1px solid #dddddd;height:0.24rem;width:1.6rem;margin-left:0.02rem;}
+.dialog-form .list li{margin-top:0.1rem;font-size:0.15rem;}
+.dialog-form .list li label{position: relative;top:0.01rem;}
+

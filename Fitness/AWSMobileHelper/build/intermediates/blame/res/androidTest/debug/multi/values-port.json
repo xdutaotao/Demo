@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-port/values-port.xml",
+        "outputFile": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-port\\values-port.xml",
         "map": [
             {
                 "to": {
@@ -11,31 +11,7 @@
                     "endOffset": 106
                 },
                 "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-port/values-port.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 55,
-                        "endOffset": 106
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-port/values-port.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 55,
-                    "endOffset": 106
-                },
-                "from": {
-                    "file": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/values-port/values-port.xml",
+                    "file": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\values-port\\values-port.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>开门大吉</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <style>
+        .warnMsg{border-bottom: 1px solid #e0e0e1;}
+        .ok{border-radius: 0 0 5px 5px}
+        .content{padding: 20px!important;}
+        .doBtn{margin: 0!important;}
+        img{ width: 100%;pointer-events: none;}
+        a{text-decoration: none}
+    </style>
+</head>
+<body style="font-size: 14px;background: #f2f2f2;color: #333;">
+<div style="width: 100%"><img src="img/announce_01.png" alt=""  ></div>
+<div style="width: 100%" class="OpenClick"><img src="img/announce_02.png" alt="" ></div>
+<div style="width: 100% " class="OpenClick"><img src="img/announce_03.png" alt="" ></div>
+<div style="width: 100%" class="OpenClick"><img src="img/announce_04.png" alt="" ></div>
+<div style="width: 100%" class="TurnClick"><img src="img/announce_05.png" alt="" ></div>
+<div style="width: 100%"><img src="img/announce_06.png" alt=""></div>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/alertPopShow.js"></script>
+<script>
+    $(".OpenClick").click(function () {
+        popTipShow.alert('提示','查看活动详情，请至上海化交官网www.shcem.com', ['确定'],
+            function(e){
+                $(".mask").show()
+                //callback 处理按钮事件
+                var button = $(e.target).attr('class');
+                if(button == 'ok'){
+                    //按下确定按钮执行的操作
+                    //todo ....
+                    this.hide();
+                    $(".mask").hide();
+                }
+            }
+        );
+    });
+    $(".TurnClick").click(function () {
+        window.location.href="https://jinshuju.net/f/v1dSxl";
+    })
+
+</script>
+</body>
+</html>

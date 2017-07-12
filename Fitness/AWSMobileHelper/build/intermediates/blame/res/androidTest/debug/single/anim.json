@@ -1,82 +1,42 @@
 [
     {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_grow_fade_in_from_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_fade_in.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_fade_in.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_enter.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_popup_enter.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_out_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_shrink_fade_out_from_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_shrink_fade_out_from_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_popup_exit.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_in_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_fade_out.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_enter.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_popup_enter.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_slide_in_bottom.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_grow_fade_in_from_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
     },
     {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_in_bottom.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_exit.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_popup_exit.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_exit.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_popup_exit.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_fade_out.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_in_top.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_in_top.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Documents/Demo/Fitness/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_out_top.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_fade_in.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_fade_out.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_out_top.xml"
-    },
-    {
-        "merged": "/Users/guzhenfu/Downloads/FN-aws-my-sample-app-android/MySampleApp/AWSMobileHelper/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
-        "source": "/Users/guzhenfu/.android/build-cache/d3313132618d6d9310058c21f207647b8800b250/output/res/anim/abc_slide_out_bottom.xml"
+        "merged": "F:\\Demo\\Fitness\\AWSMobileHelper\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\guzhenfu\\.android\\build-cache\\a17ec31ba3604d32b2c54238f4263287d0f447d4\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
     }
 ]

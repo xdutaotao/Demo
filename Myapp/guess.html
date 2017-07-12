@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>竞猜</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="js/layer_mobile/need/layer.css"/>
+    <link rel="stylesheet" href="css/guess.css"/>
+
+</head>
+<body class="guess-bg">
+
+    <img class="img100" src="img/guessTop.jpg"/>
+
+    <div class="guess-col">
+
+        <ul>
+            <li>
+                <div class="title">
+                    <span class="number">1</span>
+                    <span class="text">至尊预言帝</span>
+                </div>
+
+                <div class="detail">活动期间最早同时竞猜PP1709和PE1709合约收盘价，价差为0的第一位交易商、可获<span class="red">8888 元</span>现金红包</div>
+
+                <div class="btn--list">
+                    <span class="btn">去竞猜</span>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="title">
+                    <span class="number">2</span>
+                    <span class="text">至尊预言帝</span>
+                </div>
+
+                <div class="detail">活动期间最早竞猜PP1709/PE1709任意一个合约收盘价，价差为0的前三位交易商可获<span class="red">1888元</span>现金红包</div>
+
+                <div class="btn--list">
+                <span class="btn">去竞猜</span>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="title">
+                    <span class="number">3</span>
+                    <span class="text">至尊预言帝</span>
+                </div>
+
+                <div class="detail">连续15个交易日每日参与竞猜可得<span class="red">鸡年纪念币</span>一枚   （先到先得）
+                </div>
+
+                <div class="btn--list">
+                    <span class="btn result-btn">看结果</span>
+                    <span class="btn">去竞猜</span>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="title">
+                    <span class="number"></span>
+                    <span class="text">中奖名单</span>
+                </div>
+
+                <div class="btn-col">
+                    <a class="view-btn list-btn">中奖名单<img src="img/btnRight.png"/></a>
+                    <a class="view-btn history-btn">竞猜历史<img src="img/btnRight.png"/></a>
+                </div>
+            </li>
+
+        </ul>
+
+
+        <div class="rule">
+            <div class="title">活动规则</div>
+            <p><span>•</span> 参赛资格：平台认证用户</p>
+            <p><span>•</span> 每日竞猜时间：09:00-23:00</p>
+            <p><span>•</span> 获奖的竞猜价格与对应品种的当日收盘价的价差在±25元以内；</p>
+            <p><span>•</span> 竞猜品种：PP/PE主力合约，次日16:00系统公布中奖结果；</p>
+            <p><span>•</span> 按照竞猜价格与收盘价价差从小到大评选出一、二、三等奖各一名（不分品种）；</p>
+            <p><span>•</span> 当日未发放奖励累计至次工作日第一名奖金池中。</p>
+        </div>
+
+
+    </div>
+
+</body>
+
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/guess.js"></script>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/layer_mobile/layer.js"></script>
+<script>
+
+    $(".guess-col .btn").eq(0).click(function()
+    {
+        var html='<div class="dialog-form">' +
+                '<div>剩余竞拍次数 <span class="red guess-result">10</span>次</div>'+
+                 '<ul class="list">' +
+                '<li><label class="form-row" ><input class="radio" type="radio" name="type"></label>PP 1709 <input type="text" /> </li>' +
+                '<li><label class="form-row" ><input class="radio" type="radio" name="type"></label>PP 1709  <input type="text" /> </li>' +
+                '</ul>' +
+                '</div>'
+
+        //getTodayResultNum();
+
+        layer.open({
+            title:'请填写竞猜价格',
+            content: html,
+            btn: ['开始竞猜'],
+            yes:function(index) {
+                layer.close(index);
+
+                layer.open({
+                    title: '竞猜成功',
+                    content: "每交易日17:00pm公布中奖名单",
+                    btn: ['继续竞猜'],
+                    yes: function (index) {
+                        layer.close(index);
+                    }
+
+                });
+            }
+        });
+
+    });
+
+    $(".guess-col .btn").eq(1).click(function()
+    {
+
+        var html='<div class="dialog-form">' +
+                '<div>您不符合竞猜资格，请留下您的联系方式，我们会尽快联系到您。</div>'+
+                '<ul class="list">' +
+                '<li><input style="width:2.6rem;" type="text" /> </li>' +
+                '</ul>' +
+                '</div>'
+        layer.open({
+            title:'请填写竞猜价格',
+            content: html,
+            btn: ['提交'],
+            yes:function(index) {
+                layer.close(index);
+            }
+        });
+
+    });
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>开门大吉</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+
+</head>
+<body style="font-size: 14px;background: #f2f2f2;color: #333;">
+<style>
+    *{margin: 0;padding: 0;}
+    img{display: block}
+    .warnMsg{border-bottom: 1px solid #e0e0e1;}
+    .ok{border-radius: 0 0 5px 5px}
+    .content{padding: 20px!important;}
+    .doBtn{margin: 0!important;}
+</style>
+<div style="width: 100%"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7102" alt="" style="width: 100%"></div>
+<div style="width: 100%"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7103" alt="" style="width: 100%"></div>
+<div style="width: 100%"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7104" alt="" style="width: 100%"></div>
+<div style="width: 100%"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7105" alt="" style="width: 100%"></div>
+<div style="width: 100%" class="OpenClick"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7106" alt="" style="width: 100%"></div>
+<div style="width: 100%"><img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7107" alt="" style="width: 100%"></div>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/alertPopShow.js"></script>
+<script>
+    $(".OpenClick").click(function () {
+        popTipShow.alert('提示','查看活动详情，请至上海化交官网www.shcem.com', ['确定'],
+            function(e){
+                $(".mask").show()
+                //callback 处理按钮事件
+                var button = $(e.target).attr('class');
+                if(button == 'ok'){
+                    //按下确定按钮执行的操作
+                    //todo ....
+                    this.hide();
+                    $(".mask").hide();
+                }
+            }
+        );
+    })
+
+</script>
+
+    <!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7102" title="announce_01.png" alt="7102"/>-->
+<!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7104" title="announce_03.png" alt="7104"/>-->
+<!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7106" title="announce_05.png" alt="7106"/>-->
+<!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7107" title="announce_06.png" alt="7107"/>-->
+<!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7105" title="announce_04.png" alt="7105"/>-->
+<!--<img src="//fms.uat.shcem.com/mapi/file/downloadfile?id=7103" title="announce_02.png" alt="7103"/>-->
+
+</body>
+</html>
