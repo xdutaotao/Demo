@@ -2,7 +2,12 @@
  * Created by guzhenfu on 2017/7/12.
  */
 
-$('img').click(function () {
-    alert('go');
-    console.log("ddddd")
-})
+$(function(){
+    $('img').click(function () {
+        alert('go');
+    })
+
+    // $('.speed').click(function () {
+    //     alert("ddddd")
+    // })
+});
