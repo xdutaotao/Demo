@@ -3,11 +3,22 @@
  */
 
 $(function(){
-    $('img').click(function () {
-        alert('go');
+    $('#query').click(function () {
+        toastFunction("成功调用!");
+        // location.href = 'queryTwo.html';
     })
 
-    // $('.speed').click(function () {
-    //     alert("ddddd")
-    // })
+
+
+
+
+    $('#go').click(function () {
+        var value = $('.name').val();
+        alert(value);
+        // location.href = 'main.html';
+    })
+
+    $('#buy').click(function () {
+        location.href = 'three.html';
+    })
 });
