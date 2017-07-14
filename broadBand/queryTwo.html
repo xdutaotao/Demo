@@ -11,6 +11,7 @@
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
+    <script src="js/layer_mobile/layer.js"></script>
 </head>
 <body>
 <div class="main-div">
@@ -36,38 +37,36 @@
             </div>
         </div>
 
-        <div class="row-padding">
-            <span style="flex: 1">身份证</span>
-            <input style="flex: 3" placeholder="高**" class="input-trans"></div>
+        <div class="row-padding"
+             style="background-color: #ddd; color: #999; flex: 1">可优惠套餐</div>
 
         <div class="row-padding">
-            <span style="flex: 1">手机号码</span>
-            <input style="flex: 3;" placeholder="2016.6.23" class="input-trans">
+            <span style="flex: 1">优惠金额</span>
+            <span style="margin-right: 20px">123</span>
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">验证码</span>
-            <input style="flex: 2;" placeholder="验证码" class="input-trans">
-            <span style="flex: 1;font-size: 10px; color: #29aefe">获取验证码</span>
+            <span style="flex: 1">优惠后价格</span>
+            <span style="margin-right: 20px">456</span>
         </div>
 
     </div>
 
     <div style="width: 100%; flex: 2; background-color: #ddd;
                     display: flex; flex-direction: column";>
+        <div style="margin: 20px 20px 0px 20px">
+            <span>购买前请阅读</span>
+            <span>《购机协议》</span>
+        </div>
 
         <div style="color: white; background-color: #ff5000; display: flex;
                     align-items: center; margin: 20px; height: 40px; font-size: 18px;
-                    justify-content: center; border-radius: 5px" id="query">查询可享受优惠</div>
+                    justify-content: center; border-radius: 5px" id="action">立即办理</div>
 
         <div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 20px">
             <div style="display: flex; align-items: center">
                 <img src="img/empty.png">
                 <span style="margin-left: 10px; color: #29aefe">联系卖家</span>
-            </div>
-            <div style="display: flex; align-items: center">
-                <img src="img/empty.png">
-                <span style="margin-left: 10px; color: #29aefe">查看规则</span>
             </div>
         </div>
 

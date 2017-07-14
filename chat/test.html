@@ -1,75 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <style>
-
-        nav a {
-            text-decoration: none;
-        }
-        nav > ul > li {
-            float: left;
-            text-align: center;
-            padding: 0 0.5em;
-        }
-
-        nav li ul.sub-menu {
-            display: none;
-            padding-left: 0 !important;
-        }
-
-        .sub-menu li {
-            color: white;
-        }
-
-        .sub-menu li:hover {
-            background-color: black;
-        }
-
-        .sub-menu li:hover a {
-            color: white;
-        }
-
-        ul {
-            list-style: none;
+        .router-link-active {
+            color: red;
         }
     </style>
 </head>
 <body>
-<nav>
-    <ul>
-        <li>
-            <a href="#">Home</a>
-            <ul class="sub-menu">
-                <li><a href="#">sub1</a></li>
-                <li><a href="#">sub2</a></li>
-                <li><a href="#">sub3</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Programming</a>
-            <ul class="sub-menu">
-                <li><a href="#">sub1</a></li>
-                <li><a href="#">sub2</a></li>
-                <li><a href="#">sub3</a></li>
-            </ul>
-        </li>
-        <li><a href="#">Japanese</a>
-            <ul class="sub-menu">
-                <li><a href="#">sub1</a></li>
-                <li><a href="#">sub2</a></li>
-                <li><a href="#">sub3</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+    <div id="app">
+        <h1>Hello Vue App!</h1>
+        <p>
+            <router-link to="/foo">Go to foo</router-link>
+            <router-link to="/bar">Go to Bar</router-link>
+        </p>
+    </div>
+
+
+    <div id="app2">
+        <h1>Hello Vue App2!</h1>
+        <p>
+            <router-link to="/user/foo">/user/foo</router-link>
+            <router-link to="/user/bar">/user/bar</router-link>
+        </p>
+    </div>
 </body>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('nav li').hover(function() {
-            $(this).find('.sub-menu').css('display', 'block');
-        }, function() {
-            $(this).find('.sub-menu').css('display', 'none');
-        });
-    });
+    const Foo = {
+        template: '<div>foo--</div>'
+    }
+
+    const Bar = {
+        template: '<div>bar-----</div>'
+    }
+
+
+    const router = new VueRouter(
+            [
+                {path: '/foo', component: Foo},
+                {path: '/bar', component: Bar}
+            ]
+    )
+
+
+    const app = new Vue({
+        router
+    }).$mount('#app')
+
+
+
+    const User = {
+
+    }
+
+
+    const router2 = new VueRouter({
+        routes: [
+            {path: '/user/:id', component: User}
+        ]
+    })
+
+
+    const app2 = new Vue({
+        router2
+    }).$mount('#app2')
+
+
+
 </script>
 </html>
