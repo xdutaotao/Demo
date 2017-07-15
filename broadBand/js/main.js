@@ -8,7 +8,7 @@ $(function(){
         Tida.ready({
             sellerNick:"移动天帅通讯专卖店" // 商家名称
         }, function(){
-            
+
         })
     }
     
