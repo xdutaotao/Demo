@@ -3,14 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>宽带到期续费</title>
+    <title>宽带新装</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="spm-id" content="a1z51.24540073"/>
 
     <link rel="stylesheet" href="css/main.css"/>
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/toast.js"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
+    <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
 </head>
 <body>
 <div class="main-div">
@@ -31,17 +34,17 @@
         <div style="display: flex">
             <span style="flex: 1"></span>
             <span style="flex: 2; font-size: 14px;
-                text-align: center; color: white">输入宽带信息</span>
+                text-align: center; color: white">选择购买</span>
             <span style="flex: 1"></span>
             <span style="flex: 2; font-size: 14px;
-                text-align: center; color: white">商家处理订单</span>
+                text-align: center; color: white">续约成功</span>
         </div>
 
         <div style="color: #37dec9; background-color: white; display: flex;
-                    align-items: center; height: 40px; font-size: 18px; margin: 0px 50px;
+                    align-items: center; height: 40px; margin: 0px 60px;
                     justify-content: center; border-radius: 25px">
             <img src="img/empty.png" alt="">
-            <span>续约失败全额退款</span>
+            <span style="font-size: 16px">续约失败全额退款</span>
         </div>
 
     </div>
@@ -51,30 +54,35 @@
                     flex-direction: column; background-color: aqua">
 
         <div class="row-padding"
-             style="background-color: #ddd; color: #999; font-size: 10px; align-items: flex-end;
+             style="background-color: #f4f4f4; color: #888; font-size: 10px; align-items: flex-end;
                  padding-bottom: 10px;">以下信息将提供给营运商用于业务办理, 请确保输入正确</div>
 
         <div class="row-padding">户主姓名
-            <input type="text" placeholder="HZ****9098" class="input-trans"></div>
+            <input type="text" placeholder="请输入宽带办理人姓名" class="input-trans name-input">
+        </div>
 
         <div class="row-padding">联系电话
-            <input type="text" placeholder="高**" class="input-trans"></div>
+            <input type="number" placeholder="请输入您的联系电话方便工作人员与您联系"
+                   class="input-trans phone-input" style="flex: 1"
+                    oninput="if(value.length>11)value=value.slice(0,11)">
+        </div>
 
         <div class="row-padding">
             <span style="flex: 2">宽带信息</span>
-            <input style="flex: 6; margin-left: 5px" placeholder="2016.6.23" class="input-trans">
+            <input style="flex: 6; margin-left: 5px" placeholder="请输入宽带账号" class="input-trans internet-input">
             <img src="img/empty.png" style="flex: 1">
         </div>
 
         <div class="row-padding">身份证号
-            <input type="text" placeholder="请输入办理人身份证号码" class="input-trans"></div>
+            <input type="text" placeholder="请输入办理人身份证号码" maxlength="18"
+                   class="input-trans personal-input" style="flex: 1"></div>
 
     </div>
 
-    <div style="width: 100%; flex: 2; background-color: #ddd;
+    <div style="width: 100%; flex: 2; background-color: #f4f4f4;
                     display: flex; justify-content: center; flex-direction: column";>
 
-        <div style="color: white; background-color: #ff5000; display: flex;
+        <div id="query" style="color: white; background-color: #ff5000; display: flex;
                     align-items: center; margin: 20px; height: 40px; font-size: 18px;
                     justify-content: center; border-radius: 5px">查询</div>
 

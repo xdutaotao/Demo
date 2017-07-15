@@ -36,9 +36,8 @@ a,button,input,optgroup,select,textarea {
     border: 0px;
     margin-left: 10px;
     height: 100%;
+    font-size: 16px;
 }
-
-
 
 .row-main{
     display: flex;
