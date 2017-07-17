@@ -31,22 +31,22 @@
 
         <div class="row-padding">
             <span style="flex: 1">机主姓名</span>
-            <input style="flex: 3" class="input-trans" maxlength="6">
+            <input style="flex: 3" class="input-trans queryName" maxlength="6">
         </div>
 
         <div class="row-padding">
             <span style="flex: 1">身份证</span>
-            <input style="flex: 3" maxlength="18" class="input-trans"></div>
+            <input style="flex: 3" maxlength="18" class="input-trans queryOrder"></div>
 
         <div class="row-padding">
             <span style="flex: 1">手机号码</span>
-            <input style="flex: 3;" type="number" oninput="if(value.length>11)value=value.slice(0,11)" class="input-trans">
+            <input style="flex: 3;" type="number" oninput="if(value.length>11)value=value.slice(0,11)" class="input-trans queryPhone">
         </div>
 
         <!--<div class="row-padding">-->
-            <!--<span style="flex: 1">验证码</span>-->
-            <!--<input style="flex: 1; margin-left: 0px"  class="input-trans">-->
-            <!--<span style="flex: 1;font-size: 5px; color: #29aefe">获取验证码</span>-->
+        <!--<span style="flex: 1">验证码</span>-->
+        <!--<input style="flex: 1; margin-left: 0px"  class="input-trans">-->
+        <!--<span style="flex: 1;font-size: 5px; color: #29aefe">获取验证码</span>-->
         <!--</div>-->
 
     </div>
@@ -63,7 +63,7 @@
                 <img src="img/query_ask.png" style="height: 20px; width: 20px;">
                 <span style="margin-left: 10px; color: #29aefe">联系卖家</span>
             </div>
-            <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center" id="query_rule">
                 <img src="img/query_look.png" style="height: 20px; width: 20px;">
                 <span style="margin-left: 10px; color: #29aefe">查看规则</span>
             </div>
@@ -76,6 +76,16 @@
 
 
 </div>
+
+
+<script>
+
+    var link=window.location.href.split("?")[1];
+    //$("body").append(link);
+
+
+
+</script>
 
 
 </body>

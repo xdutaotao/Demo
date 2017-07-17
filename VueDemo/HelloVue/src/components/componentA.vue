@@ -16,7 +16,8 @@
     props:['dataFromFather'],
     methods: {
       clickMe: function () {
-        console.log("333333")
+        console.log("333333");
+        this.$emit('msg-from-child', this.msg)
       }
     }
   }

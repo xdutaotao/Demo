@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div id="app">
     <h1>{{title}}</h1>
     <input v-model="newData" @keyup.enter="addNew">
@@ -9,7 +9,9 @@
         {{todo.label}}
       </li>
     </ul>
-    <component-a dataFromFather="ijjjjjjj"></component-a>
+    <component-a dataFromFather="ijjjjjjj"
+                 v-on:msg-from-child='listenChild'></component-a>
+    <p>from child msg: {{childMsg}}</p>
   </div>
 </template>
 
@@ -22,7 +24,8 @@ export default {
     return {
       title: 'this is a todo list',
       todos: Store.getStore(),
-      newData: ''
+      newData: '',
+      childMsg: ''
     }
   },
   methods: {
@@ -35,6 +38,9 @@ export default {
         finished: false
       })
       this.newData = ''
+    },
+    listenChild: function(msg){
+      this.childMsg = msg;
     }
   },
   components: {

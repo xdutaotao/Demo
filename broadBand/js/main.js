@@ -6,7 +6,7 @@ $(function(){
 
     window.onload = function () {
         Tida.ready({
-            sellerNick:"移动天帅通讯专卖店" // 商家名称
+            sellerNick:"移动天帅通信专卖店" // 商家名称
         }, function(){
 
         })
