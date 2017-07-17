@@ -10,13 +10,13 @@
 
         <link rel="stylesheet" href="css/main.css"/>
         <script src="js/jquery-2.1.1.min.js"></script>
-        <script src="js/contract.js"></script>
+        <script src="js/empty.js"></script>
         <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
     </head>
     <body>
         <div class="main-div">
-            <div style="flex: 2; display: flex; border-top: 1px solid #ddd;
-                    flex-direction: column; background-color: aqua">
+            <div style="flex: 4; display: flex; border-top: 1px solid #ddd; border-bottom: 1px solid #888;
+                    flex-direction: column; ">
 
                 <div class="row-padding"
                      style="background-color: #f4f4f4; color: #888">当前套餐</div>
@@ -34,21 +34,22 @@
                     <input type="text" placeholder="2M" class="input-trans"></div>
 
                 <div class="row-padding">套餐价格
-                    <input type="text" placeholder="200元/年" class="input-trans"></div>
+                    <input type="text" placeholder="200元/年" class="input-trans">
+                </div>
 
             </div>
 
 
-            <div style="width: 100%; flex: 1; background-color: #f4f4f4;
+            <div style="width: 100%; flex: 3; background-color: #f4f4f4;
                 display: flex; align-items: center;
                 justify-content: center; flex-direction: column">
-                <img src="img/empty.png" alt="" >
+                <img src="img/empty_empty.png" style="height: 30px; width: 50px;" >
                 <span>到期了</span>
             </div>
 
             <div style="width: 100%; flex: 1; background-color: aqua;
                     display: flex";>
-                <img id="go" src="img/empty.png" alt="" style="flex: 1">
+                <img id="go" src="img/empty_banner.png" alt="" style="height: 100%; width: 100%">
             </div>
 
 
