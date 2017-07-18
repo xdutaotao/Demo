@@ -8,6 +8,7 @@
 
     <script src="js/socket.io.js"></script>
     <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <body>
 
@@ -71,8 +72,50 @@
             <li v-for="n in eventNum">{{n}}</li>
         </div>
 
+        <div id="app-a">
+            <button @click="show = !show">Toggle</button>
+            <transition name="fade">
+                <p v-if="show">SHOW</p>
+            </transition>
+        </div>
+
+        <div id="app-b">
+            <button @click="getData">网络数据</button>
+        </div>
+
 
     <script>
+        new Vue({
+            el: '#app-b',
+            data: {
+
+            },
+            methods: {
+                getData: function () {
+                    axios.get("http://gank.io/api/data/Android/10/1")
+                            .then(function (data) {
+                                console.log(data.data.results);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            })
+                }
+            }
+        })
+
+
+
+
+
+        new Vue({
+            el: '#app-a',
+            data: {
+                show: true
+            }
+        })
+
+
+
         new Vue({
             el: "#app-9",
             data: {

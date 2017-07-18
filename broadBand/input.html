@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="main-div">
-    <div style="flex: 1; display: flex; border-top: 1px solid #ddd; justify-content: space-around;
+    <div style="flex: 3; display: flex; border-top: 1px solid #ddd; justify-content: space-around;
           flex-direction: column; background-color: #37dec9">
 
         <div style="position: relative; height: 10px;">
@@ -45,57 +45,79 @@
         </div>
 
         <div style="color: #37dec9; background-color: white; display: flex;
-                    align-items: center; height: 30px; margin: 0px 60px;
+                    align-items: center; height: 25px; margin: 0px 60px;
                     justify-content: center; border-radius: 25px">
-            <img src="img/input_head.png" style="height: 20px; width: 20px; margin-right: 5px;">
-            <span style="font-size: 16px">续约失败全额退款</span>
+            <img src="img/input_head.png" style="height: 18px; width: 18px; margin-right: 5px;">
+            <span style="font-size: 14px">续约失败全额退款</span>
         </div>
 
     </div>
 
 
-    <div style="flex: 2; display: flex; border-top: 1px solid #ddd;
+    <div style="flex: 6; display: flex; border-top: 1px solid #ddd; border-bottom: 1px solid #888;
                     flex-direction: column; background-color: aqua">
 
         <div class="row-padding"
              style="background-color: #f4f4f4; color: #888; font-size: 10px; align-items: flex-end;
                  padding-bottom: 10px;">以下信息将提供给营运商用于业务办理, 请确保输入正确</div>
 
-        <div class="row-padding">户主姓名
+        <div class="row-padding">安装地址
+            <input type="text" placeholder="请输入宽带办理人地址" class="input-trans address-input">
+        </div>
+
+        <div class="row-padding">机主姓名
             <input type="text" placeholder="请输入宽带办理人姓名" class="input-trans name-input">
         </div>
 
         <div class="row-padding">联系电话
-            <input type="number" placeholder="请输入您的联系电话方便工作人员与您联系"
+            <input type="number" placeholder="请输入您的联系电话"
                    class="input-trans phone-input" style="flex: 1"
                     oninput="if(value.length>11)value=value.slice(0,11)">
         </div>
 
-        <div class="row-padding">
-            <span style="flex: 2">宽带信息</span>
-            <input style="flex: 6; margin-left: 5px" placeholder="请输入宽带账号" class="input-trans internet-input">
-            <div style="position: relative; flex: 1">
-                <img src="img/input_circle.png" style="width: 20px; height: 20px; position: absolute; top: -10px;">
-                <img src="img/input_ask.png" style="width: 10px; height: 13px; position: absolute; top: -8px; left: 5px;">
-                <img src="img/input_ask_point.png" style="width: 2px; height: 2px; position: absolute; top: 6px; left: 9px;">
-            </div>
-
-        </div>
 
         <div class="row-padding">身份证号
             <input type="text" placeholder="请输入办理人身份证号码" maxlength="18"
                    class="input-trans personal-input" style="flex: 1"></div>
 
+        <div class="row-padding" style="display: flex;">
+            <span style="flex: 1">宽带速率</span>
+
+            <div class="dropdown" style="flex: 3; height: 100%; display: flex; align-items: center">
+                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0;height:30px;" class="speed">
+                    <option value="0" class="label">50M</option>
+                    <option value="1">100M</option>
+                    <option value="2">200M</option>
+                    <option value="3">500M</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row-padding" style="display: flex;">
+            <span style="flex: 1">宽带周期</span>
+
+            <div class="dropdown" style="flex: 3; height: 100%; display: flex; align-items: center">
+                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0;height:30px;" class="time" onchange="selectTime()">
+                    <option value="0" class="label">1年</option>
+                    <option value="1">2年</option>
+                    <option value="2">3年</option>
+                    <option value="3">4年</option>
+                </select>
+            </div>
+        </div>
+
     </div>
 
-    <div style="width: 100%; flex: 2; background-color: #f4f4f4;
+    <div style="width: 100%; flex: 3; background-color: #f4f4f4;
                     display: flex; justify-content: center; flex-direction: column";>
+        <div style="text-align: center; margin-top: 10px">应付金额:
+            <span id="money" style="color: red">1元</span>
+        </div>
 
-        <div id="query" style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin: 20px; height: 40px; font-size: 18px;
-                    justify-content: center; border-radius: 5px">查询</div>
+        <div id="action" style="color: white; background-color: #ff5000; display: flex;
+                    align-items: center; margin: 5px; height: 30px; font-size: 18px;
+                    justify-content: center; border-radius: 5px">办理</div>
 
-        <div style="flex: 1"></div>
         <div style="text-align: center;justify-content: center;
                 margin-bottom: 20px; display: flex; align-items: center">
             <img src="img/input_quire.png" style="height: 25px; width: 25px; margin: 0px 5px">

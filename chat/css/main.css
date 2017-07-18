@@ -4,6 +4,16 @@
  * Kroc Camen, and the H5BP dev community and team.
  */
 
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 5s
+}
+
+.fade-enter, .fade-leave-to{
+    opacity: 0
+}
+
+
+
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */

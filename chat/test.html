@@ -17,16 +17,10 @@
             <router-link to="/foo">Go to foo</router-link>
             <router-link to="/bar">Go to Bar</router-link>
         </p>
+        <router-view></router-view>
     </div>
 
 
-    <div id="app2">
-        <h1>Hello Vue App2!</h1>
-        <p>
-            <router-link to="/user/foo">/user/foo</router-link>
-            <router-link to="/user/bar">/user/bar</router-link>
-        </p>
-    </div>
 </body>
 <script type="text/javascript">
     const Foo = {
@@ -37,37 +31,20 @@
         template: '<div>bar-----</div>'
     }
 
+    const routes = [
+        {path: '/foo', component: Foo},
+        {path: '/bar', component: Bar}
+    ]
 
-    const router = new VueRouter(
-            [
-                {path: '/foo', component: Foo},
-                {path: '/bar', component: Bar}
-            ]
-    )
+
+    const router = new VueRouter({
+        routes
+    })
 
 
     const app = new Vue({
         router
     }).$mount('#app')
-
-
-
-    const User = {
-
-    }
-
-
-    const router2 = new VueRouter({
-        routes: [
-            {path: '/user/:id', component: User}
-        ]
-    })
-
-
-    const app2 = new Vue({
-        router2
-    }).$mount('#app2')
-
 
 
 </script>
