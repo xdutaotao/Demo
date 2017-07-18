@@ -3,27 +3,10 @@
  */
 
 
-function GetQueryString(name)
-{
+function GetQueryString(name) {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
-}
-
-Date.prototype.Format = function (fmt) { //author: meizz
-    var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
 }
 
 $(function(){
@@ -99,12 +82,12 @@ $(function(){
         }
 
         if ($('.contact-name-input').val() == ''){
-            toastFunction("地址不能为空");
+            toastFunction("联系人不能为空");
             return;
         }
 
         if ($('.contact-phone-input').val() == ''){
-            toastFunction("身份证号不能为空");
+            toastFunction("联系方式不能为空");
             return;
         }
 
@@ -141,8 +124,7 @@ $(function(){
                 });
 
             },
-            error:function(msg)
-            {
+            error:function(msg) {
                 //$("#agreement").append(JSON.stringify(msg));
                 //console.log(JSON.stringify(msg));
             }
@@ -160,7 +142,7 @@ $(function(){
         };
 
         Tida.wangwang(options,function(data){
-            alert(JSON.stringify(data));
+
         });
     })
 
