@@ -31,35 +31,6 @@ $(function(){
 
 
 
-    var nowDate = new Date();
-    var data = {
-        ex_property :{
-            broadband_rate: "50M",
-            contract_period: "1年",
-            effective_date: nowDate.getFullYear()+"年"+nowDate.getMonth()+"月"+nowDate.getDay()+"号零点",
-            id_number: $('.personal-input').val(),
-            installation_address: $('.address-input').val(),
-            mobile: $('.phone-input').val(),
-            name: $('.name-input').val(),
-            operators: "移动天帅通信专卖店",
-            package_details: "安装宽带",
-            package_name: "宽带新装",
-            package_price: '1',
-            preferential_info: "宽带优惠",
-            province: "浙江",
-            service_type: "broadband"
-        },
-        detail: {
-            mixUserId: GetQueryString("mixUserId"),
-            itemId: GetQueryString("itemId"),
-            totalPrice: "1",
-            pluginInstanceId: GetQueryString("instance_id"),
-            merchantOrderId: (new Date()).getTime(),
-        }
-
-    };
-
-
     $('#action').click(function () {
         if ($('.name-input').val() == ''){
             toastFunction("户主姓名不能为空");
@@ -99,6 +70,35 @@ $(function(){
         var params = {
             tradeExToken:'',
             tradeToken: GetQueryString("tradeToken")
+        };
+
+        var nowDate = new Date();
+        var nextDate = nowDate.setDate(nowDate.getDate() + 1);
+        var data = {
+            ex_property :{
+                broadband_rate: "50M",
+                contract_period: "1年",
+                effective_date: nextDate.getFullYear()+"年"+nextDate.getMonth()+1+"月"+nextDate.getDay()+"号零点",
+                id_number: $('.personal-input').val(),
+                installation_address: $('.address-input').val(),
+                mobile: $('.phone-input').val(),
+                name: $('.name-input').val(),
+                operators: "移动天帅通信专卖店",
+                package_details: "安装宽带",
+                package_name: "宽带新装",
+                package_price: '1',
+                preferential_info: "宽带优惠",
+                province: "浙江",
+                service_type: "broadband"
+            },
+            detail: {
+                mixUserId: GetQueryString("mixUserId"),
+                itemId: GetQueryString("itemId"),
+                totalPrice: "1",
+                pluginInstanceId: GetQueryString("instance_id"),
+                merchantOrderId: (new Date()).getTime()
+            }
+
         };
 
         $.ajax({
