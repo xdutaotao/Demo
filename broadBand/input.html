@@ -16,7 +16,7 @@
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
 </head>
 <body>
-<div class="main-div">
+<div class="main-div" style="min-height: 200px">
     <div style="flex: 6; display: flex; border-top: 1px solid #ddd; border-bottom: 1px solid #888;
                     flex-direction: column; background-color: aqua">
 
@@ -26,7 +26,7 @@
 
         <div class="row-padding">
             <span style="flex: 1">户主姓名</span>
-            <input style="flex: 3" placeholder="请输入姓名" class="input-trans name-input">
+            <input style="flex: 3" placeholder="请输入姓名" class="input-trans name-input" maxlength="6">
         </div>
 
         <div class="row-padding">
@@ -49,7 +49,9 @@
 
         <div class="row-padding">
             <span style="flex: 1">联系方式</span>
-            <input type="text" placeholder="请输入联系人电话" class="input-trans contact-phone-input" style="flex: 3">
+            <input type="number" placeholder="请输入联系人电话"
+                   class="input-trans contact-phone-input" style="flex: 3"
+                   oninput="if(value.length>11)value=value.slice(0,11)">
         </div>
 
 
