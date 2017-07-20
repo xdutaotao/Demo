@@ -14,7 +14,7 @@
     <div id="app">
         <h1>Hello Vue App!</h1>
         <p>
-            <router-link to="/foo">Go to foo</router-link>
+            <router-link :to="{ name:'fooName', params: {num: '123', age: 'abc'} }">Go to foo</router-link>
             <router-link to="/bar">Go to Bar</router-link>
         </p>
         <router-view></router-view>
@@ -24,7 +24,7 @@
 </body>
 <script type="text/javascript">
     const Foo = {
-        template: '<div>foo--</div>'
+        template: '<div>foo--{{this.$route.params.num}}---{{this.$route.params.age}}</div>'
     }
 
     const Bar = {
@@ -32,7 +32,7 @@
     }
 
     const routes = [
-        {path: '/foo', component: Foo},
+        {path: '/foo', component: Foo, name: 'fooName'},
         {path: '/bar', component: Bar}
     ]
 
