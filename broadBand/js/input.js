@@ -24,9 +24,7 @@ $(function(){
         $('.main-div').height(HEIGHT);
     });
 
-    var speedList = ['1', '2', '3', '4']
     $('.speed').change(function () {
-        $('#money').text(speedList[$('.speed option:selected').val()]);
         data.ex_property.broadband_rate = $('.speed option:selected').text();
     });
 
