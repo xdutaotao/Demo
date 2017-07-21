@@ -20,17 +20,13 @@ $(function(){
 
 
     $('#query').click(function () {
-        var name = $('.queryName').val();
-        var order = $('.queryOrder').val();
-        var phone = $('.queryPhone').val();
+        var name = $('.name').val();
+        var phone = $('.phone').val();
+        var infor = $('.infor').val();
+        var personal = $('.personal').val();
 
         if (name == ''){
-            toastFunction("机主姓名不能为空");
-            return;
-        }
-
-        if (order == ''){
-            toastFunction("身份证不能为空");
+            toastFunction("姓名不能为空");
             return;
         }
 
@@ -39,12 +35,29 @@ $(function(){
             return;
         }
 
-        location.href = 'benefitPage.html?'+link;
+        if (phone.length != 11){
+            toastFunction("手机号码输入错误");
+            return;
+        }
 
-    })
+        if (infor == ''){
+            toastFunction("宽带信息不能为空");
+            return;
+        }
 
-    $('#query_rule').click(function () {
-        location.href = 'rule.html';
+        if (personal == ''){
+            toastFunction("身份证号不能为空");
+            return;
+        }
+
+        if (personal.length != 18){
+            toastFunction("身份证号输入错误");
+            return;
+        }
+
+        // location.href = 'main.html?'+link;
+        location.href = 'empty.html?info='+infor+'&name='+name+'&phone='+phone;
+
     })
 
     $('.im').click(function () {

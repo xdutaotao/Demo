@@ -2,34 +2,19 @@
  * Created by guzhenfu on 2017/7/12.
  */
 
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
 $(function(){
-    $('#query').click(function () {
-        toastFunction("成功调用!");
-        // location.href = 'benefit.html';
-    })
+    window.onload = function () {
+        $('.info').text(GetQueryString('info'))
+        $('.name').text(GetQueryString('name'))
+        $('.time').text(GetQueryString('time'))
+        $('.speed').text(GetQueryString('speed'))
+        $('.price').text(GetQueryString('price'))
+    }
 
-
-
-
-
-    $('#go').click(function () {
-        var value = $('.name').val();
-        alert(value);
-        // location.href = 'main.html';
-    })
-
-    $('#buy').click(function () {
-        location.href = '../input.html';
-    })
-
-    $("#action").click(function () {
-        layer.open({
-            title: [
-                '购机协议',
-                'margin: 0px'
-            ],
-            content: $('#content').html(),
-            btn: '确定'
-        });
-    })
 });

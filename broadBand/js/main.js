@@ -71,20 +71,20 @@ $(function(){
             return;
         }
 
-        if ($('.personal-input').val() == ''){
-            toastFunction("身份证号不能为空");
-            return;
-        }
-
-        if ($('.personal-input').val().length != 18){
-            toastFunction("身份证号输入错误");
-            return;
-        }
-
-        if ($('.address-input').val() == ''){
-            toastFunction("地址不能为空");
-            return;
-        }
+        // if ($('.personal-input').val() == ''){
+        //     toastFunction("身份证号不能为空");
+        //     return;
+        // }
+        //
+        // if ($('.personal-input').val().length != 18){
+        //     toastFunction("身份证号输入错误");
+        //     return;
+        // }
+        //
+        // if ($('.address-input').val() == ''){
+        //     toastFunction("地址不能为空");
+        //     return;
+        // }
 
 
         var speed =  $('.speed option:selected').text();

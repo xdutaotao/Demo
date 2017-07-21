@@ -17,7 +17,7 @@
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
 </head>
 <body>
-<div class="main-div">
+<div class="main-div" style="min-height: 200px">
 
     <div style="flex: 2; display: flex; border-top: 1px solid #ddd; border-bottom: 1px solid #888;
                     flex-direction: column; background-color: white">
@@ -26,26 +26,26 @@
             flex-direction: column; background-color: #37dec9">
 
             <div style="position: relative; height: 15px;">
-                <span style="position: absolute; font-size: 14px; left: 30px;
+                <span style="position: absolute; font-size: 14px; left: 10%;
                 text-align: center; color: white">输入宽带信息</span>
 
-                <span style="position: absolute; font-size: 14px; left: 155px;
+                <span style="position: absolute; font-size: 14px; left: 50%;
                 text-align: center; color: white">商家处理订单</span>
             </div>
 
             <div style="height: 10px; width: 100%; position: relative">
-                <img src="img/line.png" style="position: absolute; height: 10px; width: 90%; padding: 0px 10px">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 65px">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 130px">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 190px">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 250px">
+                <img src="img/line.png" style="position: absolute; height: 10px; width: 95%; padding: 0px 10px">
+                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 20%">
+                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 40%">
+                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 60%">
+                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 80%">
             </div>
 
             <div style="position: relative; height: 15px;">
-                <span style="position: absolute; font-size: 14px; left: 105px;
+                <span style="position: absolute; font-size: 14px; left: 32%;
                 text-align: center; color: white">选择购买</span>
 
-                <span style="position: absolute; font-size: 14px; left: 230px;
+                <span style="position: absolute; font-size: 14px; left: 72%;
                 text-align: center; color: white">续约成功</span>
             </div>
 
@@ -61,48 +61,56 @@
 
         <div class="row-padding"
              style="background-color: #F4F4F4;  flex-direction: column; justify-content: flex-end;">
-            <span style="font-size: 10px; color: #888; margin-bottom: 5px">一下信息将提供给运营商用于业务办理，请确保输入正确</span>
+            <span style="font-size: 10px; color: #888; margin-bottom: 5px">以下信息将提供给运营商用于业务办理，请确保输入正确</span>
         </div>
 
         <div class="row-padding">
             <span style="flex: 1">户主姓名</span>
-            <input style="flex: 3" class="input-trans queryName" maxlength="6">
+            <input style="flex: 3" class="input-trans name" maxlength="6" placeholder="请输入姓名">
         </div>
 
         <div class="row-padding">
             <span style="flex: 1">联系电话</span>
-            <input style="flex: 3;" type="number" oninput="if(value.length>11)value=value.slice(0,11)" class="input-trans queryPhone">
+            <input style="flex: 3;" type="number" oninput="if(value.length>11)value=value.slice(0,11)"
+                   class="input-trans phone" placeholder="请输入电话">
+        </div>
+
+        <div class="row-padding">
+            <span style="flex: 1">宽带信息</span>
+            <input style="flex: 3"  class="input-trans infor" placeholder="请输入宽带信息">
         </div>
 
         <div class="row-padding">
             <span style="flex: 1">身份证号</span>
-            <input style="flex: 3" maxlength="18" class="input-trans queryOrder">
-        </div>
-
-        <div class="row-padding">
-            <span style="flex: 1">身份证号</span>
-            <input style="flex: 3" maxlength="18" class="input-trans queryOrder">
+            <input style="flex: 3" maxlength="18" class="input-trans personal" placeholder="请输入身份证号">
         </div>
 
     </div>
 
-    <div style="width: 100%; flex: 2; background-color: #f4f4f4;
-                    display: flex; flex-direction: column";>
+    <div style="width: 100%; flex: 1; background-color: #f4f4f4;
+                    display: flex; flex-direction: column; justify-content: space-around";>
 
         <div style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin: 20px; height: 40px; font-size: 18px;
-                    justify-content: center; border-radius: 5px" id="query">查询可享受优惠</div>
+                    align-items: center; margin: 0px 20px; height: 40px; font-size: 18px;
+                    justify-content: center; border-radius: 5px" id="query">查询</div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 20px">
-            <div style="display: flex; align-items: center" class="im">
-                <img src="img/query_ask.png" style="height: 20px; width: 20px;">
-                <span style="margin-left: 10px; color: #29aefe">联系卖家</span>
-            </div>
-            <div style="display: flex; align-items: center" id="query_rule">
-                <img src="img/query_look.png" style="height: 20px; width: 20px;">
-                <span style="margin-left: 10px; color: #29aefe">查看规则</span>
-            </div>
+        <div style="display: flex; align-self: center;
+                    justify-content: center;" class="im">
+            <img src="img/query_ask.png" style="height: 20px; width: 20px;">
+            <span style="margin-left: 10px; color: #29aefe">咨询客服</span>
         </div>
+
+        <!--<div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 20px">-->
+            <!--<div style="display: flex; align-self: center;-->
+                    <!--justify-content: center;" class="im">-->
+                <!--<img src="img/query_ask.png" style="height: 20px; width: 20px;">-->
+                <!--<span style="margin-left: 10px; color: #29aefe">联系卖家</span>-->
+            <!--</div>-->
+            <!--<div style="display: flex; align-items: center" id="query_rule">-->
+                <!--<img src="img/query_look.png" style="height: 20px; width: 20px;">-->
+                <!--<span style="margin-left: 10px; color: #29aefe">查看规则</span>-->
+            <!--</div>-->
+        <!--</div>-->
 
 
 
