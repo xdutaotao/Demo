@@ -87,20 +87,20 @@ $(function(){
             return;
         }
 
-        if ($('.contact-name-input').val() == ''){
-            toastFunction("联系人不能为空");
-            return;
-        }
-
-        if ($('.contact-phone-input').val() == ''){
-            toastFunction("联系方式不能为空");
-            return;
-        }
-
-        if ($('.contact-phone-input').val().length != 11){
-            toastFunction("联系人手机号码输入错误");
-            return;
-        }
+        // if ($('.contact-name-input').val() == ''){
+        //     toastFunction("联系人不能为空");
+        //     return;
+        // }
+        //
+        // if ($('.contact-phone-input').val() == ''){
+        //     toastFunction("联系方式不能为空");
+        //     return;
+        // }
+        //
+        // if ($('.contact-phone-input').val().length != 11){
+        //     toastFunction("联系人手机号码输入错误");
+        //     return;
+        // }
 
         if ($('.address-input').val() == ''){
             toastFunction("地址不能为空");
