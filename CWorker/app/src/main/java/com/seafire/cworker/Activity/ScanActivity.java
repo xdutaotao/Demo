@@ -33,6 +33,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 
+import static com.seafire.cworker.Activity.CollectActivity.REQUEST_SCAN_CODE;
 import static com.seafire.cworker.Common.Constants.INTENT_KEY;
 
 public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
@@ -52,7 +53,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     public static void startActivityForResult(Activity context){
         Intent intent = new Intent(context, ScanActivity.class);
-        context.startActivityForResult(intent, CollectActivity.REQUEST_CODE);
+        context.startActivityForResult(intent, REQUEST_SCAN_CODE);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
             public void run() {
                 zxingview.setVisibility(View.VISIBLE);
             }
-        }, 100);
+        }, 500);
     }
 
 
@@ -103,10 +104,8 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(200);
 
-        zxingview.stopCamera();
-        zxingview.stopSpot();
         Intent intent = new Intent();
-        intent.putExtra("scan", result);
+        intent.putExtra(INTENT_KEY, result);
         setResult(RESULT_OK, intent);
         finish();
     }

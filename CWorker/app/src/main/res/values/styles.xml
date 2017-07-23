@@ -67,6 +67,7 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:singleLine">true</item>
+        <item name="android:layout_marginLeft">400px</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">

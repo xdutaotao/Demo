@@ -222,8 +222,16 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private CollectBean collectBean;
     private List<String> historyPathList = new ArrayList<>();
 
+    private boolean isNumberSearch = false;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, String data) {
+        Intent intent = new Intent(context, CollectActivity.class);
+        intent.putExtra("SCAN_KEY", data);
         context.startActivity(intent);
     }
 
@@ -350,6 +358,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             outHeight.setOnFocusChangeListener(this);
             outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true));
 
+            outWeight.setOnTouchListener(this);
+            outWeight.setOnFocusChangeListener(this);
+            outWeight.addTextChangedListener(new CustomTextWatcher(outWeight, drawable, true));
+
             singleWeight.setOnTouchListener(this);
             singleWeight.setOnFocusChangeListener(this);
             singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true));
@@ -422,6 +434,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         number.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId==EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
                 clearData();
+                isNumberSearch = true;
                 presenter.getPartInfoByCode(CollectActivity.this, number.getText().toString(),
                         User.getInstance().getUserInfo().getPerson().getProject());
                 return true;
@@ -511,7 +524,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             source.setText(s.getData().getSourceDistribution());
         }
 
-        if (s.getHasOldData() == 1 && s.getOldData() != null) {
+        if (s.getHasOldData() == 1 && s.getOldData() != null && isNumberSearch) {
+            isNumberSearch = false;
             wrapText.setText(s.getOldData().getPackageStypeName());
             typeTxt.setText(s.getOldData().getPartMaterialName());
             number.setText(s.getOldData().getPackageModelCount() + "");
@@ -599,7 +613,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 String tempTwo = recommandChangeList.toString().replace("[", "").replace("]", "");
                 recommendTv.setText(tempTwo);
             }else if (data != null && requestCode == REQUEST_SCAN_CODE){
-                String result = data.getStringExtra("scan");
+                String result = data.getStringExtra(INTENT_KEY);
                 number.setText(result);
                 if (!TextUtils.isEmpty(number.getText().toString()))
                     presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
@@ -694,7 +708,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 ToastUtil.show("外包装高不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outHeight.getText())) {
+            if (TextUtils.isEmpty(outWeight.getText())) {
                 ToastUtil.show("毛重不能为空");
                 return;
             }
@@ -970,6 +984,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             case R.id.out_height:
                 setEditText(outHeight, outHeightTv, hasFocus);
+                break;
+
+            case R.id.out_weight:
+                setEditText(outWeight, outWeightTv, hasFocus);
                 break;
 
             case R.id.single_weight:

@@ -35,6 +35,9 @@
                     android:id="@+id/number"
                     style="@style/collect_edit"
                     android:hint="请输入零件号"
+                    android:ellipsize="end"
+                    android:inputType="textUri|textMultiLine"
+                    android:singleLine="true"
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:imeOptions="actionSearch" />
             </RelativeLayout>
@@ -309,7 +312,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    >
 
                     <View
                         android:layout_width="match_parent"

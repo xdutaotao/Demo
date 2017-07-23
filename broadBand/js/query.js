@@ -7,6 +7,11 @@ function GetQueryString(name) {
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
 }
+var code = GetQueryString("code");
+var error = GetQueryString("error");
+if (!code && (error == undefined || error == null)){
+    location.href = 'https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/query.html&state=1212&view=wap'
+}
 
 $(function(){
 
@@ -56,7 +61,34 @@ $(function(){
         }
 
         // location.href = 'main.html?'+link;
-        location.href = 'empty.html?info='+infor+'&name='+name+'&phone='+phone;
+        //location.href = 'empty.html?info='+infor+'&name='+name+'&phone='+phone;
+        // Tida.doAuth(function(data){
+        //     if(data.finish){
+        //         // 授权成功 可以顺利调用需要授权的接口了
+        //     }else {
+        //         // 未能成功授权
+        //     }
+        // }); https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/empty.html
+
+        Tida.showLoading("加载中...");
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://ydts.ews.m.jaeapp.com/php/pushUserInfo.php',
+            data: {code: code},
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+                Tida.hideLoading();
+            },
+            error:function(msg) {
+                Tida.hideLoading();
+                toastFunction("请稍后重试")
+            }
+
+        });
+
+        //location.href = 'https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/query.html&state=1212&view=web'
 
     })
 
