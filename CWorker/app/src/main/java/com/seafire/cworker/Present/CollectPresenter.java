@@ -73,7 +73,7 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                     @Override
                     protected void _onError() {
                         model.recodeMark(bean, false);
-                        getView().onFailure();
+                        getView().postTxtError();
                     }
                 }));
     }

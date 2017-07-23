@@ -73,8 +73,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                 item.name = name;
                 item.addTime = System.currentTimeMillis();
                 item.mimeType = "jpg";
-                item.width = 1080;
-                item.height = 1000;
+                item.width = 540;
+                item.height = 500;
                 item.size = data.length;
                 paths.add(item);
                 setAfterTakeView();

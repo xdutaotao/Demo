@@ -16,6 +16,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.seafire.cworker.Activity.BaseActivity;
 import com.seafire.cworker.Activity.CollectActivity;
 import com.seafire.cworker.Activity.LoginActivity;
+import com.seafire.cworker.Bean.CollectBean;
 import com.seafire.cworker.Bean.RxBusEvent;
 import com.seafire.cworker.Common.Constants;
 import com.seafire.cworker.Fragment.AddFragment;
@@ -24,14 +25,19 @@ import com.seafire.cworker.Fragment.MessageFragment;
 import com.seafire.cworker.Fragment.MyFragment;
 import com.seafire.cworker.Fragment.SearchFragment;
 import com.seafire.cworker.Model.User;
+import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.RxBus;
+import com.seafire.cworker.Utils.ShareUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.seafire.cworker.Common.Constants.COLLECT_LIST;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.container)
@@ -40,6 +46,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ImageView imageView;
     private BottomNavigationBar bottomNavigationBar;
     private String[] strings = {"主页","搜索"," ","消息","我的"};
+    private int failTime = 0;
+    private BadgeItem badgeItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +61,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setAutoHideEnabled(true);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 
-        BadgeItem badgeItem = new BadgeItem();
+        badgeItem = new BadgeItem();
 
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
@@ -64,17 +72,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
                 .addItem(new BottomNavigationItem(R.drawable.message, strings[3]))
                 .addItem(new BottomNavigationItem(R.drawable.my, strings[4])
-                        .setBadgeItem(badgeItem.setBackgroundColor(Color.RED).hide().setText("0")));
+                        .setBadgeItem(badgeItem.setBackgroundColor(Color.RED)));
 
-        RxBus.getInstance().toObservable(RxBusEvent.class)
-                .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
-                .subscribe(s -> {
-                    if (TextUtils.equals("0", s.getMsg())){
-                        badgeItem.hide();
-                    }else{
-                        badgeItem.show().setText(s.getMsg());
-                    }
-                });
+//        RxBus.getInstance().toObservable(RxBusEvent.class)
+//                .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
+//                .subscribe(s -> {
+//                    if (TextUtils.equals("0", s.getMsg())){
+//                        badgeItem.hide();
+//                    }else{
+//                        badgeItem.show().setText(s.getMsg());
+//                    }
+//                });
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
@@ -92,6 +100,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             if (days <= 0) {
                 //User.getInstance().clearUser();
             }
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        failTime = 0;
+        List<CollectBean> collectBeanList = JsonUtils.getInstance()
+                .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
+        for(CollectBean bean: collectBeanList){
+            if (!bean.getIsSuccess()){
+                failTime++;
+            }
+        }
+
+        if (failTime == 0){
+            badgeItem.hide();
+        }else{
+            badgeItem.show().setText(failTime+"");
         }
     }
 

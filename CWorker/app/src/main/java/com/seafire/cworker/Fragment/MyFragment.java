@@ -22,12 +22,14 @@ import com.seafire.cworker.Activity.PersonalActivity;
 import com.seafire.cworker.Activity.SettingActivity;
 import com.seafire.cworker.Activity.SuggestActivity;
 import com.seafire.cworker.Activity.VIPActivity;
+import com.seafire.cworker.Bean.CollectBean;
 import com.seafire.cworker.Bean.RxBusEvent;
 import com.seafire.cworker.Common.Constants;
 import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Model.UserInfo;
 import com.seafire.cworker.Present.MyPresenter;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.NetWorkUtils;
 import com.seafire.cworker.Utils.RxBus;
 import com.seafire.cworker.Utils.ShareUtils;
@@ -37,6 +39,7 @@ import com.seafire.cworker.View.MyView;
 import com.seafire.cworker.Widget.CustomDialog;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -46,6 +49,8 @@ import cn.jpush.im.android.api.JMessageClient;
 import io.jchat.android.chatting.utils.FileHelper;
 import io.jchat.android.chatting.utils.SharePreferenceManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static com.seafire.cworker.Common.Constants.COLLECT_LIST;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +95,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Inject
     MyPresenter presenter;
     private int continueDays;
+    private int failTime = 0;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
@@ -134,6 +140,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Override
     public void onResume() {
         super.onResume();
+        failTime = 0;
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             loginBtn.setText("点击登录");
             loginText.setText("请登录");
@@ -163,7 +170,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
                     today.setText(String.valueOf(ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0)));
-                    RxBus.getInstance().post(new RxBusEvent(Constants.POST_COLLECT_TIME, today.getText().toString()));
+//                    List<CollectBean> collectBeanList = JsonUtils.getInstance()
+//                            .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
+//                    for(CollectBean bean: collectBeanList){
+//                        if (!bean.getIsSuccess()){
+//                            failTime++;
+//                        }
+//                    }
+//                    RxBus.getInstance().post(new RxBusEvent(Constants.POST_COLLECT_TIME, failTime+""));
                 } else {
                     today.setText("0");
                 }

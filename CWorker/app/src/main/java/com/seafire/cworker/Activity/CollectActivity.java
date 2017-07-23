@@ -10,10 +10,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -189,6 +191,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
+    @BindView(R.id.name_layout)
+    RelativeLayout nameLayout;
+
     /**
      * 图片adapter
      */
@@ -223,6 +228,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private List<String> historyPathList = new ArrayList<>();
 
     private boolean isNumberSearch = false;
+    private RecyclerArrayAdapter<String> recyclerArrayAdapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CollectActivity.class);
@@ -275,7 +281,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 view.findViewById(R.id.delete).setOnClickListener(v -> {
                     imageItems.remove(i);
                     adapter.remove(i);
-                    if (i == 9) {
+                    if (!adapter.getAllData().contains(ADD)) {
                         adapter.add(ADD);
                     }
                 });
@@ -466,39 +472,79 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         .builder();
             }
         });
+
+        nameLayout.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(name.getText().toString())){
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("详情")
+                        .setMsg(name.getText().toString())
+                        .setPositiveButton("确定", null)
+                        .show();
+            }
+        });
+
+        recommendTv.setOnClickListener(v -> {
+            String recommandData = recommendTv.getText().toString();
+            if (!TextUtils.isEmpty(recommandData)){
+                View recommandView = LayoutInflater.from(CollectActivity.this)
+                        .inflate(R.layout.recommand_list, null);
+                RecyclerView recyclerView = (RecyclerView) recommandView.findViewById(R.id.recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(CollectActivity.this));
+                recyclerArrayAdapter.clear();
+                recyclerArrayAdapter.addAll(recommandData.split(","));
+                recyclerView.setAdapter(recyclerArrayAdapter);
+
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("详情")
+                        .setContentView(recommandView)
+                        .setPositiveButton("确定", null)
+                        .show();
+            }
+
+        });
+
+        recyclerArrayAdapter =
+                new RecyclerArrayAdapter<String>(CollectActivity.this, R.layout.recommand_item_text) {
+                    @Override
+                    protected void convert(BaseViewHolder baseViewHolder, String s) {
+                        baseViewHolder.setText(R.id.recommend_item_text, s);
+                    }
+                };
     }
 
     private void clearData(){
-        name.clearComposingText();
-        source.clearComposingText();
-        wrapText.clearComposingText();
-        typeTxt.clearComposingText();
-        modleNum.clearComposingText();
-        outLength.clearComposingText();
-        outHeight.clearComposingText();
-        outWeight.clearComposingText();
-        outWidth.clearComposingText();
+        number.setText("");
+        name.setText("");
+        source.setText("");
+        wrapText.setText("");
+        typeTxt.setText("");
+        modleNum.setText("");
+        outLength.setText("");
+        outHeight.setText("");
+        outWeight.setText("");
+        outWidth.setText("");
 
-        singleHeight.clearComposingText();
-        singleLength.clearComposingText();
-        singleWeight.clearComposingText();
-        singleWidth.clearComposingText();
+        singleHeight.setText("");
+        singleLength.setText("");
+        singleWeight.setText("");
+        singleWidth.setText("");
 
 
-        length.clearComposingText();
-        width.clearComposingText();
-        height.clearComposingText();
-        weight.clearComposingText();
+        length.setText("");
+        width.setText("");
+        height.setText("");
+        weight.setText("");
 
-        allHeight.clearComposingText();
-        allLength.clearComposingText();
-        allWidth.clearComposingText();
+        allHeight.setText("");
+        allLength.setText("");
+        allWidth.setText("");
 
-        checkTv.clearComposingText();
-        information.clearComposingText();
-        recommendTv.clearComposingText();
+        checkTv.setText("");
+        information.setText("");
+        recommendTv.setText("");
 
         adapter.clear();
+        adapter.add(ADD);
     }
 
     @Override
@@ -509,10 +555,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void getPostTxt(String s) {
         ToastUtil.show("上传成功");
-        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
-            setResult(RESULT_OK);
-        }
-        finish();
+//        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+//            setResult(RESULT_OK);
+//        }
+//        finish();
+
+        scrollView.scrollTo(0, 0);
+        clearData();
     }
 
     @Override
@@ -620,6 +669,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             }
         }
+    }
+
+    @Override
+    public void postTxtError(){
+        scrollView.scrollTo(0, 0);
+        clearData();
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
@@ -794,17 +849,31 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return;
         }
 
-        if ((Utils.subText(outLength.getText().toString()) < Utils.subText(singleLength.getText().toString())) ||
-                (Utils.subText(singleLength.getText().toString()) < Utils.subText(length.getText().toString())) ||
-                (Utils.subText(outHeight.getText().toString()) < Utils.subText(singleHeight.getText().toString())) ||
-                (Utils.subText(singleHeight.getText().toString()) < Utils.subText(height.getText().toString())) ||
-                (Utils.subText(outWidth.getText().toString()) < Utils.subText(singleWidth.getText().toString())) ||
-                (Utils.subText(singleWidth.getText().toString()) < Utils.subText(width.getText().toString())) ||
-                (Utils.subText(outWeight.getText().toString()) < Utils.subText(singleWeight.getText().toString())) ||
-                (Utils.subText(singleWeight.getText().toString()) < Utils.subText(weight.getText().toString()))
-                ){
-            ToastUtil.show("外包装大于单个包装，单个包装大于零件包装");
-            return;
+        if (outLayout.getVisibility() == View.VISIBLE &&
+                singleLayout.getVisibility() == View.GONE){
+            if ((Utils.subText(outLength.getText().toString()) <  Utils.subText(length.getText().toString())) ||
+                    (Utils.subText(outHeight.getText().toString()) <  Utils.subText(height.getText().toString())) ||
+                    (Utils.subText(outWidth.getText().toString()) <  Utils.subText(width.getText().toString())) ||
+                    (Utils.subText(outWeight.getText().toString()) <  Utils.subText(weight.getText().toString()))
+                    ){
+                ToastUtil.show("外包装应大于零件包装");
+                return;
+            }
+        }
+
+        if (outLayout.getVisibility() == View.VISIBLE && singleLayout.getVisibility() == View.VISIBLE){
+            if ((Utils.subText(outLength.getText().toString()) < Utils.subText(singleLength.getText().toString())) ||
+                    (Utils.subText(singleLength.getText().toString()) < Utils.subText(length.getText().toString())) ||
+                    (Utils.subText(outHeight.getText().toString()) < Utils.subText(singleHeight.getText().toString())) ||
+                    (Utils.subText(singleHeight.getText().toString()) < Utils.subText(height.getText().toString())) ||
+                    (Utils.subText(outWidth.getText().toString()) < Utils.subText(singleWidth.getText().toString())) ||
+                    (Utils.subText(singleWidth.getText().toString()) < Utils.subText(width.getText().toString())) ||
+                    (Utils.subText(outWeight.getText().toString()) < Utils.subText(singleWeight.getText().toString())) ||
+                    (Utils.subText(singleWeight.getText().toString()) < Utils.subText(weight.getText().toString()))
+                    ){
+                ToastUtil.show("外包装大于单个包装，单个包装大于零件包装");
+                return;
+            }
         }
 
         if (imageItems.size() <= 3){

@@ -48,7 +48,9 @@
                 android:layout_marginLeft="40px"
                 android:background="@color/nav_gray" />
 
-            <RelativeLayout style="@style/collect_item">
+            <RelativeLayout
+                style="@style/collect_item"
+                android:id="@+id/name_layout">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -312,7 +314,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    >
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
@@ -321,11 +323,8 @@
                         android:background="@color/nav_gray" />
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150px"
-                        android:gravity="center"
-                        android:paddingLeft="150px"
-                        android:paddingRight="50px">
+                        style="@style/collect_item"
+                        android:paddingLeft="150px">
 
                         <TextView
                             android:id="@+id/single_length_tv"
@@ -349,7 +348,9 @@
                         android:layout_marginLeft="40px"
                         android:background="@color/nav_gray" />
 
-                    <RelativeLayout style="@style/collect_item">
+                    <RelativeLayout
+                        style="@style/collect_item"
+                        android:paddingLeft="150px">
 
                         <TextView
                             android:id="@+id/single_width_tv"
@@ -373,7 +374,9 @@
                         android:layout_marginLeft="40px"
                         android:background="@color/nav_gray" />
 
-                    <RelativeLayout style="@style/collect_item">
+                    <RelativeLayout
+                        style="@style/collect_item"
+                        android:paddingLeft="150px">
 
                         <TextView
                             android:id="@+id/single_height_tv"
@@ -397,7 +400,9 @@
                         android:layout_marginLeft="40px"
                         android:background="@color/nav_gray" />
 
-                    <RelativeLayout style="@style/collect_item">
+                    <RelativeLayout
+                        style="@style/collect_item"
+                        android:paddingLeft="150px">
 
                         <TextView
                             android:id="@+id/single_weight_tv"
