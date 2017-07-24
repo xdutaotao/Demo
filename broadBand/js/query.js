@@ -22,6 +22,10 @@ $(function(){
 
         })
     }
+    var HEIGHT = $('.main-div').height();
+    $(window).resize(function() {
+        $('.main-div').height(HEIGHT);
+    });
 
     var params = {
         name: '',
@@ -83,14 +87,14 @@ $(function(){
         Tida.showLoading("加载中...");
         $.ajax({
             type: 'POST',
-            url: 'http://ydts.ews.m.jaeapp.com/php/queryBroadband.php',
+            url: 'https://ydts.ews.m.jaeapp.com/php/queryBroadband.php',
             data: params,
             dataType: 'json',
             success: function (data) {
                 Tida.hideLoading();
                 if (data.code == 0){
                     layer.open({
-                        title: '查询结果',
+                        title: ['查询结果','margin: 0px'],
                         btn: ['重新办理','重新输入'],
                         content: '没有查询到相关信息',
                         yes: function () {
@@ -98,17 +102,9 @@ $(function(){
                             location.href = 'input.html?'+link;
                         }
                     });
-                    // layer.confirm('没有查询到相关信息', {
-                    //     title: '查询结果',
-                    //     btn: ['重新输入','重新办理'] //按钮
-                    // }, function(){
-                    //     layer.close( );
-                    // }, function(){
-                    //     layer.close( );
-                    //     location.href = 'input.html?'+link;
-                    // });
                 }else{
-                    location.href = 'main.html?infor='+infor+'&name='+name+'&phone='+phone+"&"+link;
+                    location.href = 'main.html?infor='+infor+'&name='+name+'&phone='+phone+"&personal="+personal+"&expire="+
+                                data.data.expire+'&bandwidth='+data.data.bandwidth+'&'+link;
                 }
             },
             error:function(msg) {

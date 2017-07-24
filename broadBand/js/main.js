@@ -17,6 +17,12 @@ $(function(){
         }, function(){
 
         })
+
+        $('.number').text(GetQueryString('infor'))
+        $('.name').text(GetQueryString('name'))
+        $('.phone-input').val(GetQueryString('phone'))
+        $('.preTime').text(GetQueryString('expire'))
+        $('.preSpeed').text(GetQueryString('bandwidth'))
     }
 
     var HEIGHT = $('.main-div').height();
@@ -56,13 +62,8 @@ $(function(){
 
 
     $('#buy').click(function () {
-        if ($('.number').val() == ''){
-            toastFunction("宽带账号不能为空");
-            return;
-        }
-
-        if ($('.name').val() == ''){
-            toastFunction("名字不能为空");
+        if ($('.phone-input').val().length == 0){
+            toastFunction("手机号码不能为空");
             return;
         }
 
@@ -70,21 +71,6 @@ $(function(){
             toastFunction("手机号码输入错误");
             return;
         }
-
-        // if ($('.personal-input').val() == ''){
-        //     toastFunction("身份证号不能为空");
-        //     return;
-        // }
-        //
-        // if ($('.personal-input').val().length != 18){
-        //     toastFunction("身份证号输入错误");
-        //     return;
-        // }
-        //
-        // if ($('.address-input').val() == ''){
-        //     toastFunction("地址不能为空");
-        //     return;
-        // }
 
 
         var speed =  $('.speed option:selected').text();
@@ -96,10 +82,10 @@ $(function(){
             tradeToken: GetQueryString("tradeToken")
         };
 
-        data.ex_property.id_number = $('.personal-input').val();
-        data.ex_property.installation_address = $('.address-input').val();
+        data.ex_property.id_number = GetQueryString('personal');
+        data.ex_property.installation_address = '';
         data.ex_property.mobile = $('.phone-input').val();
-        data.ex_property.name = $('.name').val();
+        data.ex_property.name = $('.name').text();
         data.ex_property.broadband_rate = $('.speed option:selected').text();
         data.ex_property.contract_period = $('.time option:selected').text();
         data.ex_property.effective_date = nowDate.getFullYear()+"年"+(nowDate.getMonth()+1)+"月"+nowDate.getDate()+"号零点";
@@ -112,7 +98,6 @@ $(function(){
             data: data,
             dataType: 'json',
             success: function (data) {
-
                 params.tradeExToken = data.trade_extend_token;
 
                 Tida.ready({

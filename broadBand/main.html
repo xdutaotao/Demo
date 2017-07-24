@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="css/main.css"/>
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/toast.js"></script>
         <script src="js/jquery.easydropdown.min.js"></script>
         <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
     </head>
@@ -24,105 +25,24 @@
 
                 <div class="row-padding">
                     <span style="flex: 1">宽带账号</span>
-                    <input style="flex: 3" placeholder="宽带账号" class="input-trans number"></div>
+                    <span style="flex: 3" class=" number"></span>
+                 </div>
 
                 <div class="row-padding">
                     <span style="flex: 1">户主姓名</span>
-                    <input style="flex: 3" placeholder="请输入姓名" class="input-trans name"></div>
+                    <span style="flex: 3" class=" name"></span>
+                </div>
 
                 <div class="row-padding">
                     <span style="flex: 1">到期时间</span>
-
-                    <div class="dropdown" style="flex: 1; height: 100%; display: flex; align-items: center">
-                        <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 15px" class="speed">
-                            <option value="0" class="label">年</option>
-                            <option value="1">2017年</option>
-                            <option value="2">2018年</option>
-                            <option value="3">2019年</option>
-                            <option value="4">2020年</option>
-                            <option value="5">2021年</option>
-                        </select>
-                    </div>
-
-                    <div class="dropdown" style="flex: 1; height: 100%; display: flex; align-items: center">
-                        <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 15px" class="speed">
-                            <option value="0" class="label">月</option>
-                            <option value="1">1月</option>
-                            <option value="2">2月</option>
-                            <option value="3">3月</option>
-                            <option value="4">4月</option>
-                            <option value="5">5月</option>
-                            <option value="6">6月</option>
-                            <option value="7">7月</option>
-                            <option value="8">8月</option>
-                            <option value="9">9月</option>
-                            <option value="10">10月</option>
-                            <option value="11">11月</option>
-                            <option value="12">12月</option>
-                        </select>
-                    </div>
-
-                    <div class="dropdown" style="flex: 1; height: 100%; display: flex; align-items: center">
-                        <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 15px" class="speed">
-                            <option value="0" class="label">日</option>
-                            <option value="1">1日</option>
-                            <option value="2">2日</option>
-                            <option value="3">3日</option>
-                            <option value="4">4日</option>
-                            <option value="5">5日</option>
-                            <option value="6">6日</option>
-                            <option value="7">7日</option>
-                            <option value="8">8日</option>
-                            <option value="9">9日</option>
-                            <option value="10">10日</option>
-                            <option value="11">11日</option>
-                            <option value="12">12日</option>
-                            <option value="13">13日</option>
-                            <option value="14">14日</option>
-                            <option value="15">15日</option>
-                            <option value="16">16日</option>
-                            <option value="17">17日</option>
-                            <option value="18">18日</option>
-                            <option value="19">19日</option>
-                            <option value="20">20日</option>
-                            <option value="21">21日</option>
-                            <option value="22">22日</option>
-                            <option value="23">23日</option>
-                            <option value="24">24日</option>
-                            <option value="25">25日</option>
-                            <option value="26">26日</option>
-                            <option value="27">27日</option>
-                            <option value="28">28日</option>
-                            <option value="29">29日</option>
-                            <option value="30">30日</option>
-                            <option value="31">31日</option>
-                        </select>
-                    </div>
+                    <span style="flex: 3" class=" preTime"></span>
                 </div>
 
 
                 <div class="row-padding">
                     <span style="flex: 1">套餐速率</span>
-                    <div class="dropdown" style="flex: 3; height: 100%; display: flex; align-items: center">
-                        <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0;height:30px; font-size: 15px" class="speed">
-                            <option value="0" class="label">50M</option>
-                            <option value="1">100M</option>
-                            <option value="2">200M</option>
-                            <option value="3">500M</option>
-                        </select>
-                    </div>
+                    <span style="flex: 3" class="preSpeed"></span>
                 </div>
-
-                <!--<div class="row-padding">-->
-                    <!--<span style="flex: 1">身份证</span>-->
-                    <!--<input type="text" placeholder="请输入身份证号码" maxlength="18"-->
-                           <!--class="input-trans personal-input" style="flex: 3">-->
-                <!--</div>-->
-
-                <!--<div class="row-padding">-->
-                    <!--<span style="flex: 1">安装地址</span>-->
-                    <!--<input type="text" placeholder="请输入宽带安装地址" class="input-trans address-input" style="flex: 3">-->
-                <!--</div>-->
 
             </div>
 
@@ -162,7 +82,7 @@
                 <div class="row-main">
                     <span style="flex: 1">续约金额</span>
                     <div style="flex: 3">
-                        <span style="color: red; ">1000</span>
+                        <span style="color: red; ">1</span>
                     </div>
 
                 </div>
