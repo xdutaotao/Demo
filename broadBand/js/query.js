@@ -7,11 +7,11 @@ function GetQueryString(name) {
     var r = window.location.search.substr(1).match(reg);
     if(r!=null)return  unescape(r[2]); return null;
 }
-var code = GetQueryString("code");
-var error = GetQueryString("error");
-if (!code && (error == undefined || error == null)){
-    location.href = 'https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/query.html&state=1212&view=wap'
-}
+// var code = GetQueryString("code");
+// var error = GetQueryString("error");
+// if (!code && (error == undefined || error == null)){
+//     location.href = 'https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/query.html&state=1212&view=wap'
+// }
 
 $(function(){
 
@@ -23,6 +23,12 @@ $(function(){
         })
     }
 
+    var params = {
+        name: '',
+        phone: '',
+        infor: '',
+        personal: ''
+    }
 
     $('#query').click(function () {
         var name = $('.name').val();
@@ -70,16 +76,40 @@ $(function(){
         //     }
         // }); https://oauth.taobao.com/authorize?response_type=code&client_id=24545499&redirect_uri=http://ydts.ews.m.jaeapp.com/broadBand/empty.html
 
+        params.name = name;
+        params.infor = infor;
+        params.phone = phone;
+        params.personal = personal;
         Tida.showLoading("加载中...");
-
         $.ajax({
             type: 'POST',
-            url: 'https://ydts.ews.m.jaeapp.com/php/pushUserInfo.php',
-            data: {code: code},
+            url: 'http://ydts.ews.m.jaeapp.com/php/queryBroadband.php',
+            data: params,
             dataType: 'json',
             success: function (data) {
-                alert(data);
                 Tida.hideLoading();
+                if (data.code == 0){
+                    layer.open({
+                        title: '查询结果',
+                        btn: ['重新办理','重新输入'],
+                        content: '没有查询到相关信息',
+                        yes: function () {
+                            layer.close( );
+                            location.href = 'input.html?'+link;
+                        }
+                    });
+                    // layer.confirm('没有查询到相关信息', {
+                    //     title: '查询结果',
+                    //     btn: ['重新输入','重新办理'] //按钮
+                    // }, function(){
+                    //     layer.close( );
+                    // }, function(){
+                    //     layer.close( );
+                    //     location.href = 'input.html?'+link;
+                    // });
+                }else{
+                    location.href = 'main.html?infor='+infor+'&name='+name+'&phone='+phone+"&"+link;
+                }
             },
             error:function(msg) {
                 Tida.hideLoading();
