@@ -82,7 +82,7 @@ $(function(){
             tradeToken: GetQueryString("tradeToken")
         };
 
-        data.ex_property.id_number = GetQueryString('personal');
+        data.ex_property.id_number = '';
         data.ex_property.installation_address = '';
         data.ex_property.mobile = $('.phone-input').val();
         data.ex_property.name = $('.name').text();

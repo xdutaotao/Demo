@@ -124,9 +124,9 @@ $(function(){
         data.ex_property.broadband_rate = $('.speed option:selected').text();
         data.ex_property.contract_period = $('.time option:selected').text();
         data.ex_property.effective_date = nowDate.getFullYear()+"年"+(nowDate.getMonth()+1)+"月"+nowDate.getDate()+"号零点";
-        
+
         //Tida.showLoading("加载中...");
-        
+
         $.ajax({
             type: 'POST',
             url: 'https://ydts.ews.m.jaeapp.com/php/trade.php',
@@ -159,10 +159,10 @@ $(function(){
         });
 
     })
-    
+
     $('.im').click(function () {
         //Tida.showLoading("加载中...");
-        
+
         var options = {
             sellerNick:"移动天帅通信专卖店",
             itemId :GetQueryString("itemId"),

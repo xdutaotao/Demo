@@ -60,15 +60,15 @@ $(function(){
             return;
         }
 
-        if (personal == ''){
-            toastFunction("身份证号不能为空");
-            return;
-        }
+        /*  if (personal == ''){
+         toastFunction("身份证号不能为空");
+         return;
+         }*/
 
-        if (personal.length != 18){
-            toastFunction("身份证号输入错误");
-            return;
-        }
+        /*  if (personal.length != 18){
+         toastFunction("身份证号输入错误");
+         return;
+         }*/
 
         // location.href = 'main.html?'+link;
         //location.href = 'empty.html?info='+infor+'&name='+name+'&phone='+phone;
@@ -87,7 +87,7 @@ $(function(){
         Tida.showLoading("加载中...");
         $.ajax({
             type: 'POST',
-            url: 'https://ydts.ews.m.jaeapp.com/php/queryBroadband.php',
+            url: 'https://ydts.ews.m.jaeapp.com/manage/index.php?g=Portal&m=Index&a=getBroadband',
             data: params,
             dataType: 'json',
             success: function (data) {
@@ -104,7 +104,7 @@ $(function(){
                     });
                 }else{
                     location.href = 'main.html?infor='+infor+'&name='+name+'&phone='+phone+"&personal="+personal+"&expire="+
-                                data.data.expire+'&bandwidth='+data.data.bandwidth+'&'+link;
+                        data.data.expire+'&bandwidth='+data.data.expenses.split("有线宽带")[1].split("包年")[0]+'&'+link;
                 }
             },
             error:function(msg) {
