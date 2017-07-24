@@ -14,6 +14,7 @@ import com.seafire.cworker.Activity.SearchResultActivity;
 import com.seafire.cworker.Activity.SettingActivity;
 import com.seafire.cworker.Activity.SuggestActivity;
 import com.seafire.cworker.Fragment.AddFragment;
+import com.seafire.cworker.Fragment.FriendFragment;
 import com.seafire.cworker.Fragment.HomeFragment;
 import com.seafire.cworker.Fragment.MessageFragment;
 import com.seafire.cworker.Fragment.MyFragment;
@@ -42,4 +43,5 @@ public interface ActivityComponent {
     void inject(SettingActivity activity);
     void inject(SuggestActivity activity);
     void inject(PersonalActivity activity);
+    void inject(FriendFragment fragment);
 }

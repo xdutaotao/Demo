@@ -77,12 +77,13 @@
             android:value="jchat.db" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.seafire.cworker.database.UserEntry, com.seafire.cworker.database.FriendEntry,              com.seafire.cworker.database.FriendRecommendEntry" />
+            android:value="com.seafire.cworker.database.UserEntry, com.seafire.cworker.database.FriendEntry,com.seafire.cworker.database.FriendRecommendEntry" />
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="4" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Activity.LoginActivity"
             android:launchMode="singleTask" />
