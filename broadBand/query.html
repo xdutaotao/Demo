@@ -8,10 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="spm-id" content="a1z51.24540073"/>
 
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+
+
     <link rel="stylesheet" href="css/main.css"/>
 
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/query.js"></script>
+    <script src="js/query.js?v=2"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/layer_mobile/layer.js"></script>
@@ -53,7 +59,7 @@
 
             <div style="color: #37dec9; background-color: white; display: flex;
                 align-items: center; height: 25px; margin: 0px 60px;
-                justify-content: center; border-radius: 25px">
+                justify-content: center; border-radius: 25px" onclick="window.location.reload(1);">
                 <img src="img/input_head.png" style="height: 18px; width: 18px; margin-right: 5px;">
                 <span style="font-size: 14px">续约失败全额退款</span>
             </div>
@@ -127,6 +133,9 @@
 
     var link=window.location.href.split("?")[1];
     //$("body").append(link);
+
+    //alert(link);
+
 
 
 

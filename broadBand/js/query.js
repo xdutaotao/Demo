@@ -2,6 +2,7 @@
  * Created by guzhenfu on 2017/7/12.
  */
 
+
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -33,6 +34,7 @@ $(function(){
         infor: '',
         personal: ''
     }
+
 
     $('#query').click(function () {
         var name = $('.name').val();
@@ -84,14 +86,19 @@ $(function(){
         params.infor = infor;
         params.phone = phone;
         params.personal = personal;
-        Tida.showLoading("加载中...");
+
+
+        //Tida.showLoading("加载中...");
+
+
         $.ajax({
             type: 'POST',
             url: 'https://ydts.ews.m.jaeapp.com/manage/index.php?g=Portal&m=Index&a=getBroadband',
             data: params,
             dataType: 'json',
             success: function (data) {
-                Tida.hideLoading();
+
+                //Tida.hideLoading();
                 if (data.code == 0){
                     layer.open({
                         title: ['查询结果','margin: 0px'],
@@ -103,12 +110,15 @@ $(function(){
                         }
                     });
                 }else{
-                    location.href = 'main.html?infor='+infor+'&name='+escape(name)+'&phone='+phone+"&personal="+personal+"&expire="+
-                        data.data.expire+'&bandwidth='+data.data.expenses.split("有线宽带")[1].split("包年")[0]+'&'+link;
+
+                    sessionStorage.nameStr=name;
+
+                    location.href = 'main.html?'+link+'&infor='+infor+'&phone='+phone+"&personal="+personal+"&expire="+
+                        data.data.expire+'&bandwidth='+data.data.expenses.split("有线宽带")[1].split("包年")[0];
                 }
             },
             error:function(msg) {
-                Tida.hideLoading();
+                //Tida.hideLoading();
                 toastFunction("请稍后重试")
             }
 

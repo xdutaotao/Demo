@@ -61,6 +61,9 @@ $(function(){
 
     };
 
+
+    alert(GetQueryString("tradeToken"));
+
     $('#action').click(function () {
         if ($('.name-input').val() == ''){
             toastFunction("户主姓名不能为空");
@@ -117,6 +120,7 @@ $(function(){
             tradeToken: GetQueryString("tradeToken")
         };
 
+
         data.ex_property.id_number = $('.personal-input').val();
         data.ex_property.installation_address = $('.address-input').val();
         data.ex_property.mobile = $('.phone-input').val();
@@ -146,6 +150,7 @@ $(function(){
                     debug: 0,
                     combo: 0
                 }, function(e){
+                    //alert(JSON.stringify(params));
                     Tida.customization.buildOrder(params);
                     //Tida.hideLoading();
                 });

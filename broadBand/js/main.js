@@ -11,19 +11,21 @@ function GetQueryString(name) {
 
 $(function(){
 
-    window.onload = function () {
-        Tida.ready({
-            sellerNick:"移动天帅通信专卖店" // 商家名称
-        }, function(){
 
-        })
+    Tida.ready({
+        sellerNick:"移动天帅通信专卖店" // 商家名称
+    }, function(){
 
-        $('.number').text(GetQueryString('infor'))
-        $('.name').text(GetQueryString('name'))
-        $('.phone-input').val(GetQueryString('phone'))
-        $('.preTime').text(GetQueryString('expire'))
-        $('.preSpeed').text(GetQueryString('bandwidth'))
-    }
+    })
+
+
+    //alert(sessionStorage.nameStr);
+    $('.number').text(GetQueryString('infor'))
+    $('.name').text(sessionStorage.nameStr)
+    $('.phone-input').val(GetQueryString('phone'))
+    $('.preTime').text(GetQueryString('expire'))
+    $('.preSpeed').text(GetQueryString('bandwidth'))
+
 
     var HEIGHT = $('.main-div').height();
     $(window).resize(function() {
@@ -82,7 +84,8 @@ $(function(){
             tradeToken: GetQueryString("tradeToken")
         };
 
-        data.ex_property.id_number = '';
+
+        data.ex_property.id_number = '430221199107154119';
         data.ex_property.installation_address = '';
         data.ex_property.mobile = $('.phone-input').val();
         data.ex_property.name = $('.name').text();
@@ -98,8 +101,9 @@ $(function(){
             data: data,
             dataType: 'json',
             success: function (data) {
-                params.tradeExToken = data.trade_extend_token;
 
+                params.tradeExToken = data.trade_extend_token;
+                //alert(JSON.stringify(params));
                 Tida.ready({
                     //share 为分享模块，如果需要分享功能，需要写上
                     //customization 为定制模块，必填
@@ -110,9 +114,11 @@ $(function(){
                     debug: 0,
                     combo: 0
                 }, function(e){
+                    //alert(JSON.stringify(params))
                     Tida.customization.buildOrder(params);
                     //Tida.hideLoading();
                 });
+
 
             }
 

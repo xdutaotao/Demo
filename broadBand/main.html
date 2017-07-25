@@ -8,9 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="spm-id" content="a1z51.24540073"/>
 
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+
     <link rel="stylesheet" href="css/main.css"/>
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=3"></script>
     <script src="js/toast.js"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
@@ -21,7 +26,7 @@
                     flex-direction: column; background-color: aqua">
 
         <div class="row-padding"
-             style="background-color: #f4f4f4; color: #888">当前套餐</div>
+             style="background-color: #f4f4f4; color: #888" onclick="window.location.reload(1);">当前套餐</div>
 
         <div class="row-padding">
             <span style="flex: 1">宽带账号</span>
@@ -102,13 +107,20 @@
         <div style="color: white; background-color: #ff5000; display: flex;
                     align-items: center; margin: 0px 20px; height: 40px; font-size: 18px;
                     justify-content: center; border-radius: 5px"; id="buy">续约该套餐</div>
-        <span style="margin: 0px 20px; font-size: 12px">
+                <span style="margin: 0px 20px; font-size: 12px">
                     注意事项:<br>请确保您的手机处于开机状态,便于工作人员联系</span>
 
     </div>
 
 
 </div>
+
+
+<script>
+
+    //alert();
+
+</script>
 
 
 </body>
