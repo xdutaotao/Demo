@@ -103,7 +103,7 @@ $(function(){
                         }
                     });
                 }else{
-                    location.href = 'main.html?infor='+infor+'&name='+name+'&phone='+phone+"&personal="+personal+"&expire="+
+                    location.href = 'main.html?infor='+infor+'&name='+escape(name)+'&phone='+phone+"&personal="+personal+"&expire="+
                         data.data.expire+'&bandwidth='+data.data.expenses.split("有线宽带")[1].split("包年")[0]+'&'+link;
                 }
             },
