@@ -2,6 +2,7 @@ package com.seafire.cworker.Common;
 
 
 import com.seafire.cworker.Bean.BaseResponseBean;
+import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.NumberBean;
 import com.seafire.cworker.Bean.PackageBean;
 import com.seafire.cworker.Bean.SearchResponseBean;
@@ -122,5 +123,9 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("data/getPartInfoByCode")
     Observable<NumberBean> getPartInfoByCode(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("dversion/getUsersByProject")
+    Observable<BaseBean<List<FreindBean>>> getFriends(@Field("token") String token);
 
 }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/search_top" />
+    <include layout="@layout/friend_search_top" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/result_recycler_view"/>
+            android:id="@+id/result_recycler_view"
+            android:visibility="gone"/>
     </FrameLayout>
 
 

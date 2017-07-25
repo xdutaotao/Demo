@@ -135,7 +135,7 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
             }
         } else {
             if (pvFragment == null) {
-                pvFragment = new ContactsFragment();
+                pvFragment = new FriendFragment();
                 fragmentTransaction.add(R.id.consult_content, pvFragment, PV_TAG);
             } else {
                 fragmentTransaction.show(pvFragment);

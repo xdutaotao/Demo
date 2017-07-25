@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.bumptech.glide.Glide;
 import com.seafire.cworker.App;
 import com.seafire.cworker.Bean.BaseResponseBean;
+import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.UpdateVersionBean;
 import com.seafire.cworker.Utils.FileUtils;
 import com.seafire.cworker.Utils.JsonUtils;
@@ -275,6 +276,12 @@ public class LoginModel extends BaseModel {
                     return "操作成功";
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+
+    public Observable<List<FreindBean>> getFriends(){
+        return config.getRetrofitService().getFriends(User.getInstance().getUserId())
+                .compose(RxUtils.handleResult());
     }
 
 }
