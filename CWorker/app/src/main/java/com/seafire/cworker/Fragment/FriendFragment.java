@@ -19,6 +19,7 @@ import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.Present.FriendPresenter;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.View.FriendView;
 import com.seafire.cworker.adapters.ItemClickListener;
 import com.seafire.cworker.adapters.Section;
@@ -118,7 +119,7 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     }
 
     @Override
-    public void itemClicked(Item item) {
+    public void itemClicked(FreindBean.UsersBean item) {
 
     }
 
@@ -130,6 +131,7 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     @Override
     public void onFailure() {
         swipe.setRefreshing(false);
+        ToastUtil.show("请稍后重试");
     }
 
     @Override

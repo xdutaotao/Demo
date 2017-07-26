@@ -125,7 +125,7 @@ public interface RetrofitService {
     Observable<NumberBean> getPartInfoByCode(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST("dversion/getUsersByProject")
+    @POST("user/getUsersByProject")
     Observable<BaseBean<List<FreindBean>>> getFriends(@Field("token") String token);
 
 }

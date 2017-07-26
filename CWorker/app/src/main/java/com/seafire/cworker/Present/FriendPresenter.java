@@ -32,8 +32,8 @@ public class FriendPresenter extends BasePresenter<FriendView> {
                     }
 
                     @Override
-                    protected void _onError(String msg) {
-                        ToastUtil.show(msg);
+                    protected void _onError() {
+                        getView().onFailure();
                     }
                 }));
     }

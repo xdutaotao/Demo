@@ -5,13 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.R;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by lenovo on 2/23/2016.
@@ -55,8 +60,12 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (holder.viewType) {
             case VIEW_TYPE_ITEM :
-                final Item item = (Item) mDataArrayList.get(position);
+                final FreindBean.UsersBean item = (FreindBean.UsersBean) mDataArrayList.get(position);
                 holder.itemTextView.setText(item.getName());
+                Glide.with(mContext).load(item.getFace())
+                        .placeholder(R.drawable.ic_launcher_round)
+                        .bitmapTransform(new CropCircleTransformation(mContext))
+                        .into(holder.itemHeadIcon);
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -67,21 +76,23 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
             case VIEW_TYPE_SECTION :
                 final Section section = (Section) mDataArrayList.get(position);
                 holder.sectionTextView.setText(section.getName());
-                holder.sectionTextView.setOnClickListener(new View.OnClickListener() {
+                holder.sectionView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //mItemClickListener.itemClicked(section);
                         section.isExpanded = !section.isExpanded;
                         mSectionStateChangeListener.onSectionStateChanged(section, section.isExpanded);
+                        if (section.isExpanded){
+                            holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                            holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                            holder.sectionImageView.setRotation(90);
+                        }else{
+                            holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                            holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                            holder.sectionImageView.setRotation(-90);
+                        }
                     }
                 });
-//                holder.sectionToggleButton.setChecked(section.isExpanded);
-//                holder.sectionToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        mSectionStateChangeListener.onSectionStateChanged(section, isChecked);
-//                    }
-//                });
                 break;
         }
     }
@@ -106,9 +117,12 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
 
         //for section
         TextView sectionTextView;
+        View sectionView;
+        ImageView sectionImageView;
 
         //for item
         TextView itemTextView;
+        ImageView itemHeadIcon;
 
         public ViewHolder(View view, int viewType) {
             super(view);
@@ -116,8 +130,11 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
             this.view = view;
             if (viewType == VIEW_TYPE_ITEM) {
                 itemTextView = (TextView) view.findViewById(R.id.text_item);
+                itemHeadIcon = (ImageView) view.findViewById(R.id.head_icon);
             } else {
                 sectionTextView = (TextView) view.findViewById(R.id.text_section);
+                sectionView = view.findViewById(R.id.section_view);
+                sectionImageView = (ImageView) view.findViewById(R.id.group_arrow);
             }
         }
     }
