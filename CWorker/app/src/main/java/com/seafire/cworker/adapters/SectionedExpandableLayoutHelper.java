@@ -31,8 +31,6 @@ public class SectionedExpandableLayoutHelper implements SectionStateChangeListen
 
     public SectionedExpandableLayoutHelper(Context context, RecyclerView recyclerView, ItemClickListener itemClickListener) {
 
-        //setting the recycler view
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridSpanCount);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         mSectionedExpandableGridAdapter = new SectionedExpandableGridAdapter(context, mDataArrayList,
@@ -50,6 +48,13 @@ public class SectionedExpandableLayoutHelper implements SectionStateChangeListen
         Section newSection;
         mSectionMap.put(section, (newSection = new Section(section)));
         mSectionDataMap.put(newSection, items);
+        notifyDataSetChanged();
+    }
+
+    public void removeAllData(){
+        mSectionDataMap.clear();
+        mSectionDataMap.clear();
+        mDataArrayList.clear();
     }
 
     public void addItem(String section, FreindBean.UsersBean item) {

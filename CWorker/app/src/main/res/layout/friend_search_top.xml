@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="返回"
         android:layout_gravity="center_vertical"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimary"
         android:textSize="50px"
         android:id="@+id/back"
         android:gravity="center"

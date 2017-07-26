@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
     //view type
     private static final int VIEW_TYPE_SECTION = R.layout.layout_section;
     private static final int VIEW_TYPE_ITEM = R.layout.layout_item; //TODO : change this
+    private String projectName;
 
     public SectionedExpandableGridAdapter(Context context, ArrayList<Object> dataArrayList,
                                            ItemClickListener itemClickListener,
@@ -52,7 +54,9 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(viewType, parent, false), viewType);
+        ViewHolder holder =  new ViewHolder(LayoutInflater.from(mContext).inflate(viewType, parent, false), viewType);
+        AutoUtils.auto(holder.view);
+        return holder;
     }
 
 
@@ -61,7 +65,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
         switch (holder.viewType) {
             case VIEW_TYPE_ITEM :
                 final FreindBean.UsersBean item = (FreindBean.UsersBean) mDataArrayList.get(position);
-                holder.itemTextView.setText(item.getName());
+                holder.itemTextView.setText(item.getName() + (item.getType() != 0?" -- 管理员":""));
                 Glide.with(mContext).load(item.getFace())
                         .placeholder(R.drawable.ic_launcher_round)
                         .bitmapTransform(new CropCircleTransformation(mContext))
@@ -69,30 +73,32 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mItemClickListener.itemClicked(item);
+                        mItemClickListener.itemClicked(item, projectName);
                     }
                 });
                 break;
             case VIEW_TYPE_SECTION :
-                final Section section = (Section) mDataArrayList.get(position);
+                Section section = (Section) mDataArrayList.get(position);
+                projectName = section.getName();
                 holder.sectionTextView.setText(section.getName());
                 holder.sectionView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //mItemClickListener.itemClicked(section);
                         section.isExpanded = !section.isExpanded;
                         mSectionStateChangeListener.onSectionStateChanged(section, section.isExpanded);
+                        ImageView imageView = (ImageView) v.findViewById(R.id.group_arrow);
                         if (section.isExpanded){
-                            holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
-                            holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
-                            holder.sectionImageView.setRotation(90);
+                            imageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                            imageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                            imageView.setRotation(90);
                         }else{
-                            holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
-                            holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
-                            holder.sectionImageView.setRotation(-90);
+                            imageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                            imageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                            imageView.setRotation(0);
                         }
                     }
                 });
+
                 break;
         }
     }

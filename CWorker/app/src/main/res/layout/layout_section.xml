@@ -4,26 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="160px"
     android:background="@android:color/white"
-    android:orientation="horizontal"
-    android:padding="20px"
+    android:orientation="vertical"
     android:id="@+id/section_view">
 
-    <ImageView
-        android:layout_width="80px"
-        android:layout_height="80px"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/group_arrow"
-        android:id="@+id/group_arrow"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="155px"
+        android:paddingLeft="20px"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/section_padding"
-        android:layout_gravity="center_vertical"
-        android:textColor="@color/titlebar_bg_color"
-        android:textSize="@dimen/section_text_size"
-        android:id="@+id/text_section"
-        android:text="111111"/>
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/group_arrow"
+            android:id="@+id/group_arrow"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/section_padding"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/titlebar_bg_color"
+            android:textSize="60px"
+            android:id="@+id/text_section"
+            android:text="111111"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/divider"/>
 
 
 </LinearLayout>

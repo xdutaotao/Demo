@@ -19,6 +19,11 @@ $(function(){
     }
 
 
+    var params = {
+        name: '',
+        phone: '',
+        personal: ''
+    }
     $('#query').click(function () {
         var name = $('.name').val();
         var phone = $('.phone').val();
@@ -49,8 +54,40 @@ $(function(){
             return;
         }
 
-        // location.href = 'main.html?'+link;
-        location.href = 'benefit.html?personal='+ personal+'&name='+name+'&phone='+phone;
+        params.name = name;
+        params.phone = phone;
+        params.personal = personal;
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://ydts.ews.m.jaeapp.com/manage/index.php?g=Portal&m=Index&a=getBroadband',
+            data: params,
+            dataType: 'json',
+            success: function (data) {
+
+                //Tida.hideLoading();
+                if (data.code == 0){
+                    layer.open({
+                        title: ['查询结果','margin: 0px'],
+                        btn: '确定',
+                        content: '没有查询到相关信息',
+                        yes: function () {
+                            layer.close( );
+                        }
+                    });
+                }else{
+
+                    sessionStorage.phoneName=name;
+
+                    location.href = 'benefit.html?'+link+"&phone="+phone+"&personal="+personal;
+                }
+            },
+            error:function(msg) {
+                //Tida.hideLoading();
+                toastFunction("请稍后重试")
+            }
+
+        });
 
     })
 

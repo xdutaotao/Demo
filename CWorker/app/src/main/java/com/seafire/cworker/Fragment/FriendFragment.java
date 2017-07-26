@@ -3,8 +3,11 @@ package com.seafire.cworker.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +17,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.seafire.cworker.Bean.FreindBean;
+import com.seafire.cworker.Bean.FriendProBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.Present.FriendPresenter;
 import com.seafire.cworker.R;
@@ -57,6 +64,10 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
     private SectionedExpandableLayoutHelper sectionedExpandableLayoutHelper;
+    private List<FreindBean> freindBeanList = new ArrayList<>();
+
+    private RecyclerArrayAdapter<FriendProBean> adapter;
+    private List<FriendProBean> resultData = new ArrayList<>();
 
     public static FriendFragment newInstance() {
         FriendFragment fragment = new FriendFragment();
@@ -87,30 +98,87 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
             }
         });
 
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(s)){
+                    resultData.clear();
+                    adapter.clear();
+                    return;
+                }
+                if (freindBeanList.size() != 0) {
+                    resultData.clear();
+                    adapter.clear();
+                    for (FreindBean freindBean: freindBeanList){
+                        for (FreindBean.UsersBean bean: freindBean.getUsers()){
+                            if (bean.getName().contains(editText.getText())){
+                                resultData.add(changeBean(bean, freindBean.getName()));
+                            }
+                        }
+                    }
+                    adapter.addAll(resultData);
+                    back.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    resultRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        back.setOnClickListener(v -> {
+            resultRecyclerView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            back.setVisibility(View.GONE);
+            closeSoftKeyboard(editText, getContext());
+        });
+
+        adapter = new RecyclerArrayAdapter<FriendProBean>(getContext(), R.layout.layout_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, FriendProBean usersBean) {
+                baseViewHolder.setImageUrl(R.id.head_icon, usersBean.getFace());
+                baseViewHolder.setText(R.id.text_item, usersBean.getName()+(usersBean.getType() != 0?" -- 管理员":""));
+            }
+        };
+
+        adapter.setOnItemClickListener((view1, i) -> {
+            showDialog(resultData.get(i));
+        });
+
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        resultRecyclerView.setLayoutManager(manager);
+        resultRecyclerView.setAdapter(adapter);
+
         swipe.setOnRefreshListener(this);
         onRefresh();
         return view;
     }
 
     private void doSearchAction(String s) {
-        if (!TextUtils.isEmpty(s)) {
-
-        }
+        closeSoftKeyboard(editText, getContext());
     }
 
     @Override
     public void getData(List<FreindBean> list) {
         swipe.setRefreshing(false);
+        sectionedExpandableLayoutHelper.removeAllData();
+        freindBeanList.clear();
+        freindBeanList.addAll(list);
         for (FreindBean freindBean : list) {
             ArrayList<FreindBean.UsersBean> arrayList = new ArrayList<>();
             arrayList.addAll(freindBean.getUsers());
-            sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
+            if (freindBean.getUsers().size() > 0)
+                sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
         }
-        sectionedExpandableLayoutHelper.notifyDataSetChanged();
-
-        //checking if adding single item works
-//        sectionedExpandableLayoutHelper.addItem("Ice cream", new Item("Tutti frutti",5));
-//        sectionedExpandableLayoutHelper.notifyDataSetChanged();
     }
 
     @Override
@@ -119,13 +187,28 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     }
 
     @Override
-    public void itemClicked(FreindBean.UsersBean item) {
-
+    public void itemClicked(FreindBean.UsersBean item, String projectName) {
+        showDialog(changeBean(item, projectName));
     }
 
-    @Override
-    public void itemClicked(Section section) {
+    private void showDialog(FriendProBean bean){
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.friend_dialog, null);
+        TextView sex = (TextView) view.findViewById(R.id.sex);
+        TextView project = (TextView) view.findViewById(R.id.project);
+        TextView phone = (TextView) view.findViewById(R.id.phone);
 
+        String type = "";
+        if (bean.getType() != 0){
+            type = " -- 管理员";
+        }
+        sex.setText("性别:"+(bean.getSex()==0?"女":"男"));
+        project.setText("所属项目:"+bean.getProName());
+        phone.setText("手机:"+bean.getMobile());
+        new IOSDialog(getContext()).builder()
+                .setTitle(bean.getName()+type)
+                .setContentView(view)
+                .setPositiveButton("确定", null)
+                .show();
     }
 
     @Override
@@ -138,5 +221,35 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+
+    private FriendProBean changeBean(FreindBean.UsersBean bean, String proName){
+        FriendProBean friendProBean = new FriendProBean();
+        friendProBean.setAddress(bean.getAddress());
+        friendProBean.setAppid(bean.getAppid());
+        friendProBean.setDateline(bean.getDateline());
+        friendProBean.setDeviceRemark(bean.getDeviceRemark());
+        friendProBean.setDeviceToken(bean.getDeviceToken());
+        friendProBean.setDisabled(bean.getDisabled());
+        friendProBean.setEmail(bean.getEmail());
+        friendProBean.setExperience(bean.getExperience());
+        friendProBean.setFace(bean.getFace());
+        friendProBean.setGold(bean.getGold());
+        friendProBean.setId(bean.getId());
+        friendProBean.setLastLoginTime(bean.getLastLoginTime());
+        friendProBean.setLastPasswordModifiedTime(bean.getLastPasswordModifiedTime());
+        friendProBean.setLocked(bean.getLocked());
+        friendProBean.setMobile(bean.getMobile());
+        friendProBean.setName(bean.getName());
+        friendProBean.setPassword(bean.getPassword());
+        friendProBean.setProject(bean.getProject());
+        friendProBean.setSex(bean.getSex());
+        friendProBean.setToken(bean.getToken());
+        friendProBean.setType(bean.getType());
+        friendProBean.setVIP(bean.getVIP());
+        friendProBean.setVipDateline(bean.getVipDateline());
+        friendProBean.setProName(proName);
+        return friendProBean;
     }
 }
