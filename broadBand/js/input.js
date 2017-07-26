@@ -61,9 +61,6 @@ $(function(){
 
     };
 
-
-    alert(GetQueryString("tradeToken"));
-
     $('#action').click(function () {
         if ($('.name-input').val() == ''){
             toastFunction("户主姓名不能为空");

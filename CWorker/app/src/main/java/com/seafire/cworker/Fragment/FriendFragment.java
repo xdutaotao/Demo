@@ -1,10 +1,8 @@
 package com.seafire.cworker.Fragment;
 
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -16,8 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gzfgeh.adapter.BaseViewHolder;
-import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.Present.FriendPresenter;
@@ -34,18 +31,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.GetUserInfoCallback;
-import cn.jpush.im.android.api.model.UserInfo;
-import io.jchat.android.adapter.SearchFriendListAdapter;
-import io.jchat.android.chatting.utils.DialogCreator;
-import io.jchat.android.chatting.utils.HandleResponseCode;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FriendFragment extends BaseFragment implements ItemClickListener, FriendView {
+public class FriendFragment extends BaseFragment implements ItemClickListener, FriendView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R.id.type_image)
@@ -63,6 +53,8 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
 
     @Inject
     FriendPresenter presenter;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
     private SectionedExpandableLayoutHelper sectionedExpandableLayoutHelper;
 
     public static FriendFragment newInstance() {
@@ -79,7 +71,6 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
         presenter.attachView(this);
-        presenter.getFriends();
 
         sectionedExpandableLayoutHelper = new SectionedExpandableLayoutHelper(getContext(),
                 recyclerView, this);
@@ -95,13 +86,35 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
             }
         });
 
+        swipe.setOnRefreshListener(this);
+        onRefresh();
         return view;
     }
 
-    private void doSearchAction(String s){
-        if (!TextUtils.isEmpty(s)){
+    private void doSearchAction(String s) {
+        if (!TextUtils.isEmpty(s)) {
 
         }
+    }
+
+    @Override
+    public void getData(List<FreindBean> list) {
+        swipe.setRefreshing(false);
+        for (FreindBean freindBean : list) {
+            ArrayList<FreindBean.UsersBean> arrayList = new ArrayList<>();
+            arrayList.addAll(freindBean.getUsers());
+            sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
+        }
+        sectionedExpandableLayoutHelper.notifyDataSetChanged();
+
+        //checking if adding single item works
+//        sectionedExpandableLayoutHelper.addItem("Ice cream", new Item("Tutti frutti",5));
+//        sectionedExpandableLayoutHelper.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.getFriends();
     }
 
     @Override
@@ -116,20 +129,12 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
 
     @Override
     public void onFailure() {
-
+        swipe.setRefreshing(false);
     }
 
     @Override
-    public void getData(List<FreindBean> list) {
-        for(FreindBean freindBean: list){
-            ArrayList<FreindBean.UsersBean> arrayList = new ArrayList<>();
-            arrayList.addAll(freindBean.getUsers());
-            sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
-        }
-        sectionedExpandableLayoutHelper.notifyDataSetChanged();
-
-        //checking if adding single item works
-//        sectionedExpandableLayoutHelper.addItem("Ice cream", new Item("Tutti frutti",5));
-//        sectionedExpandableLayoutHelper.notifyDataSetChanged();
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
     }
 }

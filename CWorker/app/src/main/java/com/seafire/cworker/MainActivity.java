@@ -110,9 +110,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         failTime = 0;
         List<CollectBean> collectBeanList = JsonUtils.getInstance()
                 .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
-        for(CollectBean bean: collectBeanList){
-            if (!bean.getIsSuccess()){
-                failTime++;
+        if (collectBeanList != null){
+            for(CollectBean bean: collectBeanList){
+                if (!bean.getIsSuccess()){
+                    failTime++;
+                }
             }
         }
 
