@@ -104,4 +104,9 @@ $(function(){
         });
     })
 
+    $('.query_rule').click(function () {
+        //alert('1')
+        location.href = 'rule.html'
+    })
+
 });
