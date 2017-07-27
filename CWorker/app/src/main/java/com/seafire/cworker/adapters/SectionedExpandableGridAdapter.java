@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Bean.Item;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.ToastUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -86,18 +87,18 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
                     public void onClick(View v) {
                         section.isExpanded = !section.isExpanded;
                         mSectionStateChangeListener.onSectionStateChanged(section, section.isExpanded);
-                        ImageView imageView = (ImageView) v.findViewById(R.id.group_arrow);
-                        if (section.isExpanded){
-                            imageView.setPivotX(holder.sectionImageView.getWidth()/2);
-                            imageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
-                            imageView.setRotation(90);
-                        }else{
-                            imageView.setPivotX(holder.sectionImageView.getWidth()/2);
-                            imageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
-                            imageView.setRotation(0);
-                        }
                     }
                 });
+
+                if (section.isExpanded){
+                    holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                    holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                    holder.sectionImageView.setRotation(90);
+                }else{
+                    holder.sectionImageView.setPivotX(holder.sectionImageView.getWidth()/2);
+                    holder.sectionImageView.setPivotY(holder.sectionImageView.getHeight()/2);//支点在图片中心
+                    holder.sectionImageView.setRotation(0);
+                }
 
                 break;
         }

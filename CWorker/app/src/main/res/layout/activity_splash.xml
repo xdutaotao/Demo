@@ -9,6 +9,6 @@
         android:layout_height="match_parent"
         android:id="@+id/temp_page"
         android:scaleType="fitXY"
-        android:src="@drawable/launcher_one"/>
+        android:src="@drawable/splash"/>
 
 </FrameLayout>

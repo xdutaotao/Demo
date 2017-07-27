@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:id="@+id/background"
-        android:src="@drawable/home"/>
+        android:src="@drawable/launcher_one"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -20,6 +20,6 @@
         android:textColor="@android:color/white"
         android:background="@drawable/btn_seletor"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="150px"/>
+        android:layout_marginBottom="120px"/>
 
 </FrameLayout>

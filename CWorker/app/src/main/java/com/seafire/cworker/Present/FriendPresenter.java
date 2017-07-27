@@ -23,9 +23,9 @@ public class FriendPresenter extends BasePresenter<FriendView> {
     FriendPresenter() {
     }
 
-    public void getFriends(){
+    public void getFriends(Context context){
         mCompositeSubscription.add(model.getFriends()
-                .subscribe(new RxSubUtils<List<FreindBean>>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<List<FreindBean>>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(List<FreindBean> token) {
                         getView().getData(token);

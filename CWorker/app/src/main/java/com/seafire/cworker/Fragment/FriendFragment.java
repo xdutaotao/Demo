@@ -183,7 +183,7 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
 
     @Override
     public void onRefresh() {
-        presenter.getFriends();
+        presenter.getFriends(getContext());
     }
 
     @Override

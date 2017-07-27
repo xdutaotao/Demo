@@ -23,18 +23,17 @@ a,button,input,optgroup,select,textarea {
 
 .row-padding{
     display: flex;
-    height: 5%;
-    padding-left: 10px;
+    height: 0.46rem;
+    padding-left: 0.15rem;
     align-items: center;
-    flex: 1;
     background-color: white;
-    border-top: 1px solid #888;
+    border-top: 0.005rem solid #888;
 }
 
 .input-trans{
     background-color: transparent;
     border: 0px;
-    margin-left: 10px;
+    margin-left: 0.12rem;
     height: 100%;
     font-size: 16px;
 }

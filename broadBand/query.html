@@ -14,6 +14,7 @@
     <meta http-equiv="Cache" content="no-cache">
 
 
+    <link rel="stylesheet" href="css/base.css"/>
     <link rel="stylesheet" href="css/main.css"/>
 
     <script src="js/jquery-2.1.1.min.js"></script>
@@ -23,68 +24,90 @@
     <script src="js/layer_mobile/layer.js"></script>
     <link rel="stylesheet" href="js/layer_mobile/need/layer.css" />
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
+
+    <style>
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
+            font-size: 0.13rem;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #999;
+            font-size: 0.13rem;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #999;
+            font-size: 0.13rem;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #999;
+            font-size: 0.13rem;
+        }
+    </style>
+
 </head>
+
 <body>
-<div class="main-div" style="min-height: 200px">
+<div class="main-div" style="min-height: 1rem">
 
-    <div style="flex: 2; display: flex; border-top: 1px solid #ddd; border-bottom: 1px solid #888;
-                    flex-direction: column; background-color: white">
+    <div style="flex: 2; display: flex; border-top: 0.005rem solid #ddd; border-bottom: 0.005rem solid #888;
+                    flex-direction: column; background-color: white;">
 
-        <div style="flex: 3; display: flex; border-top: 1px solid #ddd; justify-content: space-around;
-            flex-direction: column; background-color: #37dec9">
+        <div style="border-top: 0.005rem solid #ddd;
+        background-color: #37dec9; height: 1.25rem" >
 
-            <div style="position: relative; height: 15px;">
-                <span style="position: absolute; font-size: 14px; left: 10%;
+            <div style="position: relative; height: 0.15rem; margin-top: 0.2rem">
+                <span style="position: absolute; font-size: 0.14rem; left: 0.18rem;
                 text-align: center; color: white">输入宽带信息</span>
 
-                <span style="position: absolute; font-size: 14px; left: 50%;
+                <span style="position: absolute; font-size: 0.14rem; left: 1.94rem;
                 text-align: center; color: white">商家处理订单</span>
             </div>
 
-            <div style="height: 10px; width: 100%; position: relative">
-                <img src="img/line.png" style="position: absolute; height: 10px; width: 95%; padding: 0px 10px">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 20%">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 40%">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 60%">
-                <img src="img/point.png" style="position: absolute; height: 10px; width: 10px; top: 3px; left: 80%">
+            <div style="height: 0.06rem; width: 100%; position: relative; margin: 0.08rem 0rem">
+                <img src="img/line.png" style="position: absolute; height: 0.06rem; width: 3.44rem; margin: 0px 0.15rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 0.54rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 1.39rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 2.29rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 3.10rem">
             </div>
 
-            <div style="position: relative; height: 15px;">
-                <span style="position: absolute; font-size: 14px; left: 32%;
+            <div style="position: relative; height: 0.15rem;">
+                <span style="position: absolute; font-size: 0.14rem; left: 1.16rem;
                 text-align: center; color: white">选择购买</span>
 
-                <span style="position: absolute; font-size: 14px; left: 72%;
+                <span style="position: absolute; font-size: 0.14rem; left: 2.86rem;
                 text-align: center; color: white">续约成功</span>
             </div>
 
-            <div style="color: #37dec9; background-color: white; display: flex;
-                align-items: center; height: 25px; margin: 0px 60px;
-                justify-content: center; border-radius: 25px" onclick="window.location.reload(1);">
-                <img src="img/input_head.png" style="height: 18px; width: 18px; margin-right: 5px;">
-                <span style="font-size: 14px">续约失败全额退款</span>
+            <div style="color: #37dec9; background-color: white; display: flex; position: relative;
+                align-items: center; height: 0.27rem; margin: 0.17rem 1.18rem; width: 1.41rem;
+                justify-content: center; border-radius: 0.5rem" onclick="window.location.reload(1);">
+                <img src="img/input_head.png" style="height: 0.15rem; width: 0.14rem; margin-right: 0.05rem;">
+                <span style="font-size: 0.12rem">续约失败全额退款</span>
             </div>
 
         </div>
 
 
         <div class="row-padding"
-             style="background-color: #F4F4F4;  flex-direction: column; justify-content: flex-end;">
-            <span style="font-size: 10px; color: #888; margin-bottom: 5px">以下信息将提供给运营商用于业务办理，请确保输入正确</span>
+             style="background-color: #F4F4F4; align-items: flex-end; padding-bottom: 0.13rem">
+            <span style="font-size: 0.12rem; color: #999;">以下信息将提供给运营商用于业务办理，请确保输入正确</span>
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">户主姓名</span>
-            <input style="flex: 3" class="input-trans name" maxlength="6" placeholder="请输入姓名">
+            <span style="font-size: 0.14rem; color: #333">户主姓名</span>
+            <input style="flex: 1" class="input-trans name" placeholder="请输入宽带的办理人姓名">
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">联系电话</span>
+            <span style="font-size: 0.14rem">联系电话</span>
             <input style="flex: 3;" type="number" oninput="if(value.length>11)value=value.slice(0,11)"
                    class="input-trans phone" placeholder="请输入电话">
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">宽带信息</span>
+            <span style="font-size: 0.14rem">宽带信息</span>
             <input style="flex: 3"  class="input-trans infor" placeholder="请输入宽带信息">
         </div>
 
@@ -98,29 +121,15 @@
     <div style="width: 100%; flex: 1; background-color: #f4f4f4;
                     display: flex; flex-direction: column; justify-content: space-around";>
 
-        <div style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin: 0px 20px; height: 40px; font-size: 18px;
-                    justify-content: center; border-radius: 5px" id="query">查询</div>
+        <!--<div style="color: white; background-color: #ff5000; display: flex;-->
+                    <!--align-items: center; margin: 0px 20px; height: 40px; font-size: 18px;-->
+                    <!--justify-content: center; border-radius: 5px" id="query">查询</div>-->
 
-        <div style="display: flex; align-self: center;
-                    justify-content: center;" class="im">
-            <img src="img/query_ask.png" style="height: 20px; width: 20px;">
-            <span style="margin-left: 10px; color: #29aefe">咨询客服</span>
-        </div>
-
-        <!--<div style="display: flex; align-items: center; justify-content: space-between; margin: 0px 20px">-->
         <!--<div style="display: flex; align-self: center;-->
-        <!--justify-content: center;" class="im">-->
-        <!--<img src="img/query_ask.png" style="height: 20px; width: 20px;">-->
-        <!--<span style="margin-left: 10px; color: #29aefe">联系卖家</span>-->
+                    <!--justify-content: center;" class="im">-->
+            <!--<img src="img/query_ask.png" style="height: 20px; width: 20px;">-->
+            <!--<span style="margin-left: 10px; color: #29aefe">咨询客服</span>-->
         <!--</div>-->
-        <!--<div style="display: flex; align-items: center" id="query_rule">-->
-        <!--<img src="img/query_look.png" style="height: 20px; width: 20px;">-->
-        <!--<span style="margin-left: 10px; color: #29aefe">查看规则</span>-->
-        <!--</div>-->
-        <!--</div>-->
-
-
 
 
     </div>
