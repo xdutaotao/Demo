@@ -17,7 +17,7 @@ a,button,input,optgroup,select,textarea {
 
 .divide-line {
     width: 100%;
-    height: 1px;
+    height: 0.01rem;
     background-color: #999999;
 }
 
@@ -35,22 +35,21 @@ a,button,input,optgroup,select,textarea {
     border: 0px;
     margin-left: 0.12rem;
     height: 100%;
-    font-size: 16px;
+    font-size: 0.16rem;
 }
 
 .row-main{
     display: flex;
-    height: 5%;
-    padding-left: 10px;
+    height: 0.46rem;
+    padding-left: 0.15rem;
     align-items: center;
-    flex: 2;
     background-color: white;
-    border-top: 1px solid #999;
+    border-top: 0.005rem solid #888;
 }
 
 
 #toastMessage{
     position: absolute;
-    border-radius: 15px;
+    border-radius: 0.15rem;
     cursor:pointer;
 }

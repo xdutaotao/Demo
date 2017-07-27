@@ -13,57 +13,77 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Cache" content="no-cache">
 
+    <link rel="stylesheet" href="css/base.css"/>
     <link rel="stylesheet" href="css/main.css"/>
+
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/main.js?v=3"></script>
     <script src="js/toast.js"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
+
+    <style>
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+    </style>
+
 </head>
 <body>
-<div class="main-div" style="min-height: 200px">
-    <div style="flex: 2; display: flex; border-top: 1px solid #ddd;
-                    flex-direction: column; background-color: aqua">
+<div class="main-div" style="min-height: 1rem">
 
         <div class="row-padding"
-             style="background-color: #f4f4f4; color: #888" onclick="window.location.reload(1);">当前套餐</div>
+             style="background-color: #f4f4f4; color: #999; font-size: 0.12rem" onclick="window.location.reload(1);">当前套餐</div>
 
         <div class="row-padding">
-            <span style="flex: 1">宽带账号</span>
-            <span style="flex: 3" class=" number"></span>
+            <span style="font-size: 0.14rem; color: #333">宽带账号</span>
+            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" number"></span>
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">户主姓名</span>
-            <span style="flex: 3" class=" name"></span>
+            <span style="font-size: 0.14rem; color: #333">户主姓名</span>
+            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" name"></span>
         </div>
 
         <div class="row-padding">
-            <span style="flex: 1">到期时间</span>
-            <span style="flex: 3" class=" preTime"></span>
+            <span style="font-size: 0.14rem; color: #333">到期时间</span>
+            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" preTime"></span>
         </div>
 
 
         <div class="row-padding">
-            <span style="flex: 1">套餐速率</span>
-            <span style="flex: 3" class="preSpeed"></span>
+            <span style="font-size: 0.14rem; color: #333">套餐速率</span>
+            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class="preSpeed"></span>
         </div>
 
-    </div>
 
-
-    <div style="flex: 2; display: flex; border-top: 1px solid #ddd;
-                    flex-direction: column; background-color: aqua">
-
-        <div class="row-main"
-             style="background-color: #f4f4f4; color: #888;
-                        flex: 2; ">续约后套餐</div>
+        <div class="row-padding" style="background-color: #f4f4f4; height: 0.6rem; align-items: flex-end">
+            <span style="font-size: 0.12rem; color: #999; margin-bottom: 0.13rem">续约后套餐</span>
+        </div>
 
         <div class="row-main speed" style="display: flex;">
-            <span style="flex: 1">宽带速率</span>
+            <span style="font-size: 0.14rem">宽带速率</span>
 
-            <div class="dropdown" style="flex: 3; height: 100%; display: flex; align-items: center">
-                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0;height:30px; font-size: 15px" class="speed">
+            <div class="dropdown" style="margin-left: 0.12rem; flex: 1; display: flex; align-items: center">
+                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem" class="speed">
                     <option value="0" class="label">50M</option>
                     <option value="1">100M</option>
                     <option value="2">200M</option>
@@ -73,9 +93,9 @@
         </div>
 
         <div class="row-main" style="display: flex;">
-            <span style="flex: 1">续约时长</span>
-            <div class="dropdown" style="flex: 3; height: 100%; display: flex; align-items: center">
-                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0;height:30px; font-size: 15px" class="time" >
+            <span style="font-size: 0.14rem">续约时长</span>
+            <div class="dropdown" style="margin-left: 0.12rem; flex: 1; display: flex; align-items: center">
+                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem" class="time" >
                     <option value="0" class="label">1年</option>
                     <option value="1">2年</option>
                     <option value="2">3年</option>
@@ -85,32 +105,24 @@
         </div>
 
         <div class="row-main">
-            <span style="flex: 1">续约金额</span>
-            <div style="flex: 3">
-                <span style="color: red; ">1</span>
-            </div>
+            <span style="font-size: 0.14rem">续约金额</span>
+            <span style="color: red; font-size: 0.13rem; margin-left: 0.12rem;">1元</span>
+
 
         </div>
 
-        <div class="row-main">
-            <span style="flex: 1">手机号码</span>
+        <div class="row-main" style="border-bottom: 0.005rem solid #888;">
+            <span style="font-size: 0.14rem">手机号码</span>
             <input type="number" placeholder="请输入电话"
                    class="input-trans phone-input" style="flex: 3"
                    oninput="if(value.length>11)value=value.slice(0,11)">
         </div>
 
-    </div>
-
-    <div style="width: 100%; flex: 1; background-color: #f4f4f4;
-                    display: flex; justify-content: center; flex-direction: column";>
-
         <div style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin: 0px 20px; height: 40px; font-size: 18px;
-                    justify-content: center; border-radius: 5px"; id="buy">续约该套餐</div>
-                <span style="margin: 0px 20px; font-size: 12px">
+                    align-items: center; margin: 0.69rem 0.16rem 0rem; height: 0.42rem; font-size: 0.18rem;
+                    justify-content: center; border-radius: 0.05rem"; id="buy">续约该套餐</div>
+                <span style="margin-left: 0.17rem; font-size: 0.12rem; height: 0.4rem; color: #999">
                     注意事项:<br>请确保您的手机处于开机状态,便于工作人员联系</span>
-
-    </div>
 
 
 </div>
