@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>查询优惠</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="spm-id" content="a1z51.24540073"/>
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+
+
+    <link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/query.js?v=2"></script>
+    <script src="js/jquery.easydropdown.min.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/layer_mobile/layer.js"></script>
+    <link rel="stylesheet" href="js/layer_mobile/need/layer.css" />
+    <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
+
+    <style>
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="main-div" style="min-height: 1rem">
+
+        <div style="border-top: 0.005rem solid #ddd;
+                background-color: #37dec9; height: 1.25rem" >
+            <div style="position: relative; height: 0.15rem; margin-top: 0.2rem">
+                <span style="position: absolute; font-size: 0.14rem; left: 0.18rem;
+                text-align: center; color: white">输入宽带信息</span>
+
+                <span style="position: absolute; font-size: 0.14rem; left: 1.94rem;
+                text-align: center; color: white">商家处理订单</span>
+            </div>
+            <div style="height: 0.06rem; width: 100%; position: relative; margin: 0.08rem 0rem">
+                <img src="img/line.png" style="position: absolute; height: 0.06rem; width: 3.44rem; margin: 0px 0.15rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 0.54rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 1.39rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 2.29rem">
+                <img src="img/point.png" style="position: absolute; height: 0.1rem; width: 0.1rem; left: 3.10rem">
+            </div>
+            <div style="position: relative; height: 0.15rem;">
+                <span style="position: absolute; font-size: 0.14rem; left: 1.16rem;
+                text-align: center; color: white">选择购买</span>
+                <span style="position: absolute; font-size: 0.14rem; left: 2.86rem;
+                text-align: center; color: white">续约成功</span>
+            </div>
+            <div style="color: #37dec9; background-color: white; display: flex; position: relative;
+                align-items: center; height: 0.27rem; margin: 0.17rem 1.18rem; width: 1.41rem;
+                justify-content: center; border-radius: 0.5rem" onclick="window.location.reload(1);">
+                <img src="img/input_head.png" style="height: 0.15rem; width: 0.14rem; margin-right: 0.05rem;">
+                <span style="font-size: 0.12rem">续约失败全额退款</span>
+            </div>
+        </div>
+
+
+        <div class="row-padding"
+             style="background-color: #F4F4F4; align-items: flex-end; padding-bottom: 0.13rem">
+            <span style="font-size: 0.12rem; color: #999;">以下信息将提供给运营商用于业务办理，请确保输入正确</span>
+        </div>
+
+        <div class="row-padding">
+            <span style="font-size: 0.14rem; color: #333">户主姓名</span>
+            <input style="flex: 1" class="input-trans name" placeholder="请输入宽带的办理人姓名">
+        </div>
+
+        <div class="row-padding">
+            <span style="font-size: 0.14rem; color: #333">联系电话</span>
+            <input style="flex: 1;" type="number" oninput="if(value.length>11)value=value.slice(0,11)"
+                   class="input-trans phone" placeholder="请输入电话">
+        </div>
+
+        <div class="row-padding" style="border-bottom: 0.005rem solid #888">
+            <span style="font-size: 0.14rem; color: #333">宽带信息</span>
+            <input style="flex: 1"  class="input-trans infor" placeholder="请输入宽带信息">
+        </div>
+
+        <div style="color: white; background-color: #ff5000; text-align: center; line-height: 0.42rem;
+                    margin: 0.2rem 0.15rem 0rem; height: 0.42rem; font-size: 0.18rem;
+                     border-radius: 0.05rem" id="query">查询</div>
+
+        <div style="display: flex; align-self: center; margin-top: 1.8rem;
+                        justify-content: center;" class="im">
+            <img src="img/query_ask.png" style="height: 0.17rem; width: 0.17rem;">
+            <span style="margin-left: 0.05rem; color: #333; font-size: 0.12rem;">咨询客服</span>
+        </div>
+
+
+</div>
+
+
+<script>
+
+    var link=window.location.href.split("?")[1];
+    //$("body").append(link);
+
+    //alert(link);
+
+
+
+
+</script>
+
+
+</body>
+
+
+</html>

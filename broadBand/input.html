@@ -21,6 +21,31 @@
     <script src="js/toast.js"></script>
     <script src="js/jquery.easydropdown.min.js"></script>
     <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
+
+    <style>
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #999;
+            font-size: 0.13rem;
+            outline: none;
+        }
+    </style>
+
 </head>
 <body>
 <div class="main-div" style="min-height: 1rem">
@@ -64,7 +89,7 @@
 
         <div class="row-padding">
             <span style="font-size: 0.14rem; color: #333">户主姓名</span>
-            <input style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" placeholder="请输入姓名" class="input-trans name-input" maxlength="6">
+            <input style="font-size: 0.13rem; color: #999; width: 3rem;" placeholder="请输入姓名" class="input-trans name-input" maxlength="6">
         </div>
 
         <div class="row-padding">
@@ -116,12 +141,12 @@
 
     <!--<div style="width: 100%; flex: 3; background-color: #f4f4f4;-->
                     <!--display: flex;  flex-direction: column";>-->
-        <div style="text-align: center; font-size: 0.14rem; margin: 0.2rem">应付金额:
+        <div style="text-align: center; font-size: 0.14rem; margin: 0.1rem">应付金额:
             <span id="money" style="color: red; font-size: 0.1rem">1元</span>
         </div>
 
         <div id="action" style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin:0rem 0.16rem 0.2rem; height: 0.42rem; font-size: 0.18rem;
+                    align-items: center; margin:0rem 0.16rem 0.1rem; height: 0.42rem; font-size: 0.18rem;
                     justify-content: center; border-radius: 0.05rem">预约办理</div>
 
         <div style="display: flex; align-self: center;
