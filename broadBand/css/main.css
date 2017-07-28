@@ -13,6 +13,7 @@ a,button,input,optgroup,select,textarea {
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #F4F4F4;
 }
 
 .divide-line {
@@ -23,19 +24,30 @@ a,button,input,optgroup,select,textarea {
 
 .row-padding{
     display: flex;
-    height: 0.46rem;
+    height: 0.45rem;
     padding-left: 0.15rem;
     align-items: center;
     background-color: white;
-    border-top: 0.005rem solid #888;
+    border-bottom: 0.005rem solid #F4F4F4;
 }
+
+.row-padding span{
+    font-size: 0.17rem;
+    color: #000
+}
+
+.row-padding input{
+    flex: 1
+}
+
 
 .input-trans{
     background-color: transparent;
     border: 0px;
-    margin-left: 0.12rem;
+    margin-left: 0.17rem;
     height: 100%;
     font-size: 0.16rem;
+    outline: none;
 }
 
 .row-main{
@@ -49,7 +61,13 @@ a,button,input,optgroup,select,textarea {
 
 
 #toastMessage{
-    position: absolute;
-    border-radius: 0.15rem;
-    cursor:pointer;
+    background-color: #000000; font-size: 0.14rem; text-align: center; opacity: 0.8;
+    line-height: 0.44rem; margin: 0rem 0.53rem; color: #fff; border-radius: 0.13rem;
+    width: 2.7rem; height: 0.44rem;
+}
+
+@font-face {font-family:myFont; src: url("../svg/PingFang-SC-Regular.otf")}
+
+span input{
+    font-family : myFont
 }
