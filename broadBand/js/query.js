@@ -100,15 +100,17 @@ $(function(){
 
                 //Tida.hideLoading();
                 if (data.code == 0){
-                    layer.open({
-                        title: ['查询结果','margin: 0px'],
-                        btn: ['重新办理','重新输入'],
-                        content: '没有查询到相关信息',
-                        yes: function () {
-                            layer.close( );
-                            location.href = 'input.html?'+link;
-                        }
-                    });
+                    toastFunction("没有查询到此帐号，请核实");
+
+                    // layer.open({
+                    //     title: ['查询结果','margin: 0px'],
+                    //     btn: ['重新办理','重新输入'],
+                    //     content: '没有查询到相关信息',
+                    //     yes: function () {
+                    //         layer.close( );
+                    //         location.href = 'input.html?'+link;
+                    //     }
+                    // });
                 }else{
 
                     sessionStorage.nameStr=name;
