@@ -31,10 +31,18 @@ Toast.prototype = {
         var toastMessageHeight = $('#toastMessage').innerHeight();
         var windowWidth = $(window).width();
         var windowHeight = $(window).height();
-        var newWidth = (windowWidth - toastMessageWidth - 80) / 2 + "px";
-        var newHeight = (windowHeight - toastMessageHeight - 80) / 2 + "px";
-        msgEntity.css({'left':newWidth,'z-index':'999999','top':newHeight,'background-color':'black','color':'white',
-            'padding':'30px','font-size':'18px'});
+        var newWidth = (windowWidth - toastMessageWidth - 80) / 400 + "rem";
+        var newHeight = (windowHeight - toastMessageHeight - 80) / 400 + "rem";
+        msgEntity.css({
+            'left':'0.5rem',
+            'z-index':'999999',
+            'top':'3.1rem',
+            'background-color':'black',
+            'color':'white',
+            'padding':'0.13rem',
+            'font-size':'0.14rem',
+            'alpha': '0.8'
+        });
     },
     //显示动画  
     show :function(){

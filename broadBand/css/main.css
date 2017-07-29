@@ -24,7 +24,7 @@ a,button,input,optgroup,select,textarea {
 
 .row-padding{
     display: flex;
-    height: 0.45rem;
+    height: 0.42rem;
     padding-left: 0.15rem;
     align-items: center;
     background-color: white;
@@ -59,11 +59,23 @@ a,button,input,optgroup,select,textarea {
     border-top: 0.005rem solid #888;
 }
 
+#preAdd :after{content:"...";}
+
+
+/*#toastMessage{*/
+    /*background-color: #000000; font-size: 0.14rem; text-align: center; opacity: 0.8;*/
+    /*line-height: 0.44rem; margin: 0rem 0.53rem; color: #fff; border-radius: 0.13rem;*/
+    /*width: 2.7rem; height: 0.44rem;*/
+/*}*/
 
 #toastMessage{
-    background-color: #000000; font-size: 0.14rem; text-align: center; opacity: 0.8;
-    line-height: 0.44rem; margin: 0rem 0.53rem; color: #fff; border-radius: 0.13rem;
-    width: 2.7rem; height: 0.44rem;
+    position: absolute;
+    border-radius: 0.15rem;
+    width: 2.5rem;
+    height: 0.2rem;
+    cursor:pointer;
+    text-align: center;
+    vertical-align: middle;
 }
 
 @font-face {font-family:myFont; src: url("../svg/PingFang-SC-Regular.otf")}

@@ -25,23 +25,23 @@
     <style>
         /*修改提示文字的颜色*/
         input::-webkit-input-placeholder { /* WebKit browsers */
-            color: #999;
-            font-size: 0.13rem;
+            color: #CCC;
+            font-size: 0.14rem;
             outline: none;
         }
         input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-            color: #999;
-            font-size: 0.13rem;
+            color: #CCC;
+            font-size: 0.14rem;
             outline: none;
         }
         input::-moz-placeholder { /* Mozilla Firefox 19+ */
-            color: #999;
-            font-size: 0.13rem;
+            color: #CCC;
+            font-size: 0.14rem;
             outline: none;
         }
         input:-ms-input-placeholder { /* Internet Explorer 10+ */
-            color: #999;
-            font-size: 0.13rem;
+            color: #CCC;
+            font-size: 0.14rem;
             outline: none;
         }
     </style>
@@ -50,79 +50,142 @@
 <body>
 <div class="main-div" style="min-height: 1rem">
 
-        <div class="row-padding"
-             style="background-color: #f4f4f4; color: #999; font-size: 0.12rem" onclick="window.location.reload(1);">当前套餐</div>
+        <div style="border-top: 0.005rem solid #ddd; display: flex; align-items: center;
+                    background-color: #FFFAB4; height: 0.36rem" >
+            <object data="svg/save.svg" type="image/svg+xml"
+                    style="width: 0.17rem; height: 0.17rem; margin-left: 0.1rem">
+            </object>
 
-        <div class="row-padding">
-            <span style="font-size: 0.14rem; color: #333">宽带账号</span>
-            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" number"></span>
+            <span style="color: #333; font-size: 0.12rem; margin:0rem 0.03rem">
+                    如果因系统原因等续约失败，全额退款</span>
         </div>
 
-        <div class="row-padding">
-            <span style="font-size: 0.14rem; color: #333">户主姓名</span>
-            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" name"></span>
-        </div>
-
-        <div class="row-padding">
-            <span style="font-size: 0.14rem; color: #333">到期时间</span>
-            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class=" preTime"></span>
+        <div style="background-color: #F4F4F4; font-size: 0.12rem; color: #888;
+                        padding-top: 0.1rem; padding-left: 0.15rem; padding-bottom: 0.08rem" onclick="window.location.reload(1);">
+            当前套餐
         </div>
 
 
         <div class="row-padding">
-            <span style="font-size: 0.14rem; color: #333">套餐速率</span>
-            <span style="font-size: 0.13rem; color: #999; margin-left: 0.12rem" class="preSpeed"></span>
+            <span style="font-size: 0.15rem; color: #999; margin: 0.15rem 0rem">户主姓名</span>
+            <span style="font-size: 0.15rem; color: #999; text-align: end; flex: 1;
+                    margin-right: 0.15rem" class="name"></span>
+        </div>
+
+        <div class="row-padding">
+            <span style="font-size: 0.15rem; color: #999; margin: 0.15rem 0rem">宽带账号</span>
+            <span style="font-size: 0.15rem; color: #999; text-align: end; flex: 1;
+                        margin-right: 0.15rem" class="number"></span>
+        </div>
+
+        <div class="row-padding">
+            <span style="font-size: 0.15rem; color: #999; margin: 0.15rem 0rem">宽带速率</span>
+            <span style="font-size: 0.15rem; color: #999; text-align: end; flex: 1;
+                            margin-right: 0.15rem" class="preSpeed"></span>
         </div>
 
 
-        <div class="row-padding" style="background-color: #f4f4f4; height: 0.6rem; align-items: flex-end">
-            <span style="font-size: 0.12rem; color: #999; margin-bottom: 0.13rem">续约后套餐</span>
+        <div class="row-padding">
+            <span style="font-size: 0.15rem; color: #999; margin: 0.15rem 0rem">到期时间</span>
+            <span style="font-size: 0.15rem; color: #999; text-align: end; flex: 1;
+                                margin-right: 0.15rem" class="preTime"></span>
         </div>
 
-        <div class="row-main speed" style="display: flex;">
-            <span style="font-size: 0.14rem">宽带速率</span>
+        <div class="row-padding">
+            <span style="font-size: 0.15rem; color: #999; margin: 0.15rem 0rem">宽带地址</span>
+            <span style="font-size: 0.15rem; color: #999; text-align: end; flex: 1; overflow:hidden; max-lines: 1;
+                                    margin-right: 0.15rem" class="preAdd"></span>
+        </div>
 
-            <div class="dropdown" style="margin-left: 0.12rem; flex: 1; display: flex; align-items: center">
-                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem" class="speed">
-                    <option value="0" class="label">50M</option>
-                    <option value="1">100M</option>
-                    <option value="2">200M</option>
-                    <option value="3">500M</option>
+
+    <div style="background-color: #F4F4F4; font-size: 0.12rem; color: #888;
+                        padding-top: 0.1rem; padding-left: 0.15rem; padding-bottom: 0.08rem">
+        续约套餐内容
+    </div>
+
+        <div class="row-padding" style="display: flex; border-bottom: 0.01rem solid #F4F4F4;">
+            <span>续约类型</span>
+
+            <div class="dropdown" style="margin-left: 0.12rem; flex: 1; display: flex; align-items: center;">
+                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.17rem; padding: 0.08rem; background-color: #fff" class="time" >
+                    <option value="0" class="label">一年</option>
+                    <option value="1">二年</option>
+                    <option value="2">三年</option>
+                    <option value="3">四年</option>
                 </select>
             </div>
+
+            <object data="svg/right.svg" type="image/svg+xml"
+                    style="width: 0.1rem; height: 0.1rem; margin-right: 0.15rem">
+            </object>
         </div>
 
-        <div class="row-main" style="display: flex;">
-            <span style="font-size: 0.14rem">续约时长</span>
+        <div class="row-padding" style="display: flex; border-bottom: 0.01rem solid #F4F4F4;">
+            <span>生效时间</span>
             <div class="dropdown" style="margin-left: 0.12rem; flex: 1; display: flex; align-items: center">
-                <select tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem" class="time" >
-                    <option value="0" class="label">1年</option>
-                    <option value="1">2年</option>
-                    <option value="2">3年</option>
-                    <option value="3">4年</option>
+                <select name="sel1" id="sel1" tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem; background-color: #fff" class="year">
+                    <option value="year" class="label">年</option>
                 </select>
             </div>
+
+            <object data="svg/right.svg" type="image/svg+xml"
+                    style="width: 0.1rem; height: 0.1rem; margin-right: 0.15rem">
+            </object>
+
+            <div class="dropdown" style="flex: 1; display: flex; align-items: center; margin: 0rem 0.01rem">
+                <select name="sel2" id="sel2" tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem; background-color: #fff" class="month">
+                    <option value="month" class="label">月</option>
+                </select>
+            </div>
+
+            <object data="svg/right.svg" type="image/svg+xml"
+                    style="width: 0.1rem; height: 0.1rem; margin-right: 0.15rem">
+            </object>
+
+            <div class="dropdown" style="flex: 1; display: flex; align-items: center">
+                <select name="sel3" id="sel3" tabindex="1" style="height: 100%; width: 100%;-webkit-appearance: none;border:0; font-size: 0.13rem; padding: 0.12rem; background-color: #fff" class="day">
+                    <option value="day" class="label">日</option>
+                </select>
+            </div>
+
+            <object data="svg/right.svg" type="image/svg+xml"
+                    style="width: 0.1rem; height: 0.1rem; margin-right: 0.15rem">
+            </object>
+
         </div>
 
-        <div class="row-main">
-            <span style="font-size: 0.14rem">续约金额</span>
-            <span style="color: red; font-size: 0.13rem; margin-left: 0.12rem;">1元</span>
-
-
+        <div class="row-padding" style="border-bottom: 0.01rem solid #F4F4F4;">
+            <span>续约金额</span>
+            <span style="color: #ff5000; font-size: 0.17rem; margin-left: 0.17rem;">1元</span>
         </div>
 
-        <div class="row-main" style="border-bottom: 0.005rem solid #888;">
-            <span style="font-size: 0.14rem">手机号码</span>
-            <input type="number" placeholder="请输入电话"
-                   class="input-trans phone-input" style="flex: 3"
+        <div class="row-padding">
+            <span>联系电话</span>
+            <input type="number" placeholder="请输入联系电话"
+                   class="input-trans phone-input" style="font-size: 0.14rem; margin-left: 0.17rem;"
                    oninput="if(value.length>11)value=value.slice(0,11)">
         </div>
 
-        <div style="color: white; background-color: #ff5000; display: flex;
-                    align-items: center; margin: 0.69rem 0.16rem 0rem; height: 0.42rem; font-size: 0.18rem;
-                    justify-content: center; border-radius: 0.05rem"; id="buy">续约该套餐</div>
-                <span style="margin-left: 0.17rem; font-size: 0.12rem; height: 0.4rem; color: #999">
-                    注意事项:<br>请确保您的手机处于开机状态,便于工作人员联系</span>
+        <div style="font-size: 0.12rem; flex: 1">
+            <object data="svg/group.svg" type="image/svg+xml"
+                    style="width: 0.14rem; height: 0.14rem; margin: 0.22rem 0.05rem 0rem 0.15rem">
+            </object>
+
+            <span style="color: #333; font-size: 0.12rem;">
+                    续约进度短信提醒</span>
+        </div>
+
+        <div style="display: flex; align-content: flex-end;">
+            <div style="display: flex;align-items: center; background-color: #fff; justify-content: center;
+                        width: 0.75rem; height: 0.47rem; flex-direction: column" class="im">
+                <img src="img/query_ask.png" style="height: 0.21rem; width: 0.21rem;">
+                <span style="color: #666; font-size: 0.11rem;">客服</span>
+            </div>
+            <span style="flex: 1; display: flex; justify-content: center; align-items: center;
+                                color: #fff; font-size: 0.18rem; background-color: #ff5000" id="buy">
+                    立即办理
+                </span>
+        </div>
 
 
 </div>

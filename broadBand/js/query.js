@@ -32,7 +32,6 @@ $(function(){
         name: '',
         phone: '',
         infor: '',
-        personal: ''
     }
 
 
@@ -40,9 +39,10 @@ $(function(){
         var name = $('.name').val();
         var phone = $('.phone').val();
         var infor = $('.infor').val();
-        var personal = $('.personal').val();
+        //var personal = $('.personal').val();
 
         if (name == ''){
+            //Tida.toast("姓名不能为空")
             toastFunction("姓名不能为空");
             return;
         }
@@ -85,7 +85,7 @@ $(function(){
         params.name = name;
         params.infor = infor;
         params.phone = phone;
-        params.personal = personal;
+        //params.personal = personal;
 
 
         //Tida.showLoading("加载中...");
@@ -112,8 +112,8 @@ $(function(){
                 }else{
 
                     sessionStorage.nameStr=name;
-
-                    location.href = 'main.html?'+link+'&infor='+infor+'&phone='+phone+"&personal="+personal+"&expire="+
+                    sessionStorage.address = data.data.address;
+                    location.href = 'main.html?'+link+'&infor='+infor+'&phone='+phone+"&expire="+
                         data.data.expire+'&bandwidth='+data.data.expenses.split("有线宽带")[1].split("包年")[0];
                 }
             },
