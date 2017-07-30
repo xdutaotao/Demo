@@ -50,7 +50,7 @@
             android:layout_marginTop="10px"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="260px"
             android:layout_height="wrap_content"
             android:text="已签到       "
             android:paddingLeft="20px"
