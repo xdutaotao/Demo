@@ -1,6 +1,7 @@
 package com.seafire.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.seafire.cworker.Bean.FreindBean;
 import com.seafire.cworker.Model.LoginModel;
@@ -32,7 +33,10 @@ public class FriendPresenter extends BasePresenter<FriendView> {
                     }
 
                     @Override
-                    protected void _onError() {
+                    protected void _onError(String s) {
+                        if (!TextUtils.equals(s, "网络错误"))
+                            s = "获取失败";
+                        ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Present.LoginPresenter;
 import com.seafire.cworker.R;
 import com.seafire.cworker.Utils.ToastUtil;
@@ -25,6 +26,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 import io.jchat.android.chatting.utils.DialogCreator;
 import io.jchat.android.chatting.utils.HandleResponseCode;
@@ -124,7 +126,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
     @Override
     public void getData(String data) {
-        ToastUtil.show("登录成功");
         loginJMessage();
     }
 
@@ -143,7 +144,22 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                         user = new UserEntry(username, appKey);
                         user.save();
                     }
-                    finish();
+                    JMessageClient.getMyInfo().setNickname(User.getInstance().getUserInfo().getPerson().getName());
+                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, JMessageClient.getMyInfo(), new BasicCallback() {
+                        @Override
+                        public void gotResult(final int status, final String desc) {
+                            dialog.dismiss();
+                            if (status == 0) {
+                                ToastUtil.show("登录成功");
+                                finish();
+                            } else {
+                                ToastUtil.show("登录成功");
+                                finish();
+                                HandleResponseCode.onHandle(LoginActivity.this, status, false);
+                            }
+                        }
+                    });
+
                 } else {
                     HandleResponseCode.onHandle(LoginActivity.this, status, false);
                 }

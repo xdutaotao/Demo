@@ -1,6 +1,7 @@
 package com.seafire.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.seafire.cworker.Model.LoginModel;
 import com.seafire.cworker.Utils.RxSubUtils;
@@ -29,8 +30,11 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     }
 
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("用户名或者密码错误");
+                    public void _onError(String s) {
+                        if (!TextUtils.equals(s, "网络错误")){
+                            s = "用户名或者密码错误";
+                        }
+                        ToastUtil.show(s);
                     }
                 }));
     }

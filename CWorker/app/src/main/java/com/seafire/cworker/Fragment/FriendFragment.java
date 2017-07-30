@@ -214,7 +214,6 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
     @Override
     public void onFailure() {
         swipe.setRefreshing(false);
-        ToastUtil.show("请稍后重试");
     }
 
     @Override

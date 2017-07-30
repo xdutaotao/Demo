@@ -314,6 +314,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     private void jMessageLogout(){
         cn.jpush.im.android.api.model.UserInfo info = JMessageClient.getMyInfo();
+        if (info == null)
+            return;
         File file = info.getAvatarFile();
         if (file != null && file.isFile()) {
 

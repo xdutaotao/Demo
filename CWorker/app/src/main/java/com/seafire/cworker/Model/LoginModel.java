@@ -1,7 +1,9 @@
 package com.seafire.cworker.Model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
 import com.bumptech.glide.Glide;
 import com.seafire.cworker.App;
 import com.seafire.cworker.Bean.BaseResponseBean;
@@ -13,6 +15,7 @@ import com.seafire.cworker.Utils.RxUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,15 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.*;
+import io.jchat.android.chatting.utils.HandleResponseCode;
+import io.jchat.android.chatting.utils.SharePreferenceManager;
+import io.jchat.android.database.FriendEntry;
+import io.jchat.android.database.FriendRecommendEntry;
+import io.jchat.android.database.UserEntry;
+import io.jchat.android.entity.FriendInvitation;
+import io.jchat.android.tools.HanziToPinyin;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -281,7 +293,156 @@ public class LoginModel extends BaseModel {
 
     public Observable<List<FreindBean>> getFriends(){
         return config.getRetrofitService().getFriends(User.getInstance().getUserId())
-                .compose(RxUtils.handleResult());
+                .compose(RxUtils.handleResultNoThread())
+                .map(freindBeen -> {
+                    if (freindBeen.size() > 0){
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            UserEntry user = UserEntry.getUser(JMessageClient.getMyInfo().getUserName(),
+                                    JMessageClient.getMyInfo().getAppKey());
+                            for (FreindBean bean : freindBeen) {
+                                for (FreindBean.UsersBean usersBean : bean.getUsers()){
+                                    freindBeanTo(usersBean, user);
+                                    //freindToRecommand(usersBean, user);
+                                }
+
+                            }
+                        ActiveAndroid.setTransactionSuccessful();
+                        }finally {
+                            ActiveAndroid.endTransaction();
+                        }
+                    }
+
+                    return freindBeen;
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+
+    //添加为朋友
+    private void freindBeanTo(FreindBean.UsersBean bean, UserEntry user){
+
+        String displayName = bean.getName();
+        if (TextUtils.isEmpty(displayName)) {
+            return;
+        }
+        String letter;
+        ArrayList<HanziToPinyin.Token> tokens = HanziToPinyin.getInstance()
+                .get(displayName);
+        StringBuilder sb = new StringBuilder();
+        if (tokens != null && tokens.size() > 0) {
+            for (HanziToPinyin.Token token : tokens) {
+                if (token.type == HanziToPinyin.Token.PINYIN) {
+                    sb.append(token.target);
+                } else {
+                    sb.append(token.source);
+                }
+            }
+        }
+        String sortString = sb.toString().substring(0, 1).toUpperCase();
+        if (sortString.matches("[A-Z]")) {
+            letter = sortString.toUpperCase();
+        } else {
+            letter = "#";
+        }
+        //避免重复请求时导致数据重复
+        FriendEntry friend = FriendEntry.getFriend(user,
+                bean.getMobile(), bean.getAppid());
+        if (null == friend) {
+            if (TextUtils.isEmpty(bean.getFace())) {
+                friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+                        null, displayName, letter, user);
+            } else {
+                if (bean.getFace() != null) {
+                    friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+                            bean.getFace(), displayName, letter, user);
+                }else {
+                    friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+                            "", displayName, letter, user);
+                }
+            }
+            friend.save();
+        }
+
+
+
+
+
+
+
+        //add friend to contact
+//        JMessageClient.getUserInfo(bean.getMobile(), bean.getAppid(), new GetUserInfoCallback() {
+//            @Override
+//            public void gotResult(int status, String desc, final cn.jpush.im.android.api.model.UserInfo userInfo) {
+//                if (status == 0) {
+//                    String displayName = bean.getName();
+//                    if (TextUtils.isEmpty(displayName)) {
+//                        return;
+//                    }
+//                    String letter;
+//                    ArrayList<HanziToPinyin.Token> tokens = HanziToPinyin.getInstance()
+//                            .get(displayName);
+//                    StringBuilder sb = new StringBuilder();
+//                    if (tokens != null && tokens.size() > 0) {
+//                        for (HanziToPinyin.Token token : tokens) {
+//                            if (token.type == HanziToPinyin.Token.PINYIN) {
+//                                sb.append(token.target);
+//                            } else {
+//                                sb.append(token.source);
+//                            }
+//                        }
+//                    }
+//                    String sortString = sb.toString().substring(0, 1).toUpperCase();
+//                    if (sortString.matches("[A-Z]")) {
+//                        letter = sortString.toUpperCase();
+//                    } else {
+//                        letter = "#";
+//                    }
+//                    //避免重复请求时导致数据重复
+//                    FriendEntry friend = FriendEntry.getFriend(user,
+//                            bean.getMobile(), bean.getAppid());
+//                    if (null == friend) {
+//                        if (TextUtils.isEmpty(bean.getFace())) {
+//                            friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+//                                    null, displayName, letter, user);
+//                        } else {
+//                            if (bean.getFace() != null) {
+//                                friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+//                                        bean.getFace(), displayName, letter, user);
+//                            }else {
+//                                friend = new FriendEntry(bean.getMobile(), bean.getAppid(),
+//                                        "", displayName, letter, user);
+//                            }
+//                        }
+//                        friend.save();
+//                    }
+//                }
+//            }
+//        });
+//        FriendRecommendEntry entry = FriendRecommendEntry.getEntry(user, bean.getMobile(), bean.getAppid());
+//        entry.state = FriendInvitation.ACCEPTED.getValue();
+//        entry.save();
+
+    }
+
+    //添加组成员
+    private void freindToRecommand(FreindBean.UsersBean userInfo, UserEntry user){
+        FriendRecommendEntry entry = FriendRecommendEntry.getEntry(user, userInfo.getName(), userInfo.getAppid());
+        if (null == entry) {
+            if (null != userInfo.getFace()) {
+                String path = userInfo.getFace();
+                entry = new FriendRecommendEntry(userInfo.getName(), userInfo.getAppid(), path,
+                        userInfo.getName(), "", FriendInvitation.INVITED.getValue(), user);
+            } else {
+                entry = new FriendRecommendEntry(userInfo.getName(), userInfo.getAppid(), null,
+                        userInfo.getName(), "", FriendInvitation.INVITED.getValue(), user);
+            }
+        } else {
+            entry.state = FriendInvitation.INVITED.getValue();
+        }
+        entry.save();
+        int showNum = SharePreferenceManager.getCachedNewFriendNum() + 1;
+        SharePreferenceManager.setCachedNewFriendNum(showNum);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.seafire.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.seafire.cworker.Model.LoginModel;
 import com.seafire.cworker.Utils.RxSubUtils;
@@ -29,8 +30,10 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     }
 
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("手机号已经注册");
+                    public void _onError(String s) {
+                        if (!TextUtils.equals(s, "网络错误"))
+                            s = "手机号已经注册";
+                        ToastUtil.show(s);
                     }
                 }));
     }

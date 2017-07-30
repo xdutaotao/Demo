@@ -171,7 +171,6 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
             ToastUtil.show("修改成功");
             finish();
         }else{
-            ToastUtil.show("注册成功");
             //JMessage 注册成功
             registerJMessage();
         }
@@ -184,22 +183,29 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
 
             @Override
             public void gotResult(final int status, final String desc) {
-
                 if (status == 0) {
                     String nickName = nameInput.getText().toString();
                     UserInfo myUserInfo = JMessageClient.getMyInfo();
-                    myUserInfo.setNickname(nickName);
-                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, myUserInfo, new BasicCallback() {
-                        @Override
-                        public void gotResult(final int status, final String desc) {
-                            dialog.dismiss();
-                            if (status == 0) {
-                                finish();
-                            } else {
-                                HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
+                    if (myUserInfo != null){
+                        myUserInfo.setNickname(nickName);
+                        JMessageClient.updateMyInfo(UserInfo.Field.nickname, myUserInfo, new BasicCallback() {
+                            @Override
+                            public void gotResult(final int status, final String desc) {
+                                dialog.dismiss();
+                                if (status == 0) {
+                                    ToastUtil.show("注册成功");
+                                    finish();
+                                } else {
+                                    HandleResponseCode.onHandle(CheckEmailActivity.this, status, false);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }else{
+                        dialog.dismiss();
+                        ToastUtil.show("注册成功");
+                        finish();
+                    }
+
 
                 } else {
                     dialog.dismiss();
