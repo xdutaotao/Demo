@@ -1030,7 +1030,7 @@ public class FileUtils {
 				total += len;
 				temp += len;
 				progress = ((float)total)/length;
-				if (temp > length/50){
+				if (temp > length/100){
 					temp = 0;
 					LogUtils.i("progress:--" + progress);
 					subscriber.onNext(progress);

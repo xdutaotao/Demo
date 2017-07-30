@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.seafire.cworker.Activity.HomeDetailActivity;
 import com.seafire.cworker.Bean.HomeResponseBean;
 import com.seafire.cworker.Bean.SearchBean;
@@ -29,9 +33,6 @@ import com.seafire.cworker.Utils.RxBus;
 import com.seafire.cworker.Utils.ShareUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.View.SearchView;
-import com.gzfgeh.GRecyclerView;
-import com.gzfgeh.adapter.BaseViewHolder;
-import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -72,6 +73,8 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
     ScrollView scrollView;
     @BindView(R.id.result_recycler_view)
     GRecyclerView resultRecyclerView;
+    @BindView(R.id.search_fragment)
+    LinearLayout searchFragment;
     private String mParam1;
 
     private List<String> hotList = new ArrayList<>();
@@ -170,10 +173,15 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         initResultRecyclerView();
         presenter.getHistoryData();
         presenter.getHotWord(getContext());
+
+
+        searchFragment.setOnClickListener(v -> {
+            SearchFragment.this.closeSoftKeyboard(editText, getContext());
+        });
         return view;
     }
 
-    private void itemClickSearch(String s){
+    private void itemClickSearch(String s) {
         editText.setText(s);
         doSearchAction(s);
     }
@@ -189,13 +197,13 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         bean.setProject(User.getInstance().getUserInfo().getProject().getProject());
     }
 
-    private void initResultRecyclerView(){
+    private void initResultRecyclerView() {
         resultAdapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean dataBean) {
                 baseViewHolder.setImageUrl(R.id.item_img, dataBean.getPic(), R.drawable.ic_launcher_round);
                 baseViewHolder.setText(R.id.item_title, dataBean.getTitle());
-                baseViewHolder.setText(R.id.item_author, "作者:"+dataBean.getAuthor());
+                baseViewHolder.setText(R.id.item_author, "作者:" + dataBean.getAuthor());
                 baseViewHolder.setVisible(R.id.item_vip, dataBean.getVipRes() != 0);
                 baseViewHolder.setText(R.id.item_txt, dataBean.getDescription());
             }
@@ -208,8 +216,8 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
 
     private void doSearchAction(String key) {
-        if (!TextUtils.isEmpty(key)){
-            if (User.getInstance().getUserInfo() == null){
+        if (!TextUtils.isEmpty(key)) {
+            if (User.getInstance().getUserInfo() == null) {
                 ToastUtil.show("请登录");
                 return;
             }
@@ -257,7 +265,7 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void getData(SearchResponseBean searchResponseBean) {
-        if (bean.getPageNo() == 1){
+        if (bean.getPageNo() == 1) {
             resultAdapter.clear();
         }
         resultAdapter.addAll(searchResponseBean.getData());
@@ -269,9 +277,9 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         //去重
         HashSet set = new HashSet(list);
         adapter.addAll(set);
-        if (list.size() == 0){
+        if (list.size() == 0) {
             clear.setVisibility(View.GONE);
-        }else{
+        } else {
             clear.setVisibility(View.VISIBLE);
         }
     }
@@ -284,7 +292,7 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         else
             resultAdapter.stopMore();
 
-        if (TextUtils.equals(msg, "请登录!")){
+        if (TextUtils.equals(msg, "请登录!")) {
             User.getInstance().clearUser();
             RxBus.getInstance().post(LOGIN_AGAIN);
         }
@@ -292,8 +300,8 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void getHotWord(List<String> list) {
-        for(String s : list){
-            if (!TextUtils.isEmpty(s)){
+        for (String s : list) {
+            if (!TextUtils.isEmpty(s)) {
                 hotList.add(s);
             }
         }
@@ -320,7 +328,7 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void onLoadMore() {
-        bean.setPageNo(bean.getPageNo()+1);
+        bean.setPageNo(bean.getPageNo() + 1);
         presenter.getSearchResult(bean);
     }
 
@@ -334,4 +342,6 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         super.onDestroy();
         presenter.detachView();
     }
+
+
 }
