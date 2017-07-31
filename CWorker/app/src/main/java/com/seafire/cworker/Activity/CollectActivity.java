@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -228,6 +229,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private List<String> historyPathList = new ArrayList<>();
 
     private boolean isNumberSearch = false;
+    private boolean numHasFocus = false;
     private RecyclerArrayAdapter<String> recyclerArrayAdapter;
 
     public static void startActivity(Context context) {
@@ -440,6 +442,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         number.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId==EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
                 clearData();
+                number.clearFocus();
                 isNumberSearch = true;
                 presenter.getPartInfoByCode(CollectActivity.this, number.getText().toString(),
                         User.getInstance().getUserInfo().getPerson().getProject());
@@ -474,6 +477,16 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         nameLayout.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(name.getText().toString())){
+                new IOSDialog(CollectActivity.this).builder()
+                        .setTitle("详情")
+                        .setMsg(name.getText().toString())
+                        .setPositiveButton("确定", null)
+                        .show();
+            }
+        });
+
+        name.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(name.getText().toString())){
                 new IOSDialog(CollectActivity.this).builder()
                         .setTitle("详情")
@@ -566,12 +579,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getSearchData(NumberBean s) {
+        clearData();
         if (s.getData() != null) {
             name.setText(s.getData().getCnName());
             source.setText(s.getData().getSourceDistribution());
         }
 
         if (s.getHasOldData() == 1 && s.getOldData() != null && isNumberSearch) {
+            isNumberSearch = false;
             new IOSDialog(this).builder()
                     .setTitle("该零件号已被于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
                     .setMsg("是否重新采集当前数据?")
@@ -779,6 +794,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             ToastUtil.show("零件包装模数不能为空");
             return;
         }
+
+        if (imageItems.size() <= 3){
+            ToastUtil.show("照片数量要大于3个");
+            return;
+        }
+
         if (outLayout.getVisibility() == View.VISIBLE) {
             if (TextUtils.isEmpty(outLength.getText())) {
                 ToastUtil.show("外包装长不能为空");
@@ -905,11 +926,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }
         }
 
-        if (imageItems.size() <= 3){
-            ToastUtil.show("照片数量要大于3个");
-            return;
-        }
-
         CollectBean bean = new CollectBean();
         bean.setPartCode(number.getText().toString());
         bean.setPartName(name.getText().toString());
@@ -1029,6 +1045,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+
         switch (v.getId()) {
             case R.id.modle_num:
                 if (!hasFocus) {
@@ -1040,11 +1057,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (!hasFocus) {
                     numberTv.setTextColor(normalColor);
                     if (!TextUtils.isEmpty(number.getText().toString())){
-                        if (!isNumberSearch) {
+                        if (!isNumberSearch && numHasFocus) {
+                            numHasFocus = false;
                             presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
-                        }else{
-                            isNumberSearch = false;
                         }
+                    }else{
+                        clearData();
                     }
                 }
                 break;
@@ -1119,6 +1137,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             });
 
         }
+
+        if (v.getId() != R.id.number){
+            numHasFocus = false;
+            if (hasFocus){
+                isNumberSearch = false;
+            }
+        }
     }
 
     @Override
@@ -1130,6 +1155,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     break;
 
                 case R.id.number:
+                    numHasFocus = true;
                     changeUI(event, number, numberTv);
                     break;
 
@@ -1213,6 +1239,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             if (!hasFocus) {
                 tv.setTextColor(normalColor);
                 if (et.getText().length() > 0) {
+                    InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
+                    et.setFilters(filters);
                     et.setText(et.getText() + "kg");
                 } else {
                     et.setHint("kg");
@@ -1223,6 +1251,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     int index = s.indexOf("kg");
                     String temp = s.substring(0, index);
                     et.setText(temp);
+                    if (TextUtils.equals(temp.substring(0, 1), "0")){
+                        et.setText(temp.substring(1, temp.length()));
+                    }
                 }
             }
             return;
@@ -1230,6 +1261,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         if (!hasFocus) {
             tv.setTextColor(normalColor);
             if (et.getText().length() > 0) {
+                InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
+                et.setFilters(filters);
                 et.setText(et.getText() + "mm");
             } else {
                 et.setHint("mm");
@@ -1238,8 +1271,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             if (et.getText().length() > 0) {
                 String s = et.getText().toString();
                 int index = s.indexOf("mm");
-                String temp = s.substring(0, index);
-                et.setText(temp);
+                if (index > 0){
+                    String temp = s.substring(0, index);
+                    et.setText(temp);
+                    if (TextUtils.equals(temp.substring(0, 1), "0")){
+                        et.setText(temp.substring(1, temp.length()));
+                    }
+                }
+
             }
         }
     }

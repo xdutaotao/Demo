@@ -39,7 +39,10 @@
                     android:inputType="textUri|textMultiLine"
                     android:singleLine="true"
                     android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:imeOptions="actionSearch" />
+                    android:imeOptions="actionSearch"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
             <View

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.seafire.cworker.Bean.PackageBean;
@@ -73,10 +74,15 @@ public class CheckActivity extends BaseActivity {
 
 
         adapter.setOnItemClickListener((view, i) -> {
-            Intent intent = new Intent();
-            intent.putExtra(INTENT_KEY, listBean.get(i));
-            setResult(RESULT_OK, intent);
-            finish();
+            if (view.findViewById(R.id.select).getVisibility() == View.VISIBLE){
+                view.findViewById(R.id.select).setVisibility(View.GONE);
+            }else{
+                Intent intent = new Intent();
+                intent.putExtra(INTENT_KEY, listBean.get(i));
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+
         });
     }
 

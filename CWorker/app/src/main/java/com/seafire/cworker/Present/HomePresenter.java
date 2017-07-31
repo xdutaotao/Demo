@@ -1,5 +1,7 @@
 package com.seafire.cworker.Present;
 
+import android.text.TextUtils;
+
 import com.seafire.cworker.Bean.HomeResponseBean;
 import com.seafire.cworker.Model.HomeModel;
 import com.seafire.cworker.Utils.RxSubUtils;
@@ -29,8 +31,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     }
 
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("请求失败");
+                    public void _onError(String s) {
+                        if (!TextUtils.equals(s, "网络错误"))
+                            s = "请求失败";
+                        ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));
