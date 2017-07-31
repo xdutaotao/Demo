@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -262,6 +263,17 @@ public class Utils {
             e.printStackTrace();
         }
         return 0l;
+    }
+
+    /**
+     * 将长整型格式转 日期格式
+     * @param time
+     * @return
+     */
+    public static String strToDateLong(long time) {
+        Date date = new Date(time);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(date);
     }
 
     /**

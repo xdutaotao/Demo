@@ -1,6 +1,7 @@
 package com.seafire.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.seafire.cworker.Bean.CollectBean;
 import com.seafire.cworker.Bean.NumberBean;
@@ -50,7 +51,9 @@ public class CollectPresenter extends BasePresenter<CollectView> {
 
                     @Override
                     protected void _onError(String msg) {
-                        ToastUtil.show(msg);
+                        if (TextUtils.equals(msg, "网络错误"))
+                            ToastUtil.show(msg);
+                        getView().onFailure();
                     }
                 }));
     }
@@ -71,7 +74,7 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                     }
 
                     @Override
-                    protected void _onError() {
+                    protected void _onError(String msg) {
                         model.recodeMark(bean, false);
                         getView().postTxtError();
                     }

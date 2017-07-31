@@ -2,6 +2,7 @@ html,body{
     margin:0px;
     height:100%;
     width: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
 a,button,input,optgroup,select,textarea {
@@ -28,16 +29,19 @@ a,button,input,optgroup,select,textarea {
     padding-left: 0.15rem;
     align-items: center;
     background-color: white;
-    border-bottom: 0.005rem solid #F4F4F4;
+    border-bottom: 0.01rem solid #F4F4F4;
 }
 
 .row-padding span{
-    font-size: 0.17rem;
-    color: #000
+    font-size: 0.14rem;
+    color: #333;
 }
 
 .row-padding input{
-    flex: 1
+    flex: 1;
+    font-size:0.14rem;
+    color: #333;
+    line-height:0.2rem;
 }
 
 
@@ -46,8 +50,10 @@ a,button,input,optgroup,select,textarea {
     border: 0px;
     margin-left: 0.17rem;
     height: 100%;
-    font-size: 0.16rem;
+    line-height: 0.40rem;
+    font-size: 0.14rem;
     outline: none;
+    vertical-align: middle;
 }
 
 .row-main{
@@ -56,16 +62,16 @@ a,button,input,optgroup,select,textarea {
     padding-left: 0.15rem;
     align-items: center;
     background-color: white;
-    border-top: 0.005rem solid #888;
+    border-top: 0.01rem solid #888;
 }
 
 #preAdd :after{content:"...";}
 
 
 /*#toastMessage{*/
-    /*background-color: #000000; font-size: 0.14rem; text-align: center; opacity: 0.8;*/
-    /*line-height: 0.44rem; margin: 0rem 0.53rem; color: #fff; border-radius: 0.13rem;*/
-    /*width: 2.7rem; height: 0.44rem;*/
+/*background-color: #000000; font-size: 0.14rem; text-align: center; opacity: 0.8;*/
+/*line-height: 0.44rem; margin: 0rem 0.53rem; color: #fff; border-radius: 0.13rem;*/
+/*width: 2.7rem; height: 0.44rem;*/
 /*}*/
 
 #toastMessage{
@@ -78,8 +84,8 @@ a,button,input,optgroup,select,textarea {
     vertical-align: middle;
 }
 
-@font-face {font-family:myFont; src: url("../svg/PingFang-SC-Regular.otf")}
+/*@font-face {font-family:myFont; src: url("../svg/PingFang-SC-Regular.otf")}
 
-span input{
-    font-family : myFont
-}
+body{
+    font-family : myFont;
+}*/

@@ -135,7 +135,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         JMessageClient.login(name.getText().toString(), pwd.getText().toString(), new BasicCallback() {
             @Override
             public void gotResult(final int status, final String desc) {
-                dialog.dismiss();
                 if (status == 0) {
                     String username = JMessageClient.getMyInfo().getUserName();
                     String appKey = JMessageClient.getMyInfo().getAppKey();
@@ -161,6 +160,9 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                     });
 
                 } else {
+                    dialog.dismiss();
+                    ToastUtil.show("登录成功");
+                    finish();
                     HandleResponseCode.onHandle(LoginActivity.this, status, false);
                 }
             }

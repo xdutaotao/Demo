@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Present.MessagePresenter;
 import com.seafire.cworker.R;
 import com.seafire.cworker.View.MessageView;
@@ -97,6 +98,11 @@ public class MessageFragment extends BaseFragment implements MessageView, View.O
         peBtn.setOnClickListener(this);
         pvBtn.setOnClickListener(this);
 
+        if (User.getInstance().getUserInfo() != null){
+            add.setVisibility(User.getInstance().getUserInfo().getPerson().getType() != 0 ? View.VISIBLE : View.GONE);
+        }else{
+            add.setVisibility(View.GONE);
+        }
         add.setOnClickListener(v -> {
             CreateGroupNameActivity.startActivity(MessageFragment.this.getContext());
         });

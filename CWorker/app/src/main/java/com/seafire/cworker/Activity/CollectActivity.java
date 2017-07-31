@@ -513,7 +513,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void clearData(){
-        number.setText("");
+        //number.setText("");
         name.setText("");
         source.setText("");
         wrapText.setText("");
@@ -566,49 +566,78 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getSearchData(NumberBean s) {
-        if (s.getData() == null) {
-            return;
-        } else {
+        if (s.getData() != null) {
             name.setText(s.getData().getCnName());
             source.setText(s.getData().getSourceDistribution());
         }
 
         if (s.getHasOldData() == 1 && s.getOldData() != null && isNumberSearch) {
-            isNumberSearch = false;
-            wrapText.setText(s.getOldData().getPackageStypeName());
-            typeTxt.setText(s.getOldData().getPartMaterialName());
-            number.setText(s.getOldData().getPackageModelCount() + "");
-            length.setText(String.valueOf(s.getOldData().getPartLength()));
-            width.setText(String.valueOf(s.getOldData().getPartWidth()));
-            height.setText(String.valueOf(s.getOldData().getPartHeight()));
-            weight.setText(String.valueOf(s.getOldData().getNetWeight()));
+            new IOSDialog(this).builder()
+                    .setTitle("该零件号已被于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
+                    .setMsg("是否重新采集当前数据?")
+                    .setPositiveButton("确定", v -> {
+                        wrapText.setText(s.getOldData().getPackageStypeName());
+                        typeTxt.setText(s.getOldData().getPartMaterialName());
+                        modleNum.setText(s.getOldData().getPackageModelCount() + "");
+                        clearImg(modleNum);
+                        length.setText(String.valueOf(s.getOldData().getPartLength()) +"mm");
+                        clearImg(length);
+                        width.setText(String.valueOf(s.getOldData().getPartWidth())+"mm");
+                        clearImg(width);
+                        height.setText(String.valueOf(s.getOldData().getPartHeight())+"mm");
+                        clearImg(height);
+                        weight.setText(String.valueOf(s.getOldData().getNetWeight())+"kg");
+                        clearImg(weight);
 
-            outLength.setText(String.valueOf(s.getOldData().getPackageLength()));
-            outWidth.setText(String.valueOf(s.getOldData().getPackageWidth()));
-            outHeight.setText(String.valueOf(s.getOldData().getPackageHeight()));
-            outWeight.setText(String.valueOf(s.getOldData().getRoughWeight()));
+                        allLength.setText(String.valueOf(s.getOldData().getAddedLength()) + "mm");
+                        clearImg(allLength);
+                        allWidth.setText(String.valueOf(s.getOldData().getAddedWidth()) + "mm");
+                        clearImg(allWidth);
+                        allHeight.setText(String.valueOf(s.getOldData().getAddedHeight()) + "mm");
+                        clearImg(allHeight);
 
-            singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength()));
-            singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth()));
-            singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight()));
-            singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight()));
-            singleSwitch.setChecked(true);
+                        outLength.setText(String.valueOf(s.getOldData().getPackageLength()));
+                        clearImg(outLength);
+                        outWidth.setText(String.valueOf(s.getOldData().getPackageWidth()));
+                        clearImg(outWidth);
+                        outHeight.setText(String.valueOf(s.getOldData().getPackageHeight()));
+                        clearImg(outHeight);
+                        outWeight.setText(String.valueOf(s.getOldData().getRoughWeight()));
+                        clearImg(outWeight);
 
-            checkTv.setText(s.getOldData().getAuditType());
-            recommendTv.setText(s.getOldData().getProcessRecommendation());
-            information.setText(s.getOldData().getRemark());
-            List<String> paths = JsonUtils.getInstance().JsonToList(s.getOldData().getDocumentCodes());
-            Observable.from(paths)
-                    .map(s1 -> {
-                        ImageItem imageItem = new ImageItem();
-                        imageItem.path = s1;
-                        return imageItem;
-                    }).toList()
-                    .subscribe(imageItems1 -> {
-                        imageItems.clear();
-                        imageItems.addAll(imageItems1);
-                        setResultToAdapter(imageItems);
-                    });
+                        singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength()));
+                        clearImg(singleLength);
+                        singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth()));
+                        clearImg(singleWidth);
+                        singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight()));
+                        clearImg(singleHeight);
+                        singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight()));
+                        clearImg(singleWeight);
+                        singleSwitch.setChecked(true);
+
+                        checkTv.setText(s.getOldData().getAuditType());
+                        recommendTv.setText(s.getOldData().getProcessRecommendation());
+                        information.setText(s.getOldData().getRemark());
+                        //List<String> paths = JsonUtils.getInstance().JsonToList(s.getOldData().getDocumentCodes());
+                        List<String> paths = new ArrayList<>();
+                        paths.add(s.getOldData().getDocumentCodes());
+                        Observable.from(paths)
+                                .map(s1 -> {
+                                    ImageItem imageItem = new ImageItem();
+                                    imageItem.path = s1;
+                                    return imageItem;
+                                }).toList()
+                                .subscribe(imageItems1 -> {
+                                    imageItems.clear();
+                                    imageItems.addAll(imageItems1);
+                                    setResultToAdapter(imageItems);
+                                });
+                    })
+                    .setNegativeButton("取消", v -> {
+                        number.setText("");
+                    })
+                    .show();
+
         }
     }
 
@@ -1010,8 +1039,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             case R.id.number:
                 if (!hasFocus) {
                     numberTv.setTextColor(normalColor);
-                    if (!TextUtils.isEmpty(number.getText().toString()))
-                        presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
+                    if (!TextUtils.isEmpty(number.getText().toString())){
+                        if (!isNumberSearch) {
+                            presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
+                        }else{
+                            isNumberSearch = false;
+                        }
+                    }
                 }
                 break;
 
@@ -1296,7 +1330,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onFailure() {
-        ToastUtil.show("上传失败");
+        clearData();
     }
 
     @Override

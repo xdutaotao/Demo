@@ -1,6 +1,7 @@
 package com.seafire.cworker.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.seafire.cworker.Bean.SearchBean;
 import com.seafire.cworker.Bean.SearchResponseBean;
@@ -37,6 +38,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
                     @Override
                     public void _onError(String msg) {
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "请求失败";
                         getView().fail(msg);
                     }
                 }));
@@ -52,6 +55,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
                     @Override
                     public void _onError(String msg) {
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "请求失败";
                         getView().fail(msg);
                     }
                 }));
@@ -67,6 +72,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
                     @Override
                     public void _onError(String msg) {
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "请求失败";
                         getView().fail(msg);
                     }
                 }));

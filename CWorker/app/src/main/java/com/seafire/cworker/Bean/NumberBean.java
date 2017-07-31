@@ -215,7 +215,7 @@ public class NumberBean {
          * partHeight : demo
          */
 
-        private int dateline;
+        private long dateline;
         private int packageWidth;
         private String project;
         private int addedLength;
@@ -250,11 +250,11 @@ public class NumberBean {
         private String documentCodes;
         private int partHeight;
 
-        public int getDateline() {
+        public long getDateline() {
             return dateline;
         }
 
-        public void setDateline(int dateline) {
+        public void setDateline(long dateline) {
             this.dateline = dateline;
         }
 

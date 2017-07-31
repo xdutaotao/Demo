@@ -11,27 +11,27 @@ function GetQueryString(name) {
 
 $(function(){
 
-    //生成1900年-2100年
-    for(var i = 2017; i<=2030;i++){
-        var option = document.createElement('option');
-        option.setAttribute('value',i);
-        option.innerHTML = i;
-        sel1.appendChild(option);
-    }
-    //生成1月-12月
-    for(var i = 1; i <=12; i++){
-        var option = document.createElement('option');
-        option.setAttribute('value',i);
-        option.innerHTML = i;
-        sel2.appendChild(option);
-    }
-    //生成1日—31日
-    for(var i = 1; i <=31; i++){
-        var option = document.createElement('option');
-        option.setAttribute('value',i);
-        option.innerHTML = i;
-        sel3.appendChild(option);
-    }
+    // //生成1900年-2100年
+    // for(var i = 2017; i<=2030;i++){
+    //     var option = document.createElement('option');
+    //     option.setAttribute('value',i);
+    //     option.innerHTML = i;
+    //     sel1.appendChild(option);
+    // }
+    // //生成1月-12月
+    // for(var i = 1; i <=12; i++){
+    //     var option = document.createElement('option');
+    //     option.setAttribute('value',i);
+    //     option.innerHTML = i;
+    //     sel2.appendChild(option);
+    // }
+    // //生成1日—31日
+    // for(var i = 1; i <=31; i++){
+    //     var option = document.createElement('option');
+    //     option.setAttribute('value',i);
+    //     option.innerHTML = i;
+    //     sel3.appendChild(option);
+    // }
 
 
     Tida.ready({
@@ -96,12 +96,12 @@ $(function(){
             return;
         }
 
-        if ($('.year option:selected').text() == '年' ||
-                    $('.month option:selected').text() == '月' ||
-                        $('.day option:selected').text() == '日'){
-            toastFunction("请选择年月日");
-            return;
-        }
+        // if ($('.year option:selected').text() == '年' ||
+        //             $('.month option:selected').text() == '月' ||
+        //                 $('.day option:selected').text() == '日'){
+        //     toastFunction("请选择年月日");
+        //     return;
+        // }
 
 
         //var speed =  $('.speed option:selected').text();
@@ -120,7 +120,8 @@ $(function(){
         data.ex_property.name = $('.name').text();
         data.ex_property.broadband_rate = $('.preSpeed').text();
         data.ex_property.contract_period = $('.time option:selected').text();
-        data.ex_property.effective_date = $('.year option:selected').text()+"年"+$('.month option:selected').text()+"月"+$('.day option:selected').text()+"号零点";
+        // data.ex_property.effective_date = $('.year option:selected').text()+"年"+$('.month option:selected').text()+"月"+$('.day option:selected').text()+"号零点";
+        data.ex_property.effective_date = "";
 
         //Tida.showLoading("加载中...");
 

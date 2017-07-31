@@ -14,11 +14,6 @@ import android.widget.Toast;
 import com.seafire.cworker.Fragment.BaseFragmentAdapter;
 import com.seafire.cworker.Fragment.FirstFragment;
 import com.seafire.cworker.R;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.PermissionNo;
-import com.yanzhenjie.permission.PermissionYes;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,31 +69,31 @@ public class LaunchActivity extends FragmentActivity implements ViewPager.OnPage
     }
 
     private void getPermission(){
-        AndPermission.with(this)
-                .requestCode(REQUEST_CODE_PERMISSION_OTHER)
-                .permission(
-                        Manifest.permission.WRITE_CONTACTS,
-                        Manifest.permission.READ_SMS,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.MODIFY_PHONE_STATE,
-                        Manifest.permission.RECEIVE_SMS,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                .callback(this)
-                // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
-                // 这样避免用户勾选不再提示，导致以后无法申请权限。
-                // 你也可以不设置。
-                .rationale(new RationaleListener() {
-                    @Override
-                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
-                        // 这里的对话框可以自定义，只要调用rationale.resume()就可以继续申请。
-                        AndPermission.rationaleDialog(LaunchActivity.this, rationale)
-                                .show();
-                    }
-                })
-                .start();
+//        AndPermission.with(this)
+//                .requestCode(REQUEST_CODE_PERMISSION_OTHER)
+//                .permission(
+//                        Manifest.permission.WRITE_CONTACTS,
+//                        Manifest.permission.READ_SMS,
+//                        Manifest.permission.CAMERA,
+//                        Manifest.permission.READ_PHONE_STATE,
+//                        Manifest.permission.MODIFY_PHONE_STATE,
+//                        Manifest.permission.RECEIVE_SMS,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE
+//                )
+//                .callback(this)
+//                // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
+//                // 这样避免用户勾选不再提示，导致以后无法申请权限。
+//                // 你也可以不设置。
+//                .rationale(new RationaleListener() {
+//                    @Override
+//                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+//                        // 这里的对话框可以自定义，只要调用rationale.resume()就可以继续申请。
+//                        AndPermission.rationaleDialog(LaunchActivity.this, rationale)
+//                                .show();
+//                    }
+//                })
+//                .start();
     }
 
     @Override
@@ -120,25 +115,25 @@ public class LaunchActivity extends FragmentActivity implements ViewPager.OnPage
 
     }
 
-    @PermissionYes(REQUEST_CODE_PERMISSION_OTHER)
-    private void getMultiYes(@NonNull List<String> grantedPermissions) {
-        Toast.makeText(this, "获取权限成功", Toast.LENGTH_SHORT).show();
-    }
-
-    @PermissionNo(REQUEST_CODE_PERMISSION_OTHER)
-    private void getMultiNo(@NonNull List<String> deniedPermissions) {
-        Toast.makeText(this, "获取权限失败", Toast.LENGTH_SHORT).show();
-
-        // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
-        if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
-            AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
-                    .setTitle("友情提示")
-                    .setMessage("你拒绝了我们的权限申请")
-                    .setPositiveButton("确定")
-                    .setNegativeButton("取消", null)
-                    .show();
-
-            // 更多自定dialog，请看上面。
-        }
-    }
+//    @PermissionYes(REQUEST_CODE_PERMISSION_OTHER)
+//    private void getMultiYes(@NonNull List<String> grantedPermissions) {
+//        Toast.makeText(this, "获取权限成功", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @PermissionNo(REQUEST_CODE_PERMISSION_OTHER)
+//    private void getMultiNo(@NonNull List<String> deniedPermissions) {
+//        Toast.makeText(this, "获取权限失败", Toast.LENGTH_SHORT).show();
+//
+//        // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+//        if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
+//            AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
+//                    .setTitle("友情提示")
+//                    .setMessage("你拒绝了我们的权限申请")
+//                    .setPositiveButton("确定")
+//                    .setNegativeButton("取消", null)
+//                    .show();
+//
+//            // 更多自定dialog，请看上面。
+//        }
+//    }
 }
