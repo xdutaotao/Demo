@@ -13,8 +13,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -633,9 +635,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         checkTv.setText(s.getOldData().getAuditType());
                         recommendTv.setText(s.getOldData().getProcessRecommendation());
                         information.setText(s.getOldData().getRemark());
-                        //List<String> paths = JsonUtils.getInstance().JsonToList(s.getOldData().getDocumentCodes());
-                        List<String> paths = new ArrayList<>();
-                        paths.add(s.getOldData().getDocumentCodes());
+                        List<String> paths = Arrays.asList(s.getOldData().getDocumentCodes().split(","));
                         Observable.from(paths)
                                 .map(s1 -> {
                                     ImageItem imageItem = new ImageItem();
@@ -718,7 +718,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void postTxtError(){
         scrollView.scrollTo(0, 0);
-        clearData();
+        //clearData();
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
@@ -1241,7 +1241,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (et.getText().length() > 0) {
                     InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
                     et.setFilters(filters);
-                    et.setText(et.getText() + "kg");
+                    int length = et.getText().length();
+                    if (TextUtils.equals(et.getText().subSequence(length-1, length), ".")){
+                        et.setText(et.getText().subSequence(0, length-1) + "kg");
+                    }else{
+                        et.setText(et.getText() + "kg");
+                    }
+
                 } else {
                     et.setHint("kg");
                 }
@@ -1251,9 +1257,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     int index = s.indexOf("kg");
                     String temp = s.substring(0, index);
                     et.setText(temp);
-                    if (TextUtils.equals(temp.substring(0, 1), "0")){
-                        et.setText(temp.substring(1, temp.length()));
-                    }
                 }
             }
             return;
@@ -1263,7 +1266,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             if (et.getText().length() > 0) {
                 InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
                 et.setFilters(filters);
-                et.setText(et.getText() + "mm");
+
+                int length = et.getText().length();
+                if (TextUtils.equals(et.getText().subSequence(length-1, length), ".")){
+                    et.setText(et.getText().subSequence(0, length-1) + "mm");
+                }else{
+                    et.setText(et.getText() + "mm");
+                }
+
             } else {
                 et.setHint("mm");
             }
@@ -1274,9 +1284,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (index > 0){
                     String temp = s.substring(0, index);
                     et.setText(temp);
-                    if (TextUtils.equals(temp.substring(0, 1), "0")){
-                        et.setText(temp.substring(1, temp.length()));
-                    }
                 }
 
             }

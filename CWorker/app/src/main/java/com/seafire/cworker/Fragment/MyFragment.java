@@ -298,7 +298,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     setSign(0);
                 }
                 sign.setText("已签到");
-                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 1);
+                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
                 break;
 
             case R.id.help:

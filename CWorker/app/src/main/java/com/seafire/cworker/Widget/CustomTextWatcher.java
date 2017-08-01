@@ -29,9 +29,13 @@ public class CustomTextWatcher implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count){
         if (editText.getText().length() > 0) {
-            if (TextUtils.equals(s, "0")){
-                editText.setText("");
-                return;
+            int length = editText.getText().length();
+            String temp = editText.getText().toString();
+            if (length == 2 && TextUtils.equals("0", temp.substring(0, 1))){
+                if (!TextUtils.equals(temp.substring(1, 2), ".")){
+                    editText.setText("0");
+                    return;
+                }
             }
             editText.setCompoundDrawablePadding(20);
             editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
@@ -61,8 +65,8 @@ public class CustomTextWatcher implements TextWatcher {
                 InputFilter[] filters = {new InputFilter.LengthFilter(6)};
                 editText.setFilters(filters);
             }
-            editText.setSelection(s.length());
         }
+        editText.setSelection(s.length());
     }
 
     @Override

@@ -511,4 +511,9 @@
         <item name="android:textColor">#1a1a1a</item>
     </style>
 
+    <!--popwindow 消失动画-->
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowExitAnimation">@anim/popwindow_exit_anim</item>       <!-- 指定消失的动画xml  -->
+    </style>
+
 </resources>

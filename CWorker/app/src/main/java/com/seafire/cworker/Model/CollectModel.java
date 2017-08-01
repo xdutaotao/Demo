@@ -137,24 +137,9 @@ public class CollectModel extends BaseModel {
 //        }
 
         return resizeFile(list)
-                .flatMap(stringRequestBodyMap -> {
-                    return config.getRetrofitService().postCollectImg(stringRequestBodyMap);
-                })
-                .flatMap(responseBody -> {
-                    try {
-                        String s = responseBody.string();
-                        UploadBean uploadBean = JsonUtils.getInstance().JsonToUploadBean(s);
-                        if (TextUtils.equals(uploadBean.getMsg(), "200")){
-                            map.put("documentCodes", uploadBean.getData());
-                            return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap);
-                        }else{
-                            return Observable.error(new RxUtils.ServerException(uploadBean.getResult())) ;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return Observable.error(new RxUtils.ServerException("操作失败")) ;
-
+                .flatMap(s -> {
+                    map.put("documentCodes", s);
+                    return config.getRetrofitService().postCollectTxt(map, doubleMap, intMap);
                 })
                 .flatMap( bean1 -> {
                     if (TextUtils.equals(bean1.getMsg(), "200")){
@@ -173,26 +158,49 @@ public class CollectModel extends BaseModel {
     }
 
 
-    private Observable<Map<String, RequestBody>> resizeFile(List<String> list){
+    private Observable<String> resizeFile(List<String> list){
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
         return Observable.from(list)
                 .flatMap(s -> {
-                    return Luban.get(App.getContext())
-                            .load(new File(s))                     //传人要压缩的图片
-                            .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
-                            .asObservable();
+                    if (s.contains("http")){
+                        return Observable.create(subscriber -> {
+                            subscriber.onNext(s);
+                            subscriber.onCompleted();
+                        });
+                    }else{
+                        return Luban.get(App.getContext())
+                                .load(new File(s))                     //传人要压缩的图片
+                                .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
+                                .asObservable()
+                                .map(file -> {
+                                    RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
+                                    requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
+                                    requestBodyMap.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
+                                    return requestBodyMap;
+                                })
+                                .flatMap(stringRequestBodyMap -> config.getRetrofitService().postCollectImg(stringRequestBodyMap))
+                                .map(responseBody -> {
+                                    try {
+                                        String result = responseBody.string();
+                                        UploadBean uploadBean = JsonUtils.getInstance().JsonToUploadBean(result);
+                                        if (TextUtils.equals(uploadBean.getMsg(), "200")) {
+                                            return uploadBean.getData();
+                                        }else{
+                                            return "上传图片失败";
+                                        }
+                                    }catch (IOException e){
+                                        e.printStackTrace();
+                                    }
+                                    return "上传图片失败";
+                                });
+                    }
                 })
                 .toList()
-                .map(files -> {
-                    for(File file: files){
-                        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-                        requestBodyMap.put("photo\"; filename=\""+file.getName(), body);
-                    }
-                    return requestBodyMap;
-                })
-                .map(stringRequestBodyMap -> {
-                    stringRequestBodyMap.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
-                    return stringRequestBodyMap;
+                .map(s -> {
+                    for(String temp: s)
+                        sb.append(temp).append(",");
+                    return sb.toString().substring(0, sb.toString().length()-1);
                 });
     }
 

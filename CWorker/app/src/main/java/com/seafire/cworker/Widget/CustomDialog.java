@@ -80,6 +80,7 @@ public class CustomDialog {
         PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*1/2, true);
         popupWindow.setTouchable(true);
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         int x = Utils.getScreenWidth(context)/6;
         int y = Utils.getScreenHeight(context)/6;
