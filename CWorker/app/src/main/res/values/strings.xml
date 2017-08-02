@@ -602,4 +602,12 @@
     <string name="jmui_sdk_87x_871506">imei无效</string>
     <string name="jmui_sdk_87x_871201">请求超时，请检查您的网络</string>
 
+    <string name="need_permition_camera">相机</string>
+    <string name="need_permition_write_external_storage">读写手机存储</string>
+    <string name="need_permition_record_audio">录音</string>
+    <string name="need_permition_call_phone">拨打电话</string>
+    <string name="need_permition">该功能需要您开启APP的：%1$s权限</string>
+    <string name="miss_call">您有一个新的未接来电!  </string>
+    <string name="need_permition_setting">读取系统权限</string>
+
 </resources>

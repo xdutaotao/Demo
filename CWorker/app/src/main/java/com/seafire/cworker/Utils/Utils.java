@@ -664,6 +664,30 @@ public class Utils {
         return str;
     }
 
+    /*
+    * 将时间转换为时间戳
+    */
+    public static long dateToStamp(String s) throws ParseException{
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = simpleDateFormat.parse(s);
+        long ts = date.getTime();
+        return ts;
+    }
+
+    public static boolean isActiveTime(){
+        boolean isActive = false;
+        try {
+            long startTime = dateToStamp("2017-08-15 08:30:00");
+            if (startTime < System.currentTimeMillis()){
+                isActive = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return isActive;
+
+    }
+
 
 
 }

@@ -293,7 +293,8 @@ public class ConversationListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mConvListController.getAdapter().notifyDataSetChanged();
+        //mConvListController.getAdapter().notifyDataSetChanged();
+        mConvListController.initConvListAdapter();
     }
 
 

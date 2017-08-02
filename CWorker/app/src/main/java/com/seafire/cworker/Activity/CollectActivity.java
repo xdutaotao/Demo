@@ -581,13 +581,15 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getSearchData(NumberBean s) {
-        clearData();
         if (s.getData() != null) {
+            name.setText("");
+            source.setText("");
             name.setText(s.getData().getCnName());
             source.setText(s.getData().getSourceDistribution());
         }
 
         if (s.getHasOldData() == 1 && s.getOldData() != null && isNumberSearch) {
+            clearData();
             isNumberSearch = false;
             new IOSDialog(this).builder()
                     .setTitle("该零件号已被于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")

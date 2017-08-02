@@ -49,7 +49,7 @@ public class ConversationListController implements
     }
 
     // 得到会话列表
-    private void initConvListAdapter() {
+    public void initConvListAdapter() {
         mDatas = JMessageClient.getConversationList();
         //对会话列表进行时间排序
         if (mDatas == null)

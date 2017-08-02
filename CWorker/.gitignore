@@ -9,7 +9,6 @@
 .classpath
 .project
 Readme
-build.gradle
 build.xml
 gradlew
 gradlew.bat
