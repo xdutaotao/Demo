@@ -179,7 +179,7 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
     private void registerJMessage(){
         final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.registering_hint));
         dialog.show();
-        JMessageClient.register(phone, pwdInput.getText().toString(), new BasicCallback() {
+        JMessageClient.register(phone, phone+"1", new BasicCallback() {
 
             @Override
             public void gotResult(final int status, final String desc) {

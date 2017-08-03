@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     private void loginJMessage() {
         final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.login_hint));
         dialog.show();
-        JMessageClient.login(name.getText().toString(), pwd.getText().toString(), new BasicCallback() {
+        JMessageClient.login(name.getText().toString(), name.getText().toString()+"1", new BasicCallback() {
             @Override
             public void gotResult(final int status, final String desc) {
                 if (status == 0) {
@@ -154,15 +154,15 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                             } else {
                                 ToastUtil.show("登录成功");
                                 finish();
-                                HandleResponseCode.onHandle(LoginActivity.this, status, false);
+                                //HandleResponseCode.onHandle(LoginActivity.this, status, false);
                             }
                         }
                     });
 
                 } else {
                     dialog.dismiss();
-                    ToastUtil.show("登录成功");
-                    finish();
+//                    ToastUtil.show("登录成功");
+//                    finish();
                     HandleResponseCode.onHandle(LoginActivity.this, status, false);
                 }
             }
