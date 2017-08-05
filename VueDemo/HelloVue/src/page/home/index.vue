@@ -3,26 +3,31 @@
  */
 
 <template>
-  <headerTitle title="这是title"></headerTitle>
+  <div class="homePage">
+    <head-title title="第一次"></head-title>
+  </div>
 </template>
 
 <script>
 
-  import headerTitle from '../../components/header/head'
+  import headTitle from '../../components/header/head'
 
   export default{
-    name: 'home',
     data() {
       return {
 
       }
     },
-    component:{
-      headerTitle
+    components:{
+      headTitle
     }
   }
 </script>
 
 <style>
+  .homePage{
+    height: 500px;
+    width: 100%;
+  }
 
 </style>

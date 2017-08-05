@@ -6,9 +6,10 @@
       <!--</svg>-->
     <!--</section>-->
 
-    <section id="headerCenter" v-if="title">
+    <section>
       <span>{{title}}</span>
     </section>
+
 
     <!--<section id="headerRight" v-if="isShowTitleRight">-->
 
@@ -22,7 +23,6 @@
   //import {mapState, mapAction} from 'vuex'
 
   export default {
-
 //    mounted(){
 //      this.getUserInfo();
 //    },
@@ -44,7 +44,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 
   #header{
     background-color: blue;
