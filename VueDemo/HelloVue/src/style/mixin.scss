@@ -1,0 +1,28 @@
+$blue: #3190e8;
+$bc: #e4e4e4;
+$fc:#fff;
+
+@mixin wh($width, $height){
+  width: $width;
+  height: $height
+}
+
+@mixin center{
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+//字体大小，颜色
+@mixin sc($size, $color){
+  font-size: $size;
+  color: $color;
+}
+
+//定位上下居中
+@mixin ct {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

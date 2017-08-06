@@ -4,7 +4,9 @@
 
 <template>
   <div class="homePage">
-    <head-title title="第一次"></head-title>
+    <head-title signin-up="home">
+      <span slot="logoText" class="logoText">ele.me</span>
+    </head-title>
   </div>
 </template>
 
@@ -24,10 +26,14 @@
   }
 </script>
 
-<style>
-  .homePage{
-    height: 500px;
-    width: 100%;
+<style lang="scss" scoped>
+
+  @import "../../style/mixin.scss";
+
+  .logoText{
+    @include sc(0.8rem, #fff);
+    @include ct;
+    margin-left: 0.4rem;
   }
 
 </style>
