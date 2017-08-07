@@ -33,6 +33,12 @@
       </ul>
     </section>
 
+    <section>
+      <ul>
+        
+      </ul>
+    </section>
+
   </div>
 </template>
 
@@ -89,7 +95,6 @@
       height: 1.8rem;
       padding: 0 0.45rem;
       border-top: 1px solid $bc;
-      border-bottom: 2px solid $bc;
       @include font(0.75rem, 1.8rem);
       span:nth-of-type(1){
         color: $blue;
@@ -104,8 +109,9 @@
   }
 
   .hot_city{
-    padding-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
     border-bottom: 1px solid $bc;
+    background-color: white;
     span{
       @include sc(0.55rem, #666);
       padding-left: 0.45rem;
@@ -114,10 +120,9 @@
 
   .citylistul{
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
     border-top: 1px solid $bc;
+
     li{
       @include sc(0.55rem, #666);
       text-align: center;
