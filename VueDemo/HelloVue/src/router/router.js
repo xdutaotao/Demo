@@ -6,8 +6,14 @@ import App from '../App.vue'
 export default [{
     path: '/',
     component: App,
-    children: [{
+    children: [
+      {
         path: '',
         component: r => require.ensure([], ()=> r(require('../page/home')), 'home')
-    }]
+      },
+      {
+        path: '/login',
+        component: r => require.ensure([], ()=> r(require('../page/login/login')), 'login')
+      }
+    ]
 }]

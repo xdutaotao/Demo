@@ -39,8 +39,8 @@
               <h4 class="city_title">{{key}}
                 <span>（按字母排序）</span>
               </h4>
-              <ul >
-                <router-link tag="li" v-for="item in value" :key="item.id">
+              <ul class="citylistul clear">
+                <router-link tag="li" v-for="item in value" :key="item.id" :to="'/city/' + item.id" class="citylistli ellipsis">
                   {{item.name}}
                 </router-link>
               </ul>
@@ -70,7 +70,7 @@
       //获取所有城市
       groupcity().then(res => {
           this.groupcity = res;
-          console.log(this.groupcity)
+          console.log(JSON.stringify(this.groupcity))
         })
     },
 
@@ -164,12 +164,15 @@
       }
     }
 
-    .city_title{
-      @include sc(0.55rem, #666);
-      margin-left: 0.45rem;
-      line-height: 1.45rem;
-    }
+  }
 
+  .city_title{
+    @include sc(0.55rem, #666);
+    margin-left: 0.45rem;
+    line-height: 1.45rem;
+    span{
+      @include sc(0.475rem, #999);
+    }
   }
 
   .group_city_container{
@@ -178,6 +181,25 @@
     .letter_classify_li{
       margin-bottom: 0.45rem;
       border-top: 1px solid $bc;
+
+      .citylistul{
+        display: flex;
+        flex-wrap: wrap;
+        border-top: 1px solid $bc;
+
+        .citylistli{
+          @include sc(0.55rem, #666);
+          text-align: center;
+          @include wh(25%, 1.75rem);
+          @include font(0.6rem, 1.75rem);
+          border-bottom: 0.025rem solid $bc;
+          border-right: 0.025rem solid $bc;
+        }
+
+        .citylistli:nth-of-type(4n){
+          border-right: none;
+        }
+      }
     }
   }
 
