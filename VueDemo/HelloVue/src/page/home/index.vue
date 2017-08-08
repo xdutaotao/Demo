@@ -25,7 +25,7 @@
     </nav>
 
     <section class="hot_city">
-      <span>热门城市</span>
+      <span class="city_title">热门城市</span>
       <ul class="citylistul">
         <router-link  tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
           {{item.name}}
@@ -33,9 +33,18 @@
       </ul>
     </section>
 
-    <section>
+    <section class="group_city_container">
       <ul>
-        
+          <li class="letter_classify_li" v-for="(value, key, index) in sortgroupcity" :key="key" >
+              <h4 class="city_title">{{key}}
+                <span>（按字母排序）</span>
+              </h4>
+              <ul >
+                <router-link tag="li" v-for="item in value" :key="item.id">
+                  {{item.name}}
+                </router-link>
+              </ul>
+          </li>
       </ul>
     </section>
 
@@ -45,6 +54,7 @@
 <script>
 
   import headTitle from '../../components/header/head'
+  import {cityGuess, hotcity, groupcity} from '../../service/getData'
 
   export default{
     data() {
@@ -52,9 +62,31 @@
         guessCityid: 0,
         guessCity: '上海',
         hotcity: [{name:'上海'},{name:'上海'},{name:'上海'},{name:'上海'},
-                      {name:'上海'},{name:'上海'},{name:'上海'},{name:'上海'}]
+                      {name:'上海'},{name:'上海'},{name:'上海'},{name:'上海'}],
+        groupcity: []
       }
     },
+    mounted(){
+      //获取所有城市
+      groupcity().then(res => {
+          this.groupcity = res;
+          console.log(this.groupcity)
+        })
+    },
+
+    computed:{
+      //将获取的数据按照A-Z字母开头排序
+      sortgroupcity(){
+        let sortobj = {};
+        for (let i = 65; i <= 90; i++) {
+          if (this.groupcity[String.fromCharCode(i)]) {
+            sortobj[String.fromCharCode(i)] = this.groupcity[String.fromCharCode(i)];
+          }
+        }
+        return sortobj
+      }
+    },
+
     components:{
       headTitle
     }
@@ -112,29 +144,43 @@
     margin-bottom: 0.4rem;
     border-bottom: 1px solid $bc;
     background-color: white;
-    span{
+
+    .citylistul{
+      display: flex;
+      flex-wrap: wrap;
+      border-top: 1px solid $bc;
+
+      li{
+        @include sc(0.55rem, #666);
+        text-align: center;
+        color: $blue;
+        @include wh(25%, 1.75rem);
+        @include font(0.6rem, 1.75rem);
+        border-bottom: 0.025rem solid $bc;
+        border-right: 0.025rem solid $bc;
+      }
+      li:nth-of-type(4n){
+        border-right: none;
+      }
+    }
+
+    .city_title{
       @include sc(0.55rem, #666);
-      padding-left: 0.45rem;
+      margin-left: 0.45rem;
+      line-height: 1.45rem;
+    }
+
+  }
+
+  .group_city_container{
+    background-color: white;
+
+    .letter_classify_li{
+      margin-bottom: 0.45rem;
+      border-top: 1px solid $bc;
     }
   }
 
-  .citylistul{
-    display: flex;
-    flex-wrap: wrap;
-    border-top: 1px solid $bc;
 
-    li{
-      @include sc(0.55rem, #666);
-      text-align: center;
-      color: $blue;
-      @include wh(25%, 1.75rem);
-      @include font(0.6rem, 1.75rem);
-      border-bottom: 0.025rem solid $bc;
-      border-right: 0.025rem solid $bc;
-    }
-    li:nth-of-type(4n){
-      border-right: none;
-    }
-  }
 
 </style>
