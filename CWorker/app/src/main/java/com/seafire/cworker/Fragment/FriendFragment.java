@@ -176,8 +176,7 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
         for (FreindBean freindBean : list) {
             ArrayList<FreindBean.UsersBean> arrayList = new ArrayList<>();
             arrayList.addAll(freindBean.getUsers());
-            if (freindBean.getUsers().size() > 0)
-                sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
+            sectionedExpandableLayoutHelper.addSection(freindBean.getName(), arrayList);
         }
     }
 

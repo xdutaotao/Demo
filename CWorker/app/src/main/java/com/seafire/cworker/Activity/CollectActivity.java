@@ -557,6 +557,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         checkTv.setText("");
         information.setText("");
         recommendTv.setText("");
+        infoNum.setText("0/100");
 
         adapter.clear();
         adapter.add(ADD);
@@ -581,9 +582,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void getSearchData(NumberBean s) {
+        name.setText("");
+        source.setText("");
         if (s.getData() != null) {
-            name.setText("");
-            source.setText("");
             name.setText(s.getData().getCnName());
             source.setText(s.getData().getSourceDistribution());
         }
@@ -592,7 +593,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             clearData();
             isNumberSearch = false;
             new IOSDialog(this).builder()
-                    .setTitle("该零件号已被于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
+                    .setTitle("该零件号已被"+s.getOldData().getCollectorName()+"于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
                     .setMsg("是否重新采集当前数据?")
                     .setPositiveButton("确定", v -> {
                         wrapText.setText(s.getOldData().getPackageStypeName());
@@ -1061,6 +1062,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     if (!TextUtils.isEmpty(number.getText().toString())){
                         if (!isNumberSearch && numHasFocus) {
                             numHasFocus = false;
+                            clearData();
                             presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
                         }
                     }else{

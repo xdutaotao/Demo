@@ -1,3 +1,4 @@
+/* eslint-disable indent,arrow-spacing */
 /**
  * Created by guzhenfu on 2017/8/4.
  */
@@ -8,11 +9,11 @@ export default [{
     component: App,
     children: [
       {
-        path: '',
+        path: '/test',
         component: r => require.ensure([], ()=> r(require('../page/home')), 'home')
       },
       {
-        path: '/login',
+        path: '',
         component: r => require.ensure([], ()=> r(require('../page/login/login')), 'login')
       }
     ]

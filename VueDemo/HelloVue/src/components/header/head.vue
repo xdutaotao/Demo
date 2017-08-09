@@ -65,7 +65,7 @@
 
   #header{
     background-color: $blue;
-    @include wh(100%, 1.95rem);
+    @include wh(100%, 2.2rem);
     position: fixed;
     left: 0;
     top: 0;

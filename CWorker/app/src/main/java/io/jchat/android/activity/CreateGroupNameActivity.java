@@ -95,6 +95,7 @@ public class CreateGroupNameActivity extends com.seafire.cworker.Activity.BaseAc
                                             intent.putExtra(App.GROUP_ID, groupId);
                                             intent.setClass(CreateGroupNameActivity.this, ChatActivity.class);
                                             CreateGroupNameActivity.this.startActivity(intent);
+                                            finish();
                                         } else {
 
                                             HandleResponseCode.onHandle(CreateGroupNameActivity.this, status, false);
