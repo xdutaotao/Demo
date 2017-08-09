@@ -60,8 +60,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView headIcon;
     @BindView(R.id.login_text)
     TextView loginText;
-    @BindView(R.id.today)
+    @BindView(R.id.today_fail)
     TextView today;
+    @BindView(R.id.today_success)
+    TextView todaySuccess;
     @BindView(R.id.month)
     TextView month;
     @BindView(R.id.year)
@@ -145,6 +147,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             loginBtn.setText("点击登录");
             loginText.setText("请登录");
             today.setText("0");
+            todaySuccess.setText("0");
             month.setText("0");
             year.setText("0");
             total.setText("0");
@@ -169,17 +172,19 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 loginText.setText(userInfo.getPerson().getName());
 
                 if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
-                    today.setText(String.valueOf(ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0)));
-//                    List<CollectBean> collectBeanList = JsonUtils.getInstance()
-//                            .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
-//                    for(CollectBean bean: collectBeanList){
-//                        if (!bean.getIsSuccess()){
-//                            failTime++;
-//                        }
-//                    }
-//                    RxBus.getInstance().post(new RxBusEvent(Constants.POST_COLLECT_TIME, failTime+""));
+                    List<CollectBean> collectBeanList = JsonUtils.getInstance()
+                            .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
+                    for(CollectBean bean: collectBeanList){
+                        if (!bean.getIsSuccess()){
+                            failTime++;
+                        }
+                    }
+                    int successTime = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) - failTime;
+                    today.setText(failTime+"");
+                    todaySuccess.setText(successTime+"");
                 } else {
                     today.setText("0");
+                    todaySuccess.setText("0");
                 }
 
                 month.setText(userInfo.getUps().getMonth() + "");
@@ -306,7 +311,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.today_layout:
-                if (!TextUtils.equals(today.getText().toString(), "0"))
+                if (!TextUtils.equals(today.getText().toString(), "0") ||
+                        !TextUtils.equals(todaySuccess.getText().toString(), "0"))
                     CollectHistoryActivity.startActivity(getContext());
                 break;
         }

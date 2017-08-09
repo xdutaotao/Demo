@@ -688,6 +688,24 @@ public class Utils {
 
     }
 
+    /**
+     * float 转 int String
+     * @param d
+     * @return
+     */
+    public static String formatData(double d){
+        String data = String.valueOf(d);
+        if (!TextUtils.isEmpty(data) && data.contains(".")){
+            int length = data.length();
+            while(data.length() > 1 &&
+                    (TextUtils.equals("0", data.substring(length-1, length)) || TextUtils.equals(".", data.substring(length-1, length)))){
+                data = data.substring(0, length-1);
+                length = data.length();
+            }
+        }
+        return data;
+    }
+
 
 
 }
