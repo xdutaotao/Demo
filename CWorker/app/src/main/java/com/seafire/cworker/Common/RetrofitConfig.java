@@ -156,6 +156,7 @@ public class RetrofitConfig {
                 .retryOnConnectionFailure(true)
                 .addInterceptor(httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor(cacheInterceptor)
+                .cache(cache)
                 .build();
         //.addInterceptor(loggingInterceptor)
         //.addInterceptor(headerInterceptor)

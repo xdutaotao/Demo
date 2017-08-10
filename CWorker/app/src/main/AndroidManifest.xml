@@ -95,7 +95,8 @@
         <activity android:name=".Activity.HomeDetailActivity" />
         <activity android:name=".Activity.PDFActivity" />
         <activity android:name=".Activity.SearchResultActivity" />
-        <activity android:name=".Activity.CollectActivity" />
+        <activity android:name=".Activity.CollectActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".Activity.ScanActivity" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"

@@ -23,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,7 @@ import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.Utils.Utils;
 import com.seafire.cworker.View.CollectView;
+import com.seafire.cworker.View.SystemBarTintManager;
 import com.seafire.cworker.Widget.CustomTextWatcher;
 import com.seafire.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -253,6 +256,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //ProcessingNoticationbar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect);
         ButterKnife.bind(this);
@@ -412,33 +416,84 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             wrapText.setText(collectBean.getPackageStypeName());
             typeTxt.setText(collectBean.getPartMaterialName());
             modleNum.setText(collectBean.getPackageModelCount()+"");
-            length.setText(collectBean.getPartLength()+"");
-            width.setText(collectBean.getPartWidth()+"");
-            height.setText(collectBean.getPartHeigth()+"");
-            weight.setText(collectBean.getNetWeight()+"");
 
-            outLength.setText(collectBean.getPackageLength()+"");
-            outWidth.setText(collectBean.getPackageWidth()+"");
-            outHeight.setText(collectBean.getPackageHeight()+"");
-            outWeight.setText(collectBean.getRoughWeight()+"");
+            outLayout.setVisibility(View.VISIBLE);
+            singleSwitch.setChecked(true);
 
-            singleLength.setText(collectBean.getSinglePackageLength()+"");
-            singleWidth.setText(collectBean.getSinglePackageWidth()+"");
-            singleHeight.setText(collectBean.getSinglePackageHeight()+"");
-            singleWeight.setText(collectBean.getSinglePackageWeight()+"");
+            length.setText(Utils.formatData(collectBean.getPartLength())+"mm");
+            width.setText(Utils.formatData(collectBean.getPartWidth())+"mm");
+            height.setText(Utils.formatData(collectBean.getPartHeigth())+"mm");
+            weight.setText(Utils.formatData(collectBean.getNetWeight())+"kg");
 
-            allLength.setText(collectBean.getAddedLength()+"");
-            allWidth.setText(collectBean.getAddedWidth()+"");
-            allHeight.setText(collectBean.getAddedHeight()+"");
+            outLength.setText(Utils.formatData(collectBean.getPackageLength())+"mm");
+            outWidth.setText(Utils.formatData(collectBean.getPackageWidth())+"mm");
+            outHeight.setText(Utils.formatData(collectBean.getPackageHeight())+"mm");
+            outWeight.setText(Utils.formatData(collectBean.getRoughWeight())+"kg");
+
+            singleLength.setText(Utils.formatData(collectBean.getSinglePackageLength())+"mm");
+            singleWidth.setText(Utils.formatData(collectBean.getSinglePackageWidth())+"mm");
+            singleHeight.setText(Utils.formatData(collectBean.getSinglePackageHeight())+"mm");
+            singleWeight.setText(Utils.formatData(collectBean.getSinglePackageWeight())+"kg");
+
+            allLength.setText(Utils.formatData(collectBean.getAddedLength())+"mm");
+            allWidth.setText(Utils.formatData(collectBean.getAddedWidth())+"mm");
+            allHeight.setText(Utils.formatData(collectBean.getAddedHeight())+"mm");
 
             checkTv.setText(collectBean.getAuditType());
             recommendTv.setText(collectBean.getProcessRecommendation());
             information.setText(collectBean.getRemark());
+            infoNum.setText(information.getText().length()+"/100");
             historyPathList.addAll(Arrays.asList(collectBean.getDocumentCodes().split(",")));
             adapter.addAll(historyPathList);
-            if (historyPathList.size() < 10){
-                adapter.add(ADD);
-            }
+//            if (historyPathList.size() < 10){
+//                adapter.add(ADD);
+//            }
+
+            singleSwitch.setEnabled(false);
+
+            number.setFocusable(false);
+            number.setEnabled(false);
+            modleNum.setFocusable(false);
+            modleNum.setEnabled(false);
+            length.setFocusable(false);
+            length.setEnabled(false);
+            height.setFocusable(false);
+            height.setEnabled(false);
+
+            width.setFocusable(false);
+            width.setEnabled(false);
+            weight.setFocusable(false);
+            weight.setEnabled(false);
+            allLength.setFocusable(false);
+            allLength.setEnabled(false);
+            allWidth.setFocusable(false);
+            allWidth.setEnabled(false);
+
+            allHeight.setFocusable(false);
+            allHeight.setEnabled(false);
+            singleLength.setFocusable(false);
+            singleLength.setEnabled(false);
+            singleHeight.setFocusable(false);
+            singleHeight.setEnabled(false);
+            singleWidth.setFocusable(false);
+            singleWidth.setEnabled(false);
+
+            singleWeight.setFocusable(false);
+            singleWeight.setEnabled(false);
+            outWidth.setFocusable(false);
+            outWidth.setEnabled(false);
+            outHeight.setFocusable(false);
+            outHeight.setEnabled(false);
+            outLength.setFocusable(false);
+            outLength.setEnabled(false);
+            outWeight.setFocusable(false);
+            outWeight.setEnabled(false);
+
+            information.setFocusable(false);
+            information.setEnabled(false);
+
+
+
         }
 
         number.setOnEditorActionListener((v, actionId, event) -> {
@@ -613,22 +668,22 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         allHeight.setText(String.valueOf(s.getOldData().getAddedHeight()) + "mm");
                         clearImg(allHeight);
 
-                        outLength.setText(String.valueOf(s.getOldData().getPackageLength()));
+                        outLength.setText(String.valueOf(s.getOldData().getPackageLength())+"mm");
                         clearImg(outLength);
-                        outWidth.setText(String.valueOf(s.getOldData().getPackageWidth()));
+                        outWidth.setText(String.valueOf(s.getOldData().getPackageWidth())+"mm");
                         clearImg(outWidth);
-                        outHeight.setText(String.valueOf(s.getOldData().getPackageHeight()));
+                        outHeight.setText(String.valueOf(s.getOldData().getPackageHeight())+"mm");
                         clearImg(outHeight);
-                        outWeight.setText(String.valueOf(s.getOldData().getRoughWeight()));
+                        outWeight.setText(String.valueOf(s.getOldData().getRoughWeight())+"kg");
                         clearImg(outWeight);
 
-                        singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength()));
+                        singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength())+"mm");
                         clearImg(singleLength);
-                        singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth()));
+                        singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth())+"mm");
                         clearImg(singleWidth);
-                        singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight()));
+                        singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight())+"mm");
                         clearImg(singleHeight);
-                        singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight()));
+                        singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight())+"kg");
                         clearImg(singleWeight);
                         singleSwitch.setChecked(true);
 
@@ -1237,7 +1292,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
      */
     private void setEditText(EditText et, TextView tv, boolean hasFocus) {
         if (TextUtils.equals("净重", tv.getText().toString()) ||
-                TextUtils.equals("毛重", tv.getText().toString())) {
+                TextUtils.equals("毛重", tv.getText().toString()) ||
+                    TextUtils.equals("单个包装重", tv.getText().toString())) {
             if (!hasFocus) {
                 tv.setTextColor(normalColor);
                 if (et.getText().length() > 0) {
@@ -1257,8 +1313,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (et.getText().length() > 0) {
                     String s = et.getText().toString();
                     int index = s.indexOf("kg");
-                    String temp = s.substring(0, index);
-                    et.setText(temp);
+                    if (index > 0){
+                        String temp = s.substring(0, index);
+                        et.setText(temp);
+                    }
+
                 }
             }
             return;
@@ -1370,7 +1429,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_scan:
-                actionScan();
+                if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+                    actionScan();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -1385,5 +1446,23 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+    public void ProcessingNoticationbar() {
+        setTranslucentStatus(true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.colorAccent);//通知栏所需颜色
+    }
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 }
