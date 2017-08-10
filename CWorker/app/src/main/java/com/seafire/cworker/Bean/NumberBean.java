@@ -216,31 +216,31 @@ public class NumberBean {
          */
 
         private long dateline;
-        private int packageWidth;
+        private float packageWidth;
         private String project;
-        private int addedLength;
+        private float addedLength;
         private String remark;
         private String auditType;
         private String partCode;
         private String partName;
         private String processRecommendation;
         private String packageStypeName;
-        private int singlePackageHeight;
-        private int packageLength;
+        private float singlePackageHeight;
+        private float packageLength;
         private int disabled;
-        private int roughWeight;
+        private float roughWeight;
         private String collectorName;
-        private int addedWidth;
+        private float addedWidth;
         private String partMaterialName;
-        private int singlePackageWeight;
-        private int partLength;
-        private int partWidth;
-        private int singlePackageWidth;
-        private int addedHeight;
-        private int netWeight;
-        private int packageHeight;
+        private float singlePackageWeight;
+        private float partLength;
+        private float partWidth;
+        private float singlePackageWidth;
+        private float addedHeight;
+        private float netWeight;
+        private float packageHeight;
         private int packageModelCount;
-        private int singlePackageLength;
+        private float singlePackageLength;
         private String location;
         private String locations;
         private String isHistory;
@@ -248,7 +248,7 @@ public class NumberBean {
         private Object user;
         private String pmJsona;
         private String documentCodes;
-        private int partHeight;
+        private float partHeight;
 
         public long getDateline() {
             return dateline;
@@ -258,11 +258,11 @@ public class NumberBean {
             this.dateline = dateline;
         }
 
-        public int getPackageWidth() {
+        public float getPackageWidth() {
             return packageWidth;
         }
 
-        public void setPackageWidth(int packageWidth) {
+        public void setPackageWidth(float packageWidth) {
             this.packageWidth = packageWidth;
         }
 
@@ -274,11 +274,11 @@ public class NumberBean {
             this.project = project;
         }
 
-        public int getAddedLength() {
+        public float getAddedLength() {
             return addedLength;
         }
 
-        public void setAddedLength(int addedLength) {
+        public void setAddedLength(float addedLength) {
             this.addedLength = addedLength;
         }
 
@@ -330,19 +330,19 @@ public class NumberBean {
             this.packageStypeName = packageStypeName;
         }
 
-        public int getSinglePackageHeight() {
+        public float getSinglePackageHeight() {
             return singlePackageHeight;
         }
 
-        public void setSinglePackageHeight(int singlePackageHeight) {
+        public void setSinglePackageHeight(float singlePackageHeight) {
             this.singlePackageHeight = singlePackageHeight;
         }
 
-        public int getPackageLength() {
+        public float getPackageLength() {
             return packageLength;
         }
 
-        public void setPackageLength(int packageLength) {
+        public void setPackageLength(float packageLength) {
             this.packageLength = packageLength;
         }
 
@@ -354,11 +354,11 @@ public class NumberBean {
             this.disabled = disabled;
         }
 
-        public int getRoughWeight() {
+        public float getRoughWeight() {
             return roughWeight;
         }
 
-        public void setRoughWeight(int roughWeight) {
+        public void setRoughWeight(float roughWeight) {
             this.roughWeight = roughWeight;
         }
 
@@ -370,11 +370,11 @@ public class NumberBean {
             this.collectorName = collectorName;
         }
 
-        public int getAddedWidth() {
+        public float getAddedWidth() {
             return addedWidth;
         }
 
-        public void setAddedWidth(int addedWidth) {
+        public void setAddedWidth(float addedWidth) {
             this.addedWidth = addedWidth;
         }
 
@@ -386,59 +386,59 @@ public class NumberBean {
             this.partMaterialName = partMaterialName;
         }
 
-        public int getSinglePackageWeight() {
+        public float getSinglePackageWeight() {
             return singlePackageWeight;
         }
 
-        public void setSinglePackageWeight(int singlePackageWeight) {
+        public void setSinglePackageWeight(float singlePackageWeight) {
             this.singlePackageWeight = singlePackageWeight;
         }
 
-        public int getPartLength() {
+        public float getPartLength() {
             return partLength;
         }
 
-        public void setPartLength(int partLength) {
+        public void setPartLength(float partLength) {
             this.partLength = partLength;
         }
 
-        public int getPartWidth() {
+        public float getPartWidth() {
             return partWidth;
         }
 
-        public void setPartWidth(int partWidth) {
+        public void setPartWidth(float partWidth) {
             this.partWidth = partWidth;
         }
 
-        public int getSinglePackageWidth() {
+        public float getSinglePackageWidth() {
             return singlePackageWidth;
         }
 
-        public void setSinglePackageWidth(int singlePackageWidth) {
+        public void setSinglePackageWidth(float singlePackageWidth) {
             this.singlePackageWidth = singlePackageWidth;
         }
 
-        public int getAddedHeight() {
+        public float getAddedHeight() {
             return addedHeight;
         }
 
-        public void setAddedHeight(int addedHeight) {
+        public void setAddedHeight(float addedHeight) {
             this.addedHeight = addedHeight;
         }
 
-        public int getNetWeight() {
+        public float getNetWeight() {
             return netWeight;
         }
 
-        public void setNetWeight(int netWeight) {
+        public void setNetWeight(float netWeight) {
             this.netWeight = netWeight;
         }
 
-        public int getPackageHeight() {
+        public float getPackageHeight() {
             return packageHeight;
         }
 
-        public void setPackageHeight(int packageHeight) {
+        public void setPackageHeight(float packageHeight) {
             this.packageHeight = packageHeight;
         }
 
@@ -450,11 +450,11 @@ public class NumberBean {
             this.packageModelCount = packageModelCount;
         }
 
-        public int getSinglePackageLength() {
+        public float getSinglePackageLength() {
             return singlePackageLength;
         }
 
-        public void setSinglePackageLength(int singlePackageLength) {
+        public void setSinglePackageLength(float singlePackageLength) {
             this.singlePackageLength = singlePackageLength;
         }
 
@@ -514,11 +514,11 @@ public class NumberBean {
             this.documentCodes = documentCodes;
         }
 
-        public int getPartHeight() {
+        public float getPartHeight() {
             return partHeight;
         }
 
-        public void setPartHeight(int partHeight) {
+        public void setPartHeight(float partHeight) {
             this.partHeight = partHeight;
         }
     }

@@ -105,7 +105,7 @@ public class CollectModel extends BaseModel {
         map.put("auditType", bean.getAuditType());
         map.put("project", bean.getProject());
 
-        Map<String, Double> doubleMap = new HashMap<>();
+        Map<String, Float> doubleMap = new HashMap<>();
         doubleMap.put("packageLength", bean.getPackageLength());
         doubleMap.put("packageWidth", bean.getPackageWidth());
         doubleMap.put("packageHeight", bean.getPackageHeight());

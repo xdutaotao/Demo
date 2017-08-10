@@ -113,7 +113,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("data/collect")
-    Observable<BaseResponseBean> postCollectTxt(@FieldMap Map<String, String> map, @FieldMap Map<String, Double> doubleMap, @FieldMap Map<String, Integer> integerMap);
+    Observable<BaseResponseBean> postCollectTxt(@FieldMap Map<String, String> map, @FieldMap Map<String, Float> doubleMap, @FieldMap Map<String, Integer> integerMap);
 
     //上传图片
     @Multipart

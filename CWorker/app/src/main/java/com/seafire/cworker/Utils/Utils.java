@@ -568,13 +568,13 @@ public class Utils {
     /**
      * 截取字符串 去掉后面单位
      */
-    public static int subText(@NonNull String s){
+    public static float subText(@NonNull String s){
         if (s.length() < 3){
             return 0;
         }
 
         int length = s.length();
-        return Integer.valueOf(s.substring(0, length-2));
+        return Float.valueOf(s.substring(0, length-2));
     }
 
     /**
@@ -693,7 +693,7 @@ public class Utils {
      * @param d
      * @return
      */
-    public static String formatData(double d){
+    public static String formatData(float d){
         String data = String.valueOf(d);
         if (!TextUtils.isEmpty(data) && data.contains(".")){
             int length = data.length();

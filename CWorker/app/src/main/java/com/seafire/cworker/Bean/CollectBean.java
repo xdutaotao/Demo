@@ -14,24 +14,24 @@ public class CollectBean implements Serializable{
     private String packageStypeName;
     private String partMaterialName;
     private int packageModelCount;
-    private double packageLength;
-    private double packageWidth;
-    private double packageHeight;
-    private double roughWeight;
-    private double partLength;
-    private double partWidth;
-    private double partHeigth;
-    private double netWeight;
-    private double addedLength;
-    private double addedWidth;
-    private double addedHeight;
+    private float packageLength;
+    private float packageWidth;
+    private float packageHeight;
+    private float roughWeight;
+    private float partLength;
+    private float partWidth;
+    private float partHeigth;
+    private float netWeight;
+    private float addedLength;
+    private float addedWidth;
+    private float addedHeight;
     private String processRecommendation;
     private String remark;
     private String systemResource;
-    private double singlePackageLength;
-    private double singlePackageWidth;
-    private double singlePackageHeight;
-    private double singlePackageWeight;
+    private float singlePackageLength;
+    private float singlePackageWidth;
+    private float singlePackageHeight;
+    private float singlePackageWeight;
     private String locations;
     private int isHistory;
     private String auditType;
@@ -96,91 +96,91 @@ public class CollectBean implements Serializable{
         this.packageModelCount = packageModelCount;
     }
 
-    public double getPackageLength() {
+    public float getPackageLength() {
         return packageLength;
     }
 
-    public void setPackageLength(double packageLength) {
+    public void setPackageLength(float packageLength) {
         this.packageLength = packageLength;
     }
 
-    public double getPackageWidth() {
+    public float getPackageWidth() {
         return packageWidth;
     }
 
-    public void setPackageWidth(double packageWidth) {
+    public void setPackageWidth(float packageWidth) {
         this.packageWidth = packageWidth;
     }
 
-    public double getPackageHeight() {
+    public float getPackageHeight() {
         return packageHeight;
     }
 
-    public void setPackageHeight(double packageHeight) {
+    public void setPackageHeight(float packageHeight) {
         this.packageHeight = packageHeight;
     }
 
-    public double getRoughWeight() {
+    public float getRoughWeight() {
         return roughWeight;
     }
 
-    public void setRoughWeight(double roughWeight) {
+    public void setRoughWeight(float roughWeight) {
         this.roughWeight = roughWeight;
     }
 
-    public double getPartLength() {
+    public float getPartLength() {
         return partLength;
     }
 
-    public void setPartLength(double partLength) {
+    public void setPartLength(float partLength) {
         this.partLength = partLength;
     }
 
-    public double getPartWidth() {
+    public float getPartWidth() {
         return partWidth;
     }
 
-    public void setPartWidth(double partWidth) {
+    public void setPartWidth(float partWidth) {
         this.partWidth = partWidth;
     }
 
-    public double getPartHeigth() {
+    public float getPartHeigth() {
         return partHeigth;
     }
 
-    public void setPartHeigth(double partHeigth) {
+    public void setPartHeigth(float partHeigth) {
         this.partHeigth = partHeigth;
     }
 
-    public double getNetWeight() {
+    public float getNetWeight() {
         return netWeight;
     }
 
-    public void setNetWeight(double netWeight) {
+    public void setNetWeight(float netWeight) {
         this.netWeight = netWeight;
     }
 
-    public double getAddedLength() {
+    public float getAddedLength() {
         return addedLength;
     }
 
-    public void setAddedLength(double addedLength) {
+    public void setAddedLength(float addedLength) {
         this.addedLength = addedLength;
     }
 
-    public double getAddedWidth() {
+    public float getAddedWidth() {
         return addedWidth;
     }
 
-    public void setAddedWidth(double addedWidth) {
+    public void setAddedWidth(float addedWidth) {
         this.addedWidth = addedWidth;
     }
 
-    public double getAddedHeight() {
+    public float getAddedHeight() {
         return addedHeight;
     }
 
-    public void setAddedHeight(double addedHeight) {
+    public void setAddedHeight(float addedHeight) {
         this.addedHeight = addedHeight;
     }
 
@@ -208,35 +208,35 @@ public class CollectBean implements Serializable{
         this.systemResource = systemResource;
     }
 
-    public double getSinglePackageLength() {
+    public float getSinglePackageLength() {
         return singlePackageLength;
     }
 
-    public void setSinglePackageLength(double singlePackageLength) {
+    public void setSinglePackageLength(float singlePackageLength) {
         this.singlePackageLength = singlePackageLength;
     }
 
-    public double getSinglePackageWidth() {
+    public float getSinglePackageWidth() {
         return singlePackageWidth;
     }
 
-    public void setSinglePackageWidth(double singlePackageWidth) {
+    public void setSinglePackageWidth(float singlePackageWidth) {
         this.singlePackageWidth = singlePackageWidth;
     }
 
-    public double getSinglePackageHeight() {
+    public float getSinglePackageHeight() {
         return singlePackageHeight;
     }
 
-    public void setSinglePackageHeight(double singlePackageHeight) {
+    public void setSinglePackageHeight(float singlePackageHeight) {
         this.singlePackageHeight = singlePackageHeight;
     }
 
-    public double getSinglePackageWeight() {
+    public float getSinglePackageWeight() {
         return singlePackageWeight;
     }
 
-    public void setSinglePackageWeight(double singlePackageWeight) {
+    public void setSinglePackageWeight(float singlePackageWeight) {
         this.singlePackageWeight = singlePackageWeight;
     }
 

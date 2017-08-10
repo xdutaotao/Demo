@@ -580,6 +580,18 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         baseViewHolder.setText(R.id.recommend_item_text, s);
                     }
                 };
+
+        scrollView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.getParent().requestDisallowInterceptTouchEvent(false);
+            }else{
+                if (!numHasFocus)
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                else
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+            }
+            return false;
+        });
     }
 
     private void clearData(){
@@ -652,38 +664,51 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         typeTxt.setText(s.getOldData().getPartMaterialName());
                         modleNum.setText(s.getOldData().getPackageModelCount() + "");
                         clearImg(modleNum);
-                        length.setText(String.valueOf(s.getOldData().getPartLength()) +"mm");
+                        length.setText(Utils.formatData(s.getOldData().getPartLength()) +"mm");
                         clearImg(length);
-                        width.setText(String.valueOf(s.getOldData().getPartWidth())+"mm");
+                        width.setText(Utils.formatData(s.getOldData().getPartWidth())+"mm");
                         clearImg(width);
-                        height.setText(String.valueOf(s.getOldData().getPartHeight())+"mm");
+                        height.setText(Utils.formatData(s.getOldData().getPartHeight())+"mm");
                         clearImg(height);
-                        weight.setText(String.valueOf(s.getOldData().getNetWeight())+"kg");
+                        weight.setText(Utils.formatData(s.getOldData().getNetWeight())+"kg");
                         clearImg(weight);
 
-                        allLength.setText(String.valueOf(s.getOldData().getAddedLength()) + "mm");
+                        if (Math.abs(s.getOldData().getAddedLength()) > 0.0001 ||
+                                Math.abs(s.getOldData().getAddedWidth()) > 0.0001 ||
+                                    Math.abs(s.getOldData().getAddedHeight()) > 0.0001){
+                            outLayout.setVisibility(View.VISIBLE);
+                        }
+
+                        if (Math.abs(s.getOldData().getSinglePackageLength()) > 0.0001 ||
+                                Math.abs(s.getOldData().getSinglePackageWidth()) > 0.0001 ||
+                                    Math.abs(s.getOldData().getSinglePackageHeight()) > 0.0001 ||
+                                        Math.abs(s.getOldData().getSinglePackageWeight()) > 0.0001){
+                            singleSwitch.setChecked(true);
+                        }
+
+                        allLength.setText(Utils.formatData(s.getOldData().getAddedLength()) + "mm");
                         clearImg(allLength);
-                        allWidth.setText(String.valueOf(s.getOldData().getAddedWidth()) + "mm");
+                        allWidth.setText(Utils.formatData(s.getOldData().getAddedWidth()) + "mm");
                         clearImg(allWidth);
-                        allHeight.setText(String.valueOf(s.getOldData().getAddedHeight()) + "mm");
+                        allHeight.setText(Utils.formatData(s.getOldData().getAddedHeight()) + "mm");
                         clearImg(allHeight);
 
-                        outLength.setText(String.valueOf(s.getOldData().getPackageLength())+"mm");
+                        outLength.setText(Utils.formatData(s.getOldData().getPackageLength())+"mm");
                         clearImg(outLength);
-                        outWidth.setText(String.valueOf(s.getOldData().getPackageWidth())+"mm");
+                        outWidth.setText(Utils.formatData(s.getOldData().getPackageWidth())+"mm");
                         clearImg(outWidth);
-                        outHeight.setText(String.valueOf(s.getOldData().getPackageHeight())+"mm");
+                        outHeight.setText(Utils.formatData(s.getOldData().getPackageHeight())+"mm");
                         clearImg(outHeight);
-                        outWeight.setText(String.valueOf(s.getOldData().getRoughWeight())+"kg");
+                        outWeight.setText(Utils.formatData(s.getOldData().getRoughWeight())+"kg");
                         clearImg(outWeight);
 
-                        singleLength.setText(String.valueOf(s.getOldData().getSinglePackageLength())+"mm");
+                        singleLength.setText(Utils.formatData(s.getOldData().getSinglePackageLength())+"mm");
                         clearImg(singleLength);
-                        singleWidth.setText(String.valueOf(s.getOldData().getSinglePackageWidth())+"mm");
+                        singleWidth.setText(Utils.formatData(s.getOldData().getSinglePackageWidth())+"mm");
                         clearImg(singleWidth);
-                        singleHeight.setText(String.valueOf(s.getOldData().getSinglePackageHeight())+"mm");
+                        singleHeight.setText(Utils.formatData(s.getOldData().getSinglePackageHeight())+"mm");
                         clearImg(singleHeight);
-                        singleWeight.setText(String.valueOf(s.getOldData().getSinglePackageWeight())+"kg");
+                        singleWeight.setText(Utils.formatData(s.getOldData().getSinglePackageWeight())+"kg");
                         clearImg(singleWeight);
                         singleSwitch.setChecked(true);
 
@@ -990,27 +1015,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         bean.setPackageModelCount(Integer.valueOf(modleNum.getText().toString()));
 
         if (outLayout.getVisibility() == View.VISIBLE) {
-            bean.setPackageLength(Double.valueOf(Utils.subText(outLength.getText().toString())));
-            bean.setPackageWidth(Double.valueOf(Utils.subText(outWidth.getText().toString())));
-            bean.setPackageHeight(Double.valueOf(Utils.subText(outHeight.getText().toString())));
-            bean.setRoughWeight(Double.valueOf(Utils.subText(outWeight.getText().toString())));
+            bean.setPackageLength(Float.valueOf(Utils.subText(outLength.getText().toString())));
+            bean.setPackageWidth(Float.valueOf(Utils.subText(outWidth.getText().toString())));
+            bean.setPackageHeight(Float.valueOf(Utils.subText(outHeight.getText().toString())));
+            bean.setRoughWeight(Float.valueOf(Utils.subText(outWeight.getText().toString())));
         }
 
-        bean.setPartLength(Double.valueOf(Utils.subText(length.getText().toString())));
-        bean.setPartWidth(Double.valueOf(Utils.subText(width.getText().toString())));
-        bean.setPartHeigth(Double.valueOf(Utils.subText(height.getText().toString())));
-        bean.setNetWeight(Double.valueOf(Utils.subText(weight.getText().toString())));
+        bean.setPartLength(Float.valueOf(Utils.subText(length.getText().toString())));
+        bean.setPartWidth(Float.valueOf(Utils.subText(width.getText().toString())));
+        bean.setPartHeigth(Float.valueOf(Utils.subText(height.getText().toString())));
+        bean.setNetWeight(Float.valueOf(Utils.subText(weight.getText().toString())));
 
         if (singleLayout.getVisibility() == View.VISIBLE) {
-            bean.setSinglePackageLength(Double.valueOf(Utils.subText(singleLength.getText().toString())));
-            bean.setSinglePackageWidth(Double.valueOf(Utils.subText(singleWidth.getText().toString())));
-            bean.setSinglePackageHeight(Double.valueOf(Utils.subText(singleHeight.getText().toString())));
-            bean.setSinglePackageWeight(Double.valueOf(Utils.subText(singleWeight.getText().toString())));
+            bean.setSinglePackageLength(Float.valueOf(Utils.subText(singleLength.getText().toString())));
+            bean.setSinglePackageWidth(Float.valueOf(Utils.subText(singleWidth.getText().toString())));
+            bean.setSinglePackageHeight(Float.valueOf(Utils.subText(singleHeight.getText().toString())));
+            bean.setSinglePackageWeight(Float.valueOf(Utils.subText(singleWeight.getText().toString())));
         }
 
-        bean.setAddedLength(Double.valueOf(Utils.subText(allLength.getText().toString())));
-        bean.setAddedWidth(Double.valueOf(Utils.subText(allWidth.getText().toString())));
-        bean.setAddedHeight(Double.valueOf(Utils.subText(allHeight.getText().toString())));
+        bean.setAddedLength(Float.valueOf(Utils.subText(allLength.getText().toString())));
+        bean.setAddedWidth(Float.valueOf(Utils.subText(allWidth.getText().toString())));
+        bean.setAddedHeight(Float.valueOf(Utils.subText(allHeight.getText().toString())));
 
         bean.setSystemResource(source.getText().toString());
         bean.setAuditType(checkTv.getText().toString());
@@ -1121,6 +1146,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     }else{
                         clearData();
                     }
+                }else{
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
                 }
                 break;
 
