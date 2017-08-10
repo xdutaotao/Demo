@@ -571,12 +571,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void getPostTxt(String s) {
         ToastUtil.show("上传成功");
-//        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
-//            setResult(RESULT_OK);
-//        }
-//        finish();
 
         scrollView.scrollTo(0, 0);
+        number.setText("");
         clearData();
     }
 
@@ -721,7 +718,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     @Override
     public void postTxtError(){
         scrollView.scrollTo(0, 0);
-        //clearData();
+        number.setText("");
+        clearData();
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {

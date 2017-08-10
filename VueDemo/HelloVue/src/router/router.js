@@ -8,13 +8,21 @@ export default [{
     path: '/',
     component: App,
     children: [
-      {
-        path: '/test',
-        component: r => require.ensure([], ()=> r(require('../page/home')), 'home')
-      },
-      {
-        path: '',
-        component: r => require.ensure([], ()=> r(require('../page/login/login')), 'login')
-      }
+        {
+            path: '/test',
+            component: r => require.ensure([], ()=> r(require('../page/home')), 'home')
+        },
+        {
+            path: '/test1',
+            component: r => require.ensure([], ()=> r(require('../page/login/login')), 'login')
+        },
+        {
+            path: '/forget',
+            component: r => require.ensure([], ()=> r(require('../page/login/forget')), 'forget')
+        },
+        {
+            path: '',
+            component: r => require.ensure([], ()=> r(require('../page/city/city')), 'city')
+        }
     ]
 }]

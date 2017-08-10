@@ -76,6 +76,9 @@ public class CollectPresenter extends BasePresenter<CollectView> {
                     @Override
                     protected void _onError(String msg) {
                         model.recodeMark(bean, false);
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "采集失败";
+                        ToastUtil.show(msg);
                         getView().postTxtError();
                     }
                 }));

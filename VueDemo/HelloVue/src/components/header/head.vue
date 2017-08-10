@@ -21,9 +21,9 @@
       <span class="login_span" v-else>登录|注册</span>
     </router-link>
 
-    <!--<section id="headerRight" v-if="isShowTitleRight">-->
-
-    <!--</section>-->
+    <section id="headerRight" v-if="menu">
+        <span class="titleText">{{menu}}</span>
+    </section>
   </header>
 
 
@@ -42,7 +42,7 @@
       //this.getUserInfo();
     },
 
-    props: ['title', 'isShowBack', 'signinUp'],
+    props: ['title', 'isShowBack', 'signinUp', 'menu'],
 
 //    computed:{
 //      ...mapState([
@@ -84,7 +84,6 @@
     width: 50%;
     color: #fff;
     .titleText{
-      font-weight: bold;
       @include sc(0.8rem, #fff);
     }
   }
@@ -97,5 +96,15 @@
       color: #fff;
     }
   }
+
+    #headerRight{
+        @include ct;
+        left: 85%;
+        color: #fff;
+        .titleText{
+            font-weight: bold;
+            @include sc(0.6rem, #fff);
+        }
+    }
 
 </style>

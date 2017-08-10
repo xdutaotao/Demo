@@ -4,18 +4,14 @@
 
 <template>
     <div>
-        <head-title isShowBack="true" title="密码登录"></head-title>
+        <head-title isShowBack="true" title="重置密码"></head-title>
 
         <nav class="inputWrap">
             <input type="text" class="nameInput" placeholder="账号">
-            <section class="pwdWrap">
-                <input type="text" class="pwdInput" placeholder="密码">
-                <div class="pwdLetter">
-                    <span class="letter">abc</span>
-                    <span class="letter">...</span>
-                    <div class="pwdBtn" @click="changePwdType" :class="{trans_to_right: pwdShowType}"></div>
-                </div>
-            </section>
+            <input type="text" class="nameInput" placeholder="旧密码">
+            <input type="text" class="nameInput" placeholder="请输入新密码">
+            <input type="text" class="nameInput" placeholder="请确认密码">
+
             <section class="pwdWrap">
                 <input type="text" class="pwdInput" placeholder="验证码">
                 <div class="codeWrap">
@@ -29,45 +25,41 @@
 
         </nav>
 
-        <p class="login_tips">温馨提示：未注册过的账号，登录时将自动注册</p>
-        <p class="login_tips">注册过的用户可凭账号密码登录</p>
+        <button class="loginBtn">确认修改</button>
 
-        <button class="loginBtn">登录</button>
-
-        <router-link to="/forget" class="changePwd">重置密码？</router-link>
 
     </div>
 </template>
 
 <script>
-  import headTitle from '../../components/header/head'
+    import headTitle from '../../components/header/head'
 
-  export default{
-    data() {
-      return {
-          pwdShowType: false,
-          codeNum: '111'
-      }
-    },
-    mounted(){
+    export default{
+        data() {
+            return {
+                pwdShowType: false,
+                codeNum: '111'
+            }
+        },
+        mounted(){
 
-    },
-
-    computed: {},
-
-    components: {
-      headTitle
-    },
-    methods:{
-        changePwdType(){
-            this.pwdShowType = !this.pwdShowType;
         },
 
-        changeCodePic(){
-            this.codeNum = Math.ceil(Math.random()*10000)
+        computed: {},
+
+        components: {
+            headTitle
+        },
+        methods:{
+            changePwdType(){
+                this.pwdShowType = !this.pwdShowType;
+            },
+
+            changeCodePic(){
+                this.codeNum = Math.ceil(Math.random()*10000)
+            }
         }
     }
-  }
 </script>
 
 <style lang="scss" scoped>
@@ -149,15 +141,6 @@
 
     .changeOne{
         @include sc(0.5rem, $blue)
-    }
-
-    .login_tips{
-        @include sc(.5rem, red);
-        padding: .4rem .6rem;
-        line-height: .5rem;
-        a{
-            color: #3b95e9;
-        }
     }
 
     .loginBtn{
