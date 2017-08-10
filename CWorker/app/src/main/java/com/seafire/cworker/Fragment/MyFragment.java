@@ -146,7 +146,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             loginBtn.setText("点击登录");
             loginText.setText("请登录");
-            today.setText("0");
+            today.setVisibility(View.GONE);
             todaySuccess.setText("0");
             month.setText("0");
             year.setText("0");
@@ -180,10 +180,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                         }
                     }
                     int successTime = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) - failTime;
+                    today.setVisibility(View.VISIBLE);
                     today.setText(failTime+"");
-                    todaySuccess.setText(successTime+"");
+                    todaySuccess.setText(" / " + successTime);
                 } else {
-                    today.setText("0");
+                    today.setVisibility(View.GONE);
                     todaySuccess.setText("0");
                 }
 
