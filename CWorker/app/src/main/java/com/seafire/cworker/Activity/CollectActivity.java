@@ -283,6 +283,22 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         recyclerView.setAdapter(adapter);
         submit.setOnClickListener(this);
 
+        scrollView.setOnTouchListener((v, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE && !numHasFocus) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+            }else{
+                v.getParent().requestDisallowInterceptTouchEvent(false);
+                scrollView.clearFocus();
+            }
+
+//                scrollView.setFocusable(true);
+//                scrollView.setFocusableInTouchMode(true);
+//                scrollView.requestLayout();
+//                clearFocus();
+            return false;
+        });
+
         if (getIntent().getSerializableExtra(INTENT_KEY) == null){
             adapter.add(ADD);
             adapter.setOnItemClickListener((view, i) -> {
@@ -311,14 +327,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 }
             });
             initImagePicker();
-
-            scrollView.setOnTouchListener((v, event) -> {
-                scrollView.setFocusable(true);
-                scrollView.setFocusableInTouchMode(true);
-                scrollView.requestLayout();
-                clearFocus();
-                return false;
-            });
 
             wrapLayout.setOnClickListener(this);
             typeLayout.setOnClickListener(this);
@@ -580,18 +588,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         baseViewHolder.setText(R.id.recommend_item_text, s);
                     }
                 };
-
-        scrollView.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                v.getParent().requestDisallowInterceptTouchEvent(false);
-            }else{
-                if (!numHasFocus)
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                else
-                    v.getParent().requestDisallowInterceptTouchEvent(false);
-            }
-            return false;
-        });
     }
 
     private void clearData(){

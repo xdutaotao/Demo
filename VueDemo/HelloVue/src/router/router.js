@@ -21,8 +21,12 @@ export default [{
             component: r => require.ensure([], ()=> r(require('../page/login/forget')), 'forget')
         },
         {
-            path: '',
+            path: '/city',
             component: r => require.ensure([], ()=> r(require('../page/city/city')), 'city')
+        },
+        {
+            path: '',
+            component: r => require.ensure([], ()=> r(require('../page/msite/msite')), 'msite')
         }
     ]
 }]

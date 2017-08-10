@@ -246,6 +246,9 @@ public class CollectModel extends BaseModel {
      */
     public void recodeMark(CollectBean bean, boolean isSuccess){
 
+        /**
+         * 是否是历史上传 不是历史上传
+         */
         if (bean.getIsHistory() == 0){
             if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
                 int time = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0);

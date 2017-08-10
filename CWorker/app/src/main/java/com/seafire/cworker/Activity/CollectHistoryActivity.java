@@ -71,6 +71,11 @@ public class CollectHistoryActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setData();
     }
 
