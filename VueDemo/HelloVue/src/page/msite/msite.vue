@@ -14,11 +14,13 @@
         </head-title>
 
         <nav class="contained">
-            <mt-swipe class="swipe">
-                <mt-swipe-item class="swipeItem">1</mt-swipe-item>
-                <mt-swipe-item class="swipeItem">2</mt-swipe-item>
-                <mt-swipe-item class="swipeItem">3</mt-swipe-item>
-            </mt-swipe>
+            <div class="swipe-wrapper">
+                <mt-swipe :auto="0">
+                    <mt-swipe-item class="swip-item-1 item">1</mt-swipe-item>
+                    <mt-swipe-item class="swip-item-2 item">2</mt-swipe-item>
+                </mt-swipe>
+            </div>
+
         </nav>
 
     </div>
@@ -64,8 +66,23 @@
         @include wh(100%, 60%)
     }
 
-    .swipeItem{
-        @include wh(100%, 100%);
-        background-color: #3190e8;
+    .swipe-wrapper{
+        width: 100%;
+        height: 300px;
+    }
+
+    .swip-item-1{
+        background: red;
+    }
+    .swip-item-2{
+        background: blue;
+    }
+    .swip-item-3{
+        background: green;
+    }
+    .item{
+        text-align: center;
+        font-size: 40px;
+        color: white;
     }
 </style>
