@@ -25,6 +25,7 @@ import com.seafire.cworker.Fragment.MessageFragment;
 import com.seafire.cworker.Fragment.MyFragment;
 import com.seafire.cworker.Fragment.SearchFragment;
 import com.seafire.cworker.Model.User;
+import com.seafire.cworker.Utils.BadgeUtil;
 import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.RxBus;
 import com.seafire.cworker.Utils.ShareUtils;
@@ -122,6 +123,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             badgeItem.hide();
         }else{
             badgeItem.show().setText(failTime+"");
+            BadgeUtil.setBadgeCount(this, failTime, R.mipmap.ic_launcher);
         }
     }
 
