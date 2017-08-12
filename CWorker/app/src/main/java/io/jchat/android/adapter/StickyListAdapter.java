@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -165,7 +167,7 @@ public class StickyListAdapter extends BaseAdapter implements StickyListHeadersA
             convertView = mInflater.inflate(R.layout.item_select_friend, parent, false);
             holder.itemLl = (LinearLayout) convertView.findViewById(R.id.select_friend_item_ll);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.selected_cb);
-            holder.avatar = (CircleImageView) convertView.findViewById(R.id.jmui_avatar_iv);
+            holder.avatar = (ImageView) convertView.findViewById(R.id.jmui_avatar_iv);
             holder.displayName = (TextView) convertView.findViewById(R.id.jmui_display_name_tv);
             convertView.setTag(holder);
         } else {
@@ -246,40 +248,47 @@ public class StickyListAdapter extends BaseAdapter implements StickyListHeadersA
         }
 
         holder.displayName.setText(friend.displayName);
-        if (null != friend.avatar && !TextUtils.isEmpty(friend.avatar)) {
-            Bitmap bitmap = NativeImageLoader.getInstance().getBitmapFromMemCache(friend.username);
-            if (null != bitmap) {
-                holder.avatar.setImageBitmap(bitmap);
-            } else {
-                bitmap = BitmapLoader.getBitmapFromFile(friend.avatar, mDensity);
-                if (null != bitmap) {
-                    holder.avatar.setImageBitmap(bitmap);
-                    NativeImageLoader.getInstance().updateBitmapFromCache(friend.username, bitmap);
-                } else {
-                    JMessageClient.getUserInfo(friend.username, friend.appKey, new GetUserInfoCallback() {
-                        @Override
-                        public void gotResult(int i, String s, final UserInfo userInfo) {
-                            if (i == 0) {
-                                userInfo.getAvatarBitmap(new GetAvatarBitmapCallback() {
-                                    @Override
-                                    public void gotResult(int i, String s, Bitmap bitmap) {
-                                        if (i == 0) {
-                                            friend.avatar = userInfo.getAvatarFile().getAbsolutePath();
-                                            friend.save();
-                                            holder.avatar.setImageBitmap(bitmap);
-                                            NativeImageLoader.getInstance().updateBitmapFromCache(friend.username, bitmap);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    holder.avatar.setImageResource(R.drawable.jmui_head_icon);
-                }
-            }
-        } else {
-            holder.avatar.setImageResource(R.drawable.jmui_head_icon);
-        }
+
+        Glide.with(mContext)
+                .load(friend.avatar)
+                .placeholder(R.drawable.jmui_head_icon)
+                .into(holder.avatar);
+//        if (null != friend.avatar && !TextUtils.isEmpty(friend.avatar)) {
+//            Bitmap bitmap = NativeImageLoader.getInstance().getBitmapFromMemCache(friend.username);
+//            if (null != bitmap) {
+//                holder.avatar.setImageBitmap(bitmap);
+//            } else {
+//                bitmap = BitmapLoader.getBitmapFromFile(friend.avatar, mDensity);
+//                if (null != bitmap) {
+//                    holder.avatar.setImageBitmap(bitmap);
+//                    NativeImageLoader.getInstance().updateBitmapFromCache(friend.username, bitmap);
+//                } else {
+//                    JMessageClient.getUserInfo(friend.username, friend.appKey, new GetUserInfoCallback() {
+//                        @Override
+//                        public void gotResult(int i, String s, final UserInfo userInfo) {
+//                            if (i == 0) {
+//                                userInfo.getAvatarBitmap(new GetAvatarBitmapCallback() {
+//                                    @Override
+//                                    public void gotResult(int i, String s, Bitmap bitmap) {
+//                                        if (i == 0) {
+//                                            friend.avatar = userInfo.getAvatarFile().getAbsolutePath();
+//                                            friend.save();
+//                                            holder.avatar.setImageBitmap(bitmap);
+//                                            NativeImageLoader.getInstance().updateBitmapFromCache(friend.username, bitmap);
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        }
+//                    });
+//                    holder.avatar.setImageResource(R.drawable.jmui_head_icon);
+//                }
+//
+//
+//            }
+//        } else {
+//            holder.avatar.setImageResource(R.drawable.jmui_head_icon);
+//        }
 
         return convertView;
     }
@@ -362,6 +371,6 @@ public class StickyListAdapter extends BaseAdapter implements StickyListHeadersA
         LinearLayout itemLl;
         CheckBox checkBox;
         TextView displayName;
-        CircleImageView avatar;
+        ImageView avatar;
     }
 }

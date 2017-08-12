@@ -17,6 +17,7 @@ import com.seafire.cworker.Present.SearchResultPresenter;
 import com.seafire.cworker.R;
 import com.seafire.cworker.Utils.RxBus;
 import com.seafire.cworker.Utils.ToastUtil;
+import com.seafire.cworker.Utils.Utils;
 import com.seafire.cworker.View.SearchResultView;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -73,10 +74,23 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
                 baseViewHolder.setImageUrl(R.id.item_img, dataBean.getPic(), R.drawable.ic_launcher_round);
                 baseViewHolder.setText(R.id.item_title, dataBean.getTitle());
                 baseViewHolder.setText(R.id.item_author, "作者:"+dataBean.getAuthor());
+                baseViewHolder.setText(R.id.item_time, "更新时间:"+ Utils.getStrTime(dataBean.getUpdateTime()+""));
                 baseViewHolder.setVisible(R.id.item_vip, dataBean.getVipRes() != 0);
                 baseViewHolder.setText(R.id.item_txt, dataBean.getDescription());
             }
         };
+
+        adapter.setOnItemClickListener((view, i) -> {
+            String url = adapter.getAllData().get(i).getUrl();
+            if (url.contains(".png") || url.contains(".jpeg") ||
+                    url.contains(".jpg")){
+                WebViewActivity.startActivity(this, url,
+                        adapter.getAllData().get(i).getTitle());
+            }else{
+                HomeDetailActivity.startActivity(this, adapter.getAllData().get(i));
+            }
+        });
+
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
         onRefresh();
     }

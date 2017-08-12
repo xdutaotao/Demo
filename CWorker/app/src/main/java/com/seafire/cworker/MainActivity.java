@@ -75,16 +75,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(R.drawable.my, strings[4])
                         .setBadgeItem(badgeItem.setBackgroundColor(Color.RED)));
 
-//        RxBus.getInstance().toObservable(RxBusEvent.class)
-//                .filter(s -> TextUtils.equals(s.getType(), Constants.POST_COLLECT_TIME))
-//                .subscribe(s -> {
-//                    if (TextUtils.equals("0", s.getMsg())){
-//                        badgeItem.hide();
-//                    }else{
-//                        badgeItem.show().setText(s.getMsg());
-//                    }
-//                });
-
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
         setDefaultFragment();

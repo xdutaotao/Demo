@@ -300,14 +300,21 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void getHotWord(List<String> list) {
-        for (String s : list) {
-            if (!TextUtils.isEmpty(s)) {
-                hotList.add(s);
-            }
-        }
 
-        if (hotList.get(0).length() < 1)
-            return;
+        if (list != null && list.size() == 0){
+            hotList.add("123");
+            hotList.add("热门");
+            hotList.add("1");
+        }else{
+            for (String s : list) {
+                if (!TextUtils.isEmpty(s)) {
+                    hotList.add(s);
+                }
+            }
+
+            if (hotList.get(0).length() < 1)
+                return;
+        }
 
         tagAdapter = new TagAdapter<String>(hotList) {
             @Override

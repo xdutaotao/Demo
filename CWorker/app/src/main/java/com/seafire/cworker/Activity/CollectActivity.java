@@ -403,6 +403,16 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 singleLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+//                if (!isChecked){
+//                    singleLength.setText("");
+//                    singleLength.setHint("mm");
+//                    singleWidth.setText("");
+//                    singleWidth.setHint("mm");
+//                    singleHeight.setText("");
+//                    singleHeight.setHint("mm");
+//                    singleWeight.setText("");
+//                    singleWeight.setHint("kg");
+//                }
             });
 
             dataLayout.setOnClickListener(v -> {
@@ -669,17 +679,51 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         weight.setText(Utils.formatData(s.getOldData().getNetWeight())+"kg");
                         clearImg(weight);
 
-                        if (Math.abs(s.getOldData().getAddedLength()) > 0.0001 ||
-                                Math.abs(s.getOldData().getAddedWidth()) > 0.0001 ||
-                                    Math.abs(s.getOldData().getAddedHeight()) > 0.0001){
+                        NumberBean.OldDataBean oldDataBean = s.getOldData();
+                        if (Math.abs(oldDataBean.getPackageLength()) > 0.0001 ||
+                                Math.abs(oldDataBean.getPackageWidth()) > 0.0001 ||
+                                    Math.abs(oldDataBean.getPackageHeight()) > 0.0001){
                             outLayout.setVisibility(View.VISIBLE);
-                        }
 
-                        if (Math.abs(s.getOldData().getSinglePackageLength()) > 0.0001 ||
-                                Math.abs(s.getOldData().getSinglePackageWidth()) > 0.0001 ||
-                                    Math.abs(s.getOldData().getSinglePackageHeight()) > 0.0001 ||
-                                        Math.abs(s.getOldData().getSinglePackageWeight()) > 0.0001){
-                            singleSwitch.setChecked(true);
+                            outLength.setText(Utils.formatData(s.getOldData().getPackageLength())+"mm");
+                            clearImg(outLength);
+                            outWidth.setText(Utils.formatData(s.getOldData().getPackageWidth())+"mm");
+                            clearImg(outWidth);
+                            outHeight.setText(Utils.formatData(s.getOldData().getPackageHeight())+"mm");
+                            clearImg(outHeight);
+                            outWeight.setText(Utils.formatData(s.getOldData().getRoughWeight())+"kg");
+                            clearImg(outWeight);
+
+                            if (Math.abs(oldDataBean.getSinglePackageLength()) > 0.0001 ||
+                                    Math.abs(oldDataBean.getSinglePackageWidth()) > 0.0001 ||
+                                    Math.abs(oldDataBean.getSinglePackageHeight()) > 0.0001 ||
+                                    Math.abs(oldDataBean.getSinglePackageWeight()) > 0.0001){
+                                singleSwitch.setChecked(true);
+
+                                singleLength.setText(Utils.formatData(s.getOldData().getSinglePackageLength())+"mm");
+                                clearImg(singleLength);
+                                singleWidth.setText(Utils.formatData(s.getOldData().getSinglePackageWidth())+"mm");
+                                clearImg(singleWidth);
+                                singleHeight.setText(Utils.formatData(s.getOldData().getSinglePackageHeight())+"mm");
+                                clearImg(singleHeight);
+                                singleWeight.setText(Utils.formatData(s.getOldData().getSinglePackageWeight())+"kg");
+                                clearImg(singleWeight);
+
+                            }else{
+                                singleSwitch.setChecked(false);
+                                singleLength.setText("");
+                                singleLength.setHint("mm");
+                                singleWidth.setText("");
+                                singleWidth.setHint("mm");
+                                singleHeight.setText("");
+                                singleHeight.setHint("mm");
+                                singleWeight.setText("");
+                                singleWeight.setHint("kg");
+                            }
+
+                        }else{
+                            outLayout.setVisibility(View.GONE);
+                            hideOutLayout();
                         }
 
                         allLength.setText(Utils.formatData(s.getOldData().getAddedLength()) + "mm");
@@ -689,24 +733,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         allHeight.setText(Utils.formatData(s.getOldData().getAddedHeight()) + "mm");
                         clearImg(allHeight);
 
-                        outLength.setText(Utils.formatData(s.getOldData().getPackageLength())+"mm");
-                        clearImg(outLength);
-                        outWidth.setText(Utils.formatData(s.getOldData().getPackageWidth())+"mm");
-                        clearImg(outWidth);
-                        outHeight.setText(Utils.formatData(s.getOldData().getPackageHeight())+"mm");
-                        clearImg(outHeight);
-                        outWeight.setText(Utils.formatData(s.getOldData().getRoughWeight())+"kg");
-                        clearImg(outWeight);
-
-                        singleLength.setText(Utils.formatData(s.getOldData().getSinglePackageLength())+"mm");
-                        clearImg(singleLength);
-                        singleWidth.setText(Utils.formatData(s.getOldData().getSinglePackageWidth())+"mm");
-                        clearImg(singleWidth);
-                        singleHeight.setText(Utils.formatData(s.getOldData().getSinglePackageHeight())+"mm");
-                        clearImg(singleHeight);
-                        singleWeight.setText(Utils.formatData(s.getOldData().getSinglePackageWeight())+"kg");
-                        clearImg(singleWeight);
-                        singleSwitch.setChecked(true);
 
                         checkTv.setText(s.getOldData().getAuditType());
                         recommendTv.setText(s.getOldData().getProcessRecommendation());
@@ -763,6 +789,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 wrapText.setText(bean.getName());
                 if (bean.getHasOutPackage() == 0) {
                     outLayout.setVisibility(View.GONE);
+                    //hideOutLayout();
                 } else {
                     outLayout.setVisibility(View.VISIBLE);
                 }
@@ -784,9 +811,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }else if (data != null && requestCode == REQUEST_SCAN_CODE){
                 String result = data.getStringExtra(INTENT_KEY);
                 number.setText(result);
-                if (!TextUtils.isEmpty(number.getText().toString()))
-                    presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
-
+                if (!TextUtils.isEmpty(number.getText().toString())) {
+                    presenter.getPartInfoByCode(this, result, User.getInstance().getUserInfo().getPerson().getProject());
+                    isNumberSearch = true;
+                }
             }
         }
     }
@@ -846,6 +874,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     private void postCollectTxt() {
         String dialogMsg = "";
+        int stringLength = 0;
+        String dataString = "";
 
         if (TextUtils.isEmpty(numberTv.getText())) {
             ToastUtil.show("零件号不能为空");
@@ -878,19 +908,37 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
 
         if (outLayout.getVisibility() == View.VISIBLE) {
-            if (TextUtils.isEmpty(outLength.getText())) {
+            dataString = outLength.getText().toString();
+            stringLength = dataString.length();
+
+
+
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
                 ToastUtil.show("外包装长不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outWidth.getText())) {
+
+            dataString = outWidth.getText().toString();
+            stringLength = dataString.length();
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
                 ToastUtil.show("外包装宽不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outHeight.getText())) {
+
+            dataString = outHeight.getText().toString();
+            stringLength = dataString.length();
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
                 ToastUtil.show("外包装高不能为空");
                 return;
             }
-            if (TextUtils.isEmpty(outWeight.getText())) {
+
+            dataString = outWeight.getText().toString();
+            stringLength = dataString.length();
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
                 ToastUtil.show("毛重不能为空");
                 return;
             }
@@ -900,45 +948,76 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 dialogMsg = "外包装长宽高不满足测量规则！";
             }
 
+            if (singleLayout.getVisibility() == View.VISIBLE) {
+                dataString = singleLength.getText().toString();
+                stringLength = dataString.length();
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    ToastUtil.show("单个包装长不能为空");
+                    return;
+                }
+
+                dataString = singleWidth.getText().toString();
+                stringLength = dataString.length();
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    ToastUtil.show("单个包装宽不能为空");
+                    return;
+                }
+
+                dataString = singleHeight.getText().toString();
+                stringLength = dataString.length();
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    ToastUtil.show("单个包装高不能为空");
+                    return;
+                }
+
+                dataString = singleWeight.getText().toString();
+                stringLength = dataString.length();
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    ToastUtil.show("单个包装重不能为空");
+                    return;
+                }
+
+                if (Utils.subText(singleLength.getText().toString()) < Utils.subText(singleWidth.getText().toString())
+                        || Utils.subText(singleWidth.getText().toString()) < Utils.subText(singleHeight.getText().toString())) {
+                    dialogMsg = "单个包装长宽高不满足测量规则！";
+                }
+            }
+
         }
 
-        if (singleLayout.getVisibility() == View.VISIBLE) {
-            if (TextUtils.isEmpty(singleLength.getText())) {
-                ToastUtil.show("单个包装长不能为空");
-                return;
-            }
-            if (TextUtils.isEmpty(singleWidth.getText())) {
-                ToastUtil.show("单个包装宽不能为空");
-                return;
-            }
-            if (TextUtils.isEmpty(singleHeight.getText())) {
-                ToastUtil.show("单个包装高不能为空");
-                return;
-            }
-            if (TextUtils.isEmpty(singleWeight.getText())) {
-                ToastUtil.show("单个包装重不能为空");
-                return;
-            }
 
-            if (Utils.subText(singleLength.getText().toString()) < Utils.subText(singleWidth.getText().toString())
-                    || Utils.subText(singleWidth.getText().toString()) < Utils.subText(singleHeight.getText().toString())) {
-                dialogMsg = "单个包装长宽高不满足测量规则！";
-            }
-        }
-
-        if (TextUtils.isEmpty(length.getText())) {
+        dataString = length.getText().toString();
+        stringLength = dataString.length();
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
             ToastUtil.show("零件长不能为空");
             return;
         }
-        if (TextUtils.isEmpty(width.getText())) {
+
+        dataString = width.getText().toString();
+        stringLength = dataString.length();
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
             ToastUtil.show("零件宽不能为空");
             return;
         }
-        if (TextUtils.isEmpty(height.getText())) {
+
+        dataString = height.getText().toString();
+        stringLength = dataString.length();
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
             ToastUtil.show("零件高不能为空");
             return;
         }
-        if (TextUtils.isEmpty(weight.getText())) {
+
+        dataString = weight.getText().toString();
+        stringLength = dataString.length();
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
+                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
             ToastUtil.show("净重不能为空");
             return;
         }
@@ -948,15 +1027,20 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             dialogMsg = "零件长宽高不满足测量规则！";
         }
 
-        if (TextUtils.isEmpty(allLength.getText())) {
+        dataString = allLength.getText().toString();
+        if (TextUtils.isEmpty(dataString)) {
             ToastUtil.show("叠加长度不能为空");
             return;
         }
-        if (TextUtils.isEmpty(allWidth.getText())) {
+
+        dataString = allWidth.getText().toString();
+        if (TextUtils.isEmpty(dataString)) {
             ToastUtil.show("叠加宽度不能为空");
             return;
         }
-        if (TextUtils.isEmpty(allHeight.getText())) {
+
+        dataString = allHeight.getText().toString();
+        if (TextUtils.isEmpty(dataString)) {
             ToastUtil.show("叠加高度不能为空");
             return;
         }
@@ -1068,6 +1152,22 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                             .subscribe(s -> bean.setDocumentCodes(s));
                     if (TextUtils.isEmpty(bean.getTime()))
                         bean.setTime(Utils.getNowTime());
+
+                    if (outLayout.getVisibility() == View.GONE){
+                        hideOutLayout();
+                    }else{
+                        if (singleLayout.getVisibility() == View.GONE){
+                            singleLength.setText("");
+                            singleLength.setHint("mm");
+                            singleWidth.setText("");
+                            singleWidth.setHint("mm");
+                            singleHeight.setText("");
+                            singleHeight.setHint("mm");
+                            singleWeight.setText("");
+                            singleWeight.setHint("kg");
+                        }
+                    }
+
                     presenter.postCollectData(this, bean, pathList);
 
                 })
@@ -1136,7 +1236,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     if (!TextUtils.isEmpty(number.getText().toString())){
                         if (!isNumberSearch && numHasFocus) {
                             numHasFocus = false;
-                            clearData();
                             presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
                         }
                     }else{
@@ -1487,5 +1586,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private void hideOutLayout(){
+        outLength.setText("");
+        outLength.setHint("mm");
+        outWidth.setText("");
+        outWidth.setHint("mm");
+        outHeight.setText("");
+        outHeight.setHint("mm");
+        outWeight.setText("");
+        outWeight.setHint("kg");
+
+        singleSwitch.setChecked(true);
+
+        singleLength.setText("");
+        singleLength.setHint("mm");
+        singleWidth.setText("");
+        singleWidth.setHint("mm");
+        singleHeight.setText("");
+        singleHeight.setHint("mm");
+        singleWeight.setText("");
+        singleWeight.setHint("kg");
     }
 }

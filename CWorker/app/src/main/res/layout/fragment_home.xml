@@ -26,18 +26,19 @@
 
                 <com.gzfgeh.viewpagecycle.ImageCycleView
                     android:layout_width="match_parent"
-                    android:layout_height="500px"
+                    android:layout_height="460px"
                     android:id="@+id/image_cycle_view"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50px"
+                    android:layout_height="60px"
                     android:gravity="center_vertical"
                     android:layout_margin="20px">
 
                     <View
                         android:layout_width="5px"
-                        android:layout_height="match_parent"
+                        android:layout_height="35px"
+                        android:layout_marginTop="15px"
                         android:background="@color/red"
                         android:layout_centerVertical="true"/>
 
@@ -65,13 +66,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50px"
+                    android:layout_height="60px"
                     android:gravity="center_vertical"
                     android:layout_margin="20px">
 
                     <View
                         android:layout_width="5px"
-                        android:layout_height="match_parent"
+                        android:layout_height="35px"
+                        android:layout_marginTop="15px"
                         android:background="@color/red"
                         android:layout_centerVertical="true"/>
 
@@ -99,13 +101,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50px"
+                    android:layout_height="60px"
                     android:gravity="center_vertical"
                     android:layout_margin="20px">
 
                     <View
                         android:layout_width="5px"
-                        android:layout_height="match_parent"
+                        android:layout_height="35px"
+                        android:layout_marginTop="15px"
                         android:background="@color/red"
                         android:layout_centerVertical="true"/>
 

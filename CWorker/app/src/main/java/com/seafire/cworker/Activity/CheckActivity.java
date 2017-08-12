@@ -74,14 +74,16 @@ public class CheckActivity extends BaseActivity {
 
 
         adapter.setOnItemClickListener((view, i) -> {
+            Intent intent = new Intent();
             if (view.findViewById(R.id.select).getVisibility() == View.VISIBLE){
                 view.findViewById(R.id.select).setVisibility(View.GONE);
+                intent.putExtra(INTENT_KEY, new PackageBean.ResultBean.AtsBean());
             }else{
-                Intent intent = new Intent();
                 intent.putExtra(INTENT_KEY, listBean.get(i));
+            }
                 setResult(RESULT_OK, intent);
                 finish();
-            }
+
 
         });
     }

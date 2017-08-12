@@ -9,10 +9,19 @@
     <include layout="@layout/tool_bar_center" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="450px"
+        android:layout_height="450px"
         android:src="@drawable/logo"
+        android:layout_gravity="center"
         android:layout_margin="100px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CWorker"
+        android:textSize="60px"
+        android:layout_gravity="center"
+        android:layout_margin="30px"/>
 
 
     <TextView

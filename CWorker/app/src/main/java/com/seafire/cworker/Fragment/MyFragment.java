@@ -194,7 +194,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 level.setText("LV" + ((int) (User.getInstance().getUserInfo().getPerson().getExperience() / 3500)));
                 level.setVisibility(View.VISIBLE);
                 sign.setVisibility(View.VISIBLE);
-                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("main_sign", "")) ? "已签到" : "点击签到");
+                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("main_sign", "")) ? " 已签到" : " 签到");
             }
         }
     }

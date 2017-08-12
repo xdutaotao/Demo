@@ -45,9 +45,10 @@
         android:layout_height="wrap_content"
         android:text="您的会员已过期"
         android:textColor="@android:color/holo_red_light"
-        android:padding="50px"
+        android:padding="30px"
+        android:textSize="60px"
         android:id="@+id/vip_days"
-        android:background="@android:color/holo_green_light"/>
+        android:background="#48D1CC"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -145,6 +146,8 @@
         android:layout_height="100px"
         android:layout_margin="200px"
         android:text="马上获取特权"
+        android:textSize="70px"
+        android:gravity="center"
         android:id="@+id/get_vip_btn"
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"/>

@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="300px"
-    android:layout_height="500px"
+    android:layout_height="600px"
     android:padding="20px"
     android:background="?android:attr/selectableItemBackground">
 
     <ImageView
-        android:layout_width="200px"
-        android:layout_height="260px"
+        android:layout_width="220px"
+        android:layout_height="360px"
         android:src="@drawable/ic_launcher_round"
+        android:scaleType="fitXY"
         android:id="@+id/item_img"/>
 
     <TextView
@@ -32,8 +33,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_vip"
+        android:gravity="center"
         android:text="VIP"
-        android:textSize="30px"
+        android:textSize="20px"
+        android:paddingLeft="5px"
+        android:paddingRight="5px"
         android:textColor="@android:color/holo_red_light"
         android:background="@drawable/corner_seletor"/>
 

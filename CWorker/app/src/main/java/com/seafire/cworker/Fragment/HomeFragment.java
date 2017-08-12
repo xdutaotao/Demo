@@ -124,6 +124,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
                 baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
                 baseViewHolder.setText(R.id.item_title, homeBean.getTitle());
+                baseViewHolder.setText(R.id.item_time, "更新时间:"+Utils.getStrTime(homeBean.getUpdateTime()+""));
                 baseViewHolder.setText(R.id.item_author, "作者:" + homeBean.getAuthor());
                 baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
                 baseViewHolder.setText(R.id.item_txt, homeBean.getDescription());
@@ -223,12 +224,15 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
             if (TextUtils.equals("jingHua", topicBean.getGroupTitle())) {
                 typeOne.setText("精华");
+                adapter.clear();
                 adapter.addAll(topicBean.getGroupData());
             } else if (TextUtils.equals("caiNiXiHuan", topicBean.getGroupTitle())) {
                 typeTwo.setText("猜你喜欢");
+                adapterClassic.clear();
                 adapterClassic.addAll(topicBean.getGroupData());
             } else if (TextUtils.equals("jingDian", topicBean.getGroupTitle())) {
                 typeThree.setText("经典");
+                adapterList.clear();
                 adapterList.addAll(topicBean.getGroupData());
             }
         }

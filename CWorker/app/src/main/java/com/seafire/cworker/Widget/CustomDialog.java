@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.Display;
 import android.view.Gravity;
@@ -47,7 +48,8 @@ public class CustomDialog {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int)(display.getWidth()*0.9), (int)(display.getHeight()*0.5));
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_image, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
-        Glide.with(context).load(url).placeholder(R.drawable.ic_launcher_round).into(imageView);
+        Glide.with(context).load(url).into(imageView);
+        //imageView.setImageDrawable(drawable);
         dialog.setContentView(view, params);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();

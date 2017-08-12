@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="280px"
         android:padding="50px"
         android:id="@+id/head_layout"
         android:background="@android:color/white">
@@ -21,11 +21,11 @@
             android:layout_centerVertical="true"/>
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="150px"
             android:layout_height="match_parent"
             android:src="@drawable/ic_launcher_round"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20px"
+            android:layout_marginRight="80px"
             android:id="@+id/head_icon"/>
 
         <ImageView
@@ -250,7 +250,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text=" "
+            android:text=""
+            android:maxLines="1"
+            android:maxLength="16"
+            android:ellipsize="end"
             android:layout_marginRight="50px"
             android:drawableRight="@drawable/turn_right"
             android:id="@+id/address"/>
