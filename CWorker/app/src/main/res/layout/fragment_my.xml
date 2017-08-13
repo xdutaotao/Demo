@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="300px"
             android:layout_height="300px"
-            android:src="@drawable/ic_launcher_round"
+            android:src="@drawable/my_head"
             android:id="@+id/head_icon"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"

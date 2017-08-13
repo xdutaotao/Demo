@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
+                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.default_pic);
                 baseViewHolder.setText(R.id.item_title, homeBean.getTitle());
                 baseViewHolder.setText(R.id.item_time, "更新时间:"+Utils.getStrTime(homeBean.getUpdateTime()+""));
                 baseViewHolder.setText(R.id.item_author, "作者:" + homeBean.getAuthor());
@@ -157,7 +157,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapterClassic = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
+                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.default_pic);
                 baseViewHolder.setText(R.id.item_txt, homeBean.getTitle());
                 baseViewHolder.setText(R.id.item_author, homeBean.getAuthor());
                 baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
@@ -187,7 +187,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
+                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.default_pic);
                 baseViewHolder.setText(R.id.item_txt, homeBean.getTitle());
                 baseViewHolder.setText(R.id.item_author, homeBean.getAuthor());
                 baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);

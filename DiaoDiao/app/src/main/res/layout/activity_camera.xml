@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    tools:context="com.xunao.diaodiao.Activity.CameraActivity">
+
+    <com.xunao.diaodiao.Widget.camera.CameraSurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="1300px"
+        android:id="@+id/camera"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:paddingLeft="100px"
+        android:paddingRight="100px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="60px"
+            android:textColor="@android:color/white"
+            android:id="@+id/left_tv"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22222"
+            android:textSize="60px"
+            android:id="@+id/center_tv"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/photo_btn"
+            android:id="@+id/take_photo"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3333"
+            android:textSize="60px"
+            android:id="@+id/right_tv"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="提示: 最多能拍十张"
+        android:id="@+id/all_num"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/nav_gray"/>
+</LinearLayout>

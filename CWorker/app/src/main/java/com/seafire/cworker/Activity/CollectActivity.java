@@ -273,7 +273,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 if (TextUtils.equals(ADD, s)) {
                     baseViewHolder.setVisible(R.id.delete, false);
-                    baseViewHolder.setImageResource(R.id.select_img, R.drawable.ic_launcher_round);
+                    baseViewHolder.setImageResource(R.id.select_img, R.drawable.plus);
                 } else {
                     baseViewHolder.setVisible(R.id.delete, true);
                     baseViewHolder.setImageUrl(R.id.select_img, s);

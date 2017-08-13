@@ -152,7 +152,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             year.setText("0");
             total.setText("0");
             Glide.with(this)
-                    .load(R.drawable.ic_launcher_round)
+                    .load(R.drawable.my_head)
                     .bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(headIcon);
             level.setVisibility(View.GONE);
@@ -164,7 +164,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 if (!TextUtils.isEmpty(userInfo.getPerson().getFace())) {
                     Glide.with(this)
                             .load(userInfo.getPerson().getFace())
-                            .placeholder(R.drawable.ic_launcher_round)
+                            .placeholder(R.drawable.my_head)
                             .bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(headIcon);
                 }

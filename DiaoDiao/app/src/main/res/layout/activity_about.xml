@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xunao.diaodiao.Activity.AboutActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_margin="100px"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="版本号: v1.0"
+        android:textColor="@color/nav_gray"
+        android:layout_gravity="center"
+        android:padding="10px"
+        android:id="@+id/version"
+        android:background="@drawable/corner_seletor_white"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="中包研究院"
+        android:textColor="@color/nav_gray"
+        android:gravity="bottom|center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="460px"
+        android:layout_marginBottom="20px"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="技术支持 QQ/微信:549055040"
+        android:textColor="@color/nav_gray"
+        android:gravity="top|center_horizontal"
+        android:layout_gravity="top"/>
+
+</LinearLayout>
