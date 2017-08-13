@@ -1,4 +1,4 @@
-package com.spring.demo;
+package com.gzfgeh.demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
