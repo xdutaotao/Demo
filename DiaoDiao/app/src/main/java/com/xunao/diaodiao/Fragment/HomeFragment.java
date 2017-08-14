@@ -3,14 +3,20 @@ package com.xunao.diaodiao.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.swipeheader.SwipeRefreshLayout;
+import com.gzfgeh.viewpagecycle.BannerInfo;
+import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
@@ -19,14 +25,12 @@ import com.xunao.diaodiao.Bean.SearchBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.HomePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.LocationUtils;
+import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
-import com.gzfgeh.adapter.BaseViewHolder;
-import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.gzfgeh.swipeheader.SwipeRefreshLayout;
-import com.gzfgeh.viewpagecycle.BannerInfo;
-import com.gzfgeh.viewpagecycle.ImageCycleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +64,18 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     TextView moreThree;
     @BindView(R.id.scrollView)
     LinearLayout scrollView;
+    @BindView(R.id.location_add)
+    TextView locationAdd;
+    @BindView(R.id.type_image)
+    ImageView typeImage;
+    @BindView(R.id.edit_text)
+    EditText editText;
+    @BindView(R.id.cancle_action)
+    ImageView cancleAction;
+    @BindView(R.id.document)
+    TextView document;
     private String mParam1;
 
-    @BindView(R.id.title_text)
-    TextView titleText;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
     @BindView(R.id.image_cycle_view)
     ImageCycleView imageCycleView;
     @BindView(R.id.recycler_view)
@@ -100,7 +110,13 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         getActivityComponent().inject(this);
         ButterKnife.bind(this, view);
         presenter.attachView(this);
-        titleText.setText(mParam1);
+
+        new LocationUtils().getLocationAddr(getActivity());
+        RxBus.getInstance().toObservable(String.class)
+                .compose(RxUtils.applyIOToMainThreadSchedulers())
+                .subscribe(s -> {
+                    locationAdd.setText(s);
+                });
 
         initCreamList();
         initClassicList();
@@ -142,10 +158,10 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapterList.setOnItemClickListener((view, i) -> {
             String url = adapterList.getAllData().get(i).getUrl();
             if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")){
+                    url.contains(".jpg")) {
                 WebViewActivity.startActivity(getContext(), url,
                         adapterList.getAllData().get(i).getTitle());
-            }else{
+            } else {
                 HomeDetailActivity.startActivity(getContext(), adapterList.getAllData().get(i));
             }
 
@@ -171,10 +187,10 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapterClassic.setOnItemClickListener((view, i) -> {
             String url = adapterClassic.getAllData().get(i).getUrl();
             if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")){
+                    url.contains(".jpg")) {
                 WebViewActivity.startActivity(getContext(), url,
                         adapterClassic.getAllData().get(i).getTitle());
-            }else{
+            } else {
                 HomeDetailActivity.startActivity(getContext(), adapterClassic.getAllData().get(i));
             }
 
@@ -201,10 +217,10 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapter.setOnItemClickListener((view, i) -> {
             String url = adapter.getAllData().get(i).getUrl();
             if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")){
+                    url.contains(".jpg")) {
                 WebViewActivity.startActivity(getContext(), url,
                         adapter.getAllData().get(i).getTitle());
-            }else{
+            } else {
                 HomeDetailActivity.startActivity(getContext(), adapter.getAllData().get(i));
             }
 
@@ -244,7 +260,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
         imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
             if (bannerInfo.getLink().contains(".xlsx") ||
-                    bannerInfo.getLink().contains(".xls")){
+                    bannerInfo.getLink().contains(".xls")) {
                 HomeResponseBean.TopicBean.GroupDataBean groupDataBean = new HomeResponseBean.TopicBean.GroupDataBean();
                 HomeResponseBean.BannerBean bannerBean = bean.getBanner().get(i);
                 groupDataBean.setAuthor(bannerBean.getAuthor());
@@ -259,7 +275,7 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
 
                 HomeDetailActivity.startActivity(getContext(), groupDataBean);
-            }else{
+            } else {
                 WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
             }
 

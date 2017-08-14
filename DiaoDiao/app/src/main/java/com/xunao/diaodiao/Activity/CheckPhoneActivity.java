@@ -33,10 +33,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
     @Inject
     RegisterPresenter presenter;
-    @BindView(R.id.title_text)
-    TextView titleText;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
     @BindView(R.id.phone_input)
     EditText phoneInput;
     @BindView(R.id.code_input)
@@ -68,7 +64,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
-        showToolbarBack(toolBar, titleText, "获取验证码");
+        //showToolbarBack(toolBar, titleText, "获取验证码");
 
         phoneInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);

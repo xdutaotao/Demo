@@ -29,14 +29,41 @@ android {
 
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./keystore/gzfgeh.jks")
+                storePassword "gzfgeh"
+                keyAlias "gzfgeh"
+                keyPassword "gzfgeh"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+
+        debug {
+            try {
+                storeFile file("./keystore/gzfgeh.jks")
+                storePassword "gzfgeh"
+                keyAlias "gzfgeh"
+                keyPassword "gzfgeh"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -115,4 +142,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.amap.api:location:latest.integration'
 }

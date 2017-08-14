@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:text="个人资料"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/home"/>
+            android:drawableLeft="@drawable/home_fill"/>
 
         <ImageView
             android:layout_width="wrap_content"

@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.xunao.diaodiao.Activity.BaseActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
@@ -40,6 +44,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private BottomNavigationBar bottomNavigationBar;
     private String[] strings = {"首页","发布","我的项目","个人中心"};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +61,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
         bottomNavigationBar.setInActiveColor(R.color.nav_gray);
         bottomNavigationBar.setActiveColor(R.color.colorPrimary);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home, strings[0]))
-                .addItem(new BottomNavigationItem(R.drawable.search, strings[1]))
-                .addItem(new BottomNavigationItem(R.drawable.message, strings[2]))
-                .addItem(new BottomNavigationItem(R.drawable.my, strings[3]));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home_fill, strings[0]).setInactiveIconResource(R.drawable.home_fill))
+                .addItem(new BottomNavigationItem(R.drawable.fabu_fill, strings[1]).setInactiveIconResource(R.drawable.fabu))
+                .addItem(new BottomNavigationItem(R.drawable.dindan_fill, strings[2]).setInactiveIconResource(R.drawable.dindan))
+                .addItem(new BottomNavigationItem(R.drawable.wode_fill, strings[3]).setInactiveIconResource(R.drawable.wode));
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
+
 
     }
 

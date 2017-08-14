@@ -30,10 +30,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
     @Inject
     LoginPresenter presenter;
-    @BindView(R.id.title_text)
-    TextView titleText;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
     @BindView(R.id.name)
     EditText name;
     @BindView(R.id.pwd)
@@ -58,7 +54,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
-        showToolbarBack(toolBar, titleText, "登录");
 
         name.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         login.setOnClickListener(this);

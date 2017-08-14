@@ -54,16 +54,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView headIcon;
     @BindView(R.id.login_text)
     TextView loginText;
-    @BindView(R.id.today_fail)
-    TextView today;
-    @BindView(R.id.today_success)
-    TextView todaySuccess;
-    @BindView(R.id.month)
-    TextView month;
-    @BindView(R.id.year)
-    TextView year;
-    @BindView(R.id.total)
-    TextView total;
     @BindView(R.id.personal_word)
     RelativeLayout personalWord;
     @BindView(R.id.change_pwd)
@@ -84,8 +74,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     TextView level;
     @BindView(R.id.sign)
     TextView sign;
-    @BindView(R.id.today_layout)
-    LinearLayout todayLayout;
     private String mParam1;
 
     @Inject
@@ -129,7 +117,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         setting.setOnClickListener(this);
         sign.setOnClickListener(this);
         help.setOnClickListener(this);
-        todayLayout.setOnClickListener(this);
         return view;
     }
 
@@ -140,11 +127,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             loginBtn.setText("点击登录");
             loginText.setText("请登录");
-            today.setVisibility(View.GONE);
-            todaySuccess.setText("0");
-            month.setText("0");
-            year.setText("0");
-            total.setText("0");
             Glide.with(this)
                     .load(R.drawable.ic_launcher_round)
                     .bitmapTransform(new CropCircleTransformation(getContext()))
@@ -164,32 +146,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 }
 
                 loginText.setText(userInfo.getPerson().getName());
-
-                if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
-                    List<CollectBean> collectBeanList = JsonUtils.getInstance()
-                            .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
-                    for(CollectBean bean: collectBeanList){
-                        if (!bean.getIsSuccess()){
-                            failTime++;
-                        }
-                    }
-                    int successTime = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) - failTime;
-                    today.setVisibility(View.VISIBLE);
-                    today.setText(failTime+"");
-                    todaySuccess.setText(" / " + successTime);
-                } else {
-                    today.setVisibility(View.GONE);
-                    todaySuccess.setText("0");
                 }
-
-                month.setText(userInfo.getUps().getMonth() + "");
-                year.setText(userInfo.getUps().getYear() + "");
-                total.setText(userInfo.getUps().getTotal() + "");
-                level.setText("LV" + ((int) (User.getInstance().getUserInfo().getPerson().getExperience() / 3500)));
-                level.setVisibility(View.VISIBLE);
-                sign.setVisibility(View.VISIBLE);
-                sign.setText(TextUtils.equals(Utils.getNowDate(), ShareUtils.getValue("main_sign", "")) ? "已签到" : "点击签到");
-            }
         }
     }
 
@@ -302,12 +259,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
             case R.id.help:
                 HelpActivity.startActivity(getContext());
-                break;
-
-            case R.id.today_layout:
-                if (!TextUtils.equals(today.getText().toString(), "0") ||
-                        !TextUtils.equals(todaySuccess.getText().toString(), "0"))
-                    CollectHistoryActivity.startActivity(getContext());
                 break;
         }
     }

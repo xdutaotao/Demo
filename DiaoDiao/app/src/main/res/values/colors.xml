@@ -4,9 +4,9 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
 
-    <color name="colorPrimary">#3f80dc</color>
-    <color name="colorPrimaryDark">#3773cb</color>
-    <color name="colorAccent">#3773cb</color>
+    <color name="colorPrimary">#FC551F</color>
+    <color name="colorPrimaryDark">#FC551F</color>
+    <color name="colorAccent">#FC551F</color>
 
     <color name="activity_background">#f0f1f5</color>
     <color name="nav_gray">#959595</color>

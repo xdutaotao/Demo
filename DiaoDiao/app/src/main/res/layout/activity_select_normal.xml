@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xunao.diaodiao.Activity.AboutActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+
+        <LinearLayout
+            style="@style/select_layout">
+
+            <LinearLayout
+                style="@style/select_item_layout">
+
+                <TextView
+                    style="@style/select_item_text"
+                    android:text="姓名"/>
+
+                <EditText
+                    style="@style/select_item_edit"
+                    android:hint="请输入真实姓名"/>
+            </LinearLayout>
+
+            <View
+                style="@style/select_item_view"/>
+        </LinearLayout>
+
+    <LinearLayout
+        style="@style/select_layout">
+
+        <LinearLayout
+            style="@style/select_item_layout">
+
+            <TextView
+                style="@style/select_item_text"
+                android:text="姓名"/>
+
+            <EditText
+                style="@style/select_item_edit"
+                android:hint="请输入真实姓名"/>
+        </LinearLayout>
+
+        <View
+            style="@style/select_item_view"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/select_layout">
+
+        <LinearLayout
+            style="@style/select_item_layout">
+
+            <TextView
+                style="@style/select_item_text"
+                android:text="姓名"/>
+
+            <EditText
+                style="@style/select_item_edit"
+                android:hint="请输入真实姓名"/>
+        </LinearLayout>
+
+        <View
+            style="@style/select_item_view"/>
+    </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/register_btn"
+            android:text="进入应用"
+            style="@style/login_btn_style"/>
+
+
+
+</LinearLayout>
