@@ -68,7 +68,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="140px"
         android:orientation="horizontal"
         android:background="@android:color/white">
 
@@ -76,36 +76,20 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:id="@+id/today_layout">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/red"
-                    android:id="@+id/today_fail"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" / 0"
-                    android:id="@+id/today_success"/>
-
-            </LinearLayout>
-
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="今日上传"/>
+                android:text="余额"
+                android:id="@+id/money"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2000"
+                android:layout_marginLeft="20px"/>
 
         </LinearLayout>
 
@@ -120,82 +104,30 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/month"/>
+                android:text="银行卡"
+                android:id="@+id/bank"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月上传"/>
+                android:text="0张"
+                android:layout_marginLeft="20px"/>
 
         </LinearLayout>
 
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20px"
-            android:layout_marginTop="20px"
-            android:background="@color/nav_gray"/>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/year"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="今年上传"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20px"
-            android:layout_marginTop="20px"
-            android:background="@color/nav_gray"/>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/total"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="累计上传"/>
-
-        </LinearLayout>
 
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="40px"
         android:background="@color/activity_background"/>
 
     <RelativeLayout
@@ -205,7 +137,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个人资料"/>
+            android:text="个人资料"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/home"/>
 
         <ImageView
             android:layout_width="wrap_content"
