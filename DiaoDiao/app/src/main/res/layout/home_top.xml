@@ -11,17 +11,17 @@
         android:layout_width="0px"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="定位中..."
+        android:text="定位中"
         android:id="@+id/location_add"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingLeft="30px"
+        android:paddingLeft="20px"
         android:drawableLeft="@drawable/icon_dinwei"/>
 
     <LinearLayout
         android:layout_width="0px"
-        android:layout_weight="5"
+        android:layout_weight="7"
         android:layout_height="match_parent"
         android:background="@drawable/search_bg"
         android:orientation="horizontal"

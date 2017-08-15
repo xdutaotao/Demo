@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
 import com.xunao.diaodiao.Model.User;
@@ -42,20 +44,12 @@ import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
 
-public class HomeFragment extends BaseFragment implements HomeView, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view_classic)
     RecyclerView recyclerViewClassic;
     @BindView(R.id.recycler_view_list)
     RecyclerView recyclerViewList;
-    @BindView(R.id.swipe)
-    SwipeRefreshLayout swipe;
-    @BindView(R.id.type_one)
-    TextView typeOne;
-    @BindView(R.id.typeTwo)
-    TextView typeTwo;
-    @BindView(R.id.typeThree)
-    TextView typeThree;
     @BindView(R.id.more_one)
     TextView moreOne;
     @BindView(R.id.more_two)
@@ -74,6 +68,8 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     ImageView cancleAction;
     @BindView(R.id.document)
     TextView document;
+    @BindView(R.id.recycler_view_proj)
+    RecyclerView recyclerViewProj;
     private String mParam1;
 
     @BindView(R.id.image_cycle_view)
@@ -83,9 +79,13 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     @Inject
     HomePresenter presenter;
 
+    private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
+                            R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
+
     private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapter;
     private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapterClassic;
     private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapterList;
+    private RecyclerArrayAdapter<HomeProjBean> projAdapter;
 
     public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
@@ -121,9 +121,6 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         initCreamList();
         initClassicList();
         initList();
-
-        swipe.setOnRefreshListener(this);
-        swipe.showHead();
         moreOne.setOnClickListener(this);
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
@@ -131,6 +128,28 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
             presenter.checkToken();
         }
+
+        List<HomeProjBean> homeProjBeanList = new ArrayList<>();
+        for(int i=0; i<projImage.length; i++){
+            HomeProjBean homeProjBean = new HomeProjBean();
+            homeProjBean.setProjImage(projImage[i]);
+            homeProjBean.setProjText(getResources().getStringArray(R.array.homeProj)[i]);
+            homeProjBeanList.add(homeProjBean);
+        }
+
+        projAdapter = new RecyclerArrayAdapter<HomeProjBean>(getContext(), R.layout.home_proj_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, HomeProjBean homeProjBean) {
+                baseViewHolder.setImageResource(R.id.proj_image, homeProjBean.getProjImage());
+                baseViewHolder.setText(R.id.proj_text, homeProjBean.getProjText());
+            }
+        };
+
+        recyclerViewProj.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerViewProj.setAdapter(projAdapter);
+        projAdapter.addAll(homeProjBeanList);
+
+        presenter.getFirstPage();
         return view;
     }
 
@@ -138,11 +157,6 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
-                baseViewHolder.setText(R.id.item_title, homeBean.getTitle());
-                baseViewHolder.setText(R.id.item_author, "作者:" + homeBean.getAuthor());
-                baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
-                baseViewHolder.setText(R.id.item_txt, homeBean.getDescription());
             }
         };
 
@@ -169,18 +183,18 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     }
 
     private void initClassicList() {
-        adapterClassic = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_item) {
+        adapterClassic = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
-                baseViewHolder.setText(R.id.item_txt, homeBean.getTitle());
-                baseViewHolder.setText(R.id.item_author, homeBean.getAuthor());
-                baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
             }
         };
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerViewClassic.setLayoutManager(linearLayoutManager);
         recyclerViewClassic.setAdapter(adapterClassic);
 
@@ -199,18 +213,18 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     }
 
     private void initCreamList() {
-        adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_item) {
+        adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, homeBean.getPic(), R.drawable.ic_launcher_round);
-                baseViewHolder.setText(R.id.item_txt, homeBean.getTitle());
-                baseViewHolder.setText(R.id.item_author, homeBean.getAuthor());
-                baseViewHolder.setVisible(R.id.item_vip, homeBean.getVipRes() != 0);
             }
         };
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -229,22 +243,16 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
 
     @Override
     public void onFailure() {
-        swipe.setRefreshing(false);
-        //scrollView.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void getData(HomeResponseBean bean) {
-        swipe.setRefreshing(false);
         for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
             if (TextUtils.equals("jingHua", topicBean.getGroupTitle())) {
-                typeOne.setText("精华");
                 adapter.addAll(topicBean.getGroupData());
             } else if (TextUtils.equals("caiNiXiHuan", topicBean.getGroupTitle())) {
-                typeTwo.setText("猜你喜欢");
                 adapterClassic.addAll(topicBean.getGroupData());
             } else if (TextUtils.equals("jingDian", topicBean.getGroupTitle())) {
-                typeThree.setText("经典");
                 adapterList.addAll(topicBean.getGroupData());
             }
         }
@@ -280,8 +288,6 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
             }
 
         }));
-
-        scrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -296,11 +302,6 @@ public class HomeFragment extends BaseFragment implements HomeView, android.supp
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-    }
-
-    @Override
-    public void onRefresh() {
-        presenter.getFirstPage();
     }
 
     @Override

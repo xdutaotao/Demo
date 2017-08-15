@@ -19,6 +19,7 @@ import com.xunao.diaodiao.Activity.CollectHistoryActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Activity.VIPActivity;
@@ -196,11 +197,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.personal_center:
-                if (User.getInstance().getUserInfo() == null) {
-                    ToastUtil.show("请登录");
-                } else {
-                    VIPActivity.startActivity(getContext());
-                }
+//                if (User.getInstance().getUserInfo() == null) {
+//                    ToastUtil.show("请登录");
+//                } else {
+//                    VIPActivity.startActivity(getContext());
+//                }
+                SelectMemoryActivity.startActivity(getActivity());
 
                 break;
 

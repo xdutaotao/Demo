@@ -39,30 +39,27 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!--用于访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <!--用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!--用于写入缓存数据到扩展存储卡-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
-
-
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <permission
         android:name="com.xunao.diaodiao.permission.MIPUSH_RECEIVE"
@@ -73,7 +70,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.xunao.diaodiao.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -81,7 +78,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.xunao.diaodiao.Activity.SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/FullActivity"
             android:windowSoftInputMode="adjustPan">
@@ -98,51 +95,52 @@
         <meta-data
             android:name="design_height"
             android:value="1920" />
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="f7abdf589693fd6baeabb2edeb044b0b">//开发者申请的key
-
-        </meta-data>
+            android:value="f7abdf589693fd6baeabb2edeb044b0b">
+            //开发者申请的key</meta-data>
 
         <activity
-            android:name="com.xunao.diaodiao.MainActivity"
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.xunao.diaodiao.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:launchMode="singleTask" />
-        <activity android:name="com.xunao.diaodiao.Activity.CheckPhoneActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.CheckEmailActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.WebViewActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.HomeDetailActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.PDFActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.SearchResultActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.CollectActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name="com.xunao.diaodiao.Activity.ScanActivity" />
+        <activity android:name=".Activity.CheckPhoneActivity" />
+        <activity android:name=".Activity.CheckEmailActivity" />
+        <activity android:name=".Activity.WebViewActivity" />
+        <activity android:name=".Activity.HomeDetailActivity" />
+        <activity android:name=".Activity.PDFActivity" />
+        <activity android:name=".Activity.SearchResultActivity" />
+        <activity
+            android:name=".Activity.CollectActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".Activity.ScanActivity" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:theme="@style/ImagePickerThemeFullScreen" />
-        <activity android:name="com.xunao.diaodiao.Activity.WrapActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.CameraActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.PersonalActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.AddressActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.VIPActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.BuyActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.SettingActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.AboutActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.SuggestActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.HelpActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.TypeActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.CheckActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.RecommandActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.CollectHistoryActivity" />
-        <activity android:name="com.xunao.diaodiao.Activity.LaunchActivity"
-                android:theme="@style/FullActivity"/>
-        <activity android:name="com.xunao.diaodiao.Activity.DocActivity" />
+        <activity android:name=".Activity.WrapActivity" />
+        <activity android:name=".Activity.CameraActivity" />
+        <activity android:name=".Activity.PersonalActivity" />
+        <activity android:name=".Activity.AddressActivity" />
+        <activity android:name=".Activity.VIPActivity" />
+        <activity android:name=".Activity.BuyActivity" />
+        <activity android:name=".Activity.SettingActivity" />
+        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.SuggestActivity" />
+        <activity android:name=".Activity.HelpActivity" />
+        <activity android:name=".Activity.TypeActivity" />
+        <activity android:name=".Activity.CheckActivity" />
+        <activity android:name=".Activity.RecommandActivity" />
+        <activity android:name=".Activity.CollectHistoryActivity" />
+        <activity
+            android:name=".Activity.LaunchActivity"
+            android:theme="@style/FullActivity" />
+        <activity android:name=".Activity.DocActivity" />
 
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
 
+        <activity android:name=".Activity.SelectMemoryActivity"></activity>
     </application>
 
 </manifest>

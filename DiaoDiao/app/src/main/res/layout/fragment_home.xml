@@ -2,142 +2,159 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/activity_background"
     android:orientation="vertical">
 
     <include layout="@layout/home_top" />
 
-    <com.gzfgeh.swipeheader.SwipeRefreshLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe">
+        android:fillViewport="true">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:orientation="vertical"
+            android:id="@+id/scrollView">
 
-            <LinearLayout
+            <com.gzfgeh.viewpagecycle.ImageCycleView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/scrollView"
-                android:visibility="invisible">
+                android:layout_height="500px"
+                android:id="@+id/image_cycle_view"/>
 
-                <com.gzfgeh.viewpagecycle.ImageCycleView
-                    android:layout_width="match_parent"
-                    android:layout_height="500px"
-                    android:id="@+id/image_cycle_view"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_proj"
+                android:background="@color/white"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50px"
-                    android:gravity="center_vertical"
-                    android:layout_margin="20px">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/banner02"
+                android:layout_marginTop="20px"
+                android:layout_marginBottom="20px"/>
 
-                    <View
-                        android:layout_width="5px"
-                        android:layout_height="match_parent"
-                        android:background="@color/red"
-                        android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical"
+                android:padding="20px"
+                android:layout_marginTop="10px"
+                android:background="@color/white">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="精华"
-                        android:id="@+id/type_one"
-                        android:layout_marginLeft="20px"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:drawableRight="@drawable/turn_right"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/more_one"/>
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/recycler_view"/>
+                    android:drawableLeft="@drawable/dindan_fill"
+                    android:gravity="center"
+                    android:drawablePadding="10px"
+                    android:text="项目推荐"
+                    android:layout_marginLeft="20px"
+                    android:layout_centerVertical="true"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50px"
-                    android:gravity="center_vertical"
-                    android:layout_margin="20px">
-
-                    <View
-                        android:layout_width="5px"
-                        android:layout_height="match_parent"
-                        android:background="@color/red"
-                        android:layout_centerVertical="true"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="猜你喜欢"
-                        android:layout_marginLeft="20px"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/typeTwo"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/turn_right"
-                        android:id="@+id/more_two"/>
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/recycler_view_classic"/>
+                    android:layout_centerVertical="true"
+                    android:text="更多"
+                    android:drawableRight="@drawable/turn_right"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/more_one"/>
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50px"
-                    android:gravity="center_vertical"
-                    android:layout_margin="20px">
+            <View
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:layout_width="match_parent"
+                android:background="@drawable/divider_line"/>
 
-                    <View
-                        android:layout_width="5px"
-                        android:layout_height="match_parent"
-                        android:background="@color/red"
-                        android:layout_centerVertical="true"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="经典"
-                        android:layout_marginLeft="20px"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/typeThree"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical"
+                android:padding="20px"
+                android:layout_marginTop="10px"
+                android:background="@color/white">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="更多"
-                        android:layout_alignParentRight="true"
-                        android:drawableRight="@drawable/turn_right"
-                        android:id="@+id/more_three"/>
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/recycler_view_list"
-                    android:layout_marginBottom="100px"/>
+                    android:text="零工推荐"
+                    android:gravity="center"
+                    android:drawablePadding="10px"
+                    android:layout_marginLeft="20px"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_lingong"/>
 
-            </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@drawable/turn_right"
+                    android:id="@+id/more_two"/>
+            </RelativeLayout>
 
-        </ScrollView>
+            <View
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:layout_width="match_parent"
+                android:background="@drawable/divider_line"/>
 
-    </com.gzfgeh.swipeheader.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_classic"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:gravity="center_vertical"
+                android:padding="20px"
+                android:layout_marginTop="10px"
+                android:background="@color/white">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="维保推荐"
+                    android:gravity="center"
+                    android:drawablePadding="10px"
+                    android:layout_marginLeft="20px"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_weibao"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@drawable/turn_right"
+                    android:id="@+id/more_three"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:layout_width="match_parent"
+                android:background="@drawable/divider_line"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_list"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

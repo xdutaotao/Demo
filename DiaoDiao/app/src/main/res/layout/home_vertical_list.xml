@@ -1,77 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300px"
-    android:orientation="horizontal"
-    android:layout_margin="30px"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30px"
+    android:layout_marginBottom="10px"
+    android:background="@color/white">
 
-    <ImageView
-        android:layout_width="0px"
-        android:layout_weight="3"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher_round"
-        android:id="@+id/item_img"
-        android:scaleType="centerInside"
-        android:layout_gravity="center"
-        android:layout_margin="20px"/>
+        android:text="需要一个零工来做几天采暖"
+        android:textSize="50px"
+        android:textColor="@android:color/black"
+        android:id="@+id/item_content"/>
 
     <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="10"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textSize="50px"
-            android:id="@+id/item_title"
-            android:text="111"/>
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/item_author"
-                android:textColor="@color/nav_gray"
-                android:text="111"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/item_vip"
-                android:text="VIP"
-                android:textSize="30px"
-                android:textColor="@android:color/holo_red_light"
-                android:background="@drawable/corner_seletor"
-                android:layout_marginLeft="30px"/>
-
-        </LinearLayout>
-
+            android:text="上海市徐汇区"
+            android:id="@+id/address"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/item_txt"
-            android:text="111"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textSize="40px"
-            android:textColor="@color/nav_gray"/>
-
+            android:text="今天  16:30"
+            android:id="@+id/time"
+            android:gravity="right"/>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@drawable/turn_right"
-        android:layout_gravity="right"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="采暖系统"
+            android:id="@+id/name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="15km"
+            android:id="@+id/distance"
+            android:gravity="right"/>
+    </LinearLayout>
+
+    <View
+        android:layout_height="2px"
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"
+        android:background="@drawable/divider_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3天"
+            android:id="@+id/days"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="￥120/天"
+            android:textSize="40px"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/price"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn02"
+            android:text="立即申请"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:id="@+id/request"/>
+    </LinearLayout>
 
 </LinearLayout>
