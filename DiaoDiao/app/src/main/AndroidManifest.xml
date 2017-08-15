@@ -140,7 +140,10 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".Activity.SelectMemoryActivity"></activity>
+        <activity android:name=".Activity.SelectMemoryActivity"/>
+        <activity android:name=".Activity.SelectCompanyActivity"/>
+        <activity android:name=".Activity.SelectSkillActivity"/>
+        <activity android:name=".Activity.SelectNormalActivity"/>
     </application>
 
 </manifest>

@@ -1,134 +1,161 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollView">
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:src="@drawable/ic_launcher_round"
-            android:id="@+id/head_icon"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_centerInParent="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/level"
-            android:text="LV5"
-            android:textSize="30px"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_red_light"
-            android:layout_marginTop="340px"
-            android:layout_marginLeft="620px"
-            android:padding="5px"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请登录"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/head_icon"
-            android:gravity="center"
-            android:id="@+id/login_text"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10px"/>
-
-        <TextView
-            android:layout_width="260px"
-            android:layout_height="wrap_content"
-            android:text="已签到       "
-            android:paddingLeft="20px"
-            android:paddingTop="20px"
-            android:paddingBottom="20px"
-            android:paddingRight="50px"
-            android:layout_marginTop="100px"
-            android:layout_marginRight="-50px"
-            android:layout_alignParentRight="true"
-            android:textColor="@android:color/black"
-            android:background="@drawable/sign_seletor"
-            android:id="@+id/sign"/>
-
-    </RelativeLayout>
+    android:background="@color/activity_background">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@android:color/white">
+        android:background="@color/colorPrimary"
+        android:padding="40px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_shensujilu"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="我的"
+            android:textSize="50px"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_shensujilu"/>
+
+    </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300px"
+            android:src="@drawable/head_icon_girl"
+            android:id="@+id/head_icon"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            android:paddingLeft="300px"
+            android:paddingRight="300px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Lucky"
+            android:textSize="60px"
+            android:textColor="@color/white"
+            android:gravity="center"/>
 
         <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/colorPrimary"
             android:gravity="center">
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="余额"
-                android:id="@+id/money"/>
+                android:src="@drawable/pinfeng"
+                android:layout_margin="20px"/>
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000"
-                android:layout_marginLeft="20px"/>
+                android:src="@drawable/pinfeng"
+                android:layout_margin="20px"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pinfeng"
+                android:layout_margin="20px"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pinfeng"
+                android:layout_margin="20px"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20px"
-            android:layout_marginTop="20px"
-            android:background="@color/nav_gray"/>
 
         <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:background="@color/colorPrimary">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="银行卡"
-                android:id="@+id/bank"/>
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0张"
-                android:layout_marginLeft="20px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余额"
+                    android:textColor="@color/white"
+                    android:id="@+id/money"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2000"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20px"
+                android:layout_marginTop="20px"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="银行卡"
+                    android:textColor="@color/white"
+                    android:id="@+id/bank"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0张"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40px"
-        android:background="@color/activity_background"/>
 
     <RelativeLayout
         style="@style/my_item"
@@ -137,9 +164,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个人资料"
+            android:text="我的收藏"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/home_fill"/>
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_shoucang02"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -161,7 +189,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="修改密码"/>
+            android:text="我的评价"
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_wodepinjia"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -183,7 +213,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="会员中心"/>
+            android:text="申诉记录"
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_shensujilu"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -194,7 +226,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="80px"
+        android:layout_height="40px"
         android:background="@color/activity_background"/>
 
     <RelativeLayout
@@ -204,7 +236,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="系统设置"/>
+            android:text="关于调调"
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_guanyu"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -226,7 +260,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用帮助"/>
+            android:text="意见反馈"
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_yijianfankui"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -248,7 +284,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="意见反馈"/>
+            android:text="联系客服"
+            android:drawablePadding="20px"
+            android:drawableLeft="@drawable/icon_kefu"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -257,45 +295,5 @@
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/nav_gray"
-        android:layout_marginLeft="30px"/>
 
-    <RelativeLayout
-        style="@style/my_item"
-        android:id="@+id/about">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="关于我们"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/turn_right"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="150px"
-        android:background="@color/activity_background"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="点击登录"
-        android:id="@+id/login_btn"
-        android:gravity="center"
-        android:padding="30px"
-        android:background="?android:attr/selectableItemBackground"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:background="@color/activity_background"/>
 </LinearLayout>
-</ScrollView>

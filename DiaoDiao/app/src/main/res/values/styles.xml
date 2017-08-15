@@ -92,7 +92,7 @@
         <item name="android:layout_height">140px</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">30px</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:background">@color/white</item>
     </style>
     <style name="collect_item">
         <item name="android:layout_width">match_parent</item>

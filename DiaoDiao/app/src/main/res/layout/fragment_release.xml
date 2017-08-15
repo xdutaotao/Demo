@@ -32,25 +32,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我是暖通公司"
+                android:text="发布零工信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发项目, 找监理"/>
+                android:text="发布零工信息"/>
         </LinearLayout>
 
-        <CheckBox
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawablePadding="10px"
-            android:textColor="@color/accept_btn_default"
-            android:drawableRight="@drawable/checkbox_style"
-            android:id="@+id/company_box"
-            android:text="选择"/>
+            android:src="@drawable/icon_arrow01"/>
     </LinearLayout>
 
 
@@ -79,25 +74,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我是技术人员"
+                android:text="发布维保信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发技术人员维修"/>
+                android:text="找技术人员维修"/>
         </LinearLayout>
 
-        <CheckBox
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawablePadding="10px"
-            android:textColor="@color/accept_btn_default"
-            android:drawableRight="@drawable/checkbox_style"
-            android:id="@+id/skill_box"
-            android:text="选择"/>
+            android:src="@drawable/icon_arrow01"/>
     </LinearLayout>
 
     <LinearLayout
@@ -125,25 +115,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我是家庭用户"
+                android:text="发布互助信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="想维保, 可互动"/>
+                android:text="求助、多余材料分享"/>
         </LinearLayout>
 
-        <CheckBox
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawablePadding="10px"
-            android:textColor="@color/accept_btn_default"
-            android:drawableRight="@drawable/checkbox_style"
-            android:id="@+id/cumstom_box"
-            android:text="选择"/>
+            android:src="@drawable/icon_arrow01"/>
     </LinearLayout>
 
 </LinearLayout>

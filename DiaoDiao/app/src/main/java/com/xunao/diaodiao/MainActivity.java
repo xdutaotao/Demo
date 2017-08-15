@@ -1,41 +1,29 @@
 package com.xunao.diaodiao;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xunao.diaodiao.Activity.BaseActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
-import com.xunao.diaodiao.Bean.CollectBean;
 import com.xunao.diaodiao.Fragment.HomeFragment;
-import com.xunao.diaodiao.Fragment.MessageFragment;
+import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
-import com.xunao.diaodiao.Fragment.SearchFragment;
+import com.xunao.diaodiao.Fragment.ReleaseFragment;
 import com.xunao.diaodiao.Model.User;
-import com.xunao.diaodiao.Utils.JsonUtils;
-import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.xunao.diaodiao.Common.Constants.COLLECT_LIST;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.container)
@@ -50,6 +38,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         //禁止侧滑返回
         setSwipeBackEnable(false);
 
@@ -84,9 +73,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("主页"));
-        fragments.add(SearchFragment.newInstance("搜索"));
-        fragments.add(MessageFragment.newInstance("消息"));
-        fragments.add(MyFragment.newInstance("我的"));
+        fragments.add(ReleaseFragment.newInstance("发布"));
+        fragments.add(ProjectFragment.newInstance("我的项目"));
+        fragments.add(MyFragment.newInstance("个人中心"));
         return fragments;
     }
 

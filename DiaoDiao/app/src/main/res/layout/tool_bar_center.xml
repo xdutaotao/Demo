@@ -7,7 +7,9 @@
     android:background="@color/colorPrimary"
     android:theme="@style/AppTheme.AppBarOverlay"
     app:theme="@style/ToolbarTheme"
-    android:gravity="center">
+    android:gravity="center"
+    app:navigationIcon="@drawable/icon_back_white"
+    android:navigationIcon="@drawable/icon_back_white">
 
     <TextView
         android:layout_width="wrap_content"

@@ -85,29 +85,31 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
      * 登录操作
      */
     private void loginAction() {
-        int nameLength = name.getText().toString().trim().length();
-        if (nameLength == 0) {
-            ToastUtil.show("请输入手机号");
-            return;
-        }
-        if (nameLength != 11) {
-            ToastUtil.show("请输入正确的手机号");
-            return;
-        }
+        SelectMemoryActivity.startActivity(this);
 
-        int pwdLength = pwd.getText().toString().trim().length();
-        if (pwdLength == 0) {
-            ToastUtil.show("请输入密码");
-            return;
-        }
-
-        if (pwdLength < 6) {
-            ToastUtil.show("密码长度必须不少于6位");
-            return;
-        }
-
-        presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
-                Utils.getIMIEStatus(this) == null ?  "" : Utils.getIMIEStatus(this));
+//        int nameLength = name.getText().toString().trim().length();
+//        if (nameLength == 0) {
+//            ToastUtil.show("请输入手机号");
+//            return;
+//        }
+//        if (nameLength != 11) {
+//            ToastUtil.show("请输入正确的手机号");
+//            return;
+//        }
+//
+//        int pwdLength = pwd.getText().toString().trim().length();
+//        if (pwdLength == 0) {
+//            ToastUtil.show("请输入密码");
+//            return;
+//        }
+//
+//        if (pwdLength < 6) {
+//            ToastUtil.show("密码长度必须不少于6位");
+//            return;
+//        }
+//
+//        presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
+//                Utils.getIMIEStatus(this) == null ?  "" : Utils.getIMIEStatus(this));
     }
 
     @Override

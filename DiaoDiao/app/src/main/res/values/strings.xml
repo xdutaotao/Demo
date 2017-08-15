@@ -17,6 +17,8 @@
         <item>合作商家</item>
     </string-array>
 
+    <!--<string name="dialog_content"><Data><![CDATA[选择角色后不可跟换，确定选择 <font color='red'>%1$s</font>吗？]]> </Data></string>-->
+
     <string-array name="tabNames">
         <item>箱类</item>
         <item>袋类</item>

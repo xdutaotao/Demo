@@ -36,7 +36,6 @@
         android:layout_height="180px"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="20px"
         android:paddingRight="20px">
 
         <EditText

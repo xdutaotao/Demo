@@ -9,187 +9,197 @@
     <include layout="@layout/tool_bar_center" />
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            style="@style/select_layout">
-
-            <LinearLayout
-                style="@style/select_item_layout">
-
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
-
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
-
-            <LinearLayout
-                style="@style/select_item_layout">
-
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
-
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
-
-            <LinearLayout
-                style="@style/select_item_layout">
-
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
-
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
-
-            <LinearLayout
-                style="@style/select_item_layout">
-
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
-
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
-
-            <LinearLayout
-                style="@style/select_item_layout">
-
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
-
-                <EditText
-                    style="@style/select_item_edit"
-                    android:layout_width="860px"
-                    android:hint="请输入真实姓名"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="年"/>
-
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            style="@style/select_layout"
-            android:layout_height="200px">
-
-
-            <TextView
-                style="@style/select_item_text"
-                android:layout_gravity="center_vertical"
-                android:text="姓名"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="水泥回填"
-                    android:textColor="@color/white"
-                    android:background="@drawable/btn_blue_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="家电维修"
-                    android:textColor="@color/gray"
-                    android:background="@drawable/btn_blank_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-            </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="自我评价（提供给项目发起人查看）"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500px"
-            android:orientation="vertical"
-            android:layout_margin="50px"
-            android:background="@drawable/btn_gray_bg">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/information"
-                android:layout_width="match_parent"
-                android:layout_height="400px"
-                android:background="@android:color/transparent"
-                android:gravity="start"
-                android:maxLength="100"
-                android:padding="50px"
-                android:textColor="@color/nav_gray"
-                android:textSize="50px" />
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入真实姓名"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入真实姓名"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入真实姓名"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入真实姓名"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:layout_width="860px"
+                        android:hint="请输入真实姓名"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="年"/>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/select_layout"
+                android:layout_height="200px">
+
+
+                <TextView
+                    style="@style/select_item_text"
+                    android:layout_gravity="center_vertical"
+                    android:text="姓名"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="水泥回填"
+                        android:textColor="@color/white"
+                        android:background="@drawable/btn_blue_bg"
+                        android:padding="20px"
+                        android:layout_margin="20px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="家电维修"
+                        android:textColor="@color/gray"
+                        android:background="@drawable/btn_blank_bg"
+                        android:padding="20px"
+                        android:layout_margin="20px"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/info_num"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingRight="50px"
-                android:text="0/100" />
+                android:text="自我评价（提供给项目发起人查看）"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:orientation="vertical"
+                android:layout_margin="50px"
+                android:background="@drawable/btn_gray_bg">
+
+                <EditText
+                    android:id="@+id/information"
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:background="@android:color/transparent"
+                    android:gravity="start"
+                    android:maxLength="100"
+                    android:padding="50px"
+                    android:textColor="@color/nav_gray"
+                    android:textSize="50px" />
+
+                <TextView
+                    android:id="@+id/info_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingRight="50px"
+                    android:text="0/100" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_btn"
+                android:text="修改"
+                style="@style/login_btn_style"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/register_btn"
-            android:text="修改"
-            style="@style/login_btn_style"/>
+
     </ScrollView>
 
 
