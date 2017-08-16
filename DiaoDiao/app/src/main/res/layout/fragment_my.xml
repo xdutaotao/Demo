@@ -15,13 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        android:padding="40px">
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_shensujilu"/>
+            android:src="@drawable/icon_shezhi"
+            android:padding="40px"
+            android:id="@+id/setting"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +37,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_shensujilu"/>
+            android:src="@drawable/icon_xiaoxi"
+            android:padding="40px"
+            android:id="@+id/message"/>
 
     </LinearLayout>
 
@@ -159,7 +162,7 @@
 
     <RelativeLayout
         style="@style/my_item"
-        android:id="@+id/personal_word">
+        android:id="@+id/my_favorite">
 
         <TextView
             android:layout_width="wrap_content"
@@ -184,7 +187,7 @@
 
     <RelativeLayout
         style="@style/my_item"
-        android:id="@+id/change_pwd">
+        android:id="@+id/my_rating">
 
         <TextView
             android:layout_width="wrap_content"
@@ -208,7 +211,7 @@
 
     <RelativeLayout
         style="@style/my_item"
-        android:id="@+id/personal_center">
+        android:id="@+id/complaint_record">
 
         <TextView
             android:layout_width="wrap_content"
@@ -231,7 +234,7 @@
 
     <RelativeLayout
         style="@style/my_item"
-        android:id="@+id/setting">
+        android:id="@+id/about_diaodiao">
 
         <TextView
             android:layout_width="wrap_content"
@@ -254,21 +257,21 @@
         android:layout_marginLeft="30px"/>
 
     <RelativeLayout
-        style="@style/my_item"
-        android:id="@+id/help">
+        android:id="@+id/feedback"
+        style="@style/my_item">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="意见反馈"
+            android:drawableLeft="@drawable/icon_yijianfankui"
             android:drawablePadding="20px"
-            android:drawableLeft="@drawable/icon_yijianfankui"/>
+            android:text="意见反馈" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/turn_right"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:src="@drawable/turn_right" />
     </RelativeLayout>
 
     <View
@@ -279,7 +282,7 @@
 
     <RelativeLayout
         style="@style/my_item"
-        android:id="@+id/suggest">
+        android:id="@+id/contact_service">
 
         <TextView
             android:layout_width="wrap_content"

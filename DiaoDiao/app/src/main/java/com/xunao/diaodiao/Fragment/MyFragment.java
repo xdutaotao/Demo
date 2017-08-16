@@ -1,54 +1,54 @@
 package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.Activity.AboutActivity;
-import com.xunao.diaodiao.Activity.CheckPhoneActivity;
-import com.xunao.diaodiao.Activity.CollectHistoryActivity;
-import com.xunao.diaodiao.Activity.HelpActivity;
-import com.xunao.diaodiao.Activity.LoginActivity;
-import com.xunao.diaodiao.Activity.PersonalActivity;
-import com.xunao.diaodiao.Activity.SelectMemoryActivity;
+import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
+import com.xunao.diaodiao.Activity.MessageActivity;
+import com.xunao.diaodiao.Activity.MyFavoriteActivity;
+import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
-import com.xunao.diaodiao.Activity.VIPActivity;
-import com.xunao.diaodiao.Bean.CollectBean;
-import com.xunao.diaodiao.Common.Constants;
-import com.xunao.diaodiao.Model.User;
-import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.JsonUtils;
-import com.xunao.diaodiao.Utils.NetWorkUtils;
-import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.MyView;
-import com.xunao.diaodiao.Widget.CustomDialog;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
-
-import static com.xunao.diaodiao.Common.Constants.COLLECT_LIST;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
+    @BindView(R.id.head_icon)
+    ImageView headIcon;
+    @BindView(R.id.money)
+    TextView money;
+    @BindView(R.id.bank)
+    TextView bank;
+    @BindView(R.id.my_favorite)
+    RelativeLayout myFavorite;
+    @BindView(R.id.my_rating)
+    RelativeLayout myRating;
+    @BindView(R.id.complaint_record)
+    RelativeLayout complaintRecord;
+    @BindView(R.id.about_diaodiao)
+    RelativeLayout aboutDiaodiao;
+    @BindView(R.id.feedback)
+    RelativeLayout feedback;
+    @BindView(R.id.contact_service)
+    RelativeLayout contactService;
+    @BindView(R.id.setting)
+    ImageView setting;
+    @BindView(R.id.message)
+    ImageView message;
     private String mParam1;
 
     @Inject
@@ -78,6 +78,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        myFavorite.setOnClickListener(this);
+        myRating.setOnClickListener(this);
+        complaintRecord.setOnClickListener(this);
+        aboutDiaodiao.setOnClickListener(this);
+        contactService.setOnClickListener(this);
+        feedback.setOnClickListener(this);
+        setting.setOnClickListener(this);
+        message.setOnClickListener(this);
         return view;
     }
 
@@ -89,7 +97,39 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.my_favorite:
+                MyFavoriteActivity.startActivity(getActivity());
+                break;
 
+            case R.id.my_rating:
+                MyRatingActivity.startActivity(getActivity());
+                break;
+
+            case R.id.complaint_record:
+                ComplaintRecordActivity.startActivity(getActivity());
+                break;
+
+            case R.id.about_diaodiao:
+                AboutActivity.startActivity(getActivity());
+                break;
+
+            case R.id.contact_service:
+                SuggestActivity.startActivity(getActivity());
+                break;
+
+            case R.id.setting:
+                SettingActivity.startActivity(getActivity());
+                break;
+
+            case R.id.message:
+                MessageActivity.startActivity(getActivity());
+                break;
+
+            case R.id.feedback:
+
+                break;
+        }
     }
 
 
@@ -112,11 +152,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
     }
 
 }

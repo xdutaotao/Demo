@@ -5,12 +5,17 @@ import com.xunao.diaodiao.Activity.AddressActivity;
 import com.xunao.diaodiao.Activity.BuyActivity;
 import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
+import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.CheckPhoneActivity;
+import com.xunao.diaodiao.Activity.MessageActivity;
+import com.xunao.diaodiao.Activity.MyFavoriteActivity;
+import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
@@ -54,4 +59,9 @@ public interface ActivityComponent {
     void inject(SelectNormalActivity activity);
     void inject(SelectMemoryActivity activity);
     void inject(FindProjectActivity activity);
+    void inject(MyFavoriteActivity activity);
+    void inject(MyRatingActivity activity);
+    void inject(ComplaintRecordActivity activity);
+    void inject(RecordDetailActivity activity);
+    void inject(MessageActivity activity);
 }

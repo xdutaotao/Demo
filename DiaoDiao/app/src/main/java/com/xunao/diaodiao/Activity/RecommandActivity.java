@@ -88,7 +88,7 @@ public class RecommandActivity extends BaseActivity {
                         }
                     }
                 }
-                fragments.add(TabFragment.newInstance(bean.getName(), listData, selectData));
+                fragments.add(TabFragment.newInstance(bean.getName()));
             }
         }
 

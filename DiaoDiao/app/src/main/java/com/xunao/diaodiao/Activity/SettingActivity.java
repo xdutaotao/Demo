@@ -39,10 +39,6 @@ public class SettingActivity extends BaseActivity implements SettingView {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.update)
-    RelativeLayout update;
-    @BindView(R.id.clear_cache)
-    RelativeLayout clearCache;
 
     private IOSDialog dialog;
     private ProgressBar progressBar;
@@ -62,15 +58,6 @@ public class SettingActivity extends BaseActivity implements SettingView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "设置");
-
-        update.setOnClickListener(v -> {
-            presenter.updateVersion(this);
-        });
-
-        clearCache.setOnClickListener(v -> {
-            Glide.get(SettingActivity.this).clearMemory();
-            presenter.clearCache(this);
-        });
     }
 
     @Override

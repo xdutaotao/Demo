@@ -34,8 +34,6 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
     Toolbar toolBar;
     @BindView(R.id.information)
     EditText information;
-    @BindView(R.id.qq)
-    EditText qq;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SuggestActivity.class);
@@ -49,8 +47,7 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
-        showToolbarBack(toolBar, titleText, "用户反馈");
-        qq.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        showToolbarBack(toolBar, titleText, "意见反馈");
     }
 
     @Override
@@ -74,13 +71,6 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
             ToastUtil.show("内容不能为空");
             return;
         }
-
-        if(TextUtils.isEmpty(qq.getText().toString())){
-            ToastUtil.show("手机号或者QQ不能为空");
-            return;
-        }
-
-        presenter.submitSuggest(this, qq.getText().toString(), information.getText().toString());
     }
 
 

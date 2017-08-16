@@ -59,7 +59,7 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project, container, false);
+        View view = inflater.inflate(R.layout.single_recycler_view, container, false);
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
         presenter.attachView(this);

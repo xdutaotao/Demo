@@ -18,8 +18,6 @@ public class AboutActivity extends BaseActivity {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.version)
-    TextView version;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AboutActivity.class);
@@ -32,7 +30,6 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
-        showToolbarBack(toolBar, titleText, "关于");
-        version.setText("版本号: v" + Utils.getVersionCode());
+        showToolbarBack(toolBar, titleText, "关于调调");
     }
 }

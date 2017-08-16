@@ -6,31 +6,35 @@
 
     <include layout="@layout/tool_bar_center" />
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="500px"
-        android:hint="我们需要您的意见和反馈，感谢您的..."
-        android:id="@+id/information"
-        android:maxLength="100"
-        android:textColor="@color/nav_gray"
-        android:textSize="50px"
-        android:padding="50px"
-        android:gravity="start"
-        android:background="@android:color/white"
-        android:layout_margin="50px"/>
+        android:layout_margin="40px">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="请输入手机或者QQ"
-        android:id="@+id/qq"
-        android:digits="1234567890"
-        android:maxLength="11"
-        android:textColor="@color/nav_gray"
-        android:textSize="50px"
-        android:padding="50px"
-        android:gravity="start"
-        android:background="@android:color/white"
-        android:layout_margin="50px"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="400px"
+            android:hint="我们需要您的意见和反馈，感谢您的..."
+            android:id="@+id/information"
+            android:maxLength="100"
+            android:textColor="@color/nav_gray"
+            android:textSize="50px"
+            android:gravity="start"
+            android:background="@color/divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@color/divider"
+            android:text="0 / 200"
+            android:layout_alignParentBottom="true"
+            android:gravity="right"/>
+    </RelativeLayout>
+
+
+    <Button
+        style="@style/login_btn_style"
+        android:id="@+id/login"
+        android:text="提交意见"/>
 
 </LinearLayout>
