@@ -56,25 +56,12 @@ public class BankActivity extends BaseActivity implements BankView {
 
         showToolbarBack(toolBar, titleText, "我的银行卡");
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.money_item) {
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.bank_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
 
             }
         };
-
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup viewGroup) {
-                return LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.bank_foot, viewGroup);
-            }
-
-            @Override
-            public void onBindView(View view) {
-
-            }
-        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -84,6 +71,20 @@ public class BankActivity extends BaseActivity implements BankView {
         list.add("2");
         list.add("3");
         adapter.addAll(list);
+
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup viewGroup) {
+                return LayoutInflater.from(BankActivity.this)
+                        .inflate(R.layout.bank_foot, null);
+            }
+
+            @Override
+            public void onBindView(View view) {
+
+            }
+        });
+
     }
 
 

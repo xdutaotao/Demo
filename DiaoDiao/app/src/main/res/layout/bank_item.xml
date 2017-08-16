@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="500px"
     android:layout_marginTop="50px"
-    android:padding="80px"
+    android:paddingTop="80px"
+    android:paddingLeft="50px"
     android:background="@drawable/bg_yinhangka">
 
     <ImageView
