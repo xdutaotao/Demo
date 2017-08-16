@@ -1,0 +1,324 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="姓名"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="张三"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系电话"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="身份证号"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入身份证号"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="常住地区"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入常住地区"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="常住地址"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入常住地址"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="工作经验"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:layout_marginRight="60px"
+                    android:hint="请输入工作经验"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="团队人数"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入团队人数"
+                    android:layout_marginRight="60px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="人"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="承接项目类型"
+                android:layout_margin="50px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="50px"
+                android:layout_marginBottom="50px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="水泥回填"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_blue_bg"
+                    android:padding="20px"
+                    android:layout_margin="20px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="空调系统"
+                    android:textColor="@color/gray"
+                    android:background="@drawable/btn_blank_bg"
+                    android:padding="20px"
+                    android:layout_margin="20px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新风系统"
+                    android:textColor="@color/gray"
+                    android:background="@drawable/btn_blank_bg"
+                    android:padding="20px"
+                    android:layout_margin="20px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="水处理"
+                    android:textColor="@color/gray"
+                    android:background="@drawable/btn_blank_bg"
+                    android:padding="20px"
+                    android:layout_margin="20px"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自我评价(提供给项目发起人查看)"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="50px"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:layout_margin="50px">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:hint="请输入自我评价"
+                    android:id="@+id/information"
+                    android:maxLength="100"
+                    android:textColor="@color/nav_gray"
+                    android:textSize="50px"
+                    android:gravity="start"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100px"
+                    android:background="@color/divider"
+                    android:text="0 / 200"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="right|center_vertical"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="联系人实名认证(添加身份证正、反面照片)"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="50px">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/shangchuan_zheng"
+                    android:padding="20px"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/shangchuan_fan"
+                    android:padding="20px"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="资质证书(若有则添加)"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shangchuan"
+                android:padding="50px"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <Button
+                style="@style/login_btn_style"
+                android:id="@+id/login"
+                android:text="提交审核"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

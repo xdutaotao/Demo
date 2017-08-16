@@ -108,14 +108,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
+                android:id="@+id/money"
                 android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="余额"
-                    android:textColor="@color/white"
-                    android:id="@+id/money"/>
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -136,6 +136,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/bank"
                 android:orientation="vertical"
                 android:gravity="center">
 
@@ -143,8 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="银行卡"
-                    android:textColor="@color/white"
-                    android:id="@+id/bank"/>
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"

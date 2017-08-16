@@ -148,7 +148,15 @@
         <activity android:name=".Activity.MyRatingActivity" />
         <activity android:name=".Activity.ComplaintRecordActivity" />
         <activity android:name=".Activity.RecordDetailActivity" />
-        <activity android:name=".Activity.MessageActivity"></activity>
+        <activity android:name=".Activity.MessageActivity"/>
+        <activity android:name=".Activity.FeedBackDetailActivity"/>
+        <activity android:name=".Activity.EditPersonalActivity"/>
+        <activity android:name=".Activity.ComponyPersonalActivity"/>
+        <activity android:name=".Activity.EditCompanyActivity"/>
+        <activity android:name=".Activity.EditSkillActivity"/>
+        <activity android:name=".Activity.NormalPersonalActivity"/>
+        <activity android:name=".Activity.MoneyActivity"/>
+        <activity android:name=".Activity.BankActivity"/>
     </application>
 
 </manifest>

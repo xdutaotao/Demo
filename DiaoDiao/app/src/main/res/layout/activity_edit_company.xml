@@ -1,0 +1,268 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".Activity.EditPersonalActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司名称"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入公司名称"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司地区"/>
+
+                <EditText
+                    style="@style/edit_personal_edit" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司地址"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入公司地址"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入公司电话"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系人姓名"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人身份证号码"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系人身份证号码"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系人电话"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司认证"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="10px"
+                    android:drawableLeft="@drawable/single_checkbox_style"
+                    android:text="三证合一"
+                    android:id="@+id/check_box_all"
+                    android:layout_marginRight="300px"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawablePadding="10px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@drawable/checkbox_style"
+                    android:text="三证分开"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="50px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="工商营业执照"
+                    android:drawablePadding="20px"
+                    android:drawableTop="@drawable/img_add"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="组织机构代码证"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:drawablePadding="20px"
+                    android:drawableTop="@drawable/img_add"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="税务登记证"
+                    android:layout_gravity="right"
+                    android:drawablePadding="20px"
+                    android:drawableTop="@drawable/img_add"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="联系人实名认证(添加身份证正、反面照片)"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="50px">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/shangchuan_zheng"
+                    android:padding="20px"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/shangchuan_fan"
+                    android:padding="20px"/>
+            </LinearLayout>
+
+            <Button
+                style="@style/login_btn_style"
+                android:id="@+id/login"
+                android:text="提交审核"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

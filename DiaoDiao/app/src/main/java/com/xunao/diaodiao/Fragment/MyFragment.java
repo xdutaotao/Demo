@@ -5,14 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Activity.AboutActivity;
+import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
+import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
+import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Present.MyPresenter;
@@ -30,9 +34,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @BindView(R.id.head_icon)
     ImageView headIcon;
     @BindView(R.id.money)
-    TextView money;
+    LinearLayout money;
     @BindView(R.id.bank)
-    TextView bank;
+    LinearLayout bank;
     @BindView(R.id.my_favorite)
     RelativeLayout myFavorite;
     @BindView(R.id.my_rating)
@@ -86,6 +90,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         feedback.setOnClickListener(this);
         setting.setOnClickListener(this);
         message.setOnClickListener(this);
+        headIcon.setOnClickListener(this);
+        money.setOnClickListener(this);
+        bank.setOnClickListener(this);
         return view;
     }
 
@@ -115,7 +122,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
-                SuggestActivity.startActivity(getActivity());
+
                 break;
 
             case R.id.setting:
@@ -127,7 +134,19 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.feedback:
+                SuggestActivity.startActivity(getActivity());
+                break;
 
+            case R.id.head_icon:
+                PersonalActivity.startActivity(getActivity());
+                break;
+
+            case R.id.money:
+                MoneyActivity.startActivity(getActivity());
+                break;
+
+            case R.id.bank:
+                BankActivity.startActivity(getActivity());
                 break;
         }
     }

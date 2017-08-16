@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.R;
 
@@ -61,23 +62,45 @@ public class TabFragment extends BaseFragment {
                 protected void convert(BaseViewHolder baseViewHolder, String s) {
                 }
             };
+
+            adapter.setOnItemClickListener((view1, i) -> {
+                RecordDetailActivity.startActivity(TabFragment.this.getActivity());
+            });
+
         }else if (TextUtils.equals("对方申诉", mParam1)){
             adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.record_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, String s) {
                 }
             };
+
+            adapter.setOnItemClickListener((view1, i) -> {
+                RecordDetailActivity.startActivity(TabFragment.this.getActivity());
+            });
+
+        }else if (TextUtils.equals("已评价", mParam1)){
+            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_rating_item) {
+                @Override
+                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                }
+            };
+
+            adapter.setOnItemClickListener((view1, i) -> {
+                FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
+            });
+
         }else{
             adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, String s) {
                 }
             };
-        }
 
-        adapter.setOnItemClickListener((view1, i) -> {
-            RecordDetailActivity.startActivity(TabFragment.this.getActivity());
-        });
+            adapter.setOnItemClickListener((view1, i) -> {
+                FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
+            });
+
+        }
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);

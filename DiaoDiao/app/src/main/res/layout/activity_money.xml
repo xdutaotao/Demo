@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="600px"
+        android:background="@drawable/bg_yue">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前余额(元)"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="50px"
+            android:layout_marginTop="60px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="2,000"
+            android:textColor="@color/white"
+            android:textSize="120px"
+            android:layout_marginTop="140px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现"
+            android:paddingTop="20px"
+            android:paddingBottom="20px"
+            android:paddingLeft="120px"
+            android:paddingRight="120px"
+            android:gravity="center"
+            android:background="@drawable/btn_white_bg"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:layout_marginTop="480px"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"/>
+
+</LinearLayout>

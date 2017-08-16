@@ -2,17 +2,25 @@ package com.xunao.diaodiao.Utils.Dagger.Component;
 
 
 import com.xunao.diaodiao.Activity.AddressActivity;
+import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.BuyActivity;
 import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
+import com.xunao.diaodiao.Activity.ComponyPersonalActivity;
+import com.xunao.diaodiao.Activity.EditCompanyActivity;
+import com.xunao.diaodiao.Activity.EditPersonalActivity;
+import com.xunao.diaodiao.Activity.EditSkillActivity;
+import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.CheckPhoneActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
+import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
+import com.xunao.diaodiao.Activity.NormalPersonalActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
@@ -64,4 +72,12 @@ public interface ActivityComponent {
     void inject(ComplaintRecordActivity activity);
     void inject(RecordDetailActivity activity);
     void inject(MessageActivity activity);
+    void inject(FeedBackDetailActivity activity);
+    void inject(EditPersonalActivity activity);
+    void inject(ComponyPersonalActivity activity);
+    void inject(EditCompanyActivity activity);
+    void inject(EditSkillActivity activity);
+    void inject(NormalPersonalActivity activity);
+    void inject(MoneyActivity activity);
+    void inject(BankActivity activity);
 }

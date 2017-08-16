@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -44,26 +46,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     Toolbar toolBar;
     @BindView(R.id.head_icon)
     ImageView headIcon;
-    @BindView(R.id.head_layout)
-    RelativeLayout headLayout;
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.sex)
-    TextView sex;
-    @BindView(R.id.level)
-    TextView level;
-    @BindView(R.id.create_time)
-    TextView createTime;
-    @BindView(R.id.project)
-    TextView project;
-    @BindView(R.id.photo)
-    TextView photo;
-    @BindView(R.id.email)
-    TextView email;
-    @BindView(R.id.address)
-    TextView address;
-    @BindView(R.id.sex_layout)
-    RelativeLayout sexLayout;
 
     @Inject
     PersonalPresenter presenter;
@@ -84,26 +66,13 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         showToolbarBack(toolBar, titleText, "个人资料");
         presenter.attachView(this);
 
-        UserInfo userInfo = User.getInstance().getUserInfo();
-        Glide.with(this)
-                .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
-                .bitmapTransform(new CropCircleTransformation(this))
-                .into(headIcon);
-        name.setText(userInfo.getPerson().getName());
-        sex.setText(userInfo.getPerson().getSex() == 1 ? "男" : "女");
-        level.setText("LV" + userInfo.getPerson().getExperience() / 3500);
-        createTime.setText(Utils.getStrTime(userInfo.getPerson().getDateline() + ""));
-        project.setText(userInfo.getProject().getName());
-        photo.setText(userInfo.getPerson().getMobile());
-        email.setText(userInfo.getPerson().getEmail());
-        address.setText(userInfo.getPerson().getAddress());
-        addressLayout.setOnClickListener(v -> {
-            AddressActivity.startActivityForResult(PersonalActivity.this, address.getText().toString());
-        });
+//        UserInfo userInfo = User.getInstance().getUserInfo();
+//        Glide.with(this)
+//                .load()
+//                .placeholder(R.drawable.ic_launcher_round)
+//                .bitmapTransform(new CropCircleTransformation(this))
+//                .into(headIcon);
 
-        headLayout.setOnClickListener(this);
-        sexLayout.setOnClickListener(this);
         initPicker();
     }
 
@@ -127,27 +96,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 break;
 
             case R.id.sex_layout:
-                selectSex();
                 break;
         }
     }
 
-    private void selectSex() {
-        new IOSDialog(this).builder()
-                .setCancelable(true)
-                .setTitle("男", v -> {
-                    sex.setText("男");
-                    presenter.changeSex(this, 1);
-                })
-                .setMsg("女", v -> {
-                    sex.setText("女");
-                    presenter.changeSex(this, 0);
-                })
-                .setMsgSize(R.dimen.dialog_msg_size)
-                .setMsgColor("#333333")
-                .setNegativeButton("取消", null)
-                .show();
-    }
 
     private void showPicDialog() {
         new IOSDialog(this).builder()
@@ -189,9 +141,24 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
             }
         }else if (resultCode == RESULT_OK){
             if (data != null && requestCode == REQUEST_CODE){
-                address.setText(data.getStringExtra(INTENT_KEY));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_personal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                EditPersonalActivity.startActivity(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/action_done"
-        android:title="确定"
+        android:title="完善资料"
         app:showAsAction="always"/>
 </menu>

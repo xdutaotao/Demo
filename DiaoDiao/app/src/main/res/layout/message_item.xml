@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="260px"
-    android:orientation="horizontal"
-    android:padding="40px"
+    android:orientation="vertical"
+    android:paddingLeft="40px"
     android:background="@color/white">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_xitongxiaoxi"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="40px"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="258px"
+        android:orientation="horizontal"
+        android:background="@color/white">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20px">
+        <ImageView
+            android:layout_width="160px"
+            android:layout_height="160px"
+            android:src="@drawable/icon_xitongxiaoxi"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20px"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:layout_marginBottom="60px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统消息"
+                android:textColor="@color/black"
+                android:textSize="50px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有项目需要你确认, 点击查看"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="系统消息"
-            android:textColor="@color/black"
-            android:textSize="50px"/>
+            android:layout_marginTop="50px"
+            android:text="5月18日 16：30"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="有项目需要你确认"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
 
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/divider"/>
 
 </LinearLayout>

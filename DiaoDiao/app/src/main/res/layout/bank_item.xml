@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="500px"
+    android:layout_marginTop="50px"
+    android:padding="80px"
+    android:background="@drawable/bg_yinhangka">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_fabuhuzhu"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中国银行"
+            android:textColor="@color/white"
+            android:textSize="50px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="储蓄卡"
+            android:textColor="@color/white"
+            android:layout_marginTop="80px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="* * * *       * * * *        * * * * "
+            android:textColor="@color/white"
+            android:layout_marginTop="200px"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3123"
+        android:textColor="@color/white"
+        android:textSize="80px"
+        android:layout_marginTop="170px"
+        android:layout_marginLeft="50px"/>
+
+</LinearLayout>
