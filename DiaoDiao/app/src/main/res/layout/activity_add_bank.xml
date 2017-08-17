@@ -1,0 +1,126 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="开户人"/>
+
+        <EditText
+            style="@style/edit_personal_edit"
+            android:hint="请输入开户人姓名"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="选择银行"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/icon_arrow"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡号"/>
+
+        <EditText
+            style="@style/edit_personal_edit"
+            android:hint="请输入银行卡号"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行预留手机号"/>
+
+        <EditText
+            style="@style/edit_personal_edit"
+            android:hint="请输入银行预留手机号"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="验证码"/>
+
+        <EditText
+            android:layout_width="400px"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="300px"
+            android:hint="请输入验证码"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_code"
+            android:text="获取验证码"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <Button
+        style="@style/login_btn_style"
+        android:id="@+id/login"
+        android:text="提交"/>
+</LinearLayout>

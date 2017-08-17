@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.xunao.diaodiao.Bean.HomeResponseBean;
-import com.xunao.diaodiao.Present.FindProjectPresenter;
+import com.xunao.diaodiao.Present.JoinPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.View.FindProjectView;
+import com.xunao.diaodiao.View.JoinView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +26,10 @@ import butterknife.ButterKnife;
 /**
  * create by
  */
-public class FindProjectActivity extends BaseActivity implements FindProjectView {
+public class JoinActivity extends BaseActivity implements JoinView {
 
     @Inject
-    FindProjectPresenter presenter;
+    JoinPresenter presenter;
     @BindView(R.id.type_image)
     ImageView typeImage;
     @BindView(R.id.edit_text)
@@ -45,26 +44,26 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     private RecyclerArrayAdapter<String> adapter;
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, FindProjectActivity.class);
+        Intent intent = new Intent(context, JoinActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_project);
+        setContentView(R.layout.activity_join);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.home_vertical_list) {
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.join_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            ProjectDetailActivity.startActivity(FindProjectActivity.this);
+            HelpDetailActivity.startActivity(JoinActivity.this);
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

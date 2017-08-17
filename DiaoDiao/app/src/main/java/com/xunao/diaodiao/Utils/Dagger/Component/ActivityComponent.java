@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.Utils.Dagger.Component;
 
 
+import com.xunao.diaodiao.Activity.AddBankActivity;
 import com.xunao.diaodiao.Activity.AddressActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.BuyActivity;
@@ -8,12 +9,15 @@ import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.ComponyPersonalActivity;
+import com.xunao.diaodiao.Activity.DocDetailActivity;
 import com.xunao.diaodiao.Activity.EditCompanyActivity;
 import com.xunao.diaodiao.Activity.EditPersonalActivity;
 import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
+import com.xunao.diaodiao.Activity.HelpDetailActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
+import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.CheckPhoneActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
@@ -23,6 +27,7 @@ import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.NormalPersonalActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
@@ -80,4 +85,9 @@ public interface ActivityComponent {
     void inject(NormalPersonalActivity activity);
     void inject(MoneyActivity activity);
     void inject(BankActivity activity);
+    void inject(AddBankActivity activity);
+    void inject(HelpDetailActivity activity);
+    void inject(JoinActivity activity);
+    void inject(DocDetailActivity activity);
+    void inject(ProjectDetailActivity activity);
 }

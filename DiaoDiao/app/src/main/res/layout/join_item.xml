@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30px"
+    android:layout_marginBottom="10px"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上海暖通公司"
+            android:textSize="50px"
+            android:textColor="@android:color/black"
+            android:id="@+id/item_content"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            android:layout_weight="1"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            style="@style/foodRatingBar"
+            android:id="@+id/rating_star"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.0"
+            android:layout_marginLeft="20px"
+            android:id="@+id/time"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上海市徐汇区万科路"
+        android:layout_marginTop="20px"
+        android:id="@+id/address"/>
+
+
+    <View
+        android:layout_height="2px"
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"
+        android:background="@drawable/divider_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="021 - 40082891"
+            android:textColor="@color/accept_btn_default"
+            android:id="@+id/days"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn02"
+            android:text="立即申请"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:id="@+id/request"/>
+    </LinearLayout>
+
+</LinearLayout>
