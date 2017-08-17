@@ -1,0 +1,297 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        style="@style/release_proj_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="采暖系统"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_bg"
+                android:text="地暖"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="电地暖"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="暖气片明装"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="暖气片暗装"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/release_proj_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="空调新风系统"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="腹肌系统"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="水机系统"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="新风系统"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text=""
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:visibility="invisible"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/release_proj_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="水处理"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_bg"
+                android:textColor="@color/white"
+                android:text="前置"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="中央"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="中软"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="末端"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/release_proj_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="水泥回填"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="水泥回填"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="电地暖"
+                android:gravity="center"
+                android:padding="20px"
+                android:layout_marginRight="20px"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="暖气片明装"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:layout_marginRight="20px"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gray_bg"
+                android:text="暖气片暗装"
+                android:gravity="center"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:visibility="invisible"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:padding="50px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已选择: "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地暖、天暖、防火漆"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="50px"
+                android:id="@+id/next">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下一步"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

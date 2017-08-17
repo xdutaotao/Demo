@@ -1,0 +1,193 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:layout_marginBottom="20px"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已选择："/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的、你的、他的"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="项目标题"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint="请输入项目标题"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="设备品牌"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint="请输入设备品牌(选填)"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="项目地区"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint=""/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="项目地址"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint="请输入项目地址"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="联系人"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint="请输入联系人"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="联系电话"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:hint="请输入联系电话"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="施工时间"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_rili"
+                    android:drawablePadding="20px"
+                    android:hint="请输入联系电话"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:padding="40px"
+                android:background="@color/white">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:hint="我们需要您的意见和反馈，感谢您的..."
+                    android:id="@+id/information"
+                    android:maxLength="100"
+                    android:textColor="@color/nav_gray"
+                    android:textSize="50px"
+                    android:gravity="start"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100px"
+                    android:background="@color/divider"
+                    android:text="0 / 200"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="right"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加图纸(不超过10张)"
+                android:layout_margin="50px"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view"/>
+
+
+            <RelativeLayout style="@style/item_layout"
+                android:layout_marginTop="20px">
+                <TextView style="@style/item_left_text"
+                    android:text="定位"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_rili"
+                    android:drawablePadding="20px"
+                    android:hint="请输入联系电话"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="/次"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="地暖"/>
+                <TextView style="@style/item_right_text"
+                    android:text="请输入联系电话"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="电地暖铺设"/>
+                <TextView style="@style/item_right_text"
+                    android:text="300元*50m"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="明装暖气片"/>
+                <TextView style="@style/item_right_text"
+                    android:text="300元*2组"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+                <TextView style="@style/item_left_text"
+                    android:text="安装调试"/>
+                <TextView style="@style/item_right_text"
+                    android:text="3000元*1台"/>
+            </RelativeLayout>
+            <View style="@style/item_divider" />
+
+            <Button style="@style/login_btn_style"
+                android:text="下一步"
+                android:id="@+id/next"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

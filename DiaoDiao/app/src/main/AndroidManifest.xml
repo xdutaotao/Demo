@@ -163,6 +163,11 @@
         <activity android:name=".Activity.JoinActivity"/>
         <activity android:name=".Activity.DocDetailActivity"/>
         <activity android:name=".Activity.ProjectDetailActivity"/>
+        <activity android:name=".Activity.JoinDetailActivity"/>
+        <activity android:name=".Activity.ReleaseSkillActivity"/>
+        <activity android:name=".Activity.ReleaseCompanyActivity"/>
+        <activity android:name=".Activity.ReleaseProjActivity"/>
+        <activity android:name=".Activity.ReleaseProjSecondActivity"/>
     </application>
 
 </manifest>

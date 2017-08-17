@@ -2,14 +2,16 @@ package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
+import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
 import com.xunao.diaodiao.Present.SearchPresenter;
 import com.xunao.diaodiao.R;
@@ -33,6 +35,12 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.company_release)
+    LinearLayout companyRelease;
+    @BindView(R.id.skill_release)
+    LinearLayout skillRelease;
+    @BindView(R.id.home_release)
+    LinearLayout homeRelease;
     private String mParam1;
 
     public static ReleaseFragment newInstance(String param1) {
@@ -61,13 +69,28 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
 
         hideToolbarBack(toolBar, titleText, "发布");
 
+        companyRelease.setOnClickListener(this);
+        skillRelease.setOnClickListener(this);
+        homeRelease.setOnClickListener(this);
+
         return view;
     }
 
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.company_release:
+                ReleaseCompanyActivity.startActivity(getContext());
+                break;
 
+            case R.id.skill_release:
+                ReleaseSkillActivity.startActivity(getContext());
+                break;
+
+            case R.id.home_release:
+                break;
+        }
     }
 
     @Override
@@ -106,4 +129,5 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
         super.onDestroy();
         presenter.detachView();
     }
+
 }

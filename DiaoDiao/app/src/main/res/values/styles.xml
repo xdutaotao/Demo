@@ -588,6 +588,21 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
+    <style name="item_right_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="item_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2px</item>
+        <item name="android:background">@color/divider</item>
+        <item name="android:layout_marginLeft">50px</item>
+    </style>
+
     <!--<style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">-->
         <!--<item name="android:button">@drawable/checkbox_style</item>-->
     <!--</style>-->
@@ -598,5 +613,32 @@
             <item name="android:minHeight">48dip</item>
             <item name="android:maxHeight">48dip</item>
         </style>
+
+    <style name="release_layout">
+        <item name="android:layout_height">360px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingRight">40px</item>
+        <item name="android:paddingLeft">40px</item>
+        <item name="android:layout_marginBottom">40px</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="release_item_layout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_margin">40px</item>
+    </style>
+
+    <style name="release_proj_layout">
+        <item name="android:layout_height">260px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">50px</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginBottom">20px</item>
+    </style>
 
 </resources>

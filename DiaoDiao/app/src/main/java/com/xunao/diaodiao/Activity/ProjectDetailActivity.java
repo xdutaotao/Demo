@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
@@ -14,6 +16,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -41,6 +45,22 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "项目详情");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_like:
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -7,37 +7,29 @@
 
     <include layout="@layout/tool_bar_center" />
 
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:gravity="center_vertical"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:layout_marginBottom="40px"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/company_release">
+        style="@style/release_layout"
+        android:id="@+id/release_proj_info">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_nuantong"/>
+            android:src="@drawable/icon_wodexiangmu"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_margin="40px">
+            style="@style/release_item_layout">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暖通公司发布"
+                android:text="发布项目信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="施工订单"/>
         </LinearLayout>
 
         <ImageView
@@ -48,35 +40,28 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:gravity="center_vertical"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:layout_marginBottom="40px"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/skill_release">
+        style="@style/release_layout"
+        android:id="@+id/release_skill_info">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_jishu"/>
+            android:src="@drawable/icon_zhaoweibao"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_margin="40px">
+            style="@style/release_item_layout">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="技术人员发布"
+                android:text="发布维保信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="找技术人员维修"/>
         </LinearLayout>
 
         <ImageView
@@ -86,35 +71,28 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:gravity="center_vertical"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:layout_marginBottom="40px"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/home_release">
+        style="@style/release_layout"
+        android:id="@+id/release_help_info">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_jiating"/>
+            android:src="@drawable/icon_huzhuxinxi"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_margin="40px">
+            style="@style/release_item_layout">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="家庭用户发布"
+                android:text="发布互助信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="求助、多余材料分享"/>
         </LinearLayout>
 
         <ImageView
@@ -122,5 +100,39 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_arrow01"/>
     </LinearLayout>
+
+
+
+    <LinearLayout
+        style="@style/release_layout"
+        android:id="@+id/release_find_people">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_fabujianli"/>
+
+        <LinearLayout
+            style="@style/release_item_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发布监理信息"
+                android:textSize="50px"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="找监理"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_arrow01"/>
+    </LinearLayout>
+    
 
 </LinearLayout>

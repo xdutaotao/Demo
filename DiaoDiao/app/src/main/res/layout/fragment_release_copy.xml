@@ -7,7 +7,6 @@
 
     <include layout="@layout/tool_bar_center" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="400px"
@@ -16,8 +15,7 @@
         android:paddingRight="40px"
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/company_release">
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -34,10 +32,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暖通公司发布"
+                android:text="发布零工信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发布零工信息"/>
         </LinearLayout>
 
         <ImageView
@@ -55,8 +57,7 @@
         android:paddingRight="40px"
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/skill_release">
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -73,10 +74,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="技术人员发布"
+                android:text="发布维保信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="找技术人员维修"/>
         </LinearLayout>
 
         <ImageView
@@ -93,8 +98,7 @@
         android:paddingRight="40px"
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
-        android:background="@color/white"
-        android:id="@+id/home_release">
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -111,10 +115,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="家庭用户发布"
+                android:text="发布互助信息"
                 android:textSize="50px"
                 android:textColor="@color/black"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="求助、多余材料分享"/>
         </LinearLayout>
 
         <ImageView

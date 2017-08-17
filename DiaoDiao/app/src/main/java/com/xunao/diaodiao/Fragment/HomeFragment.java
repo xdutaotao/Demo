@@ -21,7 +21,6 @@ import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
-import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
@@ -156,19 +155,19 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         projAdapter.setOnItemClickListener((view1, i) -> {
             switch (i){
                 case 0:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 0);
                     break;
                 case 1:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 1);
                     break;
                 case 2:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 2);
                     break;
                 case 3:
                     HelpActivity.startActivity(HomeFragment.this.getActivity());
                     break;
                 case 4:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 4);
                     break;
                 case 5:
                     JoinActivity.startActivity(HomeFragment.this.getActivity());
@@ -207,7 +206,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 WebViewActivity.startActivity(getContext(), url,
                         adapterList.getAllData().get(i).getTitle());
             } else {
-                HomeDetailActivity.startActivity(getContext(), adapterList.getAllData().get(i));
+                FindProjectActivity.startActivity(getContext(), 0);
             }
 
         });
@@ -236,7 +235,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 WebViewActivity.startActivity(getContext(), url,
                         adapterClassic.getAllData().get(i).getTitle());
             } else {
-                HomeDetailActivity.startActivity(getContext(), adapterClassic.getAllData().get(i));
+                FindProjectActivity.startActivity(getContext(), 1);
             }
 
 
@@ -266,7 +265,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 WebViewActivity.startActivity(getContext(), url,
                         adapter.getAllData().get(i).getTitle());
             } else {
-                HomeDetailActivity.startActivity(getContext(), adapter.getAllData().get(i));
+                FindProjectActivity.startActivity(getContext(), 1);
             }
 
         });
@@ -313,7 +312,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 groupDataBean.setUrl(bannerBean.getUrl());
 
 
-                HomeDetailActivity.startActivity(getContext(), groupDataBean);
+                FindProjectActivity.startActivity(getContext(), 1);
             } else {
                 WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
             }

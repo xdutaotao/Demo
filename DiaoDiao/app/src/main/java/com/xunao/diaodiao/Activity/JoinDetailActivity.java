@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.support.v7.widget.Toolbar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.xunao.diaodiao.Bean.HomeResponseBean;
-import com.xunao.diaodiao.Present.FindProjectPresenter;
+import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.View.FindProjectView;
+import com.xunao.diaodiao.View.JoinDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,45 +26,46 @@ import butterknife.ButterKnife;
 /**
  * create by
  */
-public class FindProjectActivity extends BaseActivity implements FindProjectView {
+public class JoinDetailActivity extends BaseActivity implements JoinDetailView {
 
     @Inject
-    FindProjectPresenter presenter;
-    @BindView(R.id.type_image)
-    ImageView typeImage;
-    @BindView(R.id.edit_text)
-    EditText editText;
-    @BindView(R.id.cancle_action)
-    ImageView cancleAction;
-    @BindView(R.id.back)
-    TextView back;
+    JoinDetailPresenter presenter;
+    @BindView(R.id.title_text)
+    TextView titleText;
+    @BindView(R.id.tool_bar)
+    Toolbar toolBar;
+    @BindView(R.id.rating_star)
+    RatingBar ratingStar;
+    @BindView(R.id.time)
+    TextView time;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     private RecyclerArrayAdapter<String> adapter;
 
-    public static void startActivity(Context context , int type) {
-        Intent intent = new Intent(context, FindProjectActivity.class);
-        intent.putExtra("TYPE", type);
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, JoinDetailActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_project);
+        setContentView(R.layout.activity_join_detail);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.home_vertical_list) {
+        showToolbarBack(toolBar, titleText, "公司介绍");
+
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.join_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            ProjectDetailActivity.startActivity(FindProjectActivity.this);
+            ProjectDetailActivity.startActivity(JoinDetailActivity.this);
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -77,6 +77,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         list.add("1");
         list.add("1");
         adapter.addAll(list);
+
     }
 
 

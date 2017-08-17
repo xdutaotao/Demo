@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="400px"
+        android:layout_height="200px"
+        android:padding="40px"
+        android:text="张先生"
+        android:gravity="center_vertical"
+        android:drawablePadding="40px"
+        android:drawableLeft="@drawable/icon_weixinzhifu"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="40px"
+        android:text="1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"/>
+
+    <View style="@style/item_divider"/>
+
+</LinearLayout>

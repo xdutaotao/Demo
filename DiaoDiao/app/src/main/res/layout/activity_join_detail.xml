@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        style="@style/item_layout">
+
+        <TextView
+            style="@style/item_left_text"
+            android:text="公司名称"/>
+
+        <TextView
+            style="@style/item_right_text"
+            android:text="上海暖通公司"/>
+    </RelativeLayout>
+
+    <View style="@style/item_divider"/>
+
+    <RelativeLayout
+        style="@style/item_layout">
+
+        <TextView
+            style="@style/item_left_text"
+            android:text="公司地址"/>
+
+        <TextView
+            style="@style/item_right_text"
+            android:text="闵行区万科时一区"/>
+    </RelativeLayout>
+
+    <View style="@style/item_divider"/>
+
+    <RelativeLayout
+        style="@style/item_layout">
+
+        <TextView
+            style="@style/item_left_text"
+            android:text="评分"/>
+
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            style="@style/foodRatingBar"
+            android:id="@+id/rating_star"
+            android:layout_marginRight="80px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.0"
+            android:layout_marginLeft="20px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/time"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="评价"
+        android:background="@color/white"
+        android:layout_marginTop="40px"
+        android:padding="50px"/>
+
+
+    <View style="@style/item_divider"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:background="@color/white"/>
+</LinearLayout>
