@@ -18,7 +18,11 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.gzfgeh.viewpagecycle.BannerInfo;
 import com.gzfgeh.viewpagecycle.ImageCycleView;
+import com.xunao.diaodiao.Activity.DocActivity;
+import com.xunao.diaodiao.Activity.FindProjectActivity;
+import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
+import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
@@ -129,6 +133,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             presenter.checkToken();
         }
 
+        document.setOnClickListener(v -> {
+            DocActivity.startActivity(HomeFragment.this.getActivity());
+        });
+
         List<HomeProjBean> homeProjBeanList = new ArrayList<>();
         for(int i=0; i<projImage.length; i++){
             HomeProjBean homeProjBean = new HomeProjBean();
@@ -144,6 +152,29 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.proj_text, homeProjBean.getProjText());
             }
         };
+
+        projAdapter.setOnItemClickListener((view1, i) -> {
+            switch (i){
+                case 0:
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+                case 1:
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+                case 2:
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+                case 3:
+                    HelpActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+                case 4:
+                    FindProjectActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+                case 5:
+                    JoinActivity.startActivity(HomeFragment.this.getActivity());
+                    break;
+            }
+        });
 
         recyclerViewProj.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerViewProj.setAdapter(projAdapter);

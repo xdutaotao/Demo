@@ -574,6 +574,20 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
+    <style name="item_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">160px</item>
+        <item name="android:paddingLeft">50px</item>
+        <item name="android:paddingRight">50px</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="item_left_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
     <!--<style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">-->
         <!--<item name="android:button">@drawable/checkbox_style</item>-->
     <!--</style>-->

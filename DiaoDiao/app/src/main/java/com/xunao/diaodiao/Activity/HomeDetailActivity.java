@@ -176,8 +176,8 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
 //        }catch (Exception e){
 //            ToastUtil.show("请安装pdf阅读器查看");
 //        }
-
-        DocActivity.startActivity(this, file.getAbsolutePath());
+//
+//        DocActivity.startActivity(this, file.getAbsolutePath());
 
     }
 }

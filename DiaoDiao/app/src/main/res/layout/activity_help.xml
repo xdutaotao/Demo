@@ -1,23 +1,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/activity_background">
 
-    <include layout="@layout/tool_bar_center" />
+    <include layout="@layout/search_project" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="140px"
+        android:layout_marginBottom="20px"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0px"
             android:layout_height="match_parent"
-            android:id="@+id/text"
-            android:textColor="@android:color/black"
-            android:padding="50px"/>
-    </ScrollView>
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="徐汇区"
+                android:drawablePadding="10px"
+                android:drawableRight="@drawable/icon_xiala"/>
+
+        </LinearLayout>
 
 
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"/>
 
 </LinearLayout>

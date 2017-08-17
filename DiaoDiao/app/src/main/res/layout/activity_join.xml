@@ -2,9 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/activity_background"
-    tools:context=".Activity.FindProjectActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/search_project" />
 
@@ -25,12 +23,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="附近"
+                android:text="徐汇区"
                 android:drawablePadding="10px"
                 android:drawableRight="@drawable/icon_xiala"/>
 
         </LinearLayout>
-
 
 
         <View
@@ -50,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工费"
+                android:text="评分"
                 android:drawablePadding="10px"
                 android:drawableRight="@drawable/icon_shaixan"/>
 
@@ -73,30 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="项目类型"
-                android:drawablePadding="10px"
-                android:drawableRight="@drawable/icon_xiala"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="2px"
-            android:layout_height="match_parent"
-            android:background="@color/divider"
-            android:layout_marginTop="40px"
-            android:layout_marginBottom="40px"/>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="施工时间"
+                android:text="距离"
                 android:drawablePadding="10px"
                 android:drawableRight="@drawable/icon_shaixan"/>
 

@@ -157,6 +157,12 @@
         <activity android:name=".Activity.NormalPersonalActivity"/>
         <activity android:name=".Activity.MoneyActivity"/>
         <activity android:name=".Activity.BankActivity"/>
+        <activity android:name=".Activity.AddBankActivity"/>
+        <activity android:name=".Activity.FindProjectActivity"/>
+        <activity android:name=".Activity.HelpDetailActivity"/>
+        <activity android:name=".Activity.JoinActivity"/>
+        <activity android:name=".Activity.DocDetailActivity"/>
+        <activity android:name=".Activity.ProjectDetailActivity"/>
     </application>
 
 </manifest>

@@ -66,8 +66,12 @@ public class BankActivity extends BaseActivity implements BankView {
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {
-                return LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.bank_foot, viewGroup);
+                View view =  LayoutInflater.from(BankActivity.this)
+                        .inflate(R.layout.bank_foot, null);
+                view.setOnClickListener(v -> {
+                    AddBankActivity.startActivity(BankActivity.this);
+                });
+                return view;
             }
 
             @Override
