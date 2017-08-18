@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Activity.CheckPhoneActivity"
     android:background="@android:color/white">
 
     <include layout="@layout/tool_bar_center_white"/>
@@ -13,90 +12,114 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/login_logo"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
-    <EditText
-        android:id="@+id/phone_input"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180px"
-        android:layout_marginLeft="20px"
-        android:digits="1234567890"
-        android:drawableLeft="@drawable/icon_phone"
-        android:drawablePadding="40px"
-        android:hint="请输入手机号"
-        android:maxLength="11"
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:textSize="@dimen/edit_text_size" />
+        android:layout_height="140px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px">
 
-    <View style="@style/setting_divider_line_style"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="180px"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingRight="20px">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_phone"
+            android:layout_centerVertical="true"/>
 
         <EditText
-            android:layout_width="0px"
-            android:layout_height="180px"
-            android:layout_weight="4"
+            android:id="@+id/phone_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890"
+            android:hint="请输入手机号"
+            android:maxLength="11"
+            android:paddingLeft="80px"
+            style="@style/edit_style" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_code"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:layout_width="700px"
+            android:layout_height="match_parent"
             android:id="@+id/code_input"
             android:hint="请输入短信验证码"
             android:digits="1234567890"
             android:inputType="phone"
             android:maxLength="4"
-            android:textSize="@dimen/edit_text_size"
-            android:drawableLeft="@drawable/icon_code"
-            android:drawablePadding="40px"
-            android:layout_marginLeft="20px"/>
+            style="@style/edit_style"
+            android:paddingLeft="80px"/>
 
         <TextView
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="100px"
-            android:layout_weight="1"
             android:id="@+id/get_code"
             android:text="获取验证码"
             android:textSize="35px"
-            android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/btn_code"/>
-        </LinearLayout>
+            android:textColor="@color/white"
+            android:background="@drawable/btn_code"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        </RelativeLayout>
 
-    <View style="@style/setting_divider_line_style"/>
 
-
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180px"
-        android:id="@+id/pwd_input"
-        android:hint="请输入手机号"
-        android:digits="1234567890"
-        android:maxLength="11"
-        android:textSize="@dimen/edit_text_size"
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:drawableLeft="@drawable/icon_password"
-        android:drawablePadding="40px"
-        android:layout_marginLeft="20px"/>
+        android:layout_height="140px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px">
 
-    <View style="@style/setting_divider_line_style"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_password"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/pwd_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890"
+            android:hint="请输入密码"
+            android:maxLength="11"
+            android:paddingLeft="80px"
+            style="@style/edit_style" />
+    </RelativeLayout>
 
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180px"
-        android:id="@+id/pwd_sure_input"
-        android:hint="请输入手机号"
-        android:digits="1234567890"
-        android:maxLength="11"
-        android:textSize="@dimen/edit_text_size"
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:drawableLeft="@drawable/icon_password"
-        android:drawablePadding="40px"
-        android:layout_marginLeft="20px"/>
+        android:layout_height="140px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_password"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/pwd_sure_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890"
+            android:hint="请输入确认密码"
+            android:maxLength="11"
+            android:paddingLeft="80px"
+            style="@style/edit_style" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/register_btn"

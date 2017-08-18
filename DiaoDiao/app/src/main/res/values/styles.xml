@@ -641,4 +641,11 @@
         <item name="android:layout_marginBottom">20px</item>
     </style>
 
+    <style name="edit_style">
+        <item name="android:drawableBottom">@drawable/edit_bottom_line</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">40px</item>
+    </style>
+
 </resources>

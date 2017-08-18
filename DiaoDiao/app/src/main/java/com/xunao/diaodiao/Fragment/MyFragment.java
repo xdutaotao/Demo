@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
+import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
 import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
@@ -122,7 +123,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
-
+                LoginActivity.startActivity(getActivity());
                 break;
 
             case R.id.setting:
