@@ -2,34 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/activity_background">
+    android:background="@color/white">
 
     <include layout="@layout/tool_bar_center" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:layout_margin="40px">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="400px"
-            android:hint="我们需要您的意见和反馈，感谢您的..."
-            android:id="@+id/information"
-            android:maxLength="100"
-            android:textColor="@color/nav_gray"
-            android:textSize="50px"
-            android:gravity="start"
-            android:background="@color/divider" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:background="@color/divider"
-            android:text="0 / 200"
-            android:layout_alignParentBottom="true"
-            android:gravity="right"/>
-    </RelativeLayout>
+    <include layout="@layout/big_edit_text" />
 
 
     <Button

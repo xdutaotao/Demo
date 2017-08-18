@@ -27,13 +27,18 @@ import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.NormalPersonalActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
+import com.xunao.diaodiao.Activity.PayActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
+import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjSecondActivity;
+import com.xunao.diaodiao.Activity.ReleaseProjThirdActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
+import com.xunao.diaodiao.Activity.ReleaseSkillInforActivity;
+import com.xunao.diaodiao.Activity.ReleaseSkillSureInfoActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
@@ -100,4 +105,9 @@ public interface ActivityComponent {
     void inject(ReleaseCompanyActivity activity);
     void inject(ReleaseProjActivity activity);
     void inject(ReleaseProjSecondActivity activity);
+    void inject(ReleaseProjThirdActivity activity);
+    void inject(PayActivity activity);
+    void inject(ReleaseHelpActivity activity);
+    void inject(ReleaseSkillInforActivity activity);
+    void inject(ReleaseSkillSureInfoActivity activity);
 }

@@ -140,6 +140,7 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
+        <activity android:name=".wxapi.WXEntryActivity"/>
         <activity android:name=".Activity.SelectMemoryActivity" />
         <activity android:name=".Activity.SelectCompanyActivity" />
         <activity android:name=".Activity.SelectSkillActivity" />
@@ -168,6 +169,12 @@
         <activity android:name=".Activity.ReleaseCompanyActivity"/>
         <activity android:name=".Activity.ReleaseProjActivity"/>
         <activity android:name=".Activity.ReleaseProjSecondActivity"/>
+        <activity android:name=".Activity.ReleaseProjThirdActivity"/>
+        <activity android:name=".Activity.PayActivity"/>
+        <activity android:name=".Activity.ReleaseHelpActivity"/>
+        <activity android:name=".Activity.ReleaseSkillInforActivity"/>
+        <activity android:name=".Activity.ReleaseSkillSureInfoActivity"/>
+
     </application>
 
 </manifest>

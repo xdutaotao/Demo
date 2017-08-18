@@ -14,7 +14,8 @@
     <color name="divider">#11000000</color>
     <color name="yellow">#FFFF00</color>
 
-
+    <color name="light_gray">#676767</color>
+    <color name="light_blank">#333333</color>
 
     <!-- 全局使用的颜色 -->
     <color name="titlebar_bg_color">#3C3C3C</color>

@@ -65,6 +65,7 @@ public class ReleaseCompanyActivity extends BaseActivity implements ReleaseCompa
                 break;
 
             case R.id.release_help_info:
+
                 break;
 
             case R.id.release_proj_info:
@@ -72,6 +73,7 @@ public class ReleaseCompanyActivity extends BaseActivity implements ReleaseCompa
                 break;
 
             case R.id.release_skill_info:
+                ReleaseHelpActivity.startActivity(this);
                 break;
         }
     }

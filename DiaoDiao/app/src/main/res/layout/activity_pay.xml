@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+    <RelativeLayout style="@style/item_layout">
+        <TextView style="@style/item_left_text"
+            android:text="需要支付"/>
+        <TextView style="@style/item_right_text"
+            android:textColor="@color/red"
+            android:text="采暖系统水处理"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择支付"
+        android:layout_margin="50px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240px"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_yue"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="50px"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前余额：3000元"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawablePadding="10px"
+            android:drawableRight="@drawable/checkbox_style"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <View style="@style/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240px"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_zhifubao"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="50px"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前余额：3000元"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawablePadding="10px"
+            android:drawableRight="@drawable/checkbox_style"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <View style="@style/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240px"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_weixinzhifu"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="50px"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前余额：3000元"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawablePadding="10px"
+            android:drawableRight="@drawable/checkbox_style"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <Button style="@style/login_btn_style"
+            android:text="确认支付"
+            android:id="@+id/pay"/>
+    </LinearLayout>
+
+</LinearLayout>

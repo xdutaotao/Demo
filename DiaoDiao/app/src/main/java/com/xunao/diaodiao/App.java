@@ -3,7 +3,6 @@ package com.xunao.diaodiao;
 import android.app.Application;
 import android.content.Context;
 
-import com.activeandroid.ActiveAndroid;
 import com.xunao.diaodiao.Utils.Dagger.Component.ApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Module.ApplicationModule;
@@ -108,8 +107,6 @@ public class App  extends android.support.multidex.MultiDexApplication{
 
         //设置Notification的模式
         JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
-
-        ActiveAndroid.initialize(this);
     }
 
 

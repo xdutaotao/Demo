@@ -2,7 +2,6 @@ package com.xunao.diaodiao.Model;
 
 import android.text.TextUtils;
 
-import com.activeandroid.ActiveAndroid;
 import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
@@ -279,24 +278,6 @@ public class LoginModel extends BaseModel {
     }
 
 
-    public Observable<List<FreindBean>> getFriends(){
-        return config.getRetrofitService().getFriends(User.getInstance().getUserId())
-                .compose(RxUtils.handleResultNoThread())
-                .map(freindBeen -> {
-                    if (freindBeen.size() > 0){
-                        ActiveAndroid.beginTransaction();
-                        try {
-
-                        ActiveAndroid.setTransactionSuccessful();
-                        }finally {
-                            ActiveAndroid.endTransaction();
-                        }
-                    }
-
-                    return freindBeen;
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
-    }
 
 
 

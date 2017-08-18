@@ -30,8 +30,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.information)
-    EditText information;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.next)
@@ -70,6 +68,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next:
+                ReleaseProjThirdActivity.startActivity(this);
                 break;
         }
     }

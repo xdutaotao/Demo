@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_gray_bg"
+    android:layout_margin="40px"
+    android:padding="40px">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="400px"
+        android:background="@null"
+        android:hint="请填写意见反馈"
+        android:textColorHint="#D2D2D2"
+        android:gravity="top"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 / 200"
+        android:gravity="right|center_vertical"/>
+
+</LinearLayout>

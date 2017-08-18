@@ -15,11 +15,7 @@
             android:layout_height="wrap_content"
             android:text="采暖系统"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+        <LinearLayout style="@style/release_proj_item_layout">
 
             <TextView
                 android:layout_width="0px"
@@ -73,11 +69,7 @@
             android:layout_height="wrap_content"
             android:text="空调新风系统"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+        <LinearLayout style="@style/release_proj_item_layout">
 
             <TextView
                 android:layout_width="0px"
@@ -131,11 +123,7 @@
             android:layout_height="wrap_content"
             android:text="水处理"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+        <LinearLayout style="@style/release_proj_item_layout">
 
             <TextView
                 android:layout_width="0px"
@@ -189,11 +177,7 @@
             android:layout_height="wrap_content"
             android:text="水泥回填"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+        <LinearLayout style="@style/release_proj_item_layout">
 
             <TextView
                 android:layout_width="0px"

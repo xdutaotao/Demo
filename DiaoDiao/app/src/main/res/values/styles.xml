@@ -572,6 +572,7 @@
         <item name="android:gravity">right|center_vertical</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">40px</item>
     </style>
 
     <style name="item_layout">
@@ -634,11 +635,19 @@
     </style>
 
     <style name="release_proj_layout">
-        <item name="android:layout_height">260px</item>
+        <item name="android:layout_height">300px</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">50px</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_marginBottom">20px</item>
+    </style>
+
+    <style name="release_proj_item_layout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">20px</item>
+        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
     <style name="edit_style">

@@ -12,12 +12,14 @@
         android:layout_height="match_parent"
         android:background="@drawable/search_bg"
         android:orientation="horizontal"
-        android:layout_margin="30px">
+        android:layout_margin="30px"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/search"
+            android:src="@drawable/icon_sousuo"
             android:layout_gravity="center_vertical"
             android:layout_margin="20px"
             android:id="@+id/type_image"/>
