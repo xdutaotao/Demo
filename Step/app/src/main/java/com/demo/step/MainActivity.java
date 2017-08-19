@@ -1,156 +1,147 @@
 package com.demo.step;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.demo.step.Activity.LoginActivity;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.ashokvarma.bottomnavigation.BadgeItem;
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.demo.step.Activity.BaseActivity;
+import com.demo.step.Fragment.TabFragment;
+import com.demo.step.Utils.ToastUtil;
+import com.gzfgeh.iosdialog.IOSDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-
-    @BindView(R.id.subscribeButton)
-    Button subscribeButton;
-    @BindView(R.id.logTokenButton)
-    Button logTokenButton;
-    @BindView(R.id.login)
-    Button login;
+    private ArrayList<Fragment> fragments;
+    private ImageView imageView;
+    private BottomNavigationBar bottomNavigationBar;
+    private String[] strings = {"主页","搜索","消息","我的"};
+    private int failTime = 0;
+    private BadgeItem badgeItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //禁止侧滑返回
+        setSwipeBackEnable(false);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar_container);
+        bottomNavigationBar.setAutoHideEnabled(true);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        badgeItem = new BadgeItem();
 
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
+        bottomNavigationBar.setInActiveColor(R.color.nav_gray);
+        bottomNavigationBar.setActiveColor(R.color.colorPrimary);
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home, strings[0]))
+                .addItem(new BottomNavigationItem(R.drawable.search, strings[1]))
+                .addItem(new BottomNavigationItem(R.drawable.message, strings[2]))
+                .addItem(new BottomNavigationItem(R.drawable.my, strings[3]));
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            // Create channel to show notifications.
-//            String channelId  = getString(R.string.default_notification_channel_id);
-//            String channelName = getString(R.string.default_notification_channel_name);
-//            NotificationManager notificationManager =
-//                    getSystemService(NotificationManager.class);
-//            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
-//                    channelName, NotificationManager.IMPORTANCE_LOW));
-//        }
-
-
-
-        subscribeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // [START subscribe_topics]
-                FirebaseMessaging.getInstance().subscribeToTopic("news");
-                // [END subscribe_topics]
-
-                // Log and toast
-                String msg = getString(R.string.msg_subscribed);
-
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        logTokenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get token
-                String token = FirebaseInstanceId.getInstance().getToken();
-
-                // Log and toast
-                String msg = getString(R.string.msg_token_fmt, token);
-
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        login.setOnClickListener(v -> {
-            LoginActivity.startActivity(MainActivity.this);
-        });
-
+        fragments = getFragments();
+        bottomNavigationBar.setFirstSelectedPosition(0).initialise();
+        setDefaultFragment();
+        bottomNavigationBar.setTabSelectedListener(this);
 
     }
 
+
+
+    private void setDefaultFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.add(R.id.content, getFragments().get(0));
+        transaction.commit();
+    }
+
+    private ArrayList<Fragment> getFragments() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(TabFragment.newInstance("http://www.baidu.com"));
+        fragments.add(TabFragment.newInstance("http://www.baidu.com"));
+        fragments.add(TabFragment.newInstance("http://www.baidu.com"));
+        fragments.add(TabFragment.newInstance("http://www.baidu.com"));
+        return fragments;
+    }
+
+
+
+
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+    public void onTabSelected(int position) {
+        if (fragments != null) {
+            if (position < fragments.size()) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = fragments.get(position);
+                //解决快速点击 bug
+                if (fragment.isVisible())
+                    return;
+                if (fragment.isHidden()) {
+                    ft.show(fragment);
+                } else {
+                    ft.add(R.id.content, fragment);
+                }
+                ft.commitAllowingStateLoss();
+            }
+        }
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+        if (fragments != null) {
+            if (position < fragments.size()) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = fragments.get(position);
+                ft.hide(fragment);
+                ft.commitAllowingStateLoss();
+            }
+        }
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
+    }
+
+    /**
+     * 双击返回键退出
+     **/
+    private long mExitTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    protected void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtil.show("再按一次退出");
+            mExitTime = System.currentTimeMillis();
         } else {
-            super.onBackPressed();
+            finish();
+            System.exit(0);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
