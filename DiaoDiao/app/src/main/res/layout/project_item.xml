@@ -12,7 +12,8 @@
         android:layout_width="200px"
         android:layout_height="200px"
         android:src="@drawable/icon_huzhuxinxi"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:id="@+id/item_image"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

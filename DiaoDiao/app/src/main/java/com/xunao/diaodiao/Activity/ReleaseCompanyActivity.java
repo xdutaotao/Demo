@@ -62,10 +62,13 @@ public class ReleaseCompanyActivity extends BaseActivity implements ReleaseCompa
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.release_find_people:
+                //
+                ReleaseProjActivity.startActivity(this);
                 break;
 
             case R.id.release_help_info:
-
+                //
+                ReleaseHelpActivity.startActivity(this);
                 break;
 
             case R.id.release_proj_info:

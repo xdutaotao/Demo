@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
@@ -26,6 +27,10 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.pay)
+    TextView pay;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillSureInfoActivity.class);
@@ -41,6 +46,9 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "发布维修信息");
+        pay.setOnClickListener(v -> {
+            PayActivity.startActivity(ReleaseSkillSureInfoActivity.this);
+        });
     }
 
 

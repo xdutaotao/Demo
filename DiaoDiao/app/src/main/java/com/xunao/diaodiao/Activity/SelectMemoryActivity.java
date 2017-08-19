@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +80,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
+                            ShareUtils.putValue("TYPE", 1);
                             SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
                         })
                         .show();
@@ -98,6 +100,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
+                            ShareUtils.putValue("TYPE", 2);
                             SelectSkillActivity.startActivity(SelectMemoryActivity.this);
                         })
                         .show();
@@ -117,6 +120,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
+                            ShareUtils.putValue("TYPE", 3);
                             SelectNormalActivity.startActivity(SelectMemoryActivity.this);
                         })
                         .show();

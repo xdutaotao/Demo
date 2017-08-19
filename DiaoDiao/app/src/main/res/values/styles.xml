@@ -657,4 +657,10 @@
         <item name="android:textSize">40px</item>
     </style>
 
+    <style name="repeat_divider">
+        <item name="android:layout_height">2px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/divider_line</item>
+    </style>
+
 </resources>

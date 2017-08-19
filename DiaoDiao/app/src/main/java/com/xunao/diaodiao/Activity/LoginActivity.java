@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         registerTxt.setOnClickListener(this);
         forgetTxt.setOnClickListener(this);
         wxLogin.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
 
@@ -88,6 +89,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
             case R.id.wx_login:
                 WXEntryActivity.startActivity(this);
+                break;
+
+            case R.id.back:
+                finish();
                 break;
         }
     }

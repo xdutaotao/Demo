@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     EditText information;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.next)
+    Button next;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
@@ -47,6 +50,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "发布零工信息");
+
+        next.setOnClickListener(v -> {});
     }
 
 

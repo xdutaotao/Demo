@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <include layout="@layout/tool_bar_center" />
 
@@ -200,6 +202,7 @@
 
             <Button
                 style="@style/login_btn_style"
+                android:id="@+id/next"
                 android:text="下一步"/>
         </LinearLayout>
     </ScrollView>

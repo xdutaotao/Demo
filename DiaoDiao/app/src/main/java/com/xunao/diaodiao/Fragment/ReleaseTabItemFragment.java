@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
+import com.xunao.diaodiao.Activity.ReleaseSkillInforActivity;
 import com.xunao.diaodiao.R;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class ReleaseTabItemFragment extends BaseFragment {
         adapter.addAll(list);
 
         next.setOnClickListener(v -> {
-            ReleaseSkillActivity.startActivity(ReleaseTabItemFragment.this.getContext());
+            ReleaseSkillInforActivity.startActivity(ReleaseTabItemFragment.this.getContext());
         });
 
         return view;

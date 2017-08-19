@@ -32,8 +32,6 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.information)
-    EditText information;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SuggestActivity.class);
@@ -60,17 +58,9 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_submit:
-                actionSubmit();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void actionSubmit() {
-        if(TextUtils.isEmpty(information.getText().toString())){
-            ToastUtil.show("内容不能为空");
-            return;
-        }
     }
 
 

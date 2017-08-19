@@ -1,0 +1,213 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="项目标题"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="项目地区"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="项目地址"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="联系人"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="联系电话"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="施工时间"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="50px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="项目描述"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:text="1. 项目藐视 \n 2.项目描述"/>
+                </LinearLayout>
+
+                <View style="@style/item_divider" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="50px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加图纸"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recycler_view"/>
+                </LinearLayout>
+
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout"
+                    android:layout_marginTop="40px">
+                    <TextView style="@style/item_left_text"
+                        android:text="定位"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="地暖总价"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="点地暖总价"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="点地暖总价"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="明装暖气片总价"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout"
+                    android:layout_marginBottom="40px">
+                    <TextView style="@style/item_left_text"
+                        android:text="安装定位"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="项目工费"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout"
+                    android:layout_marginBottom="40px">
+                    <TextView style="@style/item_left_text"
+                        android:text="平台服务费"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"/>
+                </RelativeLayout>
+                <View style="@style/item_divider"
+                    android:layout_marginBottom="160px"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="修改项目信息"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="再次快捷发布"
+                android:id="@+id/pay"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

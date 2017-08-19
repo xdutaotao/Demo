@@ -32,8 +32,8 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
     EditText information;
     @BindView(R.id.info_num)
     TextView infoNum;
-    @BindView(R.id.register_btn)
-    Button registerBtn;
+    @BindView(R.id.sure)
+    Button sure;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectSkillActivity.class);

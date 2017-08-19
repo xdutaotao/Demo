@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.OrderCompProjActivity;
+import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.MessageView;
 
 import java.util.ArrayList;
@@ -38,7 +41,13 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
     RecyclerView recyclerView;
     private String mParam1;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private static final int[] COMPANY_IMAGES = {R.drawable.icon_wodexiangmu, R.drawable.icon_janlixinxi,
+            R.drawable.icon_fabulingong, R.drawable.icon_fabuweibao, R.drawable.icon_fabuhuzhu};
+
+    private static final String[] COMPANY_TEXTS = {"我的项目信息", "我的监理信息", "零工信息",
+                        "维保信息", "互助信息"};
+
+    private RecyclerArrayAdapter<HomeProjBean> adapter;
 
     public static ProjectFragment newInstance(String param1) {
         ProjectFragment fragment = new ProjectFragment();
@@ -66,20 +75,49 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
 
         hideToolbarBack(toolBar, titleText, "项目");
 
-        adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.project_item) {
+        adapter = new RecyclerArrayAdapter<HomeProjBean>(getContext(), R.layout.project_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-
+            protected void convert(BaseViewHolder baseViewHolder, HomeProjBean s) {
+                baseViewHolder.setText(R.id.item_text, s.getProjText());
+                baseViewHolder.setImageResource(R.id.item_image, s.getProjImage());
             }
         };
+
+        adapter.setOnItemClickListener((view1, i) -> {
+            switch (i){
+                case 0:
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                    break;
+
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
+        List<HomeProjBean> list = new ArrayList<>();
+
+        switch (ShareUtils.getValue("TYPE", 1)){
+            case 1:
+                for(int i=0; i<COMPANY_IMAGES.length; i++){
+                    HomeProjBean bean = new HomeProjBean();
+                    bean.setProjImage(COMPANY_IMAGES[i]);
+                    bean.setProjText(COMPANY_TEXTS[i]);
+                    list.add(bean);
+                }
+                break;
+
+            case 2:
+                break;
+
+            case 3:
+                break;
+        }
         adapter.addAll(list);
 
         return view;

@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     LinearLayout container;
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
-    private String[] strings = {"首页","发布","我的项目","个人中心"};
+    private String[] strings = {"首页","发布","订单","我的"};
 
 
     @Override
@@ -74,8 +74,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(HomeFragment.newInstance("主页"));
         fragments.add(ReleaseFragment.newInstance("发布"));
-        fragments.add(ProjectFragment.newInstance("我的项目"));
-        fragments.add(MyFragment.newInstance("个人中心"));
+        fragments.add(ProjectFragment.newInstance("订单"));
+        fragments.add(MyFragment.newInstance("我的"));
         return fragments;
     }
 

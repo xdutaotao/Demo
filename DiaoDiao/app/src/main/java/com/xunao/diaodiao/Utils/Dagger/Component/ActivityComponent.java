@@ -26,6 +26,9 @@ import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.NormalPersonalActivity;
+import com.xunao.diaodiao.Activity.OrderCompProjActivity;
+import com.xunao.diaodiao.Activity.OrderCompProjDetailActivity;
+import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PayActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
@@ -110,4 +113,7 @@ public interface ActivityComponent {
     void inject(ReleaseHelpActivity activity);
     void inject(ReleaseSkillInforActivity activity);
     void inject(ReleaseSkillSureInfoActivity activity);
+    void inject(OrderCompProjActivity activity);
+    void inject(OrderCompProjDetailActivity activity);
+    void inject(OrderProjProgressActivity activity);
 }
