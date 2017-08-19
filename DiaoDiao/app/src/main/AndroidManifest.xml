@@ -177,6 +177,9 @@
         <activity android:name=".Activity.OrderCompProjActivity"/>
         <activity android:name=".Activity.OrderCompProjDetailActivity"/>
         <activity android:name=".Activity.OrderProjProgressActivity"/>
+        <activity android:name=".Activity.SignDetailActivity"/>
+        <activity android:name=".Activity.ApplyActivity"/>
+        <activity android:name=".Activity.ApplyDetailActivity"/>
 
     </application>
 

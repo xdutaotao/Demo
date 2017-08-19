@@ -37,6 +37,7 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,9 +86,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
                             R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
 
-    private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapter;
-    private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapterClassic;
-    private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapterList;
+    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<String> adapterClassic;
+    private RecyclerArrayAdapter<String> adapterList;
     private RecyclerArrayAdapter<HomeProjBean> projAdapter;
 
     public static HomeFragment newInstance(String param1) {
@@ -184,9 +185,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     private void initList() {
-        adapterList = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
+        adapterList = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
             }
         };
 
@@ -199,23 +200,23 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerViewList.setLayoutManager(linearLayoutManager);
         recyclerViewList.setAdapter(adapterList);
 
-        adapterList.setOnItemClickListener((view, i) -> {
-            String url = adapterList.getAllData().get(i).getUrl();
-            if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")) {
-                WebViewActivity.startActivity(getContext(), url,
-                        adapterList.getAllData().get(i).getTitle());
-            } else {
-                FindProjectActivity.startActivity(getContext(), 0);
-            }
-
-        });
+//        adapterList.setOnItemClickListener((view, i) -> {
+//            String url = adapterList.getAllData().get(i).getUrl();
+//            if (url.contains(".png") || url.contains(".jpeg") ||
+//                    url.contains(".jpg")) {
+//                WebViewActivity.startActivity(getContext(), url,
+//                        adapterList.getAllData().get(i).getTitle());
+//            } else {
+//                FindProjectActivity.startActivity(getContext(), 0);
+//            }
+//
+//        });
     }
 
     private void initClassicList() {
-        adapterClassic = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
+        adapterClassic = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
             }
         };
 
@@ -228,24 +229,24 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerViewClassic.setLayoutManager(linearLayoutManager);
         recyclerViewClassic.setAdapter(adapterClassic);
 
-        adapterClassic.setOnItemClickListener((view, i) -> {
-            String url = adapterClassic.getAllData().get(i).getUrl();
-            if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")) {
-                WebViewActivity.startActivity(getContext(), url,
-                        adapterClassic.getAllData().get(i).getTitle());
-            } else {
-                FindProjectActivity.startActivity(getContext(), 1);
-            }
-
-
-        });
+//        adapterClassic.setOnItemClickListener((view, i) -> {
+//            String url = adapterClassic.getAllData().get(i).getUrl();
+//            if (url.contains(".png") || url.contains(".jpeg") ||
+//                    url.contains(".jpg")) {
+//                WebViewActivity.startActivity(getContext(), url,
+//                        adapterClassic.getAllData().get(i).getTitle());
+//            } else {
+//                FindProjectActivity.startActivity(getContext(), 1);
+//            }
+//
+//
+//        });
     }
 
     private void initCreamList() {
-        adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(getContext(), R.layout.home_vertical_list) {
+        adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
             }
         };
 
@@ -258,17 +259,17 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((view, i) -> {
-            String url = adapter.getAllData().get(i).getUrl();
-            if (url.contains(".png") || url.contains(".jpeg") ||
-                    url.contains(".jpg")) {
-                WebViewActivity.startActivity(getContext(), url,
-                        adapter.getAllData().get(i).getTitle());
-            } else {
-                FindProjectActivity.startActivity(getContext(), 1);
-            }
-
-        });
+//        adapter.setOnItemClickListener((view, i) -> {
+//            String url = adapter.getAllData().get(i).getUrl();
+//            if (url.contains(".png") || url.contains(".jpeg") ||
+//                    url.contains(".jpg")) {
+//                WebViewActivity.startActivity(getContext(), url,
+//                        adapter.getAllData().get(i).getTitle());
+//            } else {
+//                FindProjectActivity.startActivity(getContext(), 1);
+//            }
+//
+//        });
     }
 
     @Override
@@ -277,47 +278,71 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void getData(HomeResponseBean bean) {
-        for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
-            if (TextUtils.equals("jingHua", topicBean.getGroupTitle())) {
-                adapter.addAll(topicBean.getGroupData());
-            } else if (TextUtils.equals("caiNiXiHuan", topicBean.getGroupTitle())) {
-                adapterClassic.addAll(topicBean.getGroupData());
-            } else if (TextUtils.equals("jingDian", topicBean.getGroupTitle())) {
-                adapterList.addAll(topicBean.getGroupData());
-            }
-        }
 
-        List<BannerInfo> list = new ArrayList<>();
-        for (HomeResponseBean.BannerBean bannerBean : bean.getBanner()) {
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("1");
+        list.add("1");
+        adapter.addAll(list);
+        adapterClassic.addAll(list);
+        adapterList.addAll(list);
+
+
+
+//        for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
+//            if (TextUtils.equals("jingHua", topicBean.getGroupTitle())) {
+//                adapter.addAll(topicBean.getGroupData());
+//            } else if (TextUtils.equals("caiNiXiHuan", topicBean.getGroupTitle())) {
+//                adapterClassic.addAll(topicBean.getGroupData());
+//            } else if (TextUtils.equals("jingDian", topicBean.getGroupTitle())) {
+//                adapterList.addAll(topicBean.getGroupData());
+//            }
+//        }
+//
+        List<BannerInfo> bannerInfos = new ArrayList<>();
+        for (int i=0; i<2; i++){
             BannerInfo info = new BannerInfo();
-            info.setImg(bannerBean.getBannerPicUrl());
-            info.setLink(bannerBean.getUrl());
+            info.setImg("http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg");
+            info.setLink("http://www.baidu.com");
             info.setOt(1);
-            list.add(info);
+            bannerInfos.add(info);
         }
 
-        imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
-            if (bannerInfo.getLink().contains(".xlsx") ||
-                    bannerInfo.getLink().contains(".xls")) {
-                HomeResponseBean.TopicBean.GroupDataBean groupDataBean = new HomeResponseBean.TopicBean.GroupDataBean();
-                HomeResponseBean.BannerBean bannerBean = bean.getBanner().get(i);
-                groupDataBean.setAuthor(bannerBean.getAuthor());
-                groupDataBean.setBannerPicUrl(bannerBean.getBannerPicUrl());
-                groupDataBean.setDateline(bannerBean.getDateline());
-                groupDataBean.setDescription(bannerBean.getDescription());
-                groupDataBean.setUpdateTime(bannerBean.getUpdateTime());
-                groupDataBean.setTitle(bannerBean.getTitle());
-                groupDataBean.setPic(bannerBean.getPic());
-                groupDataBean.setVipRes(bannerBean.getVipRes());
-                groupDataBean.setUrl(bannerBean.getUrl());
+        imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
+
+        });
+//        for (HomeResponseBean.BannerBean bannerBean : bean.getBanner()) {
+//            BannerInfo info = new BannerInfo();
+//            info.setImg(bannerBean.getBannerPicUrl());
+//            info.setLink(bannerBean.getUrl());
+//            info.setOt(1);
+//            bannerInfos.add(info);
+//        }
 
 
-                FindProjectActivity.startActivity(getContext(), 1);
-            } else {
-                WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
-            }
 
-        }));
+//        imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
+//            if (bannerInfo.getLink().contains(".xlsx") ||
+//                    bannerInfo.getLink().contains(".xls")) {
+//                HomeResponseBean.TopicBean.GroupDataBean groupDataBean = new HomeResponseBean.TopicBean.GroupDataBean();
+//                HomeResponseBean.BannerBean bannerBean = bean.getBanner().get(i);
+//                groupDataBean.setAuthor(bannerBean.getAuthor());
+//                groupDataBean.setBannerPicUrl(bannerBean.getBannerPicUrl());
+//                groupDataBean.setDateline(bannerBean.getDateline());
+//                groupDataBean.setDescription(bannerBean.getDescription());
+//                groupDataBean.setUpdateTime(bannerBean.getUpdateTime());
+//                groupDataBean.setTitle(bannerBean.getTitle());
+//                groupDataBean.setPic(bannerBean.getPic());
+//                groupDataBean.setVipRes(bannerBean.getVipRes());
+//                groupDataBean.setUrl(bannerBean.getUrl());
+//
+//
+//                FindProjectActivity.startActivity(getContext(), 1);
+//            } else {
+//                WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
+//            }
+//
+//        }));
     }
 
     @Override

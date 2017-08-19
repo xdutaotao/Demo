@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
+import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.R;
 
 import java.util.ArrayList;
@@ -64,6 +66,14 @@ public class OrderCompTabFragment extends BaseFragment {
             protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
+                });
+
+                baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
+                    RecommandActivity.startActivity(OrderCompTabFragment.this.getContext());
+                });
+
+                baseViewHolder.setOnClickListener(R.id.distance, v -> {
+                    ApplyActivity.startActivity(OrderCompTabFragment.this.getContext());
                 });
             }
         };

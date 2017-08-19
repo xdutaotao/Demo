@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="500px"
+    android:paddingLeft="50px"
+    android:paddingRight="50px"
+    android:background="@color/activity_background">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_jingdu"/>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="50px"
+        android:layout_marginTop="50px"
+        android:layout_marginLeft="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="06-29 签到"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="万科时一区"
+                android:drawablePadding="20px"
+                android:drawableLeft="@drawable/icon_dizhi"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:20:07"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="4"
+            android:id="@+id/recycler_view_item"
+            tools:listitem="@layout/select_photo_item"/>
+    </LinearLayout>
+
+</LinearLayout>

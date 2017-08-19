@@ -4,32 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="30px"
-    android:layout_marginTop="20px"
+    android:layout_marginBottom="10px"
     android:background="@color/white">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="需要一个零工来做几天采暖"
-            android:textSize="50px"
-            android:textColor="@android:color/black"
-            android:id="@+id/item_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="去评价"
-            android:id="@+id/evaluation"
-            android:textColor="@color/accept_btn_pressed"
-            android:drawableRight="@drawable/arrow"
-            android:drawablePadding="20px"/>
-    </RelativeLayout>
-
 
 
     <LinearLayout
@@ -41,13 +17,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="上海市徐汇区"
+            android:text="季婷婷"
+            android:textSize="50px"
+            android:textColor="@color/light_blank"
             android:id="@+id/address"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="今天  16:30"
+            android:text="详情"
+            android:drawablePadding="20px"
+            android:drawableRight="@drawable/arrow"
+            android:textColor="@color/accept_btn_pressed"
             android:id="@+id/time"
             android:gravity="right"/>
     </LinearLayout>
@@ -58,19 +39,23 @@
         android:orientation="horizontal"
         android:layout_marginTop="30px">
 
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            style="@style/foodRatingBar"
+            android:id="@+id/rating_star"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="80px"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="采暖系统"
-            android:textColor="@color/accept_btn_default"
-            android:id="@+id/name"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3 人申请"
-            android:id="@+id/distance"
-            android:gravity="right"/>
+            android:text="5.0"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/percent"
+            android:layout_alignRight="@+id/rating_star"/>
     </LinearLayout>
 
     <View
@@ -83,29 +68,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginTop="30px">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="价格"
+            android:layout_weight="1"
+            android:text="3年工作经验"
             android:id="@+id/days"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="￥120/天"
-            android:textSize="40px"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/price"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn02"
-            android:text="查看"
+            android:text="申请通过"
             android:textColor="@color/colorPrimary"
             android:gravity="center"
             android:id="@+id/request"/>

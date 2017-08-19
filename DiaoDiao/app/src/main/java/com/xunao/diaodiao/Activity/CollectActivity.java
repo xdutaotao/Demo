@@ -268,13 +268,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_photo_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                if (TextUtils.equals(ADD, s)) {
-                    baseViewHolder.setVisible(R.id.delete, false);
-                    baseViewHolder.setImageResource(R.id.select_img, R.drawable.ic_launcher_round);
-                } else {
-                    baseViewHolder.setVisible(R.id.delete, true);
-                    baseViewHolder.setImageUrl(R.id.select_img, s);
-                }
+
             }
         };
         recyclerView.setAdapter(adapter);
@@ -299,13 +293,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         if (getIntent().getSerializableExtra(INTENT_KEY) == null){
             adapter.add(ADD);
             adapter.setOnItemClickListener((view, i) -> {
-                view.findViewById(R.id.delete).setOnClickListener(v -> {
-                    imageItems.remove(i);
-                    adapter.remove(i);
-                    if (!adapter.getAllData().contains(ADD)) {
-                        adapter.add(ADD);
-                    }
-                });
                 if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                     new IOSDialog(this).builder()
                             .setCancelable(true)
@@ -409,8 +396,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
 
             recommendLayout.setOnClickListener(v -> {
-                if (resultBean != null)
-                    RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
+                //if (resultBean != null)
+                    //RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
             });
             presenter.packagingForm();
         }else{

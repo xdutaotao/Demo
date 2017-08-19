@@ -3,25 +3,136 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <include layout="@layout/tool_bar_center" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/red"
-        app:tabTextColor="@color/black"
-        app:tabMode="scrollable"
-        app:tabIndicatorColor="@color/red"
-        app:tabIndicatorHeight="2px"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:background="@android:color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评分"
+                android:padding="50px"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="50px"
+                android:layout_marginBottom="50px">
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="40px"
+                    style="@style/foodRatingBar"
+                    android:id="@+id/rating_star"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5.0"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/percent"
+                    android:layout_alignRight="@+id/rating_star"/>
+
+            </LinearLayout>
+
+            <View style="@style/item_divider" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评价"
+                android:padding="50px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="50px"
+                android:layout_marginBottom="50px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="很负责任"
+                    android:textColor="@color/white"
+                    android:paddingTop="30px"
+                    android:paddingBottom="30px"
+                    android:paddingLeft="80px"
+                    android:paddingRight="80px"
+                    android:background="@drawable/btn_blue_bg"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50px"
+                    android:text="工程质量好"
+                    android:paddingTop="30px"
+                    android:paddingBottom="30px"
+                    android:paddingLeft="80px"
+                    android:paddingRight="80px"
+                    android:background="@drawable/btn_blank_bg"/>
+            </LinearLayout>
+
+            <View style="@style/item_divider" />
+
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_gray_bg"
+                android:layout_margin="50px">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:background="@null"
+                    android:hint="请填写意见反馈"
+                    android:textColorHint="#D2D2D2"
+                    android:gravity="top"
+                    android:padding="40px"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0 / 200"
+                    android:paddingRight="50px"
+                    android:paddingBottom="50px"
+                    android:gravity="right|center_vertical"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/divider"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view"
+                    android:padding="50px"/>
+
+            </LinearLayout>
+
+            <Button style="@style/login_btn_style"
+                android:text="提交"
+                android:id="@+id/post"/>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

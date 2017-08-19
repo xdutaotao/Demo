@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.xunao.diaodiao.Present.OrderProjProgressPresenter;
+import com.xunao.diaodiao.Present.ApplyDetailPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.View.OrderProjProgressView;
+import com.xunao.diaodiao.View.ApplyDetailView;
 
 import javax.inject.Inject;
 
@@ -19,34 +18,29 @@ import butterknife.ButterKnife;
 /**
  * create by
  */
-public class OrderProjProgressActivity extends BaseActivity implements OrderProjProgressView {
+public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView {
 
     @Inject
-    OrderProjProgressPresenter presenter;
+    ApplyDetailPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.sign)
-    Button sign;
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, OrderProjProgressActivity.class);
+        Intent intent = new Intent(context, ApplyDetailActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_proj_progress);
+        setContentView(R.layout.activity_apply_detail);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "项目进度");
-        sign.setOnClickListener(v -> {
-            SignDetailActivity.startActivity(OrderProjProgressActivity.this);
-        });
+        showToolbarBack(toolBar, titleText, "人员详情");
     }
 
 

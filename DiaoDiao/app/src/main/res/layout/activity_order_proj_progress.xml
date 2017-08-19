@@ -244,7 +244,8 @@
 
 
             <Button style="@style/login_btn_style"
-                android:text="签到详情"/>
+                android:text="签到详情"
+                android:id="@+id/sign"/>
         </LinearLayout>
     </ScrollView>
 
