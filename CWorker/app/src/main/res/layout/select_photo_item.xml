@@ -16,7 +16,7 @@
     <ImageView
         android:layout_width="60px"
         android:layout_height="60px"
-        android:src="@drawable/cancle"
+        android:src="@drawable/img_cancle"
         android:id="@+id/delete"
         android:layout_alignParentRight="true"/>
 

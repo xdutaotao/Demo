@@ -75,7 +75,7 @@
                     android:textSize="40px"
                     android:textColor="@android:color/white"
                     android:layout_alignParentRight="true"
-                    android:background="@android:color/holo_blue_dark"
+                    android:background="#22C9EA"
                     android:layout_marginRight="100px"
                     android:id="@+id/read"/>
             </RelativeLayout>
@@ -95,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/content"
-        android:layout_margin="50px"/>
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"/>
 
 </LinearLayout>
