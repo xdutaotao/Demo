@@ -112,7 +112,7 @@ public class CollectModel extends BaseModel {
         doubleMap.put("roughWeight", bean.getRoughWeight());
         doubleMap.put("partLength", bean.getPartLength());
         doubleMap.put("partWidth", bean.getPartWidth());
-        doubleMap.put("partHeigth", bean.getPartHeigth());
+        doubleMap.put("partHeight", bean.getPartHeigth());
         doubleMap.put("netWeight", bean.getNetWeight());
         doubleMap.put("addedLength", bean.getAddedLength());
         doubleMap.put("addedWidth", bean.getAddedWidth());

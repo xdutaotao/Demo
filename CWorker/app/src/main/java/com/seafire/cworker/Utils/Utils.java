@@ -698,7 +698,7 @@ public class Utils {
         if (!TextUtils.isEmpty(data) && data.contains(".")){
             int length = data.length();
             while(data.length() > 1 &&
-                    (TextUtils.equals("0", data.substring(length-1, length)) || TextUtils.equals(".", data.substring(length-1, length)))){
+                    (TextUtils.equals("0", data.substring(length-1)) || TextUtils.equals(".", data.substring(length-1)))){
                 data = data.substring(0, length-1);
                 length = data.length();
             }
