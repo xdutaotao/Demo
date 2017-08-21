@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @RequestMapping("/hello")
+    @RequestMapping("/hello/{id}")
     public String index(){
-        return "Hello Spring Boot nihao";
+        return "Hello Spring Boot nia";
     }
 }

@@ -68,9 +68,11 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
             if (!isOpened){
                 zxingview.openFlashlight();
                 isOpened = true;
+                openLight.setImageResource(R.drawable.turn_off);
             }else{
                 isOpened = false;
                 zxingview.closeFlashlight();
+                openLight.setImageResource(R.drawable.turn_on);
             }
 
         });

@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="@color/jmui_jpush_blue"
-                    android:textSize="@dimen/text_medium_size" />
+                    android:textSize="40px" />
 
                 <TextView
                     android:id="@+id/msg_item_date"
