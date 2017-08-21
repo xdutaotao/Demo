@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -256,7 +257,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        //ProcessingNoticationbar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect);
         ButterKnife.bind(this);
@@ -287,15 +287,14 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
             if (event.getAction() == MotionEvent.ACTION_MOVE && !numHasFocus) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
+                scrollView.setFocusable(true);
+                scrollView.setFocusableInTouchMode(true);
+                clearFocus();
             }else{
                 v.getParent().requestDisallowInterceptTouchEvent(false);
                 scrollView.clearFocus();
+                getFocus();
             }
-
-//                scrollView.setFocusable(true);
-//                scrollView.setFocusableInTouchMode(true);
-//                scrollView.requestLayout();
-//                clearFocus();
             return false;
         });
 
@@ -334,85 +333,75 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
             modleNum.setOnTouchListener(this);
             modleNum.setOnFocusChangeListener(this);
-            modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false));
+            modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false, this));
 
             number.setOnTouchListener(this);
             number.setOnFocusChangeListener(this);
-            number.addTextChangedListener(new CustomTextWatcher(number, drawable, false));
+            number.addTextChangedListener(new CustomTextWatcher(number, drawable, false, this));
 
             length.setOnTouchListener(this);
             length.setOnFocusChangeListener(this);
-            length.addTextChangedListener(new CustomTextWatcher(length, drawable, true));
+            length.addTextChangedListener(new CustomTextWatcher(length, drawable, true, this));
 
             width.setOnTouchListener(this);
             width.setOnFocusChangeListener(this);
-            width.addTextChangedListener(new CustomTextWatcher(width, drawable, true));
+            width.addTextChangedListener(new CustomTextWatcher(width, drawable, true, this));
 
             height.setOnTouchListener(this);
             height.setOnFocusChangeListener(this);
-            height.addTextChangedListener(new CustomTextWatcher(height, drawable, true));
+            height.addTextChangedListener(new CustomTextWatcher(height, drawable, true, this));
 
             weight.setOnTouchListener(this);
             weight.setOnFocusChangeListener(this);
-            weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true));
+            weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true, this));
 
             allLength.setOnTouchListener(this);
             allLength.setOnFocusChangeListener(this);
-            allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true));
+            allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true, this));
 
             allWidth.setOnTouchListener(this);
             allWidth.setOnFocusChangeListener(this);
-            allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true));
+            allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true, this));
 
             allHeight.setOnTouchListener(this);
             allHeight.setOnFocusChangeListener(this);
-            allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true));
+            allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true, this));
 
             outLength.setOnTouchListener(this);
             outLength.setOnFocusChangeListener(this);
-            outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true));
+            outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true, this));
 
             outWidth.setOnTouchListener(this);
             outWidth.setOnFocusChangeListener(this);
-            outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true));
+            outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true, this));
 
             outHeight.setOnTouchListener(this);
             outHeight.setOnFocusChangeListener(this);
-            outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true));
+            outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true, this));
 
             outWeight.setOnTouchListener(this);
             outWeight.setOnFocusChangeListener(this);
-            outWeight.addTextChangedListener(new CustomTextWatcher(outWeight, drawable, true));
+            outWeight.addTextChangedListener(new CustomTextWatcher(outWeight, drawable, true, this));
 
             singleWeight.setOnTouchListener(this);
             singleWeight.setOnFocusChangeListener(this);
-            singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true));
+            singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true, this));
 
             singleLength.setOnTouchListener(this);
             singleLength.setOnFocusChangeListener(this);
-            singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true));
+            singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true, this));
 
             singleWidth.setOnTouchListener(this);
             singleWidth.setOnFocusChangeListener(this);
-            singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true));
+            singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true, this));
 
             singleHeight.setOnTouchListener(this);
             singleHeight.setOnFocusChangeListener(this);
-            singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true));
+            singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true, this));
             setEditTextChangedListener();
 
             singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 singleLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-//                if (!isChecked){
-//                    singleLength.setText("");
-//                    singleLength.setHint("mm");
-//                    singleWidth.setText("");
-//                    singleWidth.setHint("mm");
-//                    singleHeight.setText("");
-//                    singleHeight.setHint("mm");
-//                    singleWeight.setText("");
-//                    singleWeight.setHint("kg");
-//                }
             });
 
             dataLayout.setOnClickListener(v -> {
@@ -756,6 +745,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     .show();
 
         }
+    }
+
+    public boolean getNumberSearch(){
+        return isNumberSearch;
     }
 
     private void selectCamera() {
@@ -1202,7 +1195,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void setEditTextChangedListener() {
-        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false) {
+        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false, this) {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
@@ -1525,20 +1518,53 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
      * @return
      */
     private void clearFocus(){
-        number.clearFocus();
-        modleNum.clearFocus();
-        length.clearFocus();
-        width.clearFocus();
-        height.clearFocus();
-        weight.clearFocus();
-        outLength.clearFocus();
-        outWidth.clearFocus();
-        outHeight.clearFocus();
-        outWeight.clearFocus();
-        singleLength.clearFocus();
-        singleWidth.clearFocus();
-        singleHeight.clearFocus();
-        singleWeight.clearFocus();
+        modleNum.setInputType(InputType.TYPE_NULL);
+
+        length.setInputType(InputType.TYPE_NULL);
+        width.setInputType(InputType.TYPE_NULL);
+        height.setInputType(InputType.TYPE_NULL);
+        weight.setInputType(InputType.TYPE_NULL);
+
+        outLength.setInputType(InputType.TYPE_NULL);
+        outWidth.setInputType(InputType.TYPE_NULL);
+        outHeight.setInputType(InputType.TYPE_NULL);
+        outWeight.setInputType(InputType.TYPE_NULL);
+
+        singleLength.setInputType(InputType.TYPE_NULL);
+        singleWidth.setInputType(InputType.TYPE_NULL);
+        singleHeight.setInputType(InputType.TYPE_NULL);
+        singleWeight.setInputType(InputType.TYPE_NULL);
+
+        allWidth.setInputType(InputType.TYPE_NULL);
+        allHeight.setInputType(InputType.TYPE_NULL);
+        allLength.setInputType(InputType.TYPE_NULL);
+
+        information.setInputType(InputType.TYPE_NULL);
+    }
+
+    private void getFocus(){
+        modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+
+        length.setInputType(8194);
+        width.setInputType(8194);
+        height.setInputType(8194);
+        weight.setInputType(8194);
+
+        outLength.setInputType(8194);
+        outWidth.setInputType(8194);
+        outHeight.setInputType(8194);
+        outWeight.setInputType(8194);
+
+        singleLength.setInputType(8194);
+        singleWidth.setInputType(8194);
+        singleHeight.setInputType(8194);
+        singleWeight.setInputType(8194);
+
+        allWidth.setInputType(8194);
+        allHeight.setInputType(8194);
+        allLength.setInputType(8194);
+
+        information.setInputType(8194);
     }
 
     @Override

@@ -706,6 +706,37 @@ public class Utils {
         return data;
     }
 
+    /**
+     * 重复出现的次数
+     * @param str
+     * @param substr
+     * @return
+     */
+    public static int stringsub(String str,String substr) {
+        int index=0;
+        int count=0;
+        int fromindex=0;
+        while((index=str.indexOf(substr,fromindex))!=-1)
+        {
+            //str=str.substring(index+substr.length());
+            fromindex=index+substr.length();
+            count++;
+        }
+        return count;
+    }
+
+    public static boolean isNumber(char s){
+        if (TextUtils.equals(s+"", ".")){
+            return true;
+        }else{
+            if (s > '0' && s < '9'){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
 }

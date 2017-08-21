@@ -34,14 +34,16 @@
 
                 <EditText
                     android:id="@+id/number"
-                    style="@style/collect_edit"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
                     android:hint="请输入零件号"
                     android:ellipsize="end"
+                    android:textSize="45px"
+                    android:textCursorDrawable="@null"
                     android:singleLine="true"
                     android:imeOptions="actionSearch"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:background="@null"
+                    android:gravity="right|center_vertical" />
             </RelativeLayout>
 
             <View

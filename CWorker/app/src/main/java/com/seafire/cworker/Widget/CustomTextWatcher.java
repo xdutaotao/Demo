@@ -1,11 +1,15 @@
 package com.seafire.cworker.Widget;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
+import com.seafire.cworker.Activity.CollectActivity;
+import com.seafire.cworker.Utils.Utils;
 
 /**
  * Description:
@@ -15,11 +19,13 @@ public class CustomTextWatcher implements TextWatcher {
     private EditText editText;
     private Drawable drawable;
     private boolean isNumPoint;
+    private Context context;
 
-    public CustomTextWatcher(EditText et, Drawable d, boolean b) {
+    public CustomTextWatcher(EditText et, Drawable d, boolean b, Context context) {
         this.editText = et;
         this.drawable = d;
         this.isNumPoint = b;
+        this.context = context;
     }
 
     @Override
@@ -28,6 +34,15 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count){
+        //不能有两个小数点
+        String string = s.toString();
+        int len = string.length();
+
+        if (Utils.stringsub(string, ".") == 2){
+            editText.setText(string.subSequence(0, len-1));
+            return;
+        }
+
         if (editText.getText().length() > 0) {
             int length = editText.getText().length();
             String temp = editText.getText().toString();
@@ -43,6 +58,7 @@ public class CustomTextWatcher implements TextWatcher {
             editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
         if (isNumPoint){
+
             if (s.toString().length() == 6) {
                 //如果第六个不为小数点, 并且前面没有小数点
                 if (!TextUtils.equals(s.toString().substring(5, 6), ".") && !s.toString().substring(0,5).contains(".")) {
