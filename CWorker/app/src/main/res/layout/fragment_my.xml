@@ -13,12 +13,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500px"
+        android:layout_height="600px"
         android:background="@color/colorPrimary"
         android:layout_gravity="center">
 
         <ImageView
-            android:layout_width="300px"
+            android:layout_width="290px"
             android:layout_height="300px"
             android:src="@drawable/my_head"
             android:id="@+id/head_icon"
@@ -34,8 +34,8 @@
             android:textSize="30px"
             android:textColor="@android:color/white"
             android:background="@android:color/holo_red_light"
-            android:layout_marginTop="340px"
-            android:layout_marginLeft="620px"
+            android:layout_marginTop="360px"
+            android:layout_marginLeft="640px"
             android:padding="5px"/>
 
         <TextView

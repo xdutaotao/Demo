@@ -1,5 +1,7 @@
 package com.seafire.cworker.Widget;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -64,21 +70,22 @@ public class CustomDialog {
             ruleTV.setText("金币+6 积分+12");
         else
             ruleTV.setText("金币+5 积分+10");
-        SpringSystem springSystem = SpringSystem.create();
-        SpringConfig springConfig = SpringConfig.fromOrigamiTensionAndFriction(60, 7);
-        Spring spring = springSystem.createSpring();
-        spring.setSpringConfig(springConfig);
-        spring.addListener(new SimpleSpringListener(){
-            @Override
-            public void onSpringUpdate(Spring spring) {
-                super.onSpringUpdate(spring);
-                float value = (float) spring.getCurrentValue();
-                view.setScaleX(value);
-                view.setScaleY(value);
-            }
-        });
-        spring.setEndValue(1);
+//        SpringSystem springSystem = SpringSystem.create();
+//        SpringConfig springConfig = SpringConfig.fromOrigamiTensionAndFriction(60, 7);
+//        Spring spring = springSystem.createSpring();
+//        spring.setSpringConfig(springConfig);
+//        spring.addListener(new SimpleSpringListener(){
+//            @Override
+//            public void onSpringUpdate(Spring spring) {
+//                super.onSpringUpdate(spring);
+//                float value = (float) spring.getCurrentValue();
+//                view.setScaleX(value);
+//                view.setScaleY(value);
+//            }
+//        });
+//        spring.setEndValue(1);
 
+        //propertyValuesHolder(view);
         PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*1/2, true);
         popupWindow.setTouchable(true);
         popupWindow.setOutsideTouchable(true);
@@ -118,6 +125,16 @@ public class CustomDialog {
         int x = Utils.getScreenWidth(context)/4;
         int y = Utils.getScreenHeight(context)/3;
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y);
+    }
+
+    public static void propertyValuesHolder(View view) {
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("alpha", 0.5f,
+                1f, 1f);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 0.5f,
+                1.2f, 1f);
+        PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 0.5f,
+                1.2f, 1f);
+        ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY,pvhZ).setDuration(300).start();
     }
 
 

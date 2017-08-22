@@ -2,8 +2,12 @@ package com.seafire.cworker.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -49,6 +53,8 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     private Subscription subscriber;
     private EventHandler eventHandler;
     private boolean isChangePwd;
+
+    Drawable drawable;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CheckPhoneActivity.class);
@@ -105,6 +111,29 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         if (getIntent().getBooleanExtra(INTENT_KEY, false)){
             isChangePwd = true;
         }
+
+        phoneInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)){
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    phoneInput.setCompoundDrawables(null, null, drawable, null);
+                }else{
+                    phoneInput.setCompoundDrawables(null, null, null, null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 

@@ -367,8 +367,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             allHeight.setOnFocusChangeListener(this);
             allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true, this));
 
-            outLength.setOnTouchListener(this);
-            outLength.setOnFocusChangeListener(this);
+//            outLength.setOnTouchListener(this);
+//            outLength.setOnFocusChangeListener(this);
             outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true, this));
 
             outWidth.setOnTouchListener(this);
@@ -745,10 +745,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     .show();
 
         }
-    }
-
-    public boolean getNumberSearch(){
-        return isNumberSearch;
     }
 
     private void selectCamera() {

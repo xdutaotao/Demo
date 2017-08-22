@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seafire.cworker.Model.User;
@@ -53,6 +56,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     TextView registerTxt;
     @BindView(R.id.code_login)
     TextView forgetTxt;
+    @BindView(R.id.login_cancle)
+    ImageView loginCancle;
+    @BindView(R.id.pwd_cancle)
+    ImageView pwdCancle;
 
 
     public static void startActivity(Context context) {
@@ -73,14 +80,57 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         login.setOnClickListener(this);
         registerTxt.setOnClickListener(this);
         forgetTxt.setOnClickListener(this);
+
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    loginCancle.setVisibility(View.VISIBLE);
+                } else {
+                    loginCancle.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    pwdCancle.setVisibility(View.VISIBLE);
+                } else {
+                    pwdCancle.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        loginCancle.setOnClickListener(this);
+        pwdCancle.setOnClickListener(this);
     }
-
-
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login:
                 loginAction();
                 break;
@@ -91,6 +141,14 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 
             case R.id.code_login:
                 CheckPhoneActivity.startActivity(this, true);
+                break;
+
+            case R.id.login_cancle:
+                name.setText("");
+                break;
+
+            case R.id.pwd_cancle:
+                pwd.setText("");
                 break;
         }
     }
@@ -121,7 +179,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         }
 
         presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
-                Utils.getIMIEStatus(this) == null ?  "" : Utils.getIMIEStatus(this));
+                Utils.getIMIEStatus(this) == null ? "" : Utils.getIMIEStatus(this));
     }
 
     @Override
@@ -132,7 +190,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     private void loginJMessage() {
         final Dialog dialog = DialogCreator.createLoadingDialog(this, getString(R.string.login_hint));
         dialog.show();
-        JMessageClient.login(name.getText().toString(), name.getText().toString()+"1", new BasicCallback() {
+        JMessageClient.login(name.getText().toString(), name.getText().toString() + "1", new BasicCallback() {
             @Override
             public void gotResult(final int status, final String desc) {
                 if (status == 0) {
@@ -185,7 +243,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
-    private void actionRegister(){
+    private void actionRegister() {
         CheckPhoneActivity.startActivity(this);
         //CheckEmailActivity.startActivity(this, "18513212904");
     }

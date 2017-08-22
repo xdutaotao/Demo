@@ -247,7 +247,7 @@ public class CollectModel extends BaseModel {
     public void recodeMark(CollectBean bean, boolean isSuccess){
 
         /**
-         * 是否是历史上传 不是历史上传
+         * 是否是历史上传 不是历史上传 改变次数
          */
         if (bean.getIsHistory() == 0){
             if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0){
@@ -263,6 +263,9 @@ public class CollectModel extends BaseModel {
         List<CollectBean> collectBeanList = new ArrayList<>();
         bean.setSuccess(isSuccess);
 
+        /**
+         * 是历史上传
+         */
         if (bean.getIsHistory() == 1){
             List<CollectBean> list = JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null));
             if (list != null){
@@ -273,9 +276,10 @@ public class CollectModel extends BaseModel {
                         collectBeanList.add(bean);
                     }
                 }
-            }else{
-                collectBeanList.add(bean);
+                collectBeanList.addAll(list);
             }
+
+            collectBeanList.add(bean);
 
         }else{
             if (!isSuccess)

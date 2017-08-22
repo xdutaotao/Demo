@@ -38,6 +38,7 @@ public class CollectBean implements Serializable{
     private String project;
     private String documentCodes;
     private String time;
+    private long longTime;
 
 
     public String getTime() {
@@ -278,5 +279,13 @@ public class CollectBean implements Serializable{
 
     public void setDocumentCodes(String documentCodes) {
         this.documentCodes = documentCodes;
+    }
+
+    public long getLongTime() {
+        return longTime;
+    }
+
+    public void setLongTime(long longTime) {
+        this.longTime = longTime;
     }
 }

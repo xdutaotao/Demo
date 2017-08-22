@@ -3,6 +3,7 @@ package com.seafire.cworker.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -58,6 +59,8 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
     private String phone;
     private boolean isChangePwd;
 
+    Drawable drawable;
+
     public static void startActivity(Context context, String phone) {
         Intent intent = new Intent(context, CheckEmailActivity.class);
         intent.putExtra(INTENT_KEY, phone);
@@ -87,8 +90,13 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(s)){
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    emailInput.setCompoundDrawables(null, null, drawable, null);
+                }else{
+                    emailInput.setCompoundDrawables(null, null, null, null);
+                }
             }
 
             @Override
@@ -100,6 +108,73 @@ public class CheckEmailActivity extends BaseActivity implements CheckEmailActivi
                 } else {
                     emailInput.setHint("请输入邮箱");
                 }
+            }
+        });
+
+        drawable = getResources().getDrawable(R.drawable.cancle);
+        nameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)){
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    nameInput.setCompoundDrawables(null, null, drawable, null);
+                }else{
+                    nameInput.setCompoundDrawables(null, null, null, null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        pwdInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)){
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    pwdInput.setCompoundDrawables(null, null, drawable, null);
+                }else{
+                    pwdInput.setCompoundDrawables(null, null, null, null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        surePwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)){
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    surePwd.setCompoundDrawables(null, null, drawable, null);
+                }else{
+                    surePwd.setCompoundDrawables(null, null, null, null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
