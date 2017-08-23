@@ -675,7 +675,7 @@ public class Utils {
     }
 
     public static boolean isActiveTime(){
-        boolean isActive = false;
+        boolean isActive = true;
 //        try {
 //            long startTime = dateToStamp("2017-09-01 08:30:00");
 //            if (startTime < System.currentTimeMillis()){
