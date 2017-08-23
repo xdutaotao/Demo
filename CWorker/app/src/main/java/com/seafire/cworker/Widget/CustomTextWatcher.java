@@ -19,13 +19,11 @@ public class CustomTextWatcher implements TextWatcher {
     private EditText editText;
     private Drawable drawable;
     private boolean isNumPoint;
-    private Context context;
 
-    public CustomTextWatcher(EditText et, Drawable d, boolean b, Context context) {
+    public CustomTextWatcher(EditText et, Drawable d, boolean b) {
         this.editText = et;
         this.drawable = d;
         this.isNumPoint = b;
-        this.context = context;
     }
 
     @Override

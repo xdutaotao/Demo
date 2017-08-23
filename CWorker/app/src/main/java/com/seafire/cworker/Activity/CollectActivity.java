@@ -255,6 +255,26 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         context.startActivityForResult(intent, CollectHistoryActivity.REQUEST_CODE);
     }
 
+
+    private CustomTextWatcher modleNumWatcher;
+    private CustomTextWatcher numberWatcher;
+    private CustomTextWatcher lengthWatcher;
+    private CustomTextWatcher widthWatcher;
+    private CustomTextWatcher heightWatcher;
+    private CustomTextWatcher weightWatcher;
+    private CustomTextWatcher allHeightWatcher;
+    private CustomTextWatcher allWidthWatcher;
+    private CustomTextWatcher allWeightWatcher;
+    private CustomTextWatcher allLengthWatcher;
+    private CustomTextWatcher singleWidthWatcher;
+    private CustomTextWatcher singleHeightWatcher;
+    private CustomTextWatcher singleLengthWatcher;
+    private CustomTextWatcher singleWeightWatcher;
+    private CustomTextWatcher outWeightWatcher;
+    private CustomTextWatcher outLengthWatcher;
+    private CustomTextWatcher outWidthWatcher;
+    private CustomTextWatcher outHeightWatcher;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -330,74 +350,92 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             wrapLayout.setOnClickListener(this);
             typeLayout.setOnClickListener(this);
 
+            modleNumWatcher = new CustomTextWatcher(modleNum, drawable, false);
+            numberWatcher = new CustomTextWatcher(number, drawable, false);
+            lengthWatcher = new CustomTextWatcher(length, drawable, true);
+            widthWatcher = new CustomTextWatcher(width, drawable, true);
+            heightWatcher = new CustomTextWatcher(height, drawable, true);
+            weightWatcher = new CustomTextWatcher(weight, drawable, true);
+            allHeightWatcher = new CustomTextWatcher(allHeight, drawable, true);
+            allWidthWatcher = new CustomTextWatcher(allWidth, drawable, true);
+            allLengthWatcher = new CustomTextWatcher(allLength, drawable, true);
+            singleWidthWatcher = new CustomTextWatcher(singleWidth, drawable, true);
+            singleHeightWatcher = new CustomTextWatcher(singleHeight, drawable, true);
+            singleLengthWatcher = new CustomTextWatcher(singleLength, drawable, true);
+            singleWeightWatcher = new CustomTextWatcher(singleWeight, drawable, true);
+            outWeightWatcher = new CustomTextWatcher(outWeight, drawable, true);
+            outLengthWatcher = new CustomTextWatcher(outLength, drawable, true);
+            outWidthWatcher = new CustomTextWatcher(outWidth, drawable, true);
+            outHeightWatcher = new CustomTextWatcher(outHeight, drawable, true);
+
             modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
             modleNum.setOnTouchListener(this);
             modleNum.setOnFocusChangeListener(this);
-            modleNum.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false, this));
+            modleNum.addTextChangedListener(modleNumWatcher);
 
             number.setOnTouchListener(this);
             number.setOnFocusChangeListener(this);
-            number.addTextChangedListener(new CustomTextWatcher(number, drawable, false, this));
+            number.addTextChangedListener(numberWatcher);
 
             length.setOnTouchListener(this);
             length.setOnFocusChangeListener(this);
-            length.addTextChangedListener(new CustomTextWatcher(length, drawable, true, this));
+            length.addTextChangedListener(lengthWatcher);
 
             width.setOnTouchListener(this);
             width.setOnFocusChangeListener(this);
-            width.addTextChangedListener(new CustomTextWatcher(width, drawable, true, this));
+            width.addTextChangedListener(widthWatcher);
 
             height.setOnTouchListener(this);
             height.setOnFocusChangeListener(this);
-            height.addTextChangedListener(new CustomTextWatcher(height, drawable, true, this));
+            height.addTextChangedListener(heightWatcher);
 
             weight.setOnTouchListener(this);
             weight.setOnFocusChangeListener(this);
-            weight.addTextChangedListener(new CustomTextWatcher(weight, drawable, true, this));
+            weight.addTextChangedListener(weightWatcher);
 
             allLength.setOnTouchListener(this);
             allLength.setOnFocusChangeListener(this);
-            allLength.addTextChangedListener(new CustomTextWatcher(allLength, drawable, true, this));
+            allLength.addTextChangedListener(allLengthWatcher);
 
             allWidth.setOnTouchListener(this);
             allWidth.setOnFocusChangeListener(this);
-            allWidth.addTextChangedListener(new CustomTextWatcher(allWidth, drawable, true, this));
+            allWidth.addTextChangedListener(allWidthWatcher);
 
             allHeight.setOnTouchListener(this);
             allHeight.setOnFocusChangeListener(this);
-            allHeight.addTextChangedListener(new CustomTextWatcher(allHeight, drawable, true, this));
+            allHeight.addTextChangedListener(allHeightWatcher);
 
-//            outLength.setOnTouchListener(this);
-//            outLength.setOnFocusChangeListener(this);
-            outLength.addTextChangedListener(new CustomTextWatcher(outLength, drawable, true, this));
+            outLength.setOnTouchListener(this);
+            outLength.setOnFocusChangeListener(this);
+            outLength.addTextChangedListener(outLengthWatcher);
 
             outWidth.setOnTouchListener(this);
             outWidth.setOnFocusChangeListener(this);
-            outWidth.addTextChangedListener(new CustomTextWatcher(outWidth, drawable, true, this));
+            outWidth.addTextChangedListener(outWidthWatcher);
 
             outHeight.setOnTouchListener(this);
             outHeight.setOnFocusChangeListener(this);
-            outHeight.addTextChangedListener(new CustomTextWatcher(outHeight, drawable, true, this));
+            outHeight.addTextChangedListener(outHeightWatcher);
 
             outWeight.setOnTouchListener(this);
             outWeight.setOnFocusChangeListener(this);
-            outWeight.addTextChangedListener(new CustomTextWatcher(outWeight, drawable, true, this));
+            outWeight.addTextChangedListener(outWeightWatcher);
 
             singleWeight.setOnTouchListener(this);
             singleWeight.setOnFocusChangeListener(this);
-            singleWeight.addTextChangedListener(new CustomTextWatcher(singleWeight, drawable, true, this));
+            singleWeight.addTextChangedListener(singleWeightWatcher);
 
             singleLength.setOnTouchListener(this);
             singleLength.setOnFocusChangeListener(this);
-            singleLength.addTextChangedListener(new CustomTextWatcher(singleLength, drawable, true, this));
+            singleLength.addTextChangedListener(singleLengthWatcher);
 
             singleWidth.setOnTouchListener(this);
             singleWidth.setOnFocusChangeListener(this);
-            singleWidth.addTextChangedListener(new CustomTextWatcher(singleWidth, drawable, true, this));
+            singleWidth.addTextChangedListener(singleWidthWatcher);
 
             singleHeight.setOnTouchListener(this);
             singleHeight.setOnFocusChangeListener(this);
-            singleHeight.addTextChangedListener(new CustomTextWatcher(singleHeight, drawable, true, this));
+            singleHeight.addTextChangedListener(singleHeightWatcher);
             setEditTextChangedListener();
 
             singleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -655,6 +693,25 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     .setTitle("该零件号已被"+s.getOldData().getCollectorName()+"于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
                     .setMsg("是否重新采集当前数据?")
                     .setPositiveButton("确定", v -> {
+
+                        modleNum.removeTextChangedListener(modleNumWatcher);
+                        number.removeTextChangedListener(numberWatcher);
+                        length.removeTextChangedListener(lengthWatcher);
+                        width.removeTextChangedListener(widthWatcher);
+                        height.removeTextChangedListener(heightWatcher);
+                        weight.removeTextChangedListener(weightWatcher);
+                        allLength.removeTextChangedListener(allLengthWatcher);
+                        allWidth.removeTextChangedListener(allWidthWatcher);
+                        allHeight.removeTextChangedListener(allHeightWatcher);
+                        outLength.removeTextChangedListener(outLengthWatcher);
+                        outWidth.removeTextChangedListener(outWidthWatcher);
+                        outHeight.removeTextChangedListener(outHeightWatcher);
+                        outWeight.removeTextChangedListener(outWeightWatcher);
+                        singleWeight.removeTextChangedListener(singleWeightWatcher);
+                        singleLength.removeTextChangedListener(singleLengthWatcher);
+                        singleWidth.removeTextChangedListener(singleWidthWatcher);
+                        singleHeight.removeTextChangedListener(singleHeightWatcher);
+
                         wrapText.setText(s.getOldData().getPackageStypeName());
                         typeTxt.setText(s.getOldData().getPartMaterialName());
                         modleNum.setText(s.getOldData().getPackageModelCount() + "");
@@ -738,6 +795,24 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                                     imageItems.addAll(imageItems1);
                                     setResultToAdapter(imageItems);
                                 });
+
+                        modleNum.addTextChangedListener(modleNumWatcher);
+                        number.addTextChangedListener(numberWatcher);
+                        length.addTextChangedListener(lengthWatcher);
+                        width.addTextChangedListener(widthWatcher);
+                        height.addTextChangedListener(heightWatcher);
+                        weight.addTextChangedListener(weightWatcher);
+                        allLength.addTextChangedListener(allLengthWatcher);
+                        allWidth.addTextChangedListener(allWidthWatcher);
+                        allHeight.addTextChangedListener(allHeightWatcher);
+                        outLength.addTextChangedListener(outLengthWatcher);
+                        outWidth.addTextChangedListener(outWidthWatcher);
+                        outHeight.addTextChangedListener(outHeightWatcher);
+                        outWeight.addTextChangedListener(outWeightWatcher);
+                        singleWeight.addTextChangedListener(singleWeightWatcher);
+                        singleLength.addTextChangedListener(singleLengthWatcher);
+                        singleWidth.addTextChangedListener(singleWidthWatcher);
+                        singleHeight.addTextChangedListener(singleHeightWatcher);
                     })
                     .setNegativeButton("取消", v -> {
                         number.setText("");
@@ -1191,7 +1266,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void setEditTextChangedListener() {
-        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false, this) {
+        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false) {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
