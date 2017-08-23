@@ -23,13 +23,13 @@ import cn.bluemobi.dylan.step.view.StepArcView;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv_data;
-    private StepArcView cc;
+    private TextView cc;
     private TextView tv_isSupport;
     private SharedPreferencesUtils sp;
 
     private void assignViews() {
         tv_data = (TextView) findViewById(R.id.tv_data);
-        cc = (StepArcView) findViewById(R.id.cc);
+        cc = (TextView) findViewById(R.id.cc);
         tv_isSupport = (TextView) findViewById(R.id.tv_isSupport);
     }
 
@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //获取用户设置的计划锻炼步数，没有设置过的话默认7000
         String planWalk_QTY = (String) sp.getParam("planWalk_QTY", "7000");
         //设置当前步数为0
-        cc.setCurrentCount(Integer.parseInt(planWalk_QTY), 0);
+        //cc.setCurrentCount(Integer.parseInt(planWalk_QTY), 0);
+        cc.setText("0");
 
         setupService();
     }
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             StepService stepService = ((StepService.StepBinder) service).getService();
             //设置初始化数据
             String planWalk_QTY = (String) sp.getParam("planWalk_QTY", "7000");
-            cc.setCurrentCount(Integer.parseInt(planWalk_QTY), stepService.getStepCount());
-
+            //cc.setCurrentCount(Integer.parseInt(planWalk_QTY), stepService.getStepCount());
+            cc.setText(stepService.getStepCount()+"");
             tv_isSupport.setText(stepService.isStepCounter() ? "系统计步芯片" : "加速度传感器");
 
             //设置步数监听回调
@@ -96,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void updateUi(int stepCount) {
                     String planWalk_QTY = (String) sp.getParam("planWalk_QTY", "7000");
-                    cc.setCurrentCount(Integer.parseInt(planWalk_QTY), stepCount);
+                    //cc.setCurrentCount(Integer.parseInt(planWalk_QTY), stepCount);
+                    cc.setText(stepCount+"");
                 }
             });
         }
