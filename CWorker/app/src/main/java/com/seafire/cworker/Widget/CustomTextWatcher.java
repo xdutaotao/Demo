@@ -76,8 +76,11 @@ public class CustomTextWatcher implements TextWatcher {
                 InputFilter[] filters = {new InputFilter.LengthFilter(index+4)};
                 editText.setFilters(filters);
             }else{
-                InputFilter[] filters = {new InputFilter.LengthFilter(6)};
-                editText.setFilters(filters);
+                if (!TextUtils.isEmpty(s)){
+                    InputFilter[] filters = {new InputFilter.LengthFilter(6)};
+                    editText.setFilters(filters);
+                }
+
             }
         }
         editText.setSelection(s.length());

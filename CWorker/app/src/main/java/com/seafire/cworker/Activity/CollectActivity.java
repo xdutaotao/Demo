@@ -264,7 +264,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private CustomTextWatcher weightWatcher;
     private CustomTextWatcher allHeightWatcher;
     private CustomTextWatcher allWidthWatcher;
-    private CustomTextWatcher allWeightWatcher;
     private CustomTextWatcher allLengthWatcher;
     private CustomTextWatcher singleWidthWatcher;
     private CustomTextWatcher singleHeightWatcher;
@@ -674,7 +673,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         scrollView.scrollTo(0, 0);
         number.setText("");
-        clearData();
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+            clearData();
+        }
+
     }
 
     @Override
@@ -887,7 +889,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void postTxtError(){
         scrollView.scrollTo(0, 0);
         number.setText("");
-        clearData();
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+            clearData();
+        }
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {

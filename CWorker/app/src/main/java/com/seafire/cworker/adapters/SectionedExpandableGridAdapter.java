@@ -81,6 +81,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
             case VIEW_TYPE_SECTION :
                 Section section = (Section) mDataArrayList.get(position);
                 projectName = section.getName();
+                holder.sectionSize.setText("["+ mDataArrayList.size() +"]");
                 holder.sectionTextView.setText(section.getName());
                 holder.sectionView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -126,6 +127,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
         TextView sectionTextView;
         View sectionView;
         ImageView sectionImageView;
+        TextView sectionSize;
 
         //for item
         TextView itemTextView;
@@ -142,6 +144,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
                 sectionTextView = (TextView) view.findViewById(R.id.text_section);
                 sectionView = view.findViewById(R.id.section_view);
                 sectionImageView = (ImageView) view.findViewById(R.id.group_arrow);
+                sectionSize = (TextView) view.findViewById(R.id.size);
             }
         }
     }

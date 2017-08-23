@@ -270,21 +270,19 @@ public class CollectModel extends BaseModel {
             List<CollectBean> list = JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null));
             if (list != null){
                 for(CollectBean collectBean: list){
-                    if (!TextUtils.equals(collectBean.getTime(), bean.getTime())){
-                        collectBeanList.add(collectBean);
-                    }else{
+                    if (collectBean.getLongTime() == bean.getLongTime()){
                         collectBeanList.add(bean);
+                    }else{
+                        collectBeanList.add(collectBean);
                     }
                 }
-                collectBeanList.addAll(list);
             }
 
-            collectBeanList.add(bean);
-
-        }else{
+        }else{  //不是历史上传
             if (!isSuccess)
                 bean.setIsHistory(1);
 
+            bean.setLongTime(System.currentTimeMillis());
             if (ShareUtils.getValue(Constants.COLLECT_LIST, null) != null){
                 collectBeanList.addAll(JsonUtils.getInstance().JsonToCollectList(ShareUtils.getValue(Constants.COLLECT_LIST, null)));
             }
