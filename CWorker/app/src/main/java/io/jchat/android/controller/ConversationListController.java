@@ -12,6 +12,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.seafire.cworker.App;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.ShareUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,6 +83,15 @@ public class ConversationListController implements
                         if (mListAdapter.includeAtMsg(conv)) {
                             intent.putExtra("atMsgId", mListAdapter.getAtMsgId(conv));
                         }
+                        int cnt = mListAdapter.getItem(position).getUnReadMsgCnt();
+                        if (ShareUtils.getValue("message", 0) == 0){
+                            ShareUtils.putValue("message", cnt);
+                        }else{
+                            int msgCnt = ShareUtils.getValue("message", 0);
+                            ShareUtils.putValue("message", msgCnt - cnt > 0 ? msgCnt - cnt: 0);
+                        }
+
+
                         long groupId = ((GroupInfo) conv.getTargetInfo()).getGroupID();
                         intent.putExtra(App.GROUP_ID, groupId);
                         intent.putExtra(App.DRAFT, getAdapter().getDraft(conv.getId()));

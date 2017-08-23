@@ -24,6 +24,8 @@ import android.widget.PopupWindow;
 
 import com.seafire.cworker.App;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.RxBus;
+import com.seafire.cworker.Utils.ShareUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -169,6 +171,14 @@ public class ConversationListFragment extends BaseFragment {
                 mBackgroundHandler.sendMessage(mBackgroundHandler.obtainMessage(REFRESH_CONVERSATION_LIST,
                         conv));
             }
+            int msgCnt = ShareUtils.getValue("message", 0);
+            if (msgCnt == 0){
+                ShareUtils.putValue("message", 1);
+            }else{
+                msgCnt++;
+                ShareUtils.putValue("message", msgCnt);
+            }
+
         } else {
             final UserInfo userInfo = (UserInfo) msg.getTargetInfo();
             final String targetId = userInfo.getUserName();

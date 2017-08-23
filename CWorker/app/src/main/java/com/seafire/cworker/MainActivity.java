@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private String[] strings = {"主页","搜索"," ","消息","我的"};
     private int failTime = 0;
     private BadgeItem badgeItem;
+    private BadgeItem msgBadgeItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
 
         badgeItem = new BadgeItem();
+        msgBadgeItem = new BadgeItem();
 
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
@@ -71,7 +73,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home, strings[0]))
                 .addItem(new BottomNavigationItem(R.drawable.home_search, strings[1]))
                 .addItem(new BottomNavigationItem(R.drawable.empty, strings[2]))
-                .addItem(new BottomNavigationItem(R.drawable.message, strings[3]))
+                .addItem(new BottomNavigationItem(R.drawable.message, strings[3])
+                        .setBadgeItem(msgBadgeItem.setBackgroundColor(Color.RED)))
                 .addItem(new BottomNavigationItem(R.drawable.my, strings[4])
                         .setBadgeItem(badgeItem.setBackgroundColor(Color.RED)));
 
@@ -113,7 +116,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             badgeItem.hide();
         }else{
             badgeItem.show().setText(failTime+"");
-            BadgeUtil.setBadgeCount(this, failTime, R.mipmap.ic_launcher);
+        }
+
+        int msgCnt = ShareUtils.getValue("message", 0);
+        if (msgCnt == 0){
+            msgBadgeItem.hide();
+        }else{
+            msgBadgeItem.show().setText(msgCnt+"");
+        }
+
+        int appCnt = failTime+msgCnt;
+        if (appCnt != 0){
+            BadgeUtil.setBadgeCount(this, appCnt, R.mipmap.ic_launcher);
         }
     }
 
