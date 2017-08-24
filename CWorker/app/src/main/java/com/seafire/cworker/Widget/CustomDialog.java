@@ -1,5 +1,6 @@
 package com.seafire.cworker.Widget;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -147,6 +148,7 @@ public class CustomDialog {
         animSet.play(anim4).with(anim5).after(anim3);
         animSet.setDuration(300)
                 .start();
+        view.setVisibility(View.VISIBLE);
     }
 
     public static void viewHide(View view) {
@@ -155,12 +157,34 @@ public class CustomDialog {
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
                 1f, 0f);
 
-        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.5f);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.3f);
 
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim1).with(anim2).with(anim3);
-        animSet.setDuration(300)
+        animSet.setDuration(500)
                 .start();
+
+        animSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
 

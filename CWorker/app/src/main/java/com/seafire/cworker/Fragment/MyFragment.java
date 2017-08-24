@@ -142,8 +142,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         help.setOnClickListener(this);
         todayLayout.setOnClickListener(this);
         scrollView.setOnTouchListener((v, event) -> {
-            CustomDialog.viewHide(popView);
-            return false;
+            if (popView.getVisibility() == View.VISIBLE && event.getAction() == MotionEvent.ACTION_DOWN)
+                CustomDialog.viewHide(popView);
+            return true;
         });
         return view;
     }
@@ -321,8 +322,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 days.setText(Html.fromHtml("<font color='#ffa400'><big><big><big><big><big><big>" + continueDays + "</big></big></big></big></big></big></font>天"));
 
-                CustomDialog.viewShow(popView);
-                popView.setVisibility(View.VISIBLE);
+                if (popView.getVisibility() == View.GONE)
+                    CustomDialog.viewShow(popView);
 
                 //CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
                 break;
