@@ -1,5 +1,6 @@
 package com.seafire.cworker.Widget;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
@@ -89,7 +90,8 @@ public class CustomDialog {
         PopupWindow popupWindow = new PopupWindow(view, Utils.getScreenWidth(context)*2/3, Utils.getScreenHeight(context)*1/2, true);
         popupWindow.setTouchable(true);
         popupWindow.setOutsideTouchable(true);
-        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        //popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        viewShow(view);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         int x = Utils.getScreenWidth(context)/6;
         int y = Utils.getScreenHeight(context)/6;
@@ -127,14 +129,38 @@ public class CustomDialog {
         popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x, y);
     }
 
-    public static void propertyValuesHolder(View view) {
-        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("alpha", 0.5f,
-                1f, 1f);
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 0.5f,
+    public static void viewShow(View view) {
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
+                0.5f, 1.2f);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
+                0.5f, 1.2f);
+
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1.0f);
+
+        ObjectAnimator anim4 = ObjectAnimator.ofFloat(view, "scaleX",
                 1.2f, 1f);
-        PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 0.5f,
+        ObjectAnimator anim5 = ObjectAnimator.ofFloat(view, "scaleY",
                 1.2f, 1f);
-        ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY,pvhZ).setDuration(300).start();
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(anim1).with(anim2).with(anim3);
+        animSet.play(anim4).with(anim5).after(anim3);
+        animSet.setDuration(300)
+                .start();
+    }
+
+    public static void viewHide(View view) {
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
+                1f, 0f);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
+                1f, 0f);
+
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.5f);
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(anim1).with(anim2).with(anim3);
+        animSet.setDuration(300)
+                .start();
     }
 
 

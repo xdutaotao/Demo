@@ -1,6 +1,7 @@
 package com.seafire.cworker.Fragment;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,7 +24,6 @@ import com.seafire.cworker.Activity.SettingActivity;
 import com.seafire.cworker.Activity.SuggestActivity;
 import com.seafire.cworker.Activity.VIPActivity;
 import com.seafire.cworker.Bean.CollectBean;
-import com.seafire.cworker.Bean.RxBusEvent;
 import com.seafire.cworker.Common.Constants;
 import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Model.UserInfo;
@@ -31,7 +31,6 @@ import com.seafire.cworker.Present.MyPresenter;
 import com.seafire.cworker.R;
 import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.NetWorkUtils;
-import com.seafire.cworker.Utils.RxBus;
 import com.seafire.cworker.Utils.ShareUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.Utils.Utils;
@@ -92,6 +91,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     TextView sign;
     @BindView(R.id.today_layout)
     LinearLayout todayLayout;
+    @BindView(R.id.rule_tv)
+    TextView ruleTv;
+    @BindView(R.id.days)
+    TextView days;
+    @BindView(R.id.pop_view)
+    LinearLayout popView;
     private String mParam1;
 
     @Inject
@@ -136,6 +141,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         sign.setOnClickListener(this);
         help.setOnClickListener(this);
         todayLayout.setOnClickListener(this);
+        scrollView.setOnTouchListener((v, event) -> {
+            CustomDialog.viewHide(popView);
+            return false;
+        });
         return view;
     }
 
@@ -174,14 +183,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 if (ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) != 0) {
                     List<CollectBean> collectBeanList = JsonUtils.getInstance()
                             .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
-                    for(CollectBean bean: collectBeanList){
-                        if (!bean.getIsSuccess()){
+                    for (CollectBean bean : collectBeanList) {
+                        if (!bean.getIsSuccess()) {
                             failTime++;
                         }
                     }
                     int successTime = ShareUtils.getValue(Constants.POST_COLLECT_TIME, 0) - failTime;
                     today.setVisibility(View.VISIBLE);
-                    today.setText(failTime+"");
+                    today.setText(failTime + "");
                     todaySuccess.setText(" / " + successTime);
                 } else {
                     today.setVisibility(View.GONE);
@@ -232,7 +241,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             case R.id.change_pwd:
                 if (User.getInstance().getUserInfo() != null) {
                     CheckPhoneActivity.startActivity(getContext(), true);
-                }else{
+                } else {
                     ToastUtil.show("请登录");
                 }
                 break;
@@ -285,15 +294,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                         if (!TextUtils.equals(ShareUtils.getValue("main_sign", ""), Utils.getNowDate())) {
                             continueDays = ShareUtils.getValue("continue", 0);
                             continueDays++;
-                            if (continueDays % 7 == 0){
-                                setSign(continueDays/7);
-                            }else{
+                            if (continueDays % 7 == 0) {
+                                setSign(continueDays / 7);
+                            } else {
                                 setSign(0);
                             }
 
                             ShareUtils.putValue("continue", continueDays);
                             ShareUtils.putValue("main_sign", Utils.getNowDate());
-                        }else{
+                        } else {
                             continueDays = ShareUtils.getValue("continue", 0);
                         }
                     }
@@ -304,7 +313,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     setSign(0);
                 }
                 sign.setText("已签到");
-                CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
+
+                if (User.getInstance().getUserInfo().getPerson().getVIP() != 0)
+                    ruleTv.setText("金币+6 积分+12");
+                else
+                    ruleTv.setText("金币+5 积分+10");
+
+                days.setText(Html.fromHtml("<font color='#ffa400'><big><big><big><big><big><big>" + continueDays + "</big></big></big></big></big></big></font>天"));
+
+                CustomDialog.viewShow(popView);
+                popView.setVisibility(View.VISIBLE);
+
+                //CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
                 break;
 
             case R.id.help:
@@ -319,7 +339,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         }
     }
 
-    private void jMessageLogout(){
+    private void jMessageLogout() {
         cn.jpush.im.android.api.model.UserInfo info = JMessageClient.getMyInfo();
         if (info == null)
             return;
@@ -336,11 +356,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         JMessageClient.logout();
     }
 
-    private void setSign(int days){
-        if (User.getInstance().getUserInfo().getPerson().getVIP() != 1){
-            presenter.signToday(6 + days*10, 12);
-        }else{
-            presenter.signToday(5 + days*10, 10);
+    private void setSign(int days) {
+        if (User.getInstance().getUserInfo().getPerson().getVIP() != 1) {
+            presenter.signToday(6 + days * 10, 12);
+        } else {
+            presenter.signToday(5 + days * 10, 10);
         }
 
     }
@@ -369,6 +389,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+        ToastUtil.show("sss");
         return false;
     }
 
