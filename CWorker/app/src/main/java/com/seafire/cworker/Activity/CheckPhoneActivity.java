@@ -2,7 +2,6 @@ package com.seafire.cworker.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seafire.cworker.Present.RegisterPresenter;
@@ -49,12 +49,12 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     TextView getCode;
     @BindView(R.id.register_btn)
     Button registerBtn;
+    @BindView(R.id.phone_cancle)
+    ImageView phoneCancle;
 
     private Subscription subscriber;
     private EventHandler eventHandler;
     private boolean isChangePwd;
-
-    Drawable drawable;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, CheckPhoneActivity.class);
@@ -80,35 +80,35 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         getCode.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
-        eventHandler = new EventHandler(){
+        eventHandler = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        if (isChangePwd){
+                        if (isChangePwd) {
                             CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString(), isChangePwd);
-                        }else{
+                        } else {
                             CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
                         }
 
                         finish();
 
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         //获取验证码成功
                         ToastUtil.show("发送成功");
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                         //返回支持发送验证码的国家列表
                     }
-                }else{
-                    ((Throwable)data).printStackTrace();
+                } else {
+                    ((Throwable) data).printStackTrace();
                 }
             }
         };
         SMSSDK.registerEventHandler(eventHandler);
 
-        if (getIntent().getBooleanExtra(INTENT_KEY, false)){
+        if (getIntent().getBooleanExtra(INTENT_KEY, false)) {
             isChangePwd = true;
         }
 
@@ -120,11 +120,10 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(s)){
-                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                    phoneInput.setCompoundDrawables(null, null, drawable, null);
-                }else{
-                    phoneInput.setCompoundDrawables(null, null, null, null);
+                if (!TextUtils.isEmpty(s)) {
+                    phoneCancle.setVisibility(View.VISIBLE);
+                } else {
+                    phoneCancle.setVisibility(View.GONE);
                 }
             }
 
@@ -134,12 +133,16 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             }
         });
 
+        phoneCancle.setOnClickListener(v -> {
+            phoneInput.setText("");
+        });
+
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.get_code:
                 getCodeAction();
                 break;
@@ -150,7 +153,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         }
     }
 
-    private void getCodeAction(){
+    private void getCodeAction() {
         if (phoneInput.getText().length() == 0) {
             ToastUtil.show("手机号不能为空");
             return;
@@ -160,15 +163,15 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             ToastUtil.show("手机号填写错误");
             return;
         }
-        if(isChangePwd){
+        if (isChangePwd) {
             presenter.changePwd(this, phoneInput.getText().toString());
-        }else{
+        } else {
             presenter.checkPhone(this, phoneInput.getText().toString());
         }
 
     }
 
-    private void setCodeAction(){
+    private void setCodeAction() {
         if (phoneInput.getText().length() == 0) {
             ToastUtil.show("手机号不能为空");
             return;
@@ -186,7 +189,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         subscriber = Observable.interval(1, TimeUnit.SECONDS)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(aLong -> {
-                    if (subscriber != null){
+                    if (subscriber != null) {
                         if (aLong >= 60) {
                             stopTime();
                         } else {

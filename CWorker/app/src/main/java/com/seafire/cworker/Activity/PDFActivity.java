@@ -98,7 +98,8 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
 
     @Override
     public void onFailure() {
-
+        if (dialog != null)
+            dialog.dismiss();
     }
 
     @Override

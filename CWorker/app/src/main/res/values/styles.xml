@@ -66,7 +66,7 @@
     </style>
 
     <style name="collect_edit">
-        <item name="android:layout_width">300px</item>
+        <item name="android:layout_width">350px</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:background">@android:color/transparent</item>

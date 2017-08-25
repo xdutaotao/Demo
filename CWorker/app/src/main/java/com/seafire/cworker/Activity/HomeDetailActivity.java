@@ -117,7 +117,7 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
             }else if (names.length == 2){
                 name = names[0] + "." + suffixName;
             }else{
-                name = suffixName + "." + suffixName;
+                name = System.currentTimeMillis() + "." + suffixName;
             }
 
             file = new File(Environment.getExternalStorageDirectory()+"/cwork/", name);
@@ -154,8 +154,8 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
 
     @Override
     public void onFailure() {
-        dialog.dismiss();
-        ToastUtil.show("下载PDF失败");
+        if (dialog != null)
+            dialog.dismiss();
     }
 
     @Override

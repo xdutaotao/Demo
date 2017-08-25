@@ -970,8 +970,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return;
         }
 
-        if (imageItems.size() <= 3){
-            ToastUtil.show("照片数量要大于3个");
+        if (imageItems.size() < 3){
+            ToastUtil.show("照片数量至少要3个");
             return;
         }
 

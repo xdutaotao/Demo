@@ -144,7 +144,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         scrollView.setOnTouchListener((v, event) -> {
             if (popView.getVisibility() == View.VISIBLE && event.getAction() == MotionEvent.ACTION_DOWN)
                 CustomDialog.viewHide(popView);
-            return true;
+            return false;
         });
         return view;
     }
@@ -375,6 +375,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Override
     public void getData(String data) {
         ToastUtil.show("退出成功");
+        ShareUtils.delete();
     }
 
     @Override

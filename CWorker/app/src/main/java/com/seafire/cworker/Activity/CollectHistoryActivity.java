@@ -1,5 +1,6 @@
 package com.seafire.cworker.Activity;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.seafire.cworker.Bean.CollectBean;
 import com.seafire.cworker.R;
 import com.seafire.cworker.Utils.JsonUtils;
 import com.seafire.cworker.Utils.ShareUtils;
+import com.seafire.cworker.Utils.ToastUtil;
 import com.seafire.cworker.Utils.Utils;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
@@ -68,9 +71,54 @@ public class CollectHistoryActivity extends BaseActivity {
                 CollectActivity.startActivityForResult(this, list.get(i));
         });
 
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(int i) {
+                if (adapter.getAllData().get(i).getIsSuccess()){
+                    new IOSDialog(CollectHistoryActivity.this).builder()
+                            .setMsg("复制", v -> {
+                                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                // 将文本内容放到系统剪贴板里。
+                                cm.setText(adapter.getAllData().get(i).getPartCode());
+                                ToastUtil.show("复制成功");
+                            })
+                            .show();
+                }else{
+                    new IOSDialog(CollectHistoryActivity.this).builder()
+                            .setMsg("是否删除记录？")
+                            .setNegativeButton("取消", null)
+                            .setNegativeBtnColor(R.color.colorAccent)
+                            .setPositiveBtnColor(R.color.colorAccent)
+                            .setPositiveButton("确认", v -> {
+                                deleteData(adapter.getAllData().get(i));
+                            }).show();
+                }
+                return false;
+            }
+        });
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void deleteData(CollectBean bean){
+        if (ShareUtils.getValue(COLLECT_LIST, null) != null) {
+            List<CollectBean> collectBeanList  = JsonUtils.getInstance()
+                    .JsonToCollectList(ShareUtils.getValue(COLLECT_LIST, null));
+
+            List<CollectBean> newList = new ArrayList<>();
+            for(CollectBean collectBean : collectBeanList){
+                if (collectBean.getLongTime() != bean.getLongTime()){
+                    newList.add(collectBean);
+                }
+            }
+
+            ShareUtils.putValue(COLLECT_LIST, JsonUtils.getInstance().CollectListToJson(newList));
+            ShareUtils.putValue(POST_COLLECT_TIME, newList.size());
+
+            setData();
+        }
     }
 
     @Override

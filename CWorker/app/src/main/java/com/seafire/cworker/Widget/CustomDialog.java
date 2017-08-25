@@ -146,18 +146,18 @@ public class CustomDialog {
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim1).with(anim2).with(anim3);
         animSet.play(anim4).with(anim5).after(anim3);
-        animSet.setDuration(300)
+        animSet.setDuration(200)
                 .start();
         view.setVisibility(View.VISIBLE);
     }
 
     public static void viewHide(View view) {
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
-                1f, 0f);
+                1f, 0.2f);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",
-                1f, 0f);
+                1f, 0.2f);
 
-        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.3f);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.0f);
 
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim1).with(anim2).with(anim3);
