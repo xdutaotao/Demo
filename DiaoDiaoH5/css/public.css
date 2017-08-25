@@ -1,0 +1,261 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("../images/bg.png");
+    background-repeat: repeat-x;
+    background-color: rgb(255, 244, 236);
+    font: 13px/1 "微软雅黑",Tahoma,sans-serif,Arial,Helvetica,"宋体";
+
+}
+
+.container {
+    width: 997px;
+    margin: 0 auto;
+}
+
+.header {
+
+    background-image: url("../images/ag_menue_bg.png");
+    background-repeat: repeat-x;
+    font-size: 18px;
+    line-height: 39px;
+    height: 48px;
+    overflow: hidden;
+
+}
+
+.header li {
+    float: left;
+    color: white;
+    list-style: none;
+    padding: 1px 16px 7px 16px;
+
+}
+.header li:hover{
+    background-color: orange;
+    color: black;
+    text-decoration: underline;
+}
+.new_open_num{
+    background-image: url("../images/ag_hk6_open_bg.png");
+    width: 997px;
+    height: 182px;
+}
+.open_list{
+    background-image: url(../images/sub_bot_bg.png);
+    width: 1000px;
+    height: 47px;
+    margin-top: 10px;
+}
+.nums_table {
+
+    width: 100%;
+    text-align: center;
+    border-right: 1px solid rgb(232, 232, 232);
+    border-bottom: 1px solid rgb(232, 232, 232);
+    margin-top: 4px;
+    border-collapse:collapse;
+
+
+}
+.nums_table td{
+    border-left: 1px solid rgb(232, 232, 232);
+    border-top: 1px solid rgb(232, 232, 232);
+ }
+
+.nums_table thead tr{
+    background-color: rgb(221, 221, 221);
+    line-height: 30px;
+    font-weight: bold;
+}
+.nums_table tbody td{
+    background-color: white;
+
+}
+.daresult{
+    background: red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    margin: auto;
+}
+.xiaoresult{
+    background: #191718;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    margin: auto;
+}
+.danresult{
+    background: #2F62E3;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    margin: auto;
+}
+.shuangresult{
+    background: #F00078;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    margin: auto;
+}
+.new_num_left{
+    float: left;
+    color: white;
+}
+.new_num_title{
+    float: left;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 28px;
+    margin-left: 14px;
+    line-height: 24px;
+    font-weight: bold;
+}
+.new_num_title h4{
+    font-size: 22px;
+}
+.new_num_title span{
+    background-color: rgb(254, 219, 109);
+    border-radius: 4px;
+    color: red;
+
+}
+.new_num_title span div{
+    margin-left: 3px;
+    margin-right: 3px;
+    display: inline;
+}
+.sheng_qishu{
+    font-size: 14px;
+}
+.new_num_result{
+    float: left;
+}
+.new_num_result p{
+    margin-left: 415px;
+    margin-top: 36px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.new_num_result img{
+    margin-top: 15px;
+    margin-left: 54px;
+}
+.new_num_right{
+    float: right;
+    color: white;
+    overflow: hidden;
+}
+.new_num_right p{
+    margin-top: 30px;
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 7px;
+}
+.new_num_right span{
+    font-size: 40px;
+    display: block;
+    margin-left: 23px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.tdwidth{
+    width: 68px;
+}
+.footer{
+    width: 100%;
+    height: 90px;
+    border-top: 3px solid yellow;
+    margin-top: 20px;
+    text-align: center;
+
+}
+.footer p{
+    margin-top: 20px;
+}
+.open_list p{
+    float: left;
+    font-size: 22px;
+    margin-top: 13px;
+    margin-left: 12px;
+}
+.open_list a{
+    float: right;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-right: 13px;
+    border: 1px solid rgb(218, 124, 12);
+    line-height: 28px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+.open_list span{
+    margin-right: 21px;
+    margin-left: 21px;
+}
+.zsttdwidth{
+    width: 90px;
+}
+.zsttext{
+    font-size:14px;float:right;margin-top:-50px;font-weight:600
+}
+.new_num_right a{
+    float: right;
+    margin-top: 27px;
+    font-size: 14px;
+    border: 1px solid rgb(183, 183, 183);
+    border-radius: 4px;
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.2);
+    color: rgb(96, 96, 96)
+}
+.guanfangchaxun{
+    margin: 6px 9px 6px 9px;
+}
+.wanfaguizhi{
+    margin: 6px 9px 6px 9px;
+}
+.bnt1{
+    margin-right: 57px;
+}
+.bnt2{
+    margin-right: 10px;
+}
+.new_num_right spen{
+    color: red;
+    font-weight: bold;
+}
+.tdone{
+    width: 187px;
+}
+.nextqi_text{
+    display: inline;
+    font-weight: bold;
+    color: red;
+}
+.opennums_pictd{
+    width: 273px; 
+    height: 60px
+}
+.zonghe_td{
+    width: 46px;
+}

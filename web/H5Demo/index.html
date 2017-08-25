@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Chat</title>
+    </head>
+
+    <script src="js/socket.io.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+
+    <body>
+
+        <div id="app">{{message}}</div>
+
+        <div id="app-2">
+            <span v-bind:title="message">
+                提示信息
+            </span>
+        </div>
+
+        <div id="app-3">
+            <p v-if="seen">看到我了</p>
+        </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue'
+            }
+        });
+
+        new Vue({
+            el: '#app-2',
+            data: {
+                message: '页面加载' + new Date()
+            }
+        })
+
+        var vue3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen: true
+            }
+        })
+
+//        var socket = io("http://192.168.68.61:3030/p2pim");
+//        socket.on('connect',function () {
+//            var send = {};
+//            send.userCode='android1';
+//            send.token='android1';
+//            socket.emit('join',JSON.stringify(send),function (ack) {
+//                alert(ack);
+//            });
+//        });
+
+    </script>
+
+    </body>
+</html>
