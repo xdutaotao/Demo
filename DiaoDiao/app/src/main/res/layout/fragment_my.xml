@@ -11,37 +11,37 @@
         android:orientation="vertical"
         android:background="@drawable/bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_shezhi"
-            android:padding="40px"
-            android:id="@+id/setting"/>
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="我的"
-            android:textSize="50px"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:gravity="center"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_shezhi"
+                android:padding="40px"
+                android:id="@+id/setting"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_xiaoxi"
-            android:padding="40px"
-            android:id="@+id/message"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="我的"
+                android:textSize="50px"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center"/>
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_xiaoxi"
+                android:padding="40px"
+                android:id="@+id/message"/>
+
+        </LinearLayout>
 
 
 
@@ -155,8 +155,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
     </LinearLayout>
 
 
@@ -297,6 +295,5 @@
             android:src="@drawable/turn_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-
 
 </LinearLayout>

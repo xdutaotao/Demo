@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -21,11 +22,11 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     LoginPresenter() {
     }
 
-    public void login(Context context, String phone, String pwd, String id){
-        mCompositeSubscription.add(model.login(phone, pwd, id)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+    public void login(Context context, String phone, String pwd){
+        mCompositeSubscription.add(model.login(phone, pwd)
+                .subscribe(new RxSubUtils<LoginResBean>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(LoginResBean token) {
                         getView().getData(token);
                     }
 

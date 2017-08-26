@@ -1,49 +1,35 @@
 package com.xunao.diaodiao.Bean;
 
-import android.text.TextUtils;
-
 public class BaseBean<T>{
-	private T data;
-	private String msg;
-	private String result;
+	private T body;
+	private String resultMsg;
+	private int resultCode;
 
 	public boolean isError() {
-		//if (TextUtils.equals("MSG00000", CODE) || TextUtils.equals("00000", CODE)){
-		if(TextUtils.isEmpty(msg)){
-			return true;
-		}
-		if (TextUtils.equals(msg, "200")){
-			return false;
-		}else{
-			return true;
-		}
+		return false;
 	}
 
-	public String errorMsg(){
-		return result;
+	public T getBody() {
+		return body;
 	}
 
-	public T getData() {
-		return data;
+	public void setBody(T body) {
+		this.body = body;
 	}
 
-	public void setData(T data) {
-		this.data = data;
+	public String getResultMsg() {
+		return resultMsg;
 	}
 
-	public String getMsg() {
-		return msg;
+	public void setResultMsg(String resultMsg) {
+		this.resultMsg = resultMsg;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public int getResultCode() {
+		return resultCode;
 	}
 
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
+	public void setResultCode(int resultCode) {
+		this.resultCode = resultCode;
 	}
 }

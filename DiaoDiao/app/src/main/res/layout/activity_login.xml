@@ -1,11 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.LoginActivity"
-    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <ImageView
@@ -47,7 +44,7 @@
 
     </LinearLayout>
 
-    <View style="@style/setting_divider_line_style"/>
+    <View style="@style/item_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,16 +71,20 @@
 
     </LinearLayout>
 
+    <View style="@style/item_divider"/>
+
     <Button
         style="@style/login_btn_style"
         android:id="@+id/login"
         android:text="登录"
-        android:layout_marginTop="50px"/>
+        android:layout_marginTop="150px"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:layout_margin="40px">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_marginTop="60px">
 
         <TextView
             android:layout_width="wrap_content"
@@ -111,6 +112,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="50px"
         android:layout_marginRight="50px"
+        android:layout_marginTop="80px"
         android:gravity="center">
 
         <View
@@ -134,12 +136,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="微信登录"
         android:id="@+id/wx_login"
         android:drawablePadding="20px"
         android:drawableTop="@drawable/icon_wechat"
         android:layout_gravity="center"
-        android:layout_marginTop="100px"/>
+        android:layout_marginTop="50px"/>
 
 
 </LinearLayout>

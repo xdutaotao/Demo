@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Utils;
 
+import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.CollectBean;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResponseBean;
@@ -39,7 +40,7 @@ public class JsonUtils {
         return gson;
     }
 
-    public String RegisterBeanToJson(RegisterBean bean){
+    public String BaseRequestBeanToJson(BaseRequestBean bean){
         return gson.toJson(bean);
     }
 

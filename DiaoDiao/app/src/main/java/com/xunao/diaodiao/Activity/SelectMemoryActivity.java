@@ -21,6 +21,10 @@ import com.xunao.diaodiao.Utils.ShareUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
+
 public class SelectMemoryActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.title_text)
@@ -46,7 +50,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
         getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
-        showToolbarBack(toolBar, titleText, "选择颜色");
+        showToolbarBack(toolBar, titleText, "选择角色");
 
         companyBox.setOnCheckedChangeListener(this);
         skillBox.setOnCheckedChangeListener(this);
@@ -76,12 +80,16 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
                 new IOSDialog(this, 0.9f).builder()
                         .setMsg(builder)
-                        .setNegativeButton("取消", null)
+                        .setMsgSize(R.dimen.small_font_size)
+                        .setNegativeButton("取消", v -> {
+                            companyBox.setChecked(false);
+                        })
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", 1);
+                            ShareUtils.putValue("TYPE", COMPANY_TYPE);
                             SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
+                            finish();
                         })
                         .show();
                 break;
@@ -96,12 +104,16 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
                 new IOSDialog(this, 0.9f).builder()
                         .setMsg(builder)
-                        .setNegativeButton("取消", null)
+                        .setMsgSize(R.dimen.small_font_size)
+                        .setNegativeButton("取消", v -> {
+                            skillBox.setChecked(false);
+                        })
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", 2);
+                            ShareUtils.putValue("TYPE", SKILL_TYPE);
                             SelectSkillActivity.startActivity(SelectMemoryActivity.this);
+                            finish();
                         })
                         .show();
                 break;
@@ -116,12 +128,16 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
                 new IOSDialog(this, 0.9f).builder()
                         .setMsg(builder)
-                        .setNegativeButton("取消", null)
+                        .setMsgSize(R.dimen.small_font_size)
+                        .setNegativeButton("取消", v -> {
+                            cumstomBox.setChecked(false);
+                        })
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", 3);
+                            ShareUtils.putValue("TYPE", CUSTOM_TYPE);
                             SelectNormalActivity.startActivity(SelectMemoryActivity.this);
+                            finish();
                         })
                         .show();
 

@@ -4,6 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="default_font_size">18sp</dimen>
+    <dimen name="small_font_size">13px</dimen>
+    <dimen name="middle_font_size">18px</dimen>
+    <dimen name="big_font_size">20px</dimen>
     <dimen name="edit_text_size">50px</dimen>
     <dimen name="home_text_size">30px</dimen>
     <dimen name="dialog_msg_size">16px</dimen>

@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Common;
 
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
@@ -40,8 +41,8 @@ public interface RetrofitService {
     Observable<BaseBean<String>> register(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST(ApiConstants.USER_LOGIN)
-    Observable<ResponseBean> login(@FieldMap Map<String, String> map);
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<LoginResBean>> login(RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

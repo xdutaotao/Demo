@@ -16,4 +16,8 @@ public class Constants {
     public static final String COLLECT_LIST = "COLLECT_LIST";
     public static final String IS_COME_OVER = "IS_COME_OVER";
 
+    public static final int COMPANY_TYPE = 1;
+    public static final int SKILL_TYPE = 2;
+    public static final int CUSTOM_TYPE = 3;
+
 }

@@ -27,8 +27,8 @@ public class SelectCompanyActivity extends BaseActivity implements SelectCompany
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.register_btn)
-    Button registerBtn;
+    @BindView(R.id.go_in_app)
+    Button goInApp;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectCompanyActivity.class);
@@ -43,6 +43,10 @@ public class SelectCompanyActivity extends BaseActivity implements SelectCompany
         getActivityComponent().inject(this);
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "暖通公司");
+
+        goInApp.setOnClickListener(v -> {
+            finish();
+        });
     }
 
 

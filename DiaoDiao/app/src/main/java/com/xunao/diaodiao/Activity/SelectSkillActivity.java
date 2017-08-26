@@ -3,11 +3,13 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Present.SelectSkillPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.SelectSkillView;
@@ -32,8 +34,12 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
     EditText information;
     @BindView(R.id.info_num)
     TextView infoNum;
-    @BindView(R.id.sure)
-    Button sure;
+    @BindView(R.id.go_in_app)
+    Button goInApp;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
+    private RecyclerArrayAdapter<String> adapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectSkillActivity.class);
@@ -49,6 +55,10 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "技术人员");
+
+        goInApp.setOnClickListener(v -> {
+            finish();
+        });
     }
 
 

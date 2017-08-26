@@ -3,6 +3,9 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Present.LoginPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -69,6 +73,27 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         forgetTxt.setOnClickListener(this);
         wxLogin.setOnClickListener(this);
         back.setOnClickListener(this);
+
+//        name.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if (TextUtils.isEmpty(s) && TextUtils.isEmpty(pwd.getText())){
+//                    login.setAlpha(0.2f);
+//                }else{
+//                    login.setAlpha(1.0f);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
     }
 
 
@@ -84,7 +109,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 break;
 
             case R.id.code_login:
-                CheckPhoneActivity.startActivity(this, true);
+                CheckPhoneActivity.startActivity(this, 1);
                 break;
 
             case R.id.wx_login:
@@ -101,7 +126,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
      * 登录操作
      */
     private void loginAction() {
-        SelectMemoryActivity.startActivity(this);
+        //SelectMemoryActivity.startActivity(this);
 
 //        int nameLength = name.getText().toString().trim().length();
 //        if (nameLength == 0) {
@@ -123,13 +148,16 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 //            ToastUtil.show("密码长度必须不少于6位");
 //            return;
 //        }
-//
+
+        SelectMemoryActivity.startActivity(this);
+        finish();
+
 //        presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
 //                Utils.getIMIEStatus(this) == null ?  "" : Utils.getIMIEStatus(this));
     }
 
     @Override
-    public void getData(String data) {
+    public void getData(LoginResBean data) {
         loginJMessage();
     }
 
@@ -156,7 +184,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     }
 
     private void actionRegister() {
-        CheckPhoneActivity.startActivity(this);
+        CheckPhoneActivity.startActivity(this, 0);
         //CheckEmailActivity.startActivity(this, "18513212904");
     }
 

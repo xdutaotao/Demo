@@ -8,129 +8,139 @@
 
     <include layout="@layout/tool_bar_center" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            style="@style/select_layout">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                style="@style/select_item_layout">
+                style="@style/select_layout">
 
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
+                <LinearLayout
+                    style="@style/select_item_layout">
 
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入公司名称"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
             </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
 
             <LinearLayout
-                style="@style/select_item_layout">
+                style="@style/select_layout">
 
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
+                <LinearLayout
+                    style="@style/select_item_layout">
 
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司地区"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入公司地区"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
             </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
 
             <LinearLayout
-                style="@style/select_item_layout">
+                style="@style/select_layout">
 
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
+                <LinearLayout
+                    style="@style/select_item_layout">
 
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司地址"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入公司地址"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
             </LinearLayout>
-
-            <View
-                style="@style/select_item_view"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/select_layout">
 
             <LinearLayout
-                style="@style/select_item_layout">
+                style="@style/select_layout">
 
-                <TextView
-                    style="@style/select_item_text"
-                    android:text="姓名"/>
+                <LinearLayout
+                    style="@style/select_item_layout">
 
-                <EditText
-                    style="@style/select_item_edit"
-                    android:hint="请输入真实姓名"/>
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司电话"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入公司电话"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
             </LinearLayout>
 
-            <View
-                style="@style/select_item_view"/>
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="联系人"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入联系人"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="联系人电话"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:hint="请输入联系人电话"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/go_in_app"
+                android:text="进入应用"
+                style="@style/login_btn_style"
+                android:layout_marginTop="150px"/>
+
         </LinearLayout>
-
-    <LinearLayout
-        style="@style/select_layout">
-
-        <LinearLayout
-            style="@style/select_item_layout">
-
-            <TextView
-                style="@style/select_item_text"
-                android:text="姓名"/>
-
-            <EditText
-                style="@style/select_item_edit"
-                android:hint="请输入真实姓名"/>
-        </LinearLayout>
-
-        <View
-            style="@style/select_item_view"/>
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/select_layout">
-
-        <LinearLayout
-            style="@style/select_item_layout">
-
-            <TextView
-                style="@style/select_item_text"
-                android:text="姓名"/>
-
-            <EditText
-                style="@style/select_item_edit"
-                android:hint="请输入真实姓名"/>
-        </LinearLayout>
-
-        <View
-            style="@style/select_item_view"/>
-    </LinearLayout>
+    </ScrollView>
 
 
-
-
-
-        <Button
-            android:id="@+id/register_btn"
-            android:text="修改"
-            style="@style/login_btn_style"/>
 
 
 

@@ -45,7 +45,8 @@
     <style name="login_btn_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">130px</item>
-        <item name="android:layout_margin">40px</item>
+        <item name="android:layout_marginLeft">40px</item>
+        <item name="android:layout_marginRight">40px</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">50px</item>
         <item name="android:background">@drawable/btn_seletor</item>
@@ -89,7 +90,7 @@
 
     <style name="my_item">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">140px</item>
+        <item name="android:layout_height">130px</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">30px</item>
         <item name="android:background">@color/white</item>
@@ -541,8 +542,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
-        <item name="android:layout_marginRight">20px</item>
+        <item name="android:layout_marginRight">40px</item>
         <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textSize">40px</item>
+        <item name="android:textColorHint">@color/edit_hint_color</item>
     </style>
 
     <style name="select_item_view">

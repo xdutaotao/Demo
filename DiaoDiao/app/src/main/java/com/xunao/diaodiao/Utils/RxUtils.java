@@ -44,7 +44,7 @@ public class RxUtils {
 	
 	/**
      * 处理服务器返回的数据，进一步处理错误信息， 有线程切换
-     * @param <T>
+     * @param
      * @return
      */
     public static <T> Observable.Transformer<BaseBean<T>, T> handleResult(){
@@ -56,13 +56,13 @@ public class RxUtils {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
                         if (!result.isError()){
-                            if (result.getData() != null){
-                                return createData(result.getData());
+                            if (result.getBody() != null){
+                                return createData(result.getBody());
                             }else{
-                                return createData((T) result.getResult());
+                                return createData((T) result.getResultMsg());
                             }
                         }else {
-                            return Observable.error(new ServerException(result.errorMsg()));
+                            return Observable.error(new ServerException(result.getResultMsg()));
                         }
                     }
                 }).debounce(1000, TimeUnit.MILLISECONDS)    //防止重复请求
@@ -88,13 +88,13 @@ public class RxUtils {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
                         if (!result.isError()){
-                            if (result.getData() != null){
-                                return createData(result.getData());
+                            if (result.getBody() != null){
+                                return createData(result.getBody());
                             }else{
-                                return createData((T) result.getResult());
+                                return createData((T) result.getResultMsg());
                             }
                         }else {
-                            return Observable.error(new ServerException(result.errorMsg()));
+                            return Observable.error(new ServerException(result.getResultMsg()));
                         }
                     }
                 }).debounce(1000, TimeUnit.MILLISECONDS)    //防止重复请求

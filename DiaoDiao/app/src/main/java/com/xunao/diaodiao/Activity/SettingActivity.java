@@ -12,14 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Present.SettingPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SettingView;
-import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.io.File;
 
@@ -39,6 +38,8 @@ public class SettingActivity extends BaseActivity implements SettingView {
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.update)
+    RelativeLayout update;
 
     private IOSDialog dialog;
     private ProgressBar progressBar;
@@ -58,13 +59,17 @@ public class SettingActivity extends BaseActivity implements SettingView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "设置");
+
+        update.setOnClickListener(v -> {
+            CheckPhoneActivity.startActivity(SettingActivity.this, 2);
+        });
     }
 
     @Override
     public void getUpdateVersion(UpdateVersionBean.DataBean bean) {
-        if (TextUtils.equals(bean.getLastVersion(), bean.getVersion())){
+        if (TextUtils.equals(bean.getLastVersion(), bean.getVersion())) {
             ToastUtil.show("目前是最新版本");
-        }else{
+        } else {
             new IOSDialog(this).builder()
                     .setTitle("升级版本")
                     .setMsg(bean.getRemark())
@@ -72,7 +77,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
                     .setPositiveButton("确定", v -> {
                         showDownloadDialog();
                         file = new File(Environment.getExternalStorageDirectory()
-                                + File.separator + "cwork" + File.separator, bean.getVersion()+".apk");
+                                + File.separator + "cwork" + File.separator, bean.getVersion() + ".apk");
                         presenter.apkFileDownload(bean.getDownloadUrl(), file);
                     })
                     .show();
@@ -95,7 +100,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
         ToastUtil.show(data);
     }
 
-    private void showDownloadDialog(){
+    private void showDownloadDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         progressText = (TextView) view.findViewById(R.id.progress_text);

@@ -39,7 +39,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发项目, 找监理"/>
+                android:textColor="@color/nav_gray"
+                android:text="发项目, 找监理"
+                android:layout_marginTop="20px"/>
         </LinearLayout>
 
         <CheckBox
@@ -86,7 +88,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发技术人员维修"/>
+                android:text="发技术人员维修"
+                android:layout_marginTop="20px"
+                android:textColor="@color/nav_gray"/>
         </LinearLayout>
 
         <CheckBox
@@ -132,7 +136,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="想维保, 可互动"/>
+                android:text="想维保, 可互动"
+                android:layout_marginTop="20px"
+                android:textColor="@color/nav_gray"/>
         </LinearLayout>
 
         <CheckBox

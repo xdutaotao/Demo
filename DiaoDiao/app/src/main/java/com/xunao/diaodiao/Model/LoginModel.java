@@ -4,8 +4,10 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
@@ -70,32 +72,18 @@ public class LoginModel extends BaseModel {
 
     /**
      * 登录
-     * @param phone
-     * @param pwd
-     * @param cliendID
      * @return
      */
-    public Observable<String> login(String phone, String pwd, String cliendID){
-        Map<String, String> map = new HashMap<>();
-        map.put("username", phone);
-        map.put("password", pwd);
-        map.put("clientId", cliendID);
+    public Observable<LoginResBean> login(String mobile, String pwd){
+        StringBuilder sb = new StringBuilder("login");
+        sb.append(mobile).append(pwd).append(System.currentTimeMillis()+"")
+                .append("security");
 
-        return config.getRetrofitService().login(map)
-                .flatMap(testBean -> {
-                    String s = testBean.getResult().getToken();
-                    User.getInstance().setUserId(s);
+        String params = String.format("{\"mobile\":\"%s\"," +
+                "\"password\":\"%s\",\"verify\":\"%s\"}", mobile , pwd, sb.toString());
 
-                    return config.getRetrofitService().getUserInfo(s)
-                            .compose(RxUtils.handleResultNoThread())
-                            .map(userInfo -> {
-                                String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
-                                User.getInstance().setUserInfo(userInfoString);
-
-                                return userInfoString;
-                            });
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
+        return config.getRetrofitService().login(setBody("login", params))
+                .compose(RxUtils.handleResult());
     }
 
     /**
