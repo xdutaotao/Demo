@@ -6,22 +6,31 @@ package com.xunao.diaodiao.Bean;
  */
 
 public class HomeBean {
-    private String url;
-    private String text;
+    private String lat;
+    private String lng;
+    private String verify;
 
-    public String getUrl() {
-        return url;
+    public String getLat() {
+        return lat;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 
-    public String getText() {
-        return text;
+    public String getLng() {
+        return lng;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getVerify() {
+        return verify;
+    }
+
+    public void setVerify(String verify) {
+        this.verify = verify;
     }
 }

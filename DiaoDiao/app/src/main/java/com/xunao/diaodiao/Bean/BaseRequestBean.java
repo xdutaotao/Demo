@@ -5,10 +5,10 @@ package com.xunao.diaodiao.Bean;
  * Created by guzhenfu on 2017/8/25.
  */
 
-public class BaseRequestBean {
+public class BaseRequestBean<T> {
     private String cmd;
     private long ts;
-    private String params;
+    private T params;
 
     public String getCmd() {
         return cmd;
@@ -26,11 +26,11 @@ public class BaseRequestBean {
         this.ts = ts;
     }
 
-    public String getParams() {
+    public T getParams() {
         return params;
     }
 
-    public void setParams(String params) {
+    public void setParams(T params) {
         this.params = params;
     }
 }

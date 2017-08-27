@@ -44,7 +44,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
 
-    private RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean> adapter;
+    private RecyclerArrayAdapter<HomeResponseBean> adapter;
 
     private SearchBean bean;
 
@@ -67,9 +67,9 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
             showToolbarBack(toolBar, titleText, titles[bean.getGroupType()-1]);
         }
 
-        adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(this, R.layout.home_vertical_list) {
+        adapter = new RecyclerArrayAdapter<HomeResponseBean>(this, R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean dataBean) {
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean dataBean) {
             }
         };
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -81,7 +81,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         if (bean.getPageNo() == 1){
             adapter.clear();
         }
-        adapter.addAll(searchResponseBean.getData());
+        //adapter.addAll(searchResponseBean.getData());
     }
 
     @Override

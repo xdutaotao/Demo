@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -34,6 +37,7 @@ public class MessageActivity extends BaseActivity implements MessageView {
     RecyclerView recyclerView;
 
     private RecyclerArrayAdapter<String> adapter;
+    private SpannableStringBuilder builder;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MessageActivity.class);
@@ -51,12 +55,20 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
         showToolbarBack(toolBar, titleText, "我的消息");
 
+        ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.accept_btn_default));
+        builder = new SpannableStringBuilder("有项目需要你确认, 点击查看");
+        builder.setSpan(span, 10, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.message_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-
+                baseViewHolder.setText(R.id.look, builder);
             }
         };
+
+        adapter.setOnItemClickListener((view, i) -> {
+
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

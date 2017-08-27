@@ -1,9 +1,12 @@
 package com.xunao.diaodiao.Model;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.xunao.diaodiao.Bean.HomeBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Utils.RxUtils;
+import com.xunao.diaodiao.Utils.Utils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,21 +25,19 @@ public class HomeModel extends BaseModel {
     @Inject
     public HomeModel() {}
 
-    public Observable<HomeResponseBean> getFirstPage(){
-        return config.getRetrofitService().getFirstPage()
-                .flatMap(homeResponseBean -> {
-                    if (TextUtils.equals("200", homeResponseBean.getMsg())){
-                        return Observable.create(new Observable.OnSubscribe<HomeResponseBean>() {
-                            @Override
-                            public void call(Subscriber<? super HomeResponseBean> subscriber) {
-                                subscriber.onNext(homeResponseBean);
-                                subscriber.onCompleted();
-                            }
-                        });
-                    }else{
-                        return Observable.error(new Throwable(homeResponseBean.getResult()));
-                    }
-                }).compose(RxUtils.applyIOToMainThreadSchedulers());
+    public Observable<HomeResponseBean> getFirstPage(@NonNull String lat, @NonNull String lng){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("index");
+        sb.append(time+"").append(lat).append(lng)
+                .append("security");
+
+        HomeBean bean = new HomeBean();
+        bean.setLat(lat);
+        bean.setLng(lng);
+        bean.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getFirstPage(setBody("index",time, bean))
+                .compose(RxUtils.handleResult());
     }
 
 

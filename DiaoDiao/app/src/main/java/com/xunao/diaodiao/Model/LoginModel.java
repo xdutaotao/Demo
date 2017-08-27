@@ -7,11 +7,13 @@ import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
 import com.xunao.diaodiao.Utils.RxUtils;
+import com.xunao.diaodiao.Utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,14 +77,17 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<LoginResBean> login(String mobile, String pwd){
+        long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("login");
-        sb.append(mobile).append(pwd).append(System.currentTimeMillis()+"")
+        sb.append(time+"").append(mobile).append(pwd)
                 .append("security");
 
-        String params = String.format("{\"mobile\":\"%s\"," +
-                "\"password\":\"%s\",\"verify\":\"%s\"}", mobile , pwd, sb.toString());
+        LoginBean loginBean = new LoginBean();
+        loginBean.setMobile(mobile);
+        loginBean.setPassword(pwd);
+        loginBean.setVerify(Utils.getMD5(sb.toString()));
 
-        return config.getRetrofitService().login(setBody("login", params))
+        return config.getRetrofitService().login(setBody("login", time, loginBean))
                 .compose(RxUtils.handleResult());
     }
 

@@ -6,16 +6,16 @@ package com.xunao.diaodiao.Bean;
  */
 
 public class LoginBean {
-    private String username;
+    private String mobile;
     private String password;
-    private String clientId;
+    private String verify;
 
-    public String getUsername() {
-        return username;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getPassword() {
@@ -26,11 +26,11 @@ public class LoginBean {
         this.password = password;
     }
 
-    public String getClientId() {
-        return clientId;
+    public String getVerify() {
+        return verify;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setVerify(String verify) {
+        this.verify = verify;
     }
 }

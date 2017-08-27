@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
@@ -43,6 +44,8 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
 
     private RecyclerArrayAdapter<String> adapter;
 
+    private String[] skills = {"家电维修", "水泥回填", "家电维修", "水泥回填", "家电维修", "水泥回填"};
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectSkillActivity.class);
         context.startActivity(intent);
@@ -69,11 +72,12 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
             }
         };
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 100);
-        recyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-
+        adapter.addAll(skills);
     }
 
 

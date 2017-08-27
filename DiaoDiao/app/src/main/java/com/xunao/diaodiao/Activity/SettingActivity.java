@@ -2,12 +2,14 @@ package com.xunao.diaodiao.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,6 +42,12 @@ public class SettingActivity extends BaseActivity implements SettingView {
     Toolbar toolBar;
     @BindView(R.id.update)
     RelativeLayout update;
+    @BindView(R.id.clear_cache)
+    RelativeLayout clearCache;
+    @BindView(R.id.abc)
+    RelativeLayout abc;
+    @BindView(R.id.login)
+    Button login;
 
     private IOSDialog dialog;
     private ProgressBar progressBar;
@@ -62,6 +70,17 @@ public class SettingActivity extends BaseActivity implements SettingView {
 
         update.setOnClickListener(v -> {
             CheckPhoneActivity.startActivity(SettingActivity.this, 2);
+        });
+
+        abc.setOnClickListener(v -> {
+            try {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("market://details?id=com.xunao.diaodiao"));
+                startActivity(i);
+            } catch (Exception e) {
+                ToastUtil.show("您的手机上没有安装Android应用市场");
+                e.printStackTrace();
+            }
         });
     }
 

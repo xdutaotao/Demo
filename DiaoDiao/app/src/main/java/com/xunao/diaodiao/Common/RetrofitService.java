@@ -18,6 +18,7 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -40,9 +41,13 @@ public interface RetrofitService {
     @POST(ApiConstants.USER_REGISTER)
     Observable<BaseBean<String>> register(@FieldMap Map<String, String> map);
 
-    @FormUrlEncoded
+
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<LoginResBean>> login(RequestBody body);
+    Observable<BaseBean<LoginResBean>> login(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<HomeResponseBean>> getFirstPage(@Body RequestBody body);
+
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
@@ -75,8 +80,6 @@ public interface RetrofitService {
     @POST("user/logout")
     Observable<BaseBean<String>> logout(@Field("token") String token);
 
-    @GET("home/getFirstPage")
-    Observable<HomeResponseBean> getFirstPage();
 
     @FormUrlEncoded
     @POST("home/search")

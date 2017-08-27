@@ -6,7 +6,7 @@ public class BaseBean<T>{
 	private int resultCode;
 
 	public boolean isError() {
-		return false;
+		return getResultCode() == 0 ? true : false;
 	}
 
 	public T getBody() {

@@ -50,10 +50,6 @@ import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
 
 public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
-    @BindView(R.id.recycler_view_classic)
-    RecyclerView recyclerViewClassic;
-    @BindView(R.id.recycler_view_list)
-    RecyclerView recyclerViewList;
     @BindView(R.id.more_one)
     TextView moreOne;
     @BindView(R.id.more_two)
@@ -83,12 +79,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Inject
     HomePresenter presenter;
 
+    private String latData;
+    private String lngData;
+
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
                             R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
 
-    private RecyclerArrayAdapter<String> adapter;
-    private RecyclerArrayAdapter<String> adapterClassic;
-    private RecyclerArrayAdapter<String> adapterList;
     private RecyclerArrayAdapter<HomeProjBean> projAdapter;
 
     public static HomeFragment newInstance(String param1) {
@@ -119,19 +115,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         RxBus.getInstance().toObservable(String.class)
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(s -> {
-                    locationAdd.setText(s);
+                    String[] data = s.split("#");
+                    locationAdd.setText(data[0]);
+                    if (!TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])){
+                        latData = data[1];
+                        lngData = data[2];
+                        presenter.getFirstPage(latData, lngData);
+                    }
+
                 });
 
-        initCreamList();
-        initClassicList();
-        initList();
         moreOne.setOnClickListener(this);
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
 
-        if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
-            presenter.checkToken();
-        }
 
         document.setOnClickListener(v -> {
             DocActivity.startActivity(HomeFragment.this.getActivity());
@@ -180,96 +177,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerViewProj.setAdapter(projAdapter);
         projAdapter.addAll(homeProjBeanList);
 
-        presenter.getFirstPage();
         return view;
-    }
-
-    private void initList() {
-        adapterList = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
-            }
-        };
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recyclerViewList.setLayoutManager(linearLayoutManager);
-        recyclerViewList.setAdapter(adapterList);
-
-//        adapterList.setOnItemClickListener((view, i) -> {
-//            String url = adapterList.getAllData().get(i).getUrl();
-//            if (url.contains(".png") || url.contains(".jpeg") ||
-//                    url.contains(".jpg")) {
-//                WebViewActivity.startActivity(getContext(), url,
-//                        adapterList.getAllData().get(i).getTitle());
-//            } else {
-//                FindProjectActivity.startActivity(getContext(), 0);
-//            }
-//
-//        });
-    }
-
-    private void initClassicList() {
-        adapterClassic = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
-            }
-        };
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recyclerViewClassic.setLayoutManager(linearLayoutManager);
-        recyclerViewClassic.setAdapter(adapterClassic);
-
-//        adapterClassic.setOnItemClickListener((view, i) -> {
-//            String url = adapterClassic.getAllData().get(i).getUrl();
-//            if (url.contains(".png") || url.contains(".jpeg") ||
-//                    url.contains(".jpg")) {
-//                WebViewActivity.startActivity(getContext(), url,
-//                        adapterClassic.getAllData().get(i).getTitle());
-//            } else {
-//                FindProjectActivity.startActivity(getContext(), 1);
-//            }
-//
-//
-//        });
-    }
-
-    private void initCreamList() {
-        adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
-            }
-        };
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-
-//        adapter.setOnItemClickListener((view, i) -> {
-//            String url = adapter.getAllData().get(i).getUrl();
-//            if (url.contains(".png") || url.contains(".jpeg") ||
-//                    url.contains(".jpg")) {
-//                WebViewActivity.startActivity(getContext(), url,
-//                        adapter.getAllData().get(i).getTitle());
-//            } else {
-//                FindProjectActivity.startActivity(getContext(), 1);
-//            }
-//
-//        });
     }
 
     @Override
@@ -283,9 +191,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         list.add("1");
         list.add("1");
         list.add("1");
-        adapter.addAll(list);
-        adapterClassic.addAll(list);
-        adapterList.addAll(list);
 
 
 

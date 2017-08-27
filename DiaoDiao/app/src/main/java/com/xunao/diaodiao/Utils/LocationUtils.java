@@ -25,7 +25,11 @@ public class LocationUtils {
                     //可在其中解析amapLocation获取相应内容。
 //                    ToastUtil.show(amapLocation.getProvince());//省信息
 //                    ToastUtil.show(amapLocation.getCity());//城市信息
-                    RxBus.getInstance().post(amapLocation.getCity());
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(amapLocation.getCity()).append("#")
+                            .append(amapLocation.getLatitude()).append("#")
+                            .append(amapLocation.getLongitude());
+                    RxBus.getInstance().post(sb.toString());
                 }else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                     Log.e("AmapError","location Error, ErrCode:"

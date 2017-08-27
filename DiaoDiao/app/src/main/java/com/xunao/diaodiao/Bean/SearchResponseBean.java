@@ -19,7 +19,7 @@ public class SearchResponseBean {
     private String msg;
     private String result;
     private int count;
-    private List<HomeResponseBean.TopicBean.GroupDataBean> data;
+    private List<HomeResponseBean> data;
 
     public String getMsg() {
         return msg;
@@ -45,11 +45,11 @@ public class SearchResponseBean {
         this.count = count;
     }
 
-    public List<HomeResponseBean.TopicBean.GroupDataBean> getData() {
+    public List<HomeResponseBean> getData() {
         return data;
     }
 
-    public void setData(List<HomeResponseBean.TopicBean.GroupDataBean> data) {
+    public void setData(List<HomeResponseBean> data) {
         this.data = data;
     }
 

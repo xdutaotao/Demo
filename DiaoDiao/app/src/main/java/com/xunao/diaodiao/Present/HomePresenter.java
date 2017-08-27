@@ -22,8 +22,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
     @Inject
     HomePresenter() {}
 
-    public void getFirstPage(){
-        mCompositeSubscription.add(model.getFirstPage()
+    public void getFirstPage(String lat, String lng){
+        mCompositeSubscription.add(model.getFirstPage(lat, lng)
                 .subscribe(new RxSubUtils<HomeResponseBean>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(HomeResponseBean token) {

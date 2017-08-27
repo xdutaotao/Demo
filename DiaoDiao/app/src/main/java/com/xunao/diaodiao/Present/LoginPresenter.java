@@ -32,10 +32,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                     @Override
                     public void _onError(String s) {
-                        if (!TextUtils.equals(s, "网络错误")){
-                            s = "用户名或者密码错误";
-                        }
                         ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

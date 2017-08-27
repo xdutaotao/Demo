@@ -19,11 +19,11 @@ public class BaseModel {
         return RequestBody.create(okhttp3.MediaType.parse("application/json"), s);
     }
 
-    public RequestBody setBody(String cmd, String params){
-        BaseRequestBean bean = new BaseRequestBean();
+    public <T> RequestBody setBody(String cmd, long time, T params){
+        BaseRequestBean<T> bean = new BaseRequestBean<>();
         bean.setCmd(cmd);
+        bean.setTs(time);
         bean.setParams(params);
-        bean.setTs(System.currentTimeMillis()/1000);
         String s = JsonUtils.getInstance().BaseRequestBeanToJson(bean);
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"),s);
     }
