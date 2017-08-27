@@ -1,46 +1,21 @@
-$(document).ready(function () {
-    get_data_ontime();
-        $.ajax({
-        type:"post",
-        url:"http://www.xgjsk5.com/shifouguanbi",
-        async:true,
-        success:function (data) {
-            $('title').html(data[0].name);  
-        }
-    });
 
-
-
-});
 
 var timer=null;
 var timer2=null;
 
-function get_data_ontime() {
+$.ajax({
+    type:"post",
+    url:serverTimeUrl,
+    async:true,
+    success:function (d) {
+        var time=d.servertime;
+        bb(time)
+    }
+});
+
+function bb(time) {
+    time=new Date(time);
     get_data();
-    setInterval(function () {
-        $.ajax({
-            type:"post",
-            url:"http://www.xgjsk5.com/servertime",
-            async:true,
-            success:function (d) {
-                var time=d.servertime;
-                bb(time)
-            }
-        });
-        function bb(time) {
-            time=new Date(time);
-            if(time.getMinutes()%5==0 && time.getSeconds()==30){
-                clearInterval(timer2);  
-                    get_data();
-
-
-            }
-        }
-
-    },1000);
-
-
 }
 
 
@@ -49,14 +24,11 @@ function get_data_ontime() {
 function get_data() {
     $.ajax({
         type:"post",
-        url:"http://www.xgjsk5.com/onedata",
+        url:oneDataUrl,
         async:true,
         success:function (data) {
             newNum(data);
-            clearInterval(timer);
-            timer=setInterval(function () {
-                daojishi(data);
-            },1000);
+            daojishi(data);
         }
     });
 }
@@ -65,7 +37,7 @@ function daojishi(data) {
 
     $.ajax({
         type:"post",
-        url:"http://www.xgjsk5.com/servertime",
+        url:serverTimeUrl,
         async:true,
         success:function (d) {
             var time=d.servertime;
@@ -73,31 +45,81 @@ function daojishi(data) {
         }
     });
 
+
     function ll(time) {
-        var nowtime=new Date(time+1000*30);
-        var nexttime=(data[0].next_time*1000)+(1000*30);
-        var daojishi=nexttime-nowtime;
-        daojishi=new Date(daojishi);
-        var min=daojishi.getMinutes()<10 && daojishi.getMinutes()>=0 ?"0"+daojishi.getMinutes():daojishi.getMinutes();
-        var sec=daojishi.getSeconds()<10 && daojishi.getSeconds()>=0?"0"+daojishi.getSeconds():daojishi.getSeconds();
-        if(min=="00" && sec==10){   
-            clearInterval(timer2);
-            timer2=setInterval(function () {
-                var num=parseInt(Math.random()*6+1);
-                var num2=RandomNumBoth(52,54);
-                var html="<img src='images/dice_"+num+".png' >";
-                html+="<img src='images/dice_"+num+".png' >";
-                html+="<img src='images/dice_"+num+".png' >";
-                $('.result_pic').html(html);
-                $('.result_pic img').css("margin-left",num2);
-            },400)
+
+
+
+        var timeStart=new Date(time).Format("yyyy-MM-dd")+" 00:00:25";
+
+        timeStart=new Date(timeStart);
+
+
+        var timeStartInt=timeStart.getTime();
+
+        var subTime=timeerCount-parseInt((time-timeStartInt)/1000)%timeerCount;
+
+
+        var min="0"+parseInt(subTime/60);
+        var sec=subTime%60;
+        if(sec<10)
+        {
+            sec="0"+sec;
         }
-        if(parseInt(min)>5){
-            min="00";
-            sec="00";
-        }
+
         var djstext=min+":"+sec;
         $('.new_num_right span').html(djstext);
+
+        setInterval(function()
+        {
+
+            if(min=="00" && sec=="10"){
+                console.log("经来");
+                clearInterval(timer2);
+                timer2=setInterval(function () {
+
+                    var num=parseInt(Math.random()*6+1);
+                    var num2=RandomNumBoth(52,54);
+                    var html="<img src='images/dice_"+num+".png' >";
+                    html+="<img src='images/dice_"+num+".png' >";
+                    html+="<img src='images/dice_"+num+".png' >";
+                    $('.result_pic').html(html);
+                    $('.result_pic img').css("margin-left",num2);
+
+
+                },400)
+            }
+
+
+
+            subTime -= 1;
+
+            min="0"+parseInt(subTime/60);
+
+            sec=subTime%60;
+            if(sec<10)
+            {
+                sec="0"+sec;
+            }
+
+            var djstext=min+":"+sec;
+            $('.new_num_right span').html(djstext);
+
+            if(subTime<=0)
+            {
+                clearInterval(timer2);
+                getdata();
+                subTime=timeerCount;
+            }
+
+
+        },1000);
+
+
+
+
+
+
     }
 
 }
@@ -124,4 +146,21 @@ function RandomNumBoth(Min,Max){
     var Rand = Math.random();
     var num2 = Min + Math.round(Rand * Range); //四舍五入
     return num2;
+}
+
+
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }

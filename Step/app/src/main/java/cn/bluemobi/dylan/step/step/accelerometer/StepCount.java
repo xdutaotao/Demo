@@ -1,7 +1,5 @@
 package cn.bluemobi.dylan.step.step.accelerometer;
 
-import android.widget.Toast;
-
 /**
  * Created by dylan on 16/9/27.
  */

@@ -3,12 +3,14 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Present.SelectSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -59,6 +61,19 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
         goInApp.setOnClickListener(v -> {
             finish();
         });
+
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setText(R.id.skill_text, s);
+            }
+        };
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 100);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
     }
 
 

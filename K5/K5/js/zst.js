@@ -3,32 +3,32 @@
  */
 $(document).ready(function () {
     getdata();
-    setInterval(function () {
-        $.ajax({
-            type:"post",
-            url:"http://www.xgjsk5.com/servertime",
-            async:true,
-            success:function (d) {
-                var nowtime=d.servertime;
-                cc(nowtime);
-            }
-        });
-        function cc(nowTime) {
-            nowTime=new Date(nowTime);
-            if(nowTime.getMinutes()%5==0 && nowTime.getSeconds()==30){
-                setTimeout(function () {
-                    getdata();
-                },1000);
-            }
-        }
-
-    },1000);
+    //setInterval(function () {
+    //    $.ajax({
+    //        type:"post",
+    //        url:"http://www.xgjsk5.com/servertime",
+    //        async:true,
+    //        success:function (d) {
+    //            var nowtime=d.servertime;
+    //            cc(nowtime);
+    //        }
+    //    });
+    //    function cc(nowTime) {
+    //        nowTime=new Date(nowTime);
+    //        if(nowTime.getMinutes()%5==0 && nowTime.getSeconds()==30){
+    //            setTimeout(function () {
+    //                getdata();
+    //            },1000);
+    //        }
+    //    }
+    //
+    //},1000);
 });
 
 function getdata() {
     $.ajax({
         type:"post",
-        url:"http://www.xgjsk5.com/alldata",
+        url:allDataUrl,
         async:true,
         success:function (d) {
             updata(d);

@@ -3,10 +3,10 @@
  */
 $(document).ready(function () {
     getdata();
-    setInterval(function () {
+   /* setInterval(function () {
         $.ajax({
             type:"post",
-            url:"http://www.xgjsk5.com/servertime",
+            url:serverTimeUrl,
             async:true,
             success:function (d) {
                 var nowtime=d.servertime;
@@ -22,14 +22,14 @@ $(document).ready(function () {
             }
         }
 
-   },1000);
+   },1000);*/
 
 });
 
 function getdata() {
     $.ajax({
         type: "post",
-        url: "http://www.xgjsk5.com/alldata",
+        url: allDataUrl,
         async: true,
         success: function (data) {
             updata(data);
@@ -39,6 +39,7 @@ function getdata() {
 
 
 function updata(data) {
+    //console.log(data);
     $('.nums_table tbody tr').remove();
     for (var j=0;j<49;j++){
         var timer = new Date(data[j].g_time * 1000);
