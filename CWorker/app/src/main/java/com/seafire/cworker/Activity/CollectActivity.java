@@ -696,23 +696,23 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     .setMsg("是否重新采集当前数据?")
                     .setPositiveButton("确定", v -> {
 
-                        modleNum.removeTextChangedListener(modleNumWatcher);
-                        number.removeTextChangedListener(numberWatcher);
-                        length.removeTextChangedListener(lengthWatcher);
-                        width.removeTextChangedListener(widthWatcher);
-                        height.removeTextChangedListener(heightWatcher);
-                        weight.removeTextChangedListener(weightWatcher);
-                        allLength.removeTextChangedListener(allLengthWatcher);
-                        allWidth.removeTextChangedListener(allWidthWatcher);
-                        allHeight.removeTextChangedListener(allHeightWatcher);
-                        outLength.removeTextChangedListener(outLengthWatcher);
-                        outWidth.removeTextChangedListener(outWidthWatcher);
-                        outHeight.removeTextChangedListener(outHeightWatcher);
-                        outWeight.removeTextChangedListener(outWeightWatcher);
-                        singleWeight.removeTextChangedListener(singleWeightWatcher);
-                        singleLength.removeTextChangedListener(singleLengthWatcher);
-                        singleWidth.removeTextChangedListener(singleWidthWatcher);
-                        singleHeight.removeTextChangedListener(singleHeightWatcher);
+//                        modleNum.removeTextChangedListener(modleNumWatcher);
+//                        number.removeTextChangedListener(numberWatcher);
+//                        length.removeTextChangedListener(lengthWatcher);
+//                        width.removeTextChangedListener(widthWatcher);
+//                        height.removeTextChangedListener(heightWatcher);
+//                        weight.removeTextChangedListener(weightWatcher);
+//                        allLength.removeTextChangedListener(allLengthWatcher);
+//                        allWidth.removeTextChangedListener(allWidthWatcher);
+//                        allHeight.removeTextChangedListener(allHeightWatcher);
+//                        outLength.removeTextChangedListener(outLengthWatcher);
+//                        outWidth.removeTextChangedListener(outWidthWatcher);
+//                        outHeight.removeTextChangedListener(outHeightWatcher);
+//                        outWeight.removeTextChangedListener(outWeightWatcher);
+//                        singleWeight.removeTextChangedListener(singleWeightWatcher);
+//                        singleLength.removeTextChangedListener(singleLengthWatcher);
+//                        singleWidth.removeTextChangedListener(singleWidthWatcher);
+//                        singleHeight.removeTextChangedListener(singleHeightWatcher);
 
                         wrapText.setText(s.getOldData().getPackageStypeName());
                         typeTxt.setText(s.getOldData().getPartMaterialName());
@@ -798,23 +798,23 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                                     setResultToAdapter(imageItems);
                                 });
 
-                        modleNum.addTextChangedListener(modleNumWatcher);
-                        number.addTextChangedListener(numberWatcher);
-                        length.addTextChangedListener(lengthWatcher);
-                        width.addTextChangedListener(widthWatcher);
-                        height.addTextChangedListener(heightWatcher);
-                        weight.addTextChangedListener(weightWatcher);
-                        allLength.addTextChangedListener(allLengthWatcher);
-                        allWidth.addTextChangedListener(allWidthWatcher);
-                        allHeight.addTextChangedListener(allHeightWatcher);
-                        outLength.addTextChangedListener(outLengthWatcher);
-                        outWidth.addTextChangedListener(outWidthWatcher);
-                        outHeight.addTextChangedListener(outHeightWatcher);
-                        outWeight.addTextChangedListener(outWeightWatcher);
-                        singleWeight.addTextChangedListener(singleWeightWatcher);
-                        singleLength.addTextChangedListener(singleLengthWatcher);
-                        singleWidth.addTextChangedListener(singleWidthWatcher);
-                        singleHeight.addTextChangedListener(singleHeightWatcher);
+//                        modleNum.addTextChangedListener(modleNumWatcher);
+//                        number.addTextChangedListener(numberWatcher);
+//                        length.addTextChangedListener(lengthWatcher);
+//                        width.addTextChangedListener(widthWatcher);
+//                        height.addTextChangedListener(heightWatcher);
+//                        weight.addTextChangedListener(weightWatcher);
+//                        allLength.addTextChangedListener(allLengthWatcher);
+//                        allWidth.addTextChangedListener(allWidthWatcher);
+//                        allHeight.addTextChangedListener(allHeightWatcher);
+//                        outLength.addTextChangedListener(outLengthWatcher);
+//                        outWidth.addTextChangedListener(outWidthWatcher);
+//                        outHeight.addTextChangedListener(outHeightWatcher);
+//                        outWeight.addTextChangedListener(outWeightWatcher);
+//                        singleWeight.addTextChangedListener(singleWeightWatcher);
+//                        singleLength.addTextChangedListener(singleLengthWatcher);
+//                        singleWidth.addTextChangedListener(singleWidthWatcher);
+//                        singleHeight.addTextChangedListener(singleHeightWatcher);
                     })
                     .setNegativeButton("取消", v -> {
                         number.setText("");
