@@ -29,7 +29,7 @@
             android:textColor="@color/accept_btn_default"
             android:drawableRight="@drawable/icon_arrow01"
             android:drawablePadding="20px"
-            android:text="去评价"/>
+            android:text="查看评价"/>
     </LinearLayout>
 
     <TextView

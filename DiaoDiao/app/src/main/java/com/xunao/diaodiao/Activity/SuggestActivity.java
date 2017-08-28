@@ -48,21 +48,6 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
         showToolbarBack(toolBar, titleText, "意见反馈");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_submit, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_submit:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public void onFailure() {

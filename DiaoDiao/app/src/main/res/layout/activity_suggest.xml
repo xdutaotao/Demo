@@ -11,6 +11,7 @@
 
     <Button
         style="@style/login_btn_style"
+        android:layout_marginTop="100px"
         android:id="@+id/login"
         android:text="提交意见"/>
 

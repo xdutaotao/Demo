@@ -45,6 +45,8 @@ public class FeedBackDetailActivity extends BaseActivity implements FeedBackDeta
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        showToolbarBack(toolBar, titleText, "我的评价");
+
         ratingStar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {

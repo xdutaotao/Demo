@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
+import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.R;
 
@@ -79,7 +80,7 @@ public class TabFragment extends BaseFragment {
             });
 
         }else if (TextUtils.equals("已评价", mParam1)){
-            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_rating_item) {
+            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_already_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, String s) {
                 }
@@ -89,7 +90,7 @@ public class TabFragment extends BaseFragment {
                 FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
             });
 
-        }else{
+        }else if (TextUtils.equals("待评价", mParam1)){
             adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, String s) {
@@ -97,7 +98,7 @@ public class TabFragment extends BaseFragment {
             };
 
             adapter.setOnItemClickListener((view1, i) -> {
-                FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
+                RecommandActivity.startActivity(TabFragment.this.getActivity());
             });
 
         }
