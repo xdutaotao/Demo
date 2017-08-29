@@ -218,7 +218,7 @@ public class Utils {
      * @return
      */
     public static String getNowDate(){
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
         String date = sd.format(new Date(System.currentTimeMillis()));
         return date;
     }
@@ -272,9 +272,14 @@ public class Utils {
      * @return
      */
     public static String strToDateLong(long time) {
-        Date date = new Date(time);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(date);
+        Date date = new Date(time*1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        String result = formatter.format(date);
+        String[] results = result.split(" ");
+        if (TextUtils.equals(results[0], getNowDate())){
+            results[0] = "今天";
+        }
+        return results[0]+" "+results[1];
     }
 
     /**

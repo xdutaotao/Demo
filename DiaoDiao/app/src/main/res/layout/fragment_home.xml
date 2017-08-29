@@ -33,12 +33,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/banner02"
+                android:id="@+id/banner"
                 android:layout_marginTop="20px"
                 android:layout_marginBottom="20px"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="140px"
                 android:gravity="center_vertical"
                 android:padding="20px"
                 android:layout_marginTop="10px"
@@ -77,7 +78,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="140px"
                 android:gravity="center_vertical"
                 android:padding="20px"
                 android:layout_marginTop="10px"
@@ -116,7 +117,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="140px"
                 android:gravity="center_vertical"
                 android:padding="20px"
                 android:layout_marginTop="10px"

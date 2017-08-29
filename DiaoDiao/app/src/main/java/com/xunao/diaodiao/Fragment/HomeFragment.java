@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.viewpagecycle.BannerInfo;
@@ -20,9 +21,9 @@ import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
-import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
@@ -64,31 +65,34 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     EditText editText;
     @BindView(R.id.cancle_action)
     ImageView cancleAction;
-    @BindView(R.id.document)
-    TextView document;
     @BindView(R.id.recycler_view_proj)
     RecyclerView recyclerViewProj;
     @BindView(R.id.recycler_view_classic)
     RecyclerView recyclerViewClassic;
     @BindView(R.id.recycler_view_list)
     RecyclerView recyclerViewList;
-    private String mParam1;
-
+    @BindView(R.id.banner)
+    ImageView banner;
     @BindView(R.id.image_cycle_view)
     ImageCycleView imageCycleView;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @Inject
     HomePresenter presenter;
+    @BindView(R.id.document)
+    TextView document;
 
     private String latData;
     private String lngData;
+    private HomeResponseBean homeResponseBean;
 
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
             R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
 
     private RecyclerArrayAdapter<HomeProjBean> projAdapter;
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<HomeResponseBean.Project> adapter;
+    private RecyclerArrayAdapter<HomeResponseBean.Project> adapterSkill;
+    private RecyclerArrayAdapter<HomeResponseBean.Project> adapterList;
 
     public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
@@ -96,14 +100,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -123,7 +119,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     if (!TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                         latData = data[1];
                         lngData = data[2];
-                        presenter.getFirstPage(latData, lngData);
+                        if (homeResponseBean == null)
+                            presenter.getFirstPage(latData, lngData);
                     }
 
                 });
@@ -132,9 +129,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         moreTwo.setOnClickListener(this);
         moreThree.setOnClickListener(this);
 
-
         document.setOnClickListener(v -> {
-            DocActivity.startActivity(HomeFragment.this.getActivity());
+            DocActivity.startActivity(getContext());
         });
 
         List<HomeProjBean> homeProjBeanList = new ArrayList<>();
@@ -181,10 +177,39 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         projAdapter.addAll(homeProjBeanList);
 
 
-        adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
+        adapter = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
+                baseViewHolder.setText(R.id.item_content, s.getTitle());
+                baseViewHolder.setText(R.id.address, s.getDesc());
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.name, s.getType());
+                baseViewHolder.setText(R.id.distance, s.getDistance());
+                baseViewHolder.setText(R.id.price, s.getPrice());
+            }
+        };
 
+        adapterSkill = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
+                baseViewHolder.setText(R.id.item_content, s.getTitle());
+                baseViewHolder.setText(R.id.address, s.getDesc());
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.name, s.getType());
+                baseViewHolder.setText(R.id.distance, s.getDistance());
+                baseViewHolder.setText(R.id.price, s.getPrice());
+            }
+        };
+
+        adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
+                baseViewHolder.setText(R.id.item_content, s.getTitle());
+                baseViewHolder.setText(R.id.address, s.getDesc());
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.name, s.getType());
+                baseViewHolder.setText(R.id.distance, s.getDistance());
+                baseViewHolder.setText(R.id.price, s.getPrice());
             }
         };
 
@@ -192,35 +217,29 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         adapter.setOnItemClickListener((view1, i) -> {
         });
 
-        recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()){
+        recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
-        recyclerViewClassic.setAdapter(adapter);
+        recyclerViewClassic.setAdapter(adapterSkill);
 
-        recyclerViewList.setLayoutManager(new LinearLayoutManager(getContext()){
+        recyclerViewList.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
-        recyclerViewList.setAdapter(adapter);
+        recyclerViewList.setAdapter(adapterList);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
         recyclerView.setAdapter(adapter);
-
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        adapter.addAll(list);
 
         return view;
     }
@@ -231,67 +250,33 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void getData(HomeResponseBean bean) {
-
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        adapter.addAll(list);
-
-
-//        for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
-//            if (TextUtils.equals("jingHua", topicBean.getGroupTitle())) {
-//                adapter.addAll(topicBean.getGroupData());
-//            } else if (TextUtils.equals("caiNiXiHuan", topicBean.getGroupTitle())) {
-//                adapterClassic.addAll(topicBean.getGroupData());
-//            } else if (TextUtils.equals("jingDian", topicBean.getGroupTitle())) {
-//                adapterList.addAll(topicBean.getGroupData());
-//            }
-//        }
-//
+        homeResponseBean = bean;
         List<BannerInfo> bannerInfos = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < bean.getCarousel().size(); i++) {
             BannerInfo info = new BannerInfo();
-            info.setImg("http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg");
-            info.setLink("http://www.baidu.com");
-            info.setOt(1);
+            info.setImg(bean.getCarousel().get(i).getImage());
+            info.setLink(bean.getCarousel().get(i).getLink());
+            info.setOt(i);
             bannerInfos.add(info);
         }
 
         imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
-
+            WebViewActivity.startActivity(HomeFragment.this.getContext(),
+                    bean.getCarousel().get(i).getLink(), bean.getCarousel().get(i).getName());
         });
-//        for (HomeResponseBean.BannerBean bannerBean : bean.getBanner()) {
-//            BannerInfo info = new BannerInfo();
-//            info.setImg(bannerBean.getBannerPicUrl());
-//            info.setLink(bannerBean.getUrl());
-//            info.setOt(1);
-//            bannerInfos.add(info);
-//        }
 
+        adapter.clear();
+        adapter.addAll(bean.getProject());
 
-//        imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
-//            if (bannerInfo.getLink().contains(".xlsx") ||
-//                    bannerInfo.getLink().contains(".xls")) {
-//                HomeResponseBean.TopicBean.GroupDataBean groupDataBean = new HomeResponseBean.TopicBean.GroupDataBean();
-//                HomeResponseBean.BannerBean bannerBean = bean.getBanner().get(i);
-//                groupDataBean.setAuthor(bannerBean.getAuthor());
-//                groupDataBean.setBannerPicUrl(bannerBean.getBannerPicUrl());
-//                groupDataBean.setDateline(bannerBean.getDateline());
-//                groupDataBean.setDescription(bannerBean.getDescription());
-//                groupDataBean.setUpdateTime(bannerBean.getUpdateTime());
-//                groupDataBean.setTitle(bannerBean.getTitle());
-//                groupDataBean.setPic(bannerBean.getPic());
-//                groupDataBean.setVipRes(bannerBean.getVipRes());
-//                groupDataBean.setUrl(bannerBean.getUrl());
-//
-//
-//                FindProjectActivity.startActivity(getContext(), 1);
-//            } else {
-//                WebViewActivity.startActivity(getContext(), bannerInfo.getLink(), bean.getBanner().get(i).getTitle());
-//            }
-//
-//        }));
+        adapterSkill.clear();
+        adapterSkill.addAll(bean.getOdd());
+
+        adapterList.clear();
+        adapterList.addAll(bean.getMaintenance());
+
+        Glide.with(this).load(bean.getAdvertisement().get(0).getImage())
+                .placeholder(R.drawable.banner02)
+                .into(banner);
     }
 
     @Override
@@ -339,4 +324,5 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         bean.setProject("");
         SearchResultActivity.startActivity(getContext(), bean);
     }
+
 }

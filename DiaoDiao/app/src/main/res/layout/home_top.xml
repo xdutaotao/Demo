@@ -16,7 +16,8 @@
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingLeft="20px"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
         android:drawableLeft="@drawable/icon_dinwei"/>
 
     <LinearLayout

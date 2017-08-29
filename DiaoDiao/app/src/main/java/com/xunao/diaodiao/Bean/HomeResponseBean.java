@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HomeResponseBean {
     private List<Carousel> carousel;
-    private Advertisement advertisement;
+    private List<Advertisement> advertisement;
     private List<Project> project;
     private List<Project> odd;
     private List<Project> maintenance;
@@ -23,11 +23,11 @@ public class HomeResponseBean {
         this.carousel = carousel;
     }
 
-    public Advertisement getAdvertisement() {
+    public List<Advertisement> getAdvertisement() {
         return advertisement;
     }
 
-    public void setAdvertisement(Advertisement advertisement) {
+    public void setAdvertisement(List<Advertisement> advertisement) {
         this.advertisement = advertisement;
     }
 
@@ -110,7 +110,7 @@ public class HomeResponseBean {
     public static class Project{
         private int id;
         private String title;
-        private long create_time;
+        private long build_time;
         private String desc;
         private String distance;
         private String type;
@@ -132,12 +132,12 @@ public class HomeResponseBean {
             this.title = title;
         }
 
-        public long getCreate_time() {
-            return create_time;
+        public long getBuild_time() {
+            return build_time;
         }
 
-        public void setCreate_time(long create_time) {
-            this.create_time = create_time;
+        public void setBuild_time(long create_time) {
+            this.build_time = create_time;
         }
 
         public String getDesc() {

@@ -63,8 +63,9 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
     private File file;
 
 
-    public static void startActivity(Context context, HomeResponseBean bean) {
+    public static void startActivity(Context context, String data) {
         Intent intent = new Intent(context, HomeDetailActivity.class);
+        intent.putExtra(INTENT_KEY, data);
         context.startActivity(intent);
     }
 
@@ -76,29 +77,8 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-    }
+        showToolbarBack(toolBar, title, getIntent().getStringExtra(INTENT_KEY));
 
-
-
-    private void showDownloadDialog(){
-        View view = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        progressText = (TextView) view.findViewById(R.id.progress_text);
-        dialog = new IOSDialog(this);
-        dialog.builder()
-                .setTitle("下载文件")
-                .setContentView(view)
-                .show();
-    }
-
-
-    private void showWarningDialog(){
-        new IOSDialog(this).builder()
-                .setTitle("此文档为VIP文档")
-                .setMsg("您还不是VIP会员，请到会员中心兑换")
-                .setPositiveButton("确定", null)
-                .setPositiveBtnColor(R.color.colorPrimary)
-                .show();
     }
 
     @Override
@@ -114,19 +94,6 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
         progressText.setText(String.valueOf(downProgress) + "%");
         if (progress == 1.0f) {
             dialog.dismiss();
-            startNewActivity();
         }
-    }
-
-    private void startNewActivity(){
-//        try {
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-//            startActivity(intent);
-//        }catch (Exception e){
-//            ToastUtil.show("请安装pdf阅读器查看");
-//        }
-//
-//        DocActivity.startActivity(this, file.getAbsolutePath());
-
     }
 }
