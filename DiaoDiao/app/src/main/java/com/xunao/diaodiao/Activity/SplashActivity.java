@@ -40,11 +40,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void goToNextActivity(){
         boolean isComeOver = ShareUtils.getValue(Constants.IS_COME_OVER, false);
-        if (isComeOver){
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        }else{
-            startActivity(new Intent(SplashActivity.this, LaunchActivity.class));
-        }
+//        if (isComeOver){
+//            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//        }else{
+//            startActivity(new Intent(SplashActivity.this, LaunchActivity.class));
+//        }
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
     }
 

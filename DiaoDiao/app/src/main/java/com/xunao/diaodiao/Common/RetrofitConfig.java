@@ -154,13 +154,14 @@ public class RetrofitConfig {
                 .connectTimeout(20000, TimeUnit.MILLISECONDS)
                 .readTimeout(20000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
-                .addInterceptor(httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addInterceptor(cacheInterceptor)
                 .cache(cache)
                 .build();
         //.addInterceptor(loggingInterceptor)
         //.addInterceptor(headerInterceptor)
         //.cache(cache)
+
+//        .addInterceptor(httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
+//                .addInterceptor(cacheInterceptor)
 
         Gson gson = new GsonBuilder()
                 .setLenient()

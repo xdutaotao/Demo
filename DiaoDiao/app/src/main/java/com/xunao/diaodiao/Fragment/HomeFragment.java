@@ -15,15 +15,14 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.gzfgeh.viewpagecycle.BannerInfo;
 import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
+import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
-import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
@@ -37,7 +36,6 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +68,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     TextView document;
     @BindView(R.id.recycler_view_proj)
     RecyclerView recyclerViewProj;
+    @BindView(R.id.recycler_view_classic)
+    RecyclerView recyclerViewClassic;
+    @BindView(R.id.recycler_view_list)
+    RecyclerView recyclerViewList;
     private String mParam1;
 
     @BindView(R.id.image_cycle_view)
@@ -83,9 +85,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private String lngData;
 
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
-                            R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
+            R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
 
     private RecyclerArrayAdapter<HomeProjBean> projAdapter;
+    private RecyclerArrayAdapter<String> adapter;
 
     public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
@@ -117,7 +120,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 .subscribe(s -> {
                     String[] data = s.split("#");
                     locationAdd.setText(data[0]);
-                    if (!TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])){
+                    if (!TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                         latData = data[1];
                         lngData = data[2];
                         presenter.getFirstPage(latData, lngData);
@@ -135,7 +138,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         });
 
         List<HomeProjBean> homeProjBeanList = new ArrayList<>();
-        for(int i=0; i<projImage.length; i++){
+        for (int i = 0; i < projImage.length; i++) {
             HomeProjBean homeProjBean = new HomeProjBean();
             homeProjBean.setProjImage(projImage[i]);
             homeProjBean.setProjText(getResources().getStringArray(R.array.homeProj)[i]);
@@ -151,7 +154,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         };
 
         projAdapter.setOnItemClickListener((view1, i) -> {
-            switch (i){
+            switch (i) {
                 case 0:
                     FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 0);
                     break;
@@ -177,6 +180,48 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerViewProj.setAdapter(projAdapter);
         projAdapter.addAll(homeProjBeanList);
 
+
+        adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.home_vertical_list) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+
+            }
+        };
+
+
+        adapter.setOnItemClickListener((view1, i) -> {
+        });
+
+        recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerViewClassic.setAdapter(adapter);
+
+        recyclerViewList.setLayoutManager(new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerViewList.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("1");
+        list.add("1");
+        adapter.addAll(list);
+
         return view;
     }
 
@@ -191,7 +236,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         list.add("1");
         list.add("1");
         list.add("1");
-
+        adapter.addAll(list);
 
 
 //        for (HomeResponseBean.TopicBean topicBean : bean.getTopic()) {
@@ -205,7 +250,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //        }
 //
         List<BannerInfo> bannerInfos = new ArrayList<>();
-        for (int i=0; i<2; i++){
+        for (int i = 0; i < 2; i++) {
             BannerInfo info = new BannerInfo();
             info.setImg("http://cn.bing.com/az/hprichbg/rb/Dongdaemun_ZH-CN10736487148_1920x1080.jpg");
             info.setLink("http://www.baidu.com");
@@ -223,7 +268,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //            info.setOt(1);
 //            bannerInfos.add(info);
 //        }
-
 
 
 //        imageCycleView.setImageResources(list, ((bannerInfo, i, view) -> {
