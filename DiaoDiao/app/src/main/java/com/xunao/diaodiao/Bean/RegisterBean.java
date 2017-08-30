@@ -6,17 +6,17 @@ package com.xunao.diaodiao.Bean;
  */
 
 public class RegisterBean {
-    private String name;
+    private String code;
     private String password;
     private String mobile;
-    private String email;
+    private String verify;
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getPassword() {
@@ -35,11 +35,11 @@ public class RegisterBean {
         this.mobile = mobile;
     }
 
-    public String getEmail() {
-        return email;
+    public String getVerify() {
+        return verify;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVerify(String verify) {
+        this.verify = verify;
     }
 }

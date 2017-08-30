@@ -41,8 +41,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
     /**
      * 修改密码 检查手机号是否存在
      */
-    public void changePwd(Context context, String phone){
-        mCompositeSubscription.add(model.checkExistPhone(phone)
+    public void register(Context context, String phone, String pwd, String code){
+        mCompositeSubscription.add(model.checkExistPhone(phone, pwd, code)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(String token) {
@@ -50,8 +50,10 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     }
 
                     @Override
-                    public void _onError() {
-                        ToastUtil.show("手机号没有注册");
+                    public void _onError(String s) {
+                        if (!TextUtils.equals(s, "网络错误"))
+                            s = "注册失败";
+                        ToastUtil.show(s);
                     }
                 }));
     }

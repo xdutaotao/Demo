@@ -7,8 +7,10 @@ import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
@@ -45,7 +47,16 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<String> checkPhone(String phone){
-        return config.getRetrofitService().checkPhone(phone)
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("getVerify");
+        sb.append(time+"").append(phone)
+                .append("security");
+
+        GetCodeBean bean = new GetCodeBean();
+        bean.setMobile(phone);
+        bean.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().checkPhone(setBody("getVerify", time, bean))
                 .compose(RxUtils.handleResult());
     }
 
@@ -92,13 +103,28 @@ public class LoginModel extends BaseModel {
     }
 
     /**
-     * 修改密码 检查手机号
+     * 注册
      * @param phone
      * @return
      */
-    public Observable<String> checkExistPhone(String phone){
-        return config.getRetrofitService().checkExistPhone(phone)
-                .compose(RxUtils.handleResult());
+    public Observable<String> checkExistPhone(String phone, String pwd, String code){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("register");
+        sb.append(time+"").append(code).append(phone).append(pwd)
+                .append("security");
+
+        RegisterBean registerBean = new RegisterBean();
+        registerBean.setMobile(phone);
+        registerBean.setPassword(pwd);
+        registerBean.setCode(code);
+        registerBean.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().checkExistPhone(setBody("register", time, registerBean))
+                .compose(RxUtils.handleResult())
+                .doOnNext(s -> {
+                    User.getInstance().setUserId(s);
+                });
     }
 
     /**

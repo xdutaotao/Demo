@@ -48,19 +48,27 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<HomeResponseBean>> getFirstPage(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> checkPhone(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> checkExistPhone(@Body RequestBody body);
+
+
+
+
+
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);
 
-    @GET("user/checkMobile")
-    Observable<BaseBean<String>> checkPhone(@Query("mobile") String mobile);
+
 
     @GET("user/checkEmail")
     Observable<BaseBean<String>> checkEmail(@Query("email") String email);
 
-    @GET("user/changePassword/checkMobile")
-    Observable<BaseBean<String>> checkExistPhone(@Query("mobile") String mobile);
+
 
     @GET("user/changeThePassword")
     Observable<BaseBean<String>> changePwd(@Query("mobile") String mobile, @Query("newPassword") String newPassword);

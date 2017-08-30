@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxUtils;
@@ -55,7 +56,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
     private Subscription subscriber;
     private EventHandler eventHandler;
-    private boolean isChangePwd;
 
     private int type = 0;
 
@@ -91,11 +91,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        if (isChangePwd) {
-                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString(), isChangePwd);
-                        } else {
-                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
-                        }
+//                        if (isChangePwd) {
+//                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString(), isChangePwd);
+//                        } else {
+//                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
+//                        }
 
                         finish();
 
@@ -119,11 +119,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.get_code:
-                //getCodeAction();
+                getCodeAction();
                 break;
 
             case R.id.register_btn:
-                //setCodeAction();
+                setCodeAction();
                 break;
         }
     }
@@ -138,11 +138,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             ToastUtil.show("手机号填写错误");
             return;
         }
-        if (isChangePwd) {
-            presenter.changePwd(this, phoneInput.getText().toString());
-        } else {
-            presenter.checkPhone(this, phoneInput.getText().toString());
-        }
+
+        getCode.setBackgroundResource(R.drawable.btn_code_not);
+
+        presenter.checkPhone(this, phoneInput.getText().toString());
+
 
     }
 
@@ -156,24 +156,42 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             ToastUtil.show("手机号填写错误");
             return;
         }
-        SMSSDK.submitVerificationCode("86", phoneInput.getText().toString(), codeInput.getText().toString());
+
+        if (pwdInput.getText().length() == 0) {
+            ToastUtil.show("密码不能为空");
+            return;
+        }
+
+        if (pwdInput.getText().length() < 6) {
+            ToastUtil.show("密码至少6位");
+            return;
+        }
+
+        presenter.register(this, phoneInput.getText().toString(),
+                codeInput.getText().toString(), codeInput.getText().toString());
+        //SMSSDK.submitVerificationCode("86", phoneInput.getText().toString(), codeInput.getText().toString());
     }
 
     @Override
     public void getData(String result) {
-        subscriber = Observable.interval(1, TimeUnit.SECONDS)
-                .compose(RxUtils.applyIOToMainThreadSchedulers())
-                .subscribe(aLong -> {
-                    if (subscriber != null) {
-                        if (aLong >= 60) {
-                            stopTime();
-                        } else {
-                            getCode.setText((60 - aLong) + "秒后重发");
-                        }
-                    }
+        if (result.length() == 4){
+            getCode.setBackgroundResource(R.drawable.btn_code);
+            codeInput.setText(result);
+        }
 
-                });
-        SMSSDK.getVerificationCode("86", phoneInput.getText().toString());
+//        subscriber = Observable.interval(1, TimeUnit.SECONDS)
+//                .compose(RxUtils.applyIOToMainThreadSchedulers())
+//                .subscribe(aLong -> {
+//                    if (subscriber != null) {
+//                        if (aLong >= 60) {
+//                            stopTime();
+//                        } else {
+//                            getCode.setText((60 - aLong) + "秒后重发");
+//                        }
+//                    }
+//
+//                });
+//        SMSSDK.getVerificationCode("86", phoneInput.getText().toString());
     }
 
     private void stopTime() {
