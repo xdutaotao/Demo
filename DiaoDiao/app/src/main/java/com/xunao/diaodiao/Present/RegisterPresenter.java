@@ -51,10 +51,30 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 
                     @Override
                     public void _onError(String s) {
-                        if (!TextUtils.equals(s, "网络错误"))
-                            s = "注册失败";
                         ToastUtil.show(s);
                     }
                 }));
     }
+
+
+
+    /**
+     * 选择角色
+     */
+    public void select(Context context, int type){
+        mCompositeSubscription.add(model.select(type)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+
 }

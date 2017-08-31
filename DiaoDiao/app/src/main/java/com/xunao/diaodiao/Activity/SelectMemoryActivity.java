@@ -15,8 +15,14 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Present.LoginPresenter;
+import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.View.LoginView;
+import com.xunao.diaodiao.View.RegisterView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +31,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 
-public class SelectMemoryActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class SelectMemoryActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, RegisterView {
 
     @BindView(R.id.title_text)
     TextView titleText;
@@ -38,6 +44,11 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
     @BindView(R.id.cumstom_box)
     CheckBox cumstomBox;
 
+    @Inject
+    RegisterPresenter presenter;
+
+    private int type;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectMemoryActivity.class);
         context.startActivity(intent);
@@ -49,6 +60,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
         setContentView(R.layout.activity_select_memory);
         getActivityComponent().inject(this);
         ButterKnife.bind(this);
+        presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "选择角色");
 
@@ -87,9 +99,9 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", COMPANY_TYPE);
-                            SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
-                            finish();
+                            type = COMPANY_TYPE;
+                            presenter.select(SelectMemoryActivity.this, COMPANY_TYPE);
+
                         })
                         .show();
                 break;
@@ -111,9 +123,9 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", SKILL_TYPE);
-                            SelectSkillActivity.startActivity(SelectMemoryActivity.this);
-                            finish();
+                            type = SKILL_TYPE;
+                            presenter.select(SelectMemoryActivity.this, SKILL_TYPE);
+
                         })
                         .show();
                 break;
@@ -135,13 +147,42 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            ShareUtils.putValue("TYPE", CUSTOM_TYPE);
-                            SelectNormalActivity.startActivity(SelectMemoryActivity.this);
-                            finish();
+                            type = CUSTOM_TYPE;
+                            presenter.select(SelectMemoryActivity.this, CUSTOM_TYPE);
+
                         })
                         .show();
 
                 break;
         }
     }
+
+    @Override
+    public void getData(String result) {
+        switch (type){
+            case COMPANY_TYPE:
+                type = COMPANY_TYPE;
+                SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
+                break;
+
+            case SKILL_TYPE:
+                type = SKILL_TYPE;
+                SelectSkillActivity.startActivity(SelectMemoryActivity.this);
+                break;
+
+            case CUSTOM_TYPE:
+                SelectNormalActivity.startActivity(SelectMemoryActivity.this);
+                break;
+        }
+
+        ShareUtils.putValue("TYPE", type);
+        finish();
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
+
+
 }

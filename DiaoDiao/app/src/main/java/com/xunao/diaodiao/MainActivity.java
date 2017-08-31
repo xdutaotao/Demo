@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.setBarBackgroundColor(R.color.activity_background);
         bottomNavigationBar.setInActiveColor(R.color.nav_gray);
         bottomNavigationBar.setActiveColor(R.color.colorPrimary);
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home_fill, strings[0]).setInactiveIconResource(R.drawable.home_fill))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home_fill, strings[0]).setInactiveIconResource(R.drawable.home))
                 .addItem(new BottomNavigationItem(R.drawable.fabu_fill, strings[1]).setInactiveIconResource(R.drawable.fabu))
                 .addItem(new BottomNavigationItem(R.drawable.dindan_fill, strings[2]).setInactiveIconResource(R.drawable.dindan))
                 .addItem(new BottomNavigationItem(R.drawable.wode_fill, strings[3]).setInactiveIconResource(R.drawable.wode));

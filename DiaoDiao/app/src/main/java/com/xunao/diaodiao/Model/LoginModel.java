@@ -11,6 +11,7 @@ import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.RegisterBean;
+import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
@@ -125,6 +126,29 @@ public class LoginModel extends BaseModel {
                 .doOnNext(s -> {
                     User.getInstance().setUserId(s);
                 });
+    }
+
+
+    /**
+     * 选择角色
+     * @param
+     * @return
+     */
+    public Observable<String> select(int type){
+        String useid = User.getInstance().getUserId();
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("chooseRole");
+        sb.append(time+"").append(type).append(useid)
+                .append("security");
+
+        SelectBean selectBean = new SelectBean();
+        selectBean.setType(type);
+        selectBean.setUserid(Integer.valueOf(useid));
+        selectBean.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().select(setBody("chooseRole", time, selectBean))
+                .compose(RxUtils.handleResult());
     }
 
     /**

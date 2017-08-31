@@ -18,6 +18,7 @@ import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Present.MyPresenter;
@@ -123,6 +124,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
+                //SelectMemoryActivity.startActivity(getActivity());
                 LoginActivity.startActivity(getActivity());
                 break;
 

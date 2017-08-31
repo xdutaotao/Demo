@@ -55,7 +55,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     LinearLayout goLogin;
 
     private Subscription subscriber;
-    private EventHandler eventHandler;
 
     private int type = 0;
 
@@ -84,33 +83,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         getCode.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
-        eventHandler = new EventHandler() {
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        //提交验证码成功
-//                        if (isChangePwd) {
-//                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString(), isChangePwd);
-//                        } else {
-//                            CheckEmailActivity.startActivity(CheckPhoneActivity.this, phoneInput.getText().toString());
-//                        }
-
-                        finish();
-
-                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        //获取验证码成功
-                        ToastUtil.show("发送成功");
-                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-                        //返回支持发送验证码的国家列表
-                    }
-                } else {
-                    ((Throwable) data).printStackTrace();
-                }
-            }
-        };
-        SMSSDK.registerEventHandler(eventHandler);
 
     }
 
@@ -169,7 +141,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
         presenter.register(this, phoneInput.getText().toString(),
                 codeInput.getText().toString(), codeInput.getText().toString());
-        //SMSSDK.submitVerificationCode("86", phoneInput.getText().toString(), codeInput.getText().toString());
     }
 
     @Override
@@ -177,21 +148,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         if (result.length() == 4){
             getCode.setBackgroundResource(R.drawable.btn_code);
             codeInput.setText(result);
+        }else{
+            SelectMemoryActivity.startActivity(this);
+            finish();
         }
 
-//        subscriber = Observable.interval(1, TimeUnit.SECONDS)
-//                .compose(RxUtils.applyIOToMainThreadSchedulers())
-//                .subscribe(aLong -> {
-//                    if (subscriber != null) {
-//                        if (aLong >= 60) {
-//                            stopTime();
-//                        } else {
-//                            getCode.setText((60 - aLong) + "秒后重发");
-//                        }
-//                    }
-//
-//                });
-//        SMSSDK.getVerificationCode("86", phoneInput.getText().toString());
     }
 
     private void stopTime() {
@@ -212,7 +173,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
-        SMSSDK.unregisterEventHandler(eventHandler);
     }
 
 

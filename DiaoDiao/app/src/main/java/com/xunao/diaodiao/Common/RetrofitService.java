@@ -54,7 +54,8 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> checkExistPhone(@Body RequestBody body);
 
-
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> select(@Body RequestBody body);
 
 
 
