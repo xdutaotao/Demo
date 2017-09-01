@@ -47,8 +47,6 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
     @Inject
     RegisterPresenter presenter;
 
-    private int type;
-
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectMemoryActivity.class);
         context.startActivity(intent);
@@ -99,7 +97,6 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            type = COMPANY_TYPE;
                             presenter.select(SelectMemoryActivity.this, COMPANY_TYPE);
 
                         })
@@ -123,7 +120,6 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            type = SKILL_TYPE;
                             presenter.select(SelectMemoryActivity.this, SKILL_TYPE);
 
                         })
@@ -147,7 +143,6 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                         .setNegativeBtnColor(R.color.actionbar_sel_color)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("确认", v -> {
-                            type = CUSTOM_TYPE;
                             presenter.select(SelectMemoryActivity.this, CUSTOM_TYPE);
 
                         })
@@ -159,14 +154,12 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
     @Override
     public void getData(String result) {
-        switch (type){
+        switch (Integer.valueOf(result)){
             case COMPANY_TYPE:
-                type = COMPANY_TYPE;
                 SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
                 break;
 
             case SKILL_TYPE:
-                type = SKILL_TYPE;
                 SelectSkillActivity.startActivity(SelectMemoryActivity.this);
                 break;
 
@@ -175,7 +168,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                 break;
         }
 
-        ShareUtils.putValue("TYPE", type);
+        ShareUtils.putValue("TYPE", result);
         finish();
     }
 

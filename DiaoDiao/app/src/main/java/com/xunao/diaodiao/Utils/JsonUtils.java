@@ -3,8 +3,7 @@ package com.xunao.diaodiao.Utils;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.CollectBean;
 import com.xunao.diaodiao.Bean.LoginBean;
-import com.xunao.diaodiao.Bean.LoginResponseBean;
-import com.xunao.diaodiao.Bean.RegisterBean;
+import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.UploadBean;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -48,8 +47,8 @@ public class JsonUtils {
         return gson.toJson(bean);
     }
 
-    public LoginResponseBean jsonToLoginResponseBean(String json){
-        return gson.fromJson(json, LoginResponseBean.class);
+    public RegisterRespBean jsonToLoginResponseBean(String json){
+        return gson.fromJson(json, RegisterRespBean.class);
     }
 
     public UserInfo JsonToUserInfo(String json){

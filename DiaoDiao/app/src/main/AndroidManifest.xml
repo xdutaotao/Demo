@@ -105,8 +105,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".Activity.CheckPhoneActivity" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".Activity.CheckPhoneActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity android:name=".Activity.CheckEmailActivity" />
         <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.HomeDetailActivity" />

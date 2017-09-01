@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Present.SelectCompanyPresenter;
@@ -29,6 +30,18 @@ public class SelectCompanyActivity extends BaseActivity implements SelectCompany
     Toolbar toolBar;
     @BindView(R.id.go_in_app)
     Button goInApp;
+    @BindView(R.id.name)
+    EditText name;
+    @BindView(R.id.address)
+    EditText address;
+    @BindView(R.id.address_detail)
+    EditText addressDetail;
+    @BindView(R.id.phone)
+    EditText phone;
+    @BindView(R.id.contact)
+    EditText contact;
+    @BindView(R.id.contact_phone)
+    EditText contactPhone;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectCompanyActivity.class);

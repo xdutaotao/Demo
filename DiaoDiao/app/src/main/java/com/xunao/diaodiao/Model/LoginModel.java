@@ -11,6 +11,7 @@ import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.RegisterBean;
+import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
@@ -122,10 +123,12 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().checkExistPhone(setBody("register", time, registerBean))
-                .compose(RxUtils.handleResult())
-                .doOnNext(s -> {
-                    User.getInstance().setUserId(s);
-                });
+                .compose(RxUtils.handleResultNoThread())
+                .map(registerRespBean -> {
+                    String userid = registerRespBean.getUserid();
+                    User.getInstance().setUserId(userid);
+                    return userid;
+                }).compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
 
@@ -148,7 +151,11 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().select(setBody("chooseRole", time, selectBean))
-                .compose(RxUtils.handleResult());
+                .compose(RxUtils.handleResultNoThread())
+                .map(selectRespBean -> {
+                    return selectRespBean.getType()+"";
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     /**

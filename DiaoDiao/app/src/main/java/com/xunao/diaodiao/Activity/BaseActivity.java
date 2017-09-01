@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Activity;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponentFactory;
 import com.gzfgeh.swipeback.SwipeBackActivity;
+import com.xunao.diaodiao.Utils.ViewServer;
 
 /**
  * Description:
@@ -21,6 +23,13 @@ import com.gzfgeh.swipeback.SwipeBackActivity;
 
 public class BaseActivity extends SwipeBackActivity {
     private ActivityComponent activityComponent;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewServer.get(this).addWindow(this);
+    }
 
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
@@ -51,6 +60,12 @@ public class BaseActivity extends SwipeBackActivity {
         title.setText(txt);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ViewServer.get(this).setFocusedWindow(this);
+    }
+
     /**
      * 手动控制键盘隐藏
      * @param view
@@ -73,18 +88,26 @@ public class BaseActivity extends SwipeBackActivity {
         }
     }
 
-    // 获取点击事件
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TODO Auto-generated method stub
-        if(ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View view = getCurrentFocus();
-            if(isHideInput(view, ev)) {
-                closeSoftKeyboard(view, this);
-            }
-        }
-        return super.dispatchTouchEvent(ev);
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
     }
+
+    // 获取点击事件
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        // TODO Auto-generated method stub
+//        if(ev.getAction() == MotionEvent.ACTION_DOWN) {
+//            View view = getCurrentFocus();
+//            if(isHideInput(view, ev)) {
+//                closeSoftKeyboard(view, this);
+//            }
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
+
+
     // 判定是否需要隐藏
     private boolean isHideInput(View v, MotionEvent ev) {
         if(v != null && (v instanceof EditText)) {

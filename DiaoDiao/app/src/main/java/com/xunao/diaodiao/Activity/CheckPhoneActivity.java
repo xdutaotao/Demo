@@ -11,22 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.RegisterView;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import rx.Observable;
 import rx.Subscription;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
@@ -53,6 +46,8 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     EditText pwdSureInput;
     @BindView(R.id.go_login)
     LinearLayout goLogin;
+    @BindView(R.id.login)
+    TextView login;
 
     private Subscription subscriber;
 
@@ -75,14 +70,15 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         type = getIntent().getIntExtra(INTENT_KEY, 0);
         showToolbarBack(toolBar, titleText, type == 0 ? "注册" : (type == 1 ? "忘记密码" : "修改密码"));
 
-        registerBtn.setText(type==0? "注册" : "修改");
+        registerBtn.setText(type == 0 ? "注册" : "修改");
 
-        goLogin.setVisibility(type == 0? View.VISIBLE : View.GONE);
+        goLogin.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
 
         phoneInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         getCode.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+        login.setOnClickListener(this);
 
     }
 
@@ -96,6 +92,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
             case R.id.register_btn:
                 setCodeAction();
+                break;
+
+            case R.id.login:
+                LoginActivity.startActivity(this);
+                finish();
                 break;
         }
     }
@@ -145,10 +146,10 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
     @Override
     public void getData(String result) {
-        if (result.length() == 4){
+        if (result.length() == 4) {
             getCode.setBackgroundResource(R.drawable.btn_code);
             codeInput.setText(result);
-        }else{
+        } else {
             SelectMemoryActivity.startActivity(this);
             finish();
         }

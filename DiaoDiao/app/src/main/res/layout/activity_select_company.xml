@@ -25,10 +25,11 @@
 
                     <TextView
                         style="@style/select_item_text"
-                        android:text="公司姓名"/>
+                        android:text="公司名称"/>
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/name"
                         android:hint="请输入公司名称"/>
                 </LinearLayout>
 
@@ -48,6 +49,7 @@
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/address"
                         android:hint="请输入公司地区"/>
                 </LinearLayout>
 
@@ -67,6 +69,7 @@
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/address_detail"
                         android:hint="请输入公司地址"/>
                 </LinearLayout>
 
@@ -86,6 +89,7 @@
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/phone"
                         android:hint="请输入公司电话"/>
                 </LinearLayout>
 
@@ -105,6 +109,7 @@
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/contact"
                         android:hint="请输入联系人"/>
                 </LinearLayout>
 
@@ -124,6 +129,7 @@
 
                     <EditText
                         style="@style/select_item_edit"
+                        android:id="@+id/contact_phone"
                         android:hint="请输入联系人电话"/>
                 </LinearLayout>
 

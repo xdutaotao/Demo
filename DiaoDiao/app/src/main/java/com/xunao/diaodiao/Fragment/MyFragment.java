@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -124,8 +126,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
-                //SelectMemoryActivity.startActivity(getActivity());
-                LoginActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                    LoginActivity.startActivity(getActivity());
+                }else{
+                    SelectMemoryActivity.startActivity(getActivity());
+                }
+
+
                 break;
 
             case R.id.setting:

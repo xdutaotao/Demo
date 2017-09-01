@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@android:color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:background="@android:color/white">
 
     <include layout="@layout/tool_bar_center_white"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
 
         <LinearLayout
@@ -104,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:digits="1234567890"
+                    android:inputType="textPassword"
                     android:hint="请设置6-16位字符登录密码"
                     android:maxLength="11"
                     android:paddingLeft="80px"
@@ -129,6 +129,7 @@
                     android:layout_height="match_parent"
                     android:digits="1234567890"
                     android:hint="请再次输入登录密码"
+                    android:inputType="textPassword"
                     android:maxLength="11"
                     android:paddingLeft="80px"
                     style="@style/edit_style" />
@@ -160,6 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="   立即登录"
+                    android:id="@+id/login"
                     android:layout_gravity="center"
                     android:gravity="center"/>
             </LinearLayout>

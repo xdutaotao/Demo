@@ -6,10 +6,12 @@ import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
+import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
 import com.xunao.diaodiao.Bean.BaseBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.ResponseBean;
+import com.xunao.diaodiao.Bean.SelectRespBean;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.UserInfo;
 
@@ -52,10 +54,10 @@ public interface RetrofitService {
     Observable<BaseBean<String>> checkPhone(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> checkExistPhone(@Body RequestBody body);
+    Observable<BaseBean<RegisterRespBean>> checkExistPhone(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> select(@Body RequestBody body);
+    Observable<BaseBean<SelectRespBean>> select(@Body RequestBody body);
 
 
 

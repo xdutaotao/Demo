@@ -147,21 +147,17 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             return;
         }
 
-//        SelectMemoryActivity.startActivity(this);
-//        finish();
-
         presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim());
     }
 
     @Override
     public void getData(LoginResBean data) {
-        loginJMessage();
-    }
+        if (data.getType() == 0){
+            SelectMemoryActivity.startActivity(this);
+        }
 
-    private void loginJMessage() {
         ToastUtil.show("登录成功");
         finish();
-
     }
 
     @Override
