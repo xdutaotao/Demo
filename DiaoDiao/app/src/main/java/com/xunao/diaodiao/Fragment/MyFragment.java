@@ -25,6 +25,7 @@ import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.MyView;
 
@@ -32,6 +33,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
@@ -129,7 +132,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 if (TextUtils.isEmpty(User.getInstance().getUserId())){
                     LoginActivity.startActivity(getActivity());
                 }else{
-                    SelectMemoryActivity.startActivity(getActivity());
+                    if (ShareUtils.getValue(TYPE_KEY, 0) == 0)
+                        SelectMemoryActivity.startActivity(getActivity());
+                    else{
+
+                    }
                 }
 
 

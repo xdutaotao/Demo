@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class SelectMemoryActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, RegisterView {
 
@@ -154,7 +155,8 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
     @Override
     public void getData(String result) {
-        switch (Integer.valueOf(result)){
+        int type = Integer.valueOf(result);
+        switch (type){
             case COMPANY_TYPE:
                 SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
                 break;
@@ -168,7 +170,7 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                 break;
         }
 
-        ShareUtils.putValue("TYPE", result);
+        ShareUtils.putValue(TYPE_KEY, type);
         finish();
     }
 
