@@ -66,10 +66,6 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
         showToolbarBack(toolBar, titleText, "会员中心");
         getVipBtn.setOnClickListener(this);
 
-        if (User.getInstance().getUserInfo().getPerson().getVIP() != 0){
-            level.setImageResource(R.drawable.vip);
-        }
-        name.setText(User.getInstance().getUserInfo().getPerson().getName());
 
         vipOne.setOnClickListener(this);
         vipTwo.setOnClickListener(this);
@@ -85,18 +81,6 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
-        if (days <= 0) {
-            vipDays.setText("您的会员已过期");
-        } else {
-            vipDays.setText("尊敬的VIP用户,您的会员还有:" + days + "天");
-        }
-
-        Glide.with(this)
-                .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
-                .bitmapTransform(new CropCircleTransformation(this))
-                .into(headIcon);
     }
 
     @Override

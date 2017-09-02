@@ -83,17 +83,6 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
         quarterLayout.setOnClickListener(this);
         monthLayout.setOnClickListener(this);
         payBtn.setOnClickListener(this);
-        glod.setText(User.getInstance().getUserInfo().getPerson().getGold()+"");
-        number.setText(User.getInstance().getUserInfo().getPerson().getExperience()+"");
-        name.setText(User.getInstance().getUserInfo().getPerson().getName());
-        Glide.with(this)
-                .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
-                .bitmapTransform(new CropCircleTransformation(this))
-                .into(headIcon);
-        if (User.getInstance().getUserInfo().getPerson().getVIP() != 0){
-            level.setImageResource(R.drawable.vip);
-        }
     }
 
     @Override
@@ -128,10 +117,6 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
                 break;
 
             case R.id.pay_btn:
-                if (money > User.getInstance().getUserInfo().getPerson().getGold()){
-                    ToastUtil.show("金币不足，请联系管理员!");
-                    return;
-                }
                 presenter.addVipDuration(this, getTime(money), money);
                 break;
         }
@@ -168,13 +153,6 @@ public class BuyActivity extends BaseActivity implements View.OnClickListener, B
 
     @Override
     public void getData(String s) {
-        glod.setText(User.getInstance().getUserInfo().getPerson().getGold()+"");
-        ToastUtil.show("购买成功");
-        Glide.with(this)
-                .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
-                .bitmapTransform(new CropCircleTransformation(this))
-                .into(headIcon);
     }
 
     @Override

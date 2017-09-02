@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjActivity;
+import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
@@ -25,6 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -39,13 +45,15 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.go_login_text)
+    TextView goLoginText;
     private String mParam1;
 
     private static final int[] COMPANY_IMAGES = {R.drawable.icon_wodexiangmu, R.drawable.icon_janlixinxi,
             R.drawable.icon_fabulingong, R.drawable.icon_fabuweibao, R.drawable.icon_fabuhuzhu};
 
     private static final String[] COMPANY_TEXTS = {"我的项目信息", "我的监理信息", "零工信息",
-                        "维保信息", "互助信息"};
+            "维保信息", "互助信息"};
 
     private RecyclerArrayAdapter<HomeProjBean> adapter;
 
@@ -84,7 +92,7 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         };
 
         adapter.setOnItemClickListener((view1, i) -> {
-            switch (i){
+            switch (i) {
                 case 0:
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
                     break;
@@ -100,11 +108,26 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+            recyclerView.setVisibility(View.GONE);
+            goLoginText.setVisibility(View.VISIBLE);
+            goLoginText.setText("用户未登录，点击登录");
+        }else if(type ==0){
+            recyclerView.setVisibility(View.GONE);
+            goLoginText.setVisibility(View.VISIBLE);
+            goLoginText.setText("未选择角色，点击选择");
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            goLoginText.setVisibility(View.GONE);
+        }
+
+
         List<HomeProjBean> list = new ArrayList<>();
 
-        switch (ShareUtils.getValue("TYPE", 1)){
+        switch (ShareUtils.getValue("TYPE", 1)) {
             case 1:
-                for(int i=0; i<COMPANY_IMAGES.length; i++){
+                for (int i = 0; i < COMPANY_IMAGES.length; i++) {
                     HomeProjBean bean = new HomeProjBean();
                     bean.setProjImage(COMPANY_IMAGES[i]);
                     bean.setProjText(COMPANY_TEXTS[i]);
@@ -120,11 +143,23 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         }
         adapter.addAll(list);
 
+        goLoginText.setOnClickListener(this);
+
+
         return view;
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.go_login_text:
+                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                    LoginActivity.startActivity(ProjectFragment.this.getContext());
+                }else{
+                    SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+                }
+                break;
+        }
     }
 
 

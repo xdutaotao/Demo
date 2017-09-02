@@ -318,8 +318,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         bean.setPageSize(15);
         bean.setKeywords("");
         bean.setToken(User.getInstance().getUserId());
-        bean.setType(User.getInstance().getUserInfo().getPerson().getType());  //?
-        bean.setVipRes(User.getInstance().getUserInfo().getPerson().getVIP());
         bean.setSort(0);
         bean.setProject("");
         SearchResultActivity.startActivity(getContext(), bean);

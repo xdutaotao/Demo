@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
+import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.LoginBean;
@@ -28,6 +29,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import cn.jpush.im.android.api.model.*;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -101,7 +103,17 @@ public class LoginModel extends BaseModel {
         loginBean.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().login(setBody("login", time, loginBean))
-                .compose(RxUtils.handleResult());
+                .compose(RxUtils.handleResultNoThread())
+                .map(loginResBean -> {
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setType(loginResBean.getType());
+                    userInfo.setMobile(loginResBean.getMobile());
+                    userInfo.setUserid(loginResBean.getUserid());
+                    userInfo.setIs_frozen(loginResBean.getIs_frozen());
+                    User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(userInfo));
+                    return loginResBean;
+                })
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     /**
@@ -158,6 +170,31 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
+
+    /**
+     * 完善信息
+     * @param
+     * @return
+     */
+    public Observable<LoginResBean> fillInfor(FillCompanyReq req){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("completeCompany");
+        sb.append(time+"").append(req.getAddress()).append(req.getCity())
+                .append(req.getContact()).append(req.getContact_mobile())
+                .append(req.getDistrict()).append(req.getName())
+                .append(req.getProvince()).append(req.getTel())
+                .append(req.getUserid())
+                .append("security");
+
+        FillCompanyReq selectBean = new FillCompanyReq();
+        selectBean.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().fillInfor(setBody("completeCompany", time, selectBean))
+                .compose(RxUtils.handleResult());
+    }
+
+
     /**
      * 修改密码
      * @param phone
@@ -178,23 +215,6 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
-    /**
-     *  购买VIP
-     */
-    public Observable<String> addVipDuration(long time, int gold){
-        return config.getRetrofitService().addVipDuration(User.getInstance().getUserId(), time, gold)
-                .compose(RxUtils.handleResultNoThread())
-                .flatMap(personBean -> {
-                    return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
-                            .compose(RxUtils.handleResultNoThread());
-                })
-                .map(userInfo -> {
-                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
-                    User.getInstance().setUserInfo(userInfoString);
-                    return "操作成功";
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
-    }
 
     /**
      *  更改个人地址
@@ -303,28 +323,6 @@ public class LoginModel extends BaseModel {
                 subscriber.onCompleted();
             }
         }).compose(RxUtils.applyIOToMainThreadSchedulers());
-    }
-
-    /**
-     * 签到
-     * @return
-     */
-    public Observable<String> signToday(int gold, int experience){
-        Map<String, Integer> map = new HashMap<>();
-        map.put("gold", gold);
-        map.put("experience", experience);
-        return config.getRetrofitService().signToday(User.getInstance().getUserId(), map)
-                .compose(RxUtils.handleResultNoThread())
-                .flatMap(personBean -> {
-                    return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
-                            .compose(RxUtils.handleResultNoThread());
-                })
-                .map(userInfoBaseBean -> {
-                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfoBaseBean);
-                    User.getInstance().setUserInfo(userInfoString);
-                    return "操作成功";
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
 

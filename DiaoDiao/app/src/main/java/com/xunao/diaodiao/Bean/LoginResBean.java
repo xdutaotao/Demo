@@ -6,25 +6,25 @@ package com.xunao.diaodiao.Bean;
  */
 
 public class LoginResBean {
-    private long userid;
-    private String name;
+    private int userid;
+    private String mobile;
     private int type;
     private int is_frozen;
 
-    public long getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 
-    public String getName() {
-        return name;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public int getType() {

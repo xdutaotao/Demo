@@ -170,11 +170,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void getData(String s) {
         ToastUtil.show(s);
-        Glide.with(this)
-                .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
-                .bitmapTransform(new CropCircleTransformation(this))
-                .into(headIcon);
 
     }
 

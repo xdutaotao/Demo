@@ -22,6 +22,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Present.LoginPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.LoginView;
 import com.xunao.diaodiao.wxapi.WXEntryActivity;
@@ -30,6 +31,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -154,6 +157,8 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     public void getData(LoginResBean data) {
         if (data.getType() == 0){
             SelectMemoryActivity.startActivity(this);
+        }else{
+            ShareUtils.putValue(TYPE_KEY, data.getType());
         }
 
         ToastUtil.show("登录成功");

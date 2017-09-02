@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
+import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SearchPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.SearchView;
 
 import java.util.List;
@@ -24,10 +29,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
+
 /**
  * create by
  */
-public class ReleaseFragment extends BaseFragment implements SearchView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
+public class ReleaseFragment extends BaseFragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     @Inject
     SearchPresenter presenter;
@@ -41,6 +48,8 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
     LinearLayout skillRelease;
     @BindView(R.id.home_release)
     LinearLayout homeRelease;
+    @BindView(R.id.go_login_text)
+    TextView goLoginText;
     private String mParam1;
 
     public static ReleaseFragment newInstance(String param1) {
@@ -65,13 +74,45 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
         View view = inflater.inflate(R.layout.fragment_release, container, false);
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
-        presenter.attachView(this);
+        //presenter.attachView(this);
 
         hideToolbarBack(toolBar, titleText, "发布");
+
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+            goLoginText.setVisibility(View.VISIBLE);
+            companyRelease.setVisibility(View.GONE);
+            skillRelease.setVisibility(View.GONE);
+            homeRelease.setVisibility(View.GONE);
+            goLoginText.setText("用户未登录，点击登录");
+        }else if(type == 0){
+            goLoginText.setVisibility(View.VISIBLE);
+            companyRelease.setVisibility(View.GONE);
+            skillRelease.setVisibility(View.GONE);
+            homeRelease.setVisibility(View.GONE);
+            goLoginText.setText("未选择角色，点击选择");
+        }else if(type == 1){
+            goLoginText.setVisibility(View.GONE);
+            companyRelease.setVisibility(View.VISIBLE);
+            skillRelease.setVisibility(View.GONE);
+            homeRelease.setVisibility(View.GONE);
+        }else if(type == 2){
+            goLoginText.setVisibility(View.GONE);
+            companyRelease.setVisibility(View.GONE);
+            skillRelease.setVisibility(View.VISIBLE);
+            homeRelease.setVisibility(View.GONE);
+        }else{
+            goLoginText.setVisibility(View.GONE);
+            companyRelease.setVisibility(View.GONE);
+            skillRelease.setVisibility(View.GONE);
+            homeRelease.setVisibility(View.VISIBLE);
+        }
+
 
         companyRelease.setOnClickListener(this);
         skillRelease.setOnClickListener(this);
         homeRelease.setOnClickListener(this);
+        goLoginText.setOnClickListener(this);
 
         return view;
     }
@@ -79,7 +120,7 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.company_release:
                 ReleaseCompanyActivity.startActivity(getContext());
                 break;
@@ -90,38 +131,15 @@ public class ReleaseFragment extends BaseFragment implements SearchView, View.On
 
             case R.id.home_release:
                 break;
+
+            case R.id.go_login_text:
+                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                    LoginActivity.startActivity(ReleaseFragment.this.getContext());
+                }else{
+                    SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
+                }
+                break;
         }
-    }
-
-    @Override
-    public void getData(SearchResponseBean searchResponseBean) {
-    }
-
-    @Override
-    public void getHistoryList(List<String> list) {
-    }
-
-    @Override
-    public void fail(String msg) {
-
-    }
-
-    @Override
-    public void getHotWord(List<String> list) {
-
-    }
-
-    @Override
-    public void onRefresh() {
-    }
-
-    @Override
-    public void onLoadMore() {
-    }
-
-    @Override
-    public void onFailure() {
-
     }
 
     @Override

@@ -27,13 +27,13 @@ public class CollectPresenter extends BasePresenter<CollectView> {
     }
 
     public void packagingForm(){
-        mCompositeSubscription.add(model.packagingForm()
-                .subscribe(new RxSubUtils<PackageBean.ResultBean>(mCompositeSubscription) {
-                    @Override
-                    protected void _onNext(PackageBean.ResultBean token) {
-                        getView().getData(token);
-                    }
-                }));
+//        mCompositeSubscription.add(model.packagingForm()
+//                .subscribe(new RxSubUtils<PackageBean.ResultBean>(mCompositeSubscription) {
+//                    @Override
+//                    protected void _onNext(PackageBean.ResultBean token) {
+//                        getView().getData(token);
+//                    }
+//                }));
     }
 
 

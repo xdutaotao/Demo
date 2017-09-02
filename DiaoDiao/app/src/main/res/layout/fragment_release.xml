@@ -17,7 +17,8 @@
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
         android:background="@color/white"
-        android:id="@+id/company_release">
+        android:id="@+id/company_release"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
         android:background="@color/white"
-        android:id="@+id/skill_release">
+        android:id="@+id/skill_release"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -94,7 +96,8 @@
         android:layout_marginBottom="40px"
         android:orientation="horizontal"
         android:background="@color/white"
-        android:id="@+id/home_release">
+        android:id="@+id/home_release"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -122,5 +125,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_arrow01"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@color/white"
+        android:text="用户未登录，点击登录"
+        android:id="@+id/go_login_text"/>
 
 </LinearLayout>

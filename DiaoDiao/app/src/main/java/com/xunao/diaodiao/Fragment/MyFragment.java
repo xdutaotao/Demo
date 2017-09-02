@@ -19,6 +19,7 @@ import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.SelectCompanyActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
@@ -60,6 +61,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView setting;
     @BindView(R.id.message)
     ImageView message;
+    @BindView(R.id.name)
+    TextView name;
     private String mParam1;
 
     @Inject
@@ -100,7 +103,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         headIcon.setOnClickListener(this);
         money.setOnClickListener(this);
         bank.setOnClickListener(this);
+        name.setOnClickListener(this);
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (User.getInstance().getUserInfo() != null){
+            String mobile = User.getInstance().getUserInfo().getMobile();
+            name.setText(mobile);
+        }else{
+            name.setText("未登录");
+        }
     }
 
     @Override
@@ -139,6 +155,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     }
                 }
 
+                //SelectCompanyActivity.startActivity(getContext());
 
                 break;
 
@@ -164,6 +181,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
             case R.id.bank:
                 BankActivity.startActivity(getActivity());
+                break;
+
+            case R.id.name:
+                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                    LoginActivity.startActivity(MyFragment.this.getContext());
+                }
                 break;
         }
     }

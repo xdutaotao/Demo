@@ -60,6 +60,8 @@ public interface RetrofitService {
     Observable<BaseBean<SelectRespBean>> select(@Body RequestBody body);
 
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<LoginResBean>> fillInfor(@Body RequestBody body);
 
 
     @FormUrlEncoded
@@ -97,10 +99,6 @@ public interface RetrofitService {
     Observable<SearchResponseBean> getSearchResult(@FieldMap Map<String, String> map, @FieldMap Map<String, Integer> intMap);
 
     @FormUrlEncoded
-    @POST("personalCenter/addVipDuration")
-    Observable<BaseBean<UserInfo.PersonBean>> addVipDuration(@Field("token") String token, @Field("vipDateline") long vipDateline, @Field("gold") int gold);
-
-    @FormUrlEncoded
     @POST("personalCenter/addTheAddress")
     Observable<BaseResponseBean> changeAddress(@FieldMap Map<String, String> map);
 
@@ -122,9 +120,6 @@ public interface RetrofitService {
     @POST("personalCenter/complaintsSuggestions")
     Observable<BaseBean<String>> submitSuggest(@FieldMap Map<String, String> map);
 
-    @FormUrlEncoded
-    @POST("personalCenter/goldAndExp")
-    Observable<BaseBean<UserInfo.PersonBean>> signToday(@Field("token") String token, @FieldMap Map<String, Integer> map);
 
     @FormUrlEncoded
     @POST("data/collect")

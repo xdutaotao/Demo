@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SettingPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SettingView;
@@ -81,6 +83,14 @@ public class SettingActivity extends BaseActivity implements SettingView {
                 ToastUtil.show("您的手机上没有安装Android应用市场");
                 e.printStackTrace();
             }
+        });
+
+
+        login.setOnClickListener(v -> {
+            User.getInstance().clearUser();
+            ShareUtils.delete();
+            ToastUtil.show("退出成功");
+            finish();
         });
     }
 

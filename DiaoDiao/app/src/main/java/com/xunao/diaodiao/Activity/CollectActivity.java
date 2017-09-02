@@ -493,8 +493,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 clearData();
                 number.clearFocus();
                 isNumberSearch = true;
-                presenter.getPartInfoByCode(CollectActivity.this, number.getText().toString(),
-                        User.getInstance().getUserInfo().getPerson().getProject());
                 return true;
             }else{
                 return false;
@@ -768,8 +766,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }else if (data != null && requestCode == REQUEST_SCAN_CODE){
                 String result = data.getStringExtra(INTENT_KEY);
                 number.setText(result);
-                if (!TextUtils.isEmpty(number.getText().toString()))
-                    presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
 
             }
         }
@@ -1022,7 +1018,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         bean.setProcessRecommendation(recommandChangeList.toString().replace("[", "").replace("]", ""));
         bean.setRemark(information.getText().toString());
         bean.setIsHistory(0);
-        bean.setProject(User.getInstance().getUserInfo().getPerson().getProject());
         bean.setLocations(getLocation());
 
         List<String> pathList = new ArrayList<>();
@@ -1121,7 +1116,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         if (!isNumberSearch && numHasFocus) {
                             numHasFocus = false;
                             clearData();
-                            presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
                         }
                     }else{
                         clearData();

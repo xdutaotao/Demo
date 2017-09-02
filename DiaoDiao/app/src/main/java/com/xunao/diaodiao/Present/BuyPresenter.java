@@ -22,17 +22,17 @@ public class BuyPresenter extends BasePresenter<BuyView> {
     BuyPresenter(){}
 
     public void addVipDuration(Context context, long time, int gold){
-        mCompositeSubscription.add(model.addVipDuration(time, gold)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
-                    @Override
-                    protected void _onNext(String token) {
-                        getView().getData(token);
-                    }
-
-                    @Override
-                    public void _onError(String s) {
-                        ToastUtil.show(s);
-                    }
-                }));
+//        mCompositeSubscription.add(model.addVipDuration(time, gold)
+//                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+//                    @Override
+//                    protected void _onNext(String token) {
+//                        getView().getData(token);
+//                    }
+//
+//                    @Override
+//                    public void _onError(String s) {
+//                        ToastUtil.show(s);
+//                    }
+//                }));
     }
 }
