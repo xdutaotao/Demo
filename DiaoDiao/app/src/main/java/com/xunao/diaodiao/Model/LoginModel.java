@@ -7,6 +7,7 @@ import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
+import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.LoginBean;
@@ -111,6 +112,7 @@ public class LoginModel extends BaseModel {
                     userInfo.setUserid(loginResBean.getUserid());
                     userInfo.setIs_frozen(loginResBean.getIs_frozen());
                     User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(userInfo));
+                    User.getInstance().setUserId(loginResBean.getUserid()+"");
                     return loginResBean;
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());
@@ -186,13 +188,38 @@ public class LoginModel extends BaseModel {
                 .append(req.getUserid())
                 .append("security");
 
-        FillCompanyReq selectBean = new FillCompanyReq();
-        selectBean.setVerify(Utils.getMD5(sb.toString()));
+        req.setVerify(Utils.getMD5(sb.toString()));
 
 
-        return config.getRetrofitService().fillInfor(setBody("completeCompany", time, selectBean))
+        return config.getRetrofitService().fillInfor(setBody("completeCompany", time, req))
                 .compose(RxUtils.handleResult());
     }
+
+
+
+    /**
+     * 完善信息 技工
+     * @param
+     * @return
+     */
+    public Observable<LoginResBean> fillSkillInfor(FillSkillReq req){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("completeTechnician");
+        sb.append(time+"").append(req.getAddress()).append(req.getCity())
+                .append(req.getDistrict()).append(req.getEvaluate())
+                .append(req.getExperience()).append(req.getMobile())
+                .append(req.getName()).append(req.getProvince())
+                .append(req.getUserid())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().fillInfor(setBody("completeTechnician", time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
 
 
     /**

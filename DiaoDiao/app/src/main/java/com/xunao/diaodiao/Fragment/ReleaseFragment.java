@@ -78,6 +78,19 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
         hideToolbarBack(toolBar, titleText, "发布");
 
+
+        companyRelease.setOnClickListener(this);
+        skillRelease.setOnClickListener(this);
+        homeRelease.setOnClickListener(this);
+        goLoginText.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         if (TextUtils.isEmpty(User.getInstance().getUserId())){
             goLoginText.setVisibility(View.VISIBLE);
@@ -108,15 +121,7 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
             homeRelease.setVisibility(View.VISIBLE);
         }
 
-
-        companyRelease.setOnClickListener(this);
-        skillRelease.setOnClickListener(this);
-        homeRelease.setOnClickListener(this);
-        goLoginText.setOnClickListener(this);
-
-        return view;
     }
-
 
     @Override
     public void onClick(View v) {

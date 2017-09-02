@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SelectCompanyPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.SelectCompanyView;
 
@@ -21,6 +22,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -115,7 +119,8 @@ public class SelectCompanyActivity extends BaseActivity implements SelectCompany
 
     @Override
     public void getData(LoginResBean bean) {
-
+        ShareUtils.putValue(TYPE_KEY, COMPANY_TYPE);
+        finish();
     }
 
     @Override

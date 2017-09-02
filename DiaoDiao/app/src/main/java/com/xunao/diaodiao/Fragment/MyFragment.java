@@ -21,6 +21,7 @@ import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
+import com.xunao.diaodiao.Activity.SelectSkillActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Model.User;
@@ -145,17 +146,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
-                    LoginActivity.startActivity(getActivity());
-                }else{
-                    if (ShareUtils.getValue(TYPE_KEY, 0) == 0)
-                        SelectMemoryActivity.startActivity(getActivity());
-                    else{
+//                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+//                    LoginActivity.startActivity(getActivity());
+//                }else{
+//                    if (ShareUtils.getValue(TYPE_KEY, 0) == 0)
+//                        SelectMemoryActivity.startActivity(getActivity());
+//                    else{
+//
+//                    }
+//                }
 
-                    }
-                }
-
-                //SelectCompanyActivity.startActivity(getContext());
+                SelectSkillActivity.startActivity(getContext());
 
                 break;
 

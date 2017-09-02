@@ -108,20 +108,6 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        int type = ShareUtils.getValue(TYPE_KEY, 0);
-        if (TextUtils.isEmpty(User.getInstance().getUserId())){
-            recyclerView.setVisibility(View.GONE);
-            goLoginText.setVisibility(View.VISIBLE);
-            goLoginText.setText("用户未登录，点击登录");
-        }else if(type ==0){
-            recyclerView.setVisibility(View.GONE);
-            goLoginText.setVisibility(View.VISIBLE);
-            goLoginText.setText("未选择角色，点击选择");
-        }else{
-            recyclerView.setVisibility(View.VISIBLE);
-            goLoginText.setVisibility(View.GONE);
-        }
-
 
         List<HomeProjBean> list = new ArrayList<>();
 
@@ -147,6 +133,26 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+            recyclerView.setVisibility(View.GONE);
+            goLoginText.setVisibility(View.VISIBLE);
+            goLoginText.setText("用户未登录，点击登录");
+        }else if(type ==0){
+            recyclerView.setVisibility(View.GONE);
+            goLoginText.setVisibility(View.VISIBLE);
+            goLoginText.setText("未选择角色，点击选择");
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            goLoginText.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

@@ -169,8 +169,6 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
                 SelectNormalActivity.startActivity(SelectMemoryActivity.this);
                 break;
         }
-
-        ShareUtils.putValue(TYPE_KEY, type);
         finish();
     }
 
