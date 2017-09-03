@@ -3,7 +3,7 @@
 var app = getApp()
 
 var appid = 'wx29602978ed48fcf4'
-var sessionKey = 'e5fedcd8bb5be396f93ff7b247eecfa0=='
+var secret = '0bd7e3aa68811109cf25275bf6d6df6f'
 
 var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 
@@ -11,7 +11,12 @@ var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {}
+    userInfo: {},
+    code: "",
+    encryptedData:"",
+    iv: "",
+    session_key: "",
+    openid:""
   },
   //事件处理函数
   bindViewTap: function() {
@@ -19,6 +24,30 @@ Page({
       url: '../logs/logs'
     })
   },
+
+  get3rdSession: function () {
+    let that = this
+    wx.request({
+      url: 'http://lh.2donghua.com/miniApps/convert.php',
+      data: {
+        code: that.data.code,
+        encryptedData: that.data.encryptedData,
+        iv: that.data.iv,
+        appid: appid,
+        secret: secret
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: 'POST',
+      success: function (res) {
+        let response = res.data.substring(3)
+        console.log(response)
+        console.log(JSON.parse(response).stepInfoList)
+      }
+    })
+  },
+
   onLoad: function () {
     console.log('onLoad')
     var that = this
@@ -38,23 +67,7 @@ Page({
         if (res.code) {
           //发起网络请求
           console.log('获取用户登录成功！' + res.code)
-
-          wx.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session',
-            data: {
-              appid: appid,
-              secret: sessionKey,
-              cojs_codede: res.code,
-              grant_type: "authorization_code"
-            },
-            header: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            method: 'GET', 
-            success: function(response){
-              console.log(response);
-            }
-          })
+          that.setData({code: res.code})
 
 
           if (wx.getWeRunData) {
@@ -63,6 +76,11 @@ Page({
               success(res) {
                 console.log('获取计步接口成功！' + res.errMsg)
                 const encryptedData = res.encryptedData
+                that.setData({iv:res.iv})
+                that.setData({encryptedData: encryptedData})
+                that.get3rdSession();
+
+
               },
               fail(error) {
                 console.log(error);

@@ -23,6 +23,9 @@ import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.SelectSkillView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -65,7 +68,7 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
     private RecyclerArrayAdapter<String> adapter;
 
     private String[] skills = {"家电维修", "水泥回填", "家电维修", "水泥回填", "家电维修", "水泥回填"};
-    private String skillsName ;
+    private List<String> skillsName = new ArrayList<>();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectSkillActivity.class);
@@ -98,12 +101,11 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
             if (skillsName.toString().contains(skillItem)){
                 view.setBackground(getResources().getDrawable(R.drawable.btn_blank_bg));
                 ((TextView)view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                String[] temp = skillsName.split(","+skillItem);
-                skillsName = temp[0]+temp[1];
+                skillsName.remove(skillItem);
             }else{
                 view.setBackground(getResources().getDrawable(R.drawable.btn_blue_bg));
                 ((TextView)view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsName+=(skillItem+",");
+                skillsName.add(skillItem);
             }
 
         });
@@ -142,7 +144,7 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
             return;
         }
 
-        if (TextUtils.isEmpty(skillsName)){
+        if (TextUtils.isEmpty(skillsName.toString())){
             ToastUtil.show("不能为空");
             return;
         }
@@ -162,7 +164,7 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
         req.setAddress(address.getText().toString());
         req.setExperience(year.getText().toString());
         req.setEvaluate(information.getText().toString());
-        req.setProject_type(skillsName.substring(0, skillsName.length()-1));
+        req.setProject_type(skillsName.toString());
 
         presenter.fillSkillInfor(this, req);
 

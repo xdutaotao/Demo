@@ -20,6 +20,8 @@ App({
           typeof cb == "function" && cb(that.globalData.userInfo)
         }
       })
+
+      
     }
   },
 
