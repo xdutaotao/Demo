@@ -7,6 +7,7 @@ import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
+import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCodeBean;
@@ -208,8 +209,8 @@ public class LoginModel extends BaseModel {
         sb.append(time+"").append(req.getAddress()).append(req.getCity())
                 .append(req.getDistrict()).append(req.getEvaluate())
                 .append(req.getExperience()).append(req.getMobile())
-                .append(req.getName()).append(req.getProvince())
-                .append(req.getUserid())
+                .append(req.getName()).append(req.getProject_type())
+                .append(req.getProvince()).append(req.getUserid())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));
@@ -220,6 +221,26 @@ public class LoginModel extends BaseModel {
     }
 
 
+    /**
+     * 完善信息 技工
+     * @param
+     * @return
+     */
+    public Observable<LoginResBean> fillNormalInfor(FillNormalReq req){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("completeFamily");
+        sb.append(time+"").append(req.getAddress()).append(req.getCity())
+                .append(req.getDistrict()).append(req.getMobile())
+                .append(req.getName())
+                .append(req.getProvince()).append(req.getUserid())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().fillInfor(setBody("completeFamily", time, req))
+                .compose(RxUtils.handleResult());
+    }
 
 
     /**

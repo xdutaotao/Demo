@@ -201,7 +201,7 @@
                     android:gravity="start"
                     android:maxLength="100"
                     android:padding="50px"
-                    android:textColor="@color/nav_gray"
+                    android:textColorHint="@color/nav_gray"
                     android:background="@null"
                     android:textSize="50px" />
 

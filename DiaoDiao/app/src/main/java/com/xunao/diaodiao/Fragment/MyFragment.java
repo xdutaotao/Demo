@@ -21,6 +21,7 @@ import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
+import com.xunao.diaodiao.Activity.SelectNormalActivity;
 import com.xunao.diaodiao.Activity.SelectSkillActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
@@ -156,7 +157,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 //                    }
 //                }
 
-                SelectSkillActivity.startActivity(getContext());
+                SelectNormalActivity.startActivity(getContext());
 
                 break;
 

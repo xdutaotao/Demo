@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -67,7 +69,7 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
 
     private RecyclerArrayAdapter<String> adapter;
 
-    private String[] skills = {"家电维修", "水泥回填", "家电维修", "水泥回填", "家电维修", "水泥回填"};
+    private String[] skills = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
     private List<String> skillsName = new ArrayList<>();
 
     public static void startActivity(Context context) {
@@ -93,17 +95,28 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.skill_text, s);
+                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                    if (skillsName.toString().contains(s)){
+                        v.setBackgroundResource(R.drawable.btn_blank_bg);
+                        ((TextView)v).setTextColor(getResources().getColor(R.color.gray));
+                        skillsName.remove(s);
+                    }else{
+                        v.setBackgroundResource(R.drawable.btn_blue_bg);
+                        ((TextView)v).setTextColor(Color.WHITE);
+                        skillsName.add(s);
+                    }
+                });
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
             String skillItem = adapter.getAllData().get(i);
             if (skillsName.toString().contains(skillItem)){
-                view.setBackground(getResources().getDrawable(R.drawable.btn_blank_bg));
+                view.setBackgroundResource(R.drawable.btn_blank_bg);
                 ((TextView)view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
                 skillsName.remove(skillItem);
             }else{
-                view.setBackground(getResources().getDrawable(R.drawable.btn_blue_bg));
+                view.setBackgroundResource(R.drawable.btn_blue_bg);
                 ((TextView)view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
                 skillsName.add(skillItem);
             }
@@ -116,6 +129,24 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
         recyclerView.setAdapter(adapter);
 
         adapter.addAll(skills);
+
+        information.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int len = s.toString().length();
+                infoNum.setText(len+"/200");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void goInAppAction(){
@@ -164,7 +195,9 @@ public class SelectSkillActivity extends BaseActivity implements SelectSkillView
         req.setAddress(address.getText().toString());
         req.setExperience(year.getText().toString());
         req.setEvaluate(information.getText().toString());
-        req.setProject_type(skillsName.toString());
+        String projectType = skillsName.toString();
+        projectType = projectType.substring(1, projectType.length()-1);
+        req.setProject_type(projectType);
 
         presenter.fillSkillInfor(this, req);
 
