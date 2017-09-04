@@ -19,4 +19,43 @@
         WHERE ID = #{id,jdbcType=VARCHAR}
     </select>
 
+    <update id="updateById" parameterType="com.gzfgeh.spring.dao.model.User" >
+        UPDATE STUDENT
+        <set >
+            <if test="age != null and age != ''" >
+                AGE = #{age,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE NAME = #{name,jdbcType=VARCHAR}
+    </update>
+
+
+    <insert id="insert" parameterType="com.gzfgeh.spring.dao.model.User" >
+        INSERT INTO STUDENT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null and id != ''" >
+                ID,
+            </if>
+            <if test="name != null and name != ''" >
+                NAME,
+            </if>
+            <if test="age != null and age != ''" >
+                AGE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null and id != ''" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null and name != ''" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null and age != ''" >
+                #{age,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+
 </mapper>

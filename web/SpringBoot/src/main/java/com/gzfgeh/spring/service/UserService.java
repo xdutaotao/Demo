@@ -19,4 +19,14 @@ public class UserService implements Serializable{
     public User selectById(String id){
         return userMapper.selectById(id);
     }
+
+    public int updateById(User user){
+        return userMapper.updateById(user);
+    }
+
+
+    public int insert(User user){
+        userMapper.insert(user);
+        return 999;
+    }
 }

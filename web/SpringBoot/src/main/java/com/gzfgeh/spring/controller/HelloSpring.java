@@ -55,4 +55,16 @@ public class HelloSpring {
         return service.selectById(user.getId());
     }
 
+
+    @PostMapping(value = "/updateUserData")
+    public int updateUserData(@RequestBody User user){
+        return service.updateById(user);
+    }
+
+
+    @PostMapping(value = "/insertData")
+    public int insertData(@RequestBody User user){
+        return service.insert(user);
+    }
+
 }
