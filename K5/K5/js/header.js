@@ -110,6 +110,15 @@ function daojishi(data) {
                 clearInterval(timer2);
                 getdata();
                 subTime=timeerCount;
+
+                $.ajax({
+                    type:"post",
+                    url:oneDataUrl,
+                    async:true,
+                    success:function (data) {
+                        newNum(data);
+                    }
+                });
             }
 
 
