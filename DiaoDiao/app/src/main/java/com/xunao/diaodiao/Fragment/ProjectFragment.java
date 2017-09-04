@@ -177,13 +177,6 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.go_login_text:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
-                    LoginActivity.startActivity(ProjectFragment.this.getContext());
-                }else{
-                    SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
-                }
-                break;
         }
     }
 

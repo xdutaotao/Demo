@@ -19,16 +19,11 @@ import com.xunao.diaodiao.Activity.MoneyActivity;
 import com.xunao.diaodiao.Activity.MyFavoriteActivity;
 import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
-import com.xunao.diaodiao.Activity.SelectCompanyActivity;
-import com.xunao.diaodiao.Activity.SelectMemoryActivity;
-import com.xunao.diaodiao.Activity.SelectNormalActivity;
-import com.xunao.diaodiao.Activity.SelectSkillActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.MyView;
 
@@ -36,8 +31,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
@@ -65,6 +58,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView message;
     @BindView(R.id.name)
     TextView name;
+    @BindView(R.id.login)
+    TextView login;
+    @BindView(R.id.money_text)
+    TextView moneyText;
+    @BindView(R.id.bank_text)
+    TextView bankText;
     private String mParam1;
 
     @Inject
@@ -106,6 +105,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         money.setOnClickListener(this);
         bank.setOnClickListener(this);
         name.setOnClickListener(this);
+        login.setOnClickListener(this);
         return view;
     }
 
@@ -113,11 +113,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Override
     public void onResume() {
         super.onResume();
-        if (User.getInstance().getUserInfo() != null){
+        if (User.getInstance().getUserInfo() != null) {
+            name.setVisibility(View.VISIBLE);
+            login.setVisibility(View.GONE);
             String mobile = User.getInstance().getUserInfo().getMobile();
             name.setText(mobile);
-        }else{
-            name.setText("未登录");
+
+        } else {
+            name.setVisibility(View.GONE);
+            login.setVisibility(View.VISIBLE);
+            moneyText.setText("- / -");
+            bankText.setText("- / -");
         }
     }
 
@@ -144,6 +150,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
             case R.id.about_diaodiao:
                 AboutActivity.startActivity(getActivity());
+                break;
+
+            case R.id.login:
+                LoginActivity.startActivity(getContext());
                 break;
 
             case R.id.contact_service:
@@ -186,7 +196,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.name:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                     LoginActivity.startActivity(MyFragment.this.getContext());
                 }
                 break;
@@ -214,5 +224,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         super.onDestroy();
         presenter.detachView();
     }
+
 
 }
