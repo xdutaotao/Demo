@@ -1,19 +1,17 @@
 package com.gzfgeh.spring.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.gzfgeh.spring.entity.User;
+import com.gzfgeh.spring.dao.model.User;
+import com.gzfgeh.spring.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by guzhenfu on 2017/8/31.
  */
 @RestController
 public class HelloSpring {
-
+    @Autowired
+    private UserService service;
 
     //localhost:8080/hello
     @RequestMapping("/hello")
@@ -33,12 +31,6 @@ public class HelloSpring {
         return username + age;
     }
 
-    //localhost:8080/map?username=gzfgeh&age=111
-    @PostMapping("/map")
-    public String getMapParams(@RequestBody Map<String, Object> map){
-        return map.get("username").toString() + map.get("age").toString();
-    }
-
     //localhost:8080/data  post  '{"name":"gzfgeh","age":"11"}'
     @ResponseBody
     @RequestMapping(value = "/data", method = RequestMethod.POST)
@@ -50,11 +42,17 @@ public class HelloSpring {
         return user;
     }
 
-
-    @RequestMapping(value = "/getdata", method = RequestMethod.POST)
-    public User getData(User user){
+    //localhost:8080/data  post  '{"name":"gzfgeh","age":"11"}'
+    @RequestMapping(value = "/getdata", method = { RequestMethod.POST, RequestMethod.GET })
+    public User getData(@RequestBody User user){
         System.out.printf("ddd"+user.getName());
         return user;
+    }
+
+    //localhost:8080/getUserData  post  '{"name":"gzfgeh","age":"11"}'
+    @RequestMapping(value = "/getUserData", method = {RequestMethod.POST, RequestMethod.GET})
+    public User getUserData(@RequestBody User user){
+        return service.selectById(user.getId());
     }
 
 }

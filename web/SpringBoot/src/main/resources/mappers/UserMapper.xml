@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gzfgeh.spring.dao.UserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.gzfgeh.spring.dao.model.User" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="AGE" property="age" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, NAME, AGE
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM STUDENT
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
