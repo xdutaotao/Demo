@@ -41,8 +41,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
     /**
      * 修改密码 检查手机号是否存在
      */
-    public void register(Context context, String phone, String pwd, String code){
-        mCompositeSubscription.add(model.checkExistPhone(phone, pwd, code)
+    public void register(Context context, String phone, String pwd, String code, int type){
+        mCompositeSubscription.add(model.checkExistPhone(phone, pwd, code, type)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(String token) {

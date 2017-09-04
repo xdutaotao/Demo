@@ -157,7 +157,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 //                    }
 //                }
 
-                SelectNormalActivity.startActivity(getContext());
+                LoginActivity.startActivity(getContext());
 
                 break;
 

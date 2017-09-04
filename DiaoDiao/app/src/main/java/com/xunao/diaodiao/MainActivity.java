@@ -79,25 +79,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         return fragments;
     }
 
-    @SuppressWarnings("RestrictedApi")
-    private void showCenterFragment() {
-        if (User.getInstance().getUserInfo() == null){
-            new IOSDialog(this).builder()
-                    .setTitle("提示")
-                    .setMsg("登陆后才可使用此功能")
-                    .setPositiveButton("立即登陆", v -> LoginActivity.startActivity(this))
-                    .setPositiveBtnColor(R.color.colorPrimary)
-                    .setNegativeButton("暂不登陆", null)
-                    .setNegativeBtnColor(R.color.colorPrimary)
-                    .show();
-        }else{
-            CollectActivity.startActivity(this);
-        }
-    }
-
-
-
-
     @Override
     public void onTabSelected(int position) {
         if (fragments != null) {
@@ -134,6 +115,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabReselected(int position) {
 
+    }
+
+
+    public void goToFragment(int index){
+        if (index == 1)
+            bottomNavigationBar.selectTab(0);
     }
 
     /**

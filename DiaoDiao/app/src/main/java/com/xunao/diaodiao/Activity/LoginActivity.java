@@ -112,6 +112,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 break;
 
             case R.id.code_login:
+                //忘记密码
                 CheckPhoneActivity.startActivity(this, 1);
                 break;
 

@@ -140,8 +140,9 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             return;
         }
 
+
         presenter.register(this, phoneInput.getText().toString(),
-                pwdInput.getText().toString(), codeInput.getText().toString());
+                pwdInput.getText().toString(), codeInput.getText().toString(), type);
     }
 
     @Override

@@ -124,9 +124,25 @@ public class LoginModel extends BaseModel {
      * @param phone
      * @return
      */
-    public Observable<String> checkExistPhone(String phone, String pwd, String code){
+    public Observable<String> checkExistPhone(String phone, String pwd, String code, int type){
+        String actionName = "";
+        switch (type){
+            case 0:
+                actionName = "register";
+                break;
+
+            case 1:
+                actionName = "forgetpwd";
+                break;
+
+            case 2:
+                actionName = "forgetpwd";
+                break;
+        }
+
+
         long time = System.currentTimeMillis()/1000;
-        StringBuilder sb = new StringBuilder("register");
+        StringBuilder sb = new StringBuilder(actionName);
         sb.append(time+"").append(code).append(phone).append(pwd)
                 .append("security");
 
@@ -137,7 +153,7 @@ public class LoginModel extends BaseModel {
         registerBean.setVerify(Utils.getMD5(sb.toString()));
 
 
-        return config.getRetrofitService().checkExistPhone(setBody("register", time, registerBean))
+        return config.getRetrofitService().checkExistPhone(setBody(actionName, time, registerBean))
                 .compose(RxUtils.handleResultNoThread())
                 .map(registerRespBean -> {
                     String userid = registerRespBean.getUserid();

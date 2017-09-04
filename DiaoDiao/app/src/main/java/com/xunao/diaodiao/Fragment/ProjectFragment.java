@@ -16,6 +16,7 @@ import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
+import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.R;
@@ -45,8 +46,7 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.go_login_text)
-    TextView goLoginText;
+
     private String mParam1;
 
     private static final int[] COMPANY_IMAGES = {R.drawable.icon_wodexiangmu, R.drawable.icon_janlixinxi,
@@ -56,6 +56,9 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
             "维保信息", "互助信息"};
 
     private RecyclerArrayAdapter<HomeProjBean> adapter;
+
+    private int index = 0;
+    private int selectIndex = 0;
 
     public static ProjectFragment newInstance(String param1) {
         ProjectFragment fragment = new ProjectFragment();
@@ -129,8 +132,6 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         }
         adapter.addAll(list);
 
-        goLoginText.setOnClickListener(this);
-
 
         return view;
     }
@@ -142,17 +143,35 @@ public class ProjectFragment extends BaseFragment implements MessageView, View.O
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         if (TextUtils.isEmpty(User.getInstance().getUserId())){
             recyclerView.setVisibility(View.GONE);
-            goLoginText.setVisibility(View.VISIBLE);
-            goLoginText.setText("用户未登录，点击登录");
+            index++;
+            if (index == 1) {
+                LoginActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
         }else if(type ==0){
             recyclerView.setVisibility(View.GONE);
-            goLoginText.setVisibility(View.VISIBLE);
-            goLoginText.setText("未选择角色，点击选择");
+
+            selectIndex++;
+            if (selectIndex == 1) {
+                SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
+
         }else{
             recyclerView.setVisibility(View.VISIBLE);
-            goLoginText.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                LoginActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
+        }
     }
 
     @Override

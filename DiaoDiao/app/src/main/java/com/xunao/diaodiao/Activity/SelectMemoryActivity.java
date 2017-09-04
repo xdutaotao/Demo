@@ -155,20 +155,20 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
     @Override
     public void getData(String result) {
-        int type = Integer.valueOf(result);
-        switch (type){
-            case COMPANY_TYPE:
-                SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
-                break;
-
-            case SKILL_TYPE:
-                SelectSkillActivity.startActivity(SelectMemoryActivity.this);
-                break;
-
-            case CUSTOM_TYPE:
-                SelectNormalActivity.startActivity(SelectMemoryActivity.this);
-                break;
-        }
+//        int type = Integer.valueOf(result);
+//        switch (type){
+//            case COMPANY_TYPE:
+//                SelectCompanyActivity.startActivity(SelectMemoryActivity.this);
+//                break;
+//
+//            case SKILL_TYPE:
+//                SelectSkillActivity.startActivity(SelectMemoryActivity.this);
+//                break;
+//
+//            case CUSTOM_TYPE:
+//                SelectNormalActivity.startActivity(SelectMemoryActivity.this);
+//                break;
+//        }
         finish();
     }
 

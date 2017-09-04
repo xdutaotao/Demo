@@ -16,6 +16,7 @@ import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
+import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SearchPresenter;
 import com.xunao.diaodiao.R;
@@ -48,9 +49,10 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     LinearLayout skillRelease;
     @BindView(R.id.home_release)
     LinearLayout homeRelease;
-    @BindView(R.id.go_login_text)
-    TextView goLoginText;
+
     private String mParam1;
+    private int index = 0;
+    private int selectIndex = 0;
 
     public static ReleaseFragment newInstance(String param1) {
         ReleaseFragment fragment = new ReleaseFragment();
@@ -82,7 +84,6 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         companyRelease.setOnClickListener(this);
         skillRelease.setOnClickListener(this);
         homeRelease.setOnClickListener(this);
-        goLoginText.setOnClickListener(this);
 
         return view;
     }
@@ -93,32 +94,43 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         if (TextUtils.isEmpty(User.getInstance().getUserId())){
-            goLoginText.setVisibility(View.VISIBLE);
-            companyRelease.setVisibility(View.GONE);
-            skillRelease.setVisibility(View.GONE);
-            homeRelease.setVisibility(View.GONE);
-            goLoginText.setText("用户未登录，点击登录");
+            index++;
+            if (index == 1) {
+                LoginActivity.startActivity(ReleaseFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
         }else if(type == 0){
-            goLoginText.setVisibility(View.VISIBLE);
-            companyRelease.setVisibility(View.GONE);
-            skillRelease.setVisibility(View.GONE);
-            homeRelease.setVisibility(View.GONE);
-            goLoginText.setText("未选择角色，点击选择");
+            selectIndex++;
+            if (selectIndex == 1) {
+                SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
         }else if(type == 1){
-            goLoginText.setVisibility(View.GONE);
             companyRelease.setVisibility(View.VISIBLE);
             skillRelease.setVisibility(View.GONE);
             homeRelease.setVisibility(View.GONE);
         }else if(type == 2){
-            goLoginText.setVisibility(View.GONE);
             companyRelease.setVisibility(View.GONE);
             skillRelease.setVisibility(View.VISIBLE);
             homeRelease.setVisibility(View.GONE);
         }else{
-            goLoginText.setVisibility(View.GONE);
             companyRelease.setVisibility(View.GONE);
             skillRelease.setVisibility(View.GONE);
             homeRelease.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (!hidden){
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                LoginActivity.startActivity(ReleaseFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
         }
 
     }
@@ -135,14 +147,6 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 break;
 
             case R.id.home_release:
-                break;
-
-            case R.id.go_login_text:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
-                    LoginActivity.startActivity(ReleaseFragment.this.getContext());
-                }else{
-                    SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
-                }
                 break;
         }
     }
