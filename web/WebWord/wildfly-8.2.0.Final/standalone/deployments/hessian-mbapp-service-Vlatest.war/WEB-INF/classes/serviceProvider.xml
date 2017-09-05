@@ -1,0 +1,35 @@
+<!--<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx
+ 		http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+    <import resource="classpath*:spring_mbapp.xml"/>
+
+	<!-- 使用Spring的HessianServie做代理 -->
+	<bean name="/IFinadrawService" class="core.hessian.HessianServiceExporter">
+		<property name="service" ref="IFinadrawService"/>
+		<property name="serviceInterface" value="mbapp.dd.service.IFinadrawService"/>
+	</bean>
+	<bean id="IFinadrawService" class="mbapp.dd.service.impl.FinadrawServiceImpl"/>
+	
+	<bean name="/IProductService" class="core.hessian.HessianServiceExporter">
+		<property name="service" ref="IProductService"/>
+		<property name="serviceInterface" value="mbapp.weixin.service.IProductService"/>
+	</bean>
+	<bean id="IProductService" class="mbapp.weixin.service.impl.ProductServiceImpl"/>
+	
+	<bean name="/IOrderService" class="core.hessian.HessianServiceExporter">
+		<property name="service" ref="IOrderService"/>
+		<property name="serviceInterface" value="mbapp.weixin.service.IOrderService"/>
+	</bean>
+	<bean id="IOrderService" class="mbapp.weixin.service.impl.OrderServiceImpl"/>
+</beans>  

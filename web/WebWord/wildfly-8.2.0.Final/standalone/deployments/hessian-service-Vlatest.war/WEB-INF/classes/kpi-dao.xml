@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="kpiDAO" class="shcem.kpi.dao.impl.KpiDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="capitalKpiDAO" class="shcem.kpi.dao.impl.CapitalKpiDAOImpl">
+		<property name="dataSource" ref="dataSourceGeact" />
+	</bean>
+	<!-- mysql database -->
+<!-- 	<bean id="dingDAO" class="shcem.kpi.dao.impl.DingDAOImpl"> -->
+<!-- 		<property name="dataSource" ref="dataSourceDing" /> -->
+<!-- 	</bean> -->
+</beans>
+
+
+
+
+
+
+
+
+
+
+

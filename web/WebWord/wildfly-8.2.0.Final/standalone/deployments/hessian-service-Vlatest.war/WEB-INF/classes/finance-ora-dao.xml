@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="voucherOraDAO" class="shcem.finance.dao.impl.VoucherOraDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="firmBanlanceOraDAO" class="shcem.finance.dao.impl.FirmBanlanceOraDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="bankMgrDAO" class="shcem.finance.dao.impl.BankMgrDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="bankMgrDAO_read" class="shcem.finance.dao.impl.BankMgrDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="voucherDAO" class="shcem.finance.dao.impl.VoucherDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="voucherDAO_read" class="shcem.finance.dao.impl.VoucherDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="firmBanlanceDAO" class="shcem.finance.dao.impl.FirmBanlanceDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="firmBanlanceDAO_read" class="shcem.finance.dao.impl.FirmBanlanceDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="fundFlowDAO" class="shcem.finance.dao.impl.FundFlowDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="fundFlowDAO_read" class="shcem.finance.dao.impl.FundFlowDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="SApplyDAO" class="shcem.finance.dao.impl.SApplyDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sApplyDAO_read" class="shcem.finance.dao.impl.SApplyDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 优惠券 -->
+	<bean id="couponDao" class="shcem.finance.dao.impl.CouponDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="couponDao_read" class="shcem.finance.dao.impl.CouponDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 发票 -->
+	<bean id="invoiceDao" class="shcem.finance.dao.impl.InvoiceDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="invoiceDao_read" class="shcem.finance.dao.impl.InvoiceDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 交收相关 -->
+	<bean id="deliveryDAO" class="shcem.trade.dao.impl.DeliveryDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="deliveryDAO_read" class="shcem.trade.dao.impl.DeliveryDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 保单 -->
+	<bean id="insurancePolicyDao" class="shcem.market.dao.impl.InsurancePolicyDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="insurancePolicyDao_read" class="shcem.market.dao.impl.InsurancePolicyDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+[DEBUG] 2017-08-31 09:13:43,745 Got Userid From Hessian Header:
+[DEBUG] 2017-08-31 09:13:43,760 Got Userid From Hessian Header:
+[INFO ] 2017-08-31 09:14:12,612 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() Start
+[DEBUG] 2017-08-31 09:14:12,616 {"transaction_id":"4006762001201708309128175114","nonce_str":"636a4715d67c40ea9772ceef8e079b20","bank_type":"CFT","openid":"oSEaLv2kI_x9IjhHbTaF58d3qOxU","sign":"8F30C09F8944C2A35EC0186E0F506E0C","fee_type":"CNY","mch_id":"1390197902","cash_fee":"1","device_info":"WEB","out_trade_no":"150407979883647bc333de4e78a6c3b3","appid":"wx148cde2b74b6a21b","total_fee":"1","trade_type":"JSAPI","result_code":"SUCCESS","time_end":"20170830155648","is_subscribe":"Y","return_code":"SUCCESS"}
+[INFO ] 2017-08-31 09:15:34,298 更新订单状态和商品库存 成功！
+[INFO ] 2017-08-31 09:15:34,300 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() End
+[DEBUG] 2017-08-31 09:17:31,985 Got Userid From Hessian Header:
+[DEBUG] 2017-08-31 09:17:32,069 Got Userid From Hessian Header:
+[INFO ] 2017-08-31 09:17:50,484 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() Start
+[DEBUG] 2017-08-31 09:17:50,490 {"transaction_id":"4006762001201708309128175114","nonce_str":"636a4715d67c40ea9772ceef8e079b20","bank_type":"CFT","openid":"oSEaLv2kI_x9IjhHbTaF58d3qOxU","sign":"8F30C09F8944C2A35EC0186E0F506E0C","fee_type":"CNY","mch_id":"1390197902","cash_fee":"1","device_info":"WEB","out_trade_no":"150407979883647bc333de4e78a6c3b3","appid":"wx148cde2b74b6a21b","total_fee":"1","trade_type":"JSAPI","result_code":"SUCCESS","time_end":"20170830155648","is_subscribe":"Y","return_code":"SUCCESS"}
+[INFO ] 2017-08-31 09:17:58,310 更新订单状态和商品库存 成功！
+[INFO ] 2017-08-31 09:17:58,313 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() End
+[INFO ] 2017-08-31 09:18:11,491 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() Start
+[DEBUG] 2017-08-31 09:18:11,619 {"transaction_id":"4006762001201708309128175114","nonce_str":"636a4715d67c40ea9772ceef8e079b20","bank_type":"CFT","openid":"oSEaLv2kI_x9IjhHbTaF58d3qOxU","sign":"8F30C09F8944C2A35EC0186E0F506E0C","fee_type":"CNY","mch_id":"1390197902","cash_fee":"1","device_info":"WEB","out_trade_no":"150407979883647bc333de4e78a6c3b3","appid":"wx148cde2b74b6a21b","total_fee":"1","trade_type":"JSAPI","result_code":"SUCCESS","time_end":"20170830155648","is_subscribe":"Y","return_code":"SUCCESS"}
+[ERROR] 2017-08-31 09:18:16,684 更新订单状态和商品库存 失败！
+[INFO ] 2017-08-31 09:18:16,686 mbapp.weixin.service.impl.ProductServiceImpl. updateOrderAndStock() End

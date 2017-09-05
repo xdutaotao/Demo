@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="firmDAO" class="shcem.member.dao.impl.FirmDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="firmDAO_read" class="shcem.member.dao.impl.FirmDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+
+	<bean id="traderDAO" class="shcem.member.dao.impl.TraderDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="traderDAO_read" class="shcem.member.dao.impl.TraderDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+
+	<bean id="userDAO" class="shcem.member.dao.impl.UserDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="userDAO_read" class="shcem.member.dao.impl.UserDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="systemMgrDAO" class="shcem.systemMgr.dao.impl.SystemMgrDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 老专场 -->
+	<bean id="firmBanlanceOraDAO" class="shcem.finance.dao.impl.FirmBanlanceOraDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userWeiXinDao" class="shcem.member.dao.impl.UserWeiXinDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="userWeiXinDao_read" class="shcem.member.dao.impl.UserWeiXinDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="commonDao_read" class="shcem.common.dao.impl.CommonDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="leadsDAO_read" class="shcem.trade.dao.impl.LeadsDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

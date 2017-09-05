@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- Transaction template for Managers, from: http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/ -->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="manager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.base.component.impl.BaseManager">
+				<property name="DAO">
+					<ref bean="dao" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="traderManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.TraderManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="marketManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.MarketManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="statQueryManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.StatQueryManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<bean id="leadsManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.LeadsManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.OrderManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<!-- 交收相关 -->
+	<bean id="deliveryManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.DeliveryManagerImpl" autowire="byName"/>
+		</property>
+	</bean>
+	
+	<!-- 特殊流程记录 -->
+	<bean id="specialOprManagerImpl" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.SpecialOprManagerImpl" autowire="byName"/>
+		</property>
+	</bean>
+	
+	<!-- 交收配送费用相关 -->
+	<bean id="logisticsRateMgrImpl" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.logistics.component.impl.LogisticsRateMgrImpl" autowire="byName"/>
+		</property>
+	</bean>
+	
+	<!-- 配送交收 -->
+	<bean id="distributionMgr" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.DistributionMgrImpl" autowire="byName"/>
+		</property>
+	</bean>
+	
+	<!-- 仓库地址交易场关系 -->
+	<bean id="WHAddrTemplateRlspManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.trade.component.impl.WHAddrTemplateRlspManagerImpl" autowire="byName"/>
+		</property>
+	</bean>
+	
+</beans>

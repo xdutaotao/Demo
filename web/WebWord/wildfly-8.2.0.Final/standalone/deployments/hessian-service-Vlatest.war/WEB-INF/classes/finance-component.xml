@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- Transaction template for Managers, from: http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/ -->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="manager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.base.component.impl.BaseManager">
+				<property name="DAO">
+					<ref bean="dao" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="bankMgrManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.BankMgrManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<bean id="voucherManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.VoucherManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<bean id="firmBanlanceManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.FirmBanlanceManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<!-- 资金流水 -->
+	<bean id="fundFlowManagerImpl" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.FundFlowManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	
+	<bean id="sapplyManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.SApplyManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	<!-- 优惠券 -->
+	<bean id="couponComponnetManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.CouponComponnetManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+	<!-- 发票 -->
+	<bean id="invoiceComponnetManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.finance.component.impl.InvoiceComponentManagerImpl"
+				autowire="byName" />
+		</property>
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

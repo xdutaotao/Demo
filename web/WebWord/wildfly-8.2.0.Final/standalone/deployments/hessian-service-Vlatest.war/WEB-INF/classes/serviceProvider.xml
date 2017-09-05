@@ -1,0 +1,423 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- 使用Spring的HessianServie做代理 -->
+
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Log Service 日志服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/ILogService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ILogimpl" />
+		<property name="serviceInterface" value="shcem.log.service.ILogService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="ILogimpl" class="shcem.log.service.impl.LogServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Log Service 日志服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Trade Service 交易服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/ITradeService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ITradeimpl" />
+		<property name="serviceInterface" value="shcem.trade.service.ITradeService" />
+	</bean>
+	<!-- 特殊记录 -->
+	<bean name="/ISpecialOprService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ISpecialOprServiceImpl" />
+		<property name="serviceInterface" value="shcem.trade.service.ISpecialOprService" />
+	</bean>
+	<!-- 财务报表-->
+	<bean name="/IFinanceFormsService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IFinanceFormsServiceImpl" />
+		<property name="serviceInterface" value="shcem.trade.service.IFinanceFormsService" />
+	</bean>
+	<!-- 仓库地址交易场关系-->
+	<bean name="/IWHAddrTemplateRlspService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IWHAddrTemplateRlspServiceImpl" />
+		<property name="serviceInterface" value="shcem.trade.service.IWHAddrTemplateRlspService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="ITradeimpl" class="shcem.trade.service.impl.TradeServiceImpl" />
+	<bean id="ISpecialOprServiceImpl" class="shcem.trade.service.impl.SpecialOprServiceImpl" />
+	<bean id="IFinanceFormsServiceImpl" class="shcem.trade.service.impl.FinanceFormsServiceImpl" />
+	<bean id="IWHAddrTemplateRlspServiceImpl" class="shcem.trade.service.impl.WHAddrTemplateRlspServiceImpl" />
+	
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Trade Service 交易服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Leads Service 服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/ILeadsMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ILeadsimpl" />
+		<property name="serviceInterface" value="shcem.trade.service.ILeadsMgrService" />
+	</bean>
+	<!-- 交收相关 -->
+	<bean name="/IDeliveryService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="DeliveryServiceImpl" />
+		<property name="serviceInterface" value="shcem.trade.service.IDeliveryService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="ILeadsimpl" class="shcem.trade.service.impl.LeadsMgrServiceImpl" />
+	<bean id="DeliveryServiceImpl" class="shcem.trade.service.impl.DeliveryServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Leads Service 交易服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+		<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Order Service 服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/IOrderMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IOrderimpl" />
+		<property name="serviceInterface" value="shcem.trade.service.IOrderMgrService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IOrderimpl" class="shcem.trade.service.impl.OrderMgrServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Order Service 交易服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+			<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	SApply Service 服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/ISApplyMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ISApplyimpl" />
+		<property name="serviceInterface" value="shcem.finance.service.ISApplyMgrService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="ISApplyimpl" class="shcem.finance.service.impl.SApplyMgrServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	SApply Service 交易服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	
+				<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Report Service 服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/IReportService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IReportServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IReportService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IReportServiceImpl" class="shcem.finance.service.impl.ReportServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	SApply Service 交易服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Market Service 优惠券服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<!-- 优惠券相关相关 -->
+	<!-- Market Service -->
+	<bean name="/ICouponActivityMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ICouponActivityMgrImpl" />
+		<property name="serviceInterface" value="shcem.market.service.ICouponActivityMgrService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="ICouponActivityMgrImpl" class="shcem.market.service.impl.CouponActivityMgrServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Market Service 优惠券服务 开结束
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	
+	<!-- 竞猜活动相关 Start -->
+	<bean name="/IQuizActivitiesService4Java" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="QuizActivitiesServiceImpl" />
+		<property name="serviceInterface" value="shcem.market.service.IQuizActivitiesService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="QuizActivitiesServiceImpl" class="shcem.market.service.impl.QuizActivitiesServiceImpl" />
+	<!-- 竞猜活动相关 End -->
+
+	<!-- 竞猜活动相关 Start -->
+	<bean name="/IAttentionService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="AttentionServiceImpl" />
+		<property name="serviceInterface" value="shcem.market.service.IAttentionService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="AttentionServiceImpl" class="shcem.market.service.impl.AttentionServiceImpl" />
+	<!-- 竞猜活动相关 End -->
+
+
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Member Service 会员服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<!-- 会员交易相关 -->
+	<!-- Firm Service -->
+	<bean name="/IFirmService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IFirmimpl" />
+		<property name="serviceInterface" value="shcem.member.service.IFirmService" />
+	</bean>
+	
+	<!-- Trade Service -->
+	<bean name="/ITraderService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ITraderImpl" />
+		<property name="serviceInterface" value="shcem.member.service.ITraderService"></property>
+	</bean>
+	
+	<!-- User Service -->
+	<bean name="/IUserService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IUserImpl" />
+		<property name="serviceInterface" value="shcem.member.service.IUserService"></property>
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IFirmimpl" class="shcem.member.service.impl.FirmServiceImpl" />
+	<bean id="ITraderImpl" class="shcem.member.service.impl.TraderServiceImpl" />
+	<bean id="IUserImpl" class="shcem.member.service.impl.UserServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Member Service 会员服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Product Service 产品服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/IPdClassifyService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IPdClassifyimpl" />
+		<property name="serviceInterface" value="shcem.product.service.IPdClassifyService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IPdClassifyimpl" class="shcem.product.service.impl.PdClassifyServiceImpl" />
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Product Service 产品服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Bank Service 财务服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/IBankMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IBankMgrimpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IBankMgrService" />
+	</bean>
+	<bean name="/IVoucherMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IVoucherMgrServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IVoucherMgrService" />
+	</bean>
+	<bean name="/IBalanceMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IBalanceMgrServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IBalanceMgrService" />
+	</bean>
+	
+	<!-- 资金流水服务 shcem.finance.service-->
+	<bean name="/IFundFlowService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IFundFlowMgrService" />
+		<property name="serviceInterface" value="shcem.finance.service.IFundFlowService" />
+	</bean>
+	
+	<bean name="/IPaymentService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IPaymentServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IPaymentService" />
+	</bean>
+	
+	<bean name="/ICouponMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="ICouponMgrServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.ICouponMgrService" />
+	</bean>
+	<!-- 发票 -->
+	<bean name="/IInvoiceService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IInvoiceServiceImpl" />
+		<property name="serviceInterface" value="shcem.finance.service.IInvoiceService" />
+	</bean>
+	
+	<!-- 接口的具体实现类 -->
+	<bean id="IBankMgrimpl" class="shcem.finance.service.impl.BankMgrServiceImpl" />
+	<bean id="IVoucherMgrServiceImpl" class="shcem.finance.service.impl.VoucherMgrServiceImpl" />
+	<bean id="IBalanceMgrServiceImpl" class="shcem.finance.service.impl.BalanceMgrServiceImpl" />
+	<bean id="IFundFlowMgrService" class="shcem.finance.service.impl.FundFlowMgrService" />
+	<bean id="IPaymentServiceImpl" class="shcem.finance.service.impl.PaymentServiceImpl" />
+	<bean id="ICouponMgrServiceImpl" class="shcem.finance.service.impl.CouponMgrServiceImpl" />
+	<bean id="IInvoiceServiceImpl" class="shcem.finance.service.impl.InvoiceServiceImpl" />
+	<!-- 可以配置多个HessianServiceExporter代理Bean -->
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Bank Service 财务服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Inform Service 资讯服务 开始 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	<bean name="/IInfoMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IInfoMgrimpl" />
+		<property name="serviceInterface" value="shcem.inform.service.IInfoMgrService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IInfoMgrimpl" class="shcem.inform.service.impl.InfoMgrServiceImpl" />
+	<!-- 可以配置多个HessianServiceExporter代理Bean -->
+
+	<bean name="/IInfoQuoService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IInfoQuoimpl" />
+		<property name="serviceInterface" value="shcem.inform.service.IInfoQuoService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IInfoQuoimpl" class="shcem.inform.service.impl.InfoQuoServiceImpl" />
+	<!-- 可以配置多个HessianServiceExporter代理Bean -->
+	
+	<bean name="/IInfoCtgService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IInfoCtgimpl" />
+		<property name="serviceInterface" value="shcem.inform.service.IInfoCtgService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IInfoCtgimpl" class="shcem.inform.service.impl.InfoCtgServiceImpl" />
+	<!-- 可以配置多个HessianServiceExporter代理Bean -->
+	
+	<bean name="/IInfoOraService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="IInfoOraimpl" />
+		<property name="serviceInterface" value="shcem.inform.service.IInfoOraService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="IInfoOraimpl" class="shcem.inform.service.impl.InfoOraServiceImpl" />
+	<!-- 可以配置多个HessianServiceExporter代理Bean -->
+	<!-- 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Inform Service 资讯服务 终了 
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	-->
+	
+	<!-- 系统后台管理开始 -->
+	<bean name="/ISystemMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="SystemMgrService"/>
+		<property name="serviceInterface" value="shcem.systemMgr.service.ISystemMgrService"/>
+	</bean>
+	<!-- 具体实现类 -->
+	<bean id="SystemMgrService" class="shcem.systemMgr.service.impl.SystemMgrServiceImpl"/>
+	<!-- 系统后台管理终了 -->
+	
+	
+	<!-- 后台消息开始  -->
+	<bean name="/IMessageService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="MessageServiceImpl"/>
+		<property name="serviceInterface" value="shcem.message.service.IMessageService"/>
+	</bean>
+	<!-- 具体实现类 -->
+	<bean id="MessageServiceImpl" class="shcem.message.service.impl.MessageServiceImpl"/>
+	<!-- 后台消息终了  -->
+	
+	
+	<!-- 公共方法开始 -->
+	<bean name="/ICommonMgrService" class="shcem.hessian.HessianServiceExporter">
+		<!-- service引用具体的实现实体Bean -->
+		<property name="service" ref="CommonMgrService" />
+		<property name="serviceInterface" value="shcem.common.service.ICommonMgrService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="CommonMgrService" class="shcem.common.service.impl.CommonMgrServiceImpl" />
+	
+	<!-- app消息服务 -->
+	<bean name="/IPushMsgForAppService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="PushMsgForAppService" />
+		<property name="serviceInterface" value="shcem.common.service.IPushMsgForAppService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="PushMsgForAppService" class="shcem.common.service.impl.PushMsgForAppServiceImpl" />
+	<!-- 公共方法终了 -->
+	
+	<!-- 微信服务 -->
+	<bean name="/IWeiXinApiService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="WeiXinApiService" />
+		<property name="serviceInterface" value="shcem.weixin.service.IWeiXinApiService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="WeiXinApiService" class="shcem.weixin.service.impl.WeiXinApiServiceImpl" />
+	
+	<!-- 交收配送，物流费用相关 -->
+	<bean name="/ILogisticsRateService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="logisticsRateService" />
+		<property name="serviceInterface" value="shcem.logistics.service.ILogisticsRateService" />
+	</bean>
+	<bean id="logisticsRateService" class="shcem.logistics.service.impl.LogisticsRateService" />
+	
+	
+	<!-- 交收配送，交收申请流程  -->
+	<bean name="/IDistribution4JavaService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="distributionService" />
+		<property name="serviceInterface" value="shcem.trade.service.IDistributionService" />
+	</bean>
+	<bean id="distributionService" class="shcem.trade.service.impl.DistributionServiceImpl" />
+	
+	
+	<!-- kpi服务 -->
+	<bean name="/IKpiApiService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="KpiApiService" />
+		<property name="serviceInterface" value="shcem.kpi.service.IKpiApiService" />
+	</bean>
+	<!-- 接口的具体实现类 -->
+	<bean id="KpiApiService" class="shcem.kpi.service.impl.KpiApiServiceImpl" />
+	
+	<!-- 保单服务 -->
+	<bean name="/IInsurancePolicyService" class="shcem.hessian.HessianServiceExporter">
+		<property name="service" ref="insurancePolicyService" />
+		<property name="serviceInterface" value="shcem.market.service.IInsurancePolicyService" />
+	</bean>
+	<!--  保单服务接口的具体实现类 -->
+	<bean id="insurancePolicyService" class="shcem.market.service.impl.InsurancePolicyServiceImpl" />
+	
+	
+</beans>
