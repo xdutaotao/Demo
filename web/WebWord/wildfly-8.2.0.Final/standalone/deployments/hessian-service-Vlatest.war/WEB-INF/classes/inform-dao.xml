@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="infoMgrDAO" class="shcem.inform.dao.impl.InfoMgrDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="infoMgrDAO_read" class="shcem.inform.dao.impl.InfoMgrDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+
+	<bean id="infoQuoDAO" class="shcem.inform.dao.impl.InfoQuoDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="infoQuoDAO_read" class="shcem.inform.dao.impl.InfoQuoDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="infoCtgDAO" class="shcem.inform.dao.impl.InfoCtgDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="infoCtgDAO_read" class="shcem.inform.dao.impl.InfoCtgDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+

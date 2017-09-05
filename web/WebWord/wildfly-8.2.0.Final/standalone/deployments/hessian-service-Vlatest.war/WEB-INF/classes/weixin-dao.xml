@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="userWeiXinDAO" class="shcem.member.dao.impl.UserWeiXinDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="weiXinTemplateDAO" class="shcem.weixin.dao.impl.WeiXinTemplateDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="weiXinPushHistoryDAO" class="shcem.weixin.dao.impl.WeiXinPushHistoryDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="weiXinKeyWordDAO" class="shcem.weixin.dao.impl.WeiXinKeyWordDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="weiXinKeyWordDAO_read" class="shcem.weixin.dao.impl.WeiXinKeyWordDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

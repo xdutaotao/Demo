@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- Transaction template for Managers, from: http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/ -->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="manager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.base.component.impl.BaseManager">
+				<property name="DAO">
+					<ref bean="dao" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="firmManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.member.component.impl.FirmManagerImpl"
+				autowire="byName" >
+				<property name="traderDAO">
+					<ref bean="traderDAO" />
+				</property>
+			</bean>
+			
+		</property>
+		<!-- 配置自己的事务机制，方法匹配到，创建事务；匹配不到，继续匹配txProxyTemplate机制 -->
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="get*">readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 交易员管理 -->
+	<bean id="traderManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.member.component.impl.TraderManagerImpl"
+				autowire="byName" />
+		</property>		
+	</bean>
+	
+	<!-- 用户管理 -->
+	<bean id="userManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="shcem.member.component.impl.UserManagerImpl"
+				autowire="byName" />
+		</property>		
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

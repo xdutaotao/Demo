@@ -1,0 +1,228 @@
+[DEBUG] 2017-08-24 10:58:05,146 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 10:58:05,158 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:02:24,624 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:02:24,634 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:04:30,406 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:04:30,434 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:05:02,552 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:05:02,562 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:07:33,606 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 11:07:33,618 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 11:07:38,872 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:07:38,876 {"categoryId":1}
+[INFO ] 2017-08-24 11:07:39,430 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:07:48,993 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:07:49,097 {"categoryId":1}
+[INFO ] 2017-08-24 11:07:49,640 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:09:39,221 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:09:39,222 {"categoryId":1}
+[INFO ] 2017-08-24 11:09:39,257 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:11:09,945 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 11:11:09,956 {"userCode":"","openId":"z/B5qNIeWDX04iLsvIbBFNuesjiyAgHTgBgLItj1KLU=","productId":1,"num":1,"companyName":"在","contactName":"嗯","mobile":"18513212904","invoiceInfo":"","invoiceUrl":"","dannerPrice":268,"stayPrice":0,"dannerID":4,"stayID":5,"dannerNum":0,"stayNum":0,"checkInDate":"","checkOutDate":"","total":28,"dinnerPrice":0}
+[INFO ] 2017-08-24 11:11:10,158 创建订单 成功！
+[INFO ] 2017-08-24 11:11:10,170 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 11:11:11,542 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 11:11:11,543 {"orderId":"92445a90ea03425daa79b7cbb96fc983"}
+[INFO ] 2017-08-24 11:11:11,562 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 11:11:17,411 mbapp.weixin.service.impl.ProductServiceImpl getProductStock() Start
+[DEBUG] 2017-08-24 11:11:17,413 {"productId":1}
+[INFO ] 2017-08-24 11:11:17,423 mbapp.weixin.service.impl.ProductServiceImpl getProductStock() End
+[INFO ] 2017-08-24 11:13:35,691 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:13:35,693 {"categoryId":1}
+[INFO ] 2017-08-24 11:13:35,705 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:14:39,208 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 11:14:39,209 {"userCode":"","openId":"21FbWOt9pUkCZONFRzVikaPc2U4IRwCcwtsGRhHk9P8=","productId":2,"num":1,"companyName":"嘿嘿","contactName":"哈哈","mobile":"18818203595","invoiceInfo":"","invoiceUrl":"https://fms.uat.shcem.com/mapi/file/dynamicimage?id=10005","dannerPrice":268,"stayPrice":0,"dannerID":4,"stayID":5,"dannerNum":0,"stayNum":0,"checkInDate":"","checkOutDate":"","total":68,"dinnerPrice":0}
+[INFO ] 2017-08-24 11:14:39,446 创建订单 成功！
+[INFO ] 2017-08-24 11:14:39,447 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 11:14:41,205 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 11:14:41,208 {"orderId":"a798166ac14f4255b939cb6eea26c343"}
+[INFO ] 2017-08-24 11:14:41,217 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 11:14:49,002 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:14:49,004 {"categoryId":1}
+[INFO ] 2017-08-24 11:14:49,487 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:15:04,001 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 11:15:04,002 {"userCode":"","openId":"21FbWOt9pUkCZONFRzVikaPc2U4IRwCcwtsGRhHk9P8=","productId":3,"num":1,"companyName":"嘿嘿","contactName":"哈哈","mobile":"18818203595","invoiceInfo":"","invoiceUrl":"","dannerPrice":268,"stayPrice":0,"dannerID":4,"stayID":5,"dannerNum":0,"stayNum":0,"checkInDate":"","checkOutDate":"","total":0,"dinnerPrice":0}
+[INFO ] 2017-08-24 11:15:04,862 创建订单 成功！
+[INFO ] 2017-08-24 11:15:04,863 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 11:15:06,876 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 11:15:06,877 {"orderId":"a625e27e096a47c2bdf7ab99f97e90bd"}
+[INFO ] 2017-08-24 11:15:06,886 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 11:15:11,205 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:15:11,206 {"categoryId":1}
+[INFO ] 2017-08-24 11:15:11,325 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:15:54,581 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 11:15:54,582 {"userCode":"","openId":"21FbWOt9pUkCZONFRzVikaPc2U4IRwCcwtsGRhHk9P8=","productId":2,"num":1,"companyName":"嘿嘿","contactName":"哈哈","mobile":"18818203595","invoiceInfo":"十五岁挺住\n提一提中秋节去听细嗅蔷薇\n8gusupoxiyiyyiminq\n97848464940486464584646","invoiceUrl":"","dannerPrice":268,"stayPrice":0,"dannerID":4,"stayID":5,"dannerNum":1,"stayNum":0,"checkInDate":"","checkOutDate":"","total":68}
+[INFO ] 2017-08-24 11:15:54,883 创建订单 成功！
+[INFO ] 2017-08-24 11:15:54,884 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 11:15:56,599 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 11:15:56,639 {"orderId":"8547688d904543ac9f8551d494fe4d0c"}
+[INFO ] 2017-08-24 11:15:56,655 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 11:16:10,564 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:16:10,567 {"categoryId":1}
+[INFO ] 2017-08-24 11:16:10,696 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:16:44,201 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 11:16:44,202 {"userCode":"","openId":"21FbWOt9pUkCZONFRzVikaPc2U4IRwCcwtsGRhHk9P8=","productId":2,"num":1,"companyName":"4米主题","contactName":"破破","mobile":"18818203595","invoiceInfo":"","invoiceUrl":"https://fms.uat.shcem.com/mapi/file/dynamicimage?id=10006","dannerPrice":268,"stayPrice":680,"dannerID":4,"stayID":5,"dannerNum":0,"stayNum":2,"checkInDate":"2017-09-14","checkOutDate":"2017-09-16","total":68,"dinnerPrice":0}
+[INFO ] 2017-08-24 11:16:45,089 创建订单 成功！
+[INFO ] 2017-08-24 11:16:45,096 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 11:16:46,291 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 11:16:46,300 {"orderId":"1d2b87ea643f42188e91e6b2d8ea61e1"}
+[INFO ] 2017-08-24 11:16:46,331 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 11:17:25,603 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:17:25,605 {"categoryId":1}
+[INFO ] 2017-08-24 11:17:25,614 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:19:07,023 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:19:07,025 {"categoryId":1}
+[INFO ] 2017-08-24 11:19:07,037 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:21:20,256 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:21:20,257 {"categoryId":1}
+[INFO ] 2017-08-24 11:21:20,267 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 11:31:19,511 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 11:31:19,518 {"categoryId":1}
+[INFO ] 2017-08-24 11:31:19,527 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 13:11:29,087 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:11:29,102 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:20:20,999 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:20:21,009 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:22:18,260 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:22:18,270 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:22:35,534 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:22:35,543 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:23:01,725 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 13:23:01,735 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 13:23:17,097 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 13:23:17,101 {"categoryId":1}
+[INFO ] 2017-08-24 13:23:37,208 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 15:20:01,243 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:20:01,252 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 15:20:10,896 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 15:20:10,900 {"categoryId":1}
+[INFO ] 2017-08-24 15:20:13,637 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 15:20:42,345 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:20:42,355 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 15:20:48,720 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 15:20:48,722 {"categoryId":1}
+[INFO ] 2017-08-24 15:22:33,100 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 15:40:36,657 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 15:40:36,659 {"categoryId":1}
+[INFO ] 2017-08-24 15:40:36,706 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 15:41:06,540 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() Start
+[DEBUG] 2017-08-24 15:41:06,540 {"userCode":"","openId":"z/B5qNIeWDX04iLsvIbBFNuesjiyAgHTgBgLItj1KLU=","productId":1,"num":1,"companyName":"嗯","contactName":"这","mobile":"18513212904","invoiceInfo":"","invoiceUrl":"","dannerPrice":268,"stayPrice":0,"dannerID":4,"stayID":5,"dannerNum":0,"stayNum":0,"checkInDate":"","checkOutDate":"","total":28,"dinnerPrice":0}
+[INFO ] 2017-08-24 15:41:06,765 创建订单 成功！
+[INFO ] 2017-08-24 15:41:06,766 mbapp.weixin.service.impl.ProductServiceImpl. insertOrderRelation() End
+[INFO ] 2017-08-24 15:41:08,078 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() Start
+[DEBUG] 2017-08-24 15:41:08,079 {"orderId":"4c64de7077e64d3c88903ceccedfd1eb"}
+[INFO ] 2017-08-24 15:41:08,112 mbapp.weixin.service.impl.OrderServiceImpl getOrderInfoById() End
+[INFO ] 2017-08-24 15:41:10,838 mbapp.weixin.service.impl.ProductServiceImpl getProductStock() Start
+[DEBUG] 2017-08-24 15:41:10,839 {"productId":1}
+[INFO ] 2017-08-24 15:41:11,035 mbapp.weixin.service.impl.ProductServiceImpl getProductStock() End
+[DEBUG] 2017-08-24 15:51:49,269 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:51:49,280 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 15:51:56,952 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 15:51:56,960 {"categoryId":1}
+[INFO ] 2017-08-24 15:52:00,793 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 15:59:31,916 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:59:31,924 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:59:48,922 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 15:59:48,932 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:00:30,824 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:00:30,827 {"categoryId":1}
+[INFO ] 2017-08-24 16:00:34,844 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:02:26,383 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:02:26,391 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:07:03,706 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:07:03,716 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:08:57,050 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:08:57,056 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:09:23,088 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:09:23,098 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:09:28,616 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:09:28,618 {"categoryId":1}
+[INFO ] 2017-08-24 16:09:30,215 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:11:23,346 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:11:23,359 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:11:58,735 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:11:58,737 {"categoryId":1}
+[INFO ] 2017-08-24 16:12:00,003 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:13:36,383 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:13:36,390 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:14:27,453 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:14:27,464 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:14:30,159 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:14:30,161 {"categoryId":1}
+[INFO ] 2017-08-24 16:14:34,335 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:18:55,163 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:18:55,173 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:20:44,467 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:20:44,478 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:21:09,394 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:21:09,400 {"categoryId":1}
+[INFO ] 2017-08-24 16:21:12,973 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:38:10,206 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:38:10,216 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:38:13,820 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:38:14,129 {"categoryId":1}
+[INFO ] 2017-08-24 16:38:20,086 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 16:38:59,892 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:38:59,894 {"categoryId":1}
+[INFO ] 2017-08-24 16:41:26,492 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:43:19,025 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:43:19,036 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:43:23,339 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:43:23,398 {"categoryId":1}
+[INFO ] 2017-08-24 16:43:26,967 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:48:51,377 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:48:51,387 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:51:47,814 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:51:47,823 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:09,511 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:09,519 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:25,606 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:25,614 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:59,383 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:52:59,392 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:53:03,664 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:53:03,673 {"categoryId":1}
+[INFO ] 2017-08-24 16:53:07,806 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:54:56,298 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:54:56,306 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:55:18,408 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:55:18,418 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:55:34,639 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:55:34,653 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:55:40,693 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:55:40,720 {"categoryId":1}
+[INFO ] 2017-08-24 16:55:45,672 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 16:59:12,759 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:59:12,769 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:59:41,403 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 16:59:41,413 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 16:59:49,794 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 16:59:49,797 {"categoryId":1}
+[INFO ] 2017-08-24 16:59:54,407 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 17:27:29,949 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:27:29,951 {"categoryId":1}
+[INFO ] 2017-08-24 17:27:32,962 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 17:30:57,333 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:30:57,356 {"categoryId":1}
+[INFO ] 2017-08-24 17:31:00,880 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 17:52:18,389 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:52:18,390 {"categoryId":1}
+[INFO ] 2017-08-24 17:52:21,909 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 17:52:40,922 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 17:52:40,930 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 17:52:57,804 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 17:52:57,822 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 17:52:59,137 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:52:59,141 {"categoryId":1}
+[INFO ] 2017-08-24 17:53:00,589 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 17:53:42,671 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:53:42,673 {"categoryId":1}
+[INFO ] 2017-08-24 17:53:43,130 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[INFO ] 2017-08-24 17:53:45,386 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:53:45,387 {"categoryId":1}
+[INFO ] 2017-08-24 17:53:45,495 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End
+[DEBUG] 2017-08-24 17:55:03,022 Got Userid From Hessian Header:
+[DEBUG] 2017-08-24 17:55:03,306 Got Userid From Hessian Header:
+[INFO ] 2017-08-24 17:55:11,475 mbapp.weixin.service.impl.ProductServiceImpl getProductList() Start
+[DEBUG] 2017-08-24 17:55:11,480 {"categoryId":1}
+[INFO ] 2017-08-24 17:55:12,174 mbapp.weixin.service.impl.ProductServiceImpl getProductList() End

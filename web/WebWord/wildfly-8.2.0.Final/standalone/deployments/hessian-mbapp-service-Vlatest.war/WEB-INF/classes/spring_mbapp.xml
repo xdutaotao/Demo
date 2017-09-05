@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx
+ 		http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+	<!-- 配置文件加载器 -->
+	<bean class="core.constant.PropertyConfigurer">
+		<property name="locations" value="classpath*:resultCode_mbapp.properties" />
+	</bean>
+	<!-- 启用spring注解 -->
+	<context:annotation-config />
+	<!-- 设置使用注解的类所在的jar包 -->
+	<context:component-scan base-package="mbapp" />
+	
+	<!-- UFinance START-->
+	<bean id="dataSourceUFinance" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:jboss/datasources/uFinance</value>
+		</property>
+	</bean>
+	<bean id="sqlSessionFactoryUFinance" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceUFinance" />
+		<!-- 打印sql用，可删除 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:mapper/mbapp/dd/*.xml" />
+	</bean>
+	<!-- 扫描 注入bean -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryUFinance" />
+		<property name="basePackage" value="mbapp.dd.dao" />
+	</bean>
+	<bean id="txManagerUFinance"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceUFinance" />
+	</bean>
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="txManagerUFinance"
+		proxy-target-class="true" />
+	<!-- UFinance END -->
+	
+	<!-- mbapp weixin START-->
+	<bean id="dataSourceWeixin" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:jboss/datasources/mbapp</value>
+		</property>
+	</bean>
+	<bean id="sqlSessionFactoryWeixin" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceWeixin" />
+		<!-- 打印sql用，可删除 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:mapper/mbapp/weixin/*.xml" />
+	</bean>
+	<!-- 扫描 注入bean -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryWeixin" />
+		<property name="basePackage" value="mbapp.weixin.dao" />
+	</bean>
+	<bean id="txManagerWeixin"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceWeixin" />
+	</bean>
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="txManagerWeixin"
+		proxy-target-class="true" />
+	<!-- mbapp weixin END -->
+</beans>

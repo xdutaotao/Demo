@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dao" class="shcem.base.dao.impl.BaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="traderDAO" class="shcem.trade.dao.impl.TraderDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="traderDAO_read" class="shcem.trade.dao.impl.TraderDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+
+	<bean id="statQueryDAO" class="shcem.trade.dao.impl.StatQueryDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="marketDAO" class="shcem.trade.dao.impl.MarketDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="marketDAO_read" class="shcem.trade.dao.impl.MarketDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="leadsDAO" class="shcem.trade.dao.impl.LeadsDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="leadsDAO_read" class="shcem.trade.dao.impl.LeadsDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="orderDAO" class="shcem.trade.dao.impl.OrderDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="orderDAO_read" class="shcem.trade.dao.impl.OrderDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 交收相关 -->
+	<bean id="deliveryDAO" class="shcem.trade.dao.impl.DeliveryDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="deliveryDAO_read" class="shcem.trade.dao.impl.DeliveryDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="systemMgrDAO" class="shcem.systemMgr.dao.impl.SystemMgrDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="systemMgrDAO_read" class="shcem.systemMgr.dao.impl.SystemMgrDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="SApplyDAO" class="shcem.finance.dao.impl.SApplyDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 特殊流程记录 -->
+	<bean id="specialOprDAO" class="shcem.trade.dao.impl.SpecialOprDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="specialOprDAO_read" class="shcem.trade.dao.impl.SpecialOprDAOImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<bean id="commonDao" class="shcem.common.dao.impl.CommonDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 交收配送费用相关 -->
+	<bean id="logisticsRateDao" class="shcem.logistics.dao.impl.LogisticsRateDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="logisticsRateDao_read" class="shcem.logistics.dao.impl.LogisticsRateDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 配送交收 -->
+	<bean id="distributionDao" class="shcem.trade.dao.impl.DistributionDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="distributionDao_read" class="shcem.trade.dao.impl.DistributionDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+	<!-- 仓库地址交易场关系 -->
+	<bean id="whAddrTemplateRlspDao" class="shcem.trade.dao.impl.WHAddrTemplateRlspDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="whAddrTemplateRlspDao_read" class="shcem.trade.dao.impl.WHAddrTemplateRlspDaoImpl">
+		<property name="dataSource" ref="dataSource_read" />
+	</bean>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
