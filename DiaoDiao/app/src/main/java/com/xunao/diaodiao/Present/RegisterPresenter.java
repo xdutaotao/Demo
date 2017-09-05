@@ -39,10 +39,28 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
     }
 
     /**
-     * 修改密码 检查手机号是否存在
+     * 注册
      */
     public void register(Context context, String phone, String pwd, String code, int type){
         mCompositeSubscription.add(model.checkExistPhone(phone, pwd, code, type)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+    /**
+     * 修改密码 检查手机号是否存在
+     */
+    public void forgetPwd(Context context, String phone, String pwd, String code, int type){
+        mCompositeSubscription.add(model.forgetPwd(phone, pwd, code, type)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(String token) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -11,8 +12,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.RegisterView;
 
@@ -23,6 +26,7 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class CheckPhoneActivity extends BaseActivity implements RegisterView, View.OnClickListener {
 
@@ -140,18 +144,26 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             return;
         }
 
+        if (type == 1){
+            //忘记密码
+            presenter.forgetPwd(this, phoneInput.getText().toString(),
+                    pwdInput.getText().toString(), codeInput.getText().toString(), type);
+        }else{
+            //注册
+            presenter.register(this, phoneInput.getText().toString(),
+                    pwdInput.getText().toString(), codeInput.getText().toString(), type);
+        }
 
-        presenter.register(this, phoneInput.getText().toString(),
-                pwdInput.getText().toString(), codeInput.getText().toString(), type);
     }
 
     @Override
     public void getData(String result) {
-        if (result.length() == 4) {
+        if (result.length() == 4) { //注册
             getCode.setBackgroundResource(R.drawable.btn_code);
             codeInput.setText(result);
         } else {
-            SelectMemoryActivity.startActivity(this);
+            if (TextUtils.isEmpty(User.getInstance().getUserId()))
+                LoginActivity.startActivity(this);
             finish();
         }
 

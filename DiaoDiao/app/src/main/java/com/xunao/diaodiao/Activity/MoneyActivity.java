@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Present.MoneyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.MoneyView;
@@ -68,6 +69,8 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         list.add("2");
         list.add("3");
         adapter.addAll(list);
+
+        presenter.getMoney(this);
     }
 
 
@@ -82,4 +85,8 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         presenter.detachView();
     }
 
+    @Override
+    public void getData(GetMoneyRes res) {
+
+    }
 }

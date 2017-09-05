@@ -91,7 +91,7 @@ public class RxUtils {
                             if (result.getBody() != null){
                                 return createData(result.getBody());
                             }else{
-                                return createData((T) result.getResultMsg());
+                                return createData((T) (result.getResultMsg()));
                             }
                         }else {
                             return Observable.error(new ServerException(result.getResultMsg()));

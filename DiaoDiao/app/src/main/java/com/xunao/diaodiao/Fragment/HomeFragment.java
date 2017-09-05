@@ -241,6 +241,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         });
         recyclerView.setAdapter(adapter);
 
+        locationAdd.setOnClickListener(v -> {
+            SearchResultActivity.startActivity(HomeFragment.this.getContext());
+        });
+
         return view;
     }
 
@@ -320,7 +324,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         bean.setToken(User.getInstance().getUserId());
         bean.setSort(0);
         bean.setProject("");
-        SearchResultActivity.startActivity(getContext(), bean);
+        SearchResultActivity.startActivity(getContext());
     }
 
 }

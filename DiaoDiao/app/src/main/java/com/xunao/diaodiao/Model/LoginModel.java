@@ -11,6 +11,8 @@ import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCodeBean;
+import com.xunao.diaodiao.Bean.GetMoneyReq;
+import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.RegisterBean;
@@ -20,6 +22,7 @@ import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
 import com.xunao.diaodiao.Utils.RxUtils;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.Utils;
 
 import java.io.File;
@@ -38,6 +41,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * Created by
@@ -163,6 +167,50 @@ public class LoginModel extends BaseModel {
     }
 
 
+
+    /**
+     * 注册
+     * @param phone
+     * @return
+     */
+    public Observable<String> forgetPwd(String phone, String pwd, String code, int type){
+        String actionName = "";
+        switch (type){
+            case 0:
+                actionName = "register";
+                break;
+
+            case 1:
+                actionName = "forgetpwd";
+                break;
+
+            case 2:
+                actionName = "forgetpwd";
+                break;
+        }
+
+
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(actionName);
+        sb.append(time+"").append(code).append(phone).append(pwd)
+                .append("security");
+
+        RegisterBean registerBean = new RegisterBean();
+        registerBean.setMobile(phone);
+        registerBean.setPassword(pwd);
+        registerBean.setCode(code);
+        registerBean.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().forgetPwd(setBody(actionName, time, registerBean))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+
+
+
     /**
      * 选择角色
      * @param
@@ -255,6 +303,27 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().fillInfor(setBody("completeFamily", time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+
+    public Observable<GetMoneyRes> getMoney(){
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder("balanceInfo");
+        sb.append(time+"").append(type+"")
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getMoney(setBody("balanceInfo", time, req))
                 .compose(RxUtils.handleResult());
     }
 

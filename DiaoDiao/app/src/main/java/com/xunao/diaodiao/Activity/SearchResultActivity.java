@@ -3,24 +3,23 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
-import com.xunao.diaodiao.Bean.HomeResponseBean;
+import com.google.gson.Gson;
+import com.xunao.diaodiao.Bean.CitiesBean;
+import com.xunao.diaodiao.Bean.Data;
 import com.xunao.diaodiao.Bean.SearchBean;
-import com.xunao.diaodiao.Bean.SearchResponseBean;
-import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SearchResultPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.RxBus;
-import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.SearchResultView;
-import com.gzfgeh.GRecyclerView;
-import com.gzfgeh.adapter.BaseViewHolder;
-import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Widget.QuickIndexView;
+import com.xunao.diaodiao.adapters.CitiesAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,29 +27,30 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
 
 /**
  * create by
  */
-public class SearchResultActivity extends BaseActivity implements SearchResultView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
-    private static final String[] titles = {"精华", "猜你喜欢","经典"};
+public class SearchResultActivity extends BaseActivity implements SearchResultView {
+    private static final String[] titles = {"精华", "猜你喜欢", "经典"};
     @Inject
     SearchResultPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.quickIndexView)
+    QuickIndexView quickIndexView;
 
-    private RecyclerArrayAdapter<HomeResponseBean> adapter;
+    private CitiesAdapter adapter;
 
-    private SearchBean bean;
+    private List<String> hotCities;
 
-    public static void startActivity(Context context, SearchBean bean) {
+
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, SearchResultActivity.class);
-        intent.putExtra(INTENT_KEY, bean);
         context.startActivity(intent);
     }
 
@@ -62,53 +62,54 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
-            bean = (SearchBean) getIntent().getSerializableExtra(INTENT_KEY);
-            showToolbarBack(toolBar, titleText, titles[bean.getGroupType()-1]);
-        }
+        showToolbarBack(toolBar, titleText, "选择城市");
 
-        adapter = new RecyclerArrayAdapter<HomeResponseBean>(this, R.layout.home_vertical_list) {
+//        adapter = new RecyclerArrayAdapter<HomeResponseBean>(this, R.layout.home_vertical_list) {
+//            @Override
+//            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean dataBean) {
+//            }
+//        };
+//        recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        initView();
+    }
+
+    private void initView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        Gson gson = new Gson();
+        CitiesBean citiesBean = gson.fromJson(Data.citiesJson, CitiesBean.class);
+        hotCities = new ArrayList<>();
+        hotCities.add("北京");
+        hotCities.add("上海");
+        hotCities.add("广州");
+        hotCities.add("杭州");
+        hotCities.add("南京");
+        hotCities.add("深圳");
+        adapter = new CitiesAdapter(this, citiesBean.getDatas(), hotCities);
+        recyclerView.setAdapter(adapter);
+
+        quickIndexView.setOnIndexChangeListener(new QuickIndexView.OnIndexChangeListener() {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean dataBean) {
+            public void onIndexChange(String words) {
+                List<CitiesBean.DatasBean> datas = adapter.getData();
+                if (datas != null && datas.size() > 0) {
+                    int count = 0;
+                    for (int i = 0; i < datas.size(); i++) {
+                        CitiesBean.DatasBean datasBean = datas.get(i);
+                        if (datasBean.getAlifName().equals(words)) {
+                            LinearLayoutManager llm = (LinearLayoutManager) recyclerView
+                                    .getLayoutManager();
+                            llm.scrollToPositionWithOffset(count + 1, 0);
+                            return;
+                        }
+                        count += datasBean.getAddressList().size() + 1;
+                    }
+                }
             }
-        };
-        recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
+        });
     }
 
-    @Override
-    public void getData(SearchResponseBean searchResponseBean) {
-        if (bean.getPageNo() == 1){
-            adapter.clear();
-        }
-        //adapter.addAll(searchResponseBean.getData());
-    }
-
-    @Override
-    public void fail(String msg) {
-        ToastUtil.show(msg);
-        if (adapter.getAllData().size() == 0)
-            recyclerView.setVisibility(View.GONE);
-        else
-            adapter.stopMore();
-
-        if (TextUtils.equals(msg, "请登录!")){
-            User.getInstance().clearUser();
-            RxBus.getInstance().post(LOGIN_AGAIN);
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        bean.setPageNo(1);
-        presenter.getSearchResult(bean);
-    }
-
-    @Override
-    public void onLoadMore() {
-        bean.setPageNo(bean.getPageNo()+1);
-        presenter.getSearchResult(bean);
-    }
 
     @Override
     public void onFailure() {
@@ -119,4 +120,6 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         super.onDestroy();
         presenter.detachView();
     }
+
+
 }

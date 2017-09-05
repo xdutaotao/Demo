@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Common;
 
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
@@ -62,6 +63,14 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<LoginResBean>> fillInfor(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> forgetPwd(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<GetMoneyRes>> getMoney(@Body RequestBody body);
+
 
 
     @FormUrlEncoded

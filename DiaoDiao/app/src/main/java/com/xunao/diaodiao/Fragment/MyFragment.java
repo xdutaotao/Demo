@@ -188,7 +188,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.money:
-                MoneyActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                    LoginActivity.startActivity(getContext());
+                }else{
+                    MoneyActivity.startActivity(getActivity());
+                }
+
                 break;
 
             case R.id.bank:

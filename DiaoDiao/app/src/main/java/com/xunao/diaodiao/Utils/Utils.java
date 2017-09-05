@@ -583,6 +583,11 @@ public class Utils {
         return Float.valueOf(s.substring(0, length-2));
     }
 
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
     /**
      * 读取xlsx
      * @param path

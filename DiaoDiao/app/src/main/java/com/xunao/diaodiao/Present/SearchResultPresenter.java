@@ -23,12 +23,12 @@ public class SearchResultPresenter extends BasePresenter<SearchResultView> {
                 .subscribe(new RxSubUtils<SearchResponseBean>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(SearchResponseBean token) {
-                        getView().getData(token);
+                        //getView().getData(token);
                     }
 
                     @Override
                     public void _onError(String msg) {
-                        getView().fail(msg);
+                        //getView().fail(msg);
                     }
                 }));
     }
