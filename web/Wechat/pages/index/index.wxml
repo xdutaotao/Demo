@@ -1,13 +1,17 @@
 <!--index.wxml-->
 <view class="container">
-  <view>
-    <text style="color: #fff; font-size: 25px">今日步数</text>
-  </view>
-  <view  bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  
+  <view  bindtap="bindViewTap" class="userinfo"> 
+    <text style="color: #fff; font-size: 25px">今日步数</text> 
+    <text style="color: #fff; font-size: 25px">{{todayStep}}</text> 
+    <view class='stepstatus'>
+      <text style='color: #fff'>2.2公里</text>
+      <text style='color: #fff'>2.2卡</text>
+      <text style='color: #fff'>20分钟</text>
+    </view>
   </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <text></text>
+  </view>    
+
 </view>

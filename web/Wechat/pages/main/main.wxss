@@ -1,3 +1,43 @@
+.mainContain{
+  display: flex;
+  flex-direction: column;
+}
+
+.switchContain{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.personRank{
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  background-color: #15abc4;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.teamRank{
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  color: #15abc4;
+  
+}
+
+
+
+
 .slide-image{width: 100%;}
 .bc_green{height:50px;width: 25%;background: blue}
 .section{width: 100%;height: 220px}

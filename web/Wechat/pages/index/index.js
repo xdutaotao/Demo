@@ -5,7 +5,7 @@ var app = getApp()
 var appid = 'wx29602978ed48fcf4'
 var secret = '0bd7e3aa68811109cf25275bf6d6df6f'
 
-var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
+//var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 
 
 Page({
@@ -16,7 +16,8 @@ Page({
     encryptedData:"",
     iv: "",
     session_key: "",
-    openid:""
+    openid:"",
+    todayStep: ""
   },
   //事件处理函数
   bindViewTap: function() {
@@ -42,8 +43,13 @@ Page({
       method: 'POST',
       success: function (res) {
         let response = res.data.substring(3)
-        console.log(response)
-        console.log(JSON.parse(response).stepInfoList)
+        that.stepInfoList = JSON.parse(response).stepInfoList;
+        console.log(that.stepInfoList)
+        that.todayStep = that.stepInfoList[that.stepInfoList.length-2].step+"";
+        console.log(that.todayStep)
+        that.setData({
+          todayStep: that.todayStep
+        })
       }
     })
   },
