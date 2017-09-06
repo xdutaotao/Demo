@@ -195,77 +195,151 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:padding="50px">
+                android:padding="50px"
+                android:id="@+id/all_layout">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="工商营业执照"
-                    android:id="@+id/first_pic"
-                    android:drawablePadding="20px"
-                    android:drawableTop="@drawable/img_add"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="组织机构代码证"
-                    android:id="@+id/second_pic"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:drawablePadding="20px"
-                    android:drawableTop="@drawable/img_add"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="税务登记证"
-                    android:id="@+id/third_pic"
-                    android:layout_gravity="right"
-                    android:drawablePadding="20px"
-                    android:drawableTop="@drawable/img_add"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="三证合一"
-                    android:gravity="center"
-                    android:id="@+id/one_pic"
-                    android:layout_gravity="center"
-                    android:drawablePadding="20px"
-                    android:visibility="gone"
-                    android:drawableTop="@drawable/img_add"/>
-
-                <ImageView
+                <RelativeLayout
                     android:layout_width="240px"
                     android:layout_height="240px"
-                    android:id="@+id/first_iv"
-                    android:visibility="gone"
-                    android:layout_marginLeft="50px"/>
+                    android:layout_marginLeft="50px"
+                    android:layout_marginRight="50px"
+                    android:background="@android:color/white">
 
-                <ImageView
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/first_iv"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/first_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工商营业执照"
+                        android:id="@+id/first_pic"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
                     android:layout_width="240px"
                     android:layout_height="240px"
-                    android:id="@+id/second_iv"
-                    android:visibility="gone"
-                    android:layout_marginLeft="50px"/>
+                    android:layout_marginLeft="50px"
+                    android:layout_marginRight="50px"
+                    android:background="@android:color/white">
 
-                <ImageView
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/second_iv"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/second_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="组织机构代码证"
+                        android:id="@+id/second_pic"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
                     android:layout_width="240px"
                     android:layout_height="240px"
-                    android:id="@+id/third_iv"
-                    android:visibility="gone"
-                    android:layout_marginLeft="50px"/>
+                    android:layout_marginLeft="50px"
+                    android:layout_marginRight="50px"
+                    android:background="@android:color/white">
 
-                <ImageView
-                    android:layout_width="240px"
-                    android:layout_height="240px"
-                    android:id="@+id/one_iv"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="50px"/>
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/third_iv"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/third_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="税务登记证"
+                        android:id="@+id/third_pic"
+                        android:layout_gravity="right"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="50px"
+            android:id="@+id/one_layout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="三证合一"
+                android:gravity="center"
+                android:id="@+id/one_pic"
+                android:layout_gravity="center"
+                android:drawablePadding="20px"
+                android:visibility="gone"
+                android:drawableTop="@drawable/img_add"/>
+
+            <ImageView
+                android:layout_width="240px"
+                android:layout_height="240px"
+                android:id="@+id/one_iv"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50px"/>
+
+            <ImageView
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:src="@drawable/cancle"
+                android:id="@+id/one_delete"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"/>
+
+        </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"

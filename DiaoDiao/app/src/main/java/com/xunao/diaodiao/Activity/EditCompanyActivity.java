@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -64,12 +67,27 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     ImageView thirdIv;
     @BindView(R.id.one_iv)
     ImageView oneIv;
-    private int SELECT_TYPE = 0;
-
+    @BindView(R.id.all_layout)
+    LinearLayout allLayout;
+    @BindView(R.id.one_layout)
+    LinearLayout oneLayout;
+    @BindView(R.id.first_delete)
+    ImageView firstDelete;
+    @BindView(R.id.second_delete)
+    ImageView secondDelete;
+    @BindView(R.id.third_delete)
+    ImageView thirdDelete;
+    @BindView(R.id.one_delete)
+    ImageView oneDelete;
+    private int SELECT_TYPE = 1;
     /**
      * 图片返回的items
      */
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
+    private String firstUrl;
+    private String secondUrl;
+    private String thirdUrl;
+    private String oneUrl;
 
 
     public static void startActivity(Context context) {
@@ -89,13 +107,11 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         checkBoxAll.setOnCheckedChangeListener(this);
         checkBoxSingle.setOnCheckedChangeListener(this);
-        firstPic.setOnClickListener(this);
-        secondPic.setOnClickListener(this);
-        thirdPic.setOnClickListener(this);
-        onePic.setOnClickListener(this);
 
         checkBoxSingle.setChecked(true);
         initImagePicker();
+
+
     }
 
     private void initImagePicker() {
@@ -161,29 +177,104 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             case R.id.check_box_all:
                 checkBoxAll.setChecked(isChecked);
                 checkBoxSingle.setChecked(!isChecked);
-                firstPic.setVisibility(View.VISIBLE);
-                secondPic.setVisibility(View.VISIBLE);
-                thirdPic.setVisibility(View.VISIBLE);
-                onePic.setVisibility(View.GONE);
-                oneIv.setVisibility(View.GONE);
-                firstIv.setVisibility(View.VISIBLE);
-                secondIv.setVisibility(View.VISIBLE);
-                thirdIv.setVisibility(View.VISIBLE);
+                allLayout.setVisibility(View.VISIBLE);
+                oneLayout.setVisibility(View.GONE);
+
+                if (TextUtils.isEmpty(firstUrl)){
+                    firstPic.setVisibility(View.VISIBLE);
+                    firstIv.setVisibility(View.GONE);
+                    firstDelete.setVisibility(View.GONE);
+                }else{
+                    firstPic.setVisibility(View.GONE);
+                    firstIv.setVisibility(View.VISIBLE);
+                    firstDelete.setVisibility(View.VISIBLE);
+                }
+
+                if (TextUtils.isEmpty(secondUrl)){
+                    secondPic.setVisibility(View.VISIBLE);
+                    secondIv.setVisibility(View.GONE);
+                    secondDelete.setVisibility(View.GONE);
+                }else{
+                    secondPic.setVisibility(View.GONE);
+                    secondIv.setVisibility(View.VISIBLE);
+                    secondDelete.setVisibility(View.VISIBLE);
+                }
+
+                if (TextUtils.isEmpty(thirdUrl)){
+                    thirdPic.setVisibility(View.VISIBLE);
+                    thirdIv.setVisibility(View.GONE);
+                    thirdDelete.setVisibility(View.GONE);
+                }else{
+                    thirdPic.setVisibility(View.GONE);
+                    thirdIv.setVisibility(View.VISIBLE);
+                    thirdDelete.setVisibility(View.VISIBLE);
+                }
+
                 break;
 
             case R.id.check_box_single:
                 checkBoxAll.setChecked(!isChecked);
                 checkBoxSingle.setChecked(isChecked);
-                firstPic.setVisibility(View.GONE);
-                secondPic.setVisibility(View.GONE);
-                thirdPic.setVisibility(View.GONE);
-                onePic.setVisibility(View.VISIBLE);
-                oneIv.setVisibility(View.VISIBLE);
-                firstIv.setVisibility(View.GONE);
-                secondIv.setVisibility(View.GONE);
-                thirdIv.setVisibility(View.GONE);
+                allLayout.setVisibility(View.GONE);
+                oneLayout.setVisibility(View.VISIBLE);
+
+                if (TextUtils.isEmpty(oneUrl)){
+                    onePic.setVisibility(View.VISIBLE);
+                    oneIv.setVisibility(View.GONE);
+                    oneDelete.setVisibility(View.GONE);
+                }else{
+                    onePic.setVisibility(View.GONE);
+                    oneIv.setVisibility(View.VISIBLE);
+                    oneDelete.setVisibility(View.VISIBLE);
+                }
                 break;
         }
+    }
+
+    private void setImagePath(String path) {
+        switch (SELECT_TYPE) {
+            case 0:
+                Glide.with(this).load(path).into(oneIv);
+                oneLayout.setVisibility(View.VISIBLE);
+                allLayout.setVisibility(View.GONE);
+                onePic.setVisibility(View.GONE);
+                oneIv.setVisibility(View.VISIBLE);
+                oneDelete.setVisibility(View.VISIBLE);
+                oneUrl = path;
+                break;
+
+            case 1:
+                Glide.with(this).load(path).into(firstIv);
+                oneLayout.setVisibility(View.GONE);
+                allLayout.setVisibility(View.VISIBLE);
+                firstPic.setVisibility(View.GONE);
+                firstIv.setVisibility(View.VISIBLE);
+                firstDelete.setVisibility(View.VISIBLE);
+                firstUrl = path;
+                break;
+
+            case 2:
+                Glide.with(this).load(path).into(secondIv);
+                oneLayout.setVisibility(View.GONE);
+                allLayout.setVisibility(View.VISIBLE);
+                secondIv.setVisibility(View.VISIBLE);
+                secondPic.setVisibility(View.GONE);
+                secondDelete.setVisibility(View.VISIBLE);
+                secondUrl = path;
+                break;
+
+            case 3:
+                Glide.with(this).load(path).into(thirdIv);
+                oneLayout.setVisibility(View.GONE);
+                allLayout.setVisibility(View.VISIBLE);
+                thirdIv.setVisibility(View.VISIBLE);
+                thirdPic.setVisibility(View.GONE);
+                thirdDelete.setVisibility(View.VISIBLE);
+                thirdUrl = path;
+                break;
+        }
+
+
     }
 
 
@@ -193,8 +284,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-
-                //scanPhotoPath(images.get(0).path);
+                setImagePath(images.get(0).path);
             } else {
                 ToastUtil.show("没有数据");
             }
