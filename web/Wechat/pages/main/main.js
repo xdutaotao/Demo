@@ -1,5 +1,7 @@
 var mainService=require('mainService.js');
 
+const app = getApp()
+
 Page({
   data: {
     imgUrls: [],
@@ -9,6 +11,9 @@ Page({
     duration: 1000,
     currentTab: 0,
     // indicator-dots:true
+
+    motto: 'Hello World',
+    userInfo: {},
   },
 
   onLoad:function(){
@@ -21,6 +26,12 @@ Page({
     }, function(error){
         console.log(error)
     });
+
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo
+      })
+    }
     
   },
 

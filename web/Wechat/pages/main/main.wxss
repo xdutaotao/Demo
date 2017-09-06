@@ -13,13 +13,16 @@
 .personRank{
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
-  background-color: #15abc4;
+  background-color: #fff;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 15px;
-  color: #fff;
+  color: #15abc4;
+  border-style: solid;
+  border-color: #15abc4;
+  border-width: 1px;
 }
 
 .personRankSelect{
@@ -32,6 +35,7 @@
   padding-right: 20px;
   font-size: 15px;
   color: #fff;
+  
 }
 
 .teamRank{
@@ -52,16 +56,35 @@
 .teamRankSelect{
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: #fff;
+  background-color: #15abc4;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 15px;
-  color: #15abc4;
-  border-style: solid;
-  border-color: #15abc4;
-  border-width: 1px;
+  color: #fff;
+
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
 }
 
 
