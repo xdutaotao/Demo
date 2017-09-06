@@ -1,33 +1,70 @@
+
+
+const app = getApp()
+
+var list = [];
+
 Page({
-  data: {   
-    "category":[
-    {"id":"1","name":"LDPE","valueId":1},
-    {"id":"2","name":"HDPE","valueId":5},
-    {"id":"3","name":"LLDPE","valueId":6},
-    {"id":"4","name":"PP均聚","valueId":20},
-    {"id":"5","name":"PP共聚","valueId":21},
-    {"id":"6","name":"PVC","valueId":31},
-    {"id":"7","name":"全部","valueId":0}
-  ]
+  data: {
+    imgUrls: [],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    currentTab: 0,
+    // indicator-dots:true
+
+    motto: 'Hello World',
+    userInfo: {},
+    list: [
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" }
+    ],
+  },
+
+  onLoad: function () {
+    var that = this;
+
+
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo
+      })
+    }
+
+    // list.push({name:"1",sex:"2"})
+    // list.push({name:'3',sex:'4'})
+    // that.setData({
+    //   list: list
+    // })
+
+    // console.log(list)
 
   },
+
   // tab切换
-  changeState:function(e){
- var that=this;
-  if( this.data.currentTab === e.target.dataset.current) {  
-    consoloe.log(0)
-      return false;  
-    } else {  
-     
-      that.setData( {  
-        currentTab: e.target.dataset.current  
-      })  
-    } 
+  changeState: function (e) {
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current
+      })
+    }
   },
-
-   bindViewTap: function() {
+  //事件处理函数
+  bindViewTap: function () {
     wx.navigateTo({
-      url: '../malldetail/malldetail'
+      url: '../mainDetail/maindetail'
     })
   }
+
+
 })

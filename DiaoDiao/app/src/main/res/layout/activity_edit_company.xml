@@ -178,7 +178,8 @@
                     android:drawablePadding="10px"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:drawableLeft="@drawable/checkbox_style"
+                    android:id="@+id/check_box_single"
+                    android:drawableLeft="@drawable/single_checkbox_style"
                     android:text="三证分开"/>
 
             </RelativeLayout>
@@ -193,19 +194,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center"
                 android:padding="50px">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="工商营业执照"
+                    android:id="@+id/first_pic"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/img_add"/>
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="组织机构代码证"
+                    android:id="@+id/second_pic"
                     android:gravity="center"
                     android:layout_weight="1"
                     android:drawablePadding="20px"
@@ -215,9 +220,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="税务登记证"
+                    android:id="@+id/third_pic"
                     android:layout_gravity="right"
                     android:drawablePadding="20px"
                     android:drawableTop="@drawable/img_add"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="三证合一"
+                    android:gravity="center"
+                    android:id="@+id/one_pic"
+                    android:layout_gravity="center"
+                    android:drawablePadding="20px"
+                    android:visibility="gone"
+                    android:drawableTop="@drawable/img_add"/>
+
+                <ImageView
+                    android:layout_width="240px"
+                    android:layout_height="240px"
+                    android:id="@+id/first_iv"
+                    android:visibility="gone"
+                    android:layout_marginLeft="50px"/>
+
+                <ImageView
+                    android:layout_width="240px"
+                    android:layout_height="240px"
+                    android:id="@+id/second_iv"
+                    android:visibility="gone"
+                    android:layout_marginLeft="50px"/>
+
+                <ImageView
+                    android:layout_width="240px"
+                    android:layout_height="240px"
+                    android:id="@+id/third_iv"
+                    android:visibility="gone"
+                    android:layout_marginLeft="50px"/>
+
+                <ImageView
+                    android:layout_width="240px"
+                    android:layout_height="240px"
+                    android:id="@+id/one_iv"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50px"/>
+
             </LinearLayout>
 
             <View
@@ -256,7 +303,8 @@
             <Button
                 style="@style/login_btn_style"
                 android:id="@+id/login"
-                android:text="提交审核"/>
+                android:text="提交审核"
+                android:layout_marginBottom="100px"/>
 
         </LinearLayout>
     </ScrollView>

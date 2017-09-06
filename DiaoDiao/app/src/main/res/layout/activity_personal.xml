@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:text="完善资料"
+        android:id="@+id/edit_personal"
         android:gravity="center"
         android:textColor="@color/white"
         android:background="#AAFC551F"/>

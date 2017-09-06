@@ -2,6 +2,8 @@ var mainService=require('mainService.js');
 
 const app = getApp()
 
+var list = [];
+
 Page({
   data: {
     imgUrls: [],
@@ -14,6 +16,16 @@ Page({
 
     motto: 'Hello World',
     userInfo: {},
+    list: [
+      {name: "1", sex:"2"},
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" },
+      { name: "1", sex: "2" }
+    ],
   },
 
   onLoad:function(){
@@ -33,12 +45,20 @@ Page({
       })
     }
     
+    // list.push({name:"1",sex:"2"})
+    // list.push({name:'3',sex:'4'})
+    // that.setData({
+    //   list: list
+    // })
+
+    // console.log(list)
+    
   },
 
   // tab切换
   changeState:function(e){
- var that=this;
-  if( this.data.currentTab === e.target.dataset.current) {  
+    var that=this;
+      if( this.data.currentTab === e.target.dataset.current) {  
       return false;  
     } else {  
       that.setData( {  

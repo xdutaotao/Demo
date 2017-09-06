@@ -11,20 +11,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.xunao.diaodiao.Model.User;
-import com.xunao.diaodiao.Model.UserInfo;
-import com.xunao.diaodiao.Present.PersonalPresenter;
-import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.PersonalView;
-import com.xunao.diaodiao.Widget.GlideImageLoader;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.xunao.diaodiao.Present.PersonalPresenter;
+import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.View.PersonalView;
+import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
 
@@ -32,23 +29,46 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, PersonalView {
     public static final int REQUEST_CODE_SELECT = 8888;
     public static final int REQUEST_CODE = 6666;
 
+    @Inject
+    PersonalPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.edit_personal)
+    TextView editPersonal;
     @BindView(R.id.head_icon)
     ImageView headIcon;
-
-    @Inject
-    PersonalPresenter presenter;
+    @BindView(R.id.head_layout)
+    RelativeLayout headLayout;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.sex)
+    TextView sex;
+    @BindView(R.id.sex_layout)
+    RelativeLayout sexLayout;
+    @BindView(R.id.level)
+    TextView level;
+    @BindView(R.id.create_time)
+    TextView createTime;
+    @BindView(R.id.project)
+    TextView project;
+    @BindView(R.id.photo)
+    TextView photo;
+    @BindView(R.id.email)
+    TextView email;
+    @BindView(R.id.address)
+    TextView address;
     @BindView(R.id.address_layout)
     RelativeLayout addressLayout;
 
@@ -73,6 +93,9 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 //                .bitmapTransform(new CropCircleTransformation(this))
 //                .into(headIcon);
 
+
+        editPersonal.setOnClickListener(this);
+
         initPicker();
     }
 
@@ -95,7 +118,22 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 showPicDialog();
                 break;
 
-            case R.id.sex_layout:
+            case R.id.edit_personal:
+                int type = ShareUtils.getValue(TYPE_KEY, 0);
+                switch (type){
+                    case COMPANY_TYPE:
+                        EditCompanyActivity.startActivity(this);
+                        break;
+
+                    case SKILL_TYPE:
+                        EditSkillActivity.startActivity(this);
+                        break;
+
+                    case CUSTOM_TYPE:
+                        EditPersonalActivity.startActivity(this);
+                        break;
+                }
+
                 break;
         }
     }
@@ -139,8 +177,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
                 }
             }
-        }else if (resultCode == RESULT_OK){
-            if (data != null && requestCode == REQUEST_CODE){
+        } else if (resultCode == RESULT_OK) {
+            if (data != null && requestCode == REQUEST_CODE) {
             }
         }
     }
