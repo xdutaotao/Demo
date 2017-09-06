@@ -22,6 +22,18 @@
   color: #fff;
 }
 
+.personRankSelect{
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  background-color: #15abc4;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  color: #fff;
+}
+
 .teamRank{
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
@@ -32,7 +44,24 @@
   padding-right: 20px;
   font-size: 15px;
   color: #15abc4;
-  
+  border-style: solid;
+  border-color: #15abc4;
+  border-width: 1px;
+}
+
+.teamRankSelect{
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  color: #15abc4;
+  border-style: solid;
+  border-color: #15abc4;
+  border-width: 1px;
 }
 
 
