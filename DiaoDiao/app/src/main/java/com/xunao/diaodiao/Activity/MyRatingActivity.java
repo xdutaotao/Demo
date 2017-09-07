@@ -29,10 +29,9 @@ import butterknife.ButterKnife;
 /**
  * create by
  */
-public class MyRatingActivity extends BaseActivity implements MyRatingView {
+public class MyRatingActivity extends BaseActivity {
 
-    @Inject
-    MyRatingPresenter presenter;
+
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -56,7 +55,6 @@ public class MyRatingActivity extends BaseActivity implements MyRatingView {
         setContentView(R.layout.activity_my_rating);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
-        presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "我的评价");
 
@@ -73,18 +71,6 @@ public class MyRatingActivity extends BaseActivity implements MyRatingView {
         linearLayout.setDividerDrawable(ContextCompat.getDrawable(this,
                 R.drawable.layout_divider_vertical));
         linearLayout.setDividerPadding(20);
-    }
-
-
-    @Override
-    public void onFailure() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

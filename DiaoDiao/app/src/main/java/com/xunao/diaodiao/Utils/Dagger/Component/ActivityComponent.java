@@ -58,6 +58,7 @@ import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Fragment.ReleaseFragment;
+import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Utils.Dagger.Module.ActivityModule;
 
 import dagger.Subcomponent;
@@ -122,4 +123,5 @@ public interface ActivityComponent {
     void inject(SignDetailActivity activity);
     void inject(ApplyActivity activity);
     void inject(ApplyDetailActivity activity);
+    void inject(TabFragment fragment);
 }

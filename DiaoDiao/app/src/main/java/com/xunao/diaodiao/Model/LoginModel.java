@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
@@ -307,8 +308,10 @@ public class LoginModel extends BaseModel {
     }
 
 
-
-
+    /**
+     * 余额
+     * @return
+     */
     public Observable<GetMoneyRes> getMoney(){
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -324,6 +327,43 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getMoney(setBody("balanceInfo", time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 评价列表
+     * @return
+     */
+    public Observable<MyRateRes> getRating(int rateType){
+        String rateKey = "";
+        switch (rateType){
+            case 1:
+                rateKey = "notEvaluated";
+                break;
+
+            case 2:
+                rateKey = "hasEvaluated";
+                break;
+        }
+
+
+
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type+"")
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getRate(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

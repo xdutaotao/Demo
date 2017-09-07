@@ -9,11 +9,8 @@ import java.util.List;
 
 public class GetMoneyRes {
     private String balance;
-    private String type;
-    private String time;
-    private String change;
 
-    private List<Object> changes;
+    private List<MoneyDetail> changes;
 
 
     public String getBalance() {
@@ -24,35 +21,42 @@ public class GetMoneyRes {
         this.balance = balance;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getChange() {
-        return change;
-    }
-
-    public void setChange(String change) {
-        this.change = change;
-    }
-
-    public List<Object> getChanges() {
+    public List<MoneyDetail> getChanges() {
         return changes;
     }
 
-    public void setChanges(List<Object> changes) {
+    public void setChanges(List<MoneyDetail> changes) {
         this.changes = changes;
+    }
+
+
+    public static class MoneyDetail{
+        private String type;
+        private String time;
+        private String change;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public String getChange() {
+            return change;
+        }
+
+        public void setChange(String change) {
+            this.change = change;
+        }
     }
 }

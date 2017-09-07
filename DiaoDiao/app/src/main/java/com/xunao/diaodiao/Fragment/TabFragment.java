@@ -15,10 +15,15 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
+import com.xunao.diaodiao.Bean.MyRateRes;
+import com.xunao.diaodiao.Present.MyRatingPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.View.MyRatingView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +31,18 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TabFragment extends BaseFragment {
+public class TabFragment extends BaseFragment implements MyRatingView {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private String mParam1;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapter;
+
+    @Inject
+    MyRatingPresenter presenter;
+
+    private int type = 0;
 
     public static TabFragment newInstance(String param1) {
         TabFragment fragment = new TabFragment();
@@ -56,11 +66,13 @@ public class TabFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
         ButterKnife.bind(this, view);
+        getActivityComponent().inject(this);
+        presenter.attachView(this);
 
         if (TextUtils.equals("我的申诉", mParam1)){
-            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.record_item) {
+            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
                 @Override
-                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
@@ -69,9 +81,9 @@ public class TabFragment extends BaseFragment {
             });
 
         }else if (TextUtils.equals("对方申诉", mParam1)){
-            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.record_item) {
+            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
                 @Override
-                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
@@ -80,9 +92,9 @@ public class TabFragment extends BaseFragment {
             });
 
         }else if (TextUtils.equals("已评价", mParam1)){
-            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_already_rating_item) {
+            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_already_rating_item) {
                 @Override
-                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
@@ -90,10 +102,12 @@ public class TabFragment extends BaseFragment {
                 FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
             });
 
+            type = 2;
+            presenter.getRating(getContext(), type);
         }else if (TextUtils.equals("待评价", mParam1)){
-            adapter = new RecyclerArrayAdapter<String>(getContext(), R.layout.my_rating_item) {
+            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_rating_item) {
                 @Override
-                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
@@ -101,25 +115,34 @@ public class TabFragment extends BaseFragment {
                 RecommandActivity.startActivity(TabFragment.this.getActivity());
             });
 
+            type = 1;
+            presenter.getRating(getContext(), type);
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        adapter.addAll(list);
 
 
         return view;
     }
 
+    @Override
+    public void getData(MyRateRes res) {
+        adapter.clear();
+        adapter.addAll(res.getProject());
+    }
+
 
     public String getTitle() {
         return mParam1;
+    }
+
+
+    @Override
+    public void onFailure() {
+
     }
 
 

@@ -5,6 +5,7 @@ import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
@@ -72,6 +73,8 @@ public interface RetrofitService {
     Observable<BaseBean<GetMoneyRes>> getMoney(@Body RequestBody body);
 
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyRateRes>> getRate(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

@@ -18,20 +18,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="项目取消"
+            android:id="@+id/type"
             android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5000"
+            android:id="@+id/change_money"
             android:layout_weight="1"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:textColor="#7193F4"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2017年5月15日 14：30：18"
+        android:id="@+id/time"
         android:layout_marginTop="50px"
         android:layout_marginBottom="50px"/>
 

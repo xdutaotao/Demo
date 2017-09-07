@@ -36,8 +36,12 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.money)
+    TextView money;
+    @BindView(R.id.get_money)
+    TextView getMoney;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<GetMoneyRes.MoneyDetail> adapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MoneyActivity.class);
@@ -54,23 +58,26 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
 
         showToolbarBack(toolBar, titleText, "我的余额");
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.money_item) {
+        adapter = new RecyclerArrayAdapter<GetMoneyRes.MoneyDetail>(this, R.layout.money_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-
+            protected void convert(BaseViewHolder baseViewHolder, GetMoneyRes.MoneyDetail s) {
+                baseViewHolder.setText(R.id.type, s.getType());
+                baseViewHolder.setText(R.id.change_money, s.getChange());
+                baseViewHolder.setText(R.id.time, s.getTime());
             }
         };
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        adapter.addAll(list);
-
         presenter.getMoney(this);
+    }
+
+    @Override
+    public void getData(GetMoneyRes res) {
+        money.setText(res.getBalance());
+        adapter.clear();
+        adapter.addAll(res.getChanges());
     }
 
 
@@ -85,8 +92,4 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         presenter.detachView();
     }
 
-    @Override
-    public void getData(GetMoneyRes res) {
-
-    }
 }
