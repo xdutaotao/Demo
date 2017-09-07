@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,13 +21,18 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.xunao.diaodiao.Bean.FillCompanyReq;
+import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditCompanyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.EditCompanyView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -70,7 +77,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     @BindView(R.id.all_layout)
     LinearLayout allLayout;
     @BindView(R.id.one_layout)
-    LinearLayout oneLayout;
+    RelativeLayout oneLayout;
     @BindView(R.id.first_delete)
     ImageView firstDelete;
     @BindView(R.id.second_delete)
@@ -79,6 +86,28 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     ImageView thirdDelete;
     @BindView(R.id.one_delete)
     ImageView oneDelete;
+    @BindView(R.id.code)
+    ImageView code;
+    @BindView(R.id.code_delete)
+    ImageView codeDelete;
+    @BindView(R.id.code_reverse)
+    ImageView codeReverse;
+    @BindView(R.id.code_reverse_delete)
+    ImageView codeReverseDelete;
+    @BindView(R.id.name)
+    EditText name;
+    @BindView(R.id.address)
+    EditText address;
+    @BindView(R.id.address_detail)
+    EditText addressDetail;
+    @BindView(R.id.phone)
+    EditText phone;
+    @BindView(R.id.contact_name)
+    EditText contactName;
+    @BindView(R.id.contact_code)
+    EditText contactCode;
+    @BindView(R.id.contact_phone)
+    EditText contactPhone;
     private int SELECT_TYPE = 1;
     /**
      * 图片返回的items
@@ -88,7 +117,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     private String secondUrl;
     private String thirdUrl;
     private String oneUrl;
-
+    private String codeUrl;
+    private String codeReverseUrl;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
@@ -108,10 +138,30 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         checkBoxAll.setOnCheckedChangeListener(this);
         checkBoxSingle.setOnCheckedChangeListener(this);
 
-        checkBoxSingle.setChecked(true);
         initImagePicker();
 
+        firstPic.setOnClickListener(this);
+        secondPic.setOnClickListener(this);
+        thirdPic.setOnClickListener(this);
+        onePic.setOnClickListener(this);
 
+        firstDelete.setOnClickListener(this);
+        secondDelete.setOnClickListener(this);
+        thirdDelete.setOnClickListener(this);
+        oneDelete.setOnClickListener(this);
+
+        checkBoxAll.setChecked(true);
+        allLayout.setVisibility(View.VISIBLE);
+        oneLayout.setVisibility(View.GONE);
+
+        codeDelete.setVisibility(View.GONE);
+        codeReverseDelete.setVisibility(View.GONE);
+        code.setOnClickListener(this);
+        codeReverse.setOnClickListener(this);
+        codeDelete.setOnClickListener(this);
+        codeReverseDelete.setOnClickListener(this);
+
+        login.setOnClickListener(this);
     }
 
     private void initImagePicker() {
@@ -129,21 +179,167 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         switch (view.getId()) {
             case R.id.first_pic:
                 SELECT_TYPE = 1;
+                selectPhoto();
                 break;
 
             case R.id.second_pic:
                 SELECT_TYPE = 2;
+                selectPhoto();
                 break;
 
             case R.id.third_pic:
                 SELECT_TYPE = 3;
+                selectPhoto();
                 break;
 
             case R.id.one_pic:
                 SELECT_TYPE = 0;
+                selectPhoto();
+                break;
+
+            case R.id.first_delete:
+                firstDelete.setVisibility(View.GONE);
+                firstIv.setVisibility(View.GONE);
+                firstPic.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.second_delete:
+                secondDelete.setVisibility(View.GONE);
+                secondIv.setVisibility(View.GONE);
+                secondPic.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.third_delete:
+                thirdDelete.setVisibility(View.GONE);
+                thirdIv.setVisibility(View.GONE);
+                thirdPic.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.one_delete:
+                oneDelete.setVisibility(View.GONE);
+                oneIv.setVisibility(View.GONE);
+                onePic.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.code_delete:
+                Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
+                codeDelete.setVisibility(View.GONE);
+                break;
+
+            case R.id.code_reverse_delete:
+                Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
+                codeReverseDelete.setVisibility(View.GONE);
+                break;
+
+            case R.id.code:
+                if (codeDelete.getVisibility() == View.GONE) {
+                    selectPhoto();
+                    SELECT_TYPE = 4;
+                }
+
+                break;
+
+            case R.id.code_reverse:
+                if (codeReverseDelete.getVisibility() == View.GONE) {
+                    selectPhoto();
+                    SELECT_TYPE = 5;
+                }
+
+                break;
+
+            case R.id.login:
+                postAction();
                 break;
         }
 
+
+    }
+
+    private void postAction() {
+        if (TextUtils.isEmpty(name.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(address.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+
+        if (TextUtils.isEmpty(addressDetail.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+
+        if (TextUtils.isEmpty(phone.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(contactName.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(contactCode.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(contactPhone.getText().toString())){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(codeUrl)){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(codeReverseUrl)){
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (SELECT_TYPE == 0){
+            if (TextUtils.isEmpty(oneUrl)){
+                ToastUtil.show("不能为空");
+                return;
+            }
+        }
+
+        if (SELECT_TYPE != 0){
+            if (TextUtils.isEmpty(firstUrl) || TextUtils.isEmpty(secondUrl)
+                    || TextUtils.isEmpty(thirdUrl)){
+                ToastUtil.show("不能为空");
+                return;
+            }
+        }
+
+        FillCompanyReq req = new FillCompanyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setName(name.getText().toString());
+        req.setProvince(1);
+        req.setCity(2);
+        req.setDistrict(3);
+        req.setAddress(address.getText().toString());
+        req.setTel(phone.getText().toString());
+        req.setContact(contactName.getText().toString());
+        req.setContact_mobile(contactPhone.getText().toString());
+        req.setContact_card(contactCode.getText().toString());
+        req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
+        req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
+        List<String> remarkList = new ArrayList<>();
+        remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
+        remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
+        remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
+        req.setAuthentication(remarkList);
+        presenter.fillInfor(this, req);
+    }
+
+    private void getPicPath() {
         new IOSDialog(this).builder()
                 .setCancelable(true)
                 .setTitle("拍照", v -> {
@@ -156,8 +352,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 .setMsgColor("#333333")
                 .setNegativeButton("取消", null)
                 .show();
-
-
     }
 
     private void selectCamera() {
@@ -180,31 +374,31 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 allLayout.setVisibility(View.VISIBLE);
                 oneLayout.setVisibility(View.GONE);
 
-                if (TextUtils.isEmpty(firstUrl)){
+                if (TextUtils.isEmpty(firstUrl)) {
                     firstPic.setVisibility(View.VISIBLE);
                     firstIv.setVisibility(View.GONE);
                     firstDelete.setVisibility(View.GONE);
-                }else{
+                } else {
                     firstPic.setVisibility(View.GONE);
                     firstIv.setVisibility(View.VISIBLE);
                     firstDelete.setVisibility(View.VISIBLE);
                 }
 
-                if (TextUtils.isEmpty(secondUrl)){
+                if (TextUtils.isEmpty(secondUrl)) {
                     secondPic.setVisibility(View.VISIBLE);
                     secondIv.setVisibility(View.GONE);
                     secondDelete.setVisibility(View.GONE);
-                }else{
+                } else {
                     secondPic.setVisibility(View.GONE);
                     secondIv.setVisibility(View.VISIBLE);
                     secondDelete.setVisibility(View.VISIBLE);
                 }
 
-                if (TextUtils.isEmpty(thirdUrl)){
+                if (TextUtils.isEmpty(thirdUrl)) {
                     thirdPic.setVisibility(View.VISIBLE);
                     thirdIv.setVisibility(View.GONE);
                     thirdDelete.setVisibility(View.GONE);
-                }else{
+                } else {
                     thirdPic.setVisibility(View.GONE);
                     thirdIv.setVisibility(View.VISIBLE);
                     thirdDelete.setVisibility(View.VISIBLE);
@@ -218,11 +412,11 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 allLayout.setVisibility(View.GONE);
                 oneLayout.setVisibility(View.VISIBLE);
 
-                if (TextUtils.isEmpty(oneUrl)){
+                if (TextUtils.isEmpty(oneUrl)) {
                     onePic.setVisibility(View.VISIBLE);
                     oneIv.setVisibility(View.GONE);
                     oneDelete.setVisibility(View.GONE);
-                }else{
+                } else {
                     onePic.setVisibility(View.GONE);
                     oneIv.setVisibility(View.VISIBLE);
                     oneDelete.setVisibility(View.VISIBLE);
@@ -272,6 +466,18 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 thirdDelete.setVisibility(View.VISIBLE);
                 thirdUrl = path;
                 break;
+
+            case 4:
+                Glide.with(this).load(path).placeholder(getResources().getDrawable(R.drawable.shangchuan_zheng)).into(code);
+                codeDelete.setVisibility(View.VISIBLE);
+                codeUrl = path;
+                break;
+
+            case 5:
+                Glide.with(this).load(path).placeholder(getResources().getDrawable(R.drawable.shangchuan_fan)).into(codeReverse);
+                codeReverseDelete.setVisibility(View.VISIBLE);
+                codeReverseUrl = path;
+                break;
         }
 
 
@@ -291,6 +497,11 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         }
     }
 
+    @Override
+    public void getData(LoginResBean bean) {
+
+    }
+
 
     @Override
     public void onFailure() {
@@ -302,6 +513,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         super.onDestroy();
         presenter.detachView();
     }
+
 
 
 }

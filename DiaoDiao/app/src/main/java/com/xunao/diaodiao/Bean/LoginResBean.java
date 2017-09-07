@@ -10,6 +10,7 @@ public class LoginResBean {
     private String mobile;
     private int type;
     private int is_frozen;
+    private int is_finish;
 
     public int getUserid() {
         return userid;
@@ -41,5 +42,13 @@ public class LoginResBean {
 
     public void setIs_frozen(int is_frozen) {
         this.is_frozen = is_frozen;
+    }
+
+    public int getIs_finish() {
+        return is_finish;
+    }
+
+    public void setIs_finish(int is_finish) {
+        this.is_finish = is_finish;
     }
 }

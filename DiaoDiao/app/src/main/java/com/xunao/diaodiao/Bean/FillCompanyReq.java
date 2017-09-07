@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Bean;
 
+import java.util.List;
+
 /**
  * Description:
  * Created by guzhenfu on 2017/9/2.
@@ -12,10 +14,15 @@ public class FillCompanyReq {
     private int city;
     private int district;
     private String address;
+    private int years;
     private String tel;
     private String contact;
     private String contact_mobile;
+    private String contact_card;
     private String verify;
+    private String card_front;
+    private String card_back;
+    private List<String> authentication;
 
     public int getUserid() {
         return userid;
@@ -95,5 +102,45 @@ public class FillCompanyReq {
 
     public void setVerify(String verify) {
         this.verify = verify;
+    }
+
+    public int getYears() {
+        return years;
+    }
+
+    public void setYears(int years) {
+        this.years = years;
+    }
+
+    public String getContact_card() {
+        return contact_card;
+    }
+
+    public void setContact_card(String contact_card) {
+        this.contact_card = contact_card;
+    }
+
+    public String getCard_front() {
+        return card_front;
+    }
+
+    public void setCard_front(String card_front) {
+        this.card_front = card_front;
+    }
+
+    public String getCard_back() {
+        return card_back;
+    }
+
+    public void setCard_back(String card_back) {
+        this.card_back = card_back;
+    }
+
+    public List<String> getAuthentication() {
+        return authentication;
+    }
+
+    public void setAuthentication(List<String> authentication) {
+        this.authentication = authentication;
     }
 }

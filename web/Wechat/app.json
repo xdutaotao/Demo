@@ -4,16 +4,15 @@
     "pages/main/main",
     "pages/mall/mall",
     "pages/order/order",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/orderDetail/orderDetail"
   ],
-  
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#15abc4",
     "navigationBarTitleText": "计步",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
-
   "tabBar": {
     "color": "#999",
     "selectedColor": "#15abc4",
@@ -45,5 +44,4 @@
       }
     ]
   }
-
 }

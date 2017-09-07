@@ -26,6 +26,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/name"
                     android:hint="请输入公司名称"/>
 
             </RelativeLayout>
@@ -44,7 +45,8 @@
                     android:text="公司地区"/>
 
                 <EditText
-                    style="@style/edit_personal_edit" />
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/address"/>
 
             </RelativeLayout>
 
@@ -63,7 +65,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入公司地址"/>
+                    android:hint="请输入公司地址"
+                    android:id="@+id/address_detail"/>
 
             </RelativeLayout>
 
@@ -82,7 +85,9 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入公司电话"/>
+                    android:hint="请输入公司电话"
+                    android:inputType="phone"
+                    android:id="@+id/phone"/>
 
             </RelativeLayout>
 
@@ -102,9 +107,8 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:hint="请输入联系人姓名"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:id="@+id/contact_name"
+                    />
 
             </RelativeLayout>
 
@@ -123,6 +127,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/contact_code"
                     android:hint="请输入联系人身份证号码"/>
 
             </RelativeLayout>
@@ -142,6 +147,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/contact_phone"
+                    android:inputType="phone"
                     android:hint="请输入联系人电话"/>
 
             </RelativeLayout>
@@ -199,10 +206,10 @@
                 android:id="@+id/all_layout">
 
                 <RelativeLayout
-                    android:layout_width="240px"
-                    android:layout_height="240px"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginRight="50px"
+                    android:layout_width="260px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
                     android:background="@android:color/white">
 
                     <ImageView
@@ -225,6 +232,7 @@
                         android:layout_height="wrap_content"
                         android:text="工商营业执照"
                         android:id="@+id/first_pic"
+                        android:layout_centerInParent="true"
                         android:drawablePadding="20px"
                         android:drawableTop="@drawable/img_add"/>
 
@@ -233,10 +241,10 @@
 
 
                 <RelativeLayout
-                    android:layout_width="240px"
-                    android:layout_height="240px"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginRight="50px"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="20px"
+                    android:layout_marginRight="20px"
                     android:background="@android:color/white">
 
                     <ImageView
@@ -258,6 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="组织机构代码证"
+                        android:layout_centerInParent="true"
                         android:id="@+id/second_pic"
                         android:gravity="center"
                         android:layout_weight="1"
@@ -269,10 +278,10 @@
 
 
                 <RelativeLayout
-                    android:layout_width="240px"
-                    android:layout_height="240px"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginRight="50px"
+                    android:layout_width="260px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
                     android:background="@android:color/white">
 
                     <ImageView
@@ -295,6 +304,7 @@
                         android:layout_height="wrap_content"
                         android:text="税务登记证"
                         android:id="@+id/third_pic"
+                        android:layout_centerInParent="true"
                         android:layout_gravity="right"
                         android:drawablePadding="20px"
                         android:drawableTop="@drawable/img_add"/>
@@ -303,13 +313,14 @@
 
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="50px"
-            android:id="@+id/one_layout">
+        <RelativeLayout
+            android:layout_width="240px"
+            android:layout_height="300px"
+            android:layout_margin="50px"
+            android:id="@+id/one_layout"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/white">
 
             <TextView
                 android:layout_width="match_parent"
@@ -319,16 +330,7 @@
                 android:id="@+id/one_pic"
                 android:layout_gravity="center"
                 android:drawablePadding="20px"
-                android:visibility="gone"
                 android:drawableTop="@drawable/img_add"/>
-
-            <ImageView
-                android:layout_width="240px"
-                android:layout_height="240px"
-                android:id="@+id/one_iv"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50px"/>
 
             <ImageView
                 android:layout_width="60px"
@@ -336,9 +338,18 @@
                 android:src="@drawable/cancle"
                 android:id="@+id/one_delete"
                 android:visibility="gone"
+                android:layout_marginTop="20px"
                 android:layout_alignParentRight="true"/>
 
-        </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300px"
+                android:id="@+id/one_iv"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="50px"/>
+
+        </RelativeLayout>
 
 
             <View
@@ -359,19 +370,52 @@
                 android:orientation="horizontal"
                 android:padding="50px">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/shangchuan_zheng"
-                    android:padding="20px"/>
+                    android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shangchuan_zheng"
+                        android:id="@+id/code"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/code_delete"
+                        android:layout_marginTop="20px"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/shangchuan_fan"
-                    android:padding="20px"/>
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shangchuan_fan"
+                        android:id="@+id/code_reverse"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/code_reverse_delete"
+                        android:layout_marginTop="20px"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+
+
             </LinearLayout>
 
             <Button

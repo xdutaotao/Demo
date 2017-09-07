@@ -1,0 +1,7 @@
+<!--orderDetail.wxml-->
+
+<view class="noticeDetailContain">
+  <image src="http://project.youzewang.com/step/banner2.jpg" class="noticeClass"></image>
+  <text>1231111111111</text>
+</view>
+

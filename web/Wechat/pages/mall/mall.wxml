@@ -12,11 +12,11 @@
   
   <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
     <view class="listClass">
-      <text class="rankClass">{{item.name}}</text>>
+      <text class="rankClass">{{item.name}}</text>
       <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
-      <text>Baron</text>>
-      <text></text>>
-      <text class="stepCntClass">4732 步</text>>
+      <text>Baron</text>
+      <text></text>
+      <text class="stepCntClass">4732 步</text>
     </view>
     <view class="divider"></view>
   </block>
