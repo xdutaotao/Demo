@@ -183,42 +183,6 @@ public class CollectModel extends BaseModel {
                 });
     }
 
-    /**
-     * 上传采集信息
-     */
-    public Observable<String> postCollectImg(List<String> list){
-        Map<String, RequestBody> map = new HashMap<>();
-        map.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
-
-        for(String path: list){
-            File file = new File(path);
-            RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-            map.put("photo\"; filename=\""+file.getName(), body);
-        }
-
-        return config.getRetrofitService().postCollectImg(map)
-                .flatMap( responseBody -> {
-                    try {
-                        String s = responseBody.string();
-                        UploadBean bean = JsonUtils.getInstance().JsonToUploadBean(s);
-                        if (TextUtils.equals(bean.getMsg(), "200")){
-                            return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
-                                    .compose(RxUtils.handleResultNoThread());
-                        }else{
-                            return Observable.error(new RxUtils.ServerException("操作失败")) ;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return Observable.error(new RxUtils.ServerException("操作失败")) ;
-                })
-                .map(userInfo -> {
-                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
-                    User.getInstance().setUserInfo(userInfoString);
-                    return "操作成功";
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
-    }
 
     /**
      * 记录上次

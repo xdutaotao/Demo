@@ -2,39 +2,36 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
-import com.xunao.diaodiao.Bean.GetMoneyRes;
+import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Model.LoginModel;
-import com.xunao.diaodiao.Model.MyRatingModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.View.HasRatingView;
 import com.xunao.diaodiao.View.MyRatingView;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-
 /**
  * Created by
  */
-public class MyRatingPresenter extends BasePresenter<MyRatingView> {
+public class HasRatingPresenter extends BasePresenter<HasRatingView> {
     @Inject
     LoginModel model;
 
     @Inject
-    MyRatingPresenter() {
+    HasRatingPresenter() {
     }
 
     /**
      * 评论列表
      * @param context
-     * @param type
      */
-    public void getRating(Context context){
-        mCompositeSubscription.add(model.getRating()
-                .subscribe(new RxSubUtils<MyRateRes>(mCompositeSubscription,context) {
+    public void getHasRating(Context context){
+        mCompositeSubscription.add(model.getHasRating()
+                .subscribe(new RxSubUtils<HasRateRes>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(MyRateRes token) {
+                    protected void _onNext(HasRateRes token) {
                         getView().getData(token);
                     }
 

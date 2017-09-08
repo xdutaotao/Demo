@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
@@ -21,10 +22,10 @@ import com.xunao.diaodiao.Activity.MyRatingActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
+import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.MyView;
 
 import javax.inject.Inject;
@@ -64,6 +65,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     TextView moneyText;
     @BindView(R.id.bank_text)
     TextView bankText;
+    @BindView(R.id.first_star)
+    ImageView firstStar;
+    @BindView(R.id.second_star)
+    ImageView secondStar;
+    @BindView(R.id.third_star)
+    ImageView thirdStar;
+    @BindView(R.id.fourth_star)
+    ImageView fourthStar;
     private String mParam1;
 
     @Inject
@@ -125,12 +134,54 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             moneyText.setText("- / -");
             bankText.setText("- / -");
         }
+        presenter.getInfo(getContext());
     }
 
     @Override
     public void updateData() {
         super.updateData();
         onResume();
+    }
+
+    @Override
+    public void getData(MyBean data) {
+        name.setText(data.getName());
+        Glide.with(this).load(data.getHead_img()).placeholder(R.drawable.head_icon_girl).into(headIcon);
+        moneyText.setText(data.getBalance());
+        bankText.setText(data.getCard_number() + "张");
+
+        switch (Integer.valueOf(data.getUser_point())){
+            case 0:
+                firstStar.setImageResource(R.drawable.pinfeng2);
+                secondStar.setImageResource(R.drawable.pinfeng2);
+                thirdStar.setImageResource(R.drawable.pinfeng2);
+                fourthStar.setImageResource(R.drawable.pinfeng2);
+                break;
+            case 1:
+                firstStar.setImageResource(R.drawable.pinfeng);
+                secondStar.setImageResource(R.drawable.pinfeng2);
+                thirdStar.setImageResource(R.drawable.pinfeng2);
+                fourthStar.setImageResource(R.drawable.pinfeng2);
+                break;
+            case 2:
+                firstStar.setImageResource(R.drawable.pinfeng);
+                secondStar.setImageResource(R.drawable.pinfeng);
+                thirdStar.setImageResource(R.drawable.pinfeng2);
+                fourthStar.setImageResource(R.drawable.pinfeng2);
+                break;
+            case 3:
+                firstStar.setImageResource(R.drawable.pinfeng);
+                secondStar.setImageResource(R.drawable.pinfeng);
+                thirdStar.setImageResource(R.drawable.pinfeng);
+                fourthStar.setImageResource(R.drawable.pinfeng2);
+                break;
+            case 4:
+                firstStar.setImageResource(R.drawable.pinfeng);
+                secondStar.setImageResource(R.drawable.pinfeng);
+                thirdStar.setImageResource(R.drawable.pinfeng);
+                fourthStar.setImageResource(R.drawable.pinfeng);
+                break;
+        }
     }
 
     @Override
@@ -188,9 +239,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.money:
-                if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                     LoginActivity.startActivity(getContext());
-                }else{
+                } else {
                     MoneyActivity.startActivity(getActivity());
                 }
 
@@ -214,15 +265,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     }
 
-    @Override
-    public void getData(String data) {
-        ToastUtil.show("退出成功");
-    }
-
-    @Override
-    public void signToday(String bean) {
-        ToastUtil.show("签到成功");
-    }
 
     @Override
     public void onDestroy() {

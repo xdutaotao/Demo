@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.View.MyView;
@@ -19,11 +20,11 @@ public class MyPresenter extends BasePresenter<MyView> {
     MyPresenter() {
     }
 
-    public void logout(Context context, String token){
-        mCompositeSubscription.add(model.logout(token)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+    public void getInfo(Context context){
+        mCompositeSubscription.add(model.getInfo()
+                .subscribe(new RxSubUtils<MyBean>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(MyBean token) {
                         getView().getData(token);
                     }
                 }));

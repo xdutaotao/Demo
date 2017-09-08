@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="上海市徐汇区 莫林小区334号"
+        android:id="@+id/address"
         android:layout_marginTop="30px"/>
 
     <TextView
@@ -60,13 +61,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="价格"/>
+            android:text="价格"
+            android:id="@+id/price_detail"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="￥12000"
+            android:id="@+id/price"
             android:textColor="@color/colorAccent"
             android:textSize="50px"/>
 
@@ -75,6 +78,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn02"
             android:text="项目进度"
+            android:id="@+id/project_detail"
             android:textColor="@color/colorAccent"
             android:gravity="center"/>
     </LinearLayout>

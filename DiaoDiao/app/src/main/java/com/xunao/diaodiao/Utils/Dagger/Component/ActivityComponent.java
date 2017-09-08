@@ -54,7 +54,9 @@ import com.xunao.diaodiao.Activity.SignDetailActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Fragment.AddFragment;
 import com.xunao.diaodiao.Fragment.FriendFragment;
+import com.xunao.diaodiao.Fragment.HasRateFragment;
 import com.xunao.diaodiao.Fragment.HomeFragment;
+import com.xunao.diaodiao.Fragment.NoRateFragment;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Fragment.ReleaseFragment;
@@ -124,4 +126,6 @@ public interface ActivityComponent {
     void inject(ApplyActivity activity);
     void inject(ApplyDetailActivity activity);
     void inject(TabFragment fragment);
+    void inject(HasRateFragment fragment);
+    void inject(NoRateFragment fragment);
 }

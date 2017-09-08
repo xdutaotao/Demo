@@ -1,9 +1,10 @@
 package com.xunao.diaodiao.View;
 
+import com.xunao.diaodiao.Bean.MyBean;
+
 /**
  * Created by
  */
 public interface MyView extends BaseView {
-    void getData(String data);
-    void signToday(String bean);
+    void getData(MyBean data);
 }

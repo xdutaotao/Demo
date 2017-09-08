@@ -37,7 +37,10 @@ public class TabFragment extends BaseFragment implements MyRatingView {
     RecyclerView recyclerView;
     private String mParam1;
 
-    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapter;
+    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapterMyRating;
+    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapterRating;
+    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapterNoRecommand;
+    private RecyclerArrayAdapter<MyRateRes.ProjBean> adapterHasRecommand;
 
     @Inject
     MyRatingPresenter presenter;
@@ -69,59 +72,81 @@ public class TabFragment extends BaseFragment implements MyRatingView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
+
         if (TextUtils.equals("我的申诉", mParam1)){
-            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
+            adapterMyRating = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
-            adapter.setOnItemClickListener((view1, i) -> {
+            adapterMyRating.setOnItemClickListener((view1, i) -> {
                 RecordDetailActivity.startActivity(TabFragment.this.getActivity());
             });
+
+            type = 3;
+            recyclerView.setAdapter(adapterMyRating);
+            presenter.getRating(getContext());
 
         }else if (TextUtils.equals("对方申诉", mParam1)){
-            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
+            adapterRating = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
-            adapter.setOnItemClickListener((view1, i) -> {
+            adapterRating.setOnItemClickListener((view1, i) -> {
                 RecordDetailActivity.startActivity(TabFragment.this.getActivity());
             });
 
+            type = 4;
+            recyclerView.setAdapter(adapterHasRecommand);
+            presenter.getRating(getContext());
+
         }else if (TextUtils.equals("已评价", mParam1)){
-            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_already_rating_item) {
+            adapterHasRecommand = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_already_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
                 }
             };
 
-            adapter.setOnItemClickListener((view1, i) -> {
-                FeedBackDetailActivity.startActivity(TabFragment.this.getActivity());
+            adapterHasRecommand.setOnItemClickListener((view1, i) -> {
+                FeedBackDetailActivity.startActivity(TabFragment.this.getActivity(), 1);
             });
 
             type = 2;
-            presenter.getRating(getContext(), type);
+            recyclerView.setAdapter(adapterHasRecommand);
+            presenter.getRating(getContext());
         }else if (TextUtils.equals("待评价", mParam1)){
-            adapter = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_rating_item) {
+            adapterNoRecommand = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, MyRateRes.ProjBean s) {
+                    baseViewHolder.setText(R.id.rating_name, s.getTitle());
+                    baseViewHolder.setText(R.id.address, s.getAddress());
+                    baseViewHolder.setText(R.id.price, s.getPrice());
+                    if (s.getEvaluate_type() == 1){
+                        //发单人
+                        baseViewHolder.setText(R.id.project_detail, "项目进度");
+                        baseViewHolder.setText(R.id.price_detail, "价格");
+                    }else{
+                        baseViewHolder.setText(R.id.project_detail, "维保进度");
+                        baseViewHolder.setText(R.id.price_detail, "上门费");
+                    }
+
                 }
             };
 
-            adapter.setOnItemClickListener((view1, i) -> {
+            adapterNoRecommand.setOnItemClickListener((view1, i) -> {
                 RecommandActivity.startActivity(TabFragment.this.getActivity());
             });
 
             type = 1;
-            presenter.getRating(getContext(), type);
+            presenter.getRating(getContext());
+            recyclerView.setAdapter(adapterNoRecommand);
         }
 
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
 
 
 
@@ -130,8 +155,24 @@ public class TabFragment extends BaseFragment implements MyRatingView {
 
     @Override
     public void getData(MyRateRes res) {
-        adapter.clear();
-        adapter.addAll(res.getProject());
+        switch (type){
+            case 1:
+                adapterNoRecommand.clear();
+                adapterNoRecommand.addAll(res.getProject());
+                break;
+
+            case 2:
+                adapterHasRecommand.clear();
+                adapterHasRecommand.addAll(res.getProject());
+                break;
+
+            case 3:
+                break;
+
+            case 4:
+                break;
+        }
+
     }
 
 

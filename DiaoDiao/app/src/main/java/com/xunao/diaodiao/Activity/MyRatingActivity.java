@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Fragment.BaseFragment;
+import com.xunao.diaodiao.Fragment.HasRateFragment;
+import com.xunao.diaodiao.Fragment.NoRateFragment;
 import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Present.MyRatingPresenter;
 import com.xunao.diaodiao.R;
@@ -42,7 +45,7 @@ public class MyRatingActivity extends BaseActivity {
     ViewPager viewPager;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private List<TabFragment> fragments;
+    private List<BaseFragment> fragments;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MyRatingActivity.class);
@@ -59,8 +62,8 @@ public class MyRatingActivity extends BaseActivity {
         showToolbarBack(toolBar, titleText, "我的评价");
 
         fragments=new ArrayList<>();
-        fragments.add(TabFragment.newInstance("待评价"));
-        fragments.add(TabFragment.newInstance("已评价"));
+        fragments.add(NoRateFragment.newInstance("待评价"));
+        fragments.add(HasRateFragment.newInstance("已评价"));
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);
         viewPager.setAdapter(mSectionsPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
@@ -74,9 +77,9 @@ public class MyRatingActivity extends BaseActivity {
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private List<TabFragment> mFragmentList;
+        private List<BaseFragment> mFragmentList;
 
-        public SectionsPagerAdapter(FragmentManager fm, List<TabFragment> fragmentList) {
+        public SectionsPagerAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {
             super(fm);
             this.mFragmentList = fragmentList;
         }

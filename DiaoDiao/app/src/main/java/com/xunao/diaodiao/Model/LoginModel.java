@@ -13,9 +13,13 @@ import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
+import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyRateRes;
+import com.xunao.diaodiao.Bean.RateDetailReq;
+import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
@@ -332,23 +336,11 @@ public class LoginModel extends BaseModel {
 
 
     /**
-     * 评价列表
+     * 未评价列表
      * @return
      */
-    public Observable<MyRateRes> getRating(int rateType){
-        String rateKey = "";
-        switch (rateType){
-            case 1:
-                rateKey = "notEvaluated";
-                break;
-
-            case 2:
-                rateKey = "hasEvaluated";
-                break;
-        }
-
-
-
+    public Observable<MyRateRes> getRating(){
+        String rateKey = "notEvaluated";
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -369,6 +361,79 @@ public class LoginModel extends BaseModel {
 
 
     /**
+     * 已评价列表
+     * @return
+     */
+    public Observable<HasRateRes> getHasRating(){
+        String rateKey = "hasEvaluated";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type+"")
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getHasRate(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+    /**
+     * 评价列表
+     * @return
+     */
+    public Observable<RateDetailRes> getRatingDetail(int detailID){
+        String rateKey = "evaluateDetail";
+
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(detailID)
+                .append("security");
+
+        RateDetailReq req = new RateDetailReq();
+        req.setEvaluate_id(detailID);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getRateDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 评价列表
+     * @return
+     */
+    public Observable<MyBean> getInfo(){
+        String rateKey = "personalCenter";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getUserInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
      * 修改密码
      * @param phone
      * @return
@@ -379,9 +444,7 @@ public class LoginModel extends BaseModel {
     }
 
     /**
-     * 修改密码
-     * @param token
-     * @return
+     *
      */
     public Observable<String> logout(String token){
         return config.getRetrofitService().logout(token)

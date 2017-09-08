@@ -4,10 +4,13 @@ package com.xunao.diaodiao.Common;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
+import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
+import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
 import com.xunao.diaodiao.Bean.BaseBean;
@@ -75,6 +78,17 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<MyRateRes>> getRate(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<HasRateRes>> getHasRate(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<RateDetailRes>> getRateDetail(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyBean>> getUserInfo(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
