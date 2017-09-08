@@ -29,3 +29,17 @@
   background-image: url("http://project.youzewang.com/step/main1.jpg");
   background-size: 100% 100%;
 } 
+
+.circle-box {
+  text-align: center;
+  margin-top: 10vw;
+  background-color: #ddd
+}
+
+.circle {
+  position: absolute;
+  left: -200px;
+  right: 0;
+  
+  margin: auto;
+}

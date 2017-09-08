@@ -3,6 +3,13 @@
   
   <view  bindtap="bindViewTap" class="userinfo"> 
     <text style="color: #fff; font-size: 25px">今日步数</text> 
+
+    <view class="circle-box">
+      <canvas class="circle" style="width:200px; height:200px;" canvas-id="canvasCircle">
+      </canvas>
+      <view class="draw_btn">开始动态绘制</view>
+    </view>
+
     <text style="color: #fff; font-size: 25px">{{todayStep}}</text> 
     <view class='stepstatus'>
       <text style='color: #fff'>2.2公里</text>
