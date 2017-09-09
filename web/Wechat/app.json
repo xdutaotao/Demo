@@ -1,12 +1,14 @@
 {
   "pages": [
+    "pages/firstPage/firstPage",
     "pages/index/index",
     "pages/main/main",
     "pages/mall/mall",
     "pages/order/order",
     "pages/logs/logs",
     "pages/orderDetail/orderDetail",
-    "pages/firstPage/firstPage"
+    "pages/login/login"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,7 +16,6 @@
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white"
   },
-  
   "tabBar": {
     "color": "#999",
     "selectedColor": "#15abc4",
@@ -46,5 +47,4 @@
       }
     ]
   }
-
 }

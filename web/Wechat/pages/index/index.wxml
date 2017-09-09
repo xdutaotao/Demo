@@ -1,25 +1,4 @@
 <!--index.wxml-->
-<view class="container">
-  
-  <view  bindtap="bindViewTap" class="userinfo"> 
-    <text style="color: #fff; font-size: 25px">今日步数</text> 
-
-    <view class="circle-box">
-      <canvas class="circle" style="width:200px; height:200px;" canvas-id="canvasBgCircle">
-      </canvas>
-       <canvas class="circle" style="width:200px; height:200px;" canvas-id="canvasCircle">
-      </canvas> 
-    </view>
-
-    <text style="color: #fff; font-size: 25px">{{todayStep}}</text> 
-    <view class='stepstatus'>
-      <text style='color: #fff'>2.2公里</text>
-      <text style='color: #fff'>2.2卡</text>
-      <text style='color: #fff'>20分钟</text>
-    </view>
-  </view>
-  <view class="usermotto">
-    <text></text>
-  </view>    
+<view>
 
 </view>

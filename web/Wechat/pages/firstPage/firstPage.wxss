@@ -1,7 +1,7 @@
 /* firstPage.wxss */
 .userinfo {
   display: flex;
-  flex: 1;
+  flex: 2;
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
@@ -11,27 +11,27 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 80px;
   width: 100%;
 }
 
 .usermotto {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 667px;
+  height: 603px;
   background-image: url("http://project.youzewang.com/step/main1.jpg");
   background-size: 100% 100%;
 } 
 
 .circle-box {
   text-align: center;
-  margin-top: 10vw;
+  margin-top: 70px;
 }
 
 .circle {
@@ -40,4 +40,12 @@
   right: 0;
   top: 25px;
   margin: auto;
+}
+
+.bottomTab{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center
 }

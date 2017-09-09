@@ -102,6 +102,11 @@
   background-color: #f3f3f3
 }
 
+.dividerWidth{
+  height: 4px;
+  background-color: #f3f3f3
+}
+
 .headClass{
   width: 20px;
   height: 20px;

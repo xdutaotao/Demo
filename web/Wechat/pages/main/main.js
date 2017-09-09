@@ -2,7 +2,28 @@ var mainService=require('mainService.js');
 
 const app = getApp()
 
-var list = [];
+var myList = [
+  { name: "1", sex: "2" },
+  { name: "1", sex: "2" },
+  { name: "1", sex: "2" },
+  { name: "1", sex: "2" },
+  { name: "4", sex: "20" },
+  { name: "1", sex: "2" },
+  { name: "1", sex: "2" },
+  { name: "1", sex: "2" }
+];
+
+
+var rankList = [
+  { name: "11", sex: "12" },
+  { name: "12", sex: "22" },
+  { name: "13", sex: "32" },
+  { name: "14", sex: "42" },
+  { name: "45", sex: "20" },
+  { name: "16", sex: "52" },
+  { name: "17", sex: "26" },
+  { name: "18", sex: "27" }
+]
 
 Page({
   data: {
@@ -16,16 +37,13 @@ Page({
 
     motto: 'Hello World',
     userInfo: {},
-    list: [
-      {name: "1", sex:"2"},
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" }
-    ],
+    list: [],
+
+    myRank: "4",
+    myName: "20",
+    myStep: "4732",
+    myHead: "",
+
   },
 
   onLoad:function(){
@@ -45,11 +63,10 @@ Page({
       })
     }
     
-    // list.push({name:"1",sex:"2"})
-    // list.push({name:'3',sex:'4'})
-    // that.setData({
-    //   list: list
-    // })
+    
+    that.setData({
+      list: myList
+    })
 
     // console.log(list)
     
@@ -61,17 +78,23 @@ Page({
       if( this.data.currentTab === e.target.dataset.current) {  
       return false;  
     } else {  
-      that.setData( {  
-        currentTab: e.target.dataset.current  
-      })  
+      console.log(that.data.currentTab)
+      if (that.data.currentTab == 0){
+        that.setData({
+          currentTab: e.target.dataset.current,
+          list: myList
+        }) 
+
+      }else{
+        that.setData({
+          currentTab: e.target.dataset.current,
+          list: rankList
+        }) 
+      }
+       
     } 
   },
-     //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../mainDetail/maindetail'
-    })
-  }
+ 
 
  
 })

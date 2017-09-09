@@ -11,8 +11,8 @@ var interval;
 var svarName;
 var allStep = 3;
 
-
-var radius = 40;
+var radius = 80;
+var lineWidth = 12;
 
 Page({
   data: {
@@ -23,17 +23,20 @@ Page({
     iv: "",
     session_key: "",
     openid: "",
-    todayStep: ""
+    todayStep: "",
+    distance: "",
+    time: "",
+    kaka: "",
   },
 
   drawBgCircle: function () {
     //创建并返回绘图上下文context对象。
     var cxt_arc = wx.createCanvasContext('canvasBgCircle');
-    cxt_arc.setLineWidth(8);
+    cxt_arc.setLineWidth(lineWidth);
     cxt_arc.setStrokeStyle('#2c4c60');
     cxt_arc.setLineCap('round');
     cxt_arc.beginPath();
-    cxt_arc.arc(100, 100, radius, 0, 2 * Math.PI, false);
+    cxt_arc.arc(100, 150, radius, 0, 2 * Math.PI, false);
     cxt_arc.stroke();
     cxt_arc.draw();
   },
@@ -43,8 +46,8 @@ Page({
     //ctx.createLinearGradient(100, 100, )
     function drawArc(s, e) {
       ctx.draw();
-      var x = 100, y = 100;
-      ctx.setLineWidth(8);
+      var x = 100, y = 150;
+      ctx.setLineWidth(lineWidth);
       ctx.setStrokeStyle('#e9890B');
       ctx.setLineCap('round');
       ctx.beginPath();
@@ -70,13 +73,14 @@ Page({
   get3rdSession: function () {
     let that = this
     wx.request({
-      url: 'http://lh.2donghua.com/miniApps/convert.php',
+      url: app.globalData.url+'/miniApps/convert.php',
       data: {
         code: that.data.code,
         encryptedData: that.data.encryptedData,
         iv: that.data.iv,
         appid: appid,
-        secret: secret
+        secret: secret,
+        session_key: wx.getStorageSync('session_key')
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -86,14 +90,73 @@ Page({
         let response = res.data.substring(3)
         that.stepInfoList = JSON.parse(response).stepInfoList;
         console.log(that.stepInfoList)
-        that.todayStep = that.stepInfoList[that.stepInfoList.length - 2].step + "";
+
+        if (that.stepInfoList != null)
+          that.todayStep = that.stepInfoList[that.stepInfoList.length - 1].step + "";
         console.log(that.todayStep)
         that.setData({
-          todayStep: that.todayStep
+          todayStep: that.todayStep,
+          distance: (that.todayStep*5/8000).toFixed(2),
+          time: (that.todayStep/120).toFixed(2),
+          kaka: (that.todayStep * 655 / 720).toFixed(2)
         })
 
       }
     })
+  },
+
+  judgeBindInfo: function(){
+    let that = this
+      wx.request({
+        url: app.globalData.url + '/index.php?g=Api&m=CommonApi&a=judgeBindInfo',
+        data: {
+          code: that.data.code,
+          appid: appid,
+          secret: secret
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: 'POST',
+        success: function (res) {
+          console.log(res.data.exist);
+
+          wx.setStorageSync('openid', res.data.openid);
+          wx.setStorageSync("session_key", res.data.session_key)
+
+          if (res.data.exist == 0){
+            //不存在
+            wx.redirectTo({
+              url: '../login/login',
+            })
+          }else{
+            if (wx.getWeRunData) {
+
+              wx.getWeRunData({
+                success(res) {
+                  console.log('获取计步接口成功！' + res.errMsg)
+                  const encryptedData = res.encryptedData
+                  that.setData({ iv: res.iv })
+                  that.setData({ encryptedData: encryptedData })
+                  that.get3rdSession();
+                  that.drawBgCircle();
+                  that.drawCircle();
+
+                },
+                fail(error) {
+                  console.log(error);
+                }
+              })
+
+            } else {
+              console.log("不支持计步");
+            }
+
+          }
+
+
+        }
+      })
   },
 
   onLoad: function () {
@@ -115,28 +178,7 @@ Page({
           console.log('获取用户登录成功！' + res.code)
           that.setData({ code: res.code })
 
-
-          if (wx.getWeRunData) {
-
-            wx.getWeRunData({
-              success(res) {
-                console.log('获取计步接口成功！' + res.errMsg)
-                const encryptedData = res.encryptedData
-                that.setData({ iv: res.iv })
-                that.setData({ encryptedData: encryptedData })
-                that.get3rdSession();
-                that.drawBgCircle();
-                that.drawCircle();
-
-              },
-              fail(error) {
-                console.log(error);
-              }
-            })
-
-          } else {
-            console.log("不支持计步");
-          }
+          that.judgeBindInfo();
 
 
         } else {
@@ -146,6 +188,26 @@ Page({
     });
 
   },
+
+  goSecondTab: function(){
+    wx.switchTab({
+      url: '../main/main'
+    }); 
+
+  },
+
+  goThirdTab: function(){
+    wx.switchTab({
+      url: '../mall/mall'
+    });
+  },
+
+  goFourthTab: function(){
+    wx.switchTab({
+      url: '../order/order'
+    });
+  }
+
 
 
 })

@@ -1,0 +1,21 @@
+/* pages/login/login.wxss */
+
+.contain{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.phoneLayout{
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  align-items: center
+}
+
+.codeLayout{
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  align-items: center;
+}

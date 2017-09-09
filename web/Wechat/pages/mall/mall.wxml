@@ -1,33 +1,34 @@
 <view class='mainContain'>
-  <view class='switchContain'>
-    <text class="{{currentTab==0 ? 'personRankSelect' : 'personRank'}}"  bindtap="changeState" data-current="0">个人排行榜</text>
-    <text class="{{currentTab==1 ? 'teamRankSelect' : 'teamRank'}}" bindtap="changeState" data-current="1">小组排行榜</text>
-
-  </view>
 
   <view class="userinfo">
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   
-  <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
-    <view class="listClass">
-      <text class="rankClass">{{item.name}}</text>
-      <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
-      <text>Baron</text>
-      <text></text>
-      <text class="stepCntClass">4732 步</text>
+  <scroll-view scroll-y="true" style="height: 100%;" bindscrolltolower="loadMore">
+  
+    <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
+      <view class="listClass">
+        <text class="rankClass">{{item.name}}</text>
+        <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
+        <text>Baron</text>
+        <text></text>
+        <text class="stepCntClass">4732 步</text>
+      </view>
+      <view class="divider"></view>
+    </block>
+
+    <view style='height: 60px; margin: 20px'>
+      <view wx:if="{{hasMore}}" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;">
+      <icon type="waiting" size="25"/><text>玩命的加载中...</text></view>
+      <view wx:else><text>没有更多内容了</text></view>
     </view>
-    <view class="divider"></view>
-  </block>
+  
+  </scroll-view>
+
+  
 
 
-<!-- <view class="cus-table-tab">
-                <span class="{{currentTab==0 ? 'active' : ''}}" bindtap="changeState" data-current="0">全部</span>
-                <span class="{{currentTab==1 ? 'active' : ''}}" bindtap="changeState" data-current="1">PP</span>
-                <span class="{{currentTab==2 ? 'active' : ''}}" bindtap="changeState" data-current="2">PE</span>
-                <span class="{{currentTab==3 ? 'active' : ''}}" bindtap="changeState" data-current="3">更多</span>
-            </view> -->
 
 </view>
 
