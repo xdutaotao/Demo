@@ -1,3 +1,4 @@
+// firstPage.js
 //index.js
 //获取应用实例
 var app = getApp()
@@ -10,7 +11,6 @@ var interval;
 var svarName;
 var allStep = 3;
 
-//var WXBizDataCrypt = require('../../utils/RdWXBizDataCrypt.js');
 
 var radius = 40;
 
@@ -19,14 +19,14 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     code: "",
-    encryptedData:"",
+    encryptedData: "",
     iv: "",
     session_key: "",
-    openid:"",
+    openid: "",
     todayStep: ""
   },
 
-  drawBgCircle: function(){
+  drawBgCircle: function () {
     //创建并返回绘图上下文context对象。
     var cxt_arc = wx.createCanvasContext('canvasBgCircle');
     cxt_arc.setLineWidth(8);
@@ -56,7 +56,7 @@ Page({
     var animation_interval = 100, n = 10;
     var animation = function () {
       if (step <= allStep) {
-        endAngle = step * 2 * Math.PI / n+startAngle;
+        endAngle = step * 2 * Math.PI / n + startAngle;
         console.log(endAngle)
         drawArc(startAngle, endAngle);
         step++;
@@ -86,29 +86,24 @@ Page({
         let response = res.data.substring(3)
         that.stepInfoList = JSON.parse(response).stepInfoList;
         console.log(that.stepInfoList)
-        that.todayStep = that.stepInfoList[that.stepInfoList.length-2].step+"";
+        that.todayStep = that.stepInfoList[that.stepInfoList.length - 2].step + "";
         console.log(that.todayStep)
         that.setData({
           todayStep: that.todayStep
         })
-        
+
       }
     })
   },
 
   onLoad: function () {
-    app.editTabBar(); 
-    // wx.navigateTo({
-    //   url: '../firstPage/firstPage'
-    // })
-
     console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
+    app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
-        userInfo:userInfo
+        userInfo: userInfo
       })
     })
 
@@ -118,7 +113,7 @@ Page({
         if (res.code) {
           //发起网络请求
           console.log('获取用户登录成功！' + res.code)
-          that.setData({code: res.code})
+          that.setData({ code: res.code })
 
 
           if (wx.getWeRunData) {
@@ -127,8 +122,8 @@ Page({
               success(res) {
                 console.log('获取计步接口成功！' + res.errMsg)
                 const encryptedData = res.encryptedData
-                that.setData({iv:res.iv})
-                that.setData({encryptedData: encryptedData})
+                that.setData({ iv: res.iv })
+                that.setData({ encryptedData: encryptedData })
                 that.get3rdSession();
                 that.drawBgCircle();
                 that.drawCircle();

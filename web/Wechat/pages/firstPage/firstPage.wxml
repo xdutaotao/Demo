@@ -1,4 +1,4 @@
-<!--index.wxml-->
+<!--firstPage.wxml-->
 <view class="container">
   
   <view  bindtap="bindViewTap" class="userinfo"> 
@@ -19,7 +19,8 @@
     </view>
   </view>
   <view class="usermotto">
-    <text></text>
+    <text>1111</text>
   </view>    
 
 </view>
+
