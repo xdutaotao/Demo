@@ -170,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@null"
+                    android:checked="false"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:drawablePadding="10px"
@@ -182,6 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:button="@null"
+                    android:checked="true"
                     android:drawablePadding="10px"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -338,7 +340,6 @@
                 android:src="@drawable/cancle"
                 android:id="@+id/one_delete"
                 android:visibility="gone"
-                android:layout_marginTop="20px"
                 android:layout_alignParentRight="true"/>
 
             <ImageView

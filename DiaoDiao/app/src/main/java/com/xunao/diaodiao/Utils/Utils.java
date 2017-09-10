@@ -776,7 +776,7 @@ public class Utils {
      * @param
      * @return
      */
-    public static String Bitmap2StrByBase64(String path){
+    public static String Bitmap2StrByBase64(@NonNull String path){
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(path);

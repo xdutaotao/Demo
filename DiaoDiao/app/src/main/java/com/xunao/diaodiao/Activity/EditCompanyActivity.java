@@ -150,7 +150,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         thirdDelete.setOnClickListener(this);
         oneDelete.setOnClickListener(this);
 
-        checkBoxAll.setChecked(true);
         allLayout.setVisibility(View.VISIBLE);
         oneLayout.setVisibility(View.GONE);
 
@@ -310,7 +309,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             }
         }
 
-        if (SELECT_TYPE != 0){
+        if (SELECT_TYPE <= 3){
             if (TextUtils.isEmpty(firstUrl) || TextUtils.isEmpty(secondUrl)
                     || TextUtils.isEmpty(thirdUrl)){
                 ToastUtil.show("不能为空");
@@ -332,11 +331,22 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
         req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
         List<String> remarkList = new ArrayList<>();
-        remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
-        remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
-        remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
+        if (oneLayout.getVisibility() == View.VISIBLE){
+            remarkList.add(Utils.Bitmap2StrByBase64(oneUrl));
+        }else{
+            remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
+            remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
+            remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
+        }
+
         req.setAuthentication(remarkList);
         presenter.fillInfor(this, req);
+    }
+
+    @Override
+    public void getData(LoginResBean bean) {
+        ToastUtil.show("完善成功");
+        finish();
     }
 
     private void getPicPath() {
@@ -371,8 +381,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             case R.id.check_box_all:
                 checkBoxAll.setChecked(isChecked);
                 checkBoxSingle.setChecked(!isChecked);
-                allLayout.setVisibility(View.VISIBLE);
-                oneLayout.setVisibility(View.GONE);
+                allLayout.setVisibility(View.GONE);
+                oneLayout.setVisibility(View.VISIBLE);
 
                 if (TextUtils.isEmpty(firstUrl)) {
                     firstPic.setVisibility(View.VISIBLE);
@@ -409,8 +419,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             case R.id.check_box_single:
                 checkBoxAll.setChecked(!isChecked);
                 checkBoxSingle.setChecked(isChecked);
-                allLayout.setVisibility(View.GONE);
-                oneLayout.setVisibility(View.VISIBLE);
+                allLayout.setVisibility(View.VISIBLE);
+                oneLayout.setVisibility(View.GONE);
 
                 if (TextUtils.isEmpty(oneUrl)) {
                     onePic.setVisibility(View.VISIBLE);
@@ -497,15 +507,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         }
     }
 
-    @Override
-    public void getData(LoginResBean bean) {
-
-    }
-
 
     @Override
     public void onFailure() {
-
+        finish();
     }
 
     @Override

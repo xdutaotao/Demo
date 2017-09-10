@@ -14,8 +14,12 @@ public class FillSkillReq {
     private int district;
     private String address;
     private String experience;
+    private int team_number;
     private String evaluate;
     private String project_type;
+    private String card_front;
+    private String card_back;
+    private String certificate;
     private String verify;
     private String ts;
 
@@ -113,5 +117,37 @@ public class FillSkillReq {
 
     public void setTs(String ts) {
         this.ts = ts;
+    }
+
+    public int getTeam_number() {
+        return team_number;
+    }
+
+    public void setTeam_number(int team_number) {
+        this.team_number = team_number;
+    }
+
+    public String getCard_front() {
+        return card_front;
+    }
+
+    public void setCard_front(String card_front) {
+        this.card_front = card_front;
+    }
+
+    public String getCard_back() {
+        return card_back;
+    }
+
+    public void setCard_back(String card_back) {
+        this.card_back = card_back;
+    }
+
+    public String getCertificate() {
+        return certificate;
+    }
+
+    public void setCertificate(String certificate) {
+        this.certificate = certificate;
     }
 }

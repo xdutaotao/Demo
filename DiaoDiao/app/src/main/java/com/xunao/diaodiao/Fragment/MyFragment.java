@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
+import com.xunao.diaodiao.Activity.EditCompanyActivity;
+import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
 import com.xunao.diaodiao.Activity.MoneyActivity;
@@ -218,7 +220,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 //                    }
 //                }
 
-                LoginActivity.startActivity(getContext());
+                EditSkillActivity.startActivity(getContext());
 
                 break;
 

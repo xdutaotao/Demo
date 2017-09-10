@@ -27,6 +27,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/name"
                     android:hint="张三"/>
 
             </RelativeLayout>
@@ -46,6 +47,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/phone"
                     android:hint="请输入联系电话"/>
 
             </RelativeLayout>
@@ -65,6 +67,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/person_code"
                     android:hint="请输入身份证号"/>
 
             </RelativeLayout>
@@ -84,6 +87,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/address"
                     android:hint="请输入常住地区"/>
 
             </RelativeLayout>
@@ -103,6 +107,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
+                    android:id="@+id/address_detail"
                     android:hint="请输入常住地址"/>
 
             </RelativeLayout>
@@ -123,6 +128,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="60px"
+                    android:id="@+id/year"
                     android:hint="请输入工作经验"/>
 
                 <TextView
@@ -150,6 +156,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:hint="请输入团队人数"
+                    android:id="@+id/person_num"
                     android:layout_marginRight="60px"/>
 
                 <TextView
@@ -173,49 +180,10 @@
                 android:text="承接项目类型"
                 android:layout_margin="50px"/>
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="50px"
-                android:layout_marginBottom="50px">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="水泥回填"
-                    android:textColor="@color/white"
-                    android:background="@drawable/btn_blue_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="空调系统"
-                    android:textColor="@color/gray"
-                    android:background="@drawable/btn_blank_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="新风系统"
-                    android:textColor="@color/gray"
-                    android:background="@drawable/btn_blank_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="水处理"
-                    android:textColor="@color/gray"
-                    android:background="@drawable/btn_blank_bg"
-                    android:padding="20px"
-                    android:layout_margin="20px"/>
-            </LinearLayout>
+                android:id="@+id/recycler_view"/>
 
             <View
                 android:layout_width="match_parent"
@@ -230,34 +198,35 @@
                 android:layout_marginLeft="50px"
                 android:layout_marginTop="50px"/>
 
-            <RelativeLayout
+            <LinearLayout android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:layout_margin="50px">
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_gray_bg"
+                android:layout_margin="40px"
+                android:padding="40px">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="400px"
+                    android:background="@null"
                     android:hint="请输入自我评价"
                     android:id="@+id/information"
-                    android:maxLength="100"
-                    android:textColor="@color/nav_gray"
-                    android:textSize="50px"
-                    android:gravity="start"
-                    android:background="@color/divider" />
+                    android:textColorHint="#D2D2D2"
+                    android:gravity="top"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:background="@color/divider"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/infor_num"
                     android:text="0 / 200"
-                    android:layout_alignParentBottom="true"
                     android:gravity="right|center_vertical"/>
-            </RelativeLayout>
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="30px"
+                android:layout_height="10px"
                 android:background="@color/divider"/>
 
             <TextView
@@ -272,19 +241,50 @@
                 android:orientation="horizontal"
                 android:padding="50px">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/shangchuan_zheng"
-                    android:padding="20px"/>
+                    android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shangchuan_zheng"
+                        android:id="@+id/code"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/code_delete"
+                        android:layout_marginTop="20px"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/shangchuan_fan"
-                    android:padding="20px"/>
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/shangchuan_fan"
+                        android:id="@+id/code_reverse"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/cancle"
+                        android:id="@+id/code_reverse_delete"
+                        android:layout_marginTop="20px"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <View
@@ -299,11 +299,27 @@
                 android:padding="50px"
                 android:text="资质证书(若有则添加)"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="600px"
                 android:layout_height="wrap_content"
-                android:src="@drawable/shangchuan"
-                android:padding="50px"/>
+                android:padding="50px">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/shangchuan"
+                    android:id="@+id/certification"
+                    android:padding="20px"/>
+
+                <ImageView
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:src="@drawable/cancle"
+                    android:id="@+id/certi_delete"
+                    android:layout_marginTop="20px"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -314,7 +330,8 @@
             <Button
                 style="@style/login_btn_style"
                 android:id="@+id/login"
-                android:text="提交审核"/>
+                android:text="提交审核"
+                android:layout_marginBottom="100px"/>
 
         </LinearLayout>
     </ScrollView>

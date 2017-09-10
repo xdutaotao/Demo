@@ -32,6 +32,11 @@ public class EditCompanyPresenter extends BasePresenter<EditCompanyView> {
                     protected void _onNext(LoginResBean token) {
                         getView().getData(token);
                     }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
                 }));
     }
 }
