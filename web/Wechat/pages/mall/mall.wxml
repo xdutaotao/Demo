@@ -1,30 +1,36 @@
 <view class='mainContain'>
 
-  <view class="userinfo">
+     <view class="userinfo">
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </view>
+    </view>  
   
-  <scroll-view scroll-y="true" style="height: 100%;" bindscrolltolower="loadMore">
+  <view class="dividerWidth"></view>
+   <view class="listClass">
+        <text class="rankClass">第{{myRank}}名</text>
+         <image src="{{myAvatar}}" class="headClass" background-size="cover"></image> 
+        <text>{{myName}}</text>
+        <text style='flex:1'></text>
+        <text class="stepCntClass">{{myScore}}分</text>
+      </view>
+      <view class="dividerWidth"></view>
+
   
     <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
       <view class="listClass">
-        <text class="rankClass">{{item.name}}</text>
-        <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
-        <text>Baron</text>
-        <text></text>
-        <text class="stepCntClass">4732 步</text>
+        <text class="rankClass">{{item.m_id}}</text>
+         <image src="{{item.avatar}}" class="headClass" background-size="cover"></image> 
+        <text>{{item.nickname}}</text>
+        <text style='flex:1'></text>
+        <text class="stepCntClass">{{item.all_score}}分</text>
       </view>
       <view class="divider"></view>
     </block>
 
-    <view style='height: 60px; margin: 20px'>
-      <view wx:if="{{hasMore}}" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;">
-      <icon type="waiting" size="25"/><text>玩命的加载中...</text></view>
-      <view wx:else><text>没有更多内容了</text></view>
-    </view>
-  
-  </scroll-view>
+     <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view> 
 
   
 

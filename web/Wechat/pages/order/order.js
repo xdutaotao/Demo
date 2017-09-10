@@ -16,42 +16,64 @@ Page({
 
     motto: 'Hello World',
     userInfo: {},
-    list: [
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" },
-      { name: "1", sex: "2" }
-    ],
+    list: [],
+    pageIndex: 0,
+    isHideLoadMore: true
+  },
+
+  getNotice: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/index.php?g=Portal&m=Index&a=getNotice',
+      data: {
+        page: that.data.pageIndex
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: 'GET',
+      success: function (res) {
+        console.log(res.data)
+        if (that.data.pageIndex == 0){
+          that.setData({
+            list: res.data,
+            isHideLoadMore: true
+          })
+        }else{
+          that.setData({
+            list: that.data.list.concat(res.data),
+            isHideLoadMore: true
+          })
+        }
+
+        if (res.data && res.data.length>0)
+          that.data.pageIndex++;
+      }
+    });
   },
 
   onLoad: function () {
     var that = this;
-
-
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo
-      })
-    }
-
-    // list.push({name:"1",sex:"2"})
-    // list.push({name:'3',sex:'4'})
-    // that.setData({
-    //   list: list
-    // })
-
-    // console.log(list)
-
+    that.getNotice();
   },
 
-  //事件处理函数
-  bindViewTap: function () {
+  onReachBottom: function () {
+    var that = this;
+    console.log("333333")
+
+    this.setData({
+      isHideLoadMore: false,
+    })
+
+    that.getNotice();
+  },
+
+  goToDetail: function(e){
+    let itemIndex = parseInt(e.currentTarget.dataset.index);
+    let id = this.data.list[itemIndex].id;
+    console.log(id);
     wx.navigateTo({
-      url: '../orderDetail/orderDetail'
+      url: '../orderDetail/orderDetail?id='+id
     })
   }
 

@@ -4,7 +4,7 @@
   flex: 2;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .stepstatus {
@@ -24,23 +24,28 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 603px;
-  background-image: url("http://project.youzewang.com/step/main1.jpg");
+  height: 100%;
+  width: 100%;
+  background-image: url("http://lh.2donghua.com/html/asset/img/main1.jpg");
   background-size: 100% 100%;
 } 
 
 .circle-box {
-  text-align: center;
   margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.circle {
+ .circle {
   position: absolute;
-  left: -200px;
-  right: 0;
   top: 25px;
-  margin: auto;
-}
+  left: 50%;
+  margin-left: -120px;
+  width:240px; 
+  height:240px;
+} 
 
 .bottomTab{
   display: flex;
@@ -48,4 +53,8 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center
+}
+
+page{
+  height: 100%!important
 }

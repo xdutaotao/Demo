@@ -1,7 +1,13 @@
 <!--orderDetail.wxml-->
+<import src="../../wxParse/wxParse.wxml"/> 
 
 <view class="noticeDetailContain">
-  <image src="http://project.youzewang.com/step/banner2.jpg" class="noticeClass"></image>
-  <text>1231111111111</text>
+  <image src="http://lh.2donghua.com/html/asset/img/banner2.jpg" class="noticeClass"></image>
+  
+  <view class='noticeDetail'>
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+  </view>
+  
+
 </view>
 

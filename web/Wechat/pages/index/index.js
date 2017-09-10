@@ -5,10 +5,6 @@ Page({
   data: {
   },
 
-  
-
-  
-
   onShow: function(){
     wx.navigateTo({
       url: '../firstPage/firstPage'

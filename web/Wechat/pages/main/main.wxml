@@ -12,21 +12,21 @@
   
   <view class="dividerWidth"></view>
   <view class="listClass">
-      <text class="rankClass">{{myRank}}</text>
-      <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
+      <text class="rankClass">第{{myRank}}名</text>
+      <image src="{{myAvatar}}" class="headClass" background-size="cover"></image>
       <text>{{myName}}</text>
-      <text></text>
-      <text class="stepCntClass">4732 步</text>
+      <text style='flex:1'></text>
+      <text class="stepCntClass">{{myScore}}步</text>
     </view>
     <view class="dividerWidth"></view>
 
   <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
     <view class="listClass">
-      <text class="rankClass">{{item.name}}</text>
-      <image src="{{userInfo.avatarUrl}}" class="headClass" background-size="cover"></image>
-      <text>{{item.sex}}</text>
-      <text></text>
-      <text class="stepCntClass">4732 步</text>
+      <text class="rankClass">{{item.m_id}}</text>
+      <image src="{{item.avatar}}" class="headClass" background-size="cover"></image>
+      <text>{{item.nickname}}</text>
+      <text style='flex:1'></text>
+      <text class="stepCntClass">{{item.all_score}}步</text>
     </view>
     <view class="divider"></view>
   </block>

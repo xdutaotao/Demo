@@ -31,6 +31,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    url: 'http://whjs.2donghua.com/stepCount'
+    url: 'http://lh.2donghua.com'
   }
 })

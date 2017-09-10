@@ -3,7 +3,7 @@
 .contain{
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin: 10px;
 }
 
 .phoneLayout{

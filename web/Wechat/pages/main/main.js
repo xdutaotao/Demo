@@ -1,29 +1,4 @@
-var mainService=require('mainService.js');
-
 const app = getApp()
-
-var myList = [
-  { name: "1", sex: "2" },
-  { name: "1", sex: "2" },
-  { name: "1", sex: "2" },
-  { name: "1", sex: "2" },
-  { name: "4", sex: "20" },
-  { name: "1", sex: "2" },
-  { name: "1", sex: "2" },
-  { name: "1", sex: "2" }
-];
-
-
-var rankList = [
-  { name: "11", sex: "12" },
-  { name: "12", sex: "22" },
-  { name: "13", sex: "32" },
-  { name: "14", sex: "42" },
-  { name: "45", sex: "20" },
-  { name: "16", sex: "52" },
-  { name: "17", sex: "26" },
-  { name: "18", sex: "27" }
-]
 
 Page({
   data: {
@@ -41,34 +16,72 @@ Page({
 
     myRank: "4",
     myName: "20",
-    myStep: "4732",
-    myHead: "",
+    myScore: "4732",
+    myAvatar: "",
+
+    pageIndex: 0,
+    isHideLoadMore: true,
+
+  },
+
+  getDayBillboard: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.url + '/index.php?g=Api&m=CommonApi&a=getDayBillboard',
+      data: {
+        page: that.data.pageIndex
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: 'GET',
+      success: function (res) {
+        console.log(res.data)
+        if (that.data.pageIndex == 0) {
+          that.setData({
+            list: res.data,
+            isHideLoadMore: true
+          })
+
+          res.data.forEach(function (item) {
+            if (item.openid == wx.getStorageSync('openid')) {
+              console.log(item);
+              that.setData({
+                myRank: item.m_id,
+                myName: item.nickname,
+                myScore: item.all_score,
+                myAvatar: item.avatar
+              })
+              
+
+            }
+          })
+
+        } else {
+          that.setData({
+            list: that.data.list.concat(res.data),
+            isHideLoadMore: true
+          })
+        }
+
+        if (res.data && res.data.length > 0)
+          that.data.pageIndex++;
+      }
+    });
 
   },
 
   onLoad:function(){
     var that = this;
-    mainService.getTopInforData(function(res){
-      
-        that.setData({
-          imgUrls:res
-        })
-    }, function(error){
-        console.log(error)
-    });
 
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo
       })
+
+      that.getDayBillboard()
     }
     
-    
-    that.setData({
-      list: myList
-    })
-
-    // console.log(list)
     
   },
 
@@ -78,20 +91,10 @@ Page({
       if( this.data.currentTab === e.target.dataset.current) {  
       return false;  
     } else {  
-      console.log(that.data.currentTab)
-      if (that.data.currentTab == 0){
-        that.setData({
-          currentTab: e.target.dataset.current,
-          list: myList
-        }) 
-
-      }else{
-        that.setData({
-          currentTab: e.target.dataset.current,
-          list: rankList
-        }) 
-      }
-       
+        console.log(e.target.dataset.current)
+       this.setData({
+         currentTab: e.target.dataset.current
+       })
     } 
   },
  
