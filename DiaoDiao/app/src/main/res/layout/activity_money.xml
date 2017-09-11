@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="800px"
+        android:layout_height="600px"
         android:background="@drawable/bg_yue">
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="80px"/>
+            android:layout_marginBottom="40px"/>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

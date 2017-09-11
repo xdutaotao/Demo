@@ -40,7 +40,7 @@ public class BankActivity extends BaseActivity implements BankView {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<BankListRes.BankCard> adapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, BankActivity.class);
@@ -57,10 +57,14 @@ public class BankActivity extends BaseActivity implements BankView {
 
         showToolbarBack(toolBar, titleText, "我的银行卡");
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.money_item) {
+        adapter = new RecyclerArrayAdapter<BankListRes.BankCard>(this, R.layout.bank_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-
+            protected void convert(BaseViewHolder baseViewHolder, BankListRes.BankCard s) {
+                baseViewHolder.setText(R.id.bank_name, s.getCard_name());
+                baseViewHolder.setText(R.id.bank_type, s.getCard_type());
+                int length = s.getCard().length();
+                String cardFoot = s.getCard().substring(length-4, length);
+                baseViewHolder.setText(R.id.bank_foot, cardFoot);
             }
         };
 
@@ -84,13 +88,13 @@ public class BankActivity extends BaseActivity implements BankView {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        adapter.addAll(list);
-
         presenter.getBankList(this);
+    }
+
+    @Override
+    public void getData(BankListRes data) {
+        adapter.clear();
+        adapter.addAll(data.getBankCard());
     }
 
 
@@ -105,8 +109,5 @@ public class BankActivity extends BaseActivity implements BankView {
         presenter.detachView();
     }
 
-    @Override
-    public void getData(BankListRes data) {
 
-    }
 }

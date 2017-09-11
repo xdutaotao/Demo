@@ -16,7 +16,8 @@
 
         <EditText
             style="@style/edit_personal_edit"
-            android:hint="请输入开户人姓名"/>
+            android:hint="请输入开户人姓名"
+            android:id="@+id/name"/>
 
     </RelativeLayout>
 
@@ -27,7 +28,8 @@
         android:background="@color/divider"/>
 
     <RelativeLayout
-        style="@style/edit_personal_layout">
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_bank">
 
         <TextView
             style="@style/edit_personal_text"
@@ -57,6 +59,7 @@
 
         <EditText
             style="@style/edit_personal_edit"
+            android:id="@+id/card"
             android:hint="请输入银行卡号"/>
 
     </RelativeLayout>
@@ -76,6 +79,8 @@
 
         <EditText
             style="@style/edit_personal_edit"
+            android:id="@+id/phone"
+            android:inputType="phone"
             android:hint="请输入银行预留手机号"/>
 
     </RelativeLayout>
@@ -98,7 +103,9 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="300px"
+            android:layout_marginRight="260px"
+            android:background="@null"
+            android:id="@+id/phone_code"
             android:hint="请输入验证码"/>
 
         <TextView
@@ -121,6 +128,7 @@
 
     <Button
         style="@style/login_btn_style"
-        android:id="@+id/login"
+        android:id="@+id/post"
+        android:layout_marginTop="100px"
         android:text="提交"/>
 </LinearLayout>

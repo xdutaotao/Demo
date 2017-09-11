@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -63,6 +64,11 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
             protected void convert(BaseViewHolder baseViewHolder, GetMoneyRes.MoneyDetail s) {
                 baseViewHolder.setText(R.id.type, s.getType());
                 baseViewHolder.setText(R.id.change_money, s.getChange());
+                if (TextUtils.equals(s.getChange().subSequence(0, 1), "+")){
+                    baseViewHolder.setTextColorRes(R.id.change_money, R.color.bank_add);
+                }else{
+                    baseViewHolder.setTextColorRes(R.id.change_money, R.color.colorAccent);
+                }
                 baseViewHolder.setText(R.id.time, s.getTime());
             }
         };
@@ -70,6 +76,10 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+
+        getMoney.setOnClickListener(v -> {
+            GetMoneyActivity.startActivity(MoneyActivity.this, money.getText().toString());
+        });
         presenter.getMoney(this);
     }
 

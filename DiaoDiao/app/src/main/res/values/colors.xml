@@ -19,6 +19,8 @@
 
     <color name="edit_hint_color">#CBCACB</color>
 
+    <color name="bank_add">#7193F4</color>
+
     <!-- 全局使用的颜色 -->
     <color name="titlebar_bg_color">#3C3C3C</color>
     <!-- 这是Login相关界面中的颜色 -->

@@ -182,6 +182,7 @@
         <activity android:name=".Activity.SignDetailActivity"/>
         <activity android:name=".Activity.ApplyActivity"/>
         <activity android:name=".Activity.ApplyDetailActivity"/>
+        <activity android:name=".Activity.GetMoneyActivity"/>
 
     </application>
 

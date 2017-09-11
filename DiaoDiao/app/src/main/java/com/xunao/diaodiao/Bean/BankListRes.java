@@ -1,11 +1,23 @@
 package com.xunao.diaodiao.Bean;
 
+import java.util.List;
+
 /**
  * Description:
  * Created by GUZHENFU on 2017/9/11 10:19.
  */
 
 public class BankListRes {
+    private List<BankCard> bankCard;
+
+    public List<BankCard> getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(List<BankCard> bankCard) {
+        this.bankCard = bankCard;
+    }
+
     public static class BankCard{
         private String card;
         private String card_name;

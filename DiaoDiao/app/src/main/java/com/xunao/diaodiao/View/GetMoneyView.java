@@ -5,6 +5,6 @@ import com.xunao.diaodiao.View.BaseView;
 /**
  * Created by
  */
-public interface AddBankView extends BaseView {
+public interface GetMoneyView extends BaseView {
     void getData(String s);
 }

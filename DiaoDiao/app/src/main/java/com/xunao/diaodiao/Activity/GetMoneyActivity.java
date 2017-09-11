@@ -18,12 +18,13 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.xunao.diaodiao.Bean.BindBankReq;
-import com.xunao.diaodiao.Present.AddBankPresenter;
+import com.xunao.diaodiao.Bean.GetCashRes;
+import com.xunao.diaodiao.Present.GetMoneyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.View.AddBankView;
+import com.xunao.diaodiao.View.GetMoneyView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,97 +33,88 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+
 /**
  * create by
  */
-public class AddBankActivity extends BaseActivity implements AddBankView, View.OnClickListener {
+public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View.OnClickListener {
 
     @Inject
-    AddBankPresenter presenter;
+    GetMoneyPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.name)
-    EditText name;
-    @BindView(R.id.select_bank)
-    RelativeLayout selectBank;
-    @BindView(R.id.card)
-    EditText card;
-    @BindView(R.id.phone)
-    EditText phone;
-    @BindView(R.id.phone_code)
-    EditText phoneCode;
-    @BindView(R.id.post)
-    Button post;
+    @BindView(R.id.choose_bank)
+    RelativeLayout chooseBank;
+    @BindView(R.id.input_money)
+    EditText inputMoney;
+    @BindView(R.id.get_all_money)
+    TextView getAllMoney;
+    @BindView(R.id.money_user)
+    TextView moneyUser;
+    @BindView(R.id.get_money)
+    Button getMoney;
 
     private RecyclerArrayAdapter<String> adapter;
     private List<String> selectNames = new ArrayList<>();
 
-    public static void startActivity(Context context) {
-        Intent intent = new Intent(context, AddBankActivity.class);
+    public static void startActivity(Context context, String allMoney) {
+        Intent intent = new Intent(context, GetMoneyActivity.class);
+        intent.putExtra(INTENT_KEY, allMoney);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_bank);
+        setContentView(R.layout.activity_get_money);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "绑定银行卡");
-        selectBank.setOnClickListener(this);
-        post.setOnClickListener(this);
+        showToolbarBack(toolBar, titleText, "提现");
+
+        chooseBank.setOnClickListener(this);
+        getAllMoney.setOnClickListener(this);
+        getMoney.setOnClickListener(this);
+
+        if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))){
+            moneyUser.setText("可提现金额 "+
+            new DecimalFormat("#.00").format(Float.valueOf(getIntent().getStringExtra(INTENT_KEY)))+"元");
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.select_bank:
+            case R.id.choose_bank:
                 showBottomSheetDialog();
                 break;
 
-            case R.id.post:
-                postData();
+            case R.id.get_all_money:
+                postMoney(getIntent().getStringExtra(INTENT_KEY));
+                break;
+
+            case R.id.get_money:
+                postMoney(inputMoney.getText().toString());
                 break;
         }
     }
 
-    private void postData(){
-        if (TextUtils.isEmpty(name.getText().toString())){
-            ToastUtil.show("不能为空");
-            return;
-        }
+    private void postMoney(String money){
+        GetCashRes res = new GetCashRes();
+        res.setCard(money);
+        res.setCard("1111111111111");
+        presenter.applyCash(this, res);
 
-        if (TextUtils.isEmpty(phone.getText().toString())){
-            ToastUtil.show("不能为空");
-            return;
-        }
-
-        if (TextUtils.isEmpty(card.getText().toString())){
-            ToastUtil.show("不能为空");
-            return;
-        }
-
-        if (TextUtils.isEmpty(phoneCode.getText().toString())){
-            ToastUtil.show("不能为空");
-            return;
-        }
-
-
-        BindBankReq req = new BindBankReq();
-        req.setName(name.getText().toString());
-        req.setMobile(phone.getText().toString());
-        req.setCard(card.getText().toString());
-        req.setCode(phoneCode.getText().toString());
-        req.setIdentity_card("");
-        req.setTrade_no("");
-        req.setType(101);
-        presenter.bindingCard(this, req);
     }
 
+    @Override
+    public void getData(String s) {
+        finish();
+    }
 
     private void showBottomSheetDialog(){
 
@@ -169,11 +161,6 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         dialog.setContentView(view);
 
         dialog.show();
-    }
-
-    @Override
-    public void getData(String s) {
-
     }
 
 

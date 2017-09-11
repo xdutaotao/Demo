@@ -98,6 +98,12 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<BankListRes>> getBankList(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> applyCash(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> bindingCard(@Body RequestBody body);
+
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);

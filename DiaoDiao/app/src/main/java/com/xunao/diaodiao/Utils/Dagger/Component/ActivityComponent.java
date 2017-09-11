@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Activity.EditPersonalActivity;
 import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
+import com.xunao.diaodiao.Activity.GetMoneyActivity;
 import com.xunao.diaodiao.Activity.HelpDetailActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
@@ -128,4 +129,5 @@ public interface ActivityComponent {
     void inject(TabFragment fragment);
     void inject(HasRateFragment fragment);
     void inject(NoRateFragment fragment);
+    void inject(GetMoneyActivity activity);
 }

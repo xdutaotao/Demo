@@ -7,10 +7,12 @@ import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
+import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.FreindBean;
+import com.xunao.diaodiao.Bean.GetCashRes;
 import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
@@ -474,6 +476,59 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getBankList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 银行卡列表
+     * @return
+     */
+    public Observable<String> applyCash(GetCashRes req){
+        String rateKey = "applyCash";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getCard()).append(req.getCash())
+                .append(type).append(User.getInstance().getUserId())
+                .append("security");
+
+
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().applyCash(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+    /**
+     * 银行卡列表
+     * @return
+     */
+    public Observable<String> bindingCard(BindBankReq req){
+        String rateKey = "bindingCard";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getCard()).append(req.getCard_type())
+                .append(req.getCode()).append(req.getIdentity_card())
+                .append(req.getMobile()).append(req.getName())
+                .append(req.getTrade_no()).append(req.getType())
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().bindingCard(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

@@ -61,14 +61,14 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyFavoriteItem s) {
                 if (TextUtils.equals(s.getClasses(), "项目")){
-                    //baseViewHolder.setBackgroundRes(R.id.lLayout_bg, R.drawable.bg_xiangmu);
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_xiangmu);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
                     baseViewHolder.setText(R.id.price, "￥ "+s.getFee());
                     baseViewHolder.setText(R.id.type, s.getType());
                 }else if (TextUtils.equals(s.getClasses(), "零工")){
-                    //baseViewHolder.setBackgroundRes(R.id.lLayout_bg, R.drawable.bg_lingong);
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_lingong);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
@@ -76,7 +76,7 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView {
                     baseViewHolder.setText(R.id.price, "￥ "+s.getFee() + "/天");
                     baseViewHolder.setVisible(R.id.type, false);
                 }else{
-                    //baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_jianli);
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_jianli);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
