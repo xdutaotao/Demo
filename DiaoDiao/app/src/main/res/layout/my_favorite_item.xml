@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="560px"
+    android:id="@+id/bg"
     android:background="@drawable/bg_xiangmu">
 
     <RelativeLayout
@@ -17,12 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="徐汇区xx小区地暖项目,速度接单"
+            android:id="@+id/title"
             android:textSize="50px"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_shoucang02"
+            android:id="@+id/shou_cang"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 
@@ -31,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="上海市徐汇区 - 上海暖通公司"
+        android:id="@+id/address"
         android:layout_marginLeft="150px"
         android:layout_marginBottom="50px"/>
 
@@ -52,12 +56,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/price_text"
             android:text="价格"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
+            android:id="@+id/price"
             android:textSize="50px"
             android:text="￥12000"/>
 
@@ -65,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="采暖系统"
+            android:id="@+id/type"
             android:textColor="@color/accept_btn_pressed"
             android:layout_weight="1"
             android:gravity="right"/>

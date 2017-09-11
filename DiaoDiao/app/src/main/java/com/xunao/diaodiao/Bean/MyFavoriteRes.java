@@ -14,6 +14,45 @@ public class MyFavoriteRes {
     private List<Maintenance> maintenance;
     private List<Mutual> mutual;
 
+    public List<Project> getProject() {
+        return project;
+    }
+
+    public void setProject(List<Project> project) {
+        this.project = project;
+    }
+
+    public List<Supervisor> getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(List<Supervisor> supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public List<Odd> getOdd() {
+        return odd;
+    }
+
+    public void setOdd(List<Odd> odd) {
+        this.odd = odd;
+    }
+
+    public List<Maintenance> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<Maintenance> maintenance) {
+        this.maintenance = maintenance;
+    }
+
+    public List<Mutual> getMutual() {
+        return mutual;
+    }
+
+    public void setMutual(List<Mutual> mutual) {
+        this.mutual = mutual;
+    }
 
     public static class Project {
         private int id;
@@ -295,7 +334,7 @@ public class MyFavoriteRes {
         private String title;
         private String classes;
         private String address;
-        private String collect_id;
+        private int collect_id;
 
         public int getId() {
             return id;
@@ -329,11 +368,11 @@ public class MyFavoriteRes {
             this.address = address;
         }
 
-        public String getCollect_id() {
+        public int getCollect_id() {
             return collect_id;
         }
 
-        public void setCollect_id(String collect_id) {
+        public void setCollect_id(int collect_id) {
             this.collect_id = collect_id;
         }
     }
