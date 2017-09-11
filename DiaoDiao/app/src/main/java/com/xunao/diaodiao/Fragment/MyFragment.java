@@ -136,7 +136,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             moneyText.setText("- / -");
             bankText.setText("- / -");
         }
-        presenter.getInfo(getContext());
+
+        if(!TextUtils.isEmpty(User.getInstance().getUserId()))
+            presenter.getInfo();
     }
 
     @Override
@@ -147,7 +149,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     @Override
     public void getData(MyBean data) {
-        name.setText(data.getName());
+        //name.setText(data.getName());
         Glide.with(this).load(data.getHead_img()).placeholder(R.drawable.head_icon_girl).into(headIcon);
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");
@@ -190,7 +192,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.my_favorite:
-                MyFavoriteActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                    LoginActivity.startActivity(getContext());
+                } else {
+                    MyFavoriteActivity.startActivity(getActivity());
+                }
+
                 break;
 
             case R.id.my_rating:
@@ -250,7 +257,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.bank:
-                BankActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                    LoginActivity.startActivity(getContext());
+                } else {
+                    BankActivity.startActivity(getActivity());
+                }
+
                 break;
 
             case R.id.name:

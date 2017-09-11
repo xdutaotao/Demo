@@ -20,9 +20,9 @@ public class MyPresenter extends BasePresenter<MyView> {
     MyPresenter() {
     }
 
-    public void getInfo(Context context){
+    public void getInfo(){
         mCompositeSubscription.add(model.getInfo()
-                .subscribe(new RxSubUtils<MyBean>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<MyBean>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyBean token) {
                         getView().getData(token);

@@ -1,12 +1,14 @@
 package com.xunao.diaodiao.Common;
 
 
+import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
+import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
@@ -89,6 +91,12 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<MyBean>> getUserInfo(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyFavoriteRes>> getCollectList(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<BankListRes>> getBankList(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

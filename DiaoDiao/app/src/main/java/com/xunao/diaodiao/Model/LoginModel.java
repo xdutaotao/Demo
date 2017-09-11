@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
@@ -17,6 +18,7 @@ import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
+import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
 import com.xunao.diaodiao.Bean.RateDetailRes;
@@ -210,11 +212,6 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().forgetPwd(setBody(actionName, time, registerBean))
                 .compose(RxUtils.handleResult());
     }
-
-
-
-
-
 
     /**
      * 选择角色
@@ -429,6 +426,54 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getUserInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 收藏列表
+     * @return
+     */
+    public Observable<MyFavoriteRes> getCollectList(){
+        String rateKey = "collectList";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getCollectList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 银行卡列表
+     * @return
+     */
+    public Observable<BankListRes> getBankList(){
+        String rateKey = "bankList";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getBankList(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

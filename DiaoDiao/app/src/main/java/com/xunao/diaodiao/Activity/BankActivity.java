@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Present.BankPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.BankView;
@@ -88,6 +89,8 @@ public class BankActivity extends BaseActivity implements BankView {
         list.add("2");
         list.add("3");
         adapter.addAll(list);
+
+        presenter.getBankList(this);
     }
 
 
@@ -102,4 +105,8 @@ public class BankActivity extends BaseActivity implements BankView {
         presenter.detachView();
     }
 
+    @Override
+    public void getData(BankListRes data) {
+
+    }
 }

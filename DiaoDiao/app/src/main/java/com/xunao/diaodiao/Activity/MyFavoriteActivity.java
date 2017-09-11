@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Present.MyFavoritePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.MyFavoriteView;
@@ -69,6 +70,13 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView {
         list.add("1");
         list.add("1");
         adapter.addAll(list);
+
+        presenter.getCollectList(this);
+    }
+
+    @Override
+    public void getData(MyFavoriteRes data) {
+
     }
 
 
@@ -82,5 +90,6 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView {
         super.onDestroy();
         presenter.detachView();
     }
+
 
 }
