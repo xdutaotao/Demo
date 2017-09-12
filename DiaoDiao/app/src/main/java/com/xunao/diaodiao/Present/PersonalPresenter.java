@@ -2,6 +2,8 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -24,9 +26,9 @@ public class PersonalPresenter extends BasePresenter<PersonalView> {
 
     public void changeHeadIcon(Context context, String path){
         mCompositeSubscription.add(model.changeHeadIcon(path)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<HeadIconRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(HeadIconRes token) {
                         getView().getData(token);
                     }
 
@@ -37,12 +39,12 @@ public class PersonalPresenter extends BasePresenter<PersonalView> {
                 }));
     }
 
-    public void changeSex(Context context, int sex){
-        mCompositeSubscription.add(model.changeSex(sex)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+    public void getPersonalInfo(Context context){
+        mCompositeSubscription.add(model.getPersonalInfo()
+                .subscribe(new RxSubUtils<PersonalRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
-                        getView().getData(token);
+                    protected void _onNext(PersonalRes token) {
+                        getView().getPersonalData(token);
                     }
 
                     @Override

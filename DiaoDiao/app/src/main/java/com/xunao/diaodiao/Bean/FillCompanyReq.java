@@ -14,7 +14,7 @@ public class FillCompanyReq {
     private int city;
     private int district;
     private String address;
-    private int years;
+    private long years;
     private String tel;
     private String contact;
     private String contact_mobile;
@@ -104,11 +104,11 @@ public class FillCompanyReq {
         this.verify = verify;
     }
 
-    public int getYears() {
+    public long getYears() {
         return years;
     }
 
-    public void setYears(int years) {
+    public void setYears(long years) {
         this.years = years;
     }
 

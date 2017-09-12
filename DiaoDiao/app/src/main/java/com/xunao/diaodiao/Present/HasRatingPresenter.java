@@ -25,11 +25,11 @@ public class HasRatingPresenter extends BasePresenter<HasRatingView> {
 
     /**
      * 评论列表
-     * @param context
+     * @param
      */
-    public void getHasRating(Context context){
-        mCompositeSubscription.add(model.getHasRating()
-                .subscribe(new RxSubUtils<HasRateRes>(mCompositeSubscription,context) {
+    public void getHasRating(int page){
+        mCompositeSubscription.add(model.getHasRating(page)
+                .subscribe(new RxSubUtils<HasRateRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(HasRateRes token) {
                         getView().getData(token);

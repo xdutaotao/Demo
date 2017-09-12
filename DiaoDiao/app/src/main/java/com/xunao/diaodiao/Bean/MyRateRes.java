@@ -9,9 +9,6 @@ import java.util.List;
 
 public class MyRateRes {
     private List<ProjBean> project;
-    private List<ProjBean> supervisor;
-    private List<ProjBean> maintenance;
-    private List<ProjBean> odd;
 
     public List<ProjBean> getProject() {
         return project;
@@ -21,37 +18,15 @@ public class MyRateRes {
         this.project = project;
     }
 
-    public List<ProjBean> getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(List<ProjBean> supervisor) {
-        this.supervisor = supervisor;
-    }
-
-    public List<ProjBean> getMaintenance() {
-        return maintenance;
-    }
-
-    public void setMaintenance(List<ProjBean> maintenance) {
-        this.maintenance = maintenance;
-    }
-
-    public List<ProjBean> getOdd() {
-        return odd;
-    }
-
-    public void setOdd(List<ProjBean> odd) {
-        this.odd = odd;
-    }
-
     public static class ProjBean{
         private String title;
         private String address;
         private String type;
         private String price;
         private int project_id;
-        private int evaluate_type;
+        private String total_day;
+        private String daily_wage;
+        private int project_type;
 
         public String getTitle() {
             return title;
@@ -93,12 +68,28 @@ public class MyRateRes {
             this.project_id = project_id;
         }
 
-        public int getEvaluate_type() {
-            return evaluate_type;
+        public String getTotal_day() {
+            return total_day;
         }
 
-        public void setEvaluate_type(int evaluate_type) {
-            this.evaluate_type = evaluate_type;
+        public void setTotal_day(String total_day) {
+            this.total_day = total_day;
+        }
+
+        public String getDaily_wage() {
+            return daily_wage;
+        }
+
+        public void setDaily_wage(String daily_wage) {
+            this.daily_wage = daily_wage;
+        }
+
+        public int getProject_type() {
+            return project_type;
+        }
+
+        public void setProject_type(int project_type) {
+            this.project_type = project_type;
         }
     }
 }

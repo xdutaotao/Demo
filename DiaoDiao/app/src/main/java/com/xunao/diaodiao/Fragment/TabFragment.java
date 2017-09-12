@@ -88,7 +88,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
 
             type = 3;
             recyclerView.setAdapter(adapterMyRating);
-            presenter.getRating(getContext());
+            presenter.getRating(0);
 
         }else if (TextUtils.equals("对方申诉", mParam1)){
             adapterRating = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.record_item) {
@@ -103,7 +103,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
 
             type = 4;
             recyclerView.setAdapter(adapterHasRecommand);
-            presenter.getRating(getContext());
+            presenter.getRating(0);
 
         }else if (TextUtils.equals("已评价", mParam1)){
             adapterHasRecommand = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_already_rating_item) {
@@ -118,7 +118,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
 
             type = 2;
             recyclerView.setAdapter(adapterHasRecommand);
-            presenter.getRating(getContext());
+            presenter.getRating(0);
         }else if (TextUtils.equals("待评价", mParam1)){
             adapterNoRecommand = new RecyclerArrayAdapter<MyRateRes.ProjBean>(getContext(), R.layout.my_rating_item) {
                 @Override
@@ -126,14 +126,14 @@ public class TabFragment extends BaseFragment implements MyRatingView {
                     baseViewHolder.setText(R.id.rating_name, s.getTitle());
                     baseViewHolder.setText(R.id.address, s.getAddress());
                     baseViewHolder.setText(R.id.price, s.getPrice());
-                    if (s.getEvaluate_type() == 1){
-                        //发单人
-                        baseViewHolder.setText(R.id.project_detail, "项目进度");
-                        baseViewHolder.setText(R.id.price_detail, "价格");
-                    }else{
-                        baseViewHolder.setText(R.id.project_detail, "维保进度");
-                        baseViewHolder.setText(R.id.price_detail, "上门费");
-                    }
+//                    if (s.getEvaluate_type() == 1){
+//                        //发单人
+//                        baseViewHolder.setText(R.id.project_detail, "项目进度");
+//                        baseViewHolder.setText(R.id.price_detail, "价格");
+//                    }else{
+//                        baseViewHolder.setText(R.id.project_detail, "维保进度");
+//                        baseViewHolder.setText(R.id.price_detail, "上门费");
+//                    }
 
                 }
             };
@@ -143,7 +143,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
             });
 
             type = 1;
-            presenter.getRating(getContext());
+            presenter.getRating(0);
             recyclerView.setAdapter(adapterNoRecommand);
         }
 

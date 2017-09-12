@@ -17,13 +17,17 @@ import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
+import com.xunao.diaodiao.Bean.HeadIconReq;
+import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
 import com.xunao.diaodiao.Bean.RateDetailRes;
+import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
@@ -248,16 +252,20 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<LoginResBean> fillInfor(FillCompanyReq req){
+        String useid = User.getInstance().getUserId();
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("completeCompany");
-        sb.append(time+"").append(req.getAddress()).append(req.getCity())
+        sb.append(time+"").append(req.getAddress()).append(req.getCard_back())
+                .append(req.getCard_front()).append(req.getCity())
                 .append(req.getContact()).append(req.getContact_mobile())
+                .append(req.getContact_card())
                 .append(req.getDistrict()).append(req.getName())
                 .append(req.getProvince()).append(req.getTel())
-                .append(req.getUserid())
+                .append(useid).append(req.getYears())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));
+        req.setUserid(Integer.valueOf(useid));
 
 
         return config.getRetrofitService().fillInfor(setBody("completeCompany", time, req))
@@ -338,19 +346,20 @@ public class LoginModel extends BaseModel {
      * 未评价列表
      * @return
      */
-    public Observable<MyRateRes> getRating(){
+    public Observable<MyRateRes> getRating(int page){
         String rateKey = "notEvaluated";
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(type+"")
+        sb.append(time+"").append(page).append(type+"")
                 .append(User.getInstance().getUserId())
                 .append("security");
 
-        GetMoneyReq req = new GetMoneyReq();
+        RateReq req = new RateReq();
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
+        req.setPage(page);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -363,19 +372,20 @@ public class LoginModel extends BaseModel {
      * 已评价列表
      * @return
      */
-    public Observable<HasRateRes> getHasRating(){
+    public Observable<HasRateRes> getHasRating(int page){
         String rateKey = "hasEvaluated";
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(type+"")
+        sb.append(time+"").append(page).append(type+"")
                 .append(User.getInstance().getUserId())
                 .append("security");
 
-        GetMoneyReq req = new GetMoneyReq();
+        RateReq req = new RateReq();
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
+        req.setPage(page);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -534,6 +544,52 @@ public class LoginModel extends BaseModel {
 
 
     /**
+     * 更改个人头像
+     */
+    public Observable<HeadIconRes> changeHeadIcon(String path){
+        String rateKey = "headInfo";
+
+        long time = System.currentTimeMillis()/1000;
+        String base = Utils.Bitmap2StrByBase64(path);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(base)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        HeadIconReq req = new HeadIconReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setHead_img(base);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().changeHeadIcon(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+
+    }
+
+    public Observable<PersonalRes> getPersonalInfo(){
+        String rateKey = "personalInfo";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getPersonalInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+
+    }
+
+
+    /**
      * 修改密码
      * @param phone
      * @return
@@ -567,46 +623,6 @@ public class LoginModel extends BaseModel {
                     }else{
                         return Observable.error(new RxUtils.ServerException("操作失败")) ;
                     }
-                })
-                .map(userInfo -> {
-                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
-                    User.getInstance().setUserInfo(userInfoString);
-                    return "操作成功";
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
-    }
-
-
-    /**
-     * 更改个人头像
-     */
-    public Observable<String> changeHeadIcon(String path){
-        File file = new File(path);
-        RequestBody body = RequestBody.create(MediaType.parse("image/jpg"), file);
-        //MultipartBody.Part part = MultipartBody.Part.createFormData("photo", path.substring(path.lastIndexOf("/")+1), body);
-        Map<String, RequestBody> map = new HashMap<>();
-        map.put("photo\"; filename=\""+file.getName(), body);
-        map.put("token", RequestBody.create(MediaType.parse("application/json"), User.getInstance().getUserId()));
-
-        return config.getRetrofitService().changeHeadIcon(map)
-                .flatMap( responseBody -> {
-                    try {
-                        String s = responseBody.string();
-                        BaseResponseBean bean = JsonUtils.getInstance().JsonToUpdateFile(s);
-                        if (TextUtils.equals(bean.getMsg(), "200")){
-                            return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
-                                    .compose(RxUtils.handleResultNoThread());
-                        }else if(TextUtils.equals(bean.getResult(), "请登录!")){
-                            return Observable.error(new RxUtils.ServerException("请登录")) ;
-                        }else if(TextUtils.equals(bean.getMsg(), "501")){
-                            return Observable.error(new RxUtils.ServerException("上传文件太大")) ;
-                        }else{
-                            return Observable.error(new RxUtils.ServerException("操作失败")) ;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return Observable.error(new RxUtils.ServerException("操作失败")) ;
                 })
                 .map(userInfo -> {
                     String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);

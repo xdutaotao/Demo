@@ -23,6 +23,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditCompanyPresenter;
 import com.xunao.diaodiao.R;
@@ -38,6 +39,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -125,6 +128,12 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         context.startActivity(intent);
     }
 
+    public static void startActivity(Context context, PersonalRes.CompanyInfo companyInfo) {
+        Intent intent = new Intent(context, EditCompanyActivity.class);
+        intent.putExtra(INTENT_KEY, companyInfo);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,10 +144,107 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         showToolbarBack(toolBar, titleText, "完善资料");
 
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+            PersonalRes.CompanyInfo info = (PersonalRes.CompanyInfo) getIntent().getSerializableExtra(INTENT_KEY);
+            name.setText(info.getName());
+            contactPhone.setText(info.getContact_mobile());
+            contactCode.setText(info.getContact_card());
+            address.setText(info.getAddress());
+            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+            contactName.setText(info.getContact());
+            phone.setText(info.getTel());
+
+            codeUrl = info.getCard_front();
+            if (!TextUtils.isEmpty(codeUrl)){
+                Glide.with(this).load(info.getCard_front()).placeholder(R.drawable.shangchuan_zheng).into(code);
+                codeDelete.setVisibility(View.VISIBLE);
+            }else{
+                codeDelete.setVisibility(View.GONE);
+            }
+
+            codeReverseUrl = info.getCard_back();
+            if (!TextUtils.isEmpty(codeReverseUrl)){
+                Glide.with(this).load(info.getCard_front()).placeholder(R.drawable.shangchuan_fan).into(codeReverse);
+                codeReverseDelete.setVisibility(View.VISIBLE);
+            }else{
+                codeReverseDelete.setVisibility(View.GONE);
+            }
+
+
+            if (info.getPictures() != null && info.getPictures().size() > 0){
+                oneLayout.setVisibility(View.GONE);
+                allLayout.setVisibility(View.VISIBLE);
+                checkBoxAll.setChecked(false);
+                checkBoxSingle.setChecked(true);
+
+                firstUrl = info.getPictures().get(0);
+                secondUrl = info.getPictures().get(1);
+                thirdUrl = info.getPictures().get(2);
+                if (!TextUtils.isEmpty(firstUrl)){
+                    Glide.with(this).load(firstUrl).into(firstIv);
+                    firstDelete.setVisibility(View.VISIBLE);
+                    firstPic.setVisibility(View.GONE);
+                    firstIv.setVisibility(View.VISIBLE);
+                }else{
+                    firstPic.setVisibility(View.VISIBLE);
+                    firstDelete.setVisibility(View.GONE);
+                    firstIv.setVisibility(View.GONE);
+                }
+
+                if (!TextUtils.isEmpty(secondUrl)){
+                    Glide.with(this).load(secondUrl).into(secondIv);
+                    secondIv.setVisibility(View.VISIBLE);
+                    secondDelete.setVisibility(View.VISIBLE);
+                    secondPic.setVisibility(View.GONE);
+                }else{
+                    secondIv.setVisibility(View.GONE);
+                    secondDelete.setVisibility(View.GONE);
+                    secondPic.setVisibility(View.VISIBLE);
+                }
+
+                if (!TextUtils.isEmpty(thirdUrl)){
+                    Glide.with(this).load(thirdUrl).into(thirdIv);
+                    thirdIv.setVisibility(View.VISIBLE);
+                    thirdPic.setVisibility(View.GONE);
+                    thirdDelete.setVisibility(View.VISIBLE);
+                }else{
+                    thirdIv.setVisibility(View.GONE);
+                    thirdPic.setVisibility(View.VISIBLE);
+                    thirdDelete.setVisibility(View.GONE);
+                }
+
+
+            }else{
+                oneLayout.setVisibility(View.VISIBLE);
+                allLayout.setVisibility(View.GONE);
+                oneUrl = info.getImage();
+                if (!TextUtils.isEmpty(oneUrl)){
+                    Glide.with(this).load(oneUrl).into(oneIv);
+                    onePic.setVisibility(View.GONE);
+                    oneIv.setVisibility(View.VISIBLE);
+                    oneDelete.setVisibility(View.VISIBLE);
+                }else{
+                    onePic.setVisibility(View.VISIBLE);
+                    oneIv.setVisibility(View.GONE);
+                    oneDelete.setVisibility(View.GONE);
+                }
+
+                checkBoxAll.setChecked(true);
+                checkBoxSingle.setChecked(false);
+                SELECT_TYPE = 0;
+            }
+
+        }else{
+            allLayout.setVisibility(View.VISIBLE);
+            oneLayout.setVisibility(View.GONE);
+
+            codeDelete.setVisibility(View.GONE);
+            codeReverseDelete.setVisibility(View.GONE);
+            checkBoxSingle.setChecked(true);
+        }
+
         checkBoxAll.setOnCheckedChangeListener(this);
         checkBoxSingle.setOnCheckedChangeListener(this);
-
-        initImagePicker();
 
         firstPic.setOnClickListener(this);
         secondPic.setOnClickListener(this);
@@ -150,27 +256,13 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         thirdDelete.setOnClickListener(this);
         oneDelete.setOnClickListener(this);
 
-        allLayout.setVisibility(View.VISIBLE);
-        oneLayout.setVisibility(View.GONE);
 
-        codeDelete.setVisibility(View.GONE);
-        codeReverseDelete.setVisibility(View.GONE);
         code.setOnClickListener(this);
         codeReverse.setOnClickListener(this);
         codeDelete.setOnClickListener(this);
         codeReverseDelete.setOnClickListener(this);
 
         login.setOnClickListener(this);
-    }
-
-    private void initImagePicker() {
-        ImagePicker imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());
-        imagePicker.setCrop(false);
-        imagePicker.setSaveRectangle(true);
-        imagePicker.setStyle(CropImageView.Style.RECTANGLE);
-        imagePicker.setMultiMode(false);
-        imagePicker.setShowCamera(false);
     }
 
     @Override
@@ -340,6 +432,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         }
 
         req.setAuthentication(remarkList);
+        req.setYears(System.currentTimeMillis());
         presenter.fillInfor(this, req);
     }
 

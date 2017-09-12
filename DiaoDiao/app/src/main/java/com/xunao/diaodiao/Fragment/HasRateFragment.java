@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
@@ -31,18 +33,17 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HasRateFragment extends BaseFragment implements HasRatingView {
+public class HasRateFragment extends BaseFragment implements HasRatingView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     private String mParam1;
 
     private RecyclerArrayAdapter<HasRateRes.ProjBean> adapter;
 
     @Inject
     HasRatingPresenter presenter;
-
-    private int type = 2;
+    private int page = 0;
 
     public static HasRateFragment newInstance(String param1) {
         HasRateFragment fragment = new HasRateFragment();
@@ -69,24 +70,23 @@ public class HasRateFragment extends BaseFragment implements HasRatingView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(manager);
-
 
         adapter = new RecyclerArrayAdapter<HasRateRes.ProjBean>(getContext(), R.layout.my_rating_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, HasRateRes.ProjBean s) {
                     baseViewHolder.setText(R.id.rating_name, s.getTitle());
                     baseViewHolder.setText(R.id.address, s.getAddress());
-                    baseViewHolder.setText(R.id.price, s.getPrice());
-//                    if (s.getType() == 1){
+                    baseViewHolder.setText(R.id.type, s.getType());
+                    if (s.getProject_type() == 1){
                         //发单人
                         baseViewHolder.setText(R.id.project_detail, "项目进度");
                         baseViewHolder.setText(R.id.price_detail, "价格");
-//                    }else{
-//                        baseViewHolder.setText(R.id.project_detail, "维保进度");
-//                        baseViewHolder.setText(R.id.price_detail, "上门费");
-//                    }
+                        baseViewHolder.setText(R.id.price, s.getPrice());
+                    }else{
+                        baseViewHolder.setText(R.id.project_detail, "维保进度");
+                        baseViewHolder.setText(R.id.price_detail, "上门费");
+                        baseViewHolder.setText(R.id.price, s.getDaily_wage());
+                    }
 
                 }
             };
@@ -95,16 +95,32 @@ public class HasRateFragment extends BaseFragment implements HasRatingView {
             FeedBackDetailActivity.startActivity(HasRateFragment.this.getActivity(), adapter.getAllData().get(i).getEvaluate_id());
         });
 
-        presenter.getHasRating(getContext());
-        recyclerView.setAdapter(adapter);
-
+        recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        onRefresh();
         return view;
     }
 
     @Override
+    public void onRefresh() {
+        page = 0;
+        presenter.getHasRating(page);
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        presenter.getHasRating(page);
+    }
+
+    @Override
     public void getData(HasRateRes res) {
-        adapter.clear();
-        adapter.addAll(res.getProject());
+        if (page == 0){
+            adapter.clear();
+            adapter.addAll(res.getProject());
+        }else{
+            adapter.addAll(res.getProject());
+        }
+
     }
 
 

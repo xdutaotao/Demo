@@ -787,7 +787,7 @@ public class Utils {
         ByteArrayOutputStream bos=new ByteArrayOutputStream();
         bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
         byte[] bytes=bos.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        return "data:image/png;base64,"+Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
 

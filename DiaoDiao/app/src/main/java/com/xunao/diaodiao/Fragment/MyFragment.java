@@ -34,6 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
@@ -79,6 +80,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
     @Inject
     MyPresenter presenter;
+
+    private String path;
 
     public static MyFragment newInstance(String param1) {
         MyFragment fragment = new MyFragment();
@@ -150,7 +153,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Override
     public void getData(MyBean data) {
         //name.setText(data.getName());
-        Glide.with(this).load(data.getHead_img()).placeholder(R.drawable.head_icon_girl).into(headIcon);
+        path = data.getHead_img();
+        Glide.with(this).load(path).placeholder(R.drawable.head_icon_boby)
+                .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");
 
@@ -201,7 +206,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.my_rating:
-                MyRatingActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                    LoginActivity.startActivity(getContext());
+                } else {
+                    MyRatingActivity.startActivity(getActivity());
+                }
+
+
                 break;
 
             case R.id.complaint_record:
@@ -244,7 +255,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.head_icon:
-                PersonalActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                    LoginActivity.startActivity(getContext());
+                } else {
+                    PersonalActivity.startActivity(getActivity(), path);
+                }
+
                 break;
 
             case R.id.money:

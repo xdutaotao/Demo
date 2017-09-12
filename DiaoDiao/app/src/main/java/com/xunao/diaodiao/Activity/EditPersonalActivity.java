@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Present.EditPersonalPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.EditPersonalView;
@@ -15,6 +16,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -32,6 +35,12 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditPersonalActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, PersonalRes.FamilyInfo familyInfo) {
+        Intent intent = new Intent(context, EditPersonalActivity.class);
+        intent.putExtra(INTENT_KEY, familyInfo);
         context.startActivity(intent);
     }
 

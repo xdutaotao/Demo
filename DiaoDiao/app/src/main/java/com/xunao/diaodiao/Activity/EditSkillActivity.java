@@ -27,6 +27,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -42,6 +43,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -102,6 +105,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditSkillActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, PersonalRes.TechnicianInfo technicianInfo) {
+        Intent intent = new Intent(context, EditSkillActivity.class);
+        intent.putExtra(INTENT_KEY, technicianInfo);
         context.startActivity(intent);
     }
 

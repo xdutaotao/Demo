@@ -5,7 +5,7 @@
     tools:context="com.xunao.diaodiao.Fragment.TabFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
+    <com.gzfgeh.GRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"

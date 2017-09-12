@@ -4,24 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.view.CropImageView;
+import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Present.PersonalPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
-import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.PersonalView;
-import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
 
@@ -29,9 +31,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -51,29 +55,48 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     ImageView headIcon;
     @BindView(R.id.head_layout)
     RelativeLayout headLayout;
+    @BindView(R.id.name_text)
+    TextView nameText;
     @BindView(R.id.name)
     TextView name;
-    @BindView(R.id.sex)
-    TextView sex;
-    @BindView(R.id.sex_layout)
-    RelativeLayout sexLayout;
-    @BindView(R.id.level)
-    TextView level;
-    @BindView(R.id.create_time)
-    TextView createTime;
-    @BindView(R.id.project)
-    TextView project;
-    @BindView(R.id.photo)
-    TextView photo;
-    @BindView(R.id.email)
-    TextView email;
+    @BindView(R.id.phone_text)
+    TextView phoneText;
     @BindView(R.id.address)
     TextView address;
-    @BindView(R.id.address_layout)
-    RelativeLayout addressLayout;
+    @BindView(R.id.address_detail)
+    TextView addressDetail;
+    @BindView(R.id.work_year)
+    TextView workYear;
+    @BindView(R.id.work_year_layout)
+    RelativeLayout workYearLayout;
+    @BindView(R.id.work_num)
+    TextView workNum;
+    @BindView(R.id.work_num_layout)
+    RelativeLayout workNumLayout;
+    @BindView(R.id.project)
+    TextView project;
+    @BindView(R.id.project_layout)
+    RelativeLayout projectLayout;
+    @BindView(R.id.work)
+    TextView work;
+    @BindView(R.id.work_layout)
+    RelativeLayout workLayout;
+    @BindView(R.id.phone)
+    TextView phone;
+    @BindView(R.id.phone_layout)
+    RelativeLayout phoneLayout;
+    @BindView(R.id.hide_layout)
+    LinearLayout hideLayout;
 
-    public static void startActivity(Context context) {
+
+    private int type;
+    private PersonalRes.CompanyInfo companyInfo;
+    private PersonalRes.TechnicianInfo technicianInfo;
+    private PersonalRes.FamilyInfo familyInfo;
+
+    public static void startActivity(Context context, String path) {
         Intent intent = new Intent(context, PersonalActivity.class);
+        intent.putExtra(INTENT_KEY, path);
         context.startActivity(intent);
     }
 
@@ -86,29 +109,37 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         showToolbarBack(toolBar, titleText, "个人资料");
         presenter.attachView(this);
 
-//        UserInfo userInfo = User.getInstance().getUserInfo();
-//        Glide.with(this)
-//                .load()
-//                .placeholder(R.drawable.ic_launcher_round)
-//                .bitmapTransform(new CropCircleTransformation(this))
-//                .into(headIcon);
+        if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))) {
+            Glide.with(this)
+                    .load(getIntent().getStringExtra(INTENT_KEY))
+                    .placeholder(R.drawable.head_icon_boby)
+                    .bitmapTransform(new CropCircleTransformation(this))
+                    .into(headIcon);
+        }
 
 
         editPersonal.setOnClickListener(this);
+        headLayout.setOnClickListener(this);
+        presenter.getPersonalInfo(this);
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        switch (type) {
+            case COMPANY_TYPE:
+                editPersonal.setText("完善资料才能发布和接单");
+                nameText.setText("公司名称");
+                hideLayout.setVisibility(View.GONE);
+                break;
 
-        initPicker();
-    }
+            case SKILL_TYPE:
+                nameText.setText("姓名");
+                break;
 
-    private void initPicker() {
-        ImagePicker imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());
-        imagePicker.setCrop(true);
-        imagePicker.setSaveRectangle(true);
-        imagePicker.setMultiMode(false);
-        imagePicker.setStyle(CropImageView.Style.CIRCLE);
-        imagePicker.setFocusWidth(600);
-        imagePicker.setFocusHeight(600);
-        imagePicker.setShowCamera(false);
+            case CUSTOM_TYPE:
+                editPersonal.setText("完善资料才能发布和接单");
+                nameText.setText("用户名");
+                hideLayout.setVisibility(View.GONE);
+                break;
+        }
+
     }
 
     @Override
@@ -120,7 +151,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
             case R.id.edit_personal:
                 int type = ShareUtils.getValue(TYPE_KEY, 0);
-                switch (type){
+                switch (type) {
                     case COMPANY_TYPE:
                         EditCompanyActivity.startActivity(this);
                         break;
@@ -166,6 +197,52 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
+    public void getData(HeadIconRes s) {
+        Glide.with(this)
+                .load(s.getHead_img())
+                .placeholder(R.drawable.head_icon_boby)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(headIcon);
+
+    }
+
+    @Override
+    public void getPersonalData(PersonalRes s) {
+
+        switch (type) {
+            case COMPANY_TYPE:
+                companyInfo = s.getCompanyInfo();
+                name.setText(companyInfo.getName());
+                phone.setText(companyInfo.getTel());
+                address.setText(companyInfo.getAddress());
+                addressDetail.setText(companyInfo.getCity() + companyInfo.getDistrict() + companyInfo.getProvince() + "");
+
+                break;
+
+            case SKILL_TYPE:
+                technicianInfo = s.getTechnicianInfo();
+                name.setText(technicianInfo.getName());
+                phone.setText(technicianInfo.getMobile());
+                address.setText(technicianInfo.getAddress());
+                addressDetail.setText(technicianInfo.getCity() + technicianInfo.getDistrict() + technicianInfo.getProvince() + "");
+                workYear.setText(technicianInfo.getExperience());
+                workNum.setText(technicianInfo.getTeam_number());
+                project.setText(technicianInfo.getProject_type());
+                work.setText(technicianInfo.getExperience());
+                break;
+
+            case CUSTOM_TYPE:
+                familyInfo = s.getFamilyInfo();
+                name.setText(familyInfo.getName());
+                phone.setText(familyInfo.getMobile());
+                address.setText(familyInfo.getAddress());
+                addressDetail.setText(familyInfo.getCity() + familyInfo.getDistrict() + familyInfo.getProvince() + "");
+
+                break;
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
@@ -193,7 +270,20 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_done:
-                EditPersonalActivity.startActivity(this);
+                switch (type) {
+                    case COMPANY_TYPE:
+                        EditCompanyActivity.startActivity(this, companyInfo);
+                        break;
+
+                    case SKILL_TYPE:
+                        EditSkillActivity.startActivity(this, technicianInfo);
+                        break;
+
+                    case CUSTOM_TYPE:
+                        EditPersonalActivity.startActivity(this, familyInfo);
+                        break;
+                }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -202,12 +292,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onFailure() {
-
-    }
-
-    @Override
-    public void getData(String s) {
-        ToastUtil.show(s);
 
     }
 

@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="水暖处理 采光处理"
         android:layout_marginTop="60px"
+        android:id="@+id/type"
         android:textColor="@color/accept_btn_default"/>
 
     <View

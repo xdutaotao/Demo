@@ -27,12 +27,12 @@ public class MyRatingPresenter extends BasePresenter<MyRatingView> {
 
     /**
      * 评论列表
-     * @param context
-     * @param type
+     * @param
+     * @param
      */
-    public void getRating(Context context){
-        mCompositeSubscription.add(model.getRating()
-                .subscribe(new RxSubUtils<MyRateRes>(mCompositeSubscription,context) {
+    public void getRating(int page){
+        mCompositeSubscription.add(model.getRating(page)
+                .subscribe(new RxSubUtils<MyRateRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyRateRes token) {
                         getView().getData(token);

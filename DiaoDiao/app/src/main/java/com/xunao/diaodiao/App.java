@@ -3,10 +3,13 @@ package com.xunao.diaodiao;
 import android.app.Application;
 import android.content.Context;
 
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Utils.Dagger.Component.ApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Module.ApplicationModule;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.smssdk.SMSSDK;
@@ -107,6 +110,19 @@ public class App  extends android.support.multidex.MultiDexApplication{
 
         //设置Notification的模式
         JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
+        initPicker();
+    }
+
+    private void initPicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setCrop(true);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setMultiMode(false);
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);
+        imagePicker.setFocusWidth(600);
+        imagePicker.setFocusHeight(600);
+        imagePicker.setShowCamera(false);
     }
 
 

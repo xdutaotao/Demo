@@ -6,12 +6,14 @@ import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
+import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.PackageBean;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
@@ -104,6 +106,14 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> bindingCard(@Body RequestBody body);
 
+    //上传图片
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<HeadIconRes>> changeHeadIcon(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<PersonalRes>> getPersonalInfo(@Body RequestBody body);
+
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);
@@ -141,11 +151,6 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("personalCenter/addTheAddress")
     Observable<BaseResponseBean> changeAddress(@FieldMap Map<String, String> map);
-
-    //上传图片
-    @Multipart
-    @POST("personalCenter/updateAvatar")
-    Observable<ResponseBody> changeHeadIcon(@PartMap Map<String, RequestBody> map);
 
 
     @FormUrlEncoded
