@@ -16,257 +16,274 @@
         android:textColor="@color/white"
         android:background="#E24202"/>
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="240px"
-        android:padding="50px"
-        android:id="@+id/head_layout"
-        android:background="@android:color/white">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="头像"
-            android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:layout_width="160px"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/head_icon_boby"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="60px"
-            android:id="@+id/head_icon"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/turn_right"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:paddingLeft="50px"
-        android:layout_marginTop="40px"
-        android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="姓名"
-            android:id="@+id/name_text"
-            android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="240px"
+                android:padding="50px"
+                android:id="@+id/head_layout"
+                android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1111"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50px"
-            android:id="@+id/name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="头像"
+                    android:layout_centerVertical="true"/>
 
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="160px"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/head_icon_boby"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="60px"
+                    android:id="@+id/head_icon"/>
 
-    <View style="@style/item_divider"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/turn_right"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:paddingLeft="50px"
-        android:id="@+id/phone_layout"
-        android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="手机号"
-            android:id="@+id/phone_text"
-            android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:paddingLeft="50px"
+                android:layout_marginTop="40px"
+                android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="18513212904"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50px"
-            android:id="@+id/phone"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名"
+                    android:id="@+id/name_text"
+                    android:layout_centerVertical="true"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1111"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50px"
+                    android:id="@+id/name"/>
 
-    <View style="@style/item_divider"/>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:paddingLeft="50px"
-        android:background="@android:color/white">
+            <View style="@style/item_divider"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地区"
-            android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:paddingLeft="50px"
+                android:id="@+id/phone_layout"
+                android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="上海徐汇区"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50px"
-            android:id="@+id/address"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号"
+                    android:id="@+id/phone_text"
+                    android:layout_centerVertical="true"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18513212904"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50px"
+                    android:id="@+id/phone"/>
 
-    <View style="@style/item_divider"/>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="160px"
-        android:paddingLeft="50px"
-        android:background="@android:color/white">
+            <View style="@style/item_divider"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地址"
-            android:layout_centerVertical="true"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:paddingLeft="50px"
+                android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="中华美路60号"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50px"
-            android:id="@+id/address_detail"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地区"
+                    android:layout_centerVertical="true"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上海徐汇区"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50px"
+                    android:id="@+id/address"/>
 
-    <View style="@style/item_divider"/>
+            </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/hide_layout">
+            <View style="@style/item_divider"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:paddingLeft="50px"
-            android:id="@+id/work_year_layout"
-            android:background="@android:color/white">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:paddingLeft="50px"
+                android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="工作经验"
-                android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址"
+                    android:layout_centerVertical="true"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3年"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="50px"
-                android:id="@+id/work_year"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="中华美路60号"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50px"
+                    android:id="@+id/address_detail"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <View style="@style/item_divider"/>
+            <View style="@style/item_divider"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160px"
-            android:paddingLeft="50px"
-            android:id="@+id/work_num_layout"
-            android:background="@android:color/white">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/hide_layout">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="团队人数"
-                android:layout_centerVertical="true"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160px"
+                    android:paddingLeft="50px"
+                    android:id="@+id/work_year_layout"
+                    android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10人"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="50px"
-                android:id="@+id/work_num"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工作经验"
+                        android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3年"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50px"
+                        android:id="@+id/work_year"/>
 
-        <View style="@style/item_divider"/>
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50px"
-            android:paddingTop="50px"
-            android:paddingBottom="50px"
-            android:id="@+id/project_layout"
-            android:background="@android:color/white">
+                <View style="@style/item_divider"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="承接项目类型"
-                android:layout_centerVertical="true"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160px"
+                    android:paddingLeft="50px"
+                    android:id="@+id/work_num_layout"
+                    android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="400px"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="right"
-                android:text="自己项目自己自己项目自己项目自己项目"
-                android:layout_marginRight="50px"
-                android:id="@+id/project"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="团队人数"
+                        android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10人"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="50px"
+                        android:id="@+id/work_num"/>
 
-        <View style="@style/item_divider"/>
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50px"
-            android:paddingTop="50px"
-            android:paddingBottom="50px"
-            android:id="@+id/work_layout"
-            android:background="@android:color/white">
+                <View style="@style/item_divider"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="工作经验"
-                android:layout_centerVertical="true"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50px"
+                    android:paddingTop="50px"
+                    android:paddingBottom="50px"
+                    android:id="@+id/project_layout"
+                    android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="400px"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="right"
-                android:text="自己项目自己项己项目自己项目自己项目"
-                android:layout_marginRight="50px"
-                android:id="@+id/work"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="承接项目类型"
+                        android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="400px"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="right"
+                        android:text="自己项目自己自己项目自己项目自己项目"
+                        android:layout_marginRight="50px"
+                        android:id="@+id/project"/>
 
-        <View style="@style/item_divider"/>
-    </LinearLayout>
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50px"
+                    android:paddingTop="50px"
+                    android:paddingBottom="50px"
+                    android:id="@+id/work_layout"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工作经验"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:layout_width="400px"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="right"
+                        android:text="自己项目自己项己项目自己项目自己项目"
+                        android:layout_marginRight="50px"
+                        android:id="@+id/work"/>
+
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 
 

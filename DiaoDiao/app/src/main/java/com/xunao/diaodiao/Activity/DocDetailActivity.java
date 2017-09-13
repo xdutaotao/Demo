@@ -22,6 +22,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+
 /**
  * create by
  */
@@ -42,8 +44,9 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView {
 
     private RecyclerArrayAdapter<String> adapter;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, DocDetailActivity.class);
+        intent.putExtra(INTENT_KEY, id);
         context.startActivity(intent);
     }
 

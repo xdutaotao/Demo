@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Common;
 
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
+import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
@@ -114,6 +115,9 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<PersonalRes>> getPersonalInfo(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<List<DocRes>>> getDataBase(@Body RequestBody body);
+
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);
@@ -130,10 +134,6 @@ public interface RetrofitService {
 
     @GET("home/hotKeys")
     Observable<BaseBean<List<String>>> getHotWord();
-
-    @FormUrlEncoded
-    @POST("data/packagingForm")
-    Observable<PackageBean> packagingForm(@Field("project") String project);
 
     @FormUrlEncoded
     @POST("user/checkToken")

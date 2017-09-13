@@ -36,7 +36,9 @@ import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.EditSkillView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -128,6 +130,15 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.skill_text, s);
+
+                if (skillsName.toString().contains(s)){
+                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
+                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
+                }else{
+                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
+                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
+                }
+
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
                     if (skillsName.toString().contains(s)){
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
@@ -161,8 +172,6 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.addAll(skills);
-
         information.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -192,9 +201,49 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         certification.setOnClickListener(this);
         certiDelete.setOnClickListener(this);
 
-        codeDelete.setVisibility(View.GONE);
-        codeReverseDelete.setVisibility(View.GONE);
-        certiDelete.setVisibility(View.GONE);
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+            PersonalRes.TechnicianInfo info = (PersonalRes.TechnicianInfo) getIntent().getSerializableExtra(INTENT_KEY);
+            name.setText(info.getName());
+            phone.setText(info.getMobile());
+            personCode.setText(info.getCard());
+            address.setText(info.getAddress());
+            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+            year.setText(info.getExperience());
+            personNum.setText(info.getTeam_number()+"");
+            skillsName.addAll(Arrays.asList(info.getProject_type().split(",")));
+
+            information.setText(info.getEvaluate());
+            inforNum.setText(info.getEvaluate().length()+" / 200");
+            if (!TextUtils.isEmpty(info.getCard_front())){
+                codeUrl = info.getCard_front();
+                Glide.with(this).load(codeUrl).into(code);
+                codeDelete.setVisibility(View.VISIBLE);
+            }else{
+                Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
+                codeDelete.setVisibility(View.GONE);
+            }
+
+            if (!TextUtils.isEmpty(info.getCard_back())){
+                codeReverseUrl = info.getCard_back();
+                Glide.with(this).load(codeReverseUrl).into(codeReverse);
+                codeReverseDelete.setVisibility(View.VISIBLE);
+            }else{
+                Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
+                codeDelete.setVisibility(View.GONE);
+            }
+
+            if (!TextUtils.isEmpty(info.getCertificate())){
+                certifyUrl = info.getCertificate();
+                Glide.with(this).load(certifyUrl).into(certification);
+                certiDelete.setVisibility(View.VISIBLE);
+            }else{
+                Glide.with(this).load(R.drawable.shangchuan).into(certification);
+                certiDelete.setVisibility(View.GONE);
+            }
+
+        }
+
+        adapter.addAll(skills);
         initImagePicker();
     }
 
@@ -262,6 +311,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         req.setProvince(1);
         req.setCity(2);
         req.setDistrict(3);
+        req.setCard(personCode.getText().toString());
         req.setAddress(address.getText().toString());
         req.setExperience(year.getText().toString());
         req.setTeam_number(Integer.valueOf(personNum.getText().toString()));
@@ -269,9 +319,9 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         String projectType = skillsName.toString();
         projectType = projectType.substring(1, projectType.length()-1);
         req.setProject_type(projectType);
-        req.setCard_front(Utils.Bitmap2StrByBase64(""));
-        req.setCard_back(Utils.Bitmap2StrByBase64(""));
-        req.setCertificate(Utils.Bitmap2StrByBase64(""));
+        req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
+        req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
+        req.setCertificate(Utils.Bitmap2StrByBase64(certifyUrl));
 
         presenter.fillSkillInfor(this, req);
 
@@ -324,21 +374,6 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_company_personal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_done:
-                EditCompanyActivity.startActivity(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void setImagePath(String path) {
         switch (SELECT_TYPE) {
@@ -381,7 +416,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
     @Override
     public void onFailure() {
-        finish();
+
     }
 
     @Override

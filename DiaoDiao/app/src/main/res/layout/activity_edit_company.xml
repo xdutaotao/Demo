@@ -251,6 +251,7 @@
                         android:layout_width="240px"
                         android:layout_height="240px"
                         android:id="@+id/second_iv"
+                        android:scaleType="fitXY"
                         android:visibility="gone"
                         android:layout_marginLeft="50px"/>
 
@@ -288,6 +289,7 @@
                         android:layout_width="240px"
                         android:layout_height="240px"
                         android:id="@+id/third_iv"
+                        android:scaleType="fitXY"
                         android:visibility="gone"
                         android:layout_marginLeft="50px"/>
 
@@ -330,6 +332,8 @@
                 android:id="@+id/one_pic"
                 android:layout_gravity="center"
                 android:drawablePadding="20px"
+                android:scaleType="fitXY"
+                android:minHeight="200px"
                 android:drawableTop="@drawable/img_add"/>
 
             <ImageView
@@ -378,7 +382,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/shangchuan_zheng"
+                        android:minHeight="200px"
                         android:id="@+id/code"
+                        android:scaleType="fitXY"
                         android:padding="20px"/>
 
                     <ImageView
@@ -401,6 +407,8 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/shangchuan_fan"
                         android:id="@+id/code_reverse"
+                        android:scaleType="fitXY"
+                        android:minHeight="200px"
                         android:padding="20px"/>
 
                     <ImageView

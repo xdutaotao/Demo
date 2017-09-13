@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20px"
+        android:id="@+id/doc_icon"
         android:layout_gravity="center_vertical"
         android:src="@drawable/icon_kongtiaoziliao"/>
 
@@ -25,12 +26,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="采暖资料"/>
+            android:text="采暖资料"
+            android:id="@+id/doc_type"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="共10篇"
+            android:id="@+id/doc_num"
             android:layout_marginTop="20px"/>
     </LinearLayout>
 

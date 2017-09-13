@@ -48,6 +48,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:id="@+id/phone"
+                    android:inputType="phone"
                     android:hint="请输入联系电话"/>
 
             </RelativeLayout>
@@ -129,6 +130,7 @@
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="60px"
                     android:id="@+id/year"
+                    android:inputType="phone"
                     android:hint="请输入工作经验"/>
 
                 <TextView
@@ -157,6 +159,7 @@
                     style="@style/edit_personal_edit"
                     android:hint="请输入团队人数"
                     android:id="@+id/person_num"
+                    android:inputType="phone"
                     android:layout_marginRight="60px"/>
 
                 <TextView
@@ -226,7 +229,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10px"
+                android:layout_height="5px"
                 android:background="@color/divider"/>
 
             <TextView
@@ -250,6 +253,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/shangchuan_zheng"
+                        android:minHeight="200px"
+                        android:scaleType="fitXY"
                         android:id="@+id/code"
                         android:padding="20px"/>
 
@@ -273,6 +278,8 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/shangchuan_fan"
                         android:id="@+id/code_reverse"
+                        android:scaleType="fitXY"
+                        android:minHeight="200px"
                         android:padding="20px"/>
 
                     <ImageView
@@ -307,8 +314,10 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:minHeight="200px"
                     android:src="@drawable/shangchuan"
                     android:id="@+id/certification"
+                    android:scaleType="fitXY"
                     android:padding="20px"/>
 
                 <ImageView

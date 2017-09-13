@@ -226,7 +226,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 address.setText(technicianInfo.getAddress());
                 addressDetail.setText(technicianInfo.getCity() + technicianInfo.getDistrict() + technicianInfo.getProvince() + "");
                 workYear.setText(technicianInfo.getExperience());
-                workNum.setText(technicianInfo.getTeam_number());
+                workNum.setText(technicianInfo.getTeam_number()+"");
                 project.setText(technicianInfo.getProject_type());
                 work.setText(technicianInfo.getExperience());
                 break;

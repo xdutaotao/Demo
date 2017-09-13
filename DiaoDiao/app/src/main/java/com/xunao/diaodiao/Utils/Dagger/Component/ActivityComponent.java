@@ -11,6 +11,7 @@ import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.ComponyPersonalActivity;
+import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.DocDetailActivity;
 import com.xunao.diaodiao.Activity.EditCompanyActivity;
 import com.xunao.diaodiao.Activity.EditPersonalActivity;
@@ -130,4 +131,5 @@ public interface ActivityComponent {
     void inject(HasRateFragment fragment);
     void inject(NoRateFragment fragment);
     void inject(GetMoneyActivity activity);
+    void inject(DocActivity activity);
 }

@@ -10,15 +10,20 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.DocRes;
+import com.xunao.diaodiao.Present.DocPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.View.DocView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DocActivity extends BaseActivity {
+public class DocActivity extends BaseActivity implements DocView {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -27,7 +32,10 @@ public class DocActivity extends BaseActivity {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
 
-    private RecyclerArrayAdapter<String> adapter;
+    @Inject
+    DocPresenter presenter;
+
+    private RecyclerArrayAdapter<DocRes> adapter;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, DocActivity.class);
@@ -38,12 +46,18 @@ public class DocActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc);
+
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
+        presenter.attachView(this);
         showToolbarBack(toolBar, titleText, "资料库");
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.doc_item) {
+        adapter = new RecyclerArrayAdapter<DocRes>(this, R.layout.doc_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, DocRes homeBean) {
+                baseViewHolder.setText(R.id.doc_type, homeBean.getName());
+                baseViewHolder.setText(R.id.doc_num, homeBean.getCount()+"");
+
             }
         };
 
@@ -54,11 +68,23 @@ public class DocActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
+        presenter.getDataBase(this);
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
+
+    @Override
+    public void getData(List<DocRes> list) {
+        adapter.clear();
         adapter.addAll(list);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
     }
 }

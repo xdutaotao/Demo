@@ -8,6 +8,8 @@ import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.BindBankReq;
+import com.xunao.diaodiao.Bean.DocReq;
+import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
@@ -283,18 +285,23 @@ public class LoginModel extends BaseModel {
      */
     public Observable<LoginResBean> fillSkillInfor(FillSkillReq req){
         long time = System.currentTimeMillis()/1000;
-        StringBuilder sb = new StringBuilder("completeTechnician");
-        sb.append(time+"").append(req.getAddress()).append(req.getCity())
+        StringBuilder sb = new StringBuilder("completeInfo");
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        sb.append(time+"").append(req.getAddress()).append(req.getCard())
+                .append(req.getCard_back()).append(req.getCard_front()).append(req.getCertificate())
+                .append(req.getCity())
                 .append(req.getDistrict()).append(req.getEvaluate())
                 .append(req.getExperience()).append(req.getMobile())
                 .append(req.getName()).append(req.getProject_type())
-                .append(req.getProvince()).append(req.getUserid())
+                .append(req.getProvince()).append(req.getTeam_number()).append(type).append(req.getUserid())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));
+        req.setType(type);
 
 
-        return config.getRetrofitService().fillInfor(setBody("completeTechnician", time, req))
+        return config.getRetrofitService().fillInfor(setBody("completeInfo", time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -594,6 +601,26 @@ public class LoginModel extends BaseModel {
 
     }
 
+    /**
+     *
+     */
+    public Observable<List<DocRes>> getDataBase(){
+        String rateKey = "databaseType";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"")
+                .append("security");
+
+        DocReq req = new DocReq();
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getDataBase(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
 
     /**
      * 修改密码
@@ -605,13 +632,7 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
-    /**
-     *
-     */
-    public Observable<String> logout(String token){
-        return config.getRetrofitService().logout(token)
-                .compose(RxUtils.handleResult());
-    }
+
 
 
     /**

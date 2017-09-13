@@ -69,6 +69,14 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
         showToolbarBack(toolBar, titleText, "普通用户");
 
         login.setOnClickListener(this);
+
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+            PersonalRes.FamilyInfo info = new PersonalRes.FamilyInfo();
+            name.setText(info.getName());
+            phone.setText(info.getMobile());
+            address.setText(info.getAddress());
+            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+        }
     }
 
     @Override

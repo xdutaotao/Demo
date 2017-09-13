@@ -10,6 +10,7 @@ public class FillSkillReq {
     private int type;
     private String name;
     private String mobile;
+    private String card;
     private int province;
     private int city;
     private int district;
@@ -158,5 +159,13 @@ public class FillSkillReq {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getCard() {
+        return card;
+    }
+
+    public void setCard(String card) {
+        this.card = card;
     }
 }
