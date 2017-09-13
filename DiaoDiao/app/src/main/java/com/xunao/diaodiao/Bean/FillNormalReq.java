@@ -7,6 +7,7 @@ package com.xunao.diaodiao.Bean;
 
 public class FillNormalReq {
     private int userid;
+    private int type;
     private String name;
     private String mobile;
     private int province;
@@ -77,5 +78,13 @@ public class FillNormalReq {
 
     public void setVerify(String verify) {
         this.verify = verify;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

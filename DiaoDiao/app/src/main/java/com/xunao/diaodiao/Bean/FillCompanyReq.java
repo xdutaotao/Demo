@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FillCompanyReq {
     private int userid;
+    private int type;
     private String name;
     private int province;
     private int city;
@@ -30,6 +31,14 @@ public class FillCompanyReq {
 
     public void setUserid(int userid) {
         this.userid = userid;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getName() {

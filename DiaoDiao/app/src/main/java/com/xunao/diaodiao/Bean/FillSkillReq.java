@@ -7,6 +7,7 @@ package com.xunao.diaodiao.Bean;
 
 public class FillSkillReq {
     private int userid;
+    private int type;
     private String name;
     private String mobile;
     private int province;
@@ -149,5 +150,13 @@ public class FillSkillReq {
 
     public void setCertificate(String certificate) {
         this.certificate = certificate;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

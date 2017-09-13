@@ -263,6 +263,17 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         codeReverseDelete.setOnClickListener(this);
 
         login.setOnClickListener(this);
+        initImagePicker();
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setCrop(false);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);
+        imagePicker.setMultiMode(false);
+        imagePicker.setShowCamera(false);
     }
 
     @Override
@@ -603,7 +614,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
     @Override
     public void onFailure() {
-        finish();
     }
 
     @Override

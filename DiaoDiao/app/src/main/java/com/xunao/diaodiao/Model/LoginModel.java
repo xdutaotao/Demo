@@ -254,21 +254,23 @@ public class LoginModel extends BaseModel {
     public Observable<LoginResBean> fillInfor(FillCompanyReq req){
         String useid = User.getInstance().getUserId();
         long time = System.currentTimeMillis()/1000;
-        StringBuilder sb = new StringBuilder("completeCompany");
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder("completeInfo");
         sb.append(time+"").append(req.getAddress()).append(req.getCard_back())
                 .append(req.getCard_front()).append(req.getCity())
-                .append(req.getContact()).append(req.getContact_mobile())
-                .append(req.getContact_card())
+                .append(req.getContact())
+                .append(req.getContact_card()).append(req.getContact_mobile())
                 .append(req.getDistrict()).append(req.getName())
-                .append(req.getProvince()).append(req.getTel())
+                .append(req.getProvince()).append(req.getTel()).append(req.getType())
                 .append(useid).append(req.getYears())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));
         req.setUserid(Integer.valueOf(useid));
+        req.setType(type);
 
 
-        return config.getRetrofitService().fillInfor(setBody("completeCompany", time, req))
+        return config.getRetrofitService().fillInfor(setBody("completeInfo", time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -303,18 +305,22 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<LoginResBean> fillNormalInfor(FillNormalReq req){
+        String useid = User.getInstance().getUserId();
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
-        StringBuilder sb = new StringBuilder("completeFamily");
+        StringBuilder sb = new StringBuilder("completeInfo");
         sb.append(time+"").append(req.getAddress()).append(req.getCity())
                 .append(req.getDistrict()).append(req.getMobile())
                 .append(req.getName())
-                .append(req.getProvince()).append(req.getUserid())
+                .append(req.getProvince()).append(type)
+                .append(useid)
                 .append("security");
 
+        req.setUserid(Integer.valueOf(useid));
         req.setVerify(Utils.getMD5(sb.toString()));
+        req.setType(type);
 
-
-        return config.getRetrofitService().fillInfor(setBody("completeFamily", time, req))
+        return config.getRetrofitService().fillInfor(setBody("completeInfo", time, req))
                 .compose(RxUtils.handleResult());
     }
 

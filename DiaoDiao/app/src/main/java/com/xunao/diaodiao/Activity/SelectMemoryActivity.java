@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.LoginPresenter;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
@@ -155,7 +156,8 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
 
     @Override
     public void getData(String result) {
-//        int type = Integer.valueOf(result);
+        int type = Integer.valueOf(result);
+        ShareUtils.putValue(Constants.TYPE_KEY, type);
 //        switch (type){
 //            case COMPANY_TYPE:
 //                SelectCompanyActivity.startActivity(SelectMemoryActivity.this);

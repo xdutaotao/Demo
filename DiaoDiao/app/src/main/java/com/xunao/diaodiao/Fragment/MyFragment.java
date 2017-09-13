@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.EditCompanyActivity;
+import com.xunao.diaodiao.Activity.EditPersonalActivity;
 import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
@@ -28,6 +29,7 @@ import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.MyView;
 
 import javax.inject.Inject;
@@ -127,17 +129,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     @Override
     public void onResume() {
         super.onResume();
-        if (User.getInstance().getUserInfo() != null) {
+        if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
             name.setVisibility(View.VISIBLE);
             login.setVisibility(View.GONE);
             String mobile = User.getInstance().getUserInfo().getMobile();
             name.setText(mobile);
-
         } else {
             name.setVisibility(View.GONE);
             login.setVisibility(View.VISIBLE);
             moneyText.setText("- / -");
             bankText.setText("- / -");
+            Glide.with(this).load(R.drawable.head_icon_boby)
+                    .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         }
 
         if(!TextUtils.isEmpty(User.getInstance().getUserId()))
@@ -238,7 +241,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 //                    }
 //                }
 
-                EditSkillActivity.startActivity(getContext());
+                EditPersonalActivity.startActivity(getContext());
 
                 break;
 
