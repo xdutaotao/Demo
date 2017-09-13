@@ -1,0 +1,140 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>存费送费</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="spm-id" content="a1z51.24540073"/>
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+
+    <link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/tel.css"/>
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/telFee.js?v=1"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/jquery.easydropdown.min.js"></script>
+    <script src="//g.alicdn.com/tmapp/tida2/2.2.16/tida.js?appkey=24540073"></script>
+
+    <style>
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #CCCCCC;
+            font-size: 0.14rem;
+            outline: none;
+            caret-color:#30B2F2;
+        }
+        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #CCCCCC;
+            font-size: 0.14rem;
+            outline: none;
+            caret-color:#30B2F2;
+        }
+        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #CCCCCC;
+            font-size: 0.14rem;
+            outline: none;
+            caret-color:#30B2F2;
+        }
+        input:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #CCCCCC;
+            font-size: 0.14rem;
+            outline: none;
+            caret-color:#30B2F2;
+        }
+    </style>
+
+</head>
+<body>
+<div class="main-div" style="min-height: 1rem">
+
+    <img style="height: 0.94rem; width: 100%" src="img/banner_bg.jpg" onclick="window.location.reload(1);"/>
+
+
+    <div style="background-color: #f4f4f4; color: #888888;
+                    font-size: 0.12rem; padding-top: 0.15rem; padding-left: 0.15rem;
+                 padding-bottom: 0.08rem;">以下信息将提供给营运商用于业务办理, 请确保输入正确</div>
+
+    <div class="row-padding" style="padding-left: 0.15rem;">
+        <span style="font-size: 0.17rem; color: #333;">手机号</span>
+        <input style="color: #000;" placeholder="请输入手机号" type="number"
+               oninput="if(value.length>11)value=value.slice(0,11)"
+               class="input-trans phone-input" maxlength="11" >
+    </div>
+
+    <div style="background-color: #f4f4f4; color: #888888;
+                    font-size: 0.12rem; padding-top: 0.16rem; padding-left: 0.15rem;
+                 padding-bottom: 0.08rem;">套餐资费</div>
+
+    <div style="height: 0.63rem; background-color: #FFF;
+                    padding-left:0.15rem; align-items: center;" class="row" id="selectAction">
+        <div style="display: flex; display: -webkit-box;display: -webkit-flex; flex-direction: column; justify-content: center;">
+            <div style="color: #333333; font-size: 0.17rem; margin-bottom: 0.08rem;">存100元送300元</div>
+            <div style=" align-items: center" class="row">
+                <object data="svg/icon.svg" type="image/svg+xml"
+                        style="width: 0.1rem; height: 0.1rem; margin-right: 0.06rem">
+                </object>
+                <div style="font-size: 0.12rem; color: #888888">月保底消费59元，合约期12个月，月返还36元</div>
+            </div>
+        </div>
+        <div style="-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;"></div>
+        <object data="svg/select.svg" type="image/svg+xml"
+                style="width: 0.14rem; height: 0.14rem; visibility: hidden; margin-right: 0.25rem" id="select">
+        </object>
+    </div>
+
+    <div style="padding-left: 0.15rem; padding-right: 0.15rem; padding-top: 0.19rem; padding-bottom: 0.5rem;">
+        <div style="font-size: 0.17rem; color: #333333;">用户须知</div>
+        <div style="font-size: 0.14rem; color: #333333;">
+            <ol>
+                <li>本活动仅限教师用户参加</li>
+                <li>参加活动的教师用户须承诺月消费保底58元12个月，既可享受预存100得300花费的优惠。（预存和赠送的话费自预缴生效当月起分12个月返充，每月25元，首次充值时间为优惠生效当日，次月按号码末位返充规则之行，先返充馈赠金，在反充本金）</li>
+                <li>活动要求用户自预缴生效当日起12个月内，月保底消费达到58元，在此期间入消费降档，保底正常收取。</li>
+                <li>本次活动每一个号码限参加一次。</li>
+                <li>去年已办理的教师预缴活动用户，到期当月可以续办。</li>
+            </ol>
+        </div>
+    </div>
+
+    <div style=" width: 100%; height: 0.47rem; position: fixed; bottom: 0rem" class="row">
+        <div style="display: flex; display: -webkit-box;display: -webkit-flex; align-items: center; flex-direction: column; background-color: #ffffff; width: 0.75rem;
+                        justify-content: center;" class="im">
+            <object data="svg/wangwang.svg" type="image/svg+xml"
+                    style="width: 0.21rem; height: 0.21rem; ">
+            </object>
+
+            <div style="font-size: 0.11rem; color: #666666;">客服</div>
+
+        </div>
+
+        <div style="background-color: #ff5000; color: #ffffff; font-size: 0.18rem; display: flex; display: -webkit-box;display: -webkit-flex; width: 3rem;
+                    align-items: center; justify-content: center" id="action">
+            下一步
+        </div>
+
+    </div>
+
+
+
+
+    <!--</div>-->
+
+
+</div>
+
+<script>
+
+
+</script>
+
+
+</body>
+
+
+</html>

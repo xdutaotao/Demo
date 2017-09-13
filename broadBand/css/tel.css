@@ -1,0 +1,85 @@
+html,body{
+    margin:0px;
+    height:100%;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+a,button,input,optgroup,select,textarea {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.main-div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #F4F4F4;
+}
+
+.divide-line {
+    width: 100%;
+    height: 0.01rem;
+    background-color: #999999;
+}
+
+.row-padding{
+    display: flex;
+    height: 0.45rem;
+    padding-left: 0.15rem;
+    align-items: center;
+    background-color: white;
+}
+
+.row-padding span{
+    font-size: 0.14rem;
+    color: #333;
+}
+
+.row-padding input{
+    flex: 1;
+    font-size:0.14rem;
+    color: #333;
+    line-height:0.2rem;
+}
+
+
+.input-trans{
+    background-color: transparent;
+    border: 0px;
+    margin-left: 0.34rem;
+    height: 0.45rem;
+    line-height: 0.45rem;
+    font-size: 0.2rem;
+    outline: none;
+    vertical-align: middle;
+}
+
+.row-main{
+    display: flex;
+    height: 0.46rem;
+    padding-left: 0.15rem;
+    align-items: center;
+    background-color: white;
+    border-top: 0.01rem solid #888;
+}
+
+#preAdd :after{content:"...";}
+
+
+#toastMessage{
+    position: absolute;
+    border-radius: 0.15rem;
+    width: 2.5rem;
+    height: 0.2rem;
+    cursor:pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.prompt{
+
+}
+
+.row{display: block;display:flex;flex-flow:row;display: -webkit-box;display: -webkit-flex;box-sizing: border-box;}
+.col{-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;display: block;width: 100%;box-sizing: border-box;text-align: center;}
