@@ -23,7 +23,7 @@ $(function(){
     $(window).resize(function() {
         $('.main-div').height(HEIGHT);
     });
-    
+
 
     var isDisplay = 1;
     $("#selectAction").click(function () {
@@ -58,18 +58,16 @@ $(function(){
         toastFunction("查询中...");
 
         var data = {
-            phone: $('.phone-input').val(),
-            type: 1
+            phone: $('.phone-input').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: 'https://ydts.ews.m.jaeapp.com/php/trade.php',
+            url: 'https://ydts.ews.m.jaeapp.com/manage/index.php?g=Portal&m=Index&a=searchPhone',
             data: data,
             dataType: 'json',
             success: function (data) {
-
-                params.tradeExToken = data.trade_extend_token;
+                alert(data)
 
                 Tida.ready({
                     //share 为分享模块，如果需要分享功能，需要写上
