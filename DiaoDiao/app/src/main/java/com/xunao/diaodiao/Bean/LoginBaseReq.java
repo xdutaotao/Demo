@@ -2,14 +2,12 @@ package com.xunao.diaodiao.Bean;
 
 /**
  * Description:
- * Created by guzhenfu on 2017/9/5.
+ * Created by guzhenfu on 2017/9/14.
  */
 
-public class GetMoneyReq {
+public class LoginBaseReq {
     private int userid;
-    private int type;
     private String verify;
-    private int id;
 
     public int getUserid() {
         return userid;
@@ -19,27 +17,11 @@ public class GetMoneyReq {
         this.userid = userid;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getVerify() {
         return verify;
     }
 
     public void setVerify(String verify) {
         this.verify = verify;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

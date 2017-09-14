@@ -27,6 +27,7 @@ import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.HomePresenter;
 import com.xunao.diaodiao.R;
@@ -46,6 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
+import static com.xunao.diaodiao.Common.Constants.latData;
+import static com.xunao.diaodiao.Common.Constants.lngData;
 
 public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
@@ -82,8 +85,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @BindView(R.id.document)
     TextView document;
 
-    private String latData;
-    private String lngData;
     private HomeResponseBean homeResponseBean;
 
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,

@@ -13,6 +13,9 @@ import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
+import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.FindProjReq;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetCashRes;
 import com.xunao.diaodiao.Bean.GetCodeBean;
@@ -21,6 +24,7 @@ import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconReq;
 import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
@@ -33,7 +37,9 @@ import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Present.ProjectRes;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
 import com.xunao.diaodiao.Utils.RxUtils;
@@ -602,7 +608,7 @@ public class LoginModel extends BaseModel {
     }
 
     /**
-     *
+     *  拿到资料库文件
      */
     public Observable<List<DocRes>> getDataBase(){
         String rateKey = "databaseType";
@@ -620,6 +626,105 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().getDataBase(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
+
+
+    /**
+     *  拿到资料库文件
+     */
+    public Observable<TypeInfoRes> getTypeInfo(){
+        String rateKey = "typeInfo";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(userid)
+                .append("security");
+
+        LoginBaseReq req = new LoginBaseReq();
+        req.setUserid(userid);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getTypeInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  拿到资料库文件
+     */
+    public Observable<ProjectRes> getMyWork(){
+        String rateKey = "myWork";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getMyWork(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  找项目
+     */
+    public Observable<FindProjectRes> getFindProjectList(FindProjReq req, int type){
+        String rateKey = "projectList";
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                rateKey = "oddList";
+                break;
+        }
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getDistrict()).append(req.getLat())
+                .append(req.getLng()).append(req.getMaxBuildTime())
+                .append(req.getMaxPrice()).append(req.getMinBuildTime())
+                .append(req.getMinPrice()).append(req.getPage())
+                .append(req.getPageSize());
+        if (!TextUtils.isEmpty(req.getType())){
+            sb.append(req.getType());
+        }
+        sb.append("security");
+
+        req.setVerify(sb.toString());
+
+
+        return config.getRetrofitService().getProjectList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     *  拿到资料库文件
+     */
+    public Observable<FindProjDetailRes> getFindProjDetail(int id){
+        String rateKey = "projectDetail";
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(userid)
+            .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getFindProjDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
 
 
     /**

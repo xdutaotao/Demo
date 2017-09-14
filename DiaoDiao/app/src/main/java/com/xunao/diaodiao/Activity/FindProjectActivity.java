@@ -3,31 +3,39 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.xunao.diaodiao.Bean.HomeResponseBean;
+import com.xunao.diaodiao.Bean.FindProjReq;
+import com.xunao.diaodiao.Bean.FindProjectRes;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.FindProjectPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.FindProjectView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
+import static com.xunao.diaodiao.Common.Constants.latData;
+import static com.xunao.diaodiao.Common.Constants.lngData;
+
 /**
  * create by
  */
-public class FindProjectActivity extends BaseActivity implements FindProjectView {
+public class FindProjectActivity extends BaseActivity implements FindProjectView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
 
     @Inject
     FindProjectPresenter presenter;
@@ -40,13 +48,18 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
+    @BindView(R.id.back_icon)
+    ImageView backIcon;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<FindProjectRes.FindProject> adapter;
+    private int page;
+    private FindProjReq req = new FindProjReq();
+    private int type;
 
-    public static void startActivity(Context context , int type) {
+    public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, FindProjectActivity.class);
-        intent.putExtra("TYPE", type);
+        intent.putExtra(INTENT_KEY, type);
         context.startActivity(intent);
     }
 
@@ -58,25 +71,74 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.home_vertical_list) {
+        type = getIntent().getIntExtra(INTENT_KEY, 0);
+        backIcon.setOnClickListener(v -> {
+            finish();
+        });
+
+        adapter = new RecyclerArrayAdapter<FindProjectRes.FindProject>(this, R.layout.home_vertical_list) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, FindProjectRes.FindProject homeBean) {
+                baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
+                baseViewHolder.setText(R.id.address, homeBean.getDesc());
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getBuild_time()));
+                baseViewHolder.setText(R.id.name, homeBean.getType());
+                baseViewHolder.setText(R.id.distance, homeBean.getDistance());
+                if (type == 0){
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
+                }else if(type == 1){
+                    baseViewHolder.setText(R.id.price_text, "共三天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                }
+
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            ProjectDetailActivity.startActivity(FindProjectActivity.this);
+            if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
+                ProjectDetailActivity.startActivity(FindProjectActivity.this,
+                        adapter.getAllData().get(i).getId(), type);
+            } else {
+                LoginActivity.startActivity(FindProjectActivity.this);
+            }
+
         });
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapterDefaultConfig(adapter, this, this);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        adapter.addAll(list);
+        onRefresh();
+    }
+
+    @Override
+    public void getData(FindProjectRes res) {
+        if (page == 1) {
+            adapter.clear();
+            adapter.addAll(res.getProject());
+        } else {
+            adapter.addAll(res.getProject());
+        }
+    }
+
+    @Override
+    public void getNoMore(String msg) {
+        ToastUtil.show(msg);
+        adapter.stopMore();
+    }
+
+    @Override
+    public void onRefresh() {
+        req.setLat(latData);
+        req.setLng(lngData);
+        page = 1;
+        req.setPage(page);
+        presenter.getProjectList(req, type);
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        req.setPage(page);
+        presenter.getProjectList(req, type);
     }
 
 
@@ -90,5 +152,6 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         super.onDestroy();
         presenter.detachView();
     }
+
 
 }

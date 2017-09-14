@@ -62,7 +62,7 @@ public class DocActivity extends BaseActivity implements DocView {
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            DocDetailActivity.startActivity(DocActivity.this);
+            DocDetailActivity.startActivity(DocActivity.this, 0);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

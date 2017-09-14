@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="徐汇区xxx小区地暖项目，速度接单"
                 android:textColor="@color/black"
+                android:id="@+id/title"
                 android:layout_margin="50px"/>
 
             <RelativeLayout
@@ -35,12 +36,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上海暖通公司"
+                    android:id="@+id/company_name"
                     android:textColor="@color/accept_btn_default"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="今天 16:00"
+                    android:id="@+id/time"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
 
@@ -58,6 +61,7 @@
 
                 <TextView
                     style="@style/item_right_text"
+                    android:id="@+id/proj_type"
                     android:text="采暖系统 水处理"/>
             </RelativeLayout>
 
@@ -72,6 +76,7 @@
 
                 <TextView
                     style="@style/item_right_text"
+                    android:id="@+id/address"
                     android:text="上海市闵行区"/>
             </RelativeLayout>
 
@@ -86,6 +91,7 @@
 
                 <TextView
                     style="@style/item_right_text"
+                    android:id="@+id/address_detail"
                     android:text="中华美路60号"/>
             </RelativeLayout>
 
@@ -100,6 +106,7 @@
 
                 <TextView
                     style="@style/item_right_text"
+                    android:id="@+id/build_time"
                     android:text="2017-07-01 10:30"/>
             </RelativeLayout>
 
@@ -117,29 +124,17 @@
                     android:text="项目详情"/>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200px">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="地暖(50m)"
+                        android:maxWidth="600px"
+                        android:id="@+id/detail"
                         android:layout_alignParentRight="true"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="电地暖(50m)"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="水处理前置（1个）"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"/>
 
                 </RelativeLayout>
 
@@ -157,6 +152,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:text="￥300000"
+                    android:id="@+id/price"
                     android:textColor="@color/colorPrimary"/>
             </RelativeLayout>
 
@@ -180,15 +176,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1. 需要工作经验丰富的"
+                    android:id="@+id/proj_detail"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/black"/>
+                    android:textColor="#7f7f7f"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1. 需要工作经验丰富的需要工作经验丰富的"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/black"/>
 
             </RelativeLayout>
 
@@ -204,7 +195,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:text="申请成功后可以查看"
-                    android:textColor="@color/black"/>
+                    android:textColor="#7f7f7f"/>
             </RelativeLayout>
 
             <View style="@style/item_divider"/>
@@ -212,6 +203,9 @@
 
             <Button
                 style="@style/login_btn_style"
+                android:id="@+id/post"
+                android:layout_marginTop="200px"
+                android:layout_marginBottom="100px"
                 android:text="立即申请"/>
 
         </LinearLayout>

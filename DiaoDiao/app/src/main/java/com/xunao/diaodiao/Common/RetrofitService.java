@@ -4,6 +4,8 @@ package com.xunao.diaodiao.Common;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.DocRes;
+import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
@@ -22,8 +24,10 @@ import com.xunao.diaodiao.Bean.BaseBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.ResponseBean;
 import com.xunao.diaodiao.Bean.SelectRespBean;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.UserInfo;
+import com.xunao.diaodiao.Present.ProjectRes;
 
 import java.util.List;
 import java.util.Map;
@@ -117,6 +121,24 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<List<DocRes>>> getDataBase(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<TypeInfoRes>> getTypeInfo(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<ProjectRes>> getMyWork(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<FindProjectRes>> getProjectList(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<FindProjDetailRes>> getFindProjDetail(@Body RequestBody body);
+
+
+
+
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

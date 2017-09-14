@@ -2,32 +2,33 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
-import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.LoginModel;
-import com.xunao.diaodiao.Model.MessageModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.View.MessageView;
+import com.xunao.diaodiao.View.ProjectView;
 
 import javax.inject.Inject;
 
 /**
- * Created by
+ * Description:
+ * Created by guzhenfu on 2017/9/14.
  */
-public class MessagePresenter extends BasePresenter<MessageView> {
+
+public class ProjectPresenter extends BasePresenter<ProjectView> {
     @Inject
     LoginModel model;
 
     @Inject
-    MessagePresenter() {
+    ProjectPresenter() {
     }
 
-    public void getTypeInfo(Context context){
-        mCompositeSubscription.add(model.getTypeInfo()
-                .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription, context) {
+
+    public void getMyWork(Context context){
+        mCompositeSubscription.add(model.getMyWork()
+                .subscribe(new RxSubUtils<ProjectRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(TypeInfoRes token) {
+                    protected void _onNext(ProjectRes token) {
                         getView().getData(token);
                     }
 
@@ -37,6 +38,4 @@ public class MessagePresenter extends BasePresenter<MessageView> {
                     }
                 }));
     }
-
-
 }

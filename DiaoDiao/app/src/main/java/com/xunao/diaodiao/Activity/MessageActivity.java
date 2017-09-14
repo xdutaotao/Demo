@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.MessageView;
@@ -82,6 +83,11 @@ public class MessageActivity extends BaseActivity implements MessageView {
 
     @Override
     public void onFailure() {
+
+    }
+
+    @Override
+    public void getData(TypeInfoRes res) {
 
     }
 }

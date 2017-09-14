@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="采暖系统"
+            android:textColor="@color/accept_btn_default"
             android:id="@+id/name"/>
 
         <TextView
@@ -68,13 +69,19 @@
         android:gravity="center"
         android:layout_marginTop="30px">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格"
+            android:id="@+id/price_text"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="￥120/天"
-            android:textSize="40px"
+            android:text="￥120"
+            android:textSize="60px"
             android:textColor="@color/colorPrimary"
             android:id="@+id/price"/>
 

@@ -21,4 +21,7 @@ public class Constants {
     public static final int SKILL_TYPE = 2;
     public static final int CUSTOM_TYPE = 3;
 
+    public static String latData;
+    public static String lngData;
+
 }

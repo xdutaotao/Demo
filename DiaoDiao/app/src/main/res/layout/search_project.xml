@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/icon_back_white"
+        android:id="@+id/back_icon"
         android:paddingLeft="40px"
         android:paddingRight="40px"/>
 
