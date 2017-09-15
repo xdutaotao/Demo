@@ -4,6 +4,7 @@ package com.xunao.diaodiao.Common;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.DocRes;
+import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.FreindBean;
@@ -136,7 +137,8 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindProjDetailRes>> getFindProjDetail(@Body RequestBody body);
 
-
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<FindLingGongRes>> getFindLingGongDetail(@Body RequestBody body);
 
 
 

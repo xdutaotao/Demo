@@ -13,6 +13,7 @@ import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
+import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
@@ -709,6 +710,7 @@ public class LoginModel extends BaseModel {
      */
     public Observable<FindProjDetailRes> getFindProjDetail(int id){
         String rateKey = "projectDetail";
+
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -721,6 +723,25 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getFindProjDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    public Observable<FindLingGongRes> getFindLingGongDetail(int id){
+        String rateKey = "oddDetail";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

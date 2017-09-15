@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
@@ -40,4 +41,23 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
                     }
                 }));
     }
+
+
+    public void getFindLingGongDetail(Context context, int req){
+        mCompositeSubscription.add(model.getFindLingGongDetail(req)
+                .subscribe(new RxSubUtils<FindLingGongRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(FindLingGongRes token) {
+                        getView().getLingGongData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+
+
 }
