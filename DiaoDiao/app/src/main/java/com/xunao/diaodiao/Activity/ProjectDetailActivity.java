@@ -3,12 +3,17 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -55,6 +60,12 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     Button post;
     @BindView(R.id.detail)
     TextView detail;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.pic_layout)
+    RelativeLayout picLayout;
+
+    private RecyclerArrayAdapter<String> adapter;
 
     public static void startActivity(Context context, int id, int type) {
         Intent intent = new Intent(context, ProjectDetailActivity.class);
@@ -77,6 +88,21 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         post.setOnClickListener(v -> {
 
         });
+
+        if (getIntent().getIntExtra("TYPE", 0) == 0){
+            picLayout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            picLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+
+            }
+        };
     }
 
     @Override

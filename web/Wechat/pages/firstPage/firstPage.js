@@ -3,11 +3,11 @@
 //获取应用实例
 var app = getApp()
 
-var appid = 'wx29602978ed48fcf4'
-var secret = '0bd7e3aa68811109cf25275bf6d6df6f'
+// var appid = 'wx29602978ed48fcf4'
+// var secret = '0bd7e3aa68811109cf25275bf6d6df6f'
 
-// var appid = 'wx993b21125135952b'
-// var secret = 'e15980b0bf3aa38985bee7c386337c67'
+var appid = 'wx993b21125135952b'
+var secret = 'e15980b0bf3aa38985bee7c386337c67'
 
 var ctx = wx.createCanvasContext('canvasCircle');
 var interval;
@@ -97,7 +97,7 @@ Page({
       success: function (res) {
         let response = res.data.substring(3)
         that.stepInfoList = JSON.parse(response).stepInfoList;
-        console.log(that.stepInfoList)
+        console.log(res)
 
         if (that.stepInfoList != null)
           that.todayStep = that.stepInfoList[that.stepInfoList.length - 1].step + "";
@@ -146,9 +146,9 @@ Page({
 
           if (res.data.exist == 0){
             //不存在
-            wx.redirectTo({
-              url: '../login/login',
-            })
+            // wx.redirectTo({
+            //   url: '../login/login',
+            // })
           }else{
             if (wx.getWeRunData) {
 

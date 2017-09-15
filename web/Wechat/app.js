@@ -31,6 +31,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    url: 'http://lh.2donghua.com'
+    url: 'https://lhjz.2donghua.com'
   }
 })

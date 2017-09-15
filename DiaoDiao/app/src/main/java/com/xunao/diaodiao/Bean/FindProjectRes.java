@@ -26,6 +26,7 @@ public class FindProjectRes {
         private String distance;
         private String type;
         private String price;
+        private String total_day;
 
         public int getId() {
             return id;
@@ -81,6 +82,14 @@ public class FindProjectRes {
 
         public void setPrice(String price) {
             this.price = price;
+        }
+
+        public String getTotal_day() {
+            return total_day;
+        }
+
+        public void setTotal_day(String total_day) {
+            this.total_day = total_day;
         }
     }
 

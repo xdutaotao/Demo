@@ -87,7 +87,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
                 if (type == 0){
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 }else if(type == 1){
-                    baseViewHolder.setText(R.id.price_text, "共三天");
+                    baseViewHolder.setText(R.id.price_text, "共"+homeBean.getTotal_day()+"天");
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
                 }
 

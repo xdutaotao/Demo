@@ -179,14 +179,18 @@
                     android:id="@+id/proj_detail"
                     android:layout_centerVertical="true"
                     android:textColor="#7f7f7f"/>
-
-
             </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recycler_view"/>
 
             <View style="@style/item_divider"/>
 
             <RelativeLayout
-                style="@style/item_layout">
+                style="@style/item_layout"
+                android:id="@+id/pic_layout">
 
                 <TextView
                     style="@style/item_left_text"

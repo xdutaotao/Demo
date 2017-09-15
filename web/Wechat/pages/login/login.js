@@ -1,5 +1,7 @@
 var app = getApp()
 
+var interval ;
+
 // pages/login/login.js
 Page({
 
@@ -9,6 +11,9 @@ Page({
   data: {
     phone: '',
     code: '',
+    codeNum: 60,
+    codeText: '获取验证码',
+    isShowToast: false  
   },
 
   /**
@@ -33,21 +38,43 @@ Page({
       });
       return;
     }
-
     var that = this;
-    wx.request({
-      url: app.globalData.url + '/index.php?g=Api&m=CommonApi&a=sendCode',
-      data: {
-        phone: that.data.phone
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      method: 'POST',
-      success: function (res) {
-        console.log(res)
-      }
-    })
+
+    if (that.data.codeText == '获取验证码' && that.data.codeNum == 60){
+        interval = setInterval(function () {
+        console.log(that.data.codeNum)
+        that.data.codeNum--;
+        that.setData({
+          codeText: that.data.codeNum + 's'
+        })
+
+        if (that.data.codeNum == 0) {
+          that.setData({
+            codeNum: 60,
+            codeText: '获取验证码'
+          })
+          clearInterval(interval);
+        }
+      }, 1000);
+
+
+      wx.request({
+        url: app.globalData.url + '/index.php?g=Api&m=CommonApi&a=sendCode',
+        data: {
+          phone: that.data.phone
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: 'POST',
+        success: function (res) {
+          console.log(res.data)
+        }
+
+      })
+
+    }
+    
 
   },
 
@@ -69,9 +96,16 @@ Page({
       success: function (res) {
         console.log(res)
         if (res.data.code == 1){
+          clearInterval(interval)
           wx.redirectTo({
             url: '../firstPage/firstPage',
           })
+        }else{
+          that.setData({
+            count: 1500,
+            toastText: res.data.msg
+          });
+          that.showToast(); 
         }
         
       }
@@ -87,7 +121,23 @@ Page({
 
   listenerCodeInput: function(e){
     this.data.code = e.detail.value;
-  }
+  },
+
+  showToast: function () {
+    var _this = this;
+    // toast时间  
+    _this.data.count = parseInt(_this.data.count) ? parseInt(_this.data.count) : 3000;
+    // 显示toast  
+    _this.setData({
+      isShowToast: true,
+    });
+    // 定时器关闭  
+    setTimeout(function () {
+      _this.setData({
+        isShowToast: false
+      });
+    }, _this.data.count);
+  },
 
 
 })
