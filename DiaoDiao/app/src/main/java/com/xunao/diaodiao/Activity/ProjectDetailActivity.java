@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,9 +22,6 @@ import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ProjectDetailView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -69,6 +67,18 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     RecyclerView recyclerView;
     @BindView(R.id.pic_layout)
     RelativeLayout picLayout;
+    @BindView(R.id.time_text)
+    TextView timeText;
+    @BindView(R.id.project_detail)
+    RelativeLayout projectDetail;
+    @BindView(R.id.project_fee)
+    RelativeLayout projectFee;
+    @BindView(R.id.getFell)
+    TextView getFell;
+    @BindView(R.id.pei_fee)
+    TextView peiFee;
+    @BindView(R.id.ling_gong_layout)
+    LinearLayout lingGongLayout;
 
     private RecyclerArrayAdapter<FindLingGongRes.OddDrawingBean> adapter;
     private int type;
@@ -94,12 +104,18 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
         });
         type = getIntent().getIntExtra("TYPE", 0);
-        if (type == 0){
+        if (type == 0) {
             picLayout.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-        }else{
+        } else if(type == 1){
             picLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+        }else if (type == 2){
+            timeText.setText("上门时间");
+            picLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            lingGongLayout.setVisibility(View.VISIBLE);
+            projectDetail.setVisibility(View.VISIBLE);
         }
 
         adapter = new RecyclerArrayAdapter<FindLingGongRes.OddDrawingBean>(this, R.layout.single_image) {
@@ -114,11 +130,17 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        if (type == 0){
+        if (type == 0) {
             presenter.getFindProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
-        }else{
+        } else if (type == 1){
+            presenter.getFindLingGongDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        }else if (type == 2){
             presenter.getFindLingGongDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
         }
+
+        companyName.setOnClickListener(v -> {
+            JoinDetailActivity.startActivity(this, getIntent().getIntExtra(INTENT_KEY, 0), type);
+        });
 
     }
 

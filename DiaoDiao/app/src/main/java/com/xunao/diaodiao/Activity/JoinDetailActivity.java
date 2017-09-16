@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.JoinDetailView;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -42,9 +45,12 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView {
     RecyclerView recyclerView;
 
     private RecyclerArrayAdapter<String> adapter;
+    private int type;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, int id, int type) {
         Intent intent = new Intent(context, JoinDetailActivity.class);
+        intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("TYPE", type);
         context.startActivity(intent);
     }
 
@@ -72,11 +78,23 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        adapter.addAll(list);
+        type = getIntent().getIntExtra("TYPE", 0);
+        if (type == 0){
+            presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0));
+        }else if(type == 1){
+            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0));
+        }
+
+
+    }
+
+    @Override
+    public void getData(String s) {
+
+    }
+
+    @Override
+    public void getOddInfo(GetOddInfoRes res) {
 
     }
 
@@ -91,5 +109,6 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView {
         super.onDestroy();
         presenter.detachView();
     }
+
 
 }

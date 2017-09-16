@@ -22,6 +22,7 @@ import com.xunao.diaodiao.Bean.GetCashRes;
 import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
+import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconReq;
 import com.xunao.diaodiao.Bean.HeadIconRes;
@@ -684,6 +685,10 @@ public class LoginModel extends BaseModel {
             case 1:
                 rateKey = "oddList";
                 break;
+
+            case 2:
+                rateKey = "maintenanceList";
+                break;
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -742,6 +747,45 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    public Observable<String> getCompanyInfo(int id){
+        String rateKey = "companyInfo";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getCompanyInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+    public Observable<GetOddInfoRes> getOddInfo(int id){
+        String rateKey = "oddInfo";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getOddInfo(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

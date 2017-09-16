@@ -9,6 +9,7 @@ import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
+import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
@@ -139,6 +140,13 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindLingGongRes>> getFindLingGongDetail(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> getCompanyInfo(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<GetOddInfoRes>> getOddInfo(@Body RequestBody body);
+
 
 
 

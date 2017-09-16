@@ -63,7 +63,7 @@ public class JoinActivity extends BaseActivity implements JoinView {
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            JoinDetailActivity.startActivity(JoinActivity.this);
+            JoinDetailActivity.startActivity(JoinActivity.this, 1, 1);
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

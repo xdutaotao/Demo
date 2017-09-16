@@ -9,6 +9,6 @@
         android:layout_height="300px"
         android:src="@drawable/icon"
         android:id="@+id/image"
-        android:layout_margin="50px"/>
+        android:layout_marginLeft="50px"/>
 
 </LinearLayout>
