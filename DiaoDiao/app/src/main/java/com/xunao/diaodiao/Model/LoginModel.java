@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
+import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
@@ -411,6 +412,32 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getHasRate(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 我的投诉列表
+     * @return
+     */
+    public Observable<MyComplaintRes> getMyComplaint(int page){
+        String rateKey = "myAppealList";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type+"")
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        RateReq req = new RateReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getMyComplaint(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

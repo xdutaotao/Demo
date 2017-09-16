@@ -10,6 +10,7 @@ public class RateReq {
     private int type;
     private String verify;
     private int page;
+    private int pageSize;
 
     public int getUserid() {
         return userid;
@@ -41,5 +42,13 @@ public class RateReq {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

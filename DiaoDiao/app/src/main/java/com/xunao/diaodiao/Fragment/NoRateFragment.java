@@ -99,7 +99,7 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
 
     @Override
     public void onRefresh() {
-        page = 0;
+        page = 1;
         presenter.getRating(page);
     }
 
@@ -111,7 +111,7 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
 
     @Override
     public void getData(MyRateRes res) {
-        if (page == 0){
+        if (page == 1){
             adapter.clear();
             adapter.addAll(res.getProject());
         }else{
@@ -128,7 +128,7 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
 

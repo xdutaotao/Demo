@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Fragment.BaseFragment;
+import com.xunao.diaodiao.Fragment.MyComplaintRecordFragment;
 import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Present.ComplaintRecordPresenter;
 import com.xunao.diaodiao.R;
@@ -43,7 +45,7 @@ public class ComplaintRecordActivity extends BaseActivity implements ComplaintRe
     ViewPager viewPager;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private List<TabFragment> fragments;
+    private List<BaseFragment> fragments;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ComplaintRecordActivity.class);
@@ -61,8 +63,8 @@ public class ComplaintRecordActivity extends BaseActivity implements ComplaintRe
         showToolbarBack(toolBar, titleText, "申诉记录");
 
         fragments=new ArrayList<>();
-        fragments.add(TabFragment.newInstance("我的申诉"));
-        fragments.add(TabFragment.newInstance("对方申诉"));
+        fragments.add(MyComplaintRecordFragment.newInstance("我的申诉"));
+        fragments.add(MyComplaintRecordFragment.newInstance("对方申诉"));
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);
         viewPager.setAdapter(mSectionsPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
@@ -88,9 +90,9 @@ public class ComplaintRecordActivity extends BaseActivity implements ComplaintRe
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private List<TabFragment> mFragmentList;
+        private List<BaseFragment> mFragmentList;
 
-        public SectionsPagerAdapter(FragmentManager fm, List<TabFragment> fragmentList) {
+        public SectionsPagerAdapter(FragmentManager fm, List<BaseFragment> fragmentList) {
             super(fm);
             this.mFragmentList = fragmentList;
         }

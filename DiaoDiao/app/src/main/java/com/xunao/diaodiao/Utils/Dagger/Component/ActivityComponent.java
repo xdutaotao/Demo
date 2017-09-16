@@ -58,6 +58,7 @@ import com.xunao.diaodiao.Fragment.AddFragment;
 import com.xunao.diaodiao.Fragment.FriendFragment;
 import com.xunao.diaodiao.Fragment.HasRateFragment;
 import com.xunao.diaodiao.Fragment.HomeFragment;
+import com.xunao.diaodiao.Fragment.MyComplaintRecordFragment;
 import com.xunao.diaodiao.Fragment.NoRateFragment;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
@@ -130,6 +131,7 @@ public interface ActivityComponent {
     void inject(TabFragment fragment);
     void inject(HasRateFragment fragment);
     void inject(NoRateFragment fragment);
+    void inject(MyComplaintRecordFragment fragment);
     void inject(GetMoneyActivity activity);
     void inject(DocActivity activity);
 }
