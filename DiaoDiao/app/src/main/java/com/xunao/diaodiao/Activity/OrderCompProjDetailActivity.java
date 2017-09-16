@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+
 /**
  * create by
  */
@@ -32,8 +34,9 @@ public class OrderCompProjDetailActivity extends BaseActivity implements OrderCo
     @BindView(R.id.pay)
     TextView pay;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderCompProjDetailActivity.class);
+        intent.putExtra(INTENT_KEY, id);
         context.startActivity(intent);
     }
 
@@ -60,4 +63,8 @@ public class OrderCompProjDetailActivity extends BaseActivity implements OrderCo
         presenter.detachView();
     }
 
+    @Override
+    public void getData(String s) {
+
+    }
 }

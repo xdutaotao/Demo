@@ -12,6 +12,8 @@
         android:layout_height="400px"
         android:background="@null"
         android:hint="请填写意见反馈"
+        android:id="@+id/content"
+        android:maxLength="200"
         android:textColorHint="#D2D2D2"
         android:gravity="top"/>
 
@@ -19,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0 / 200"
+        android:id="@+id/content_num"
         android:gravity="right|center_vertical"/>
 
 </LinearLayout>

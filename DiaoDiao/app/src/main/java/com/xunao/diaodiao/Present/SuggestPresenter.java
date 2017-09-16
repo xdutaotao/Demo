@@ -20,8 +20,8 @@ public class SuggestPresenter extends BasePresenter<SuggestView> {
     SuggestPresenter() {
     }
 
-    public void submitSuggest(Context context, String phone, String content){
-        mCompositeSubscription.add(model.submitSuggest(phone, content)
+    public void submitSuggest(Context context, String content){
+        mCompositeSubscription.add(model.submitSuggest(content)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {

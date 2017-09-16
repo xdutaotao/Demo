@@ -11,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="共3人申请"
+        android:id="@+id/people_num"
         android:textColor="@color/nav_gray"
         android:padding="50px"/>
 
-    <android.support.v7.widget.RecyclerView
+    <com.gzfgeh.GRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"/>

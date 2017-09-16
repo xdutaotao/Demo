@@ -1,6 +1,8 @@
 package com.xunao.diaodiao.Common;
 
 
+import com.xunao.diaodiao.Bean.ApplyDetailRes;
+import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.DocRes;
@@ -18,6 +20,7 @@ import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
+import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailRes;
@@ -150,8 +153,23 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<GetOddInfoRes>> getOddInfo(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> submitSuggest(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderCompRes>> myProjectWait(@Body RequestBody body);
 
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<ApplyProjRes>> getApplyList(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<ApplyDetailRes>> getApplyDetail(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> getApplyPass(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
@@ -196,9 +214,7 @@ public interface RetrofitService {
     @POST("version/getVersionsByPlatform")
     Observable<BaseBean<List<UpdateVersionBean.DataBean>>> updateVersion(@Field("platform") String platform);
 
-    @FormUrlEncoded
-    @POST("personalCenter/complaintsSuggestions")
-    Observable<BaseBean<String>> submitSuggest(@FieldMap Map<String, String> map);
+
 
 
     @FormUrlEncoded

@@ -35,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
@@ -177,7 +178,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         List<HomeProjBean> list = new ArrayList<>();
 
         switch (ShareUtils.getValue("TYPE", 1)) {
-            case 1:
+            case COMPANY_TYPE:
                 for (int i = 0; i < COMPANY_IMAGES.length; i++) {
                     HomeProjBean bean = new HomeProjBean();
                     bean.setProjImage(COMPANY_IMAGES[i]);

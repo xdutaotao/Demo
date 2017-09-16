@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
@@ -27,7 +28,7 @@ import butterknife.Unbinder;
 public abstract class BaseTabFragment<T> extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
 

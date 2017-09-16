@@ -4,6 +4,9 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.ApplyDetailRes;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
+import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
@@ -33,6 +36,7 @@ import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
+import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
 import com.xunao.diaodiao.Bean.RateDetailRes;
@@ -64,6 +68,7 @@ import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Subscriber;
 
+import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -816,7 +821,121 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     * 提交意见
+     */
+    public Observable<String> submitSuggest(String content){
+        String rateKey = "feedBack";
 
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(content).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setContent(content);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 提交意见
+     */
+    public Observable<OrderCompRes> myProjectWait(int page){
+        String rateKey = "myProjectWait";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myProjectWait(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 申请列表
+     */
+    public Observable<ApplyProjRes> getApplyList(int id, int projType){
+        String rateKey = "applyList";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(projType).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setProject_id(id);
+        req.setProject_type(projType);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getApplyList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 申请列表
+     */
+    public Observable<ApplyDetailRes> getApplyDetail(int id){
+        String rateKey = "applyList";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setProject_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getApplyDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    public Observable<String> getApplyPass(ApplyPassReq req){
+        String rateKey = "applyList";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+
+        return config.getRetrofitService().getApplyPass(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
 
 
     /**
@@ -873,17 +992,7 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
-    /**
-     *  检查更新
-     */
-    public Observable<String> submitSuggest(String phone, String content){
-        Map<String, String> map = new HashMap<>();
-        map.put("token", User.getInstance().getUserId());
-        map.put("mobile", phone);
-        map.put("content", content);
-        return config.getRetrofitService().submitSuggest(map)
-                .compose(RxUtils.handleResult());
-    }
+
 
     /**
      * 清除缓存

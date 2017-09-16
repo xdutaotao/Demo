@@ -10,6 +10,11 @@ public class GetMoneyReq {
     private int type;
     private String verify;
     private int id;
+    private String content;
+    private int page;
+    private int pageSize;
+    private int project_id;
+    private int project_type;
 
     public int getUserid() {
         return userid;
@@ -41,5 +46,46 @@ public class GetMoneyReq {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
+    }
+
+    public int getProject_type() {
+        return project_type;
+    }
+
+    public void setProject_type(int project_type) {
+        this.project_type = project_type;
     }
 }
