@@ -117,7 +117,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 .subscribe(s -> {
                     String[] data = s.split("#");
                     locationAdd.setText(data[0]);
-                    if (!TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
+                    if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                         latData = data[1];
                         lngData = data[2];
                         if (homeResponseBean == null)

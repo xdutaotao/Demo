@@ -29,6 +29,7 @@ import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconReq;
 import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
@@ -783,18 +784,20 @@ public class LoginModel extends BaseModel {
     }
 
 
-    public Observable<String> getCompanyInfo(int id){
+    public Observable<JoinDetailRes> getCompanyInfo(int id, int page){
         String rateKey = "companyInfo";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(userid)
+        sb.append(time+"").append(id).append(page).append(10).append(userid)
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setId(id);
+        req.setPage(page);
+        req.setPageSize(10);
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getCompanyInfo(setBody(rateKey, time, req))

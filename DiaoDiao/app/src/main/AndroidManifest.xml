@@ -183,6 +183,7 @@
         <activity android:name=".Activity.ApplyActivity"/>
         <activity android:name=".Activity.ApplyDetailActivity"/>
         <activity android:name=".Activity.GetMoneyActivity"/>
+        <activity android:name=".Activity.ReleaseSKillTypeActivity"/>
 
     </application>
 

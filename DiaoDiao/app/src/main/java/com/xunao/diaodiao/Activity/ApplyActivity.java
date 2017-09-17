@@ -65,7 +65,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            ApplyDetailActivity.startActivity(ApplyActivity.this);
+            ApplyDetailActivity.startActivity(ApplyActivity.this, 0);
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);

@@ -43,6 +43,7 @@ import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjSecondActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjThirdActivity;
+import com.xunao.diaodiao.Activity.ReleaseSKillTypeActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillInforActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillSureInfoActivity;
@@ -136,4 +137,5 @@ public interface ActivityComponent {
     void inject(OrderCompTabFragment fragment);
     void inject(GetMoneyActivity activity);
     void inject(DocActivity activity);
+    void inject(ReleaseSKillTypeActivity activity);
 }

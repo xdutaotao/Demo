@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.GetOddInfoRes;
+import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Model.JoinDetailModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -23,11 +24,15 @@ public class JoinDetailPresenter extends BasePresenter<JoinDetailView> {
     JoinDetailPresenter() {
     }
 
-    public void getCompanyInfo(int type){
-        mCompositeSubscription.add(model.getCompanyInfo(type)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+    /**
+     *
+     * @param type
+     */
+    public void getCompanyInfo(int type, int page){
+        mCompositeSubscription.add(model.getCompanyInfo(type, page)
+                .subscribe(new RxSubUtils<JoinDetailRes>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(JoinDetailRes token) {
                         getView().getData(token);
                     }
 

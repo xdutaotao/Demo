@@ -14,6 +14,7 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjActivity;
+import com.xunao.diaodiao.Activity.ReleaseSKillTypeActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
@@ -36,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
@@ -105,39 +107,40 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeProjBean s) {
                 switch (type){
+                    case 2:
                     case 1:{
                             baseViewHolder.setText(R.id.item_text, s.getProjText());
                             baseViewHolder.setImageResource(R.id.item_image, s.getProjImage());
                             if (TextUtils.equals(COMPANY_TEXTS[0], s.getProjText()) && projectBean != null){
-                                if (projectBean.getProject_wait() != null) {
+                                if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
                                     baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + projectBean.getProject_wait());
 
                                 }
-                                if (projectBean.getProject_doing() != null){
+                                if (!TextUtils.isEmpty(projectBean.getProject_doing())){
                                     baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + projectBean.getProject_doing());
                                 }
                             }else if(TextUtils.equals(COMPANY_TEXTS[1], s.getProjText()) && supervisorBean != null){
-                                if (supervisorBean.getSupervisor_wait() != null) {
+                                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
                                     baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + supervisorBean.getSupervisor_wait());
 
                                 }
-                                if (supervisorBean.getSupervisor_wait() != null){
+                                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())){
                                     baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + supervisorBean.getSupervisor_wait());
                                 }
                             }else if(TextUtils.equals(COMPANY_TEXTS[2], s.getProjText()) && oddBean != null){
-                                if (oddBean.getOdd_doing() != null) {
+                                if (!TextUtils.isEmpty(oddBean.getOdd_doing() )) {
                                     baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + oddBean.getOdd_doing());
 
                                 }
-                                if (oddBean.getOdd_wait() != null){
+                                if (!TextUtils.isEmpty(oddBean.getOdd_wait())){
                                     baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + oddBean.getOdd_wait());
                                 }
                             }else if (TextUtils.equals(COMPANY_TEXTS[3], s.getProjText()) && maintenanceBean != null){
-                                if (maintenanceBean.getMaintenance_doing() != null) {
+                                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
                                     baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + maintenanceBean.getMaintenance_doing());
 
                                 }
-                                if (maintenanceBean.getMaintenance_wait() != null){
+                                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait() )){
                                     baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + maintenanceBean.getMaintenance_wait());
                                 }
                             }else if(TextUtils.equals(COMPANY_TEXTS[4], s.getProjText()) && !TextUtils.isEmpty(mutual)){
@@ -145,10 +148,6 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                                 baseViewHolder.setVisible(R.id.waiting, false);
                             }
                         }
-
-                        break;
-
-                    case 2:
 
                         break;
                 }
@@ -167,6 +166,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                     break;
 
                 case 2:
+                    ReleaseSKillTypeActivity.startActivity(getContext());
                     break;
             }
         });
@@ -178,6 +178,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         List<HomeProjBean> list = new ArrayList<>();
 
         switch (ShareUtils.getValue("TYPE", 1)) {
+            case SKILL_TYPE:
             case COMPANY_TYPE:
                 for (int i = 0; i < COMPANY_IMAGES.length; i++) {
                     HomeProjBean bean = new HomeProjBean();
@@ -185,9 +186,6 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                     bean.setProjText(COMPANY_TEXTS[i]);
                     list.add(bean);
                 }
-                break;
-
-            case 2:
                 break;
 
             case 3:
@@ -215,6 +213,11 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         }
     }
 
+    @Override
+    public void updateData() {
+        super.updateData();
+        presenter.getMyWork(getContext());
+    }
 
     @Override
     public void onResume() {
