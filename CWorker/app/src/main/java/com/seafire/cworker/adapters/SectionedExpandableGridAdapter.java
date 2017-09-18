@@ -68,7 +68,7 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
                 final FreindBean.UsersBean item = (FreindBean.UsersBean) mDataArrayList.get(position);
                 holder.itemTextView.setText(item.getName() + (item.getType() != 0?" -- 管理员":""));
                 Glide.with(mContext).load(item.getFace())
-                        .placeholder(R.drawable.ic_launcher_round)
+                        .placeholder(R.drawable.my_head)
                         .bitmapTransform(new CropCircleTransformation(mContext))
                         .into(holder.itemHeadIcon);
                 holder.view.setOnClickListener(new View.OnClickListener() {

@@ -13,7 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.seafire.cworker.Common.RetrofitConfig;
+import com.seafire.cworker.Model.User;
 import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.RxUtils;
 
 import java.io.File;
 import cn.jpush.im.android.api.JMessageClient;
@@ -106,6 +109,13 @@ public class BaseActivity extends Activity {
             case user_logout:
                 title = mContext.getString(R.string.user_logout_dialog_title);
                 msg = mContext.getString(R.string.user_logout_dialog_message);
+
+                RetrofitConfig.getInstance().getRetrofitService().logout(User.getInstance().getUserId())
+                        .compose(RxUtils.handleResult())
+                        .subscribe(s -> {
+                            User.getInstance().clearUser();
+                        });
+
                 dialog = DialogCreator.createBaseCustomDialog(mContext, title, msg, onClickListener);
                 break;
             case user_deleted:

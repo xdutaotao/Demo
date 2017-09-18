@@ -146,6 +146,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 CustomDialog.viewHide(popView);
             return false;
         });
+
+        popView.setOnClickListener(v -> {
+            CustomDialog.viewHide(v);
+        });
         return view;
     }
 
