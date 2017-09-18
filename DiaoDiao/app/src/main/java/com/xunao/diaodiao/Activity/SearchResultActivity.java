@@ -32,7 +32,6 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
  * create by
  */
 public class SearchResultActivity extends BaseActivity implements SearchResultView {
-    private static final String[] titles = {"精华", "猜你喜欢", "经典"};
     @Inject
     SearchResultPresenter presenter;
     @BindView(R.id.title_text)

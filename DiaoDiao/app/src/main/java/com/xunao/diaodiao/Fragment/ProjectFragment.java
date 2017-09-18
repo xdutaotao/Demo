@@ -159,14 +159,22 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         adapter.setOnItemClickListener((view1, i) -> {
             switch (i) {
                 case 0:
-                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                    if (type == 0){
+                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), 0);
+                    }
+
                     break;
 
                 case 1:
                     break;
 
                 case 2:
-                    ReleaseSKillTypeActivity.startActivity(getContext());
+                    if (type == 0){
+
+                    }else{
+                        ReleaseSKillTypeActivity.startActivity(getContext());
+                    }
+
                     break;
             }
         });

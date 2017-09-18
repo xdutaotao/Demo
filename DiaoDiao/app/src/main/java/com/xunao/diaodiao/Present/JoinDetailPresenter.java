@@ -44,8 +44,8 @@ public class JoinDetailPresenter extends BasePresenter<JoinDetailView> {
     }
 
 
-    public void getOddInfo(int type){
-        mCompositeSubscription.add(model.getOddInfo(type)
+    public void getOddInfo(int type, int page){
+        mCompositeSubscription.add(model.getOddInfo(type, page)
                 .subscribe(new RxSubUtils<GetOddInfoRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(GetOddInfoRes token) {

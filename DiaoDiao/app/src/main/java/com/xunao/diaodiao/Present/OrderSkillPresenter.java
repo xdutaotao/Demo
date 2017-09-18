@@ -1,16 +1,12 @@
 package com.xunao.diaodiao.Present;
 
-import android.content.Context;
-
-import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.View.DocView;
 import com.xunao.diaodiao.View.OrderCompView;
-
-import java.util.List;
+import com.xunao.diaodiao.View.OrderSkillView;
 
 import javax.inject.Inject;
 
@@ -19,20 +15,20 @@ import javax.inject.Inject;
  * Created by guzhenfu on 2017/9/14.
  */
 
-public class OrderComPresenter extends BasePresenter<OrderCompView> {
+public class OrderSkillPresenter extends BasePresenter<OrderSkillView> {
 
     @Inject
     LoginModel model;
 
     @Inject
-    OrderComPresenter() {
+    OrderSkillPresenter() {
     }
 
-    public void myProjectWait(int page){
-        mCompositeSubscription.add(model.myProjectWait(page)
-                .subscribe(new RxSubUtils<OrderCompRes>(mCompositeSubscription) {
+    public void mySkillWait(int page){
+        mCompositeSubscription.add(model.mySkillWait(page)
+                .subscribe(new RxSubUtils<OrderSkillRes>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(OrderCompRes token) {
+                    protected void _onNext(OrderSkillRes token) {
                         getView().getData(token);
                     }
 

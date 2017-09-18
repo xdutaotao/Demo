@@ -22,6 +22,9 @@ import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailRes;
@@ -146,6 +149,9 @@ public interface RetrofitService {
     Observable<BaseBean<FindProjDetailRes>> getFindProjDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> postProject(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindLingGongRes>> getFindLingGongDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
@@ -160,6 +166,17 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<OrderCompRes>> myProjectWait(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillRes>> mySkillWait(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillDoingRes>> mySkillDoing(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillFinishRes>> mySkillFinish(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> mySkillProjDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ApplyProjRes>> getApplyList(@Body RequestBody body);

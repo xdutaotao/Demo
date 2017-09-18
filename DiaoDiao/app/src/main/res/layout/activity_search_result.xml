@@ -39,7 +39,7 @@
             android:layout_marginTop="20px"
             android:layout_marginBottom="20px"
             android:drawablePadding="20px"
-            android:drawableLeft="@drawable/icon_dinwei"
+            android:drawableLeft="@drawable/icon_back"
             android:gravity="center_vertical"
             android:text="当前定位城市：上海市"
             android:id="@+id/current_city"
@@ -54,7 +54,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginRight="100px"/>
 
 
         <com.xunao.diaodiao.Widget.QuickIndexView
@@ -62,7 +63,7 @@
             android:layout_width="100px"
             android:background="@color/white"
             android:layout_height="match_parent"
-            android:layout_marginBottom="100px"
+            android:layout_marginBottom="50px"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>

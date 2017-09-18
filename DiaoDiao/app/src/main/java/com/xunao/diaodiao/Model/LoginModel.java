@@ -38,6 +38,9 @@ import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
 import com.xunao.diaodiao.Bean.RateDetailRes;
@@ -764,6 +767,31 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    //申请项目
+    public Observable<String> postProject(int id, int types){
+        String rateKey = "applyProject";
+        if (types == 0){
+
+        }else{
+            rateKey = "applyOdd";
+        }
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().postProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
 
     public Observable<FindLingGongRes> getFindLingGongDetail(int id){
         String rateKey = "oddDetail";
@@ -806,8 +834,28 @@ public class LoginModel extends BaseModel {
 
 
 
-    public Observable<GetOddInfoRes> getOddInfo(int id){
+    public Observable<GetOddInfoRes> getOddInfo(int id, int page){
         String rateKey = "oddInfo";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(page).append(10).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setId(id);
+        req.setPageSize(10);
+        req.setPage(page);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getOddInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    public Observable<String> mySkillProjDetail(int id){
+        String rateKey = "myPublishOddDetail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -818,9 +866,10 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setId(id);
+        req.setOdd_id(id);
         req.setVerify(sb.toString());
 
-        return config.getRetrofitService().getOddInfo(setBody(rateKey, time, req))
+        return config.getRetrofitService().mySkillProjDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -849,7 +898,7 @@ public class LoginModel extends BaseModel {
     }
 
     /**
-     * 提交意见
+     * 项目进行中
      */
     public Observable<OrderCompRes> myProjectWait(int page){
         String rateKey = "myProjectWait";
@@ -870,6 +919,81 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myProjectWait(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发布的 零工 待确认
+     */
+    public Observable<OrderSkillRes> mySkillWait(int page){
+        String rateKey = "myPublishOddWait";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().mySkillWait(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发布的 零工 进行中
+     */
+    public Observable<OrderSkillDoingRes> mySkillDoing(int page){
+        String rateKey = "myPublishOddDoing";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().mySkillDoing(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发布的 零工 已完成
+     */
+    public Observable<OrderSkillFinishRes> mySkillFinish(int page){
+        String rateKey = "myPublishOddFinish";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().mySkillFinish(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

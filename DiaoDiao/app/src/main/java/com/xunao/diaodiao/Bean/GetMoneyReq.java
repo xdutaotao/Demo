@@ -15,6 +15,7 @@ public class GetMoneyReq {
     private int pageSize;
     private int project_id;
     private int project_type;
+    private int odd_id;
 
     public int getUserid() {
         return userid;
@@ -87,5 +88,13 @@ public class GetMoneyReq {
 
     public void setProject_type(int project_type) {
         this.project_type = project_type;
+    }
+
+    public int getOdd_id() {
+        return odd_id;
+    }
+
+    public void setOdd_id(int odd_id) {
+        this.odd_id = odd_id;
     }
 }

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,9 +16,6 @@ import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.JoinDetailView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -42,14 +37,19 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     Toolbar toolBar;
     @BindView(R.id.rating_star)
     RatingBar ratingStar;
-    @BindView(R.id.time)
-    TextView time;
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.address)
+    TextView address;
+    @BindView(R.id.score)
+    TextView score;
 
     private RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean> adapter;
+    private RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean> oddAdapter;
     private int type;
-    private int page= 1;
+    private int page = 1;
 
     public static void startActivity(Context context, int id, int type) {
         Intent intent = new Intent(context, JoinDetailActivity.class);
@@ -68,22 +68,34 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
         showToolbarBack(toolBar, titleText, "公司介绍");
 
-        adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
-                baseViewHolder.setText(R.id.content, homeBean.getContent());
-                baseViewHolder.setText(R.id.head_info, homeBean.getName());
-                baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
-            }
-        };
-
-        adapter.setOnItemClickListener((view, i) -> {
-            ProjectDetailActivity.startActivity(JoinDetailActivity.this, 0, 0);
-        });
-
-        recyclerView.setAdapterDefaultConfig(adapter, this, this);
-
         type = getIntent().getIntExtra("TYPE", 0);
+
+        if (type == 0){
+            adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
+                @Override
+                protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
+                    baseViewHolder.setText(R.id.content, homeBean.getContent());
+                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
+                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
+                }
+            };
+
+            recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        }else{
+            oddAdapter = new RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
+                @Override
+                protected void convert(BaseViewHolder baseViewHolder, GetOddInfoRes.EvaluateInfoBean homeBean) {
+                    baseViewHolder.setText(R.id.content, homeBean.getContent());
+                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
+                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
+                }
+            };
+
+            recyclerView.setAdapterDefaultConfig(oddAdapter, this, this);
+        }
+
+
+
         onRefresh();
 
 
@@ -92,44 +104,71 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     @Override
     public void onRefresh() {
         page = 1;
-        if (type == 0){
+        if (type == 0) {
             presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        }else if(type == 1){
-            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0));
+        } else if (type == 1) {
+            //零工
+            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
         }
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        if (type == 0){
+        if (type == 0) {
             presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        }else if(type == 1){
-            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0));
+        } else if (type == 1) {
+            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
         }
     }
 
     @Override
     public void getData(JoinDetailRes s) {
-        if (page == 1){
+        if (page == 1) {
             adapter.clear();
+            name.setText(s.getCompany_info().getName());
+            address.setText(s.getCompany_info().getAddress());
+            score.setText(s.getCompany_info().getPoint());
+            ratingStar.setRating(Float.valueOf(s.getCompany_info().getPoint()));
         }
 
-        if (s.getEvaluate_Info().size() == 0){
+        if (s.getEvaluate_Info().size() == 0) {
             adapter.stopMore();
-        }else{
+        } else {
             adapter.addAll(s.getEvaluate_Info());
         }
     }
 
     @Override
-    public void getOddInfo(GetOddInfoRes res) {
+    public void getOddInfo(GetOddInfoRes s) {
+        if (page == 1) {
+            oddAdapter.clear();
+            name.setText(s.getOdd_info().getName());
+            address.setText(s.getOdd_info().getAddress());
+            score.setText(s.getOdd_info().getPoint());
+            ratingStar.setRating(Float.valueOf(s.getOdd_info().getPoint()));
+        }
 
+        if (s.getEvaluate_Info() == null){
+            recyclerView.showEmpty();
+            return;
+        }
+
+        if (s.getEvaluate_Info().size() == 0) {
+            oddAdapter.stopMore();
+        } else {
+            oddAdapter.addAll(s.getEvaluate_Info());
+        }
     }
 
 
     @Override
     public void onFailure() {
+        if (type == 0){
+            adapter.stopMore();
+        }else{
+            oddAdapter.stopMore();
+        }
 
     }
 
@@ -138,7 +177,6 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

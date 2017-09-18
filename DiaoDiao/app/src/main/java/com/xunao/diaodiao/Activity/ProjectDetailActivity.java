@@ -20,6 +20,7 @@ import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ProjectDetailView;
 
@@ -100,9 +101,6 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
         showToolbarBack(toolBar, titleText, "项目详情");
 
-        post.setOnClickListener(v -> {
-
-        });
         type = getIntent().getIntExtra("TYPE", 0);
         if (type == 0) {
             picLayout.setVisibility(View.VISIBLE);
@@ -142,6 +140,13 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
             JoinDetailActivity.startActivity(this, getIntent().getIntExtra(INTENT_KEY, 0), type);
         });
 
+        post.setOnClickListener(v -> {
+            //申请
+            presenter.postProject(ProjectDetailActivity.this,
+                    getIntent().getIntExtra(INTENT_KEY, 0), type);
+
+        });
+
     }
 
     @Override
@@ -174,6 +179,12 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
 
         adapter.addAll(res.getOdd_drawing());
+    }
+
+    @Override
+    public void postProject(String res) {
+        ToastUtil.show("申请成功");
+        finish();
     }
 
     @Override
