@@ -71,7 +71,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         adapter = new RecyclerArrayAdapter<HomeResponseBean.TopicBean.GroupDataBean>(this, R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.TopicBean.GroupDataBean dataBean) {
-                baseViewHolder.setImageUrl(R.id.item_img, dataBean.getPic(), R.drawable.ic_launcher_round);
+                baseViewHolder.setImageUrl(R.id.item_img, dataBean.getPic(), R.drawable.default_pic);
                 baseViewHolder.setText(R.id.item_title, dataBean.getTitle());
                 baseViewHolder.setText(R.id.item_author, "作者:"+dataBean.getAuthor());
                 baseViewHolder.setText(R.id.item_time, "更新时间:"+ Utils.getStrTime(dataBean.getUpdateTime()+""));

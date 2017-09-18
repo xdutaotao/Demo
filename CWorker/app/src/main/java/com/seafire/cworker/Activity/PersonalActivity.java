@@ -92,14 +92,15 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         UserInfo userInfo = User.getInstance().getUserInfo();
         Glide.with(this)
                 .load(User.getInstance().getUserInfo().getPerson().getFace())
-                .placeholder(R.drawable.ic_launcher_round)
+                .placeholder(R.drawable.my_head)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(headIcon);
         name.setText(userInfo.getPerson().getName());
         sex.setText(userInfo.getPerson().getSex() == 1 ? "男" : "女");
         level.setText("LV" + userInfo.getPerson().getExperience() / 3500);
         createTime.setText(Utils.getStrTime(userInfo.getPerson().getDateline() + ""));
-        project.setText(userInfo.getProject().getName());
+        if (userInfo.getProject() != null)
+            project.setText(userInfo.getProject().getName());
         photo.setText(userInfo.getPerson().getMobile());
         email.setText(userInfo.getPerson().getEmail());
         address.setText(userInfo.getPerson().getAddress());
