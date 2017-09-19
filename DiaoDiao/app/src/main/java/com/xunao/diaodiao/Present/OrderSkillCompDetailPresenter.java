@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.JoinDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.OrderSkillCompDetailModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -25,9 +26,9 @@ public class OrderSkillCompDetailPresenter extends BasePresenter<OrderSkillCompD
 
     public void mySkillProjDetail(Context context, int type){
         mCompositeSubscription.add(model.mySkillProjDetail(type)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<SkillProjDetailRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(SkillProjDetailRes token) {
                         getView().getData(token);
                     }
 

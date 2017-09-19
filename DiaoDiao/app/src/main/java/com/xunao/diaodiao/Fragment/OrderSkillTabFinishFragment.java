@@ -78,7 +78,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
-                baseViewHolder.setText(R.id.price_text, "共"+homeBean.getTotal_day()+"天");
+                baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
 
                 if (homeBean.getStatus() == 1){
                     //已完成
@@ -118,6 +118,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
 
     @Override
     public void onRefresh() {
+        page = 1;
         presenter.mySkillFinish(page);
     }
 

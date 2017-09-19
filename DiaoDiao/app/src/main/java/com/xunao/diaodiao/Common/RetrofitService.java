@@ -19,6 +19,7 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
+import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.OrderCompRes;
@@ -34,6 +35,7 @@ import com.xunao.diaodiao.Bean.BaseBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.ResponseBean;
 import com.xunao.diaodiao.Bean.SelectRespBean;
+import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -176,7 +178,10 @@ public interface RetrofitService {
     Observable<BaseBean<OrderSkillFinishRes>> mySkillFinish(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> mySkillProjDetail(@Body RequestBody body);
+    Observable<BaseBean<MyPublishOddWorkRes>> myPublishOddWorkProgress(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SkillProjDetailRes>> mySkillProjDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ApplyProjRes>> getApplyList(@Body RequestBody body);

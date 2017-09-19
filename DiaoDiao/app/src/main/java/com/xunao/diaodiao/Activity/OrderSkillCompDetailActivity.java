@@ -3,12 +3,17 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Present.OrderSkillCompDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.OrderSkillCompDetailView;
 
 import javax.inject.Inject;
@@ -52,6 +57,8 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private RecyclerArrayAdapter<String> adapter;
+
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderSkillCompDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
@@ -66,12 +73,42 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        showToolbarBack(toolBar, title, "零工详情");
+
         presenter.mySkillProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
+
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setImageUrl(R.id.image, s);
+            }
+        };
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void getData(String s) {
+    public void getData(SkillProjDetailRes s) {
+        if (s != null && s.getOdd() != null){
+            SkillProjDetailRes.OddBean oddBean = s.getOdd().get(0);
 
+            title.setText(oddBean.getTitle());
+            address.setText(oddBean.getRegion());
+            addressDetail.setText(oddBean.getAddress());
+            type.setText(oddBean.getType());
+            name.setText(oddBean.getContact());
+            phone.setText(oddBean.getContact_mobile());
+            money.setText(oddBean.getDaily_wage()+"元");
+            days.setText(oddBean.getTotal_day()+"天");
+            time.setText(Utils.strToDateLong(Long.valueOf(oddBean.getBuild_time())));
+            projDetail.setText(oddBean.getDescribe());
+
+            adapter.clear();
+            adapter.addAll(oddBean.getImages());
+        }
     }
 
 

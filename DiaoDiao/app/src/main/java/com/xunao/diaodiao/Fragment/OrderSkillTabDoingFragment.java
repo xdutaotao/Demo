@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,12 +81,13 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
-                baseViewHolder.setText(R.id.price_text, "共"+homeBean.getTotal_day()+"天");
+                if (!TextUtils.isEmpty(homeBean.getTotal_day()))
+                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            OrderSkillCompDetailActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+            OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
                     adapter.getAllData().get(i).getOdd_id());
         });
 
@@ -109,6 +111,7 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
 
     @Override
     public void onRefresh() {
+        page=1;
         presenter.mySkillDoing(page);
     }
 

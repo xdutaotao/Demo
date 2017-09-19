@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Fragment.BaseFragment;
 import com.xunao.diaodiao.Fragment.BaseTabFragment;
 import com.xunao.diaodiao.Fragment.OrderCompTabFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingFragment;
+import com.xunao.diaodiao.Fragment.OrderSkillTabFinishFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabFragment;
 import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Present.OrderCompProjPresenter;
@@ -94,7 +95,7 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         }else{
             fragments.add(OrderSkillTabFragment.newInstance("待确认"));
             fragments.add(OrderSkillTabDoingFragment.newInstance("进行中"));
-            fragments.add(OrderSkillTabFragment.newInstance("已完成/取消"));
+            fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消"));
         }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);

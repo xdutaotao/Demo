@@ -3,6 +3,9 @@ package com.xunao.diaodiao.Common;
 import android.content.Context;
 
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Common.RetrofitAdapter.DoubleDefault0Adapter;
+import com.xunao.diaodiao.Common.RetrofitAdapter.IntegerDefault0Adapter;
+import com.xunao.diaodiao.Common.RetrofitAdapter.LongDefault0Adapter;
 import com.xunao.diaodiao.Utils.LogUtils;
 import com.xunao.diaodiao.Utils.NetWorkUtils;
 import com.google.gson.Gson;
@@ -165,6 +168,12 @@ public class RetrofitConfig {
 //                .addInterceptor(cacheInterceptor)
 
         Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Integer.class, new IntegerDefault0Adapter())
+                .registerTypeAdapter(int.class, new IntegerDefault0Adapter())
+                .registerTypeAdapter(Double.class, new DoubleDefault0Adapter())
+                .registerTypeAdapter(double.class, new DoubleDefault0Adapter())
+                .registerTypeAdapter(Long.class, new LongDefault0Adapter())
+                .registerTypeAdapter(long.class, new LongDefault0Adapter())
                 .setLenient()
                 .create();
 
@@ -181,7 +190,6 @@ public class RetrofitConfig {
     public RetrofitService getRetrofitService() {
         return retrofitService;
     }
-
 
     private void disableConnectionReuseIfNecessary() {
         // Work around pre-Froyo bugs in HTTP connection reuse.

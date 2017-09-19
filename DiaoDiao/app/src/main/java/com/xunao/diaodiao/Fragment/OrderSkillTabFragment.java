@@ -121,6 +121,7 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
+        page = 1;
         presenter.mySkillWait(page);
     }
 

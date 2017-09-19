@@ -36,6 +36,7 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
+import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
@@ -48,6 +49,7 @@ import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
+import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Present.ProjectRes;
@@ -854,18 +856,19 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
-    public Observable<String> mySkillProjDetail(int id){
+    public Observable<SkillProjDetailRes> mySkillProjDetail(int id){
         String rateKey = "myPublishOddDetail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(userid)
+        sb.append(time+"").append(id).append(type).append(userid)
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
-        req.setId(id);
+        req.setType(type);
         req.setOdd_id(id);
         req.setVerify(sb.toString());
 
@@ -994,6 +997,30 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().mySkillFinish(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发布的 零工 进行中 进度
+     */
+    public Observable<MyPublishOddWorkRes> myPublishOddWorkProgress(int id){
+        String rateKey = "myPublishOddWork";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setOdd_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myPublishOddWorkProgress(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
