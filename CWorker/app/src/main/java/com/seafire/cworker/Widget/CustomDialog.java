@@ -131,6 +131,8 @@ public class CustomDialog {
     }
 
     public static void viewShow(View view) {
+        view.setFocusableInTouchMode(true);
+        view.setFocusable(true);
         ObjectAnimator anim1 = ObjectAnimator.ofFloat(view, "scaleX",
                 0.5f, 1.2f);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(view, "scaleY",

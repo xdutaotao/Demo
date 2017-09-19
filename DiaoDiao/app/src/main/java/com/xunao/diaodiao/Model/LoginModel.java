@@ -36,11 +36,14 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
+import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
@@ -50,8 +53,10 @@ import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Present.OrderSkillRecievePresenter;
 import com.xunao.diaodiao.Present.ProjectRes;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.JsonUtils;
@@ -856,6 +861,7 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    //我发布的  详情
     public Observable<SkillProjDetailRes> mySkillProjDetail(int id){
         String rateKey = "myPublishOddDetail";
 
@@ -873,6 +879,27 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().mySkillProjDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    //我接的 零工 详情
+    public Observable<SkillProjRecieveDetailRes> mySkillProjRecieveDetail(int id){
+        String rateKey = "myAcceptOddDetail";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setOdd_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().mySkillProjRecieveDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -951,6 +978,55 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 技术 我接的 零工 待确认
+     */
+    public Observable<OrderSkillRecieveRes> myAcceptOddWait(int page){
+        String rateKey = "myAcceptOddWait";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddWait(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我接的 零工 取消申请
+     */
+    public Observable<String> myAcceptOddCancel(int odd_id){
+        String rateKey = "myAcceptOddCancel";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(odd_id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setOdd_id(odd_id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddCancel(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 技术 我发布的 零工 进行中
      */
     public Observable<OrderSkillDoingRes> mySkillDoing(int page){
@@ -972,6 +1048,31 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().mySkillDoing(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我接的 零工 进行中
+     */
+    public Observable<OrderSkillDoingRes> myAcceptOddDoing(int page){
+        String rateKey = "myAcceptOddDoing";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddDoing(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -1001,6 +1102,82 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 技术 我接的 零工 已完成
+     */
+    public Observable<OrderSkillFinishRecieveRes> myAcceptOddFinish(int page){
+        String rateKey = "myAcceptOddFinish";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddFinish(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发布的 零工 进行中 通过
+     */
+    public Observable<String> myPublishOddSuccess(int id){
+        String rateKey = "myPublishOddSuccess";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append(id)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setWork_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myPublishOddSuccess(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 技术 我发布的 零工 进行中 付款
+     */
+    public Observable<String> myPublishOddFail(MyPublicOddFailReq req){
+        String rateKey = "myPublishOddFail";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getReason())
+                .append(type).append(userid).append(req.getWork_id())
+                .append("security");
+
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myPublishOddFail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
      * 技术 我发布的 零工 进行中 进度
      */
     public Observable<MyPublishOddWorkRes> myPublishOddWorkProgress(int id){
@@ -1021,6 +1198,30 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myPublishOddWorkProgress(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 技术 我发接的 零工 进行中 进度
+     */
+    public Observable<MyPublishOddWorkRes> myAcceptOddWork(int id){
+        String rateKey = "myAcceptOddWork";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setOdd_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddWork(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

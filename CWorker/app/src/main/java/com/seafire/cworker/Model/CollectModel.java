@@ -48,6 +48,8 @@ public class CollectModel extends BaseModel {
 
                             @Override
                             public void call(Subscriber<? super PackageBean.ResultBean> subscriber) {
+
+
                                 subscriber.onNext(packageBean.getResult());
                                 subscriber.onCompleted();
                             }

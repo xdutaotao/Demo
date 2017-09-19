@@ -27,6 +27,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 
@@ -73,6 +74,13 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("user/logout")
     Observable<BaseBean<String>> logout(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("user/logout")
+    Observable<BaseBean<String>> postAddr(@FieldMap Map<String, String> map);
+
+
+    Observable<String> getAddr();
 
     @GET("home/getFirstPage")
     Observable<HomeResponseBean> getFirstPage();

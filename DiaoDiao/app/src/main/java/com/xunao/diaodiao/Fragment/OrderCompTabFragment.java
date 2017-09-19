@@ -87,7 +87,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_fee());
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
+                    //OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {

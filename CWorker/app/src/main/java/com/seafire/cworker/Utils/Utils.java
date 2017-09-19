@@ -14,18 +14,27 @@ import android.util.Xml;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.gson.Gson;
 import com.seafire.cworker.Activity.LoginActivity;
 import com.seafire.cworker.App;
+import com.seafire.cworker.Bean.LocationBean;
+import com.seafire.cworker.Common.RetrofitConfig;
 
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -735,6 +744,58 @@ public class Utils {
         }
 
         return false;
+    }
+
+
+    public static void postAddr(float lat, float nat, float addr){
+
+    }
+
+    private static String getLonLat(String address){
+        //返回输入地址address的经纬度信息, 格式是 经度,纬度
+        String queryUrl = "http://restapi.amap.com/v3/geocode/geo?key=5cbb5fbca9d31831bd37aa029f2d1c62&address="+address;
+        String queryResult = getResponse(queryUrl);  //高德接品返回的是JSON格式的字符串
+
+        LocationBean bean = new Gson().fromJson(queryResult, LocationBean.class);
+//        JSONObject jo = new JSONObject().fromObject(queryResult);
+//        JSONArray ja = jo.getJSONArray("geocodes");
+//        return new JSONObject().fromObject(ja.getString(0)).get("location").toString();
+        return bean.getGeocodes().get(0).getLocation();
+    }
+
+    private static Long getDistance(String startLonLat, String endLonLat){
+        //返回起始地startAddr与目的地endAddr之间的距离，单位：米
+        Long result = new Long(0);
+        String queryUrl = "http://restapi.amap.com/v3/distance?key=5cbb5fbca9d31831bd37aa029f2d1c62&origins="+startLonLat+"&destination="+endLonLat;
+                String queryResult = getResponse(queryUrl);
+//        JSONObject jo = new JSONObject().fromObject(queryResult);
+//        JSONArray ja = jo.getJSONArray("results");
+//
+//        result = Long.parseLong(new JSONObject().fromObject(ja.getString(0)).get("distance").toString());
+        return result;
+//        return queryResult;
+    }
+
+    private static String getResponse(String serverUrl){
+        //用JAVA发起http请求，并返回json格式的结果
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(serverUrl);
+            URLConnection conn = url.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line;
+            while((line = in.readLine()) != null){
+                result.append(line);
+            }
+            in.close();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result.toString();
     }
 
 

@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
-import com.xunao.diaodiao.Present.OrderProjProgressPresenter;
+import com.xunao.diaodiao.Present.OrderProjRecieveProgressPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.OrderProjProgressView;
+import com.xunao.diaodiao.View.OrderProjRecieveProgressView;
 
 import javax.inject.Inject;
 
@@ -28,10 +31,10 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class OrderProjProgressActivity extends BaseActivity implements OrderProjProgressView {
+public class OrderProjRecieveProgressActivity extends BaseActivity implements OrderProjRecieveProgressView {
 
     @Inject
-    OrderProjProgressPresenter presenter;
+    OrderProjRecieveProgressPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -42,13 +45,29 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     TextView pass;
     @BindView(R.id.give_money)
     TextView giveMoney;
+    @BindView(R.id.recycler_view_layout)
+    RelativeLayout recyclerViewLayout;
+    @BindView(R.id.time)
+    TextView time;
+    @BindView(R.id.address)
+    TextView address;
+    @BindView(R.id.recycler_view_item)
+    RecyclerView recyclerViewItem;
+    @BindView(R.id.sign_layout)
+    LinearLayout signLayout;
+    @BindView(R.id.post)
+    TextView post;
+    @BindView(R.id.apply_money)
+    TextView applyMoney;
 
     private RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
     private LinearLayoutManager manager;
 
+    private RecyclerArrayAdapter<String> signAdapter;
+
     public static void startActivity(Context context, int id) {
-        Intent intent = new Intent(context, OrderProjProgressActivity.class);
+        Intent intent = new Intent(context, OrderProjRecieveProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
         context.startActivity(intent);
     }
@@ -57,14 +76,14 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_order_proj_progress);
-        setContentView(R.layout.skill_project_progress);
+        setContentView(R.layout.skill_project_recieve_progress);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "项目进度");
 
-        adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_progress_item) {
+        adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_recieve_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "
@@ -94,7 +113,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
-        presenter.myPublishOddWorkProgress(getIntent().getIntExtra(INTENT_KEY, 0));
+        presenter.myAcceptOddWork(getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
             MyPublicOddFailReq req = new MyPublicOddFailReq();
@@ -108,11 +127,34 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
             presenter.myPublishOddSuccess(0);
         });
 
+        signAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setImageUrl(R.id.image, s);
+            }
+        };
+
+        post.setOnClickListener(v -> {
+
+        });
+
+        applyMoney.setOnClickListener(v -> {
+
+        });
+
+
+
 
     }
 
     @Override
     public void getData(MyPublishOddWorkRes res) {
+        if (res.getWork() == null || res.getWork().size() == 0) {
+            recyclerViewLayout.setVisibility(View.GONE);
+            signLayout.setVisibility(View.VISIBLE);
+        } else {
+            adapter.addAll(res.getWork());
+        }
 
     }
 

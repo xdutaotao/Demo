@@ -19,6 +19,7 @@ import com.seafire.cworker.Activity.LoginActivity;
 import com.seafire.cworker.Bean.CollectBean;
 import com.seafire.cworker.Bean.RxBusEvent;
 import com.seafire.cworker.Common.Constants;
+import com.seafire.cworker.Common.RetrofitConfig;
 import com.seafire.cworker.Fragment.AddFragment;
 import com.seafire.cworker.Fragment.HomeFragment;
 import com.seafire.cworker.Fragment.MessageFragment;
@@ -27,13 +28,17 @@ import com.seafire.cworker.Fragment.SearchFragment;
 import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Utils.BadgeUtil;
 import com.seafire.cworker.Utils.JsonUtils;
+import com.seafire.cworker.Utils.LocationUtils;
 import com.seafire.cworker.Utils.RxBus;
+import com.seafire.cworker.Utils.RxUtils;
 import com.seafire.cworker.Utils.ShareUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +55,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private int failTime = 0;
     private BadgeItem badgeItem;
     private BadgeItem msgBadgeItem;
+
+    private boolean post = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +97,48 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         //VIP 到期 重新登录
         if (User.getInstance().getUserInfo() != null){
-            long days = (User.getInstance().getUserInfo().getPerson().getVipDateline() - System.currentTimeMillis()/1000)/(60*60*24);
-            if (days <= 0) {
-                //User.getInstance().clearUser();
+            if (User.getInstance().getUserInfo().getPerson().getVIP() == 2){
+                //超级管理员
+                postAdd();
+            }else{
+                if (User.getInstance().getUserInfo().getProject() == null){
+
+                }else{
+                    String address = User.getInstance().getUserInfo().getProject().getAddress();
+                    ToastUtil.show(address);
+
+                }
+
             }
+        }
+    }
+
+    private void postAdd(){
+        if (!post){
+            new LocationUtils().getLocationAddr(this);
+            RxBus.getInstance().toObservable(String.class)
+                    .compose(RxUtils.applyIOToMainThreadSchedulers())
+                    .subscribe(s -> {
+                        String[] data = s.split("#");
+                        if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
+                            String latData = data[1];
+                            String lngData = data[2];
+
+                            Map<String ,String> map = new HashMap<>();
+                            map.put("token", User.getInstance().getUserId());
+                            map.put("longitude", lngData);
+                            map.put("latitude", latData);
+
+                            RetrofitConfig.getInstance().getRetrofitService()
+                                    .postAddr(map)
+                                    .compose(RxUtils.handleResult())
+                                    .subscribe(s1 -> {
+
+                                    });
+                        }
+
+                    });
+            post = true;
         }
     }
 

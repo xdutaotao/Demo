@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
-import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
-import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
 import com.xunao.diaodiao.Present.OrderSkillFinishPresenter;
+import com.xunao.diaodiao.Present.OrderSkillFinishRecievePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.OrderSkillDoingView;
+import com.xunao.diaodiao.View.OrderSkillFinishRecieveView;
 import com.xunao.diaodiao.View.OrderSkillFinishView;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ import butterknife.Unbinder;
  * Created by guzhenfu on 2017/8/19.
  */
 
-public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillFinishView {
+public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillFinishRecieveView {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
@@ -39,13 +38,13 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
     private String mParam1;
 
     @Inject
-    OrderSkillFinishPresenter presenter;
+    OrderSkillFinishRecievePresenter presenter;
 
-    private RecyclerArrayAdapter<OrderSkillFinishRes.OddBean> adapter;
+    private RecyclerArrayAdapter<OrderSkillFinishRecieveRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabFinishFragment newInstance(String param1) {
-        OrderSkillTabFinishFragment fragment = new OrderSkillTabFinishFragment();
+    public static OrderSkillTabFinishRecieveFragment newInstance(String param1) {
+        OrderSkillTabFinishRecieveFragment fragment = new OrderSkillTabFinishRecieveFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -68,9 +67,9 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         getActivityComponent().inject(this);
         unbinder = ButterKnife.bind(this, view);
         presenter.attachView(this);
-        adapter = new RecyclerArrayAdapter<OrderSkillFinishRes.OddBean>(getContext(), R.layout.order_comp_tab_item) {
+        adapter = new RecyclerArrayAdapter<OrderSkillFinishRecieveRes.OddBean>(getContext(), R.layout.order_comp_tab_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, OrderSkillFinishRes.OddBean homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, OrderSkillFinishRecieveRes.OddBean homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
@@ -103,7 +102,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         return view;
     }
     @Override
-    public void getData(OrderSkillFinishRes list) {
+    public void getData(OrderSkillFinishRecieveRes list) {
         if (page == 1)
             adapter.clear();
 
@@ -119,13 +118,13 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillFinish(page);
+        presenter.myAcceptOddFinish(page);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillFinish(page);
+        presenter.myAcceptOddFinish(page);
     }
 
     public String getTitle(){

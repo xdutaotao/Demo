@@ -46,7 +46,7 @@ public class SectionedExpandableLayoutHelper implements SectionStateChangeListen
 
     public void addSection(String section, ArrayList<FreindBean.UsersBean> items) {
         Section newSection;
-        mSectionMap.put(section, (newSection = new Section(section)));
+        mSectionMap.put(section, (newSection = new Section(section, items.size())));
         mSectionDataMap.put(newSection, items);
         notifyDataSetChanged();
     }

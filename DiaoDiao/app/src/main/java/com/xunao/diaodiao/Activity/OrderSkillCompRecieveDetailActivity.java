@@ -6,18 +6,19 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Present.OrderSkillCompDetailPresenter;
+import com.xunao.diaodiao.Present.OrderSkillCompRecieveDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.OrderSkillCompDetailView;
+import com.xunao.diaodiao.View.OrderSkillCompRecieveDetailView;
 
 import javax.inject.Inject;
 
@@ -29,10 +30,10 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class OrderSkillCompDetailActivity extends BaseActivity implements OrderSkillCompDetailView {
+public class OrderSkillCompRecieveDetailActivity extends BaseActivity implements OrderSkillCompRecieveDetailView {
 
     @Inject
-    OrderSkillCompDetailPresenter presenter;
+    OrderSkillCompRecieveDetailPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -59,41 +60,29 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
     TextView projDetail;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.contact_divider)
-    View contactDivider;
     @BindView(R.id.contact_btn)
     Button contactBtn;
-    @BindView(R.id.contact_layout)
-    LinearLayout contactLayout;
-    @BindView(R.id.bottom_btn_layout)
-    LinearLayout bottomBtnLayout;
 
     private RecyclerArrayAdapter<String> adapter;
 
     public static void startActivity(Context context, int id) {
-        Intent intent = new Intent(context, OrderSkillCompDetailActivity.class);
+        Intent intent = new Intent(context, OrderSkillCompRecieveDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, int id, int who) {
-        Intent intent = new Intent(context, OrderSkillCompDetailActivity.class);
-        intent.putExtra(INTENT_KEY, id);
-        intent.putExtra("WHO", who);
-        context.startActivity(intent);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_skill_comp_detail);
+        setContentView(R.layout.activity_order_skill_comp_recieve_detail);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
         showToolbarBack(toolBar, title, "零工详情");
 
-        presenter.mySkillProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        presenter.mySkillProjRecieveDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
             @Override
@@ -106,12 +95,17 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+
+        contactBtn.setOnClickListener(v -> {
+
+        });
+
     }
 
     @Override
-    public void getData(SkillProjDetailRes s) {
+    public void getData(SkillProjRecieveDetailRes s) {
         if (s != null && s.getOdd() != null) {
-            SkillProjDetailRes.OddBean oddBean = s.getOdd().get(0);
+            SkillProjRecieveDetailRes.OddBean oddBean = s.getOdd().get(0);
 
             title.setText(oddBean.getTitle());
             address.setText(oddBean.getRegion());
@@ -121,7 +115,7 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
             phone.setText(oddBean.getContact_mobile());
             money.setText(oddBean.getDaily_wage() + "元");
             days.setText(oddBean.getTotal_day() + "天");
-            time.setText(Utils.strToDateLong(Long.valueOf(oddBean.getBuild_time())));
+            time.setText(Utils.strToDateLong(oddBean.getClose_time()));
             projDetail.setText(oddBean.getDescribe());
 
             adapter.clear();

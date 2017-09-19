@@ -2,29 +2,26 @@ package com.xunao.diaodiao.Present;
 
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
-import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Model.LoginModel;
-import com.xunao.diaodiao.Model.OrderProjProgressModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.View.OrderProjProgressView;
+import com.xunao.diaodiao.View.OrderProjRecieveProgressView;
 
 import javax.inject.Inject;
-
-import rx.Subscriber;
 
 /**
  * Created by
  */
-public class OrderProjProgressPresenter extends BasePresenter<OrderProjProgressView> {
+public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRecieveProgressView> {
     @Inject
     LoginModel model;
 
     @Inject
-    OrderProjProgressPresenter() {
+    OrderProjRecieveProgressPresenter() {
     }
 
-    public void myPublishOddWorkProgress(int page){
-        mCompositeSubscription.add(model.myPublishOddWorkProgress(page)
+    public void myAcceptOddWork(int page){
+        mCompositeSubscription.add(model.myAcceptOddWork(page)
                 .subscribe(new RxSubUtils<MyPublishOddWorkRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyPublishOddWorkRes token) {

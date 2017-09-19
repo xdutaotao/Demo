@@ -5,13 +5,15 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="200px"
+    android:maxHeight="500px"
     android:paddingLeft="50px"
     android:paddingRight="50px"
     android:background="@color/activity_background">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="500px"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <View android:layout_width="2px"
@@ -36,7 +38,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white"
         android:padding="50px"
@@ -45,31 +47,17 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50px"
             android:id="@+id/time"
+            android:layout_marginBottom="50px"
             android:text="06-29 签到"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20px">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="万科时一区"
-                android:id="@+id/address"
-                android:drawablePadding="20px"
-                android:drawableLeft="@drawable/icon_dizhi"/>
-
-        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200px"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="4"
-            android:visibility="gone"
             android:id="@+id/recycler_view_item"
             tools:listitem="@layout/select_photo_item"/>
 
@@ -77,7 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="款项打入零工账号"/>
+            android:text="通过后将工钱款汇入零工账号"
+            android:visibility="gone"
+            android:id="@+id/content"/>
     </LinearLayout>
 
 </LinearLayout>

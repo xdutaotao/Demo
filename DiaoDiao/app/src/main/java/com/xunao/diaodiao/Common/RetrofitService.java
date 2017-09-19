@@ -24,7 +24,9 @@ import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
@@ -36,6 +38,7 @@ import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.ResponseBean;
 import com.xunao.diaodiao.Bean.SelectRespBean;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -172,16 +175,43 @@ public interface RetrofitService {
     Observable<BaseBean<OrderSkillRes>> mySkillWait(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillRecieveRes>> myAcceptOddWait(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myAcceptOddCancel(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<OrderSkillDoingRes>> mySkillDoing(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillDoingRes>> myAcceptOddDoing(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<OrderSkillFinishRes>> mySkillFinish(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OrderSkillFinishRecieveRes>> myAcceptOddFinish(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<MyPublishOddWorkRes>> myPublishOddWorkProgress(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyPublishOddWorkRes>> myAcceptOddWork(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myPublishOddSuccess(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myPublishOddFail(@Body RequestBody body);
+
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<SkillProjDetailRes>> mySkillProjDetail(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SkillProjRecieveDetailRes>> mySkillProjRecieveDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ApplyProjRes>> getApplyList(@Body RequestBody body);

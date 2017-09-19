@@ -77,11 +77,12 @@ public class SectionedExpandableGridAdapter extends RecyclerView.Adapter<Section
                         mItemClickListener.itemClicked(item, projectName);
                     }
                 });
+
                 break;
             case VIEW_TYPE_SECTION :
                 Section section = (Section) mDataArrayList.get(position);
                 projectName = section.getName();
-                holder.sectionSize.setText("["+ mDataArrayList.size() +"]");
+                holder.sectionSize.setText("["+ section.getSize() +"]");
                 holder.sectionTextView.setText(section.getName());
                 holder.sectionView.setOnClickListener(new View.OnClickListener() {
                     @Override

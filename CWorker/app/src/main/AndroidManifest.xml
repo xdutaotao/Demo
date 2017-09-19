@@ -83,6 +83,11 @@
             android:name="AA_DB_VERSION"
             android:value="4" />
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="5cbb5fbca9d31831bd37aa029f2d1c62">
+            //开发者申请的key</meta-data>
+
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -154,6 +159,9 @@
         <activity android:name="io.jchat.android.activity.AtMemberActivity" />
         <activity android:name="io.jchat.android.activity.FrowardToPersonActivity" />
         <activity android:name="io.jchat.android.activity.CreateGroupNameActivity" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
     </application>
 
 </manifest>

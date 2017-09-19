@@ -14,8 +14,11 @@ import com.xunao.diaodiao.Fragment.BaseFragment;
 import com.xunao.diaodiao.Fragment.BaseTabFragment;
 import com.xunao.diaodiao.Fragment.OrderCompTabFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingFragment;
+import com.xunao.diaodiao.Fragment.OrderSkillTabDoingRecieveFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabFinishFragment;
+import com.xunao.diaodiao.Fragment.OrderSkillTabFinishRecieveFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabFragment;
+import com.xunao.diaodiao.Fragment.OrderSkillTabRecieveFragment;
 import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Present.OrderCompProjPresenter;
 import com.xunao.diaodiao.R;
@@ -51,7 +54,9 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private List<BaseFragment> fragments;
     private static final String[] TAB_TITLE = {"待确认", "进行中", "已完成/取消"};
+    private static final String[] TAB_TITLE_WHO = {"申请中", "进行中", "已完成/关闭"};
     private int type = 0;
+    private int who = 0;
 
     public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, OrderCompProjActivity.class);
@@ -78,10 +83,11 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         if (type == 0){
             showToolbarBack(toolBar, titleText, "项目信息");
         }else{
-            if (getIntent().getIntExtra("WHO", 0) == 0){
+            who = getIntent().getIntExtra("WHO", 0);
+            if (who == 0){
                 showToolbarBack(toolBar, titleText, "我发布的-零工信息");
             }else{
-                showToolbarBack(toolBar, titleText, "零工信息");
+                showToolbarBack(toolBar, titleText, "我接的-零工信息");
             }
 
         }
@@ -93,9 +99,16 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
             fragments.add(OrderCompTabFragment.newInstance("进行中"));
             fragments.add(OrderCompTabFragment.newInstance("已完成/取消"));
         }else{
-            fragments.add(OrderSkillTabFragment.newInstance("待确认"));
-            fragments.add(OrderSkillTabDoingFragment.newInstance("进行中"));
-            fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消"));
+            if (who == 0){
+                fragments.add(OrderSkillTabFragment.newInstance("待确认"));
+                fragments.add(OrderSkillTabDoingFragment.newInstance("进行中"));
+                fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消"));
+            }else{
+                fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中"));
+                fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中"));
+                fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭"));
+            }
+
         }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);

@@ -16,6 +16,7 @@ public class GetMoneyReq {
     private int project_id;
     private int project_type;
     private int odd_id;
+    private int work_id;
 
     public int getUserid() {
         return userid;
@@ -96,5 +97,13 @@ public class GetMoneyReq {
 
     public void setOdd_id(int odd_id) {
         this.odd_id = odd_id;
+    }
+
+    public int getWork_id() {
+        return work_id;
+    }
+
+    public void setWork_id(int work_id) {
+        this.work_id = work_id;
     }
 }

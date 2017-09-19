@@ -10,14 +10,17 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
-import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
-import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
-import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
-import com.xunao.diaodiao.Present.OrderSkillFinishPresenter;
+import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
+import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
+import com.xunao.diaodiao.Bean.OrderSkillRes;
+import com.xunao.diaodiao.Present.OrderSkillPresenter;
+import com.xunao.diaodiao.Present.OrderSkillRecievePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.OrderSkillDoingView;
-import com.xunao.diaodiao.View.OrderSkillFinishView;
+import com.xunao.diaodiao.View.OrderSkillRecieveView;
+import com.xunao.diaodiao.View.OrderSkillView;
 
 import javax.inject.Inject;
 
@@ -31,7 +34,7 @@ import butterknife.Unbinder;
  * Created by guzhenfu on 2017/8/19.
  */
 
-public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillFinishView {
+public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillRecieveView {
     private static final String ARG_PARAM1 = "param1";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
@@ -39,13 +42,13 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
     private String mParam1;
 
     @Inject
-    OrderSkillFinishPresenter presenter;
+    OrderSkillRecievePresenter presenter;
 
-    private RecyclerArrayAdapter<OrderSkillFinishRes.OddBean> adapter;
+    private RecyclerArrayAdapter<OrderSkillRecieveRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabFinishFragment newInstance(String param1) {
-        OrderSkillTabFinishFragment fragment = new OrderSkillTabFinishFragment();
+    public static OrderSkillTabRecieveFragment newInstance(String param1) {
+        OrderSkillTabRecieveFragment fragment = new OrderSkillTabRecieveFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -68,42 +71,44 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         getActivityComponent().inject(this);
         unbinder = ButterKnife.bind(this, view);
         presenter.attachView(this);
-        adapter = new RecyclerArrayAdapter<OrderSkillFinishRes.OddBean>(getContext(), R.layout.order_comp_tab_item) {
+        adapter = new RecyclerArrayAdapter<OrderSkillRecieveRes.OddBean>(getContext(), R.layout.order_comp_tab_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, OrderSkillFinishRes.OddBean homeBean) {
+            protected void convert(BaseViewHolder baseViewHolder, OrderSkillRecieveRes.OddBean homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                 baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage() +"/天");
+                baseViewHolder.setText(R.id.request, "取消申请");
 
-                if (homeBean.getStatus() == 1){
-                    //已完成
-                    baseViewHolder.setText(R.id.request, "查看");
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getCancel_time())+ " 取消");
-                }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
-                    baseViewHolder.setText(R.id.time, "去评价");
-                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    presenter.myAcceptOddCancel(homeBean.getOdd_id());
+                });
 
-                }
+                baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
+                    //RecommandActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext());
+                });
+
+                baseViewHolder.setOnClickListener(R.id.distance, v -> {
+                    //ApplyActivity.startActivity(OrderCompTabFragment.this.getContext());
+                });
             }
         };
 
-//        adapter.setOnItemClickListener((v, i) -> {
-//            OrderSkillCompDetailActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-//                    adapter.getAllData().get(i).getOdd_id());
-//        });
+        adapter.setOnItemClickListener((v, i) -> {
+            OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                    adapter.getAllData().get(i).getOdd_id());
+        });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
         onRefresh();
         return view;
     }
     @Override
-    public void getData(OrderSkillFinishRes list) {
+    public void getData(OrderSkillRecieveRes list) {
         if (page == 1)
             adapter.clear();
 
@@ -115,17 +120,22 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
 
     }
 
+    @Override
+    public void cancle(String list) {
+        ToastUtil.show("取消成功");
+    }
+
 
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillFinish(page);
+        presenter.mySkillWait(page);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillFinish(page);
+        presenter.mySkillWait(page);
     }
 
     public String getTitle(){

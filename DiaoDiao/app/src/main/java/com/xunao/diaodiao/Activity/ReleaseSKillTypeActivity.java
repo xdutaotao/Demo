@@ -49,11 +49,13 @@ public class ReleaseSKillTypeActivity extends BaseActivity implements ReleaseSKi
         showToolbarBack(toolBar, titleText, "零工信息");
 
         myRelease.setOnClickListener(v -> {
+            // 1 零工  0 我发布的
             OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, 1, 0);
         });
 
         myGet.setOnClickListener(v -> {
-
+            //        1 我接的
+            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, 1, 1);
         });
     }
 
