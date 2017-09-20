@@ -15,11 +15,14 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.seafire.cworker.Activity.LoginActivity;
 import com.seafire.cworker.App;
+import com.seafire.cworker.Bean.DistanceBean;
 import com.seafire.cworker.Bean.LocationBean;
 import com.seafire.cworker.Common.RetrofitConfig;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -747,8 +750,20 @@ public class Utils {
     }
 
 
-    public static void postAddr(float lat, float nat, float addr){
-
+    public static void postAddr(String lat, String nat, String addr){
+        long distance = getDistance(lat+","+nat, getLonLat(addr));
+        if (distance > 1000){
+            new IOSDialog(App.getContext()).builder()
+                    .setTitle("退出APP")
+                    .setMsg("项目超出距离")
+                    .setNegativeButton("确定", v -> {
+                        System.exit(0);
+                    })
+                    .setPositiveButton("取消", v -> {
+                        System.exit(0);
+                    })
+                    .show();
+        }
     }
 
     private static String getLonLat(String address){
@@ -760,16 +775,21 @@ public class Utils {
 //        JSONObject jo = new JSONObject().fromObject(queryResult);
 //        JSONArray ja = jo.getJSONArray("geocodes");
 //        return new JSONObject().fromObject(ja.getString(0)).get("location").toString();
-        return bean.getGeocodes().get(0).getLocation();
+        String result =  bean.getGeocodes().get(0).getLocation();
+        ToastUtil.show(result);
+        return result;
     }
 
-    private static Long getDistance(String startLonLat, String endLonLat){
+    private static long getDistance(String startLonLat, String endLonLat){
         //返回起始地startAddr与目的地endAddr之间的距离，单位：米
-        Long result = new Long(0);
+        //Long result = new Long(0);
         String queryUrl = "http://restapi.amap.com/v3/distance?key=5cbb5fbca9d31831bd37aa029f2d1c62&origins="+startLonLat+"&destination="+endLonLat;
                 String queryResult = getResponse(queryUrl);
 //        JSONObject jo = new JSONObject().fromObject(queryResult);
 //        JSONArray ja = jo.getJSONArray("results");
+
+        DistanceBean bean = new Gson().fromJson(queryResult, DistanceBean.class);
+        long result =  bean.getResults().get(0).getDistance();
 //
 //        result = Long.parseLong(new JSONObject().fromObject(ja.getString(0)).get("distance").toString());
         return result;

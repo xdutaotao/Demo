@@ -34,6 +34,7 @@ import com.seafire.cworker.Utils.RxUtils;
 import com.seafire.cworker.Utils.ShareUtils;
 import com.seafire.cworker.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.seafire.cworker.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,9 +105,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 if (User.getInstance().getUserInfo().getProject() == null){
 
                 }else{
-                    String address = User.getInstance().getUserInfo().getProject().getAddress();
-                    ToastUtil.show(address);
-
+                    postAdd();
                 }
 
             }
@@ -123,22 +122,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                         if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                             String latData = data[1];
                             String lngData = data[2];
+                            if (!post){
+                                Map<String ,String> map = new HashMap<>();
+                                map.put("token", User.getInstance().getUserId());
+                                map.put("longitude", lngData);
+                                map.put("latitude", latData);
 
-                            Map<String ,String> map = new HashMap<>();
-                            map.put("token", User.getInstance().getUserId());
-                            map.put("longitude", lngData);
-                            map.put("latitude", latData);
+                                RetrofitConfig.getInstance().getRetrofitService()
+                                        .postAddr(map)
+                                        .compose(RxUtils.handleResult())
+                                        .subscribe(s1 -> {
+                                            post = true;
+                                            if (User.getInstance().getUserInfo().getPerson().getVIP() != 2)
+                                                Utils.postAddr(lngData, latData, User.getInstance().getUserInfo().getProject().getAddress());
+                                        });
+                            }
 
-                            RetrofitConfig.getInstance().getRetrofitService()
-                                    .postAddr(map)
-                                    .compose(RxUtils.handleResult())
-                                    .subscribe(s1 -> {
-
-                                    });
                         }
 
                     });
-            post = true;
+
         }
     }
 
