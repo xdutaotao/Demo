@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -159,8 +160,13 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         adapter.setOnItemClickListener((view1, i) -> {
             switch (i) {
                 case 0:
-                    if (type == 0){
-                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), 0);
+                    //OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                    //公司
+                    if (type == COMPANY_TYPE){
+                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                    }else if (type == SKILL_TYPE){
+                        //技术员
+                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_PROJECT);
                     }
 
                     break;

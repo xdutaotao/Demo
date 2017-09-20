@@ -147,7 +147,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
     @Override

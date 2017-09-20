@@ -7,6 +7,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.xunao.diaodiao.Common.Constants;
 
 /**
  * Description:
@@ -25,6 +26,7 @@ public class LocationUtils {
                     //可在其中解析amapLocation获取相应内容。
 //                    ToastUtil.show(amapLocation.getProvince());//省信息
 //                    ToastUtil.show(amapLocation.getCity());//城市信息
+                    Constants.address = amapLocation.getDistrict()+amapLocation.getStreet();
                     StringBuilder sb = new StringBuilder();
                     sb.append(amapLocation.getCity()).append("#")
                             .append(amapLocation.getLatitude()).append("#")

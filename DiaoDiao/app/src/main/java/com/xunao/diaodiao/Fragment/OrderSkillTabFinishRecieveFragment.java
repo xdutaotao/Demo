@@ -11,6 +11,7 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillFinishPresenter;
 import com.xunao.diaodiao.Present.OrderSkillFinishRecievePresenter;
 import com.xunao.diaodiao.R;
@@ -32,10 +33,12 @@ import butterknife.Unbinder;
 
 public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillFinishRecieveView {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
+    private int who;
 
     @Inject
     OrderSkillFinishRecievePresenter presenter;
@@ -43,10 +46,11 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
     private RecyclerArrayAdapter<OrderSkillFinishRecieveRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabFinishRecieveFragment newInstance(String param1) {
+    public static OrderSkillTabFinishRecieveFragment newInstance(String param1, int param2) {
         OrderSkillTabFinishRecieveFragment fragment = new OrderSkillTabFinishRecieveFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +60,7 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -76,8 +81,15 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
-                baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+
+                if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                    baseViewHolder.setText(R.id.days, "价格");
+                }
+
 
                 if (homeBean.getStatus() == 1){
                     //已完成
@@ -92,11 +104,6 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
             }
         };
 
-//        adapter.setOnItemClickListener((v, i) -> {
-//            OrderSkillCompDetailActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-//                    adapter.getAllData().get(i).getOdd_id());
-//        });
-
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
         onRefresh();
         return view;
@@ -106,11 +113,20 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() ==0){
-            adapter.stopMore();
-        }else{
-            adapter.addAll(list.getOdd());
+        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+            if(list.getOdd().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getOdd());
+            }
+        }else if (who == Constants.SKILL_RECIEVE_PROJECT){
+            if(list.getProject().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getProject());
+            }
         }
+
 
     }
 
@@ -118,13 +134,13 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.myAcceptOddFinish(page);
+        presenter.myAcceptOddFinish(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.myAcceptOddFinish(page);
+        presenter.myAcceptOddFinish(page, who);
     }
 
     public String getTitle(){

@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="300px"
-        android:layout_height="300px"
+        android:layout_width="180px"
+        android:layout_height="180px"
         android:src="@drawable/icon"
         android:id="@+id/image"
         android:layout_marginLeft="50px"/>

@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Present;
 
+import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -35,8 +36,8 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
                 }));
     }
 
-    public void myPublishOddSuccess(int page){
-        mCompositeSubscription.add(model.myPublishOddSuccess(page)
+    public void myAcceptOddSubmit(MyAcceptOddSubmitReq page){
+        mCompositeSubscription.add(model.myAcceptOddSubmit(page)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(String token) {

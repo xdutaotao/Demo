@@ -22,6 +22,7 @@ import com.xunao.diaodiao.Fragment.OrderSkillTabRecieveFragment;
 import com.xunao.diaodiao.Fragment.TabFragment;
 import com.xunao.diaodiao.Present.OrderCompProjPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.OrderCompProjView;
 import com.xunao.diaodiao.adapters.SectionsPagerAdapter;
 
@@ -33,7 +34,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -58,15 +65,13 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
     private int type = 0;
     private int who = 0;
 
-    public static void startActivity(Context context, int type) {
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, OrderCompProjActivity.class);
-        intent.putExtra(INTENT_KEY, type);
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, int type, int who) {
+    public static void startActivity(Context context, int who) {
         Intent intent = new Intent(context, OrderCompProjActivity.class);
-        intent.putExtra(INTENT_KEY, type);
         intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
@@ -79,34 +84,43 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        type = getIntent().getIntExtra(INTENT_KEY, 0);
-        if (type == 0){
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (type == COMPANY_TYPE){
             showToolbarBack(toolBar, titleText, "项目信息");
-        }else{
+        }else if (type == SKILL_TYPE){
             who = getIntent().getIntExtra("WHO", 0);
-            if (who == 0){
+            if (who == SKILL_RECIEVE_LINGGONG){
                 showToolbarBack(toolBar, titleText, "我发布的-零工信息");
-            }else{
+            }else if (who == SKILL_RECIEVE_LINGGONG){
                 showToolbarBack(toolBar, titleText, "我接的-零工信息");
+            }else if (who == SKILL_RECIEVE_PROJECT){
+                showToolbarBack(toolBar, titleText, "项目信息");
             }
 
         }
 
 
         fragments=new ArrayList<>();
-        if (type == 0){
+        if (type == COMPANY_TYPE){
             fragments.add(OrderCompTabFragment.newInstance("待确认"));
             fragments.add(OrderCompTabFragment.newInstance("进行中"));
             fragments.add(OrderCompTabFragment.newInstance("已完成/取消"));
-        }else{
-            if (who == 0){
+        }else if (type == SKILL_TYPE){
+            if (who == SKILL_RELEASE_LINGGONG){
+                //我发的 零工
                 fragments.add(OrderSkillTabFragment.newInstance("待确认"));
                 fragments.add(OrderSkillTabDoingFragment.newInstance("进行中"));
                 fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消"));
-            }else{
-                fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中"));
-                fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中"));
-                fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭"));
+            }else if (who == SKILL_RECIEVE_LINGGONG){
+                //我接的 零工
+                fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
+                fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中", who));
+                fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭", who));
+            }else if (who == SKILL_RECIEVE_PROJECT){
+                //我接的 项目
+                fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
+                fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中", who));
+                fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭", who));
             }
 
         }
@@ -123,7 +137,12 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         linearLayout.setDividerPadding(20);
 
         for(int i=0; i<fragments.size(); i++){
-            tab.getTabAt(i).setText(TAB_TITLE[i]);
+            if (who == 0){
+                tab.getTabAt(i).setText(TAB_TITLE[i]);
+            }else{
+                tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);
+            }
+
         }
     }
 

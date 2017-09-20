@@ -21,8 +21,8 @@ public class OrderSkillDoingRecievePresenter extends BasePresenter<OrderSkillDoi
     OrderSkillDoingRecievePresenter() {
     }
 
-    public void myAcceptOddDoing(int page){
-        mCompositeSubscription.add(model.myAcceptOddDoing(page)
+    public void myAcceptOddDoing(int page, int who){
+        mCompositeSubscription.add(model.myAcceptOddDoing(page, who)
                 .subscribe(new RxSubUtils<OrderSkillDoingRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderSkillDoingRes token) {

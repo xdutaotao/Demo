@@ -18,6 +18,16 @@ public class OrderSkillFinishRecieveRes {
         this.odd = odd;
     }
 
+    private List<OddBean> project;
+
+    public List<OddBean> getProject() {
+        return project;
+    }
+
+    public void setProject(List<OddBean> project) {
+        this.project = project;
+    }
+
     public static class OddBean{
         private int odd_id;
         private String title;
@@ -30,6 +40,9 @@ public class OrderSkillFinishRecieveRes {
         private int status;
         private long cancel_time;
         private long finish_time;
+
+        private int project_id;
+        private String project_price;
 
         public int getOdd_id() {
             return odd_id;
@@ -117,6 +130,22 @@ public class OrderSkillFinishRecieveRes {
 
         public void setFinish_time(long finish_time) {
             this.finish_time = finish_time;
+        }
+
+        public int getProject_id() {
+            return project_id;
+        }
+
+        public void setProject_id(int project_id) {
+            this.project_id = project_id;
+        }
+
+        public String getProject_price() {
+            return project_price;
+        }
+
+        public void setProject_price(String project_price) {
+            this.project_price = project_price;
         }
     }
 }

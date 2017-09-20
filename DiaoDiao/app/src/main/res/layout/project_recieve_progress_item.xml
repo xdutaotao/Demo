@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:minHeight="200px"
     android:maxHeight="500px"
-    android:paddingLeft="50px"
-    android:paddingRight="50px"
+    android:paddingLeft="40px"
+    android:paddingRight="20px"
     android:background="@color/activity_background">
 
 
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:minHeight="200px"
         android:maxHeight="500px"
+        android:id="@+id/image_layout"
         android:background="@color/activity_background">
 
         <LinearLayout
@@ -49,15 +50,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:padding="50px"
+            android:paddingTop="50px"
             android:layout_marginTop="50px"
             android:layout_marginLeft="50px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="50px"
+                android:paddingLeft="50px"
                 android:id="@+id/time"
-                android:layout_marginBottom="50px"
+                android:layout_marginBottom="20px"
+                android:text="06-29 签到"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50px"
+                android:paddingLeft="50px"
+                android:id="@+id/address"
+                android:layout_marginBottom="20px"
                 android:text="06-29 签到"/>
 
 

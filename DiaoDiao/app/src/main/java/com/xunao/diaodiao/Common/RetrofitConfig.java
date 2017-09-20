@@ -175,6 +175,7 @@ public class RetrofitConfig {
                 .registerTypeAdapter(Long.class, new LongDefault0Adapter())
                 .registerTypeAdapter(long.class, new LongDefault0Adapter())
                 .setLenient()
+                .serializeNulls()
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()

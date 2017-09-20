@@ -18,6 +18,16 @@ public class OrderSkillRecieveRes {
         this.odd = odd;
     }
 
+    private List<OddBean> project;
+
+    public List<OddBean> getProject() {
+        return project;
+    }
+
+    public void setProject(List<OddBean> project) {
+        this.project = project;
+    }
+
     public static class OddBean{
         private int odd_id;
         private String title;
@@ -27,6 +37,8 @@ public class OrderSkillRecieveRes {
         private String total_day;
         private String daily_wage;
         private int apply_time;
+        private int project_id;
+        private String project_price;
 
         public int getOdd_id() {
             return odd_id;
@@ -90,6 +102,22 @@ public class OrderSkillRecieveRes {
 
         public void setApply_time(int apply_count) {
             this.apply_time = apply_count;
+        }
+
+        public int getProject_id() {
+            return project_id;
+        }
+
+        public void setProject_id(int project_id) {
+            this.project_id = project_id;
+        }
+
+        public String getProject_price() {
+            return project_price;
+        }
+
+        public void setProject_price(String project_price) {
+            this.project_price = project_price;
         }
     }
 }

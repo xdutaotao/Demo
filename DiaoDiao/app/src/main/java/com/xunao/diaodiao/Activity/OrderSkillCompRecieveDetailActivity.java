@@ -13,6 +13,7 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillCompDetailPresenter;
 import com.xunao.diaodiao.Present.OrderSkillCompRecieveDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -64,6 +65,7 @@ public class OrderSkillCompRecieveDetailActivity extends BaseActivity implements
     Button contactBtn;
 
     private RecyclerArrayAdapter<String> adapter;
+    private int who;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderSkillCompRecieveDetailActivity.class);
@@ -80,7 +82,14 @@ public class OrderSkillCompRecieveDetailActivity extends BaseActivity implements
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, title, "零工详情");
+        who = getIntent().getIntExtra("WHO", 0);
+
+        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+            showToolbarBack(toolBar, title, "零工详情");
+        }else if (who == Constants.SKILL_RECIEVE_PROJECT){
+            showToolbarBack(toolBar, title, "项目详情");
+        }
+
 
         presenter.mySkillProjRecieveDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
 

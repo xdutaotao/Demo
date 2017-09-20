@@ -23,8 +23,8 @@ public class OrderSkillRecievePresenter extends BasePresenter<OrderSkillRecieveV
     OrderSkillRecievePresenter() {
     }
 
-    public void mySkillWait(int page){
-        mCompositeSubscription.add(model.myAcceptOddWait(page)
+    public void mySkillWait(int page, int who){
+        mCompositeSubscription.add(model.myAcceptOddWait(page, who)
                 .subscribe(new RxSubUtils<OrderSkillRecieveRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderSkillRecieveRes token) {
@@ -38,8 +38,8 @@ public class OrderSkillRecievePresenter extends BasePresenter<OrderSkillRecieveV
                 }));
     }
 
-    public void myAcceptOddCancel(int page){
-        mCompositeSubscription.add(model.myAcceptOddCancel(page)
+    public void myAcceptOddCancel(int page, int who){
+        mCompositeSubscription.add(model.myAcceptOddCancel(page, who)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(String token) {

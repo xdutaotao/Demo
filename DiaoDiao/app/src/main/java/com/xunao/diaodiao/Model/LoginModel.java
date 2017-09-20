@@ -33,6 +33,7 @@ import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
@@ -54,8 +55,10 @@ import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
+import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillRecievePresenter;
 import com.xunao.diaodiao.Present.ProjectRes;
 import com.xunao.diaodiao.Utils.FileUtils;
@@ -81,6 +84,8 @@ import rx.Subscriber;
 
 import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
@@ -980,8 +985,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我接的 零工 待确认
      */
-    public Observable<OrderSkillRecieveRes> myAcceptOddWait(int page){
+    public Observable<OrderSkillRecieveRes> myAcceptOddWait(int page, int who){
         String rateKey = "myAcceptOddWait";
+        if (who == SKILL_RECIEVE_PROJECT){
+            rateKey = "myAcceptProjectWait";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1005,8 +1013,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我接的 零工 取消申请
      */
-    public Observable<String> myAcceptOddCancel(int odd_id){
+    public Observable<String> myAcceptOddCancel(int odd_id, int who){
         String rateKey = "myAcceptOddCancel";
+        if (who == SKILL_RECIEVE_PROJECT){
+            rateKey = "myAcceptProjectCancel";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1019,7 +1030,12 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setOdd_id(odd_id);
+        if (who == SKILL_RECIEVE_PROJECT){
+            req.setProject_id(odd_id);
+        }else if(who == SKILL_RECIEVE_LINGGONG){
+            req.setOdd_id(odd_id);
+        }
+
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myAcceptOddCancel(setBody(rateKey, time, req))
@@ -1054,8 +1070,12 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我接的 零工 进行中
      */
-    public Observable<OrderSkillDoingRes> myAcceptOddDoing(int page){
+    public Observable<OrderSkillDoingRes> myAcceptOddDoing(int page, int who){
         String rateKey = "myAcceptOddDoing";
+
+        if (who == SKILL_RECIEVE_PROJECT){
+            rateKey = "myAcceptProjectDoing";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1104,8 +1124,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我接的 零工 已完成
      */
-    public Observable<OrderSkillFinishRecieveRes> myAcceptOddFinish(int page){
+    public Observable<OrderSkillFinishRecieveRes> myAcceptOddFinish(int page, int who){
         String rateKey = "myAcceptOddFinish";
+        if (who == Constants.SKILL_RECIEVE_PROJECT){
+            rateKey = "myAcceptProjectFinish";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1226,6 +1249,29 @@ public class LoginModel extends BaseModel {
     }
 
 
+    public Observable<String> myAcceptOddSubmit(MyAcceptOddSubmitReq req){
+        String rateKey = "myAcceptOddSubmit";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getOdd_id()).append(req.getSign_time())
+                .append(req.getRemark()).append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptOddSubmit(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
     /**
      * 申请列表
      */
@@ -1291,6 +1337,25 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().getApplyPass(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
+
+    public Observable<SkillRecieveProjDetailRes> myAcceptProjectDetail(int id){
+        String rateKey = "myAcceptProjectDetail";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setProject_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
 
 
     /**

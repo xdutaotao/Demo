@@ -23,8 +23,8 @@ public class OrderSkillFinishRecievePresenter extends BasePresenter<OrderSkillFi
     OrderSkillFinishRecievePresenter() {
     }
 
-    public void myAcceptOddFinish(int page){
-        mCompositeSubscription.add(model.myAcceptOddFinish(page)
+    public void myAcceptOddFinish(int page, int who){
+        mCompositeSubscription.add(model.myAcceptOddFinish(page, who)
                 .subscribe(new RxSubUtils<OrderSkillFinishRecieveRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderSkillFinishRecieveRes token) {

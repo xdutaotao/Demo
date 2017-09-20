@@ -232,6 +232,16 @@ public class Utils {
      * 格式：2016/12/13
      * @return
      */
+    public static String getNowDateMonth(){
+        SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
+        String date = sd.format(new Date(System.currentTimeMillis()));
+        return date;
+    }
+
+    /**
+     * 格式：2016/12/13
+     * @return
+     */
     public static String getNowTime(){
         SimpleDateFormat sd = new SimpleDateFormat("yyyy年MM月dd日");
         String date = sd.format(new Date(System.currentTimeMillis()));

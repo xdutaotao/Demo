@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
 import com.xunao.diaodiao.Present.OrderSkillDoingRecievePresenter;
 import com.xunao.diaodiao.R;
@@ -34,10 +35,12 @@ import butterknife.Unbinder;
 
 public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillDoingView {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
+    private int who;
 
     @Inject
     OrderSkillDoingRecievePresenter presenter;
@@ -45,10 +48,11 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
     private RecyclerArrayAdapter<OrderSkillDoingRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabDoingRecieveFragment newInstance(String param1) {
+    public static OrderSkillTabDoingRecieveFragment newInstance(String param1,int mParam2) {
         OrderSkillTabDoingRecieveFragment fragment = new OrderSkillTabDoingRecieveFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, mParam2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +62,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -78,23 +83,43 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time())+ " 开始");
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
-                if (!TextUtils.isEmpty(homeBean.getTotal_day()))
-                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+
+                if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                    if (!TextUtils.isEmpty(homeBean.getTotal_day()))
+                        baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                }else{
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                    baseViewHolder.setText(R.id.days, "价格");
+                }
+
 
                 baseViewHolder.setText(R.id.request, "项目进度");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                        homeBean.getOdd_id());
+                    if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                        OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getOdd_id());
+                    }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                        OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getProject_id());
+                    }
+
+
                 });
             }
 
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                    adapter.getAllData().get(i).getOdd_id());
+            if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getOdd_id());
+            }else if (who == Constants.SKILL_RECIEVE_PROJECT){
+                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getProject_id());
+            }
+
 
 //
         });
@@ -108,11 +133,20 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() ==0){
-            adapter.stopMore();
-        }else{
-            adapter.addAll(list.getOdd());
+        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+            if(list.getOdd().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getOdd());
+            }
+        }else if (who == Constants.SKILL_RECIEVE_PROJECT){
+            if(list.getProject().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getProject());
+            }
         }
+
 
     }
 
@@ -120,13 +154,13 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
     @Override
     public void onRefresh() {
         page=1;
-        presenter.myAcceptOddDoing(page);
+        presenter.myAcceptOddDoing(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.myAcceptOddDoing(page);
+        presenter.myAcceptOddDoing(page, who);
     }
 
     public String getTitle(){

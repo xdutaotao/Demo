@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillPresenter;
 import com.xunao.diaodiao.Present.OrderSkillRecievePresenter;
 import com.xunao.diaodiao.R;
@@ -36,10 +37,12 @@ import butterknife.Unbinder;
 
 public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillRecieveView {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
+    private int who;
 
     @Inject
     OrderSkillRecievePresenter presenter;
@@ -47,10 +50,11 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
     private RecyclerArrayAdapter<OrderSkillRecieveRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabRecieveFragment newInstance(String param1) {
+    public static OrderSkillTabRecieveFragment newInstance(String param1, int who) {
         OrderSkillTabRecieveFragment fragment = new OrderSkillTabRecieveFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, who);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,6 +64,7 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -80,12 +85,24 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage() +"/天");
+                if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage() +"/天");
+                }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+//                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price() +"/天");
+                }
+
                 baseViewHolder.setText(R.id.request, "取消申请");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    presenter.myAcceptOddCancel(homeBean.getOdd_id());
+                    if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                        presenter.myAcceptOddCancel(homeBean.getOdd_id(), who);
+                    }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                        presenter.myAcceptOddCancel(homeBean.getProject_id(), who);
+                    }
+
+
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
@@ -99,8 +116,16 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
-                    adapter.getAllData().get(i).getOdd_id());
+
+            if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getOdd_id());
+            }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getProject_id());
+            }
+
+
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -112,11 +137,21 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() ==0){
-            adapter.stopMore();
-        }else{
-            adapter.addAll(list.getOdd());
+        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+            if(list.getOdd().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getOdd());
+            }
+        }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+            if(list.getProject().size() ==0){
+                adapter.stopMore();
+            }else{
+                adapter.addAll(list.getProject());
+            }
         }
+
+
 
     }
 
@@ -129,13 +164,13 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillWait(page);
+        presenter.mySkillWait(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillWait(page);
+        presenter.mySkillWait(page, who);
     }
 
     public String getTitle(){

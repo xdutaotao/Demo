@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Utils.Dagger.Component;
 
 import com.xunao.diaodiao.Activity.AddBankActivity;
 import com.xunao.diaodiao.Activity.AddressActivity;
+import com.xunao.diaodiao.Activity.AppealActivity;
 import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
@@ -57,6 +58,7 @@ import com.xunao.diaodiao.Activity.SelectNormalActivity;
 import com.xunao.diaodiao.Activity.SelectSkillActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SignDetailActivity;
+import com.xunao.diaodiao.Activity.SkillRecieveProjectDetailActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Fragment.AddFragment;
 import com.xunao.diaodiao.Fragment.FriendFragment;
@@ -156,4 +158,6 @@ public interface ActivityComponent {
     void inject(OrderSkillCompDetailActivity activity);
     void inject(OrderSkillCompRecieveDetailActivity activity);
     void inject(OrderProjRecieveProgressActivity activity);
+    void inject(AppealActivity activity);
+    void inject(SkillRecieveProjectDetailActivity activity);
 }

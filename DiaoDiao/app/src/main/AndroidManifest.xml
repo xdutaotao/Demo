@@ -188,6 +188,8 @@
         <activity android:name=".Activity.OrderSkillCompDetailActivity"/>
         <activity android:name=".Activity.OrderSkillCompRecieveDetailActivity"/>
         <activity android:name=".Activity.OrderProjRecieveProgressActivity"/>
+        <activity android:name=".Activity.AppealActivity"/>
+        <activity android:name=".Activity.SkillRecieveProjectDetailActivity"/>
 
     </application>
 

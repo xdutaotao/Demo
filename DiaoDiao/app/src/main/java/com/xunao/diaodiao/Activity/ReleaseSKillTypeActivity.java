@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Present.ReleaseSKillTypePresenter;
 import com.xunao.diaodiao.R;
@@ -50,12 +51,12 @@ public class ReleaseSKillTypeActivity extends BaseActivity implements ReleaseSKi
 
         myRelease.setOnClickListener(v -> {
             // 1 零工  0 我发布的
-            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, 1, 0);
+            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_LINGGONG);
         });
 
         myGet.setOnClickListener(v -> {
             //        1 我接的
-            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, 1, 1);
+            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_LINGGONG);
         });
     }
 

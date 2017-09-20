@@ -39,6 +39,7 @@ import com.xunao.diaodiao.Bean.ResponseBean;
 import com.xunao.diaodiao.Bean.SelectRespBean;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
+import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -203,6 +204,12 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> myPublishOddSuccess(@Body RequestBody body);
 
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myAcceptOddSubmit(@Body RequestBody body);
+
+
+
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> myPublishOddFail(@Body RequestBody body);
 
@@ -223,6 +230,11 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> getApplyPass(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SkillRecieveProjDetailRes>> myAcceptProjectDetail(@Body RequestBody body);
+
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
