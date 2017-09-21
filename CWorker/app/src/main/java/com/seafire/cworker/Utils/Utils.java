@@ -750,25 +750,14 @@ public class Utils {
     }
 
 
-    public static void postAddr(String lat, String nat, String addr){
+    public static long postAddr(String lat, String nat, String addr){
         long distance = getDistance(lat+","+nat, getLonLat(addr));
-        if (distance > 1000){
-            new IOSDialog(App.getContext()).builder()
-                    .setTitle("退出APP")
-                    .setMsg("项目超出距离")
-                    .setNegativeButton("确定", v -> {
-                        System.exit(0);
-                    })
-                    .setPositiveButton("取消", v -> {
-                        System.exit(0);
-                    })
-                    .show();
-        }
+        return distance;
     }
 
     private static String getLonLat(String address){
         //返回输入地址address的经纬度信息, 格式是 经度,纬度
-        String queryUrl = "http://restapi.amap.com/v3/geocode/geo?key=5cbb5fbca9d31831bd37aa029f2d1c62&address="+address;
+        String queryUrl = "http://restapi.amap.com/v3/geocode/geo?key=02629e81c3f46788483ba63e4e7bc825&address="+address;
         String queryResult = getResponse(queryUrl);  //高德接品返回的是JSON格式的字符串
 
         LocationBean bean = new Gson().fromJson(queryResult, LocationBean.class);
@@ -783,7 +772,7 @@ public class Utils {
     private static long getDistance(String startLonLat, String endLonLat){
         //返回起始地startAddr与目的地endAddr之间的距离，单位：米
         //Long result = new Long(0);
-        String queryUrl = "http://restapi.amap.com/v3/distance?key=5cbb5fbca9d31831bd37aa029f2d1c62&origins="+startLonLat+"&destination="+endLonLat;
+        String queryUrl = "http://restapi.amap.com/v3/distance?key=02629e81c3f46788483ba63e4e7bc825&origins="+startLonLat+"&destination="+endLonLat;
                 String queryResult = getResponse(queryUrl);
 //        JSONObject jo = new JSONObject().fromObject(queryResult);
 //        JSONArray ja = jo.getJSONArray("results");

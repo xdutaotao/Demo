@@ -43,6 +43,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
 
 import static com.seafire.cworker.Common.Constants.COLLECT_LIST;
 
@@ -127,14 +129,39 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                 map.put("token", User.getInstance().getUserId());
                                 map.put("longitude", lngData);
                                 map.put("latitude", latData);
+                                post = true;
+
+
+                                Observable.create(new Observable.OnSubscribe<Long>() {
+                                    @Override
+                                    public void call(Subscriber<? super Long> subscriber) {
+                                        if (User.getInstance().getUserInfo().getPerson().getVIP() != 2)
+                                            subscriber.onNext(Utils.postAddr(lngData, latData, User.getInstance().getUserInfo().getProject().getAddress()));
+                                            subscriber.onCompleted();
+                                    }
+                                }).compose(RxUtils.applyIOToMainThreadSchedulers())
+                                 .subscribe(aLong -> {
+                                     ToastUtil.show(aLong+"");
+                                     if (aLong > 1000){
+                                         new IOSDialog(MainActivity.this).builder()
+                                                 .setTitle("退出APP")
+                                                 .setMsg("项目超出距离")
+                                                 .setNegativeButton("确定", v -> {
+                                                     System.exit(0);
+                                                 })
+                                                 .setPositiveButton("取消", v -> {
+                                                     System.exit(0);
+                                                 })
+                                                 .show();
+                                     }
+                                 });
 
                                 RetrofitConfig.getInstance().getRetrofitService()
                                         .postAddr(map)
                                         .compose(RxUtils.handleResult())
                                         .subscribe(s1 -> {
-                                            post = true;
-                                            if (User.getInstance().getUserInfo().getPerson().getVIP() != 2)
-                                                Utils.postAddr(lngData, latData, User.getInstance().getUserInfo().getProject().getAddress());
+
+                                            ToastUtil.show("上传成功");
                                         });
                             }
 
