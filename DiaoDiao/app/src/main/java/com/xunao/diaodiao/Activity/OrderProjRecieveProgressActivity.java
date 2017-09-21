@@ -205,11 +205,17 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
 
         //申诉
         post.setOnClickListener(v -> {
-
+            AppealActivity.startActivity(OrderProjRecieveProgressActivity.this);
         });
 
         applyMoney.setOnClickListener(v -> {
-
+            recyclerViewLayout.setVisibility(View.GONE);
+            signLayout.setVisibility(View.VISIBLE);
+            signAdapter.add(ADD);
+            if (!TextUtils.isEmpty(Constants.address)){
+                address.setText(Constants.address + " 工作拍照");
+                time.setText(Utils.getNowDateMonth());
+            }
         });
 
         initImagePicker();

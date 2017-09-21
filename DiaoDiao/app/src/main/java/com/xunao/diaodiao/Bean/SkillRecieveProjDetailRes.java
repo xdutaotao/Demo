@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class SkillRecieveProjDetailRes {
+
     private String title;
     private long publish_time;
     private String company;

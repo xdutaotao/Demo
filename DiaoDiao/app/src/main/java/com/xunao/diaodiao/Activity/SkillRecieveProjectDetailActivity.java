@@ -79,7 +79,7 @@ public class SkillRecieveProjectDetailActivity extends BaseActivity implements S
 
     @Override
     public void getData(SkillRecieveProjDetailRes res) {
-
+        
     }
 
 
