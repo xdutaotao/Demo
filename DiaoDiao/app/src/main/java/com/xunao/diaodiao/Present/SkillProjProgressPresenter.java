@@ -3,35 +3,33 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.GetMoneyReq;
-import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.SignRes;
+import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Model.LoginModel;
-import com.xunao.diaodiao.Model.SignDetailModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.SignDetailView;
+import com.xunao.diaodiao.View.SkillProjProgressView;
 
 import javax.inject.Inject;
-
-import rx.Subscriber;
 
 /**
  * Created by
  */
-public class SignDetailPresenter extends BasePresenter<SignDetailView> {
+public class SkillProjProgressPresenter extends BasePresenter<SkillProjProgressView> {
     @Inject
     LoginModel model;
 
     @Inject
-    SignDetailPresenter() {
+    SkillProjProgressPresenter() {
     }
 
     //列表
-    public void myAcceptProjectSignList(Context context, int req){
-        mCompositeSubscription.add(model.myAcceptProjectSignList(req)
-                .subscribe(new RxSubUtils<SignRes>(mCompositeSubscription, context) {
+    public void myAcceptProjectWorkList(Context context, int prjID, int workID){
+        mCompositeSubscription.add(model.myAcceptProjectWorkList(prjID, workID)
+                .subscribe(new RxSubUtils<SkillProjProgPhotoRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(SignRes token) {
+                    protected void _onNext(SkillProjProgPhotoRes token) {
                         getView().getList(token);
                     }
 
@@ -42,8 +40,8 @@ public class SignDetailPresenter extends BasePresenter<SignDetailView> {
                 }));
     }
 
-    public void myAcceptProjectSign(Context context, GetMoneyReq req){
-        mCompositeSubscription.add(model.myAcceptProjectSign(req)
+    public void myAcceptProjectWorkSub(Context context, GetMoneyReq req){
+        mCompositeSubscription.add(model.myAcceptProjectWorkSub(req)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {

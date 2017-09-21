@@ -1427,18 +1427,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_scan:
-                if (getIntent().getSerializableExtra(INTENT_KEY) == null){
-                    actionScan();
-                }
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onFailure() {
         clearData();
     }

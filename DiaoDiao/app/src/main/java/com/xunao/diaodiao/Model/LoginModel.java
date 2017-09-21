@@ -34,6 +34,7 @@ import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
+import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
@@ -53,7 +54,9 @@ import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SelectBean;
+import com.xunao.diaodiao.Bean.SignRes;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
@@ -1353,6 +1356,131 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myAcceptProjectDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  我接的 项目 进度
+     */
+    public Observable<MyAcceptProjectWorkRes> myAcceptProjectWork(int id){
+        String rateKey = "myAcceptProjectWork";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setProject_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectWork(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  我接的 项目 进度 列表
+     */
+    public Observable<SignRes> myAcceptProjectSignList(int id){
+        String rateKey = "myAcceptProjectSignList";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id)
+                .append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setProject_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectSignList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     *  我接的 项目 进度 拍照 列表
+     */
+    public Observable<SkillProjProgPhotoRes> myAcceptProjectWorkList(int projId, int worksId){
+        String rateKey = "myAcceptProjectWorkList";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(projId)
+                .append(type).append(userid).append(worksId)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setProject_id(projId);
+        req.setWorks_id(worksId);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectWorkList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  我接的 项目 进度 拍照 提交
+     */
+    public Observable<String> myAcceptProjectWorkSub(GetMoneyReq req){
+        String rateKey = "myAcceptProjectWorkSub";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getProject_id())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectWorkSub(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
+    /**
+     *  我接的 项目 进度 签到
+     */
+    public Observable<String> myAcceptProjectSign(GetMoneyReq req){
+        String rateKey = "myAcceptProjectSign";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getProject_id())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectSign(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

@@ -190,6 +190,8 @@
         <activity android:name=".Activity.OrderProjRecieveProgressActivity"/>
         <activity android:name=".Activity.AppealActivity"/>
         <activity android:name=".Activity.SkillRecieveProjectDetailActivity"/>
+        <activity android:name=".Activity.SkillProjReceiveProgressActivity"/>
+        <activity android:name=".Activity.SkillProjProgressActivity"/>
 
     </application>
 

@@ -16,6 +16,7 @@ import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
@@ -37,7 +38,9 @@ import com.xunao.diaodiao.Bean.BaseBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.ResponseBean;
 import com.xunao.diaodiao.Bean.SelectRespBean;
+import com.xunao.diaodiao.Bean.SignRes;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
@@ -235,12 +238,26 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<SkillRecieveProjDetailRes>> myAcceptProjectDetail(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyAcceptProjectWorkRes>> myAcceptProjectWork(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myAcceptProjectSign(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SignRes>> myAcceptProjectSignList(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SkillProjProgPhotoRes>> myAcceptProjectWorkList(@Body RequestBody body);
+
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myAcceptProjectWorkSub(@Body RequestBody body);
+
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);
-
-
 
     @GET("user/checkEmail")
     Observable<BaseBean<String>> checkEmail(@Query("email") String email);

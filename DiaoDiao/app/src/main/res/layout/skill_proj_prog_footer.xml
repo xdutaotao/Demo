@@ -46,8 +46,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="50px"
-            android:text="06-29 签到"/>
+            android:text="06-29 签到"
+            android:paddingLeft="50px"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,11 +72,30 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200px"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="4"
-            android:id="@+id/recycler_view_item"
+            android:id="@+id/recycler_view_image"
             tools:listitem="@layout/select_photo_item"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginTop="20px"
+            android:id="@+id/remark"
+            android:hint="添加工作备注"
+            android:padding="20px"
+            android:textSize="40px"
+            android:layout_marginBottom="40px"
+            android:background="@drawable/btn_blank_bg"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:id="@+id/post"
+            android:background="@drawable/btn02"
+            android:text="提交"
+            android:textColor="@color/colorAccent"/>
     </LinearLayout>
 
 </LinearLayout>

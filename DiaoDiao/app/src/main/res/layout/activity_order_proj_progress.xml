@@ -20,6 +20,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="项目标题"/>
                 <TextView style="@style/item_right_text"
+                    android:id="@+id/title"
                     android:text="采暖系统水处理"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -28,6 +29,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="项目地区"/>
                 <TextView style="@style/item_right_text"
+                    android:id="@+id/address"
                     android:text="采暖系统水处理"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -36,215 +38,20 @@
                 <TextView style="@style/item_left_text"
                     android:text="项目地址"/>
                 <TextView style="@style/item_right_text"
+                    android:id="@+id/address_detail"
                     android:text="采暖系统水处理"/>
             </RelativeLayout>
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:padding="50px"
-                android:layout_marginTop="40px">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="地暖 50*100=5000"
-                        android:textColor="@color/light_blank"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="第一阶段进行中"
-                        android:textColor="@color/accept_btn_pressed"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <View style="@style/repeat_divider"
-                    android:layout_marginTop="50px"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="定位及隐藏模式"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="进行中"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="设备安装及调试"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="未开始"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:padding="50px"
-                android:layout_marginTop="40px">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="地暖 50*100=5000"
-                        android:textColor="@color/light_blank"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="第一阶段进行中"
-                        android:textColor="@color/accept_btn_pressed"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <View style="@style/repeat_divider"
-                    android:layout_marginTop="50px"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="定位及隐藏模式"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="进行中"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="设备安装及调试"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="未开始"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:padding="50px"
-                android:layout_marginTop="40px">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="地暖 50*100=5000"
-                        android:textColor="@color/light_blank"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="第一阶段进行中"
-                        android:textColor="@color/accept_btn_pressed"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <View style="@style/repeat_divider"
-                    android:layout_marginTop="50px"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="定位及隐藏模式"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="进行中"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40px">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="设备安装及调试"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="未开始"
-                        android:drawableRight="@drawable/arrow"
-                        android:layout_alignParentRight="true"/>
-                </RelativeLayout>
-
-            </LinearLayout>
+                android:id="@+id/recycler_view"/>
 
 
             <Button style="@style/login_btn_style"
-                android:text="签到详情"
+                android:text="每日签到"
+                android:layout_marginTop="100px"
+                android:layout_marginBottom="200px"
                 android:id="@+id/sign"/>
         </LinearLayout>
     </ScrollView>

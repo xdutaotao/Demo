@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_scan"
-        android:icon="@drawable/scan"
-        app:showAsAction="always"
-        android:title=" " />
+        android:id="@+id/action_contact"
+        android:title="联系暖通公司"
+        app:showAsAction="always"/>
 </menu>

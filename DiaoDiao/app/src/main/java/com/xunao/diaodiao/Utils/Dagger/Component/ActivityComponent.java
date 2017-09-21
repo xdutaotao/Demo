@@ -58,6 +58,8 @@ import com.xunao.diaodiao.Activity.SelectNormalActivity;
 import com.xunao.diaodiao.Activity.SelectSkillActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SignDetailActivity;
+import com.xunao.diaodiao.Activity.SkillProjProgressActivity;
+import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.SkillRecieveProjectDetailActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Fragment.AddFragment;
@@ -160,4 +162,6 @@ public interface ActivityComponent {
     void inject(OrderProjRecieveProgressActivity activity);
     void inject(AppealActivity activity);
     void inject(SkillRecieveProjectDetailActivity activity);
+    void inject(SkillProjReceiveProgressActivity activity);
+    void inject(SkillProjProgressActivity activity);
 }

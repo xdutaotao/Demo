@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Bean;
 
+import java.util.List;
+
 /**
  * Description:
  * Created by guzhenfu on 2017/9/5.
@@ -17,6 +19,12 @@ public class GetMoneyReq {
     private int project_type;
     private int odd_id;
     private int work_id;
+    private String location;
+    private List<String> images;
+    private int works_id;
+    private String remark;
+    private int audit;
+    private long sign_time;
 
     public int getUserid() {
         return userid;
@@ -105,5 +113,53 @@ public class GetMoneyReq {
 
     public void setWork_id(int work_id) {
         this.work_id = work_id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public int getWorks_id() {
+        return works_id;
+    }
+
+    public void setWorks_id(int works_id) {
+        this.works_id = works_id;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public int getAudit() {
+        return audit;
+    }
+
+    public void setAudit(int audit) {
+        this.audit = audit;
+    }
+
+    public long getSign_time() {
+        return sign_time;
+    }
+
+    public void setSign_time(long sign_time) {
+        this.sign_time = sign_time;
     }
 }

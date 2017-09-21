@@ -11,23 +11,22 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
-import com.xunao.diaodiao.Bean.SignRes;
-import com.xunao.diaodiao.Present.SignDetailPresenter;
+import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
+import com.xunao.diaodiao.Present.SkillProjProgressPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.SignDetailView;
+import com.xunao.diaodiao.View.SkillProjProgressView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -45,18 +44,20 @@ import static com.xunao.diaodiao.Common.Constants.address;
 /**
  * create by
  */
-public class SignDetailActivity extends BaseActivity implements SignDetailView {
+public class SkillProjProgressActivity extends BaseActivity implements SkillProjProgressView {
 
     @Inject
-    SignDetailPresenter presenter;
+    SkillProjProgressPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.post)
+    Button post;
 
-    private RecyclerArrayAdapter<SignRes.SignBean> adapter;
+    private RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
     private RecyclerArrayAdapter<String> footerAdapter;
 
@@ -69,32 +70,36 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private int workid;
+    private EditText postRemark;
 
-    public static void startActivity(Context context, int id) {
-        Intent intent = new Intent(context, SignDetailActivity.class);
+    public static void startActivity(Context context, int id, int workid) {
+        Intent intent = new Intent(context, SkillProjProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("WORKID", workid);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_detail);
+        setContentView(R.layout.activity_skill_proj_prog_photo);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "签到详情");
+        showToolbarBack(toolBar, titleText, "定位及隐藏工程施工");
 
-        adapter = new RecyclerArrayAdapter<SignRes.SignBean>(this, R.layout.sign_detail_item) {
+        workid = getIntent().getIntExtra("WORKID", 0);
+        adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.sign_detail_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, SignRes.SignBean s) {
+            protected void convert(BaseViewHolder baseViewHolder, SkillProjProgPhotoRes.InfoBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
                 recyclerView.setAdapter(itemAdapter);
 
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
-                            + " 工作拍照");
+                        + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
             }
         };
@@ -102,7 +107,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
+                View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
                 RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
                 recyclerViewFooter.setAdapter(footerAdapter);
                 return view;
@@ -111,8 +116,9 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             @Override
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
+                postRemark = (EditText) view.findViewById(R.id.remark);
                 postText.setOnClickListener(v -> {
-                    signAction();
+                    signAction(0);
                 });
             }
         });
@@ -127,10 +133,10 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                if (TextUtils.equals(ADD, s)){
+                if (TextUtils.equals(ADD, s)) {
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
-                }else{
+                } else {
                     baseViewHolder.setVisible(R.id.delete, true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
@@ -157,19 +163,25 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         recyclerView.setAdapter(adapter);
         initImagePicker();
 
-        presenter.myAcceptProjectSignList(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        presenter.myAcceptProjectWorkList(this,
+                getIntent().getIntExtra(INTENT_KEY, 0), workid);
+
+        post.setOnClickListener(v -> {
+            //第一阶段 第二阶段
+            signAction(1);
+        });
     }
 
     @Override
     public void getData(String s) {
-        ToastUtil.show("签到成功");
+        ToastUtil.show("提交审核成功");
         finish();
     }
 
     @Override
-    public void getList(SignRes list) {
-        if (list != null && list.getSign().size() > 0){
-            adapter.addAll(list.getSign());
+    public void getList(SkillProjProgPhotoRes list) {
+        if (list != null && list.getInfo().size() > 0) {
+            adapter.addAll(list.getInfo());
         }
     }
 
@@ -183,12 +195,16 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         imagePicker.setSelectLimit(10);
     }
 
-    private void signAction(){
+    private void signAction(int audit) {
         GetMoneyReq req = new GetMoneyReq();
         req.setLocation(address);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
-        presenter.myAcceptProjectSign(this, req);
+        req.setWorks_id(workid);
+        req.setSign_time(System.currentTimeMillis());
+        req.setRemark(postRemark.getText().toString());
+        req.setAudit(audit);
+        presenter.myAcceptProjectWorkSub(this, req);
     }
 
     private void selectPhoto() {
@@ -213,7 +229,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
-        if (images.size() > 0){
+        if (images.size() > 0) {
             postText.setText("确认签到");
             postText.setVisibility(View.VISIBLE);
         }

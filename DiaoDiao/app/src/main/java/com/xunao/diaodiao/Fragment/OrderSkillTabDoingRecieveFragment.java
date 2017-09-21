@@ -13,6 +13,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
+import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -101,7 +102,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                         OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getOdd_id());
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
-                        OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        SkillProjReceiveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getProject_id());
                     }
 
