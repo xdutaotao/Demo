@@ -105,20 +105,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             showCenterFragment();
         });
 
-        //VIP 到期 重新登录
-        if (User.getInstance().getUserInfo() != null){
-            if (User.getInstance().getUserInfo().getPerson().getVIP() == 2){
-                //超级管理员
-                postAdd();
-            }else{
-                if (User.getInstance().getUserInfo().getProject() == null){
-                    //没有项目不比较
-                }else{
-                    postAdd();
-                }
-
-            }
-        }
     }
 
     private void changeAddress(String address){
@@ -139,7 +125,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         LatLng start = new LatLng(Constants.lat, Constants.lng);
         LatLng end = new LatLng(point.getLatitude(), point.getLongitude());
         float distance = AMapUtils.calculateLineDistance(start,end);
-        ToastUtil.show(distance+"");
+
         if (distance > 1000){
             new IOSDialog(MainActivity.this).builder()
                     .setTitle("退出APP")
@@ -180,7 +166,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                         .compose(RxUtils.handleResult())
                                         .subscribe(s1 -> {
 
-                                            ToastUtil.show("上传成功");
                                         });
                             }
 
@@ -223,6 +208,22 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (appCnt != 0){
             BadgeUtil.setBadgeCount(this, appCnt, R.mipmap.ic_launcher);
         }
+
+        //VIP 到期 重新登录
+        if (User.getInstance().getUserInfo() != null){
+            if (User.getInstance().getUserInfo().getPerson().getVIP() == 2){
+                //超级管理员
+                postAdd();
+            }else{
+                if (User.getInstance().getUserInfo().getProject() == null){
+                    //没有项目不比较
+                }else{
+                    postAdd();
+                }
+
+            }
+        }
+
     }
 
     private void setDefaultFragment() {
