@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.seafire.cworker.Common.Constants;
 import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Present.LoginPresenter;
 import com.seafire.cworker.R;
@@ -185,6 +186,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     @Override
     public void getData(String data) {
         loginJMessage();
+        Constants.post = false;
     }
 
     private void loginJMessage() {
@@ -221,7 +223,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                     dialog.dismiss();
 //                    ToastUtil.show("登录成功");
 //                    finish();
-                    HandleResponseCode.onHandle(LoginActivity.this, status, false);
+                    //HandleResponseCode.onHandle(LoginActivity.this, status, false);
                 }
             }
         });

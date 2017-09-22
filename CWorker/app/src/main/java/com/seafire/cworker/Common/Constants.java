@@ -18,4 +18,5 @@ public class Constants {
 
     public static double lat = 0.0;
     public static double lng = 0.0;
+    public static boolean post = false;
 }

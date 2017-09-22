@@ -66,8 +66,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private BadgeItem badgeItem;
     private BadgeItem msgBadgeItem;
 
-    private boolean post = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +139,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void postAdd(){
-        if (!post){
+        if (!Constants.post){
             new LocationUtils().getLocationAddr(this);
             RxBus.getInstance().toObservable(String.class)
                     .compose(RxUtils.applyIOToMainThreadSchedulers())
@@ -150,12 +148,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                         if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                             Constants.lat = Double.valueOf(data[1]);
                             Constants.lng = Double.valueOf(data[2]);
-                            if (!post){
+                            if (!Constants.post){
                                 Map<String ,String> map = new HashMap<>();
                                 map.put("token", User.getInstance().getUserId());
                                 map.put("longitude", data[1]);
                                 map.put("latitude", data[2]);
-                                post = true;
+                                Constants.post = true;
 
                                 if (User.getInstance().getUserInfo().getPerson().getVIP() != 2){
                                     //不是超级管理员  比较距离
