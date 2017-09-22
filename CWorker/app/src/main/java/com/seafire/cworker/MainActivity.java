@@ -126,13 +126,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         if (distance > 1000){
             new IOSDialog(MainActivity.this).builder()
-                    .setTitle("退出APP")
+                    .setTitle("退出登录")
                     .setMsg("项目超出距离")
                     .setNegativeButton("确定", v -> {
-                        System.exit(0);
-                    })
-                    .setPositiveButton("取消", v -> {
-                        System.exit(0);
+                        LoginActivity.startActivity(MainActivity.this);
                     })
                     .show();
         }
