@@ -25,8 +25,8 @@ public class SkillProjReceiveProgressPresenter extends BasePresenter<SkillProjRe
     SkillProjReceiveProgressPresenter() {
     }
 
-    public void myAcceptProjectWork(Context context, int req){
-        mCompositeSubscription.add(model.myAcceptProjectWork(req)
+    public void myAcceptProjectWork(Context context, int req, int who){
+        mCompositeSubscription.add(model.myAcceptProjectWork(req, who)
                 .subscribe(new RxSubUtils<MyAcceptProjectWorkRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(MyAcceptProjectWorkRes token) {

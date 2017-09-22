@@ -16,6 +16,7 @@
 
         <View android:layout_width="2px"
             android:layout_height="80px"
+            android:id="@+id/head_line"
             android:layout_gravity="center_horizontal"
             android:background="@color/colorPrimary"/>
 
@@ -46,19 +47,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="50px"
+            android:paddingLeft="20px"
+            android:id="@+id/time"
             android:text="06-29 签到"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20px"
-            android:paddingLeft="50px">
+            android:paddingLeft="20px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="万科时一区"
+                android:id="@+id/address"
                 android:drawablePadding="20px"
                 android:drawableLeft="@drawable/icon_dizhi"/>
 

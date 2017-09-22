@@ -35,7 +35,7 @@ public class SkillProjProgressPresenter extends BasePresenter<SkillProjProgressV
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
@@ -50,7 +50,7 @@ public class SkillProjProgressPresenter extends BasePresenter<SkillProjProgressV
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

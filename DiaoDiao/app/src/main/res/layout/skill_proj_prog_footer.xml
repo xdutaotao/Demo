@@ -47,18 +47,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="06-29 签到"
-            android:paddingLeft="50px"/>
+            android:id="@+id/time"
+            android:paddingLeft="20px"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20px"
-            android:paddingLeft="50px">
+            android:paddingLeft="20px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="万科时一区"
+                android:id="@+id/address"
                 android:drawablePadding="20px"
                 android:drawableLeft="@drawable/icon_dizhi"/>
 

@@ -103,7 +103,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                                 homeBean.getOdd_id());
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                         SkillProjReceiveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                                homeBean.getProject_id());
+                                homeBean.getProject_id(), who);
                     }
 
 

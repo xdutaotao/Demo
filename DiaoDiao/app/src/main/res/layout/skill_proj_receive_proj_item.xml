@@ -13,9 +13,11 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="640px"
                 android:layout_height="wrap_content"
                 android:text="地暖 50*100=5000"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/title"
                 android:textColor="@color/light_blank"/>
 
@@ -57,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="监理确认中"
+                android:text="进行中"
                 android:id="@+id/middle"
                 android:layout_centerVertical="true"
                 android:drawableRight="@drawable/arrow"

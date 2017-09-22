@@ -34,6 +34,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
@@ -102,9 +105,9 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
 
         fragments=new ArrayList<>();
         if (type == COMPANY_TYPE){
-            fragments.add(OrderCompTabFragment.newInstance("待确认"));
-            fragments.add(OrderCompTabFragment.newInstance("进行中"));
-            fragments.add(OrderCompTabFragment.newInstance("已完成/取消"));
+            fragments.add(OrderCompTabFragment.newInstance("待确认", COMPANY_RELEASE_PROJECT_WAIT));
+            fragments.add(OrderCompTabFragment.newInstance("进行中", COMPANY_RELEASE_PROJECT_DOING));
+            fragments.add(OrderCompTabFragment.newInstance("已完成/取消", COMPANY_RELEASE_PROJECT_DONE));
         }else if (type == SKILL_TYPE){
             if (who == SKILL_RELEASE_LINGGONG){
                 //我发的 零工

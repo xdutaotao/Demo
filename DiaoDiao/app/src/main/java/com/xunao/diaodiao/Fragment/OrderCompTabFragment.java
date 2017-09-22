@@ -17,7 +17,9 @@ import com.xunao.diaodiao.Activity.OrderCompProjDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
@@ -40,10 +42,13 @@ import butterknife.Unbinder;
 
 public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderCompView {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
     Unbinder unbinder;
     private String mParam1;
+    private int who;
+
 
     @Inject
     OrderComPresenter presenter;
@@ -51,10 +56,11 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
     private RecyclerArrayAdapter<OrderCompRes.Project> adapter;
     private int page = 1;
 
-    public static OrderCompTabFragment newInstance(String param1) {
+    public static OrderCompTabFragment newInstance(String param1, int mParam2) {
         OrderCompTabFragment fragment = new OrderCompTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, mParam2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,6 +70,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -79,14 +86,45 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
             @Override
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
-                baseViewHolder.setVisible(R.id.evaluation, false);
+                if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                    baseViewHolder.setVisible(R.id.evaluation, true);
+                }else{
+                    baseViewHolder.setVisible(R.id.evaluation, false);
+                }
+
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+
+                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
+                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                    baseViewHolder.setVisible(R.id.time, false);
+                }
+
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
-                baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
+
+                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                    baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
+                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                    baseViewHolder.setVisible(R.id.distance, false);
+                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                    baseViewHolder.setVisible(R.id.distance, false);
+                }
+
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_fee());
 
+                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                    baseViewHolder.setText(R.id.request, "查看");
+                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                    baseViewHolder.setText(R.id.request, "项目进度");
+                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                    baseViewHolder.setText(R.id.request, "项目进度");
+                }
+
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                            homeBean.getProject_id(), who);
                     //OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
                 });
 
@@ -125,13 +163,14 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        presenter.myProjectWait(page);
+        page = 1;
+        presenter.myProjectWait(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.myProjectWait(page);
+        presenter.myProjectWait(page, who);
     }
 
     public String getTitle(){

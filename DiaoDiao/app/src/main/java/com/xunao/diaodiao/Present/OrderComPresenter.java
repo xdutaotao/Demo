@@ -28,8 +28,8 @@ public class OrderComPresenter extends BasePresenter<OrderCompView> {
     OrderComPresenter() {
     }
 
-    public void myProjectWait(int page){
-        mCompositeSubscription.add(model.myProjectWait(page)
+    public void myProjectWait(int page, int who){
+        mCompositeSubscription.add(model.myProjectWait(page, who)
                 .subscribe(new RxSubUtils<OrderCompRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderCompRes token) {

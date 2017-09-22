@@ -87,6 +87,8 @@ import rx.Subscriber;
 
 import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
@@ -938,8 +940,14 @@ public class LoginModel extends BaseModel {
     /**
      * 项目进行中
      */
-    public Observable<OrderCompRes> myProjectWait(int page){
+    public Observable<OrderCompRes> myProjectWait(int page, int who){
         String rateKey = "myProjectWait";
+
+        if (who == COMPANY_RELEASE_PROJECT_DOING){
+            rateKey = "myProjectDoing";
+        }else if (who == COMPANY_RELEASE_PROJECT_DONE){
+            rateKey = "myProjectFinish";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1362,8 +1370,12 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度
      */
-    public Observable<MyAcceptProjectWorkRes> myAcceptProjectWork(int id){
+    public Observable<MyAcceptProjectWorkRes> myAcceptProjectWork(int id, int who){
         String rateKey = "myAcceptProjectWork";
+
+        if (who == COMPANY_RELEASE_PROJECT_DOING){
+            rateKey = "myProjectWork";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         int type = ShareUtils.getValue("TYPE", 0);

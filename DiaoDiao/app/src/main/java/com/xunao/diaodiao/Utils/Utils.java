@@ -238,6 +238,12 @@ public class Utils {
         return date;
     }
 
+    public static String getNowDateMonth(long time){
+        SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
+        String date = sd.format(new Date(time));
+        return date;
+    }
+
     /**
      * 格式：2016/12/13
      * @return

@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,7 +25,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -51,10 +55,12 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
     private RecyclerArrayAdapter<MyAcceptProjectWorkRes.WorkBean> adapter;
     private String phone;
+    private int who;
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, SkillProjReceiveProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
 
@@ -68,17 +74,50 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
         showToolbarBack(toolBar, titleText, "项目进度");
 
+        who = getIntent().getIntExtra("WHO", 0);
+
         adapter = new RecyclerArrayAdapter<MyAcceptProjectWorkRes.WorkBean>(this, R.layout.skill_proj_receive_proj_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyAcceptProjectWorkRes.WorkBean workBean) {
                 baseViewHolder.setText(R.id.title, workBean.getTitle());
                 if (workBean.getStage1() == 0){
                     baseViewHolder.setText(R.id.progress, "第一阶段未开始");
+                    baseViewHolder.setText(R.id.middle_text, "未开始");
+                    baseViewHolder.setVisible(R.id.middle_btn, false);
+                    baseViewHolder.setVisible(R.id.middle_text, true);
                 }else if (workBean.getStage1() == 1){
                     baseViewHolder.setText(R.id.progress, "第一阶段进行中");
+                    if (who == SKILL_RECIEVE_PROJECT){
+                        baseViewHolder.setVisible(R.id.middle_btn, true);
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                    }else if (who == COMPANY_RELEASE_PROJECT_DOING){
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, true);
+                        baseViewHolder.setText(R.id.middle_text, "进行中");
+                    }else if (who == COMPANY_RELEASE_PROJECT_DONE){
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, true);
+                        baseViewHolder.setText(R.id.middle_text, "进行中");
+                    }
+
                 }else if( workBean.getStage1() == 2){
-                    baseViewHolder.setText(R.id.progress, "第一阶段已完成");
+                    //第一阶段完成了
+                    if (workBean.getStage2() == 0){
+                        baseViewHolder.setText(R.id.progress, "第一阶段已完成");
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, true);
+                        baseViewHolder.setText(R.id.middle_text, "已完成");
+                    }else if (workBean.getStage2() == 1){
+                        baseViewHolder.setText(R.id.progress, "第二阶段进行中");
+
+                    }else if( workBean.getStage2() == 2){
+                        baseViewHolder.setText(R.id.progress, "第二阶段已完成");
+                    }else{
+                        baseViewHolder.setText(R.id.progress, "第二阶段审核中");
+                    }
+
                 }else{
+                    //第一阶段审核中
                     baseViewHolder.setText(R.id.progress, "第一阶段审核中");
                 }
 
@@ -94,13 +133,18 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
                 baseViewHolder.setOnClickListener(R.id.middle_btn, v -> {
                     SkillProjProgressActivity.startActivity(SkillProjReceiveProgressActivity.this,
-                            getIntent().getIntExtra(INTENT_KEY, 0), workBean.getWorks_id());
+                            getIntent().getIntExtra(INTENT_KEY, 0), workBean.getWorks_id(),
+                            workBean.getStage1() == 2 ? 2 : 1);
                 });
 
             }
         };
 
-        presenter.myAcceptProjectWork(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
+
+        presenter.myAcceptProjectWork(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
 
         sign.setOnClickListener(v -> {
             SignDetailActivity.startActivity(SkillProjReceiveProgressActivity.this,

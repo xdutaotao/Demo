@@ -27,6 +27,10 @@ public class OrderCompRes {
         private String project_type;
         private String project_fee;
         private int apply_count;
+        private long build_time;
+        private long cancel_time;
+        private int evaluate_status;
+        private int status;
 
 
         public int getProject_id() {
@@ -83,6 +87,30 @@ public class OrderCompRes {
 
         public void setApply_count(int apply_count) {
             this.apply_count = apply_count;
+        }
+
+        public long getBuild_time() {
+            return build_time;
+        }
+
+        public void setBuild_time(long build_time) {
+            this.build_time = build_time;
+        }
+
+        public long getCancel_time() {
+            return cancel_time;
+        }
+
+        public void setCancel_time(long cancel_time) {
+            this.cancel_time = cancel_time;
+        }
+
+        public int getEvaluate_status() {
+            return evaluate_status;
+        }
+
+        public void setEvaluate_status(int evaluate_status) {
+            this.evaluate_status = evaluate_status;
         }
     }
 }

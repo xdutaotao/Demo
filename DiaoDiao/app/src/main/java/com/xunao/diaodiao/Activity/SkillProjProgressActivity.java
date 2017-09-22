@@ -22,6 +22,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.SkillProjProgressPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -72,11 +73,13 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private TextView postText;
     private int workid;
     private EditText postRemark;
+    private int stage = 0;
 
-    public static void startActivity(Context context, int id, int workid) {
+    public static void startActivity(Context context, int id, int workid, int stage) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
         intent.putExtra("WORKID", workid);
+        intent.putExtra("STAGE", stage);
         context.startActivity(intent);
     }
 
@@ -90,6 +93,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
         showToolbarBack(toolBar, titleText, "定位及隐藏工程施工");
 
+        stage = getIntent().getIntExtra("STAGE", 0);
         workid = getIntent().getIntExtra("WORKID", 0);
         adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.sign_detail_item) {
             @Override
@@ -97,7 +101,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
                 recyclerView.setAdapter(itemAdapter);
-
+                itemAdapter.clear();
+                itemAdapter.addAll(s.getImages());
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
                         + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
@@ -117,6 +122,10 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
                 postRemark = (EditText) view.findViewById(R.id.remark);
+                TextView time = (TextView) view.findViewById(R.id.time);
+                time.setText(Utils.getNowDateMonth());
+                TextView address = (TextView) view.findViewById(R.id.address);
+                address.setText(Constants.address);
                 postText.setOnClickListener(v -> {
                     signAction(0);
                 });
@@ -168,8 +177,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
         post.setOnClickListener(v -> {
             //第一阶段 第二阶段
-            signAction(1);
+            signAction(stage);
         });
+
+        if (stage == 2){
+            post.setText("第二阶段提交审核");
+        }else{
+            post.setText("第一阶段提交审核");
+        }
     }
 
     @Override
@@ -234,8 +249,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             postText.setVisibility(View.VISIBLE);
         }
 
+        pathList.clear();
         Observable.from(images)
-                .map(imageItem -> imageItem.path)
+                .map(imageItem -> {
+                    pathList.add(Utils.Bitmap2StrByBase64(imageItem.path));
+                    return imageItem.path;
+                })
                 .toList()
                 .subscribe(strings -> {
                     footerAdapter.clear();
@@ -243,8 +262,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     if (strings.size() != 10) {
                         footerAdapter.add(ADD);
                     }
-                    pathList.clear();
-                    pathList.addAll(strings);
                 });
     }
 
