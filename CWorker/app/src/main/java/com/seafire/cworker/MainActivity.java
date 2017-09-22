@@ -10,6 +10,13 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.amap.api.maps2d.AMapUtils;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -48,7 +55,7 @@ import rx.Subscriber;
 
 import static com.seafire.cworker.Common.Constants.COLLECT_LIST;
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener, GeocodeSearch.OnGeocodeSearchListener {
     @BindView(R.id.container)
     LinearLayout container;
     private ArrayList<Fragment> fragments;
@@ -105,12 +112,45 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 postAdd();
             }else{
                 if (User.getInstance().getUserInfo().getProject() == null){
-
+                    //没有项目不比较
                 }else{
                     postAdd();
                 }
 
             }
+        }
+    }
+
+    private void changeAddress(String address){
+        GeocodeSearch geocoderSearch = new GeocodeSearch(this);
+        geocoderSearch.setOnGeocodeSearchListener(this);
+        GeocodeQuery query = new GeocodeQuery(address, "021");
+        geocoderSearch.getFromLocationNameAsyn(query);
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+        LatLonPoint point =  geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
+        LatLng start = new LatLng(Constants.lat, Constants.lng);
+        LatLng end = new LatLng(point.getLatitude(), point.getLongitude());
+        float distance = AMapUtils.calculateLineDistance(start,end);
+        ToastUtil.show(distance+"");
+        if (distance > 1000){
+            new IOSDialog(MainActivity.this).builder()
+                    .setTitle("退出APP")
+                    .setMsg("项目超出距离")
+                    .setNegativeButton("确定", v -> {
+                        System.exit(0);
+                    })
+                    .setPositiveButton("取消", v -> {
+                        System.exit(0);
+                    })
+                    .show();
         }
     }
 
@@ -122,40 +162,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     .subscribe(s -> {
                         String[] data = s.split("#");
                         if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
-                            String latData = data[1];
-                            String lngData = data[2];
+                            Constants.lat = Double.valueOf(data[1]);
+                            Constants.lng = Double.valueOf(data[2]);
                             if (!post){
                                 Map<String ,String> map = new HashMap<>();
                                 map.put("token", User.getInstance().getUserId());
-                                map.put("longitude", lngData);
-                                map.put("latitude", latData);
+                                map.put("longitude", data[1]);
+                                map.put("latitude", data[2]);
                                 post = true;
 
-
-                                Observable.create(new Observable.OnSubscribe<Long>() {
-                                    @Override
-                                    public void call(Subscriber<? super Long> subscriber) {
-                                        if (User.getInstance().getUserInfo().getPerson().getVIP() != 2)
-                                            subscriber.onNext(Utils.postAddr(lngData, latData, User.getInstance().getUserInfo().getProject().getAddress()));
-                                            subscriber.onCompleted();
-                                    }
-                                }).compose(RxUtils.applyIOToMainThreadSchedulers())
-                                 .subscribe(aLong -> {
-                                     ToastUtil.show(aLong+"");
-                                     if (aLong > 1000){
-                                         new IOSDialog(MainActivity.this).builder()
-                                                 .setTitle("退出APP")
-                                                 .setMsg("项目超出距离")
-                                                 .setNegativeButton("确定", v -> {
-                                                     System.exit(0);
-                                                 })
-                                                 .setPositiveButton("取消", v -> {
-                                                     System.exit(0);
-                                                 })
-                                                 .show();
-                                     }
-                                 });
-
+                                if (User.getInstance().getUserInfo().getPerson().getVIP() != 2){
+                                    //不是超级管理员  比较距离
+                                    changeAddress(User.getInstance().getUserInfo().getProject().getAddress());
+                                }
                                 RetrofitConfig.getInstance().getRetrofitService()
                                         .postAddr(map)
                                         .compose(RxUtils.handleResult())
@@ -311,4 +330,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             System.exit(0);
         }
     }
+
+
 }

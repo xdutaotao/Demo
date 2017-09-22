@@ -16,4 +16,6 @@ public class Constants {
     public static final String COLLECT_LIST = "COLLECT_LIST";
     public static final String IS_COME_OVER = "IS_COME_OVER";
 
+    public static double lat = 0.0;
+    public static double lng = 0.0;
 }
