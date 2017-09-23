@@ -100,6 +100,21 @@
             android:value="f7abdf589693fd6baeabb2edeb044b0b">
             //开发者申请的key</meta-data>
 
+        <meta-data android:name="Mob-AppKey" android:value="20ad18688fcee"/>
+        <meta-data android:name="Mob-AppSecret" android:value="a0536022d8f2db4260ae91feb3d84878"/>
+
+        <activity
+            android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100371282" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -143,7 +158,13 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".wxapi.WXEntryActivity"/>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <activity android:name=".Activity.SelectMemoryActivity" />
         <activity android:name=".Activity.SelectCompanyActivity" />
         <activity android:name=".Activity.SelectSkillActivity" />
@@ -192,6 +213,7 @@
         <activity android:name=".Activity.SkillRecieveProjectDetailActivity"/>
         <activity android:name=".Activity.SkillProjReceiveProgressActivity"/>
         <activity android:name=".Activity.SkillProjProgressActivity"/>
+        <activity android:name=".Activity.CashRecordActivity"/>
 
     </application>
 

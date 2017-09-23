@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.View;
 
+import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.View.BaseView;
 
 /**
@@ -7,4 +8,5 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface AddBankView extends BaseView {
     void getData(String s);
+    void getBankList(BankListRes res);
 }

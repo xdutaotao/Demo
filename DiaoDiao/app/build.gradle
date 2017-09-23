@@ -87,8 +87,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile name: 'SMSSDK-2.1.4', ext: 'aar'
-    compile files('libs/MobCommons-2017.0321.1624.jar')
-    compile files('libs/MobTools-2017.0321.1624.jar')
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
 
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版
@@ -143,4 +141,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile files('libs/MobCommons-2017.0914.1125.jar')
+    compile files('libs/MobTools-2017.0914.1125.jar')
+    compile files('libs/ShareSDK-Core-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-Core-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-3.1.0.jar')
 }

@@ -82,7 +82,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
             };
 
             adapterMyRating.setOnItemClickListener((view1, i) -> {
-                RecordDetailActivity.startActivity(TabFragment.this.getActivity());
+                RecordDetailActivity.startActivity(TabFragment.this.getActivity(), 0);
             });
 
             type = 3;
@@ -97,7 +97,7 @@ public class TabFragment extends BaseFragment implements MyRatingView {
             };
 
             adapterRating.setOnItemClickListener((view1, i) -> {
-                RecordDetailActivity.startActivity(TabFragment.this.getActivity());
+                RecordDetailActivity.startActivity(TabFragment.this.getActivity(), 0);
             });
 
             type = 4;

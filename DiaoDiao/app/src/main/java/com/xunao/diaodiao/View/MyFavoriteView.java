@@ -8,4 +8,5 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface MyFavoriteView extends BaseView {
     void getData(MyFavoriteRes data);
+    void cancelCollect(String s);
 }

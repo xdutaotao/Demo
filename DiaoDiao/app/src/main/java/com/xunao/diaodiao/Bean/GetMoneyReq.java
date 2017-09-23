@@ -28,6 +28,16 @@ public class GetMoneyReq implements Serializable{
     private long sign_time;
     private int stage;
     private String reason;
+    private int appeal_id;
+    private int collect_id;
+
+    public int getCollect_id() {
+        return collect_id;
+    }
+
+    public void setCollect_id(int collect_id) {
+        this.collect_id = collect_id;
+    }
 
     public int getUserid() {
         return userid;
@@ -180,5 +190,13 @@ public class GetMoneyReq implements Serializable{
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public int getAppeal_id() {
+        return appeal_id;
+    }
+
+    public void setAppeal_id(int appeal_id) {
+        this.appeal_id = appeal_id;
     }
 }

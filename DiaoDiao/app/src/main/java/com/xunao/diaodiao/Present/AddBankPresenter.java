@@ -39,4 +39,25 @@ public class AddBankPresenter extends BasePresenter<AddBankView> {
                     }
                 }));
     }
+
+    /**
+     * bank list
+     * @param context
+     * @param
+     */
+    public void getBankList(Context context){
+        mCompositeSubscription.add(model.getBankList()
+                .subscribe(new RxSubUtils<BankListRes>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(BankListRes token) {
+                        getView().getBankList(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
 }

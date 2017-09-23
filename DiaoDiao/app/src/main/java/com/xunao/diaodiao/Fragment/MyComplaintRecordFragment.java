@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Present.MyComplaintRecordPresenter;
 import com.xunao.diaodiao.R;
@@ -78,7 +79,8 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
         };
 
         adapter.setOnItemClickListener((view1, i) -> {
-
+            RecordDetailActivity.startActivity(MyComplaintRecordFragment.this.getActivity(),
+                    adapter.getAllData().get(i).getAppeal_id());
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);

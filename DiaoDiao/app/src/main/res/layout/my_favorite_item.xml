@@ -29,7 +29,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_shoucang02"
+                android:src="@drawable/icon_shoucang02_fill"
                 android:id="@+id/shou_cang"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"/>

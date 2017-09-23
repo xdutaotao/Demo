@@ -5,6 +5,7 @@ import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
+import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
@@ -17,6 +18,7 @@ import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
+import com.xunao.diaodiao.Bean.MyAppealDetailRes;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
@@ -111,6 +113,9 @@ public interface RetrofitService {
     Observable<BaseBean<MyComplaintRes>> getMyComplaint(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MyAppealDetailRes>> myAppealDetail(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<HasRateRes>> getHasRate(@Body RequestBody body);
 
 
@@ -124,7 +129,13 @@ public interface RetrofitService {
     Observable<BaseBean<MyFavoriteRes>> getCollectList(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> cancelCollect(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<BankListRes>> getBankList(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<CashRecordRes>> cashRecord(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> applyCash(@Body RequestBody body);

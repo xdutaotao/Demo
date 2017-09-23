@@ -9,10 +9,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200px"
         android:paddingLeft="50px"
         android:paddingRight="50px"
-        android:paddingBottom="50px"
+        android:paddingBottom="20px"
         android:paddingTop="80px"
         android:id="@+id/choose_bank"
         android:background="@color/white">
@@ -22,12 +22,16 @@
             android:layout_height="wrap_content"
             android:text="选择提现银行卡"/>
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_arrow"
             android:layout_centerVertical="true"
+            android:text="中国工商银行"
+            android:id="@+id/bank_name"
+            android:drawablePadding="20px"
+            android:drawableRight="@drawable/arrow"
             android:layout_alignParentRight="true"/>
+
 
     </RelativeLayout>
 

@@ -25,8 +25,8 @@ public class SkillProjProgressPresenter extends BasePresenter<SkillProjProgressV
     }
 
     //列表
-    public void myAcceptProjectWorkList(Context context, int prjID, int workID){
-        mCompositeSubscription.add(model.myAcceptProjectWorkList(prjID, workID)
+    public void myAcceptProjectWorkList(Context context, int prjID, int workID, int who){
+        mCompositeSubscription.add(model.myAcceptProjectWorkList(prjID, workID, who)
                 .subscribe(new RxSubUtils<SkillProjProgPhotoRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(SkillProjProgPhotoRes token) {

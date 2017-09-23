@@ -8,6 +8,7 @@ import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.BuyActivity;
+import com.xunao.diaodiao.Activity.CashRecordActivity;
 import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
@@ -164,4 +165,5 @@ public interface ActivityComponent {
     void inject(SkillRecieveProjectDetailActivity activity);
     void inject(SkillProjReceiveProgressActivity activity);
     void inject(SkillProjProgressActivity activity);
+    void inject(CashRecordActivity activity);
 }

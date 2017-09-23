@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +20,13 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.BankListRes;
+import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.GetCashRes;
 import com.xunao.diaodiao.Present.GetMoneyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.GetMoneyView;
 
 import java.text.DecimalFormat;
@@ -56,9 +61,13 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
     TextView moneyUser;
     @BindView(R.id.get_money)
     Button getMoney;
+    @BindView(R.id.bank_name)
+    TextView bankName;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<BankListRes.BankCard> adapter;
     private List<String> selectNames = new ArrayList<>();
+    private BottomSheetDialog dialog;
+    private BankListRes.BankCard bankCard;
 
     public static void startActivity(Context context, String allMoney) {
         Intent intent = new Intent(context, GetMoneyActivity.class);
@@ -76,19 +85,48 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
 
         showToolbarBack(toolBar, titleText, "提现");
 
+        dialog = new BottomSheetDialog(this);
         chooseBank.setOnClickListener(this);
         getAllMoney.setOnClickListener(this);
         getMoney.setOnClickListener(this);
 
-        if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))){
-            moneyUser.setText("可提现金额 "+
-            new DecimalFormat("#.00").format(Float.valueOf(getIntent().getStringExtra(INTENT_KEY)))+"元");
+        if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))) {
+            moneyUser.setText("可提现金额 " +
+                    new DecimalFormat("#.00").format(Float.valueOf(getIntent().getStringExtra(INTENT_KEY))) + "元");
         }
+
+        adapter = new RecyclerArrayAdapter<BankListRes.BankCard>(this, R.layout.add_bank_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, BankListRes.BankCard s) {
+                baseViewHolder.setText(R.id.bank_text, s.getCard_name());
+                if (selectNames.size() > 0)
+                    baseViewHolder.setVisible(R.id.select, TextUtils.equals(s.getCard_name(), selectNames.get(0)));
+            }
+        };
+
+        adapter.setOnItemClickListener((view1, i) -> {
+            bankCard = adapter.getAllData().get(i);
+            String select = bankCard.getCard_name();
+            bankName.setText(select);
+            if (selectNames.contains(select)) {
+                ((ImageView) view1.findViewById(R.id.select)).setVisibility(View.GONE);
+                selectNames.clear();
+            } else {
+                ((ImageView) view1.findViewById(R.id.select)).setVisibility(View.VISIBLE);
+                selectNames.clear();
+                selectNames.add(select);
+            }
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+
+        presenter.getBankList(this);
+
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.choose_bank:
                 showBottomSheetDialog();
                 break;
@@ -103,55 +141,30 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
         }
     }
 
-    private void postMoney(String money){
+    private void postMoney(String money) {
         GetCashRes res = new GetCashRes();
-        res.setCard(money);
-        res.setCard("1111111111111");
+        res.setCash(money);
+        res.setCard(bankCard.getCard());
         presenter.applyCash(this, res);
 
     }
 
     @Override
     public void getData(String s) {
+        ToastUtil.show("提现成功");
         finish();
     }
 
-    private void showBottomSheetDialog(){
+    @Override
+    public void getBankList(BankListRes res) {
+        adapter.addAll(res.getBankCard());
+    }
 
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
+    private void showBottomSheetDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_dialog, null);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.add_bank_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.bank_text, s);
-                if (selectNames.size() > 0)
-                    baseViewHolder.setVisible(R.id.select, TextUtils.equals(s, selectNames.get(0)));
-            }
-        };
-
-        adapter.setOnItemClickListener((view1, i) -> {
-            String select = adapter.getAllData().get(i);
-            ToastUtil.show(select);
-            if (selectNames.contains(select)){
-                ((ImageView)view1.findViewById(R.id.select)).setVisibility(View.GONE);
-                selectNames.clear();
-            }else{
-                ((ImageView)view1.findViewById(R.id.select)).setVisibility(View.VISIBLE);
-                selectNames.clear();
-                selectNames.add(select);
-            }
-            adapter.notifyDataSetChanged();
-
-        });
-
         recyclerView.setAdapter(adapter);
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        adapter.addAll(list);
 
         ImageView cancle = (ImageView) view.findViewById(R.id.cancle_action);
         cancle.setOnClickListener(v -> {
@@ -159,9 +172,27 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
         });
 
         dialog.setContentView(view);
-
         dialog.show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        MenuItem item = menu.findItem(R.id.action_contact);
+        item.setTitle("提现记录");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+                CashRecordActivity.startActivity(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override
@@ -174,7 +205,6 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

@@ -24,15 +24,41 @@ public class MyFavoritePresenter extends BasePresenter<MyFavoriteView> {
     MyFavoritePresenter() {
     }
 
-    public void getCollectList(Context context){
-        mCompositeSubscription.add(model.getCollectList()
-                .subscribe(new RxSubUtils<MyFavoriteRes>(mCompositeSubscription, context) {
+    public void getCollectList(int page){
+        mCompositeSubscription.add(model.getCollectList(page)
+                .subscribe(new RxSubUtils<MyFavoriteRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyFavoriteRes token) {
                         getView().getData(token);
                     }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        super._onError(msg);
+                        getView().onFailure();
+                    }
                 }));
     }
 
+
+    /**
+     * 取消收藏
+     * @param page
+     */
+    public void cancelCollect(int page){
+        mCompositeSubscription.add(model.cancelCollect(page)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().cancelCollect(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        super._onError(msg);
+                        getView().onFailure();
+                    }
+                }));
+    }
 
 }

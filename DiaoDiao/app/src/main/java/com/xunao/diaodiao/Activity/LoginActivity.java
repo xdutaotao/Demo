@@ -28,10 +28,16 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.LoginView;
 import com.xunao.diaodiao.wxapi.WXEntryActivity;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
@@ -119,13 +125,36 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 break;
 
             case R.id.wx_login:
-                WXEntryActivity.startActivity(this);
+                //WXEntryActivity.startActivity(this);
+                weixinLogin();
                 break;
 
             case R.id.back:
                 finish();
                 break;
         }
+    }
+
+    private void weixinLogin(){
+        Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
+        weixin.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                platform.getDb().exportData();
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        weixin.authorize();
+        weixin.showUser(null);
     }
 
     /**

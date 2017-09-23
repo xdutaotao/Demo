@@ -19,7 +19,7 @@ public class MyComplaintRes {
     }
 
     public static class  Appeal{
-        private int appeal_order;
+        private long appeal_order;
         private int status;
         private String title;
         private String content;
@@ -27,11 +27,11 @@ public class MyComplaintRes {
         private int project_type;
         private int appeal_id;
 
-        public int getAppeal_order() {
+        public long getAppeal_order() {
             return appeal_order;
         }
 
-        public void setAppeal_order(int appeal_order) {
+        public void setAppeal_order(long appeal_order) {
             this.appeal_order = appeal_order;
         }
 

@@ -37,7 +37,7 @@ public class SignDetailPresenter extends BasePresenter<SignDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
@@ -52,7 +52,7 @@ public class SignDetailPresenter extends BasePresenter<SignDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

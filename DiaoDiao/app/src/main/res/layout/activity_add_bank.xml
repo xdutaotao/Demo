@@ -38,6 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/bank_name"
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/icon_arrow"
             android:layout_centerVertical="true"/>
@@ -96,6 +97,27 @@
 
         <TextView
             style="@style/edit_personal_text"
+            android:text="身份证号"/>
+
+        <EditText
+            style="@style/edit_personal_edit"
+            android:id="@+id/person_code"
+            android:hint="请输入身份证号"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
             android:text="验证码"/>
 
         <EditText
@@ -114,11 +136,13 @@
             android:background="@drawable/btn_code"
             android:text="获取验证码"
             android:gravity="center"
+            android:id="@+id/get_code"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="@color/white"/>
 
     </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"

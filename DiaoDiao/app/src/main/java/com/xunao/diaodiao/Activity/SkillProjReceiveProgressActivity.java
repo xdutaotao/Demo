@@ -213,7 +213,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
         sign.setOnClickListener(v -> {
             SignDetailActivity.startActivity(SkillProjReceiveProgressActivity.this,
-                    getIntent().getIntExtra(INTENT_KEY, 0));
+                    getIntent().getIntExtra(INTENT_KEY, 0), who);
 
         });
     }

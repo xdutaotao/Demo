@@ -11,6 +11,7 @@ import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.BindBankReq;
+import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
@@ -35,6 +36,7 @@ import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
+import com.xunao.diaodiao.Bean.MyAppealDetailRes;
 import com.xunao.diaodiao.Bean.MyBean;
 import com.xunao.diaodiao.Bean.MyComplaintRes;
 import com.xunao.diaodiao.Bean.MyFavoriteRes;
@@ -467,6 +469,33 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+    /**
+     * 申诉详情
+     * @param
+     * @return
+     */
+    public Observable<MyAppealDetailRes> myAppealDetail(int id){
+        String rateKey = "myAppealDetail";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type+"")
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setAppeal_id(id);
+        req.setPageSize(10);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().myAppealDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
 
 
     /**
@@ -519,23 +548,52 @@ public class LoginModel extends BaseModel {
      * 收藏列表
      * @return
      */
-    public Observable<MyFavoriteRes> getCollectList(){
+    public Observable<MyFavoriteRes> getCollectList(int page){
         String rateKey = "collectList";
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(type)
+        sb.append(time+"").append(page).append(10).append(type)
                 .append(User.getInstance().getUserId())
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
         return config.getRetrofitService().getCollectList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+    public Observable<String> cancelCollect(int id){
+        String rateKey = "cancelCollect";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setCollect_id(id);
+        req.setPageSize(10);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().cancelCollect(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -560,6 +618,32 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getBankList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 提现记录
+     * @return
+     */
+    public Observable<CashRecordRes> cashRecord(int page){
+        String rateKey = "cashRecord";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().cashRecord(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -595,16 +679,26 @@ public class LoginModel extends BaseModel {
      */
     public Observable<String> bindingCard(BindBankReq req){
         String rateKey = "bindingCard";
+        boolean isCode = TextUtils.isEmpty(req.getTrade_no());
+        if (isCode){
+            rateKey = "bindingCardGetVerify";
+        }
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getCard()).append(req.getCard_type())
-                .append(req.getCode()).append(req.getIdentity_card())
-                .append(req.getMobile()).append(req.getName())
-                .append(req.getTrade_no()).append(req.getType())
-                .append(User.getInstance().getUserId())
-                .append("security");
+        sb.append(time+"").append(req.getCard()).append(req.getCard_type());
+        if (!isCode){
+            sb.append(req.getCode());
+        }
+        sb.append(req.getIdentity_card())
+        .append(req.getMobile()).append(req.getName());
+        if(!isCode){
+            sb.append(req.getTrade_no());
+        }
+        sb.append(req.getType())
+        .append(User.getInstance().getUserId())
+        .append("security");
 
 
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
@@ -1426,8 +1520,12 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度 拍照 列表
      */
-    public Observable<SkillProjProgPhotoRes> myAcceptProjectWorkList(int projId, int worksId){
+    public Observable<SkillProjProgPhotoRes> myAcceptProjectWorkList(int projId, int worksId, int who){
         String rateKey = "myAcceptProjectWorkList";
+
+        if (who == COMPANY_RELEASE_PROJECT_DONE || who == COMPANY_RELEASE_PROJECT_DOING){
+            rateKey = "myProjectWorkList";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         int type = ShareUtils.getValue("TYPE", 0);

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.LoginActivity;
@@ -53,7 +54,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
 
     private String mParam1;
 

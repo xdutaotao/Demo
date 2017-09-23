@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
@@ -50,6 +51,7 @@ import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
+ * 审核
  * create by
  */
 public class SkillProjProgressActivity extends BaseActivity implements SkillProjProgressView {
@@ -61,7 +63,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     @BindView(R.id.post)
     Button post;
     @BindView(R.id.no_pass)
@@ -84,15 +86,16 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private int worksid;
     private int workid;
     private EditText postRemark;
     private int stage = 0;
     private int who;
 
-    public static void startActivity(Context context, int id, int workid, int stage, int who) {
+    public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
-        intent.putExtra("WORKID", workid);
+        intent.putExtra("WORKSID", worksid);
         intent.putExtra("STAGE", stage);
         intent.putExtra("WHO", who);
         context.startActivity(intent);
@@ -110,7 +113,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
         who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
-        workid = getIntent().getIntExtra("WORKID", 0);
+        worksid = getIntent().getIntExtra("WORKSID", 0);
         adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.sign_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, SkillProjProgPhotoRes.InfoBean s) {
@@ -122,7 +125,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
                         + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
-
+                if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
+                    workid = s.getWork_id();
+                }
             }
         };
 
@@ -142,8 +147,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             noPass.setOnClickListener(v -> {
                 GetMoneyReq req = new GetMoneyReq();
                 req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                req.setWork_id(workid);
+                req.setWorks_id(worksid);
                 req.setStage(stage);
+                req.setWork_id(workid);
                 AppealActivity.startActivity(SkillProjProgressActivity.this,
                         req, NO_PASS);
             });
@@ -227,7 +233,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         initImagePicker();
 
         presenter.myAcceptProjectWorkList(this,
-                getIntent().getIntExtra(INTENT_KEY, 0), workid);
+                getIntent().getIntExtra(INTENT_KEY, 0), workid, who);
 
         post.setOnClickListener(v -> {
             //第一阶段 第二阶段
@@ -249,8 +255,13 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
     @Override
     public void getList(SkillProjProgPhotoRes list) {
-        if (list != null && list.getInfo().size() > 0) {
+        if (list.getInfo() != null && list.getInfo().size() > 0) {
             adapter.addAll(list.getInfo());
+        }else{
+            pass.setVisibility(View.GONE);
+            noPass.setVisibility(View.GONE);
+            adapter.removeAllFooter();
+            recyclerView.showEmpty();
         }
     }
 

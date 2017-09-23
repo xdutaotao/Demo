@@ -26,6 +26,8 @@ public class SkillProjProgPhotoRes {
         private int audit;
         private int audit_status;
         private String feedback;
+        private int work_id;
+        private List<String> audit_images;
 
         public long getDate() {
             return date;
@@ -81,6 +83,22 @@ public class SkillProjProgPhotoRes {
 
         public void setFeedback(String feedback) {
             this.feedback = feedback;
+        }
+
+        public int getWork_id() {
+            return work_id;
+        }
+
+        public void setWork_id(int work_id) {
+            this.work_id = work_id;
+        }
+
+        public List<String> getAudit_images() {
+            return audit_images;
+        }
+
+        public void setAudit_images(List<String> audit_images) {
+            this.audit_images = audit_images;
         }
     }
 }
