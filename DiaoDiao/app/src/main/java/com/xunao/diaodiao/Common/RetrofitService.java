@@ -255,6 +255,12 @@ public interface RetrofitService {
     Observable<BaseBean<String>> myAcceptProjectWorkSub(@Body RequestBody body);
 
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myProjectWorkFail(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> myProjectWorkPass(@Body RequestBody body);
+
     @FormUrlEncoded
     @POST("personalCenter/personalData")
     Observable<BaseBean<UserInfo>> getUserInfo(@Field("token") String token);

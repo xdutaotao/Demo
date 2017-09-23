@@ -111,7 +111,7 @@ public class OrderSkillCompDetailActivity extends BaseActivity implements OrderS
     @Override
     public void getData(SkillProjDetailRes s) {
         if (s != null && s.getOdd() != null) {
-            SkillProjDetailRes.OddBean oddBean = s.getOdd().get(0);
+            SkillProjDetailRes.OddBean oddBean = s.getOdd();
 
             title.setText(oddBean.getTitle());
             address.setText(oddBean.getRegion());

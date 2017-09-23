@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by guzhenfu on 2017/9/5.
  */
 
-public class GetMoneyReq {
+public class GetMoneyReq implements Serializable{
     private int userid;
     private int type;
     private String verify;
@@ -25,6 +26,8 @@ public class GetMoneyReq {
     private String remark;
     private int audit;
     private long sign_time;
+    private int stage;
+    private String reason;
 
     public int getUserid() {
         return userid;
@@ -161,5 +164,21 @@ public class GetMoneyReq {
 
     public void setSign_time(long sign_time) {
         this.sign_time = sign_time;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

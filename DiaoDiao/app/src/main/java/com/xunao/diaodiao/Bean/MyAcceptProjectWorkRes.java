@@ -8,13 +8,13 @@ import java.util.List;
  */
 
 public class MyAcceptProjectWorkRes {
-    private List<WorksBean> works;
+    private WorksBean works;
 
-    public List<WorksBean> getWorks() {
+    public WorksBean getWorks() {
         return works;
     }
 
-    public void setWorks(List<WorksBean> works) {
+    public void setWorks(WorksBean works) {
         this.works = works;
     }
 

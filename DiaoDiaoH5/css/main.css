@@ -1,11 +1,7 @@
-html,body{
-    margin:0px;
-    padding: 0;
-    height:100%;
-    width: 100%;
-    -webkit-font-smoothing: antialiased;
-    background-color: #F8F8F8;
-}
+html{color: #000;background: #fff;overflow-y: scroll;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
+html *{outline: 0;-webkit-text-size-adjust: none;-webkit-tap-highlight-color: rgba(0,0,0,0)}
+html,body{width:100%;height:100%;font-family: sans-serif;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin: 0;padding: 0}
 
 
 a,button,input,optgroup,select,textarea {
@@ -18,6 +14,15 @@ a,button,input,optgroup,select,textarea {
     display: -webkit-flex;
     flex-direction: row;
     align-items: center;
+    width: 100%;
+}
+
+.col{
+    display:flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .rowCell{
@@ -28,8 +33,8 @@ a,button,input,optgroup,select,textarea {
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-    font-size: 0.18rem;
-    height: 0.6rem;
+    font-size: 0.12rem;
+    height: 0.45rem;
     padding-left: 0.1rem;
     padding-right: 0.1rem;
 }
@@ -50,11 +55,11 @@ a,button,input,optgroup,select,textarea {
 .divide{
     background-color: #CBCACB;
     height: 0.01rem;
-    width: 100%;
+    width: 96%;
     margin-left: 0.1rem;
 }
 
 .imageStyle{
-    width: 0.8rem;
-    height: 0.8rem;
+    width: 0.6rem;
+    height: 0.6rem;
 }

@@ -9,14 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -39,7 +43,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -57,6 +64,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     RecyclerView recyclerView;
     @BindView(R.id.post)
     Button post;
+    @BindView(R.id.no_pass)
+    TextView noPass;
+    @BindView(R.id.pass)
+    TextView pass;
+    @BindView(R.id.bottom_btn_layout)
+    LinearLayout bottomBtnLayout;
 
     private RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
@@ -74,12 +87,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private int workid;
     private EditText postRemark;
     private int stage = 0;
+    private int who;
 
-    public static void startActivity(Context context, int id, int workid, int stage) {
+    public static void startActivity(Context context, int id, int workid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
         intent.putExtra("WORKID", workid);
         intent.putExtra("STAGE", stage);
+        intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
 
@@ -93,6 +108,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
         showToolbarBack(toolBar, titleText, "定位及隐藏工程施工");
 
+        who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
         workid = getIntent().getIntExtra("WORKID", 0);
         adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.sign_detail_item) {
@@ -103,34 +119,72 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
+                baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
                         + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
+
             }
         };
 
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
-                RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                recyclerViewFooter.setAdapter(footerAdapter);
-                return view;
-            }
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+            post.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.VISIBLE);
 
-            @Override
-            public void onBindView(View view) {
-                postText = (TextView) view.findViewById(R.id.post);
-                postRemark = (EditText) view.findViewById(R.id.remark);
-                TextView time = (TextView) view.findViewById(R.id.time);
-                time.setText(Utils.getNowDateMonth());
-                TextView address = (TextView) view.findViewById(R.id.address);
-                address.setText(Constants.address);
-                postText.setOnClickListener(v -> {
-                    signAction(0);
-                });
-            }
-        });
+            adapter.addFooter(new DefaultRecyclerViewItem() {
+                @Override
+                public View onCreateView(ViewGroup viewGroup) {
+                    View view = LayoutInflater.from(SkillProjProgressActivity.this)
+                            .inflate(R.layout.company_project_footer, null);
+                    return view;
+                }
+            });
+
+            noPass.setOnClickListener(v -> {
+                GetMoneyReq req = new GetMoneyReq();
+                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                req.setWork_id(workid);
+                req.setStage(stage);
+                AppealActivity.startActivity(SkillProjProgressActivity.this,
+                        req, NO_PASS);
+            });
+
+            pass.setOnClickListener(v -> {
+                GetMoneyReq req = new GetMoneyReq();
+                presenter.myProjectWorkPass(SkillProjProgressActivity.this, req);
+            });
+
+        }else {
+            adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+                @Override
+                public View onCreateView(ViewGroup viewGroup) {
+                    View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
+                    RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                    recyclerViewFooter.setAdapter(footerAdapter);
+                    return view;
+                }
+
+                @Override
+                public void onBindView(View view) {
+                    postText = (TextView) view.findViewById(R.id.post);
+                    postRemark = (EditText) view.findViewById(R.id.remark);
+                    TextView time = (TextView) view.findViewById(R.id.time);
+                    time.setText(Utils.getNowDateMonth());
+                    TextView address = (TextView) view.findViewById(R.id.address);
+                    address.setText(Constants.address);
+                    View headLine = view.findViewById(R.id.head_line);
+                    if (adapter.getAllData().size() == 0) {
+                        headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
+                    } else {
+                        headLine.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    postText.setOnClickListener(v -> {
+                        signAction(0);
+                    });
+                }
+            });
+        }
+
+
 
         itemAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
             @Override
@@ -180,9 +234,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             signAction(stage);
         });
 
-        if (stage == 2){
+        if (stage == 2) {
             post.setText("第二阶段提交审核");
-        }else{
+        } else {
             post.setText("第一阶段提交审核");
         }
     }
@@ -264,6 +318,27 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     }
                 });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        MenuItem item = menu.findItem(R.id.action_contact);
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
+            item.setTitle("申诉");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+                ToastUtil.show("申诉");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override

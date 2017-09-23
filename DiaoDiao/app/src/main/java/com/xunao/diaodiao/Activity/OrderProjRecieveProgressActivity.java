@@ -17,6 +17,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
@@ -86,6 +87,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     private static final int IMAGE_PICKER = 8888;
 
     LinearLayoutManager linearLayoutManager ;
+    private GetMoneyReq req = new GetMoneyReq();
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderProjRecieveProgressActivity.class);
@@ -159,7 +161,9 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         presenter.myAcceptOddWork(getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
-            AppealActivity.startActivity(OrderProjRecieveProgressActivity.this);
+
+            AppealActivity.startActivity(
+                    OrderProjRecieveProgressActivity.this, req, 0);
         });
 
         giveMoney.setOnClickListener(v -> {
@@ -205,7 +209,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
 
         //申诉
         post.setOnClickListener(v -> {
-            AppealActivity.startActivity(OrderProjRecieveProgressActivity.this);
+            AppealActivity.startActivity(OrderProjRecieveProgressActivity.this, req, 0);
         });
 
         applyMoney.setOnClickListener(v -> {
@@ -253,9 +257,6 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             adapter.addAll(res.getWork());
         }
 
-
-
-
     }
 
     @Override
@@ -290,8 +291,11 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             post.setVisibility(View.VISIBLE);
             applyMoney.setVisibility(View.VISIBLE);
         }
+        pathList.clear();
         Observable.from(images)
-                .map(imageItem -> imageItem.path)
+                .map(imageItem -> {
+                    pathList.add(Utils.Bitmap2StrByBase64(imageItem.path));
+                    return imageItem.path;})
                 .toList()
                 .subscribe(strings -> {
                     signAdapter.clear();
@@ -299,8 +303,6 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                     if (strings.size() != 10) {
                         signAdapter.add(ADD);
                     }
-                    pathList.clear();
-                    pathList.addAll(strings);
                 });
     }
 

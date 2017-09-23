@@ -75,6 +75,9 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         showToolbarBack(toolBar, titleText, "项目进度");
 
         who = getIntent().getIntExtra("WHO", 0);
+        if (who == COMPANY_RELEASE_PROJECT_DONE || who == COMPANY_RELEASE_PROJECT_DOING){
+            sign.setText("签到详情");
+        }
 
         adapter = new RecyclerArrayAdapter<MyAcceptProjectWorkRes.WorkBean>(this, R.layout.skill_proj_receive_proj_item) {
             @Override
@@ -84,20 +87,32 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setText(R.id.progress, "第一阶段未开始");
                     baseViewHolder.setText(R.id.middle_text, "未开始");
                     baseViewHolder.setVisible(R.id.middle_btn, false);
+                    baseViewHolder.setVisible(R.id.middle, false);
                     baseViewHolder.setVisible(R.id.middle_text, true);
+
+                    baseViewHolder.setVisible(R.id.status_btn, false);
+                    baseViewHolder.setVisible(R.id.status_text, true);
+                    baseViewHolder.setVisible(R.id.status, false);
                 }else if (workBean.getStage1() == 1){
                     baseViewHolder.setText(R.id.progress, "第一阶段进行中");
+                    baseViewHolder.setVisible(R.id.status_btn, false);
+                    baseViewHolder.setVisible(R.id.status_text, true);
+                    baseViewHolder.setVisible(R.id.status, false);
                     if (who == SKILL_RECIEVE_PROJECT){
                         baseViewHolder.setVisible(R.id.middle_btn, true);
                         baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, false);
+
+
                     }else if (who == COMPANY_RELEASE_PROJECT_DOING){
                         baseViewHolder.setVisible(R.id.middle_btn, false);
-                        baseViewHolder.setVisible(R.id.middle_text, true);
-                        baseViewHolder.setText(R.id.middle_text, "进行中");
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+
                     }else if (who == COMPANY_RELEASE_PROJECT_DONE){
                         baseViewHolder.setVisible(R.id.middle_btn, false);
-                        baseViewHolder.setVisible(R.id.middle_text, true);
-                        baseViewHolder.setText(R.id.middle_text, "进行中");
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
                     }
 
                 }else if( workBean.getStage1() == 2){
@@ -105,40 +120,90 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     if (workBean.getStage2() == 0){
                         baseViewHolder.setText(R.id.progress, "第一阶段已完成");
                         baseViewHolder.setVisible(R.id.middle_btn, false);
-                        baseViewHolder.setVisible(R.id.middle_text, true);
-                        baseViewHolder.setText(R.id.middle_text, "已完成");
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                        baseViewHolder.setText(R.id.middle, "已完成");
+
+                        baseViewHolder.setVisible(R.id.status_btn, false);
+                        baseViewHolder.setVisible(R.id.status_text, true);
+                        baseViewHolder.setVisible(R.id.status, false);
                     }else if (workBean.getStage2() == 1){
                         baseViewHolder.setText(R.id.progress, "第二阶段进行中");
 
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                        baseViewHolder.setText(R.id.middle, "已完成");
+                        if (who == SKILL_RECIEVE_PROJECT){
+                            baseViewHolder.setVisible(R.id.status_btn, true);
+                            baseViewHolder.setVisible(R.id.status_text, false);
+                            baseViewHolder.setVisible(R.id.status, false);
+                        }else if (who == COMPANY_RELEASE_PROJECT_DOING){
+                            baseViewHolder.setVisible(R.id.status_btn, false);
+                            baseViewHolder.setVisible(R.id.status_text, false);
+                            baseViewHolder.setVisible(R.id.status, true);
+                        }else if (who == COMPANY_RELEASE_PROJECT_DONE){
+                            baseViewHolder.setVisible(R.id.status_btn, false);
+                            baseViewHolder.setVisible(R.id.status_text, false);
+                            baseViewHolder.setVisible(R.id.status, true);
+                        }
+
+
                     }else if( workBean.getStage2() == 2){
+                        //第二阶段已完成
                         baseViewHolder.setText(R.id.progress, "第二阶段已完成");
+
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                        baseViewHolder.setText(R.id.middle, "已完成");
+
+                        baseViewHolder.setVisible(R.id.status_btn, false);
+                        baseViewHolder.setVisible(R.id.status_text, false);
+                        baseViewHolder.setVisible(R.id.status, true);
+                        baseViewHolder.setText(R.id.status, "已完成");
                     }else{
+                        //第二阶段审核
                         baseViewHolder.setText(R.id.progress, "第二阶段审核中");
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                        baseViewHolder.setText(R.id.middle, "已完成");
+
+                        baseViewHolder.setVisible(R.id.status_btn, false);
+                        baseViewHolder.setVisible(R.id.status_text, false);
+                        baseViewHolder.setVisible(R.id.status, true);
+                        baseViewHolder.setText(R.id.status, "审核中");
                     }
 
                 }else{
                     //第一阶段审核中
                     baseViewHolder.setText(R.id.progress, "第一阶段审核中");
-                }
+                    baseViewHolder.setVisible(R.id.middle_btn, false);
+                    baseViewHolder.setVisible(R.id.middle_text, false);
+                    baseViewHolder.setVisible(R.id.middle, true);
+                    baseViewHolder.setText(R.id.middle, "审核中");
 
-                if (workBean.getStage2() == 0){
-                    baseViewHolder.setText(R.id.status, "未开始");
-                }else if (workBean.getStage2() == 1){
-                    baseViewHolder.setText(R.id.status, "进行中");
-                }else if( workBean.getStage2() == 2){
-                    baseViewHolder.setText(R.id.status, "已完成");
-                }else{
-                    baseViewHolder.setText(R.id.status, "审核中");
+                    baseViewHolder.setVisible(R.id.status_btn, false);
+                    baseViewHolder.setVisible(R.id.status_text, true);
+                    baseViewHolder.setVisible(R.id.status, false);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.middle_btn, v -> {
                     SkillProjProgressActivity.startActivity(SkillProjReceiveProgressActivity.this,
                             getIntent().getIntExtra(INTENT_KEY, 0), workBean.getWorks_id(),
-                            workBean.getStage1() == 2 ? 2 : 1);
+                            workBean.getStage1() == 2 ? 2 : 1, who);
                 });
 
             }
         };
+
+        adapter.setOnItemClickListener((view, i) -> {
+            SkillProjProgressActivity.startActivity(SkillProjReceiveProgressActivity.this,
+                    getIntent().getIntExtra(INTENT_KEY, 0),
+                    adapter.getAllData().get(i).getWorks_id(),
+                    adapter.getAllData().get(i).getStage1() == 2 ? 2 : 1, who);
+        });
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -150,15 +215,13 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
             SignDetailActivity.startActivity(SkillProjReceiveProgressActivity.this,
                     getIntent().getIntExtra(INTENT_KEY, 0));
 
-//            SkillProjProgressActivity.startActivity(SkillProjReceiveProgressActivity.this,
-//                    getIntent().getIntExtra(INTENT_KEY, 0), 0);
         });
     }
 
     @Override
     public void getData(MyAcceptProjectWorkRes res) {
-        if (res.getWorks() != null && res.getWorks().size() > 0){
-            MyAcceptProjectWorkRes.WorksBean worksBean = res.getWorks().get(0);
+        if (res.getWorks() != null){
+            MyAcceptProjectWorkRes.WorksBean worksBean = res.getWorks();
             title.setText(worksBean.getTitle());
             address.setText(worksBean.getAddress());
             addressDetail.setText(worksBean.getRegion());

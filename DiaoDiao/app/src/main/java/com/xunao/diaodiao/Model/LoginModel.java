@@ -1397,8 +1397,11 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度 列表
      */
-    public Observable<SignRes> myAcceptProjectSignList(int id){
+    public Observable<SignRes> myAcceptProjectSignList(int id, int who){
         String rateKey = "myAcceptProjectSignList";
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
+            rateKey = "myProjectWorkSign";
+        }
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         int type = ShareUtils.getValue("TYPE", 0);
@@ -1493,6 +1496,56 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myAcceptProjectSign(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  审核不通过
+     */
+    public Observable<String> myProjectWorkFail(GetMoneyReq req, int who){
+        String rateKey = "myAcceptProjectSign";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getProject_id())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myProjectWorkFail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 审核不通过
+     * @param req
+     * @return
+     */
+    public Observable<String> myProjectWorkPass(GetMoneyReq req){
+        String rateKey = "myProjectWorkPass";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getProject_id())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myProjectWorkPass(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

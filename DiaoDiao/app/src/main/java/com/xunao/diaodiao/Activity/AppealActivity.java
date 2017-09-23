@@ -19,9 +19,11 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Present.AppealPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.AppealView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
@@ -33,6 +35,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 
 /**
  * create by
@@ -55,6 +60,8 @@ public class AppealActivity extends BaseActivity implements AppealView {
     EditText content;
     @BindView(R.id.content_num)
     TextView contentNum;
+    @BindView(R.id.reason)
+    TextView reason;
 
     private RecyclerArrayAdapter<String> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
@@ -66,9 +73,13 @@ public class AppealActivity extends BaseActivity implements AppealView {
     List<String> pathList = new ArrayList<>();
 
     private List<String> skillsName = new ArrayList<>();
+    private GetMoneyReq req;
+    private int who;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, GetMoneyReq req, int who) {
         Intent intent = new Intent(context, AppealActivity.class);
+        intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
 
@@ -80,7 +91,15 @@ public class AppealActivity extends BaseActivity implements AppealView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "申诉");
+        req = (GetMoneyReq) getIntent().getSerializableExtra(INTENT_KEY);
+        who = getIntent().getIntExtra("WHO", 0);
+        if (who == NO_PASS) {
+            showToolbarBack(toolBar, titleText, "输入不通过原因");
+            post.setText("提交审核");
+            reason.setText("不通过的原因");
+        } else {
+            showToolbarBack(toolBar, titleText, "申诉");
+        }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
             @Override
@@ -181,13 +200,21 @@ public class AppealActivity extends BaseActivity implements AppealView {
         });
 
         post.setOnClickListener(v -> {
-            if (content.getText().toString().length() == 0){
+            if (content.getText().toString().length() == 0) {
                 ToastUtil.show("请填写原因");
                 return;
             }
 
+            req.setReason(content.getText().toString());
+            req.setImages(pathList);
 
+            presenter.myProjectWorkFail(AppealActivity.this, req, who);
         });
+
+    }
+
+    @Override
+    public void getData(String s) {
 
     }
 
@@ -223,8 +250,12 @@ public class AppealActivity extends BaseActivity implements AppealView {
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
+        pathList.clear();
         Observable.from(images)
-                .map(imageItem -> imageItem.path)
+                .map(imageItem -> {
+                    pathList.add(Utils.Bitmap2StrByBase64(imageItem.path));
+                    return imageItem.path;
+                })
                 .toList()
                 .subscribe(strings -> {
                     imageAdapter.clear();
@@ -232,8 +263,6 @@ public class AppealActivity extends BaseActivity implements AppealView {
                     if (strings.size() != 10) {
                         imageAdapter.add(ADD);
                     }
-                    pathList.clear();
-                    pathList.addAll(strings);
                 });
     }
 
@@ -248,5 +277,6 @@ public class AppealActivity extends BaseActivity implements AppealView {
         super.onDestroy();
         presenter.detachView();
     }
+
 
 }

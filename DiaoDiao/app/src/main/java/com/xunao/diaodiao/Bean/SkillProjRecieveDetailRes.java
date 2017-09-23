@@ -9,13 +9,13 @@ import java.util.List;
 
 public class SkillProjRecieveDetailRes {
 
-    private List<OddBean> odd;
+    private OddBean odd;
 
-    public List<OddBean> getOdd() {
+    public OddBean getOdd() {
         return odd;
     }
 
-    public void setOdd(List<OddBean> odd) {
+    public void setOdd(OddBean odd) {
         this.odd = odd;
     }
 

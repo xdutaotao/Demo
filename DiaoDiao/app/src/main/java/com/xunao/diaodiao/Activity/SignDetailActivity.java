@@ -39,11 +39,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
- * create by
+ * create by 签到  签到详情
  */
 public class SignDetailActivity extends BaseActivity implements SignDetailView {
 
@@ -69,10 +71,12 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private int who;
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, SignDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
 
@@ -85,6 +89,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "签到详情");
+        who = getIntent().getIntExtra("WHO", 0);
 
         adapter = new RecyclerArrayAdapter<SignRes.SignBean>(this, R.layout.sign_detail_item) {
             @Override
@@ -92,30 +97,66 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
                 recyclerView.setAdapter(itemAdapter);
-
+                itemAdapter.clear();
+                itemAdapter.addAll(s.getImages());
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
                             + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
             }
         };
 
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
-                RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                recyclerViewFooter.setAdapter(footerAdapter);
-                return view;
-            }
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
 
-            @Override
-            public void onBindView(View view) {
-                postText = (TextView) view.findViewById(R.id.post);
-                postText.setOnClickListener(v -> {
-                    signAction();
+        }else{
+            adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+                @Override
+                public View onCreateView(ViewGroup viewGroup) {
+                    View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
+                    RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                    recyclerViewFooter.setAdapter(footerAdapter);
+                    return view;
+                }
+
+                @Override
+                public void onBindView(View view) {
+                    postText = (TextView) view.findViewById(R.id.post);
+                    postText.setOnClickListener(v -> {
+                        signAction();
+                    });
+                }
+            });
+
+            footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
+                @Override
+                protected void convert(BaseViewHolder baseViewHolder, String s) {
+                    if (TextUtils.equals(ADD, s)){
+                        baseViewHolder.setVisible(R.id.delete, false);
+                        baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
+                    }else{
+                        baseViewHolder.setVisible(R.id.delete, true);
+                        baseViewHolder.setImageUrl(R.id.image, s);
+                    }
+                }
+            };
+
+            footerAdapter.setOnItemClickListener((view, i) -> {
+                view.findViewById(R.id.delete).setOnClickListener(v -> {
+                    imageItems.remove(i);
+                    footerAdapter.remove(i);
+                    if (!footerAdapter.getAllData().contains(ADD)) {
+                        footerAdapter.add(ADD);
+                    }
                 });
-            }
-        });
+
+                if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
+                    selectPhoto();
+                }
+            });
+            footerAdapter.add(ADD);
+
+
+        }
+
 
         itemAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
             @Override
@@ -124,40 +165,12 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             }
         };
 
-        footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                if (TextUtils.equals(ADD, s)){
-                    baseViewHolder.setVisible(R.id.delete, false);
-                    baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
-                }else{
-                    baseViewHolder.setVisible(R.id.delete, true);
-                    baseViewHolder.setImageUrl(R.id.image, s);
-                }
-            }
-        };
-
-        footerAdapter.setOnItemClickListener((view, i) -> {
-            view.findViewById(R.id.delete).setOnClickListener(v -> {
-                imageItems.remove(i);
-                footerAdapter.remove(i);
-                if (!footerAdapter.getAllData().contains(ADD)) {
-                    footerAdapter.add(ADD);
-                }
-            });
-
-            if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                selectPhoto();
-            }
-        });
-        footerAdapter.add(ADD);
-
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         initImagePicker();
 
-        presenter.myAcceptProjectSignList(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        presenter.myAcceptProjectSignList(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
     }
 
     @Override

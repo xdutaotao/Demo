@@ -114,7 +114,7 @@ public class OrderSkillCompRecieveDetailActivity extends BaseActivity implements
     @Override
     public void getData(SkillProjRecieveDetailRes s) {
         if (s != null && s.getOdd() != null) {
-            SkillProjRecieveDetailRes.OddBean oddBean = s.getOdd().get(0);
+            SkillProjRecieveDetailRes.OddBean oddBean = s.getOdd();
 
             title.setText(oddBean.getTitle());
             address.setText(oddBean.getRegion());

@@ -76,6 +76,16 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         });
     }
 
+    @Override
+    public void getData(ApplyDetailRes res) {
+
+    }
+
+    @Override
+    public void getPass(String s) {
+
+    }
+
 
     @Override
     public void onFailure() {
@@ -88,13 +98,5 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         presenter.detachView();
     }
 
-    @Override
-    public void getData(ApplyDetailRes res) {
 
-    }
-
-    @Override
-    public void getPass(String s) {
-
-    }
 }

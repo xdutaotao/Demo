@@ -32,4 +32,6 @@ public class Constants {
     public static final int COMPANY_RELEASE_PROJECT_WAIT = 4;
     public static final int COMPANY_RELEASE_PROJECT_DOING = 5;
     public static final int COMPANY_RELEASE_PROJECT_DONE = 6;
+
+    public static final int NO_PASS = 9999;
 }

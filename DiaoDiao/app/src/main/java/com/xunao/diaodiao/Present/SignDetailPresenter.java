@@ -27,8 +27,8 @@ public class SignDetailPresenter extends BasePresenter<SignDetailView> {
     }
 
     //列表
-    public void myAcceptProjectSignList(Context context, int req){
-        mCompositeSubscription.add(model.myAcceptProjectSignList(req)
+    public void myAcceptProjectSignList(Context context, int req, int who){
+        mCompositeSubscription.add(model.myAcceptProjectSignList(req, who)
                 .subscribe(new RxSubUtils<SignRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(SignRes token) {
