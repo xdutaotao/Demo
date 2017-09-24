@@ -1,5 +1,6 @@
 package com.xunao.diaodiao;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -121,6 +122,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void goToFragment(int index){
         if (index == 1)
             bottomNavigationBar.selectTab(0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fragments.get(bottomNavigationBar.getCurrentSelectedPosition()).onActivityResult(requestCode, resultCode, data);
     }
 
     /**

@@ -51,7 +51,9 @@ public class CitiesBean {
 
         public static class AddressListBean {
             private int id;
-            private String name;
+            private String region_name;
+            private int parent_id;
+            private int region_type;
 
             public int getId() {
                 return id;
@@ -61,12 +63,28 @@ public class CitiesBean {
                 this.id = id;
             }
 
-            public String getName() {
-                return name;
+            public String getRegion_name() {
+                return region_name;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setRegion_name(String region_name) {
+                this.region_name = region_name;
+            }
+
+            public int getParent_id() {
+                return parent_id;
+            }
+
+            public void setParent_id(int parent_id) {
+                this.parent_id = parent_id;
+            }
+
+            public int getRegion_type() {
+                return region_type;
+            }
+
+            public void setRegion_type(int region_type) {
+                this.region_type = region_type;
             }
         }
     }

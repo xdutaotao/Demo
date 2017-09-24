@@ -20,6 +20,8 @@ import android.view.WindowManager;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.App;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -810,6 +812,20 @@ public class Utils {
         DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
         String p=decimalFormat.format(data);//format 返回的是字符串
         return p;
+    }
+
+    public static String stringToPinyin(@NonNull String name){
+        StringBuilder sb = new StringBuilder();
+        char[] pins = name.toCharArray();
+        for(int i=0; i<name.length(); i++){
+            String pinyin = PinyinHelper.toHanyuPinyinStringArray(pins[i])[0];
+            if(Character.isDigit(pinyin.charAt(pinyin.length()-1))){
+                pinyin = pinyin.substring(0, pinyin.length()-1);
+            }
+            sb.append(pinyin);
+        }
+        String result =  sb.toString();
+        return result;
     }
 
 

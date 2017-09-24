@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bumptech.glide.Glide;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.gzfgeh.viewpagecycle.BannerInfo;
 import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.DocActivity;
@@ -46,12 +53,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.app.Activity.RESULT_OK;
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
 import static com.xunao.diaodiao.Common.Constants.latData;
 import static com.xunao.diaodiao.Common.Constants.lngData;
 
-public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener {
+public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, GeocodeSearch.OnGeocodeSearchListener
+{
     private static final String ARG_PARAM1 = "param1";
+    public static final int REQUEST_KEY = 8888;
     @BindView(R.id.more_one)
     TextView moreOne;
     @BindView(R.id.more_two)
@@ -84,6 +95,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     HomePresenter presenter;
     @BindView(R.id.document)
     TextView document;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
 
     private HomeResponseBean homeResponseBean;
 
@@ -116,12 +129,14 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 .compose(RxUtils.applyIOToMainThreadSchedulers())
                 .subscribe(s -> {
                     String[] data = s.split("#");
-                    locationAdd.setText(data[0]);
-                    if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
+
+                    if (data.length > 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                         latData = data[1];
                         lngData = data[2];
-                        if (homeResponseBean == null)
+                        if (homeResponseBean == null) {
+                            locationAdd.setText(data[0]);
                             presenter.getFirstPage(latData, lngData);
+                        }
                     }
 
                 });
@@ -243,19 +258,62 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         recyclerView.setAdapter(adapter);
 
         locationAdd.setOnClickListener(v -> {
-            SearchResultActivity.startActivity(HomeFragment.this.getContext());
+            SearchResultActivity.startActivityForResult(HomeFragment.this, locationAdd.getText().toString());
         });
+
+        swipe.setOnRefreshListener(this);
 
         return view;
     }
 
     @Override
+    public void onRefresh() {
+        locationAdd.setText(Constants.address);
+        presenter.getFirstPage(latData, lngData);
+    }
+
+    private void changeAddress(String address){
+        locationAdd.setText(address);
+        GeocodeSearch geocoderSearch = new GeocodeSearch(getContext());
+        geocoderSearch.setOnGeocodeSearchListener(this);
+        GeocodeQuery query = new GeocodeQuery(address, Utils.stringToPinyin(address));
+        geocoderSearch.getFromLocationNameAsyn(query);
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+        if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size()>0){
+            LatLonPoint point =  geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
+            presenter.getFirstPage(getContext(), String.valueOf(point.getLatitude()),
+                    String.valueOf(point.getLongitude()));
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if (requestCode == REQUEST_KEY){
+                changeAddress(data.getStringExtra(INTENT_KEY));
+            }
+        }
+    }
+
+    @Override
     public void onFailure() {
+        swipe.setRefreshing(false);
     }
 
     @Override
     public void getData(HomeResponseBean bean) {
         homeResponseBean = bean;
+        swipe.setRefreshing(false);
         List<BannerInfo> bannerInfos = new ArrayList<>();
         for (int i = 0; i < bean.getCarousel().size(); i++) {
             BannerInfo info = new BannerInfo();
@@ -300,32 +358,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (User.getInstance().getUserInfo() == null) {
-            ToastUtil.show("请登录");
-            return;
-        }
-        SearchBean bean = new SearchBean();
-        switch (v.getId()) {
-            case R.id.more_one:
-                bean.setGroupType(1);
-                break;
-
-            case R.id.more_two:
-                bean.setGroupType(2);
-                break;
-
-            case R.id.more_three:
-                bean.setGroupType(3);
-                break;
-        }
-
-        bean.setPageNo(1);
-        bean.setPageSize(15);
-        bean.setKeywords("");
-        bean.setToken(User.getInstance().getUserId());
-        bean.setSort(0);
-        bean.setProject("");
-        SearchResultActivity.startActivity(getContext());
     }
+
+
 
 }

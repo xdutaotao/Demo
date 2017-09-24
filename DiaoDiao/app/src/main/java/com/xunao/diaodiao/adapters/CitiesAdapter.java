@@ -32,7 +32,16 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int CITY = 2;
 
     private RecyclerArrayAdapter<String> adapter;
+    private MyHotItemClickListener hotItemClickListener;
 
+
+    public MyHotItemClickListener getHotItemClickListener() {
+        return hotItemClickListener;
+    }
+
+    public void setHotItemClickListener(MyHotItemClickListener hotItemClickListener) {
+        this.hotItemClickListener = hotItemClickListener;
+    }
 
     public CitiesAdapter(Context context, List<CitiesBean.DatasBean> cities,
                          List<String> hotCity){
@@ -108,6 +117,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             };
 
+            adapter.setOnItemClickListener((view, i) -> {
+                if (hotItemClickListener != null)
+                    hotItemClickListener.onItemClick(view, adapter.getAllData().get(i));
+            });
+
             headViewHolder.recyclerView.setAdapter(adapter);
             adapter.addAll(hotCity);
         }else{
@@ -125,7 +139,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     if(position==count){
                         CityViewHolder cityViewHolder = (CityViewHolder) holder;
                         CitiesBean.DatasBean.AddressListBean addressListBean = addressList.get(j);
-                        cityViewHolder.textCity.setText(addressListBean.getName());
+                        cityViewHolder.textCity.setText(addressListBean.getRegion_name());
+                        cityViewHolder.textCity.setOnClickListener(v -> {
+                            if (hotItemClickListener != null)
+                                hotItemClickListener.onItemClick(v, addressListBean.getRegion_name());
+                        });
                     }
                 }
             }
@@ -160,5 +178,9 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(view);
             textCity = (TextView) view.findViewById(R.id.textCity);
         }
+    }
+
+    public interface MyHotItemClickListener {
+        public void onItemClick(View view,String data);
     }
 }

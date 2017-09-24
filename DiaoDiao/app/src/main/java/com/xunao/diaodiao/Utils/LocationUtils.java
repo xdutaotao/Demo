@@ -26,6 +26,7 @@ public class LocationUtils {
                     //可在其中解析amapLocation获取相应内容。
 //                    ToastUtil.show(amapLocation.getProvince());//省信息
 //                    ToastUtil.show(amapLocation.getCity());//城市信息
+                    Constants.city = amapLocation.getCity();
                     Constants.address = amapLocation.getDistrict()+amapLocation.getStreet();
                     StringBuilder sb = new StringBuilder();
                     sb.append(amapLocation.getCity()).append("#")

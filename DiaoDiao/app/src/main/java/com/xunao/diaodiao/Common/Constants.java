@@ -24,6 +24,7 @@ public class Constants {
     public static String latData;
     public static String lngData;
     public static String address;
+    public static String city;
 
     public static final int SKILL_RELEASE_LINGGONG = 0;
     public static final int SKILL_RECIEVE_LINGGONG = 1;

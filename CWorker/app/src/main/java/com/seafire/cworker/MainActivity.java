@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private void changeAddress(String address){
         GeocodeSearch geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
-        GeocodeQuery query = new GeocodeQuery(address, "021");
+        GeocodeQuery query = new GeocodeQuery(address, Utils.stringToPinyin(address));
         geocoderSearch.getFromLocationNameAsyn(query);
     }
 

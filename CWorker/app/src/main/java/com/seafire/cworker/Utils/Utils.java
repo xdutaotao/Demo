@@ -22,6 +22,8 @@ import com.seafire.cworker.Bean.DistanceBean;
 import com.seafire.cworker.Bean.LocationBean;
 import com.seafire.cworker.Common.RetrofitConfig;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -807,6 +809,18 @@ public class Utils {
         return result.toString();
     }
 
-
+    public static String stringToPinyin(@NonNull String name){
+        StringBuilder sb = new StringBuilder();
+        char[] pins = name.toCharArray();
+        for(int i=0; i<name.length(); i++){
+            String pinyin = PinyinHelper.toHanyuPinyinStringArray(pins[i])[0];
+            if(Character.isDigit(pinyin.charAt(pinyin.length()-1))){
+                pinyin = pinyin.substring(0, pinyin.length()-1);
+            }
+            sb.append(pinyin);
+        }
+        String result =  sb.toString();
+        return result;
+    }
 
 }
