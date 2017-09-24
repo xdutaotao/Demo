@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <title>项目详情</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/common.js"></script>
+</head>
+<body style="margin: 0px">
+
+<div style="width: 100%">
+
+    <div style="background-color: #f0f3f6; margin-bottom: 0.5rem">
+
+        <div style="background-color: #ffffff; padding-top: 0.1rem;
+                padding-bottom: 0.05rem; margin-bottom: 0.1rem">
+            <div style="color: #000; font-size: 0.2rem; margin-left: 0.1rem" class="title">
+                徐汇区xx小区地暖项目，速度接单
+            </div>
+
+            <div style="display: flex; flex-direction: row; font-size: 0.16rem;
+                        justify-content: space-between; margin: 0.1rem">
+                <span style="color: #7393F4" class="publish_name">上海暖通公司</span>
+                <span class="leftText time">今天 16：00</span>
+            </div>
+        </div>
+
+        <div class="rowCell" onclick="window.location.reload(1);">
+            <span class="leftText">项目类型</span>
+            <span class="rightText projType">采暖系统水处理请求接单</span>
+        </div>
+
+        <div class="divide"></div>
+
+        <div class="rowCell">
+            <span class="leftText">地区</span>
+            <span class="rightText district">上海市闵行区</span>
+        </div>
+
+        <div class="divide"></div>
+
+        <div class="rowCell">
+            <span class="leftText">项目地址</span>
+            <span class="rightText address">上海市闵行区</span>
+        </div>
+
+        <div class="divide"></div>
+
+        <div class="rowCell">
+            <span class="leftText">施工时间</span>
+            <span class="rightText build_time">上海市闵行区</span>
+        </div>
+
+        <div class="divide"></div>
+
+        <div class="rowDetailCell">
+            <span class="leftText">项目详情</span>
+            <ol style="list-style:none;" class="projectDetail">
+            </ol>
+        </div>
+
+        <div class="divide"></div>
+
+        <div class="rowCell">
+            <span class="leftText">项目工费</span>
+            <span class="rightText project_fee" style="color: #FC551F">上海市闵行区</span>
+        </div>
+
+        <div style="background-color: #ffffff; margin-top: 0.1rem">
+            <div class="leftText" style="font-size: 0.16rem; padding-left: 0.1rem;
+                        padding-top: 0.2rem">
+                项目描述</div>
+
+            <div class="rightText describe" style="font-size: 0.16rem; padding: 0.1rem ;
+                       background-color: #ffffff">
+                1. 需要工作经验丰富的</div>
+        </div>
+
+
+        <div class="divide"></div>
+
+        <div>
+            <div class="rowCell">
+                <span class="leftText">图纸</span>
+                <span class="rightText">申请成功后可以查看</span>
+            </div>
+
+            <div class="divide"></div>
+        </div>
+
+
+    </div>
+
+    <div style="width: 94%; height: 0.4rem; color: #ffffff; background-color: #FC551F; font-size: 0.16rem;
+                    display: flex; justify-content:center; align-items: center; margin: 0.5rem 0.1rem;
+                    border-radius: 0.05rem;" class="apply">
+        立即申请
+    </div>
+
+</div>
+
+<script>
+
+
+    var nowTime = Date.parse(new Date())/1000;
+    var project_id = GetQueryString("project_id");
+    var userid = GetQueryString("userid");
+    //var type = GetQueryString("type");
+    var verify = ""+nowTime + project_id+userid;
+
+
+
+    var data = {
+        id: 3,
+        userid: 34,
+        verify: verify
+    }
+
+    var parames = {
+        cmd: 'projectDetail',
+        ts: nowTime,
+        params: data
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://admintest.diao-diao.com/index.php/api/interface/index',
+        data: JSON.stringify(parames),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (res) {
+            console.log(res.body);
+            var data = res.body;
+            $('.title').text(data.project_info.title);
+            $('.publish_name').text(data.project_info.publish_name);
+            $('.time').text(getDate(data.project_info.create_time));
+            $('.projType').text(data.project_info.type);
+            $('.district').text(data.project_info.district);
+            $('.address').text(data.project_info.address);
+            $('.project_fee').text("￥ "+data.project_info.project_fee);
+            $('.describe').text(data.project_info.describe);
+
+
+            var html='';
+
+            for(var i=0; i<data.project_expenses.length; i++){
+                var result = data.project_expenses[i];
+                html += ' <li>' +result.expenses_name+
+                    '('+result.amount+' x ' + result.unit_price +
+                    ' = ' + result.total_price+ ')' +'</li> ';
+            }
+
+
+
+            $('.projectDetail').append(html);
+
+            if (data.is_apply == 1){
+                $('.apply').hide();
+            }
+
+        },
+        fail: function (err) {
+            console.log(err);
+        }
+    })
+
+
+</script>
+
+</body>
+
+
+
+</html>

@@ -839,11 +839,10 @@ public class LoginModel extends BaseModel {
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getDistrict()).append(req.getLat())
-                .append(req.getLng()).append(req.getMaxBuildTime())
-                .append(req.getMaxPrice()).append(req.getMinBuildTime())
-                .append(req.getMinPrice()).append(req.getPage())
-                .append(req.getPageSize());
+        sb.append(time+"").append(req.getLat())
+                .append(req.getLng()).append(req.getNearby())
+                .append(req.getPage())
+                .append(req.getPageSize()).append(req.getTime_type());
         if (!TextUtils.isEmpty(req.getType())){
             sb.append(req.getType());
         }
@@ -900,6 +899,29 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().postProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    //收藏
+    public Observable<String> collectWork(int id, int types){
+        String rateKey = "collectWork";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(types)
+                .append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setProject_id(id);
+        req.setUser_type(type);
+        req.setProject_type(types);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().collectWork(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

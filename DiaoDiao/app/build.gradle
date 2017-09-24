@@ -10,7 +10,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.xunao.diaodiao"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -148,4 +148,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-3.1.0.jar')
     compile files('libs/ShareSDK-Wechat-Core-3.1.0.jar')
     compile files('libs/ShareSDK-Wechat-Moments-3.1.0.jar')
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 }

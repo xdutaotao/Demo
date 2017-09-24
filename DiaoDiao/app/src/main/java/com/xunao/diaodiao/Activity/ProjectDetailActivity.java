@@ -58,12 +58,8 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     TextView buildTime;
     @BindView(R.id.price)
     TextView price;
-    @BindView(R.id.proj_detail)
-    TextView projDetail;
     @BindView(R.id.post)
     Button post;
-    @BindView(R.id.detail)
-    TextView detail;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.pic_layout)
@@ -80,9 +76,17 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     TextView peiFee;
     @BindView(R.id.ling_gong_layout)
     LinearLayout lingGongLayout;
+    @BindView(R.id.apply)
+    TextView apply;
+    @BindView(R.id.detail_recycler_view)
+    RecyclerView detailRecyclerView;
+    @BindView(R.id.proj_detail)
+    TextView projDetail;
 
-    private RecyclerArrayAdapter<FindLingGongRes.OddDrawingBean> adapter;
+    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<FindProjDetailRes.ProjectExpensesBean> adapterDetail;
     private int type;
+    private boolean isCollect = false;
 
     public static void startActivity(Context context, int id, int type) {
         Intent intent = new Intent(context, ProjectDetailActivity.class);
@@ -103,12 +107,11 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
         type = getIntent().getIntExtra("TYPE", 0);
         if (type == 0) {
-            picLayout.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else if(type == 1){
+
+        } else if (type == 1) {
             picLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-        }else if (type == 2){
+        } else if (type == 2) {
             timeText.setText("上门时间");
             picLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -116,12 +119,24 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
             projectDetail.setVisibility(View.VISIBLE);
         }
 
-        adapter = new RecyclerArrayAdapter<FindLingGongRes.OddDrawingBean>(this, R.layout.single_image) {
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, FindLingGongRes.OddDrawingBean s) {
-                baseViewHolder.setImageUrl(R.id.image, s.getImage());
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setImageUrl(R.id.image, s);
             }
         };
+
+        adapterDetail = new RecyclerArrayAdapter<FindProjDetailRes.ProjectExpensesBean>(this, R.layout.project_detail_text_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, FindProjDetailRes.ProjectExpensesBean s) {
+                baseViewHolder.setText(R.id.text, s.getAmount());
+            }
+        };
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        detailRecyclerView.setLayoutManager(linearLayoutManager);
+        detailRecyclerView.setAdapter(adapterDetail);
+
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -130,9 +145,9 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
         if (type == 0) {
             presenter.getFindProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
-        } else if (type == 1){
+        } else if (type == 1) {
             presenter.getFindLingGongDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
-        }else if (type == 2){
+        } else if (type == 2) {
             presenter.getFindLingGongDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
         }
 
@@ -152,7 +167,7 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     @Override
     public void getData(FindProjDetailRes res) {
         title.setText(res.getProject_info().getTitle());
-        companyName.setText(res.getProject_info().getCompany_name());
+        companyName.setText(res.getProject_info().getPublish_name());
         time.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getCreate_time())));
         projType.setText(res.getProject_info().getType());
         address.setText(res.getProject_info().getDistrict());
@@ -160,7 +175,22 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getBuild_time())));
         projDetail.setText(res.getProject_info().getDescribe());
         price.setText("￥ " + res.getProject_info().getProject_fee());
-        detail.setText(res.getProject_info().getDescribe());
+        //detail.setText(res.getProject_info().getDescribe());
+        adapter.addAll(res.getProject_drawing());
+
+        //项目
+        picLayout.setVisibility(View.VISIBLE);
+        if (res.getIs_apply() == 1) {
+            //申请成功
+            apply.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            post.setVisibility(View.GONE);
+        } else {
+            apply.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        adapterDetail.addAll(res.getProject_expenses());
 
     }
 
@@ -175,8 +205,8 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getOdd_info().getBuild_time())));
         projDetail.setText(res.getOdd_info().getDescribe());
         price.setText("￥ " + res.getOdd_info().getService_fee());
-        detail.setText(res.getOdd_info().getDescribe());
-
+        //detail.setText(res.getOdd_info().getDescribe());
+        //adapterDetail.addAll(res.getProject_expenses());
 
         adapter.addAll(res.getOdd_drawing());
     }
@@ -188,15 +218,51 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     }
 
     @Override
+    public void collectWork(String s) {
+        ToastUtil.show("收藏成功");
+        isCollect = true;
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
         return true;
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (isCollect) {
+            menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
+        } else {
+            menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_like:
+                int types = 0;
+                if (type == 0) {
+                    types = 1;
+                } else if (type == 1) {
+                    types = 3;
+                } else if (type == 2) {
+                    types = 4;
+                } else if (type == 3) {
+                    types = 5;
+                } else if (type == 4) {
+                    types = 2;
+                } else {
+
+                }
+                if (!isCollect) {
+                    presenter.collectWork(this, getIntent().getIntExtra(INTENT_KEY, 0), types);
+                } else {
+                    presenter.collectWork(this, getIntent().getIntExtra(INTENT_KEY, 0), types);
+                }
 
                 return true;
         }

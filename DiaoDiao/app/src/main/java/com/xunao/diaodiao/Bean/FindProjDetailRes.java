@@ -17,8 +17,8 @@ public class FindProjDetailRes {
      */
 
     private ProjectInfoBean project_info;
-    private boolean is_apply;
-    private List<ProjectDrawingBean> project_drawing;
+    private int is_apply;
+    private List<String> project_drawing;
     private List<ProjectExpensesBean> project_expenses;
 
     public ProjectInfoBean getProject_info() {
@@ -29,19 +29,19 @@ public class FindProjDetailRes {
         this.project_info = project_info;
     }
 
-    public boolean isIs_apply() {
+    public int getIs_apply() {
         return is_apply;
     }
 
-    public void setIs_apply(boolean is_apply) {
+    public void setIs_apply(int is_apply) {
         this.is_apply = is_apply;
     }
 
-    public List<ProjectDrawingBean> getProject_drawing() {
+    public List<String> getProject_drawing() {
         return project_drawing;
     }
 
-    public void setProject_drawing(List<ProjectDrawingBean> project_drawing) {
+    public void setProject_drawing(List<String> project_drawing) {
         this.project_drawing = project_drawing;
     }
 
@@ -69,7 +69,7 @@ public class FindProjDetailRes {
 
         private String title;
         private String create_time;
-        private String company_name;
+        private String publish_name;
         private String type;
         private String district;
         private String address;
@@ -94,12 +94,12 @@ public class FindProjDetailRes {
             this.create_time = create_time;
         }
 
-        public String getCompany_name() {
-            return company_name;
+        public String getPublish_name() {
+            return publish_name;
         }
 
-        public void setCompany_name(String company_name) {
-            this.company_name = company_name;
+        public void setPublish_name(String publish_name) {
+            this.publish_name = publish_name;
         }
 
         public String getType() {
@@ -156,22 +156,6 @@ public class FindProjDetailRes {
 
         public void setService_fee(String service_fee) {
             this.service_fee = service_fee;
-        }
-    }
-
-    public static class ProjectDrawingBean {
-        /**
-         * image : http://admintest.diao-diao.com/upload/20170913232004_card1345.png
-         */
-
-        private String image;
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
         }
     }
 

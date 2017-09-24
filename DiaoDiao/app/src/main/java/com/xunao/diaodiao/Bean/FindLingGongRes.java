@@ -17,8 +17,36 @@ public class FindLingGongRes {
      */
 
     private OddInfoBean odd_info;
-    private boolean is_apply;
-    private List<OddDrawingBean> odd_drawing;
+    private OddInfoBean project_info;
+    private int is_apply;
+    private List<String> odd_drawing;
+    private List<String> project_drawing;
+    private ProjectExpensesBean project_expenses;
+
+
+    public List<String> getOdd_drawing() {
+        return odd_drawing;
+    }
+
+    public void setOdd_drawing(List<String> odd_drawing) {
+        this.odd_drawing = odd_drawing;
+    }
+
+    public ProjectExpensesBean getProject_expenses() {
+        return project_expenses;
+    }
+
+    public void setProject_expenses(ProjectExpensesBean project_expenses) {
+        this.project_expenses = project_expenses;
+    }
+
+    public List<String> getProject_drawing() {
+        return project_drawing;
+    }
+
+    public void setProject_drawing(List<String> project_drawing) {
+        this.project_drawing = project_drawing;
+    }
 
     public OddInfoBean getOdd_info() {
         return odd_info;
@@ -28,20 +56,20 @@ public class FindLingGongRes {
         this.odd_info = odd_info;
     }
 
-    public boolean isIs_apply() {
+    public OddInfoBean getProject_info() {
+        return project_info;
+    }
+
+    public void setProject_info(OddInfoBean project_info) {
+        this.project_info = project_info;
+    }
+
+    public int getIs_apply() {
         return is_apply;
     }
 
-    public void setIs_apply(boolean is_apply) {
+    public void setIs_apply(int is_apply) {
         this.is_apply = is_apply;
-    }
-
-    public List<OddDrawingBean> getOdd_drawing() {
-        return odd_drawing;
-    }
-
-    public void setOdd_drawing(List<OddDrawingBean> odd_drawing) {
-        this.odd_drawing = odd_drawing;
     }
 
     public static class OddInfoBean {
@@ -62,11 +90,13 @@ public class FindLingGongRes {
         private String title;
         private String create_time;
         private String publish_name;
+        private int public_type;
         private String type;
         private String district;
         private String address;
         private String build_time;
         private String describe;
+        private String project_fee;
         private String total_day;
         private String daily_wage;
         private String service_fee;
@@ -158,21 +188,72 @@ public class FindLingGongRes {
         public void setService_fee(String service_fee) {
             this.service_fee = service_fee;
         }
-    }
 
-    public static class OddDrawingBean {
-        /**
-         * image : http://admintest.diao-diao.com/upload/20170913232004_card1345.png
-         */
-
-        private String image;
-
-        public String getImage() {
-            return image;
+        public int getPublic_type() {
+            return public_type;
         }
 
-        public void setImage(String image) {
-            this.image = image;
+        public void setPublic_type(int public_type) {
+            this.public_type = public_type;
+        }
+
+        public String getProject_fee() {
+            return project_fee;
+        }
+
+        public void setProject_fee(String project_fee) {
+            this.project_fee = project_fee;
         }
     }
+
+
+    public static class ProjectExpensesBean{
+        private String min_cost;
+        private String expenses_name;
+        private String unit_price;
+        private String amount;
+        private String total_price;
+
+        public String getMin_cost() {
+            return min_cost;
+        }
+
+        public void setMin_cost(String min_cost) {
+            this.min_cost = min_cost;
+        }
+
+        public String getExpenses_name() {
+            return expenses_name;
+        }
+
+        public void setExpenses_name(String expenses_name) {
+            this.expenses_name = expenses_name;
+        }
+
+        public String getUnit_price() {
+            return unit_price;
+        }
+
+        public void setUnit_price(String unit_price) {
+            this.unit_price = unit_price;
+        }
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
+
+        public String getTotal_price() {
+            return total_price;
+        }
+
+        public void setTotal_price(String total_price) {
+            this.total_price = total_price;
+        }
+    }
+
+
 }

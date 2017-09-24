@@ -42,4 +42,19 @@ public class FindProjectPresenter extends BasePresenter<FindProjectView> {
                 }));
     }
 
+    public void getProjectList(Context context, FindProjReq req, int type){
+        mCompositeSubscription.add(model.getFindProjectList(req, type)
+                .subscribe(new RxSubUtils<FindProjectRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(FindProjectRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().getNoMore(s);
+                    }
+                }));
+    }
+
 }

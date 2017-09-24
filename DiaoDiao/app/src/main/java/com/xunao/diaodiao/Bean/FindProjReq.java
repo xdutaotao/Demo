@@ -8,12 +8,9 @@ package com.xunao.diaodiao.Bean;
 public class FindProjReq {
     private int page;
     private int pageSize;
-    private int district;
-    private int minPrice;
-    private int maxPrice;
     private String type;
-    private int minBuildTime;
-    private int maxBuildTime;
+    private int nearby;
+    private int time_type;
     private String lat;
     private String lng;
     private String verify;
@@ -34,29 +31,6 @@ public class FindProjReq {
         this.pageSize = pageSize;
     }
 
-    public int getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(int district) {
-        this.district = district;
-    }
-
-    public int getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(int minPrice) {
-        this.minPrice = minPrice;
-    }
-
-    public int getMaxPrice() {
-        return maxPrice;
-    }
-
-    public void setMaxPrice(int maxPrice) {
-        this.maxPrice = maxPrice;
-    }
 
     public String getType() {
         return type;
@@ -66,21 +40,6 @@ public class FindProjReq {
         this.type = type;
     }
 
-    public int getMinBuildTime() {
-        return minBuildTime;
-    }
-
-    public void setMinBuildTime(int minBuildTime) {
-        this.minBuildTime = minBuildTime;
-    }
-
-    public int getMaxBuildTime() {
-        return maxBuildTime;
-    }
-
-    public void setMaxBuildTime(int maxBuildTime) {
-        this.maxBuildTime = maxBuildTime;
-    }
 
     public String getLat() {
         return lat;
@@ -104,5 +63,21 @@ public class FindProjReq {
 
     public void setVerify(String verify) {
         this.verify = verify;
+    }
+
+    public int getNearby() {
+        return nearby;
+    }
+
+    public void setNearby(int nearby) {
+        this.nearby = nearby;
+    }
+
+    public int getTime_type() {
+        return time_type;
+    }
+
+    public void setTime_type(int time_type) {
+        this.time_type = time_type;
     }
 }

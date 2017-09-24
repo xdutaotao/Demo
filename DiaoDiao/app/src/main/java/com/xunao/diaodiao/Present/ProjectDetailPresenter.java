@@ -53,7 +53,7 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
@@ -70,10 +70,41 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
 
+    //收藏
+    public void collectWork(Context context, int id, int type){
+        mCompositeSubscription.add(model.collectWork(id, type)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().collectWork(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
+    //取消收藏
+    public void cancelCollect(Context context, int id, int type){
+        mCompositeSubscription.add(model.collectWork(id, type)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().collectWork(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
 
 }

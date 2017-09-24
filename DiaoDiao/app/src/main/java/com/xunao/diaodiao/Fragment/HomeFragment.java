@@ -268,7 +268,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void onRefresh() {
-        locationAdd.setText(Constants.address);
+        locationAdd.setText(Constants.city);
         presenter.getFirstPage(latData, lngData);
     }
 

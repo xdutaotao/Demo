@@ -9,6 +9,15 @@ import java.util.List;
 
 public class FindProjectRes {
     private List<FindProject> project;
+    private List<FindProject> odd;
+
+    public List<FindProject> getOdd() {
+        return odd;
+    }
+
+    public void setOdd(List<FindProject> odd) {
+        this.odd = odd;
+    }
 
     public List<FindProject> getProject() {
         return project;
@@ -27,6 +36,7 @@ public class FindProjectRes {
         private String type;
         private String price;
         private String total_day;
+        private String daily_wage;
 
         public int getId() {
             return id;
@@ -90,6 +100,14 @@ public class FindProjectRes {
 
         public void setTotal_day(String total_day) {
             this.total_day = total_day;
+        }
+
+        public String getDaily_wage() {
+            return daily_wage;
+        }
+
+        public void setDaily_wage(String daily_wage) {
+            this.daily_wage = daily_wage;
         }
     }
 

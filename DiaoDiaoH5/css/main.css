@@ -26,17 +26,28 @@ a,button,input,optgroup,select,textarea {
 }
 
 .rowCell{
+     display:flex;
+     display: -webkit-box;
+     display: -webkit-flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     background-color: #ffffff;
+     font-size: 0.12rem;
+     height: 0.45rem;
+     padding-left: 0.1rem;
+     padding-right: 0.1rem;
+ }
+
+.rowDetailCell{
     display:flex;
     display: -webkit-box;
     display: -webkit-flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
     font-size: 0.12rem;
-    height: 0.45rem;
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
+    padding: 0.1rem;
 }
 
 

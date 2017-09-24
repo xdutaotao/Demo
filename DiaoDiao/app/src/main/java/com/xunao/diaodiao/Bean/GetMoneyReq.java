@@ -30,6 +30,15 @@ public class GetMoneyReq implements Serializable{
     private String reason;
     private int appeal_id;
     private int collect_id;
+    private int user_type;
+
+    public int getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(int user_type) {
+        this.user_type = user_type;
+    }
 
     public int getCollect_id() {
         return collect_id;

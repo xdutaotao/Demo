@@ -172,6 +172,9 @@ public interface RetrofitService {
     Observable<BaseBean<String>> postProject(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> collectWork(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindLingGongRes>> getFindLingGongDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
