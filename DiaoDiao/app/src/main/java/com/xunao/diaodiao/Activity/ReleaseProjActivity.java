@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Present.ReleaseProjPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseProjView;
 
 import java.util.ArrayList;
@@ -52,13 +56,13 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     private String[] skills = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
     private List<String> skillsName = new ArrayList<>();
 
-    private String[] skillsSecond = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
+    private String[] skillsSecond = {"家电维2", "水泥回2", "家睡维2", "水点回2", "国电维2", "水我回2"};
     private List<String> skillsNameSecond = new ArrayList<>();
 
-    private String[] skillsThird = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
+    private String[] skillsThird = {"家电维3", "水泥回3", "家睡维3", "水点回3", "国电维3", "水我回3"};
     private List<String> skillsNameThird = new ArrayList<>();
 
-    private String[] skillsFourth = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
+    private String[] skillsFourth = {"家电维4", "水泥回4", "家睡维4", "水点回4", "国电维4", "水我回4"};
     private List<String> skillsNameFourth = new ArrayList<>();
 
     private RecyclerArrayAdapter<String> firstAdapter;
@@ -67,6 +71,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     private RecyclerArrayAdapter<String> fourthAdapter;
 
     private List<String> allSelectList = new ArrayList<>();
+    private ReleaseProjReq req = new ReleaseProjReq();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseProjActivity.class);
@@ -108,27 +113,10 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                         ((TextView) v).setTextColor(Color.WHITE);
                         skillsName.add(s);
                     }
+                    setSelect(s);
                 });
             }
         };
-
-        firstAdapter.setOnItemClickListener((view, i) -> {
-            String skillItem = firstAdapter.getAllData().get(i);
-            if (skillsName.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsName.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsName.add(skillItem);
-            }
-            setSelect(skillItem);
-        });
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        firstRecyclerView.setLayoutManager(linearLayoutManager);
         firstRecyclerView.setAdapter(firstAdapter);
         firstAdapter.addAll(skills);
 
@@ -146,38 +134,21 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
                 }
 
-//                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-//                    if (skillsNameSecond.toString().contains(s)) {
-//                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-//                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-//                        skillsNameSecond.remove(s);
-//                    } else {
-//                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-//                        ((TextView) v).setTextColor(Color.WHITE);
-//                        skillsNameSecond.add(s);
-//                    }
-//                });
+                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                    if (skillsNameSecond.toString().contains(s)) {
+                        v.setBackgroundResource(R.drawable.btn_blank_bg);
+                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+                        skillsNameSecond.remove(s);
+                    } else {
+                        v.setBackgroundResource(R.drawable.btn_blue_bg);
+                        ((TextView) v).setTextColor(Color.WHITE);
+                        skillsNameSecond.add(s);
+                    }
+                    setSelect(s);
+                });
             }
         };
 
-        secondAdapter.setOnItemClickListener((view, i) -> {
-            String skillItem = secondAdapter.getAllData().get(i);
-            if (skillsNameSecond.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsNameSecond.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsNameSecond.add(skillItem);
-            }
-            setSelect(skillItem);
-
-        });
-
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        secondRecyclerView.setLayoutManager(manager);
         secondRecyclerView.setAdapter(secondAdapter);
         secondAdapter.addAll(skillsSecond);
 
@@ -195,37 +166,21 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
                 }
 
-//                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-//                    if (skillsNameThird.toString().contains(s)) {
-//                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-//                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-//                        skillsNameThird.remove(s);
-//                    } else {
-//                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-//                        ((TextView) v).setTextColor(Color.WHITE);
-//                        skillsNameThird.add(s);
-//                    }
-//                });
+                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                    if (skillsNameThird.toString().contains(s)) {
+                        v.setBackgroundResource(R.drawable.btn_blank_bg);
+                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+                        skillsNameThird.remove(s);
+                    } else {
+                        v.setBackgroundResource(R.drawable.btn_blue_bg);
+                        ((TextView) v).setTextColor(Color.WHITE);
+                        skillsNameThird.add(s);
+                    }
+                    setSelect(s);
+                });
             }
         };
 
-        thirdAdapter.setOnItemClickListener((view, i) -> {
-            String skillItem = thirdAdapter.getAllData().get(i);
-            if (skillsNameThird.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsNameThird.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsNameThird.add(skillItem);
-            }
-            setSelect(skillItem);
-        });
-
-        LinearLayoutManager managerThird = new LinearLayoutManager(this);
-        managerThird.setOrientation(LinearLayoutManager.HORIZONTAL);
-        thirdRecyclerView.setLayoutManager(managerThird);
         thirdRecyclerView.setAdapter(thirdAdapter);
         thirdAdapter.addAll(skillsThird);
 
@@ -247,38 +202,20 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
                 }
 
-//                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-//                    if (skillsNameFourth.toString().contains(s)) {
-//                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-//                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-//                        skillsNameFourth.remove(s);
-//                    } else {
-//                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-//                        ((TextView) v).setTextColor(Color.WHITE);
-//                        skillsNameFourth.add(s);
-//                    }
-//                });
+                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                    if (skillsNameFourth.toString().contains(s)) {
+                        v.setBackgroundResource(R.drawable.btn_blank_bg);
+                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+                        skillsNameFourth.remove(s);
+                    } else {
+                        v.setBackgroundResource(R.drawable.btn_blue_bg);
+                        ((TextView) v).setTextColor(Color.WHITE);
+                        skillsNameFourth.add(s);
+                    }
+                    setSelect(s);
+                });
             }
         };
-
-        fourthAdapter.setOnItemClickListener((view, i) -> {
-            String skillItem = fourthAdapter.getAllData().get(i);
-            if (skillsNameFourth.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsNameFourth.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsNameFourth.add(skillItem);
-            }
-            setSelect(skillItem);
-
-        });
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        fourthRecyclerView.setLayoutManager(linearLayoutManager);
         fourthRecyclerView.setAdapter(fourthAdapter);
         fourthAdapter.addAll(skillsFourth);
     }
@@ -289,7 +226,12 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         }else{
             allSelectList.add(item);
         }
-
+        if (allSelectList.size() > 0) {
+            allSelect.setText(allSelectList.toString().subSequence(1, allSelectList.toString().length() - 1));
+        }else{
+            allSelectList.clear();
+            allSelect.setText("");
+        }
     }
 
 
@@ -308,7 +250,12 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                ReleaseProjSecondActivity.startActivity(this);
+                if (TextUtils.isEmpty(allSelect.getText().toString())){
+                    ToastUtil.show("请选择");
+                    return;
+                }
+                req.setProject_class(allSelect.getText().toString());
+                ReleaseProjSecondActivity.startActivity(this, req);
                 break;
         }
     }

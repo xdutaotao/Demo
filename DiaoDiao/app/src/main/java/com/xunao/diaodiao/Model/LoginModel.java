@@ -1717,24 +1717,14 @@ public class LoginModel extends BaseModel {
      *  更改个人地址
      */
     public Observable<String> changeAddress(String address){
-        Map<String, String> map = new HashMap<>();
-        map.put("address", address);
-        map.put("token", User.getInstance().getUserId());
-        return config.getRetrofitService().changeAddress(map)
-                .flatMap(baseResponseBean -> {
-                    if (TextUtils.equals(baseResponseBean.getMsg(), "200")){
-                        return config.getRetrofitService().getUserInfo(User.getInstance().getUserId())
-                                .compose(RxUtils.handleResultNoThread());
-                    }else{
-                        return Observable.error(new RxUtils.ServerException("操作失败")) ;
-                    }
-                })
-                .map(userInfo -> {
-                    String userInfoString = JsonUtils.getInstance().UserInfoToJson(userInfo);
-                    User.getInstance().setUserInfo(userInfoString);
-                    return "操作成功";
-                })
-                .compose(RxUtils.applyIOToMainThreadSchedulers());
+
+        return Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+
+            }
+        }).compose(RxUtils.applyIOToMainThreadSchedulers());
+
     }
 
 

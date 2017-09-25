@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
@@ -33,6 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/select"
                     android:text="我的、你的、他的"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -47,6 +49,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="项目标题"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/title"
                     android:hint="请输入项目标题"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -55,15 +58,19 @@
                 <TextView style="@style/item_left_text"
                     android:text="设备品牌"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/type"
                     android:hint="请输入设备品牌(选填)"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout">
+            <RelativeLayout style="@style/item_layout"
+                android:id="@+id/address_detail_layout">
                 <TextView style="@style/item_left_text"
                     android:text="项目地区"/>
-                <EditText style="@style/edit_personal_edit"
-                    android:hint=""/>
+                <TextView style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/arrow"
+                    android:id="@+id/address"
+                    android:gravity="right"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
@@ -71,6 +78,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="项目地址"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/address_detail"
                     android:hint="请输入项目地址"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -79,6 +87,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="联系人"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/name"
                     android:hint="请输入联系人"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -87,6 +96,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="联系电话"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/phone"
                     android:hint="请输入联系电话"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -94,10 +104,12 @@
             <RelativeLayout style="@style/item_layout">
                 <TextView style="@style/item_left_text"
                     android:text="施工时间"/>
-                <EditText style="@style/edit_personal_edit"
+                <TextView style="@style/edit_personal_edit"
+                    android:layout_width="700px"
                     android:drawableRight="@drawable/icon_rili"
                     android:drawablePadding="20px"
-                    android:hint="请输入联系电话"/>
+                    android:id="@+id/time"
+                    android:hint="到时间自动取消，工费退款到余额"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
@@ -115,12 +127,14 @@
                     android:background="@null"
                     android:hint="请填写意见反馈"
                     android:textColorHint="#D2D2D2"
+                    android:id="@+id/content"
                     android:gravity="top"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0 / 200"
+                    android:id="@+id/content_num"
                     android:gravity="right|center_vertical"/>
 
             </LinearLayout>
@@ -134,7 +148,11 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/recycler_view"/>
+                android:layout_marginLeft="50px"
+                android:id="@+id/recycler_view"
+                app:spanCount="4"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                tools:listitem="@layout/select_skill_item"/>
 
             <View
                 android:layout_width="match_parent"
@@ -146,9 +164,9 @@
                 <TextView style="@style/item_left_text"
                     android:text="定位"/>
                 <EditText style="@style/edit_personal_edit"
-                    android:drawableRight="@drawable/icon_rili"
-                    android:drawablePadding="20px"
-                    android:hint="请输入联系电话"/>
+                    android:hint="请输入价格"
+                    android:id="@+id/price"
+                    android:layout_marginRight="80px"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,11 +178,13 @@
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout">
+            <RelativeLayout style="@style/item_layout"
+                android:id="@+id/dinuan_layout">
                 <TextView style="@style/item_left_text"
                     android:text="地暖"/>
                 <TextView style="@style/item_right_text"
-                    android:text="请输入联系电话"/>
+                    android:drawableRight="@drawable/arrow"
+                    android:text=""/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
@@ -194,6 +214,8 @@
 
             <Button style="@style/login_btn_style"
                 android:text="下一步"
+                android:layout_marginTop="100px"
+                android:layout_marginBottom="100px"
                 android:id="@+id/next"/>
 
         </LinearLayout>

@@ -690,14 +690,14 @@ public class Utils {
 
     public static boolean isActiveTime(){
         boolean isActive = false;
-//        try {
-//            long startTime = dateToStamp("2017-10-01 08:30:00");
-//            if (startTime < System.currentTimeMillis()){
-//                isActive = true;
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            long startTime = dateToStamp("2017-10-15 08:30:00");
+            if (startTime < System.currentTimeMillis()){
+                isActive = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return isActive;
 
     }

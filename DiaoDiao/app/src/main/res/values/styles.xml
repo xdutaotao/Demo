@@ -638,7 +638,7 @@
     </style>
 
     <style name="release_proj_layout">
-        <item name="android:layout_height">300px</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:padding">50px</item>
         <item name="android:background">@color/white</item>

@@ -124,7 +124,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         LatLng end = new LatLng(point.getLatitude(), point.getLongitude());
         float distance = AMapUtils.calculateLineDistance(start,end);
 
-        if (distance > 1000){
+        if (distance > 1000 &&
+                User.getInstance().getUserInfo().getPerson().getType() != 2){
             new IOSDialog(MainActivity.this).builder()
                     .setTitle("退出登录")
                     .setMsg("项目超出距离")
@@ -152,7 +153,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                 map.put("latitude", data[2]);
                                 Constants.post = true;
 
-                                if (User.getInstance().getUserInfo().getPerson().getVIP() != 2){
+                                if (User.getInstance().getUserInfo().getPerson().getType() != 2){
                                     //不是超级管理员  比较距离
                                     changeAddress(User.getInstance().getUserInfo().getProject().getAddress());
                                 }
@@ -206,7 +207,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         //VIP 到期 重新登录
         if (User.getInstance().getUserInfo() != null){
-            if (User.getInstance().getUserInfo().getPerson().getVIP() == 2){
+            if (User.getInstance().getUserInfo().getPerson().getType() == 2){
                 //超级管理员
                 postAdd();
             }else{
@@ -250,7 +251,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     .setNegativeBtnColor(R.color.colorPrimary)
                     .show();
         }else{
-            CollectActivity.startActivity(this);
+            if (User.getInstance().getUserInfo().getProject() == null){
+                new IOSDialog(this).builder()
+                        .setTitle("账号没有分配项目组")
+                        .setMsg("无法使用完整功能！")
+                        .setPositiveButton("确定", null)
+                        .setPositiveBtnColor(R.color.colorPrimary)
+                        .show();
+            }else{
+                CollectActivity.startActivity(this);
+            }
+
         }
     }
 

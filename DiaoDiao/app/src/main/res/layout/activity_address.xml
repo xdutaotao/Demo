@@ -1,28 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.xunao.diaodiao.Activity.AddressActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/tool_bar_center" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="120px"
-        android:layout_margin="100px"
-        android:id="@+id/address"
-        android:textColor="@android:color/black"
-        android:background="@color/actionsheet_blue"/>
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="保存"
-        android:textColor="@android:color/white"
-        android:id="@+id/save"
-        android:layout_margin="100px"
-        android:background="@color/actionsheet_blue"/>
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:layout_margin="50px"
+            android:paddingLeft="10dp"
+            android:id="@+id/search_city"
+            android:background="@drawable/color_white_round_bg"
+            android:drawableLeft="@drawable/icon_sousuo"
+            android:drawablePadding="20px"
+            android:textSize="50px"
+            android:hint="搜索城市"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="50px"
+            android:background="@color/divider"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:padding="20px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="20px"
+                android:layout_marginBottom="20px"
+                android:drawablePadding="20px"
+                android:drawableLeft="@drawable/icon_back"
+                android:gravity="center_vertical"
+                android:text="当前定位城市：xx市"
+                android:id="@+id/current_city"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="选择区县"
+                android:layout_marginRight="50px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="20px"
+                android:gravity="center"
+                android:id="@+id/district"
+                android:drawableRight="@drawable/icon_xiala"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_layout"
+        android:visibility="gone">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="100px"/>
+
+
+        <com.xunao.diaodiao.Widget.QuickIndexView
+            android:id="@+id/quickIndexView"
+            android:layout_width="100px"
+            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50px"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+
+
+
 </LinearLayout>

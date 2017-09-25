@@ -11,6 +11,6 @@
         android:textColor="@color/gray"
         android:background="@drawable/btn_blank_bg"
         android:padding="20px"
-        android:layout_margin="20px"
+        android:layout_margin="10px"
         android:id="@+id/skill_text"/>
 </LinearLayout>
