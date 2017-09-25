@@ -33,7 +33,7 @@ a,button,input,optgroup,select,textarea {
      align-items: center;
      justify-content: space-between;
      background-color: #ffffff;
-     font-size: 0.12rem;
+     font-size: 0.16rem;
      height: 0.45rem;
      padding-left: 0.1rem;
      padding-right: 0.1rem;
@@ -46,7 +46,7 @@ a,button,input,optgroup,select,textarea {
     flex-direction: row;
     justify-content: space-between;
     background-color: #ffffff;
-    font-size: 0.12rem;
+    font-size: 0.16rem;
     padding: 0.1rem;
 }
 
@@ -73,4 +73,15 @@ a,button,input,optgroup,select,textarea {
 .imageStyle{
     width: 0.6rem;
     height: 0.6rem;
+    margin-left: 0.1rem;
+}
+
+#toastMessage{
+    position: absolute;
+    border-radius: 0.15rem;
+    width: 2.5rem;
+    height: 0.2rem;
+    cursor:pointer;
+    text-align: center;
+    vertical-align: middle;
 }

@@ -43,7 +43,7 @@ public class HasRateFragment extends BaseFragment implements HasRatingView, Swip
 
     @Inject
     HasRatingPresenter presenter;
-    private int page = 0;
+    private int page = 1;
 
     public static HasRateFragment newInstance(String param1) {
         HasRateFragment fragment = new HasRateFragment();
@@ -77,15 +77,16 @@ public class HasRateFragment extends BaseFragment implements HasRatingView, Swip
                     baseViewHolder.setText(R.id.rating_name, s.getTitle());
                     baseViewHolder.setText(R.id.address, s.getAddress());
                     baseViewHolder.setText(R.id.type, s.getType());
+                    baseViewHolder.setText(R.id.rating_text, "查看评价");
                     if (s.getProject_type() == 1){
                         //发单人
                         baseViewHolder.setText(R.id.project_detail, "项目进度");
                         baseViewHolder.setText(R.id.price_detail, "价格");
-                        baseViewHolder.setText(R.id.price, s.getPrice());
+                        baseViewHolder.setText(R.id.price, "￥ "+s.getPrice());
                     }else{
                         baseViewHolder.setText(R.id.project_detail, "维保进度");
                         baseViewHolder.setText(R.id.price_detail, "上门费");
-                        baseViewHolder.setText(R.id.price, s.getDaily_wage());
+                        baseViewHolder.setText(R.id.price, "￥ "+s.getDaily_wage());
                     }
 
                 }
@@ -102,7 +103,7 @@ public class HasRateFragment extends BaseFragment implements HasRatingView, Swip
 
     @Override
     public void onRefresh() {
-        page = 0;
+        page = 1;
         presenter.getHasRating(page);
     }
 
@@ -131,7 +132,7 @@ public class HasRateFragment extends BaseFragment implements HasRatingView, Swip
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
 

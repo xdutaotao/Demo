@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/base.css">
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/toast.js"></script>
 </head>
 <body style="margin: 0px">
 
@@ -87,13 +88,25 @@
 
         <div class="divide"></div>
 
-        <div>
+        <div class="applyFail">
             <div class="rowCell">
                 <span class="leftText">图纸</span>
                 <span class="rightText">申请成功后可以查看</span>
             </div>
 
             <div class="divide"></div>
+        </div>
+
+        <div style="background-color: #ffffff" class="picLayout">
+            <div style="font-size: 0.16rem; padding-top: 0.1rem; padding-left: 0.1rem;
+                       ">
+                <span class="rightText">添加图纸</span>
+                <span class="leftText">(不超过 10 张)</span>
+            </div>
+
+            <div class="row pic" style="padding-left: 0.1rem;
+                        display: inline">
+            </div>
         </div>
 
 
@@ -113,19 +126,25 @@
     var nowTime = Date.parse(new Date())/1000;
     var project_id = GetQueryString("project_id");
     var userid = GetQueryString("userid");
-    //var type = GetQueryString("type");
+    //0 ：项目 1：零工
+    var type = GetQueryString("type");
+
     var verify = ""+nowTime + project_id+userid;
 
-
-
     var data = {
-        id: 3,
-        userid: 34,
+        id: project_id,
+        userid: userid,
         verify: verify
     }
 
+    //type = 1;
+    var cmdValue = "projectDetail";
+    if (type == 1){
+        cmdValue = "oddDetail"
+    }
+
     var parames = {
-        cmd: 'projectDetail',
+        cmd: cmdValue,
         ts: nowTime,
         params: data
     }
@@ -139,38 +158,166 @@
         success: function (res) {
             console.log(res.body);
             var data = res.body;
-            $('.title').text(data.project_info.title);
-            $('.publish_name').text(data.project_info.publish_name);
-            $('.time').text(getDate(data.project_info.create_time));
-            $('.projType').text(data.project_info.type);
-            $('.district').text(data.project_info.district);
-            $('.address').text(data.project_info.address);
-            $('.project_fee').text("￥ "+data.project_info.project_fee);
-            $('.describe').text(data.project_info.describe);
+            if (type == 0){
+                //项目
+                $('.title').text(data.project_info.title);
+                $('.publish_name').text(data.project_info.publish_name);
+                $('.time').text(getDate(data.project_info.create_time));
+                $('.projType').text(data.project_info.type);
+                $('.district').text(data.project_info.district);
+                $('.address').text(data.project_info.address);
+                $('.project_fee').text("￥ "+data.project_info.project_fee);
+                $('.describe').text(data.project_info.describe);
 
 
-            var html='';
+                var html='';
 
-            for(var i=0; i<data.project_expenses.length; i++){
-                var result = data.project_expenses[i];
-                html += ' <li>' +result.expenses_name+
-                    '('+result.amount+' x ' + result.unit_price +
-                    ' = ' + result.total_price+ ')' +'</li> ';
+                for(var i=0; i<data.project_expenses.length; i++){
+                    var result = data.project_expenses[i];
+                    html += ' <li>' +result.expenses_name+
+                        '('+result.amount+' x ' + result.unit_price +
+                        ' = ' + result.total_price+ ')' +'</li> ';
+                }
+                $('.projectDetail').append(html);
+
+                if (data.project_drawing != null && data.project_drawing.length > 0){
+                    $('.applyFail').hide();
+
+                    html = '';
+                    for(var i=0; i<data.project_drawing.length; i++){
+                        html += " <img src=' " + data.project_drawing[i] +" ' class='imageStyle'> "
+                    }
+                    $('.picLayout').append(html);
+
+                }else{
+                    $('.picLayout').hide();
+                }
+
+                if (data.is_apply == 1){
+                    $('.apply').hide();
+                }
+            }else{
+                //零工
+
+                $('.title').text(data.odd_info.title);
+                $('.publish_name').text(data.odd_info.publish_name);
+                $('.time').text(getDate(data.odd_info.create_time));
+                $('.projType').text(data.odd_info.type);
+                $('.district').text(data.odd_info.district);
+                $('.address').text(data.odd_info.address);
+                $('.project_fee').text("￥ "+data.odd_info.daily_wage);
+                $('.describe').text(data.odd_info.describe);
+
+
+                var html='';
+                html += ' <li>共 ' +data.odd_info.total_day+
+                                ' 天' +'</li> ';
+                html+= ' <li>' +data.odd_info.service_fee+
+                                ' 元 / 天' +'</li> ';
+
+                $('.projectDetail').append(html);
+
+                if (data.odd_drawing != null && data.odd_drawing.length > 0){
+                    $('.applyFail').hide();
+
+                    html = '';
+                    for(var i=0; i<data.project_drawing.length; i++){
+                        html += " <img src=' " + data.project_drawing[i] +" ' class='imageStyle'> "
+                    }
+                    $('.picLayout').append(html);
+
+                }else{
+                    $('.picLayout').hide();
+                }
+
+                if (data.is_apply == 1){
+                    $('.apply').hide();
+                }
+
             }
 
 
 
-            $('.projectDetail').append(html);
-
-            if (data.is_apply == 1){
-                $('.apply').hide();
-            }
 
         },
         fail: function (err) {
             console.log(err);
         }
     })
+
+    $('.apply').click(function () {
+        var nowTime = Date.parse(new Date())/1000;
+        var project_id = GetQueryString("project_id");
+        var userid = GetQueryString("userid");
+        var type = GetQueryString("type");
+        //1 暖通 2 技术 3 家庭
+        var typeRole = GetQueryString("typeRole");
+        if(typeRole == null || typeRole == 0){
+            //没有权限
+            window.location.href = "home_proj_detail?action=3"
+            return
+        }
+
+        var verify = ""+nowTime + project_id+typeRole+userid;
+
+        //typeRole = 1;
+
+        if (typeRole == 1){
+            var data = {
+                id: project_id,
+                userid: userid,
+                type: typeRole,
+                verify: verify
+            }
+        }else if (typeRole == 2){
+            //零工
+            var data = {
+                id: project_id,
+                userid: userid,
+                type: typeRole,
+                verify: verify
+            }
+        }
+
+
+
+        var cmdValue = "applyProject";
+        if (typeRole == 2){
+            cmdValue = "applyOdd"
+        }
+
+        var parames = {
+            cmd: cmdValue,
+            ts: nowTime,
+            params: data
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://admintest.diao-diao.com/index.php/api/interface/index',
+            data: JSON.stringify(parames),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (res) {
+                if (res.resultCode == 1){
+                    //toastFunction("申请成功");
+                    window.location.href = "home_proj_detail?action=1"
+                }
+
+
+            },
+            fail: function (err) {
+                console.log(err);
+            }
+        })
+    })
+
+    $('.publish_name').click(function () {
+        //项目介绍
+        window.location.href = "home_proj_detail?action=2"
+    })
+
+
 
 
 </script>

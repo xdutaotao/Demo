@@ -130,7 +130,8 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                     //评价
-                    RecommandActivity.startActivity(OrderCompTabFragment.this.getContext());
+                    RecommandActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                        homeBean.getProject_id(), Integer.valueOf(homeBean.getProject_type()));
                 });
 
                 baseViewHolder.setOnClickListener(R.id.distance, v -> {

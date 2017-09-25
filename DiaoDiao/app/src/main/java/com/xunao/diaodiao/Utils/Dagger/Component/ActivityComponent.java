@@ -42,6 +42,7 @@ import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PayActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
+import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
 import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
@@ -168,4 +169,5 @@ public interface ActivityComponent {
     void inject(SkillProjProgressActivity activity);
     void inject(CashRecordActivity activity);
     void inject(WebViewActivity activity);
+    void inject(RecommandActivity activity);
 }

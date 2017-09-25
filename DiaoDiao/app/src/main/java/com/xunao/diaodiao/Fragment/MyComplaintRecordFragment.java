@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
  */
 public class MyComplaintRecordFragment extends BaseFragment implements MyComplaintRecordView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @Inject
     MyComplaintRecordPresenter presenter;
     @BindView(R.id.recycler_view)
@@ -34,11 +35,13 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
 
     private RecyclerArrayAdapter<MyComplaintRes.Appeal> adapter;
     private int page;
+    private int who;
 
-    public static MyComplaintRecordFragment newInstance(String param1) {
+    public static MyComplaintRecordFragment newInstance(String param1, int who) {
         MyComplaintRecordFragment fragment = new MyComplaintRecordFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, who);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,6 +51,7 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -106,13 +110,13 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.getMyComplaint(page);
+        presenter.getMyComplaint(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getMyComplaint(page);
+        presenter.getMyComplaint(page, who);
     }
 
     @Override

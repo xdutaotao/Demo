@@ -101,6 +101,16 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             finish();
         });
 
+        back.setOnClickListener(v -> {
+            if (type == 0){
+                //项目
+                ReleaseProjActivity.startActivity(FindProjectActivity.this);
+            }else if (type == 1){
+                //零工
+                ReleaseSkillActivity.startActivity(FindProjectActivity.this);
+            }
+        });
+
         adapter = new RecyclerArrayAdapter<FindProjectRes.FindProject>(this, R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, FindProjectRes.FindProject homeBean) {

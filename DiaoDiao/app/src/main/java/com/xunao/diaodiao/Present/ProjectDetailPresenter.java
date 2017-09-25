@@ -92,12 +92,12 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
     }
 
     //取消收藏
-    public void cancelCollect(Context context, int id, int type){
-        mCompositeSubscription.add(model.collectWork(id, type)
+    public void cancelCollect(Context context, int id){
+        mCompositeSubscription.add(model.cancelCollect(id)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {
-                        getView().collectWork(token);
+                        getView().cancleCollect(token);
                     }
 
                     @Override

@@ -34,7 +34,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class ProjectDetailActivity extends BaseActivity implements ProjectDetailView {
+public class ProjectDetailActivity extends BaseActivity {
 
     @Inject
     ProjectDetailPresenter presenter;
@@ -101,7 +101,7 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
         setContentView(R.layout.activity_project_detail);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
-        presenter.attachView(this);
+        //presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "项目详情");
 
@@ -164,65 +164,65 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
 
     }
 
-    @Override
-    public void getData(FindProjDetailRes res) {
-        title.setText(res.getProject_info().getTitle());
-        companyName.setText(res.getProject_info().getPublish_name());
-        time.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getCreate_time())));
-        projType.setText(res.getProject_info().getType());
-        address.setText(res.getProject_info().getDistrict());
-        addressDetail.setText(res.getProject_info().getAddress());
-        buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getBuild_time())));
-        projDetail.setText(res.getProject_info().getDescribe());
-        price.setText("￥ " + res.getProject_info().getProject_fee());
-        //detail.setText(res.getProject_info().getDescribe());
-        adapter.addAll(res.getProject_drawing());
-
-        //项目
-        picLayout.setVisibility(View.VISIBLE);
-        if (res.getIs_apply() == 1) {
-            //申请成功
-            apply.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            post.setVisibility(View.GONE);
-        } else {
-            apply.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-        adapterDetail.addAll(res.getProject_expenses());
-
-    }
-
-    @Override
-    public void getLingGongData(FindLingGongRes res) {
-        title.setText(res.getOdd_info().getTitle());
-        companyName.setText(res.getOdd_info().getPublish_name());
-        time.setText(Utils.strToDateLong(Long.valueOf(res.getOdd_info().getCreate_time())));
-        projType.setText(res.getOdd_info().getType());
-        address.setText(res.getOdd_info().getDistrict());
-        addressDetail.setText(res.getOdd_info().getAddress());
-        buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getOdd_info().getBuild_time())));
-        projDetail.setText(res.getOdd_info().getDescribe());
-        price.setText("￥ " + res.getOdd_info().getService_fee());
-        //detail.setText(res.getOdd_info().getDescribe());
-        //adapterDetail.addAll(res.getProject_expenses());
-
-        adapter.addAll(res.getOdd_drawing());
-    }
-
-    @Override
-    public void postProject(String res) {
-        ToastUtil.show("申请成功");
-        finish();
-    }
-
-    @Override
-    public void collectWork(String s) {
-        ToastUtil.show("收藏成功");
-        isCollect = true;
-        invalidateOptionsMenu();
-    }
+//    @Override
+//    public void getData(FindProjDetailRes res) {
+//        title.setText(res.getProject_info().getTitle());
+//        companyName.setText(res.getProject_info().getPublish_name());
+//        time.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getCreate_time())));
+//        projType.setText(res.getProject_info().getType());
+//        address.setText(res.getProject_info().getDistrict());
+//        addressDetail.setText(res.getProject_info().getAddress());
+//        buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getProject_info().getBuild_time())));
+//        projDetail.setText(res.getProject_info().getDescribe());
+//        price.setText("￥ " + res.getProject_info().getProject_fee());
+//        //detail.setText(res.getProject_info().getDescribe());
+//        adapter.addAll(res.getProject_drawing());
+//
+//        //项目
+//        picLayout.setVisibility(View.VISIBLE);
+//        if (res.getIs_apply() == 1) {
+//            //申请成功
+//            apply.setVisibility(View.GONE);
+//            recyclerView.setVisibility(View.VISIBLE);
+//            post.setVisibility(View.GONE);
+//        } else {
+//            apply.setVisibility(View.VISIBLE);
+//            recyclerView.setVisibility(View.GONE);
+//        }
+//
+//        adapterDetail.addAll(res.getProject_expenses());
+//
+//    }
+//
+//    @Override
+//    public void getLingGongData(FindLingGongRes res) {
+//        title.setText(res.getOdd_info().getTitle());
+//        companyName.setText(res.getOdd_info().getPublish_name());
+//        time.setText(Utils.strToDateLong(Long.valueOf(res.getOdd_info().getCreate_time())));
+//        projType.setText(res.getOdd_info().getType());
+//        address.setText(res.getOdd_info().getDistrict());
+//        addressDetail.setText(res.getOdd_info().getAddress());
+//        buildTime.setText(Utils.strToDateLong(Long.valueOf(res.getOdd_info().getBuild_time())));
+//        projDetail.setText(res.getOdd_info().getDescribe());
+//        price.setText("￥ " + res.getOdd_info().getService_fee());
+//        //detail.setText(res.getOdd_info().getDescribe());
+//        //adapterDetail.addAll(res.getProject_expenses());
+//
+//        adapter.addAll(res.getOdd_drawing());
+//    }
+//
+//    @Override
+//    public void postProject(String res) {
+//        ToastUtil.show("申请成功");
+//        finish();
+//    }
+//
+//    @Override
+//    public void collectWork(String s) {
+//        ToastUtil.show("收藏成功");
+//        isCollect = true;
+//        invalidateOptionsMenu();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -270,10 +270,10 @@ public class ProjectDetailActivity extends BaseActivity implements ProjectDetail
     }
 
 
-    @Override
-    public void onFailure() {
-
-    }
+//    @Override
+//    public void onFailure() {
+//
+//    }
 
     @Override
     public void onDestroy() {

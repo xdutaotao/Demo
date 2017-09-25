@@ -23,8 +23,8 @@ public class MyComplaintRecordPresenter extends BasePresenter<MyComplaintRecordV
     MyComplaintRecordPresenter() {
     }
 
-    public void getMyComplaint(int page){
-        mCompositeSubscription.add(model.getMyComplaint(page)
+    public void getMyComplaint(int page, int who){
+        mCompositeSubscription.add(model.getMyComplaint(page, who)
                 .subscribe(new RxSubUtils<MyComplaintRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyComplaintRes token) {

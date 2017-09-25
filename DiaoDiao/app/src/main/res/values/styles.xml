@@ -643,6 +643,7 @@
         <item name="android:padding">50px</item>
         <item name="android:background">@color/white</item>
         <item name="android:layout_marginBottom">20px</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="release_proj_item_layout">

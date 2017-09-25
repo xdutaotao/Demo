@@ -63,8 +63,8 @@ public class ComplaintRecordActivity extends BaseActivity implements ComplaintRe
         showToolbarBack(toolBar, titleText, "申诉记录");
 
         fragments=new ArrayList<>();
-        fragments.add(MyComplaintRecordFragment.newInstance("我的申诉"));
-        fragments.add(MyComplaintRecordFragment.newInstance("对方申诉"));
+        fragments.add(MyComplaintRecordFragment.newInstance("我的申诉", 0));
+        fragments.add(MyComplaintRecordFragment.newInstance("对方申诉", 1));
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);
         viewPager.setAdapter(mSectionsPagerAdapter);
         viewPager.setOffscreenPageLimit(2);

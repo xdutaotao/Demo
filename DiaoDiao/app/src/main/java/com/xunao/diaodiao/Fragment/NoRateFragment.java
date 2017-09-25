@@ -40,7 +40,7 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
 
     @Inject
     MyRatingPresenter presenter;
-    private int page;
+    private int page = 1;
 
     public static NoRateFragment newInstance(String param1) {
         NoRateFragment fragment = new NoRateFragment();
@@ -88,7 +88,8 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
             };
 
         adapter.setOnItemClickListener((view1, i) -> {
-                RecommandActivity.startActivity(NoRateFragment.this.getActivity());
+                RecommandActivity.startActivity(NoRateFragment.this.getActivity(),
+                        adapter.getAllData().get(i).getProject_id(), adapter.getAllData().get(i).getProject_type());
             });
 
 

@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
+import com.xunao.diaodiao.Bean.EvaluateReq;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
@@ -402,7 +403,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(page).append(type+"")
+        sb.append(time+"").append(page).append(10).append(type+"")
                 .append(User.getInstance().getUserId())
                 .append("security");
 
@@ -410,6 +411,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
         req.setPage(page);
+        req.setPageSize(10);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -428,7 +430,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(page).append(type+"")
+        sb.append(time+"").append(page).append(10).append(type+"")
                 .append(User.getInstance().getUserId())
                 .append("security");
 
@@ -436,6 +438,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
         req.setPage(page);
+        req.setPageSize(10);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -447,8 +450,11 @@ public class LoginModel extends BaseModel {
      * 我的投诉列表
      * @return
      */
-    public Observable<MyComplaintRes> getMyComplaint(int page){
+    public Observable<MyComplaintRes> getMyComplaint(int page, int who){
         String rateKey = "myAppealList";
+        if (who == 1){
+            rateKey = "otherAppealList";
+        }
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -589,7 +595,6 @@ public class LoginModel extends BaseModel {
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
         req.setCollect_id(id);
-        req.setPageSize(10);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1047,6 +1052,30 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setContent(content);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 评价
+     */
+    public Observable<String> toEvaluate(EvaluateReq req){
+        String rateKey = "toEvaluate";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getContent()).append(req.getImages())
+                .append(req.getPoint()).append(req.getProject_id()).append(req.getProject_type())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))

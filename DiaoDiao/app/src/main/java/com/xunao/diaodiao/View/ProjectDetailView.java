@@ -12,4 +12,5 @@ public interface ProjectDetailView extends BaseView {
     void getLingGongData(FindLingGongRes res);
     void postProject(String res);
     void collectWork(String s);
+    void cancleCollect(String s);
 }

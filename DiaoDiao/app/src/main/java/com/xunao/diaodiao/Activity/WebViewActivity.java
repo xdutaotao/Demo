@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ProjectDetailView;
 import com.xunao.diaodiao.Widget.CustomWebView;
@@ -26,6 +27,7 @@ import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.ApiConstants.H5_URL;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private static final String INTENT_KEY = "intent_key";
@@ -74,11 +76,23 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         id = getIntent().getIntExtra(ID_KEY, 0);
         if (id != 0) {
             webView.loadUrl(H5_URL + getIntent().getStringExtra(INTENT_KEY) +
-                    "?project_id="+id+"&userid="+ User.getInstance().getUserId())
+                    "?project_id="+id+"&userid="+ User.getInstance().getUserId()+"&type="+ type+"&typeRole="+ShareUtils.getValue(TYPE_KEY, 0))
                 .setWebViewClient(webView.new GWebViewClient(){
                     @Override
-                    public void onPageFinished(WebView view, String url) {
-                        super.onPageFinished(view, url);
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        super.shouldOverrideUrlLoading(view, url);
+                        if (url.contains("action=1")){
+                            //申请成功
+                            ToastUtil.show("申请成功");
+                            WebViewActivity.this.finish();
+                        }else if (url.contains("action=2")){
+                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), type);
+                        }else if (url.contains("action=3")){
+                            //没有权限
+                            ToastUtil.show("请选择角色");
+                            SelectMemoryActivity.startActivity(WebViewActivity.this);
+                        }
+                        return true;
                     }
                 });
         }else{
@@ -131,7 +145,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 if (!isCollect) {
                     presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
                 } else {
-                    presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
+                    presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
                 }
 
                 return true;
@@ -170,6 +184,13 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public void collectWork(String s) {
         ToastUtil.show("收藏成功");
         isCollect = true;
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void cancleCollect(String s) {
+        ToastUtil.show("取消收藏成功");
+        isCollect = false;
         invalidateOptionsMenu();
     }
 }

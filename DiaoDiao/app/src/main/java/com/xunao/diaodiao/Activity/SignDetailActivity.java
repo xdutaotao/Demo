@@ -231,8 +231,12 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             postText.setVisibility(View.VISIBLE);
         }
 
+        pathList.clear();
         Observable.from(images)
-                .map(imageItem -> imageItem.path)
+                .map(imageItem -> {
+                    pathList.add(Utils.Bitmap2StrByBase64(imageItem.path));
+                    return imageItem.path;
+                })
                 .toList()
                 .subscribe(strings -> {
                     footerAdapter.clear();
@@ -240,8 +244,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
                     if (strings.size() != 10) {
                         footerAdapter.add(ADD);
                     }
-                    pathList.clear();
-                    pathList.addAll(strings);
+
                 });
     }
 

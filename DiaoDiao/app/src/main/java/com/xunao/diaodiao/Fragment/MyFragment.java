@@ -219,7 +219,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.complaint_record:
-                ComplaintRecordActivity.startActivity(getActivity());
+                if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                    LoginActivity.startActivity(getContext());
+                } else {
+                    ComplaintRecordActivity.startActivity(getActivity());
+                }
+
                 break;
 
             case R.id.about_diaodiao:
