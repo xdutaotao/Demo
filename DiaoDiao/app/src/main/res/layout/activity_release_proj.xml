@@ -13,89 +13,95 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="100px">
+            android:id="@+id/recycler_view"
+            android:layout_marginBottom="120px"/>
 
-            <LinearLayout
-                style="@style/release_proj_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="采暖系统"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/first_recycler_view"
-                    app:spanCount="4"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    tools:listitem="@layout/select_skill_item"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/release_proj_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="空调新风系统"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/second_recycler_view"
-                    app:spanCount="4"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    tools:listitem="@layout/select_skill_item"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/release_proj_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="水处理"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/third_recycler_view"
-                    app:spanCount="4"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    tools:listitem="@layout/select_skill_item"/>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/release_proj_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="水泥回填"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fourth_recycler_view"
-                    app:spanCount="4"
-                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                    tools:listitem="@layout/select_skill_item"/>
-            </LinearLayout>
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_marginBottom="100px">-->
 
-        </LinearLayout>
-    </ScrollView>
+            <!--<LinearLayout-->
+                <!--style="@style/release_proj_layout">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="采暖系统"/>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/first_recycler_view"-->
+                    <!--app:spanCount="4"-->
+                    <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                    <!--tools:listitem="@layout/select_skill_item"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--style="@style/release_proj_layout">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="空调新风系统"/>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/second_recycler_view"-->
+                    <!--app:spanCount="4"-->
+                    <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                    <!--tools:listitem="@layout/select_skill_item"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--style="@style/release_proj_layout">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="水处理"/>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/third_recycler_view"-->
+                    <!--app:spanCount="4"-->
+                    <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                    <!--tools:listitem="@layout/select_skill_item"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--style="@style/release_proj_layout">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="水泥回填"/>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/fourth_recycler_view"-->
+                    <!--app:spanCount="4"-->
+                    <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                    <!--tools:listitem="@layout/select_skill_item"/>-->
+            <!--</LinearLayout>-->
+
+
+
+        <!--</LinearLayout>-->
+    <!--</ScrollView>-->
 
 
 
@@ -113,7 +119,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:background="@color/white"
-                android:padding="50px">
+                android:padding="30px">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -137,7 +143,7 @@
                 android:orientation="horizontal"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:padding="50px"
+                android:padding="30px"
                 android:id="@+id/next">
 
                 <TextView

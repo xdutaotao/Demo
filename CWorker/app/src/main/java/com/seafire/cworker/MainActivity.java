@@ -127,8 +127,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (distance > 1000 &&
                 User.getInstance().getUserInfo().getPerson().getType() != 2){
             new IOSDialog(MainActivity.this).builder()
-                    .setTitle("退出登录")
-                    .setMsg("项目超出距离")
+                    .setTitle("账号即将推出")
+                    .setMsg("原因：超出项目使用范围")
                     .setNegativeButton("确定", v -> {
                         LoginActivity.startActivity(MainActivity.this);
                     })
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                         if (data.length> 1 && !TextUtils.isEmpty(data[1]) && !TextUtils.isEmpty(data[2])) {
                             Constants.lat = Double.valueOf(data[1]);
                             Constants.lng = Double.valueOf(data[2]);
-                            if (!Constants.post){
+                            if (!Constants.post && !TextUtils.isEmpty(User.getInstance().getUserId())){
                                 Map<String ,String> map = new HashMap<>();
                                 map.put("token", User.getInstance().getUserId());
                                 map.put("longitude", data[1]);

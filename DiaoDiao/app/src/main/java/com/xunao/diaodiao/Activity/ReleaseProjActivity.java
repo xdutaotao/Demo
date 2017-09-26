@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.ReleaseProjPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -53,22 +54,13 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     @BindView(R.id.all_select)
     TextView allSelect;
 
-    private String[] skills = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
+    private List<TypeInfoRes.Type_Info> skills = new ArrayList<>();
     private List<String> skillsName = new ArrayList<>();
 
-    private String[] skillsSecond = {"家电维2", "水泥回2", "家睡维2", "水点回2", "国电维2", "水我回2"};
-    private List<String> skillsNameSecond = new ArrayList<>();
-
-    private String[] skillsThird = {"家电维3", "水泥回3", "家睡维3", "水点回3", "国电维3", "水我回3"};
-    private List<String> skillsNameThird = new ArrayList<>();
-
-    private String[] skillsFourth = {"家电维4", "水泥回4", "家睡维4", "水点回4", "国电维4", "水我回4"};
-    private List<String> skillsNameFourth = new ArrayList<>();
 
     private RecyclerArrayAdapter<String> firstAdapter;
-    private RecyclerArrayAdapter<String> secondAdapter;
-    private RecyclerArrayAdapter<String> thirdAdapter;
-    private RecyclerArrayAdapter<String> fourthAdapter;
+
+    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> adapter;
 
     private List<String> allSelectList = new ArrayList<>();
     private ReleaseProjReq req = new ReleaseProjReq();
@@ -87,8 +79,20 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "选择项目");
-
         next.setOnClickListener(this);
+
+        adapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.type_info_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info type_info) {
+                if (Integer.valueOf(type_info.getParent_id()) == 0){
+                    baseViewHolder.setText(R.id.type, type_info.getTitle());
+                }else{
+                    RecyclerView recyclerView = baseViewHolder.getView(R.id.recycler_view);
+                    recyclerView.setAdapter(firstAdapter);
+
+                }
+            }
+        };
 
         firstAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
             @Override
@@ -117,107 +121,13 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                 });
             }
         };
-        firstRecyclerView.setAdapter(firstAdapter);
-        firstAdapter.addAll(skills);
-
-
-        secondAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
-
-                if (skillsNameSecond.toString().contains(s)) {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                } else {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-                }
-
-                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsNameSecond.toString().contains(s)) {
-                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsNameSecond.remove(s);
-                    } else {
-                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView) v).setTextColor(Color.WHITE);
-                        skillsNameSecond.add(s);
-                    }
-                    setSelect(s);
-                });
-            }
-        };
-
-        secondRecyclerView.setAdapter(secondAdapter);
-        secondAdapter.addAll(skillsSecond);
-
-
-        thirdAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
-
-                if (skillsNameThird.toString().contains(s)) {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                } else {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-                }
-
-                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsNameThird.toString().contains(s)) {
-                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsNameThird.remove(s);
-                    } else {
-                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView) v).setTextColor(Color.WHITE);
-                        skillsNameThird.add(s);
-                    }
-                    setSelect(s);
-                });
-            }
-        };
-
-        thirdRecyclerView.setAdapter(thirdAdapter);
-        thirdAdapter.addAll(skillsThird);
-
-        setRecyclerView();
-
+        presenter.getTypeInfo(this);
     }
 
-    private void setRecyclerView() {
-        fourthAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
+    @Override
+    public void getData(TypeInfoRes res) {
+        adapter.addAll(res.getType_info());
 
-                if (skillsNameFourth.toString().contains(s)) {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                } else {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-                }
-
-                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsNameFourth.toString().contains(s)) {
-                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsNameFourth.remove(s);
-                    } else {
-                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView) v).setTextColor(Color.WHITE);
-                        skillsNameFourth.add(s);
-                    }
-                    setSelect(s);
-                });
-            }
-        };
-        fourthRecyclerView.setAdapter(fourthAdapter);
-        fourthAdapter.addAll(skillsFourth);
     }
 
     private void setSelect(String item){
@@ -259,4 +169,6 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                 break;
         }
     }
+
+
 }

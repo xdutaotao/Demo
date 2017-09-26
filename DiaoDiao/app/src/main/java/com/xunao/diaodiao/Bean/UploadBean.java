@@ -9,6 +9,11 @@ package com.xunao.diaodiao.Bean;
  */
 
 public class UploadBean {
+
+
+
+
+
     private String msg;
     private String data;
     private String result;
