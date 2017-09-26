@@ -84,7 +84,6 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             protected void convert(BaseViewHolder baseViewHolder, List<TypeInfoRes.Type_Info> type_info) {
                 firstAdapter.clear();
                 RecyclerView recyclerView = baseViewHolder.getView(R.id.first_recycler_view);
-                firstAdapter.clear();
                 recyclerView.setAdapter(firstAdapter);
                 List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
                 for(TypeInfoRes.Type_Info info : type_info){
