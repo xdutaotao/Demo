@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.EvaluateReq;
+import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.FillSkillReq;
@@ -56,6 +57,7 @@ import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
+import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.SignRes;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
@@ -1695,6 +1697,62 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().myProjectWorkPass(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * ids 换项目
+     * @param
+     * @return
+     */
+    public Observable<ExpensesInfoRes> typeExpenses(String s){
+        String rateKey = "typeExpenses";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(s)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setType_ids(s);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().typeExpenses(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 发布项目
+     * @param s
+     * @return
+     */
+    public Observable<String> publishProject(ReleaseProjReq req){
+        String rateKey = "publishProject";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getAddress()).append(req.getBuild_time())
+                .append(req.getCity()).append(req.getContact())
+                .append(req.getContact_mobile()).append(req.getDescribe())
+                .append(req.getDistrict()).append(req.getImages())
+                .append(req.getProject_class()).append(req.getProject_fee())
+                .append(req.getProject_type()).append(req.getProvince())
+                .append(req.getService_cost()).append(req.getTitle())
+                .append(req.getTotal_price()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

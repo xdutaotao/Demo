@@ -22,6 +22,7 @@ import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseProjView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,27 +44,24 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     Toolbar toolBar;
     @BindView(R.id.next)
     LinearLayout next;
-    @BindView(R.id.first_recycler_view)
-    RecyclerView firstRecyclerView;
-    @BindView(R.id.second_recycler_view)
-    RecyclerView secondRecyclerView;
-    @BindView(R.id.third_recycler_view)
-    RecyclerView thirdRecyclerView;
-    @BindView(R.id.fourth_recycler_view)
-    RecyclerView fourthRecyclerView;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     @BindView(R.id.all_select)
     TextView allSelect;
 
-    private List<TypeInfoRes.Type_Info> skills = new ArrayList<>();
     private List<String> skillsName = new ArrayList<>();
 
 
-    private RecyclerArrayAdapter<String> firstAdapter;
+    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> firstAdapter;
 
-    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> adapter;
+    private RecyclerArrayAdapter<List<TypeInfoRes.Type_Info>> adapter;
 
     private List<String> allSelectList = new ArrayList<>();
+    private List<String> allSelectName = new ArrayList<>();
     private ReleaseProjReq req = new ReleaseProjReq();
+    private List<List<TypeInfoRes.Type_Info>> listData = new ArrayList<>();
+    private TypeInfoRes response = new TypeInfoRes();
+    private List<String> fatherIds = new ArrayList<>();
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseProjActivity.class);
@@ -81,25 +79,32 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         showToolbarBack(toolBar, titleText, "选择项目");
         next.setOnClickListener(this);
 
-        adapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.type_info_item) {
+        adapter = new RecyclerArrayAdapter<List<TypeInfoRes.Type_Info>>(this, R.layout.type_info_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info type_info) {
-                if (Integer.valueOf(type_info.getParent_id()) == 0){
-                    baseViewHolder.setText(R.id.type, type_info.getTitle());
-                }else{
-                    RecyclerView recyclerView = baseViewHolder.getView(R.id.recycler_view);
-                    recyclerView.setAdapter(firstAdapter);
-
+            protected void convert(BaseViewHolder baseViewHolder, List<TypeInfoRes.Type_Info> type_info) {
+                firstAdapter.clear();
+                RecyclerView recyclerView = baseViewHolder.getView(R.id.first_recycler_view);
+                firstAdapter.clear();
+                recyclerView.setAdapter(firstAdapter);
+                List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
+                for(TypeInfoRes.Type_Info info : type_info){
+                    if (Integer.valueOf(info.getParent_id()) == 0){
+                        baseViewHolder.setText(R.id.type, info.getTitle());
+                    }else{
+                        temp.add(info);
+                    }
                 }
+                firstAdapter.addAll(temp);
+
             }
         };
 
-        firstAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
+        firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.select_skill_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
+            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                if (skillsName.toString().contains(s)) {
+                if (skillsName.toString().contains(s.getId())) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                 } else {
@@ -108,25 +113,56 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s)) {
+                    if (skillsName.toString().contains(s.getId())) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
                         ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s);
+                        skillsName.remove(s.getId());
                     } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
                         ((TextView) v).setTextColor(Color.WHITE);
-                        skillsName.add(s);
+                        skillsName.add(s.getId());
                     }
-                    setSelect(s);
+                    setSelect(s.getId());
                 });
             }
         };
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
+
         presenter.getTypeInfo(this);
     }
 
     @Override
     public void getData(TypeInfoRes res) {
-        adapter.addAll(res.getType_info());
+        response = res;
+
+        for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
+            if (Integer.valueOf(typeInfo.getParent_id()) == 0){
+                List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+                itemData.add(typeInfo);
+                listData.add(itemData);
+            }
+        }
+
+        for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
+            if (Integer.valueOf(typeInfo.getParent_id()) != 0){
+
+                for(List<TypeInfoRes.Type_Info> list: listData){
+                    List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
+                    temp.addAll(list);
+                    for(TypeInfoRes.Type_Info info: temp){
+                        if (TextUtils.equals(info.getId(), typeInfo.getParent_id())){
+                            list.add(typeInfo);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        adapter.addAll(listData);
 
     }
 
@@ -137,12 +173,30 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             allSelectList.add(item);
         }
         if (allSelectList.size() > 0) {
-            allSelect.setText(allSelectList.toString().subSequence(1, allSelectList.toString().length() - 1));
+            idsToString();
         }else{
             allSelectList.clear();
             allSelect.setText("");
         }
     }
+
+    private void idsToString(){
+        allSelectName.clear();
+        fatherIds.clear();
+        for(String s: allSelectList){
+            for(TypeInfoRes.Type_Info info : response.getType_info()){
+                if (TextUtils.equals(info.getId(), s)){
+                    allSelectName.add(info.getTitle());
+                    if (!fatherIds.contains(info.getParent_id()))
+                        fatherIds.add(info.getParent_id());
+                }
+            }
+        }
+        allSelect.setText(allSelectName.toString().substring(1,
+                allSelectName.toString().length() - 1));
+
+    }
+
 
 
     @Override
@@ -164,8 +218,12 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     ToastUtil.show("请选择");
                     return;
                 }
-                req.setProject_class(allSelect.getText().toString());
-                ReleaseProjSecondActivity.startActivity(this, req);
+
+                req.setProject_type(fatherIds.toString().substring(1,
+                        fatherIds.toString().length() - 1));
+                req.setProject_class(allSelectList.toString().substring(1,
+                        allSelectList.toString().length() - 1));
+                ReleaseProjSecondActivity.startActivity(this, req, allSelect.getText().toString());
                 break;
         }
     }

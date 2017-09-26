@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.seafire.cworker.Activity.HomeDetailActivity;
+import com.seafire.cworker.Activity.LoginActivity;
 import com.seafire.cworker.Activity.SearchResultActivity;
 import com.seafire.cworker.Activity.WebViewActivity;
 import com.seafire.cworker.Bean.HomeResponseBean;

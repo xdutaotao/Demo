@@ -178,38 +178,11 @@
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout"
-                android:id="@+id/dinuan_layout">
-                <TextView style="@style/item_left_text"
-                    android:text="地暖"/>
-                <TextView style="@style/item_right_text"
-                    android:drawableRight="@drawable/arrow"
-                    android:text=""/>
-            </RelativeLayout>
-            <View style="@style/item_divider" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/type_recycler_view"/>
 
-            <RelativeLayout style="@style/item_layout">
-                <TextView style="@style/item_left_text"
-                    android:text="电地暖铺设"/>
-                <TextView style="@style/item_right_text"
-                    android:text="300元*50m"/>
-            </RelativeLayout>
-            <View style="@style/item_divider" />
-
-            <RelativeLayout style="@style/item_layout">
-                <TextView style="@style/item_left_text"
-                    android:text="明装暖气片"/>
-                <TextView style="@style/item_right_text"
-                    android:text="300元*2组"/>
-            </RelativeLayout>
-            <View style="@style/item_divider" />
-
-            <RelativeLayout style="@style/item_layout">
-                <TextView style="@style/item_left_text"
-                    android:text="安装调试"/>
-                <TextView style="@style/item_right_text"
-                    android:text="3000元*1台"/>
-            </RelativeLayout>
             <View style="@style/item_divider" />
 
             <Button style="@style/login_btn_style"

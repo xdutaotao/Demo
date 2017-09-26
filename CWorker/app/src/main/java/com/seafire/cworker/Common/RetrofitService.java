@@ -67,9 +67,9 @@ public interface RetrofitService {
     @POST("data/packagingForm")
     Observable<PackageBean> packagingForm(@Field("project") String project);
 
-    @FormUrlEncoded
-    @POST("user/checkToken")
-    Observable<BaseResponseBean> checkToken(@Field("token") String token);
+
+    @GET("user/checkToken")
+    Observable<BaseResponseBean> checkToken(@Query("token") String token);
 
     @FormUrlEncoded
     @POST("user/logout")

@@ -20,13 +20,17 @@ import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjSecondView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,12 +83,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     TextView contentNum;
     @BindView(R.id.price)
     EditText price;
-    @BindView(R.id.dinuan_layout)
-    RelativeLayout dinuanLayout;
 
     private ReleaseProjReq req;
     private IOSDialog dialog;
     private String dialogMianJi, dialogPrice;
+    private RecyclerArrayAdapter<ReleaseProjReqTemp> typeAdapter;
 
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
@@ -96,9 +99,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
     private RecyclerArrayAdapter<String> adapter;
     private StringBuilder timeLong;
+    private List<ReleaseProjReqTemp> tempList = new ArrayList<>();
 
-    public static void startActivity(Context context, ReleaseProjReq req) {
+    public static void startActivity(Context context, ReleaseProjReq req, String names) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
+        intent.putExtra("NAMES", names);
         intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
     }
@@ -113,7 +118,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         showToolbarBack(toolBar, titleText, "发布项目信息");
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
-        select.setText(req.getProject_class());
+        String names = getIntent().getStringExtra("NAMES");
+        select.setText(names);
         next.setOnClickListener(this);
 
 
@@ -147,14 +153,91 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         recyclerView.setAdapter(adapter);
 
 
+
+        typeAdapter = new RecyclerArrayAdapter<ReleaseProjReqTemp>(this, R.layout.res_proj_type_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReqTemp s) {
+                baseViewHolder.setText(R.id.name, s.getName());
+                if (TextUtils.isEmpty(s.getAmount())){
+                    baseViewHolder.setVisible(R.id.type_detail, false);
+                    baseViewHolder.setVisible(R.id.type_temp, true);
+                }else{
+                    baseViewHolder.setVisible(R.id.type_detail, true);
+                    baseViewHolder.setVisible(R.id.type_temp, false);
+                    baseViewHolder.setText(R.id.type_detail,
+                            s.getUnit_price()+"元 * "+s.getAmount()+s.getUnit());
+                }
+            }
+        };
+
+        typeAdapter.setOnItemClickListener((view, i) -> {
+            showDialog(typeAdapter.getAllData().get(i));
+        });
+
+
         addressDetailLayout.setOnClickListener(v -> {
             AddressActivity.startActivityForResult(this);
         });
 
-        dinuanLayout.setOnClickListener(this);
-
         time.setOnClickListener(this);
+        presenter.typeExpenses(this, req.getProject_class());
     }
+    @Override
+    public void getData(ExpensesInfoRes res) {
+
+        for(ExpensesInfoRes.ExpensesInfoBean item : res.getExpenses_info()){
+            ReleaseProjReqTemp temp = new ReleaseProjReqTemp();
+            temp.setExpenses_id(item.getExpenses_id());
+            temp.setName(item.getName());
+            temp.setUnit(item.getUnit());
+            temp.setCost(item.getCost());
+            tempList.add(temp);
+        }
+
+        typeAdapter.addAll(tempList);
+    }
+
+    private void showDialog(ReleaseProjReqTemp temp){
+        View view = LayoutInflater.from(this)
+                .inflate(R.layout.release_proj_dialog, null);
+        ImageView cancle = (ImageView) view.findViewById(R.id.cancle_dialog);
+        cancle.setOnClickListener(v1 -> {
+            if (dialog != null)
+                dialog.dismiss();
+        });
+
+        EditText amount = (EditText) view.findViewById(R.id.amount);
+        EditText price = (EditText) view.findViewById(R.id.price);
+        TextView unit = (TextView) view.findViewById(R.id.unit);
+        unit.setText(temp.getUnit());
+        price.setHint("最小输入"+temp.getCost());
+        view.findViewById(R.id.sure).setOnClickListener(v1 -> {
+            if (TextUtils.isEmpty(amount.getText().toString())){
+                ToastUtil.show("请输入数量");
+                return;
+            }
+
+            if (TextUtils.isEmpty(price.getText())){
+                ToastUtil.show("请输入单价");
+                return;
+            }
+
+            if (Float.valueOf(temp.getCost()) > Float.valueOf(price.getText().toString())){
+                ToastUtil.show("输入单价太小");
+                return;
+            }
+
+            temp.setAmount(amount.getText().toString());
+            temp.setUnit_price(price.getText().toString());
+            if (dialog != null)
+                dialog.dismiss();
+
+        });
+        dialog = new IOSDialog(this).builder()
+                .setContentView(view);
+        dialog.show();
+    }
+
 
     private void selectPhoto() {
         Intent intent = new Intent(this, ImageGridActivity.class);
@@ -216,7 +299,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 //                }
 
                 if (TextUtils.isEmpty(addressDetail.getText())){
-                    ToastUtil.show("类型不能为空");
+                    ToastUtil.show("地址不能为空");
                     return;
                 }
 
@@ -250,9 +333,23 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-                if (TextUtils.isEmpty(dialogMianJi) || TextUtils.isEmpty(dialogPrice)){
-                    ToastUtil.show("总价不能为空");
-                    return;
+                List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
+                for(ReleaseProjReqTemp temp: tempList){
+                    if (TextUtils.isEmpty(temp.getAmount())){
+                        ToastUtil.show("请输入价格和数量");
+                        return;
+                    }
+
+                    ReleaseProjReq.ExpensesBean bean = new ReleaseProjReq.ExpensesBean();
+                    bean.setExpenses_id(temp.getExpenses_id());
+                    bean.setUnit_price(temp.getUnit_price());
+                    bean.setAmount(temp.getAmount());
+                    BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
+                            *Float.valueOf(temp.getAmount()));
+                    bigDecimal.setScale(2, 4);
+                    String totalPrice = String.valueOf(bigDecimal.floatValue());
+                    bean.setTotal_price(totalPrice);
+                    releaseProjReqs.add(bean);
                 }
 
                 req.setTitle(title.getText().toString());
@@ -265,41 +362,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 req.setBuild_time(Utils.convert2long(time.getText().toString()));
                 req.setImages(pathList);
                 req.setDescribe(content.getText().toString());
+                req.setExpenses(releaseProjReqs);
 
-                ReleaseProjThirdActivity.startActivity(this);
-                break;
-
-            case R.id.dinuan_layout:
-                View view = LayoutInflater.from(this)
-                        .inflate(R.layout.release_proj_dialog, null);
-                ImageView cancle = (ImageView) view.findViewById(R.id.cancle_dialog);
-                cancle.setOnClickListener(v1 -> {
-                    if (dialog != null)
-                        dialog.dismiss();
-                });
-
-                EditText mianji = (EditText) view.findViewById(R.id.mianji);
-                EditText price = (EditText) view.findViewById(R.id.price);
-                view.findViewById(R.id.sure).setOnClickListener(v1 -> {
-                    if (TextUtils.isEmpty(mianji.getText().toString())){
-                        ToastUtil.show("请输入面积");
-                        return;
-                    }
-
-                    if (TextUtils.isEmpty(price.getText())){
-                        ToastUtil.show("请输入单价");
-                        return;
-                    }
-
-                    dialogMianJi = mianji.getText().toString();
-                    dialogPrice = price.getText().toString();
-                    if (dialog != null)
-                        dialog.dismiss();
-
-                });
-                dialog = new IOSDialog(this).builder()
-                        .setContentView(view);
-                dialog.show();
+                ReleaseProjThirdActivity.startActivity(this, req);
                 break;
 
             case R.id.time:

@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/release_proj_layout">
+    style="@style/release_proj_layout"
+    android:padding="20px">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/type"
+        android:layout_marginLeft="20px"
         android:text="采暖系统"/>
 
     <android.support.v7.widget.RecyclerView

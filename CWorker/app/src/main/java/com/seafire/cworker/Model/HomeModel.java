@@ -44,10 +44,13 @@ public class HomeModel extends BaseModel {
         return config.getRetrofitService().checkToken(User.getInstance().getUserId())
                 .map(baseResponseBean -> {
                     if (TextUtils.equals(baseResponseBean.getMsg(), "200")){
+
                         return "ok";
-                    }else{
+                    }else if (TextUtils.equals(baseResponseBean.getMsg(), "500")){
                         User.getInstance().clearUser();
                         return LOGIN_AGAIN;
+                    }else{
+                        return " ";
                     }
                 })
                 .compose(RxUtils.applyIOToMainThreadSchedulers());

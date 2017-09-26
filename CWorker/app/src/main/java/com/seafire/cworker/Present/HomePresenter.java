@@ -2,10 +2,13 @@ package com.seafire.cworker.Present;
 
 import android.text.TextUtils;
 
+import com.seafire.cworker.Activity.LoginActivity;
 import com.seafire.cworker.Bean.HomeResponseBean;
 import com.seafire.cworker.Model.HomeModel;
+import com.seafire.cworker.Model.User;
 import com.seafire.cworker.Utils.RxSubUtils;
 import com.seafire.cworker.Utils.ToastUtil;
+import com.seafire.cworker.Utils.Utils;
 import com.seafire.cworker.View.HomeView;
 
 import javax.inject.Inject;
@@ -46,6 +49,13 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     @Override
                     protected void _onNext(String token) {
                         getView().getTokenResult(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        super._onError(msg);
+                        User.getInstance().clearUser();
+                        Utils.startLoginActivity();
                     }
                 }));
     }

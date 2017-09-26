@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.ReleaseProjThirdView;
@@ -18,6 +19,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -35,8 +38,11 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     @BindView(R.id.pay)
     TextView pay;
 
-    public static void startActivity(Context context) {
+    private ReleaseProjReq req;
+
+    public static void startActivity(Context context, ReleaseProjReq req) {
         Intent intent = new Intent(context, ReleaseProjThirdActivity.class);
+        intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
     }
 
@@ -49,6 +55,8 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "确认项目信息");
+
+        req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
         pay.setOnClickListener(this);
     }
 
@@ -68,17 +76,15 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.pay:
-                View view = LayoutInflater.from(this)
-                        .inflate(R.layout.release_proj_dialog, null);
-                view.findViewById(R.id.sure).setOnClickListener(v1 -> {
-                    PayActivity.startActivity(this);
-                });
-                new IOSDialog(this).builder()
-                        .setContentView(view)
-                        .show();
+                PayActivity.startActivity(this, req);
 
 
                 break;
         }
+    }
+
+    @Override
+    public void getData(String s) {
+
     }
 }
