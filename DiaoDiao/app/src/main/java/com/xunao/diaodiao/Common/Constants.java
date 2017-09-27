@@ -28,6 +28,8 @@ public class Constants {
     public static String address;
     public static String city;
 
+    public static final String STATUS = "STATUS";
+
     public static final int SKILL_RELEASE_LINGGONG = 0;
     public static final int SKILL_RECIEVE_LINGGONG = 1;
     public static final int SKILL_RECIEVE_PROJECT = 2;

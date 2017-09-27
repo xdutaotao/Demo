@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.CityBean;
 import com.xunao.diaodiao.Present.AddPresenter;
@@ -45,6 +49,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.address;
 import static com.xunao.diaodiao.Common.Constants.city;
 
 public class AddressActivity extends BaseActivity implements AddView, CitiesAdapter.MyHotItemClickListener {
@@ -75,6 +80,7 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
     private boolean isFind = false;
     private IOSDialog dialog;
     private List<CitiesBean.DatasBean> allData = new ArrayList<>();
+    private RecyclerArrayAdapter<String> textAdapter;
 
     public static void startActivityForResult(Activity context) {
         Intent intent = new Intent(context, AddressActivity.class);
@@ -120,11 +126,35 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
         });
 
         district.setOnClickListener(v -> {
-            for(CitiesBean.DatasBean datasBean : allData){
-
-            }
+            AddressBeanReq req = new AddressBeanReq();
+            req.setName(city);
+            //presenter.getRegionId(this, req);
         });
 
+        textAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_text_view) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setText(R.id.hot_city_text, s);
+            }
+        };
+
+        textAdapter.setOnItemClickListener((view, i) -> {
+
+        });
+
+    }
+
+    @Override
+    public void getData(String s) {
+        showPop();
+    }
+
+    private void showPop(){
+        View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
+        RecyclerView popRecyclerView = (RecyclerView) popView.findViewById(R.id.recycler_view);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        popRecyclerView.setLayoutManager(manager);
+        popRecyclerView.setAdapter(textAdapter);
     }
 
     private List<CitiesBean.DatasBean> getCities() {
@@ -278,10 +308,10 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
     }
 
     private void returnHome(String data){
-        Intent intent = new Intent();
-        intent.putExtra(INTENT_KEY, data);
-        setResult(RESULT_OK, intent);
-        finish();
+//        Intent intent = new Intent();
+//        intent.putExtra(INTENT_KEY, data);
+//        setResult(RESULT_OK, intent);
+//        finish();
     }
 
 
@@ -290,8 +320,5 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
 
     }
 
-    @Override
-    public void getData(String s) {
 
-    }
 }

@@ -1,11 +1,13 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
+
 /**
  * Description:
  * Created by guzhenfu on 2017/9/26.
  */
 
-public class ReleaseProjReqTemp {
+public class ReleaseProjReqTemp implements Serializable{
     private int expenses_id;
     private String unit_price;
     private String amount;

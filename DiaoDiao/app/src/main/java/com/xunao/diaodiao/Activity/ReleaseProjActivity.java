@@ -85,57 +85,69 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, List<TypeInfoRes.Type_Info> type_info) {
 
-//                firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(ReleaseProjActivity.this, R.layout.select_skill_item) {
-//                    @Override
-//                    protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
-//                        baseViewHolder.setText(R.id.skill_text, s.getTitle());
-//
-//                        if (skillsName.toString().contains(s.getId())) {
-//                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-//                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-//                        } else {
-//                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-//                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-//                        }
-//
-//                        baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-//                            if (skillsName.toString().contains(s.getId())) {
-//                                v.setBackgroundResource(R.drawable.btn_blank_bg);
-//                                ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-//                                skillsName.remove(s.getId());
-//                            } else {
-//                                v.setBackgroundResource(R.drawable.btn_blue_bg);
-//                                ((TextView) v).setTextColor(Color.WHITE);
-//                                skillsName.add(s.getId());
-//                            }
-//                            setSelect(s.getId());
-//                        });
-//                    }
-//                };
+                firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(ReleaseProjActivity.this, R.layout.select_skill_item) {
+                    @Override
+                    protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                        baseViewHolder.setText(R.id.skill_text, s.getTitle());
+
+                        if (skillsName.toString().contains(s.getId())) {
+                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
+                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
+                        } else {
+                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
+                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
+                        }
+
+                        baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                            if (skillsName.toString().contains(s.getId())) {
+                                v.setBackgroundResource(R.drawable.btn_blank_bg);
+                                ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+                                skillsName.remove(s.getId());
+                            } else {
+                                v.setBackgroundResource(R.drawable.btn_blue_bg);
+                                ((TextView) v).setTextColor(Color.WHITE);
+                                skillsName.add(s.getId());
+                            }
+                            setSelect(s.getId());
+                        });
+                    }
+                };
 
 
-//                firstAdapter.clear();
-//                RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.first_recycler_view);
-//                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
-//                recyclerView.setAdapter(firstAdapter);
+                firstAdapter.clear();
+                RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.first_recycler_view);
+                LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                recyclerView.setLayoutManager(manager);
+                recyclerView.setAdapter(firstAdapter);
 
-                TagLayout tagLayout = (TagLayout) baseViewHolder.getConvertView().findViewById(R.id.tag_container_layout);
-
-                List<String> temp = new ArrayList<>();
+                List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
                 for(TypeInfoRes.Type_Info info : type_info){
                     if (Integer.valueOf(info.getParent_id()) == 0){
                         baseViewHolder.setText(R.id.type, info.getTitle());
                     }else{
-                        temp.add(info.getTitle());
+                        temp.add(info);
                     }
                 }
-                tagLayout.setTags(temp);
-                tagLayout.setOnTagClickListener(new TagLayout.OnTagClickListener() {
-                    @Override
-                    public void onTagClick(Tag tag, int position) {
-                        //if (skillsName.toString().contains(tag.text))
-                    }
-                });
+                firstAdapter.addAll(temp);
+
+//                TagLayout tagLayout = (TagLayout) baseViewHolder.getConvertView().findViewById(R.id.tag_container_layout);
+//
+//                List<String> temp = new ArrayList<>();
+//                for(TypeInfoRes.Type_Info info : type_info){
+//                    if (Integer.valueOf(info.getParent_id()) == 0){
+//                        baseViewHolder.setText(R.id.type, info.getTitle());
+//                    }else{
+//                        temp.add(info.getTitle());
+//                    }
+//                }
+//                tagLayout.setTags(temp);
+//                tagLayout.setOnTagClickListener(new TagLayout.OnTagClickListener() {
+//                    @Override
+//                    public void onTagClick(Tag tag, int position) {
+//                        //if (skillsName.toString().contains(tag.text))
+//                    }
+//                });
 //                firstAdapter.addAll(temp);
 
             }

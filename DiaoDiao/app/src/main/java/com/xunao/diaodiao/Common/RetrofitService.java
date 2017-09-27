@@ -6,6 +6,7 @@ import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.CashRecordRes;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
@@ -14,6 +15,7 @@ import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.FreindBean;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.GetOddInfoRes;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
@@ -279,10 +281,17 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ExpensesInfoRes>> typeExpenses(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<GetPercentRes>> getPercent(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> publishProject(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<CheckFinishRes>> checkFinish(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> getRegionId(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

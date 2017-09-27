@@ -181,7 +181,7 @@ public class ReleaseProjReq implements Serializable{
         this.verify = verify;
     }
 
-    public static class ExpensesBean{
+    public static class ExpensesBean implements Serializable{
         private int expenses_id;
         private String unit_price;
         private String amount;

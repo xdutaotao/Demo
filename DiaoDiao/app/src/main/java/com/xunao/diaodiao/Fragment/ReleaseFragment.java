@@ -1,21 +1,29 @@
 package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Activity.EditCompanyActivity;
+import com.xunao.diaodiao.Activity.EditPersonalActivity;
+import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
+import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
+import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
-import com.xunao.diaodiao.Bean.SearchResponseBean;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SearchPresenter;
@@ -23,19 +31,18 @@ import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.SearchView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.STATUS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
  */
-public class ReleaseFragment extends BaseFragment implements View.OnClickListener {
+public class ReleaseFragment extends BaseFragment implements View.OnClickListener, SearchView {
     private static final String ARG_PARAM1 = "param1";
     @Inject
     SearchPresenter presenter;
@@ -49,6 +56,22 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     LinearLayout skillRelease;
     @BindView(R.id.home_release)
     LinearLayout homeRelease;
+    @BindView(R.id.release_proj_info)
+    LinearLayout releaseProjInfo;
+    @BindView(R.id.release_skill_info)
+    LinearLayout releaseSkillInfo;
+    @BindView(R.id.release_help_info)
+    LinearLayout releaseHelpInfo;
+    @BindView(R.id.release_find_people)
+    LinearLayout releaseFindPeople;
+    @BindView(R.id.skill_release_skill_info)
+    LinearLayout skillReleaseSkillInfo;
+    @BindView(R.id.skill_release_weibao_info)
+    LinearLayout skillReleaseWeibaoInfo;
+    @BindView(R.id.skill_release_help_info)
+    LinearLayout skillReleaseHelpInfo;
+    @BindView(R.id.custom_release_weibao_info)
+    LinearLayout customReleaseWeibaoInfo;
 
     private String mParam1;
     private int index = 0;
@@ -76,14 +99,20 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_release, container, false);
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
-        //presenter.attachView(this);
+        presenter.attachView(this);
 
         hideToolbarBack(toolBar, titleText, "发布");
 
 
-        companyRelease.setOnClickListener(this);
-        skillRelease.setOnClickListener(this);
-        homeRelease.setOnClickListener(this);
+        releaseProjInfo.setOnClickListener(this);
+        releaseFindPeople.setOnClickListener(this);
+        releaseHelpInfo.setOnClickListener(this);
+        releaseSkillInfo.setOnClickListener(this);
+        skillReleaseHelpInfo.setOnClickListener(this);
+        skillReleaseSkillInfo.setOnClickListener(this);
+        skillReleaseWeibaoInfo.setOnClickListener(this);
+        customReleaseWeibaoInfo.setOnClickListener(this);
+
 
         return view;
     }
@@ -93,27 +122,27 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         super.onResume();
 
         int type = ShareUtils.getValue(TYPE_KEY, 0);
-        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             index++;
             if (index == 1) {
                 LoginActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             }
-        }else if(type == 0){
+        } else if (type == 0) {
             selectIndex++;
             if (selectIndex == 1) {
                 SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             }
-        }else if(type == 1){
+        } else if (type == 1) {
             companyRelease.setVisibility(View.VISIBLE);
             skillRelease.setVisibility(View.GONE);
             homeRelease.setVisibility(View.GONE);
-        }else if(type == 2){
+        } else if (type == 2) {
             companyRelease.setVisibility(View.GONE);
             skillRelease.setVisibility(View.VISIBLE);
             homeRelease.setVisibility(View.GONE);
-        }else{
+        } else {
             companyRelease.setVisibility(View.GONE);
             skillRelease.setVisibility(View.GONE);
             homeRelease.setVisibility(View.VISIBLE);
@@ -126,10 +155,16 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
-        if (!hidden){
+        if (!hidden) {
             if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 LoginActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
+            }else{
+                if (ShareUtils.getValue(STATUS, 0) != 1){
+                    presenter.checkFinish();
+                }else{
+
+                }
             }
         }
 
@@ -137,16 +172,72 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        int status = ShareUtils.getValue(STATUS, 0);
+        if (status != 1){
+            if (status == 4){
+                SpannableString string = new SpannableString("请先完善资料后才能 发布/接单");
+                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+                string.setSpan(span, 10, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                new IOSDialog(getContext()).builder()
+                        .setMsg(string.toString())
+                        .setNegativeButton("稍后再说", null)
+                        .setPositiveButton("去完善", v1 -> {
+                            int type = ShareUtils.getValue(TYPE_KEY, 0);
+                            if (type == 1){
+                                EditCompanyActivity.startActivity(getContext());
+                            }else if (type == 2){
+                                EditSkillActivity.startActivity(getContext());
+                            }else{
+                                EditPersonalActivity.startActivity(getContext());
+                            }
+                        })
+                        .show();
+            }else{
+                SpannableString string = new SpannableString("审核通过后才能 发布/接单");
+                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+                string.setSpan(span, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                new IOSDialog(getContext()).builder()
+                        .setMsg(string.toString())
+                        .setNegativeButton("稍后再说", null)
+                        .setPositiveButton("去完善", null)
+                        .show();
+            }
+
+            return;
+        }
+
         switch (v.getId()) {
-            case R.id.company_release:
-                ReleaseCompanyActivity.startActivity(getContext());
+            case R.id.release_proj_info:
+                ReleaseProjActivity.startActivity(getContext());
                 break;
 
-            case R.id.skill_release:
+            case R.id.release_find_people:
+                //
+                ReleaseProjActivity.startActivity(getContext());
+                break;
+
+            case R.id.release_help_info:
+                //
+                ReleaseHelpActivity.startActivity(getContext());
+                break;
+
+            case R.id.release_skill_info:
+                ReleaseHelpActivity.startActivity(getContext());
+                break;
+
+            case R.id.skill_release_skill_info:
                 ReleaseSkillActivity.startActivity(getContext());
                 break;
 
-            case R.id.home_release:
+            case R.id.skill_release_help_info:
+                break;
+
+            case R.id.skill_release_weibao_info:
+                break;
+
+            case R.id.custom_release_weibao_info:
                 break;
         }
     }
@@ -157,4 +248,13 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         presenter.detachView();
     }
 
+    @Override
+    public void onFailure() {
+
+    }
+
+    @Override
+    public void getData(CheckFinishRes bean) {
+        ShareUtils.putValue(STATUS, bean.getStatus());
+    }
 }

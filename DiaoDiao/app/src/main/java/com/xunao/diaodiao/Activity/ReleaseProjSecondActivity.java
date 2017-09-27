@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
@@ -82,8 +85,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     EditText content;
     @BindView(R.id.content_num)
     TextView contentNum;
-    @BindView(R.id.price)
-    EditText price;
     @BindView(R.id.type_recycler_view)
     RecyclerView typeRecyclerView;
 
@@ -102,6 +103,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     private RecyclerArrayAdapter<String> adapter;
     private StringBuilder timeLong;
     private List<ReleaseProjReqTemp> tempList = new ArrayList<>();
+    private String percent;
 
     public static void startActivity(Context context, ReleaseProjReq req, String names) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
@@ -154,6 +156,28 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         adapter.add(ADD);
         recyclerView.setAdapter(adapter);
 
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 200){
+                    content.setText(s.subSequence(0, 200));
+                }else{
+                    contentNum.setText(s.length() + " / 200");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         typeAdapter = new RecyclerArrayAdapter<ReleaseProjReqTemp>(this, R.layout.res_proj_type_item) {
             @Override
@@ -184,6 +208,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         time.setOnClickListener(this);
         presenter.typeExpenses(this, req.getProject_class());
+        presenter.getPercent();
         initImagePicker();
     }
 
@@ -212,6 +237,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeAdapter.addAll(tempList);
     }
 
+    @Override
+    public void getPercent(GetPercentRes res) {
+        percent = res.getPercent();
+    }
+
     private void showDialog(ReleaseProjReqTemp temp) {
         View view = LayoutInflater.from(this)
                 .inflate(R.layout.release_proj_dialog, null);
@@ -226,6 +256,15 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         TextView unit = (TextView) view.findViewById(R.id.unit);
         unit.setText(temp.getUnit());
         price.setHint("最小输入" + temp.getCost());
+
+        if (TextUtils.isEmpty(temp.getAmount())){
+            amount.setText(temp.getAmount());
+        }
+
+        if (TextUtils.isEmpty(temp.getUnit_price())){
+            price.setText(temp.getUnit_price());
+        }
+
         view.findViewById(R.id.sure).setOnClickListener(v1 -> {
             if (TextUtils.isEmpty(amount.getText().toString())) {
                 ToastUtil.show("请输入数量");
@@ -281,7 +320,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         pathList.clear();
         Observable.from(images)
                 .map(imageItem -> {
-                    pathList.add(Utils.Bitmap2StrByBase64(imageItem.path));
+                    pathList.add(imageItem.path);
                     return imageItem.path;
                 })
                 .toList()
@@ -344,12 +383,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-                if (TextUtils.isEmpty(price.getText())) {
-                    ToastUtil.show("价格不能为空");
-                    return;
-                }
-
                 List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
+                req.setProject_fee("0");
                 for (ReleaseProjReqTemp temp : tempList) {
                     if (TextUtils.isEmpty(temp.getAmount())) {
                         ToastUtil.show("请输入价格和数量");
@@ -363,10 +398,22 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
                             * Float.valueOf(temp.getAmount()));
                     bigDecimal.setScale(2, 4);
+                    req.setProject_fee(String.valueOf(Float.valueOf(req.getProject_fee()) +
+                            bigDecimal.floatValue()));
                     String totalPrice = String.valueOf(bigDecimal.floatValue());
                     bean.setTotal_price(totalPrice);
                     releaseProjReqs.add(bean);
                 }
+
+                if (TextUtils.isEmpty(percent)){
+                    percent = "10";
+                }
+                BigDecimal serviceFee = new BigDecimal(Float.valueOf(req.getProject_fee())/Integer.valueOf(percent));
+                serviceFee.setScale(2, 4);
+                req.setService_cost(String.valueOf(serviceFee.floatValue()));
+                BigDecimal allFee = serviceFee.add(new BigDecimal(Float.valueOf(req.getProject_fee())));
+                allFee.setScale(2, 4);
+                req.setTotal_price(String.valueOf(allFee.floatValue()));
 
                 req.setTitle(title.getText().toString());
                 req.setAddress(addressDetail.getText().toString());
@@ -380,7 +427,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 req.setDescribe(content.getText().toString());
                 req.setExpenses(releaseProjReqs);
 
-                ReleaseProjThirdActivity.startActivity(this, req);
+                ReleaseProjThirdActivity.startActivity(this, req, tempList);
                 break;
 
             case R.id.time:

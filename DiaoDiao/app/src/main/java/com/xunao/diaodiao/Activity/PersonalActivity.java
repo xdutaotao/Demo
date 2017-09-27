@@ -37,6 +37,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
+import static com.xunao.diaodiao.Common.Constants.STATUS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, PersonalView {
@@ -90,6 +91,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
 
     private int type;
+    private int status;
     private PersonalRes.CompanyInfo companyInfo;
     private PersonalRes.TechnicianInfo technicianInfo;
     private PersonalRes.FamilyInfo familyInfo;
@@ -124,7 +126,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         type = ShareUtils.getValue(TYPE_KEY, 0);
         switch (type) {
             case COMPANY_TYPE:
-                editPersonal.setText("完善资料才能发布和接单");
                 nameText.setText("公司名称");
                 hideLayout.setVisibility(View.GONE);
                 break;
@@ -134,10 +135,20 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 break;
 
             case CUSTOM_TYPE:
-                editPersonal.setText("完善资料才能发布和接单");
                 nameText.setText("用户名");
                 hideLayout.setVisibility(View.GONE);
                 break;
+        }
+
+        status = ShareUtils.getValue(STATUS, 0);
+        if (status == 1){
+            editPersonal.setText("审核通过");
+        }else if (status == 2){
+            editPersonal.setText("审核中");
+        }else if (status == 3){
+            editPersonal.setText("审核未通过");
+        }else {
+            editPersonal.setText("未完善资料");
         }
 
     }
@@ -147,24 +158,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.head_layout:
                 showPicDialog();
-                break;
-
-            case R.id.edit_personal:
-                int type = ShareUtils.getValue(TYPE_KEY, 0);
-                switch (type) {
-                    case COMPANY_TYPE:
-                        EditCompanyActivity.startActivity(this);
-                        break;
-
-                    case SKILL_TYPE:
-                        EditSkillActivity.startActivity(this);
-                        break;
-
-                    case CUSTOM_TYPE:
-                        EditPersonalActivity.startActivity(this);
-                        break;
-                }
-
                 break;
         }
     }

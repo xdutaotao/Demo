@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
@@ -28,7 +29,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目标题"/>
+                    android:hint="请输入项目标题"
+                    android:id="@+id/title"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -42,7 +44,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目地区"/>
+                    android:hint="请输入项目地区"
+                    android:id="@+id/address"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -56,7 +59,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目地址"/>
+                    android:hint="请输入项目地址"
+                    android:id="@+id/address_detail"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -70,7 +74,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目类型"/>
+                    android:hint="请输入项目类型"
+                    android:id="@+id/project_type"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -84,7 +89,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入联系人"/>
+                    android:hint="请输入联系人"
+                    android:id="@+id/contact"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -99,7 +105,8 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入联系电话"/>
+                    android:hint="请输入联系电话"
+                    android:id="@+id/phone"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -114,14 +121,15 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="40px"
-                    android:hint="填写日薪(不低于300元)"/>
+                    android:hint="填写日薪(不低于300元)"
+                    android:id="@+id/fee"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="天"/>
+                    android:text="元"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -135,22 +143,33 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint=""/>
+                    android:hint=""
+                    android:id="@+id/days"
+                    android:layout_marginRight="50px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="天"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
 
             <RelativeLayout
-                style="@style/item_layout">
+                style="@style/item_layout"
+                android:id="@+id/proj_time_layout">
 
                 <TextView
                     style="@style/item_left_text"
                     android:text="施工时间"/>
 
-                <EditText
+                <TextView
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="60px"
-                    android:hint="到时间自动取消，工费退款到余额"/>
+                    android:textColor="@color/nav_gray"
+                    android:text="到时间自动取消，工费退款到余额"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -162,30 +181,31 @@
 
             <View style="@style/item_divider" />
 
-            <RelativeLayout
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="500px"
-                android:layout_margin="40px">
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_gray_bg"
+                android:layout_margin="40px"
+                android:padding="40px">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="400px"
-                    android:hint="我们需要您的意见和反馈，感谢您的..."
-                    android:id="@+id/information"
-                    android:maxLength="100"
-                    android:textColor="@color/nav_gray"
-                    android:textSize="50px"
-                    android:gravity="start"
-                    android:background="@color/divider" />
+                    android:background="@null"
+                    android:hint="简单零工的工作内容"
+                    android:textColorHint="#D2D2D2"
+                    android:id="@+id/content"
+                    android:gravity="top"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:background="@color/divider"
+                    android:layout_height="wrap_content"
                     android:text="0 / 200"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="right"/>
-            </RelativeLayout>
+                    android:id="@+id/content_num"
+                    android:gravity="right|center_vertical"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -194,15 +214,21 @@
                 android:layout_margin="50px"/>
 
             <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recycler_view"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50px"
+            android:id="@+id/recycler_view"
+            app:spanCount="4"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            tools:listitem="@layout/select_skill_item"/>
 
             <View style="@style/item_divider" />
 
             <Button
                 style="@style/login_btn_style"
                 android:id="@+id/next"
+                android:layout_marginTop="100px"
+                android:layout_marginBottom="100px"
                 android:text="下一步"/>
         </LinearLayout>
     </ScrollView>

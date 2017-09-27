@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
@@ -12,6 +13,8 @@ import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Bean.CashRecordRes;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
+import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.EvaluateReq;
@@ -29,6 +32,7 @@ import com.xunao.diaodiao.Bean.GetCodeBean;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Bean.GetOddInfoRes;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconReq;
 import com.xunao.diaodiao.Bean.HeadIconRes;
@@ -97,6 +101,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
+import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
  * Created by
@@ -1725,8 +1730,32 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 服务费用
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> getPercent(){
+        String rateKey = "getPercent";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setProject_type(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 发布项目
-     * @param s
+     * @param
      * @return
      */
     public Observable<String> publishProject(ReleaseProjReq req){
@@ -1755,6 +1784,53 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
+
+    /**
+     * 完善信息
+     * @param
+     * @return
+     */
+    public Observable<CheckFinishRes> checkFinish(){
+        String rateKey = "checkFinish";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().checkFinish(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 区县选择
+     * @param req
+     * @return
+     */
+//    public Observable<String> getRegionId(List<CitiesBean.DatasBean> req){
+//        Observable.create(new Observable.OnSubscribe<List<String>>() {
+//            @Override
+//            public void call(Subscriber<? super List<String>> subscriber) {
+//                for(CitiesBean.DatasBean bean : req){
+//                    for(CitiesBean.DatasBean.AddressListBean item: bean.getAddressList()){
+//                        if (TextUtils.equals(item.getRegion_name(), address)){
+//
+//                        }
+//                    }
+//                }
+//                return null;
+//            }
+//        })
+//    }
 
 
 

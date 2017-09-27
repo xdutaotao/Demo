@@ -11,13 +11,14 @@
             android:text="需要支付"/>
         <TextView style="@style/item_right_text"
             android:textColor="@color/red"
+            android:id="@+id/fee"
             android:text="采暖系统水处理"/>
     </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="选择支付"
+        android:text="支付方式"
         android:layout_margin="50px"/>
 
     <LinearLayout
@@ -56,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
+            android:id="@+id/current"
             android:drawablePadding="10px"
             android:drawableRight="@drawable/checkbox_style"
             android:layout_gravity="center_vertical"/>
@@ -101,6 +103,7 @@
             android:layout_height="wrap_content"
             android:button="@null"
             android:drawablePadding="10px"
+            android:id="@+id/zhifubao"
             android:drawableRight="@drawable/checkbox_style"
             android:layout_gravity="center_vertical"/>
 
@@ -144,6 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
+            android:id="@+id/wechat"
             android:drawablePadding="10px"
             android:drawableRight="@drawable/checkbox_style"
             android:layout_gravity="center_vertical"/>
