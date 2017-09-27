@@ -21,6 +21,8 @@ import com.xunao.diaodiao.Present.ReleaseProjPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseProjView;
+import com.xunao.diaodiao.Widget.Tag.Tag;
+import com.xunao.diaodiao.Widget.Tag.TagLayout;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -83,48 +85,58 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, List<TypeInfoRes.Type_Info> type_info) {
 
-                firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(ReleaseProjActivity.this, R.layout.select_skill_item) {
-                    @Override
-                    protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
-                        baseViewHolder.setText(R.id.skill_text, s.getTitle());
+//                firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(ReleaseProjActivity.this, R.layout.select_skill_item) {
+//                    @Override
+//                    protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+//                        baseViewHolder.setText(R.id.skill_text, s.getTitle());
+//
+//                        if (skillsName.toString().contains(s.getId())) {
+//                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
+//                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
+//                        } else {
+//                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
+//                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
+//                        }
+//
+//                        baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+//                            if (skillsName.toString().contains(s.getId())) {
+//                                v.setBackgroundResource(R.drawable.btn_blank_bg);
+//                                ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+//                                skillsName.remove(s.getId());
+//                            } else {
+//                                v.setBackgroundResource(R.drawable.btn_blue_bg);
+//                                ((TextView) v).setTextColor(Color.WHITE);
+//                                skillsName.add(s.getId());
+//                            }
+//                            setSelect(s.getId());
+//                        });
+//                    }
+//                };
 
-                        if (skillsName.toString().contains(s.getId())) {
-                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                        } else {
-                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-                        }
 
-                        baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                            if (skillsName.toString().contains(s.getId())) {
-                                v.setBackgroundResource(R.drawable.btn_blank_bg);
-                                ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                                skillsName.remove(s.getId());
-                            } else {
-                                v.setBackgroundResource(R.drawable.btn_blue_bg);
-                                ((TextView) v).setTextColor(Color.WHITE);
-                                skillsName.add(s.getId());
-                            }
-                            setSelect(s.getId());
-                        });
-                    }
-                };
+//                firstAdapter.clear();
+//                RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.first_recycler_view);
+//                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+//                recyclerView.setAdapter(firstAdapter);
 
+                TagLayout tagLayout = (TagLayout) baseViewHolder.getConvertView().findViewById(R.id.tag_container_layout);
 
-                firstAdapter.clear();
-                RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.first_recycler_view);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
-                recyclerView.setAdapter(firstAdapter);
-                List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
+                List<String> temp = new ArrayList<>();
                 for(TypeInfoRes.Type_Info info : type_info){
                     if (Integer.valueOf(info.getParent_id()) == 0){
                         baseViewHolder.setText(R.id.type, info.getTitle());
                     }else{
-                        temp.add(info);
+                        temp.add(info.getTitle());
                     }
                 }
-                firstAdapter.addAll(temp);
+                tagLayout.setTags(temp);
+                tagLayout.setOnTagClickListener(new TagLayout.OnTagClickListener() {
+                    @Override
+                    public void onTagClick(Tag tag, int position) {
+                        //if (skillsName.toString().contains(tag.text))
+                    }
+                });
+//                firstAdapter.addAll(temp);
 
             }
         };

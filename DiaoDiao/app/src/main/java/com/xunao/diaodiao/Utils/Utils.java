@@ -13,6 +13,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.util.Xml;
 import android.view.View;
 import android.view.WindowManager;
@@ -67,7 +68,10 @@ public class Utils {
         }
     }
 
-
+    public static int dipToPx(Context c,float dipValue) {
+        DisplayMetrics metrics = c.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+    }
 
     private final static  int SIZE = 1000000;
     /**

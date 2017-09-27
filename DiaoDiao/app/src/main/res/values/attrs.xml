@@ -97,4 +97,14 @@
         <attr name="isDropDownStyle" format="boolean" />
         <attr name="isOnBottomStyle" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="TagLayout">
+        <attr name="lineMargin" format="dimension" />
+        <attr name="tagMargin" format="dimension" />
+        <attr name="textPaddingLeft" format="dimension" />
+        <attr name="textPaddingRight" format="dimension" />
+        <attr name="textPaddingTop" format="dimension" />
+        <attr name="textPaddingBottom" format="dimension" />
+    </declare-styleable>
+
 </resources>
