@@ -92,7 +92,7 @@ public class LoginModel extends BaseModel {
         Map<String, String> map = new HashMap<>();
         map.put("username", phone);
         map.put("password", pwd);
-        map.put("clientId", cliendID);
+        map.put("clientId", "android");
 
         return config.getRetrofitService().login(map)
                 .flatMap(testBean -> {

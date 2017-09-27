@@ -17,7 +17,6 @@
             android:text=""/>
 
         <TextView style="@style/item_right_text"
-            android:drawableRight="@drawable/arrow"
             android:id="@+id/type_detail"
             android:visibility="gone"
             android:text="111"/>

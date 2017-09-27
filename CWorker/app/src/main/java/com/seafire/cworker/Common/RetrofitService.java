@@ -77,7 +77,7 @@ public interface RetrofitService {
     Observable<BaseBean<String>> logout(@Field("token") String token);
 
     @FormUrlEncoded
-    @POST("user/logout")
+    @POST("user/registerPosition")
     Observable<BaseBean<String>> postAddr(@FieldMap Map<String, String> map);
 
 

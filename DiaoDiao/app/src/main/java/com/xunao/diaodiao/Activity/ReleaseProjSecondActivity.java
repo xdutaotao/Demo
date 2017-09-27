@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -23,12 +24,12 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
-import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjSecondView;
+import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,10 +84,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     TextView contentNum;
     @BindView(R.id.price)
     EditText price;
+    @BindView(R.id.type_recycler_view)
+    RecyclerView typeRecyclerView;
 
     private ReleaseProjReq req;
     private IOSDialog dialog;
-    private String dialogMianJi, dialogPrice;
     private RecyclerArrayAdapter<ReleaseProjReqTemp> typeAdapter;
 
     private String ADD = "ADD";
@@ -126,10 +128,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                if (TextUtils.equals(ADD, s)){
+                if (TextUtils.equals(ADD, s)) {
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
-                }else{
+                } else {
                     baseViewHolder.setVisible(R.id.delete, true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
@@ -153,19 +155,18 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         recyclerView.setAdapter(adapter);
 
 
-
         typeAdapter = new RecyclerArrayAdapter<ReleaseProjReqTemp>(this, R.layout.res_proj_type_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReqTemp s) {
                 baseViewHolder.setText(R.id.name, s.getName());
-                if (TextUtils.isEmpty(s.getAmount())){
+                if (TextUtils.isEmpty(s.getAmount())) {
                     baseViewHolder.setVisible(R.id.type_detail, false);
                     baseViewHolder.setVisible(R.id.type_temp, true);
-                }else{
+                } else {
                     baseViewHolder.setVisible(R.id.type_detail, true);
                     baseViewHolder.setVisible(R.id.type_temp, false);
                     baseViewHolder.setText(R.id.type_detail,
-                            s.getUnit_price()+"元 * "+s.getAmount()+s.getUnit());
+                            s.getUnit_price() + "元 * " + s.getAmount() + s.getUnit());
                 }
             }
         };
@@ -173,7 +174,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeAdapter.setOnItemClickListener((view, i) -> {
             showDialog(typeAdapter.getAllData().get(i));
         });
-
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        typeRecyclerView.setLayoutManager(manager);
+        typeRecyclerView.setAdapter(typeAdapter);
 
         addressDetailLayout.setOnClickListener(v -> {
             AddressActivity.startActivityForResult(this);
@@ -181,11 +184,23 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         time.setOnClickListener(this);
         presenter.typeExpenses(this, req.getProject_class());
+        initImagePicker();
     }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setCrop(false);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setMultiMode(true);
+        imagePicker.setShowCamera(false);
+        imagePicker.setSelectLimit(10);
+    }
+
     @Override
     public void getData(ExpensesInfoRes res) {
 
-        for(ExpensesInfoRes.ExpensesInfoBean item : res.getExpenses_info()){
+        for (ExpensesInfoRes.ExpensesInfoBean item : res.getExpenses_info()) {
             ReleaseProjReqTemp temp = new ReleaseProjReqTemp();
             temp.setExpenses_id(item.getExpenses_id());
             temp.setName(item.getName());
@@ -197,7 +212,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeAdapter.addAll(tempList);
     }
 
-    private void showDialog(ReleaseProjReqTemp temp){
+    private void showDialog(ReleaseProjReqTemp temp) {
         View view = LayoutInflater.from(this)
                 .inflate(R.layout.release_proj_dialog, null);
         ImageView cancle = (ImageView) view.findViewById(R.id.cancle_dialog);
@@ -210,25 +225,26 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         EditText price = (EditText) view.findViewById(R.id.price);
         TextView unit = (TextView) view.findViewById(R.id.unit);
         unit.setText(temp.getUnit());
-        price.setHint("最小输入"+temp.getCost());
+        price.setHint("最小输入" + temp.getCost());
         view.findViewById(R.id.sure).setOnClickListener(v1 -> {
-            if (TextUtils.isEmpty(amount.getText().toString())){
+            if (TextUtils.isEmpty(amount.getText().toString())) {
                 ToastUtil.show("请输入数量");
                 return;
             }
 
-            if (TextUtils.isEmpty(price.getText())){
+            if (TextUtils.isEmpty(price.getText())) {
                 ToastUtil.show("请输入单价");
                 return;
             }
 
-            if (Float.valueOf(temp.getCost()) > Float.valueOf(price.getText().toString())){
+            if (Float.valueOf(temp.getCost()) > Float.valueOf(price.getText().toString())) {
                 ToastUtil.show("输入单价太小");
                 return;
             }
 
             temp.setAmount(amount.getText().toString());
             temp.setUnit_price(price.getText().toString());
+            typeAdapter.notifyDataSetChanged();
             if (dialog != null)
                 dialog.dismiss();
 
@@ -283,7 +299,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next:
-                if (TextUtils.isEmpty(title.getText())){
+                if (TextUtils.isEmpty(title.getText())) {
                     ToastUtil.show("标题不能为空");
                     return;
                 }
@@ -298,44 +314,44 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 //                    return;
 //                }
 
-                if (TextUtils.isEmpty(addressDetail.getText())){
+                if (TextUtils.isEmpty(addressDetail.getText())) {
                     ToastUtil.show("地址不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(name.getText())){
+                if (TextUtils.isEmpty(name.getText())) {
                     ToastUtil.show("联系人不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(phone.getText())){
+                if (TextUtils.isEmpty(phone.getText())) {
                     ToastUtil.show("联系人电话不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(time.getText())){
+                if (TextUtils.isEmpty(time.getText())) {
                     ToastUtil.show("施工时间不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(content.getText())){
+                if (TextUtils.isEmpty(content.getText())) {
                     ToastUtil.show("描述不能为空");
                     return;
                 }
 
-                if (pathList.size() == 0){
+                if (pathList.size() == 0) {
                     ToastUtil.show("图纸不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(price.getText())){
+                if (TextUtils.isEmpty(price.getText())) {
                     ToastUtil.show("价格不能为空");
                     return;
                 }
 
                 List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
-                for(ReleaseProjReqTemp temp: tempList){
-                    if (TextUtils.isEmpty(temp.getAmount())){
+                for (ReleaseProjReqTemp temp : tempList) {
+                    if (TextUtils.isEmpty(temp.getAmount())) {
                         ToastUtil.show("请输入价格和数量");
                         return;
                     }
@@ -345,7 +361,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     bean.setUnit_price(temp.getUnit_price());
                     bean.setAmount(temp.getAmount());
                     BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
-                            *Float.valueOf(temp.getAmount()));
+                            * Float.valueOf(temp.getAmount()));
                     bigDecimal.setScale(2, 4);
                     String totalPrice = String.valueOf(bigDecimal.floatValue());
                     bean.setTotal_price(totalPrice);
@@ -378,15 +394,15 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     @Override
                     public void onDatePicked(String year, String month, String day) {
                         //ToastUtil.show(year+month+day);
-                        timeLong.append(year+"-")
-                                .append(month+"-")
+                        timeLong.append(year + "-")
+                                .append(month + "-")
                                 .append(day);
 
                         timePicker.show();
                         timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
                             @Override
                             public void onTimePicked(String hour, String minute) {
-                                timeLong.append(" "+hour+":")
+                                timeLong.append(" " + hour + ":")
                                         .append(minute);
 
                                 time.setText(timeLong.toString());
@@ -409,7 +425,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

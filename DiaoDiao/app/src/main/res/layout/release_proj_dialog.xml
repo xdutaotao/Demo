@@ -20,7 +20,7 @@
         <EditText style="@style/edit_personal_edit"
             android:hint="请输入数量"
             android:id="@+id/amount"
-            android:layout_marginRight="50px"/>
+            android:layout_marginRight="100px"/>
 
         <TextView
             android:layout_width="wrap_content"

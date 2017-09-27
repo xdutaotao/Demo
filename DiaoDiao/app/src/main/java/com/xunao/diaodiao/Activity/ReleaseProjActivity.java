@@ -82,8 +82,39 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         adapter = new RecyclerArrayAdapter<List<TypeInfoRes.Type_Info>>(this, R.layout.type_info_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, List<TypeInfoRes.Type_Info> type_info) {
+
+                firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(ReleaseProjActivity.this, R.layout.select_skill_item) {
+                    @Override
+                    protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                        baseViewHolder.setText(R.id.skill_text, s.getTitle());
+
+                        if (skillsName.toString().contains(s.getId())) {
+                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
+                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
+                        } else {
+                            baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
+                            baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
+                        }
+
+                        baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                            if (skillsName.toString().contains(s.getId())) {
+                                v.setBackgroundResource(R.drawable.btn_blank_bg);
+                                ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+                                skillsName.remove(s.getId());
+                            } else {
+                                v.setBackgroundResource(R.drawable.btn_blue_bg);
+                                ((TextView) v).setTextColor(Color.WHITE);
+                                skillsName.add(s.getId());
+                            }
+                            setSelect(s.getId());
+                        });
+                    }
+                };
+
+
                 firstAdapter.clear();
-                RecyclerView recyclerView = baseViewHolder.getView(R.id.first_recycler_view);
+                RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.first_recycler_view);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
                 recyclerView.setAdapter(firstAdapter);
                 List<TypeInfoRes.Type_Info> temp = new ArrayList<>();
                 for(TypeInfoRes.Type_Info info : type_info){
@@ -98,33 +129,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             }
         };
 
-        firstAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.select_skill_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
-                baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                if (skillsName.toString().contains(s.getId())) {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                } else {
-                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
-                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
-                }
-
-                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s.getId())) {
-                        v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s.getId());
-                    } else {
-                        v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView) v).setTextColor(Color.WHITE);
-                        skillsName.add(s.getId());
-                    }
-                    setSelect(s.getId());
-                });
-            }
-        };
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
