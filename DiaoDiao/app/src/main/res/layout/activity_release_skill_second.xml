@@ -52,6 +52,15 @@
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
+                        android:text="项目类型"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"
+                        android:id="@+id/project_type"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
                         android:text="联系人"/>
                     <TextView style="@style/item_right_text"
                         android:text="采暖系统水处理"
@@ -65,6 +74,24 @@
                     <TextView style="@style/item_right_text"
                         android:text="采暖系统水处理"
                         android:id="@+id/phone"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="日薪"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"
+                        android:id="@+id/fee"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
+
+                <RelativeLayout style="@style/item_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="工作天数"/>
+                    <TextView style="@style/item_right_text"
+                        android:text="采暖系统水处理"
+                        android:id="@+id/days"/>
                 </RelativeLayout>
                 <View style="@style/item_divider" />
 
@@ -123,18 +150,9 @@
                 </LinearLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/type_recycler_view"
-                    android:background="@color/white"
-                    android:layout_marginBottom="50px"/>
-
-                <View style="@style/item_divider" />
-
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
-                        android:text="零工工费"/>
+                        android:text="项目工费"/>
                     <TextView style="@style/item_right_text"
                         android:id="@+id/project_fee"
                         android:text="采暖系统水处理"/>

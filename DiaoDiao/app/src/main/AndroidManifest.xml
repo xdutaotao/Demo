@@ -215,6 +215,7 @@
         <activity android:name=".Activity.SkillProjReceiveProgressActivity"/>
         <activity android:name=".Activity.SkillProjProgressActivity"/>
         <activity android:name=".Activity.CashRecordActivity"/>
+        <activity android:name=".Activity.ReleaseSkillSecondActivity"/>
 
     </application>
 

@@ -36,6 +36,7 @@ import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PackageBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
@@ -283,6 +284,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<GetPercentRes>> getPercent(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<ProjectTypeRes>> publishOddType(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> publishProject(@Body RequestBody body);

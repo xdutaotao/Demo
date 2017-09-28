@@ -47,7 +47,7 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
 
         showToolbarBack(toolBar, titleText, "发布维修信息");
         pay.setOnClickListener(v -> {
-            PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, null);
+           // PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, null);
         });
     }
 

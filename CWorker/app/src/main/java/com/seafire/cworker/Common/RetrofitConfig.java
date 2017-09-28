@@ -3,6 +3,9 @@ package com.seafire.cworker.Common;
 import android.content.Context;
 
 import com.seafire.cworker.App;
+import com.seafire.cworker.Common.RetrofitAdapter.DoubleDefault0Adapter;
+import com.seafire.cworker.Common.RetrofitAdapter.IntegerDefault0Adapter;
+import com.seafire.cworker.Common.RetrofitAdapter.LongDefault0Adapter;
 import com.seafire.cworker.Utils.LogUtils;
 import com.seafire.cworker.Utils.NetWorkUtils;
 import com.google.gson.Gson;
@@ -163,7 +166,14 @@ public class RetrofitConfig {
         //.cache(cache)
 
         Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Integer.class, new IntegerDefault0Adapter())
+                .registerTypeAdapter(int.class, new IntegerDefault0Adapter())
+                .registerTypeAdapter(Double.class, new DoubleDefault0Adapter())
+                .registerTypeAdapter(double.class, new DoubleDefault0Adapter())
+                .registerTypeAdapter(Long.class, new LongDefault0Adapter())
+                .registerTypeAdapter(long.class, new LongDefault0Adapter())
                 .setLenient()
+                .serializeNulls()
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()

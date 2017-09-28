@@ -52,6 +52,7 @@ import com.xunao.diaodiao.Activity.ReleaseProjThirdActivity;
 import com.xunao.diaodiao.Activity.ReleaseSKillTypeActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillInforActivity;
+import com.xunao.diaodiao.Activity.ReleaseSkillSecondActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillSureInfoActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.SelectCompanyActivity;
@@ -170,4 +171,5 @@ public interface ActivityComponent {
     void inject(CashRecordActivity activity);
     void inject(WebViewActivity activity);
     void inject(RecommandActivity activity);
+    void inject(ReleaseSkillSecondActivity activity);
 }

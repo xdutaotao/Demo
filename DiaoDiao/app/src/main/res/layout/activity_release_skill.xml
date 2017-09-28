@@ -42,9 +42,10 @@
                     style="@style/item_left_text"
                     android:text="项目地区"/>
 
-                <EditText
+                <TextView
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目地区"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
                     android:id="@+id/address"/>
             </RelativeLayout>
 
@@ -66,15 +67,17 @@
             <View style="@style/item_divider" />
 
             <RelativeLayout
-                style="@style/item_layout">
+                style="@style/item_layout"
+                android:id="@+id/project_type_layout">
 
                 <TextView
                     style="@style/item_left_text"
                     android:text="项目类型"/>
 
-                <EditText
+                <TextView
                     style="@style/edit_personal_edit"
-                    android:hint="请输入项目类型"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
                     android:id="@+id/project_type"/>
             </RelativeLayout>
 
@@ -106,6 +109,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:hint="请输入联系电话"
+                    android:inputType="phone"
                     android:id="@+id/phone"/>
             </RelativeLayout>
 
@@ -122,6 +126,7 @@
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="40px"
                     android:hint="填写日薪(不低于300元)"
+                    android:inputType="phone"
                     android:id="@+id/fee"/>
 
                 <TextView
@@ -145,6 +150,7 @@
                     style="@style/edit_personal_edit"
                     android:hint=""
                     android:id="@+id/days"
+                    android:inputType="phone"
                     android:layout_marginRight="50px"/>
 
                 <TextView
@@ -169,6 +175,7 @@
                     style="@style/edit_personal_edit"
                     android:layout_marginRight="60px"
                     android:textColor="@color/nav_gray"
+                    android:id="@+id/time"
                     android:text="到时间自动取消，工费退款到余额"/>
 
                 <ImageView

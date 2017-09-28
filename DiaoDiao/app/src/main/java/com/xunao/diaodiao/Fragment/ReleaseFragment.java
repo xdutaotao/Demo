@@ -172,41 +172,45 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        int status = ShareUtils.getValue(STATUS, 0);
-        if (status != 1){
-            if (status == 4){
-                SpannableString string = new SpannableString("请先完善资料后才能 发布/接单");
-                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-                string.setSpan(span, 10, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                new IOSDialog(getContext()).builder()
-                        .setMsg(string.toString())
-                        .setNegativeButton("稍后再说", null)
-                        .setPositiveButton("去完善", v1 -> {
-                            int type = ShareUtils.getValue(TYPE_KEY, 0);
-                            if (type == 1){
-                                EditCompanyActivity.startActivity(getContext());
-                            }else if (type == 2){
-                                EditSkillActivity.startActivity(getContext());
-                            }else{
-                                EditPersonalActivity.startActivity(getContext());
-                            }
-                        })
-                        .show();
-            }else{
-                SpannableString string = new SpannableString("审核通过后才能 发布/接单");
-                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-                string.setSpan(span, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                new IOSDialog(getContext()).builder()
-                        .setMsg(string.toString())
-                        .setNegativeButton("稍后再说", null)
-                        .setPositiveButton("去完善", null)
-                        .show();
-            }
-
-            return;
-        }
+//        int status = ShareUtils.getValue(STATUS, 0);
+//        if (status != 1){
+//            if (status == 4){
+//                SpannableString string = new SpannableString("请先完善资料后才能 发布/接单");
+//                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+//                string.setSpan(span, 10, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//                new IOSDialog(getContext()).builder()
+//                        .setMsg(string.toString())
+//                        .setNegativeButton("稍后再说", null)
+//                        .setNegativeBtnColor(R.color.nav_gray)
+//                        .setPositiveBtnColor(R.color.black)
+//                        .setPositiveButton("去完善", v1 -> {
+//                            int type = ShareUtils.getValue(TYPE_KEY, 0);
+//                            if (type == 1){
+//                                EditCompanyActivity.startActivity(getContext());
+//                            }else if (type == 2){
+//                                EditSkillActivity.startActivity(getContext());
+//                            }else{
+//                                EditPersonalActivity.startActivity(getContext());
+//                            }
+//                        })
+//                        .show();
+//            }else{
+//                SpannableString string = new SpannableString("审核通过后才能 发布/接单");
+//                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
+//                string.setSpan(span, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//                new IOSDialog(getContext()).builder()
+//                        .setMsg(string.toString())
+//                        .setNegativeButton("稍后再说", null)
+//                        .setNegativeBtnColor(R.color.nav_gray)
+//                        .setPositiveBtnColor(R.color.black)
+//                        .setPositiveButton("去完善", null)
+//                        .show();
+//            }
+//
+//            return;
+//        }
 
         switch (v.getId()) {
             case R.id.release_proj_info:

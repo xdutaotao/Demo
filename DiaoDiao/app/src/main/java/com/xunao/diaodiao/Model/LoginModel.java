@@ -56,12 +56,14 @@ import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
 import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.SignRes;
 import com.xunao.diaodiao.Bean.SkillProjDetailRes;
@@ -1754,6 +1756,31 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 项目类型
+     * @param
+     * @return
+     */
+    public Observable<ProjectTypeRes> publishOddType(){
+        String rateKey = "publishOddType";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setType(type);
+        req.setUserid(userid);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().publishOddType(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 发布项目
      * @param
      * @return
@@ -1774,6 +1801,37 @@ public class LoginModel extends BaseModel {
                 .append(req.getProject_type()).append(req.getProvince())
                 .append(req.getService_cost()).append(req.getTitle())
                 .append(req.getTotal_price()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 发布零工
+     * @param
+     * @return
+     */
+    public Observable<String> publishOdd(ReleaseSkillReq req){
+        String rateKey = "publishOdd";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getAddress()).append(req.getBuild_time())
+                .append(req.getCity()).append(req.getContact())
+                .append(req.getContact_mobile()).append(req.getDaily_wage()).append(req.getDescribe())
+                .append(req.getDistrict()).append(req.getImages()).append(req.getOdd_fee())
+                .append(req.getProject_type()).append(req.getProvince())
+                .append(req.getService_fee()).append(req.getTitle())
+                .append(req.getTotal_day()).append(req.getTotal_fee()).append(type)
                 .append(userid)
                 .append("security");
 

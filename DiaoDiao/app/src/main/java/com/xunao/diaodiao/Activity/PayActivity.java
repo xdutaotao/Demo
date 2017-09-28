@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.ReleaseProjThirdView;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -46,8 +49,16 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
     CheckBox wechat;
 
     private ReleaseProjReq req;
+    private ReleaseSkillReq skillReq;
+    private int type = 0;
 
     public static void startActivity(Context context, ReleaseProjReq req) {
+        Intent intent = new Intent(context, PayActivity.class);
+        intent.putExtra(INTENT_KEY, req);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseSkillReq req) {
         Intent intent = new Intent(context, PayActivity.class);
         intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
@@ -62,8 +73,17 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "支付");
-        req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
-        fee.setText("￥" + req.getTotal_price());
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (type == 1){
+            //暖通公司
+            req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
+            fee.setText("￥" + req.getTotal_price());
+        }else if (type == 2){
+            skillReq = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
+            fee.setText("￥" + skillReq.getTotal_fee());
+        }
+
+
         pay.setOnClickListener(this);
         current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
@@ -75,7 +95,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                presenter.publishProject(this, req);
+                if (type == 1){
+                    presenter.publishProject(this, req);
+                }else{
+                    presenter.publishOdd(this, skillReq);
+                }
+
                 break;
         }
     }
@@ -90,7 +115,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
                 })
                 .setPositiveBtnColor(R.color.light_blank)
                 .setPositiveButton("查看订单", v1 -> {
-
+                    finish();
                 })
                 .show();
     }

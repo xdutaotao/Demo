@@ -3,24 +3,32 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.GetPercentRes;
+import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Present.ReleaseSkillPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseSkillView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
@@ -31,7 +39,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.TimePicker;
 import rx.Observable;
+
+import static com.xunao.diaodiao.Common.Constants.latData;
+import static com.xunao.diaodiao.Common.Constants.lngData;
 
 /**
  * create by
@@ -44,8 +57,6 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.information)
-    EditText information;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.next)
@@ -53,11 +64,11 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     @BindView(R.id.title)
     EditText title;
     @BindView(R.id.address)
-    EditText address;
+    TextView address;
     @BindView(R.id.address_detail)
     EditText addressDetail;
     @BindView(R.id.project_type)
-    EditText projectType;
+    TextView projectType;
     @BindView(R.id.contact)
     EditText contact;
     @BindView(R.id.phone)
@@ -72,6 +83,10 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     EditText content;
     @BindView(R.id.content_num)
     TextView contentNum;
+    @BindView(R.id.time)
+    TextView time;
+    @BindView(R.id.project_type_layout)
+    RelativeLayout projectTypeLayout;
 
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
@@ -82,7 +97,11 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     private static final int IMAGE_PICKER = 8888;
 
     private RecyclerArrayAdapter<String> adapter;
+    private StringBuilder timeLong;
+    private String percent;
 
+    private RecyclerArrayAdapter<ProjectTypeRes.TypeBean> textAdapter;
+    private CustomPopWindow popWindow;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
@@ -98,6 +117,27 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "发布零工信息");
+
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 200) {
+                    content.setText(s.subSequence(0, 200));
+                } else {
+                    contentNum.setText(content.getText().length() + " / 200");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -128,10 +168,35 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         adapter.add(ADD);
         recyclerView.setAdapter(adapter);
 
+        textAdapter = new RecyclerArrayAdapter<ProjectTypeRes.TypeBean>(this, R.layout.single_recycler_item_pop) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, ProjectTypeRes.TypeBean s) {
+                baseViewHolder.setText(R.id.text, s.getName());
+            }
+        };
+
+        textAdapter.setOnItemClickListener((view, i) -> {
+            popWindow.dissmiss();
+            projectType.setText(textAdapter.getAllData().get(i).getName());
+        });
 
         next.setOnClickListener(this);
-
+        projTimeLayout.setOnClickListener(this);
+        projectTypeLayout.setOnClickListener(this);
         initImagePicker();
+        presenter.getPercent(this);
+        presenter.publishOddType();
+    }
+
+    @Override
+    public void getData(GetPercentRes res) {
+        percent = res.getPercent();
+    }
+
+    @Override
+    public void getProjectType(ProjectTypeRes res) {
+        if (res != null)
+            textAdapter.addAll(res.getTypes());
     }
 
     private void initImagePicker() {
@@ -186,12 +251,128 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.next:
+                if (TextUtils.isEmpty(title.getText())) {
+                    ToastUtil.show("标题不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(projectType.getText())) {
+                    ToastUtil.show("类型不能为空");
+                    return;
+                }
+
+//                if (TextUtils.isEmpty(address.getText())){
+//                    ToastUtil.show("选择地区");
+//                    return;
+//                }
+
+                if (TextUtils.isEmpty(addressDetail.getText())) {
+                    ToastUtil.show("地址不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(contact.getText())) {
+                    ToastUtil.show("联系人不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(phone.getText())) {
+                    ToastUtil.show("联系人电话不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(fee.getText())) {
+                    ToastUtil.show("施工时间不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(days.getText())) {
+                    ToastUtil.show("施工时间不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(time.getText())) {
+                    ToastUtil.show("施工时间不能为空");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(content.getText())) {
+                    ToastUtil.show("描述不能为空");
+                    return;
+                }
+
+                if (pathList.size() == 0) {
+                    ToastUtil.show("图纸不能为空");
+                    return;
+                }
                 ReleaseSkillReq req = new ReleaseSkillReq();
-                
+                req.setTitle(title.getText().toString());
+                req.setProvince(1);
+                req.setCity(2);
+                req.setDistrict(3);
+                req.setAddress(addressDetail.getText().toString());
+                req.setProject_type(projectType.getText().toString());
+                req.setContact(contact.getText().toString());
+                req.setContact_mobile(phone.getText().toString());
+                req.setDaily_wage(fee.getText().toString());
+                req.setTotal_day(days.getText().toString());
+                req.setBuild_time(Utils.convert2long(time.getText().toString()));
+                req.setDescribe(content.getText().toString());
+                int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
+                req.setOdd_fee(String.valueOf(oddFee));
+                if (!TextUtils.isEmpty(percent)) {
+                    float serviceFee = oddFee / Integer.valueOf(percent);
+                    req.setService_fee(String.valueOf(serviceFee));
+
+                    req.setTotal_fee(String.valueOf(oddFee + serviceFee));
+                }
+                req.setImages(pathList);
+                ReleaseSkillSecondActivity.startActivity(this, req);
+                break;
+
+            case R.id.proj_time_layout:
+                DatePicker datePicker = new DatePicker(this);
+                datePicker.show();
+
+                TimePicker timePicker = new TimePicker(this);
+
+                timeLong = new StringBuilder();
+                datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                    @Override
+                    public void onDatePicked(String year, String month, String day) {
+                        //ToastUtil.show(year+month+day);
+                        timeLong.append(year + "-")
+                                .append(month + "-")
+                                .append(day);
+
+                        timePicker.show();
+                        timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+                            @Override
+                            public void onTimePicked(String hour, String minute) {
+                                timeLong.append(" " + hour + ":")
+                                        .append(minute);
+
+                                time.setText(timeLong.toString());
+                            }
+                        });
+
+                    }
+                });
+                break;
+
+            case R.id.project_type_layout:
+                showPop();
                 break;
         }
+    }
+
+    private void showPop(){
+        View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
+        RecyclerView popRecyclerView = (RecyclerView) popView.findViewById(R.id.recycler_view);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        popRecyclerView.setLayoutManager(manager);
+        popRecyclerView.setAdapter(textAdapter);
     }
 
 
