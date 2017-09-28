@@ -136,9 +136,14 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
 //                ProjectDetailActivity.startActivity(FindProjectActivity.this,
 //                        adapter.getAllData().get(i).getId(), type);
-                WebViewActivity.startActivity(FindProjectActivity.this,
-                        "home_proj_detail.html",
-                        adapter.getAllData().get(i).getId(), type);
+
+//                WebViewActivity.startActivity(FindProjectActivity.this,
+//                        "home_proj_detail.html",
+//                        adapter.getAllData().get(i).getId(), type);
+                //presenter.projectDetail(this, adapter.getAllData().get(i).getId(), 0);
+
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+
             } else {
                 LoginActivity.startActivity(FindProjectActivity.this);
             }
@@ -243,6 +248,12 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     public void getNoMore(String msg) {
         ToastUtil.show(msg);
         adapter.stopMore();
+    }
+
+    @Override
+    public void getUrl(String url) {
+        if (!TextUtils.isEmpty(url))
+            WebViewActivity.startActivity(FindProjectActivity.this, url);
     }
 
     @Override

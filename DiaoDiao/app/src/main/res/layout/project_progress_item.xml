@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:minHeight="200px"
     android:maxHeight="500px"
-    android:paddingLeft="50px"
+    android:paddingLeft="20px"
     android:paddingRight="50px"
     android:background="@color/activity_background">
 
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white"
-        android:padding="50px"
+        android:padding="20px"
         android:layout_marginTop="50px"
         android:layout_marginLeft="50px">
 
@@ -55,7 +55,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="200px"
+            android:layout_height="wrap_content"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="4"
             android:id="@+id/recycler_view_item"
@@ -67,6 +67,7 @@
             android:gravity="center_vertical"
             android:text="通过后将工钱款汇入零工账号"
             android:visibility="gone"
+            android:textColor="@color/nav_gray"
             android:id="@+id/content"/>
     </LinearLayout>
 

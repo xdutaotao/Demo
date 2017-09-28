@@ -168,6 +168,8 @@ public interface RetrofitService {
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindProjectRes>> getProjectList(@Body RequestBody body);
 
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<String>> projectDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindProjDetailRes>> getFindProjDetail(@Body RequestBody body);

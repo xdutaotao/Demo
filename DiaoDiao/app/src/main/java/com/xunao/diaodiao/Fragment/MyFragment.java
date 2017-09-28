@@ -139,7 +139,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             login.setVisibility(View.VISIBLE);
             moneyText.setText("- / -");
             bankText.setText("- / -");
-            Glide.with(this).load(R.drawable.head_icon_boby)
+            Glide.with(this).load(R.drawable.weidenglu)
                     .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         }
 
@@ -157,7 +157,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     public void getData(MyBean data) {
         //name.setText(data.getName());
         path = data.getHead_img();
-        Glide.with(this).load(path).placeholder(R.drawable.head_icon_boby)
+        Glide.with(this).load(path).placeholder(R.drawable.weidenglu)
                 .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");

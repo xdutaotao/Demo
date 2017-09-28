@@ -83,7 +83,8 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage());
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    //OrderProjProgressActivity.startActivity(OrderSkillTabFragment.this.getContext());
+                    OrderSkillCompDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                            homeBean.getOdd_id());
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {

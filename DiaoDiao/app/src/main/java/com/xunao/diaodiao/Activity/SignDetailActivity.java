@@ -95,7 +95,14 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, SignRes.SignBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+
+                itemAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
+                    @Override
+                    protected void convert(BaseViewHolder baseViewHolder, String s) {
+                        baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
+                    }
+                };
+
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
@@ -157,13 +164,6 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
 
         }
 
-
-        itemAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
-            }
-        };
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);

@@ -83,6 +83,7 @@ public class AppealActivity extends BaseActivity implements AppealView {
         context.startActivity(intent);
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,20 +128,6 @@ public class AppealActivity extends BaseActivity implements AppealView {
                 });
             }
         };
-
-        adapter.setOnItemClickListener((view, i) -> {
-            String skillItem = adapter.getAllData().get(i);
-            if (skillsName.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsName.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsName.add(skillItem);
-            }
-
-        });
 
 
         imageAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {

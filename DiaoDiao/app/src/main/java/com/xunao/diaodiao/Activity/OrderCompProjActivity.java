@@ -87,12 +87,14 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        showToolbarBack(toolBar, titleText, "零工信息");
+
         type = ShareUtils.getValue(TYPE_KEY, 0);
         if (type == COMPANY_TYPE){
             showToolbarBack(toolBar, titleText, "项目信息");
         }else if (type == SKILL_TYPE){
             who = getIntent().getIntExtra("WHO", 0);
-            if (who == SKILL_RECIEVE_LINGGONG){
+            if (who == SKILL_RELEASE_LINGGONG){
                 showToolbarBack(toolBar, titleText, "我发布的-零工信息");
             }else if (who == SKILL_RECIEVE_LINGGONG){
                 showToolbarBack(toolBar, titleText, "我接的-零工信息");

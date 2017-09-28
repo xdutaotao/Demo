@@ -51,7 +51,7 @@ import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
- * 审核
+ * 审核 项目进度
  * create by
  */
 public class SkillProjProgressActivity extends BaseActivity implements SkillProjProgressView {
@@ -86,11 +86,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    //工作ID
     private int worksid;
     private int workid;
     private EditText postRemark;
     private int stage = 0;
     private int who;
+    private boolean canPost = true;
+    private SkillProjProgPhotoRes.InfoBean noPassInfoBean;
 
     public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
@@ -118,7 +121,13 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             @Override
             protected void convert(BaseViewHolder baseViewHolder, SkillProjProgPhotoRes.InfoBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                itemAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
+                    @Override
+                    protected void convert(BaseViewHolder baseViewHolder, String s) {
+                        baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
+                    }
+                };
+
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
@@ -128,11 +137,27 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
                     workid = s.getWork_id();
                 }
+                if (!TextUtils.isEmpty(s.getRemark())){
+                    baseViewHolder.setVisible(R.id.remark, true);
+                    baseViewHolder.setText(R.id.remark, s.getRemark());
+                }
+
+                if (s.getAudit_status() == 3){
+                    //审核中
+                    canPost = false;
+                }else if (s.getAudit_status() == 2){
+                    //审核不通过
+                    bottomBtnLayout.setVisibility(View.VISIBLE);
+                    post.setVisibility(View.GONE);
+                    noPass.setText("电话申诉");
+                    pass.setText("再次提交");
+                    adapter.removeAllFooter();
+                    noPassInfoBean = s;
+                }
             }
         };
 
         if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
-            post.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);
 
             adapter.addFooter(new DefaultRecyclerViewItem() {
@@ -160,44 +185,35 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             });
 
         }else {
-            adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-                @Override
-                public View onCreateView(ViewGroup viewGroup) {
-                    View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
-                    RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                    recyclerViewFooter.setAdapter(footerAdapter);
-                    return view;
-                }
+            AdapterAddFooter();
 
-                @Override
-                public void onBindView(View view) {
-                    postText = (TextView) view.findViewById(R.id.post);
-                    postRemark = (EditText) view.findViewById(R.id.remark);
-                    TextView time = (TextView) view.findViewById(R.id.time);
-                    time.setText(Utils.getNowDateMonth());
-                    TextView address = (TextView) view.findViewById(R.id.address);
-                    address.setText(Constants.address);
-                    View headLine = view.findViewById(R.id.head_line);
-                    if (adapter.getAllData().size() == 0) {
-                        headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
-                    } else {
-                        headLine.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    }
-                    postText.setOnClickListener(v -> {
-                        signAction(0);
-                    });
-                }
+            //电话投诉
+            noPass.setOnClickListener(v -> {
+                Utils.startCallActivity(this, "12345678900");
             });
+
+            //再次提交
+            pass.setOnClickListener(v -> {
+//                GetMoneyReq req = new GetMoneyReq();
+//                req.setLocation(noPassInfoBean.getLocation());
+//                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+//                List<String> path = new ArrayList<>();
+//                for(String url: noPassInfoBean.getImages()){
+//                    path.add(Utils.Bitmap2StrByBase64(url));
+//                }
+//                req.setImages(path);
+//                req.setWorks_id(worksid);
+//                req.setSign_time(noPassInfoBean.getDate());
+//                req.setRemark(noPassInfoBean.getRemark());
+//                req.setAudit(noPassInfoBean.getAudit());
+//                presenter.myAcceptProjectWorkSub(this, req);
+
+                bottomBtnLayout.setVisibility(View.GONE);
+                canPost = true;
+                AdapterAddFooter();
+            });
+
         }
-
-
-
-        itemAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
-            }
-        };
 
         footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -230,10 +246,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+
+
         initImagePicker();
 
         presenter.myAcceptProjectWorkList(this,
-                getIntent().getIntExtra(INTENT_KEY, 0), workid, who);
+                getIntent().getIntExtra(INTENT_KEY, 0), worksid, who);
 
         post.setOnClickListener(v -> {
             //第一阶段 第二阶段
@@ -245,6 +263,37 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         } else {
             post.setText("第一阶段提交审核");
         }
+    }
+
+    private void AdapterAddFooter(){
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup viewGroup) {
+                View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
+                RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                recyclerViewFooter.setAdapter(footerAdapter);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View view) {
+                postText = (TextView) view.findViewById(R.id.post);
+                postRemark = (EditText) view.findViewById(R.id.remark);
+                TextView time = (TextView) view.findViewById(R.id.time);
+                time.setText(Utils.getNowDateMonth());
+                TextView address = (TextView) view.findViewById(R.id.address);
+                address.setText(Constants.address);
+                View headLine = view.findViewById(R.id.head_line);
+                if (adapter.getAllData().size() == 0) {
+                    headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
+                } else {
+                    headLine.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+                postText.setOnClickListener(v -> {
+                    signAction(0);
+                });
+            }
+        });
     }
 
     @Override
@@ -260,8 +309,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         }else{
             pass.setVisibility(View.GONE);
             noPass.setVisibility(View.GONE);
-            adapter.removeAllFooter();
-            recyclerView.showEmpty();
         }
     }
 
@@ -273,14 +320,24 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         imagePicker.setMultiMode(true);
         imagePicker.setShowCamera(false);
         imagePicker.setSelectLimit(10);
+        imagePicker.setOutPutX(100);
+        imagePicker.setOutPutY(100);
     }
 
     private void signAction(int audit) {
+        if (!canPost){
+            ToastUtil.show("上次提交，正在审核中...");
+            return;
+        }
+        if (pathList.size() ==0){
+            ToastUtil.show("请选择照片");
+            return;
+        }
         GetMoneyReq req = new GetMoneyReq();
         req.setLocation(address);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
-        req.setWorks_id(workid);
+        req.setWorks_id(worksid);
         req.setSign_time(System.currentTimeMillis());
         req.setRemark(postRemark.getText().toString());
         req.setAudit(audit);
@@ -336,6 +393,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         MenuItem item = menu.findItem(R.id.action_contact);
         if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
             item.setTitle("申诉");
+        }else{
+            item.setTitle("");
         }
         return true;
     }

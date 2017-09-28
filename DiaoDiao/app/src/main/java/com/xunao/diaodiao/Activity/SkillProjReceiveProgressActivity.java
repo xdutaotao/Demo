@@ -32,6 +32,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
+ * 项目进度
  * create by
  */
 public class SkillProjReceiveProgressActivity extends BaseActivity implements SkillProjReceiveProgressView {
@@ -205,7 +206,12 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     adapter.getAllData().get(i).getStage1() == 2 ? 2 : 1, who);
         });
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 

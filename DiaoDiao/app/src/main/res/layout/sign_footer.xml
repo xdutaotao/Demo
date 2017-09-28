@@ -15,13 +15,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <View android:layout_width="2px"
+            android:layout_height="80px"
+            android:id="@+id/head_line"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_jingdu"
-            android:layout_marginTop="80px"/>
+            android:src="@drawable/icon_jingdu"/>
 
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 
@@ -37,19 +47,20 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50px"
+            android:layout_height="60px"
             android:id="@+id/time"
-            android:paddingLeft="50px"
+            android:paddingLeft="20px"
+            android:layout_marginTop="20px"
             android:layout_marginBottom="20px"
             android:text="06-29 签到"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50px"
-            android:paddingLeft="50px"
+            android:paddingLeft="20px"
             android:id="@+id/address"
             android:drawablePadding="20px"
-            android:drawableLeft="@drawable/arrow"
+            android:drawableLeft="@drawable/icon_dizhi"
             android:layout_marginBottom="20px"
             android:text="上海"/>
 

@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20px"
+            android:layout_marginBottom="20px"
             android:paddingLeft="20px">
 
             <TextView
@@ -62,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="万科时一区"
                 android:id="@+id/address"
-                android:drawablePadding="20px"
+                android:drawablePadding="10px"
                 android:drawableLeft="@drawable/icon_dizhi"/>
 
             <TextView
@@ -75,11 +76,20 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="4"
             android:id="@+id/recycler_view_item"
             tools:listitem="@layout/select_photo_item"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/remark"
+            android:text="11111"
+            android:layout_marginLeft="20px"
+            android:layout_marginTop="20px"
+            android:textColor="@color/nav_gray"/>
     </LinearLayout>
 
 </LinearLayout>

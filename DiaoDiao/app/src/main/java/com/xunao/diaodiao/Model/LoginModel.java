@@ -100,8 +100,10 @@ import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
+import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 
@@ -866,6 +868,40 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getProjectList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  项目详情
+     */
+    public Observable<String> projectDetail(int id, int types){
+        String rateKey = "projectDetail";
+        switch (types){
+            case 0:
+                break;
+            case 1:
+                rateKey = "oddList";
+                break;
+
+            case 2:
+                rateKey = "maintenanceList";
+                break;
+        }
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setType(type);
+        req.setUserid(userid);
+        req.setVerify(sb.toString());
+
+
+        return config.getRetrofitService().projectDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -1667,11 +1703,25 @@ public class LoginModel extends BaseModel {
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
-        StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getImages()).append(req.getLocation())
-                .append(req.getProject_id())
-                .append(type).append(userid)
-                .append("security");
+        StringBuilder sb = new StringBuilder();
+        if (who == SKILL_RELEASE_LINGGONG_NO_PASS){
+            rateKey = "myPublishOddFail";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getImages()).append(req.getReason())
+                    .append(type).append(userid).append(req.getWork_id())
+                    .append("security");
+
+        }else if(who == NO_PASS){
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                    .append(req.getProject_id())
+                    .append(type).append(userid)
+                    .append("security");
+        }
+
+
+
+
 
         req.setUserid(userid);
         req.setType(type);

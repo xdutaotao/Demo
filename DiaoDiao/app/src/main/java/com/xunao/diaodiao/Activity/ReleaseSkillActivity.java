@@ -102,6 +102,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
     private RecyclerArrayAdapter<ProjectTypeRes.TypeBean> textAdapter;
     private CustomPopWindow popWindow;
+    private ProjectTypeRes res;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
@@ -195,8 +196,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
     @Override
     public void getProjectType(ProjectTypeRes res) {
-        if (res != null)
-            textAdapter.addAll(res.getTypes());
+        this.res = res;
     }
 
     private void initImagePicker() {
@@ -373,6 +373,13 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         LinearLayoutManager manager = new LinearLayoutManager(this);
         popRecyclerView.setLayoutManager(manager);
         popRecyclerView.setAdapter(textAdapter);
+        textAdapter.clear();
+        textAdapter.addAll(res.getTypes());
+
+        popWindow = new CustomPopWindow.PopupWindowBuilder(ReleaseSkillActivity.this)
+                .setView(popView)
+                .create()
+                .showAsDropDown(projectType, 0, 20);
     }
 
 

@@ -39,6 +39,8 @@ public class Constants {
     public static final int COMPANY_RELEASE_PROJECT_DONE = 6;
 
     public static final int NO_PASS = 9999;
+    public static final int SKILL_RELEASE_LINGGONG_NO_PASS = 9998;
+
 
     //----------------- separator Tag Item-----------------//
     public static final float DEFAULT_TAG_TEXT_SIZE = 18f;

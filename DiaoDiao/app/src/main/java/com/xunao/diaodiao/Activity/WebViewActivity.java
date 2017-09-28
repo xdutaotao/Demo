@@ -47,6 +47,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private boolean isCollect = false;
     private int id;
 
+    public static void startActivity(Context context, String url) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        context.startActivity(intent);
+    }
+
     public static void startActivity(Context context, String url, String id) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(INTENT_KEY, url);

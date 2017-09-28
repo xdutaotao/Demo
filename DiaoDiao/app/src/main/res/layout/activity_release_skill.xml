@@ -124,7 +124,7 @@
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:layout_marginRight="40px"
+                    android:layout_marginRight="50px"
                     android:hint="填写日薪(不低于300元)"
                     android:inputType="phone"
                     android:id="@+id/fee"/>
@@ -173,7 +173,7 @@
 
                 <TextView
                     style="@style/edit_personal_edit"
-                    android:layout_marginRight="60px"
+                    android:layout_marginRight="70px"
                     android:textColor="@color/nav_gray"
                     android:id="@+id/time"
                     android:text="到时间自动取消，工费退款到余额"/>

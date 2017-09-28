@@ -11,4 +11,5 @@ import java.util.List;
 public interface FindProjectView extends BaseView {
     void getData(FindProjectRes list);
     void getNoMore(String msg);
+    void getUrl(String url);
 }

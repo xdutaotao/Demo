@@ -99,8 +99,26 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
             @Override
             protected void convert(BaseViewHolder baseViewHolder, BankListRes.BankCard s) {
                 baseViewHolder.setText(R.id.bank_text, s.getCard_name());
-                if (selectNames.size() > 0)
+                if (selectNames.size() > 0){
                     baseViewHolder.setVisible(R.id.select, TextUtils.equals(s.getCard_name(), selectNames.get(0)));
+                    if (s.getCard_name().contains("邮政")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.zgyz);
+                    }else if (s.getCard_name().contains("招商")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.zsyh);
+                    }else if (s.getCard_name().contains("中国银行")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.zgyh);
+                    }else if(s.getCard_name().contains("中国工商")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.zggsyh);
+                    }else if(s.getCard_name().contains("银联")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.yl);
+                    }else if (s.getCard_name().contains("上海银行")){
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.shyh);
+                    }
+                    else{
+                        baseViewHolder.setImageResource(R.id.bank_icon, R.drawable.lkl);
+                    }
+                }
+
             }
         };
 
@@ -142,6 +160,10 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
     }
 
     private void postMoney(String money) {
+        if (TextUtils.isEmpty(money)){
+            ToastUtil.show("请输入金额");
+            return;
+        }
         GetCashRes res = new GetCashRes();
         res.setCash(money);
         res.setCard(bankCard.getCard());

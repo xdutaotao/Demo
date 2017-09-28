@@ -9,14 +9,19 @@
         android:layout_height="wrap_content"
         android:padding="50px">
 
+        <ImageView
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:src="@drawable/zsyh"
+            android:id="@+id/bank_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="招商银行"
-            android:id="@+id/bank_text"
-            android:drawablePadding="50px"
-            android:drawableLeft="@drawable/cancle"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100px"
+            android:id="@+id/bank_text"/>
 
         <ImageView
             android:layout_width="wrap_content"

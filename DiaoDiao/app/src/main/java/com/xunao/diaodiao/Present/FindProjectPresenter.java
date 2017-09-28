@@ -57,4 +57,20 @@ public class FindProjectPresenter extends BasePresenter<FindProjectView> {
                 }));
     }
 
+    //详情
+    public void projectDetail(Context context, int id, int type){
+        mCompositeSubscription.add(model.projectDetail(id, type)
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(String token) {
+                        getView().getUrl(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 }

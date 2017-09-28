@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Present.OrderProjProgressPresenter;
@@ -24,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
 /**
  * create by
@@ -42,6 +44,9 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     TextView pass;
     @BindView(R.id.give_money)
     TextView giveMoney;
+
+    //审核中的 work
+    private MyPublishOddWorkRes.WorkBean workBeanDoing;
 
     private RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
@@ -67,29 +72,51 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "
-                        + workBean.getRemark());
-                if (workBean.getImages() != null && workBean.getImages().size() > 0) {
-                    baseViewHolder.setVisible(R.id.recycler_view_item, true);
-                    baseViewHolder.setVisible(R.id.content, false);
-                    RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
-                    recyclerViewImages.setLayoutManager(manager);
-                    recyclerViewImages.setAdapter(imageAdapter);
-                    imageAdapter.clear();
-                    imageAdapter.addAll(workBean.getImages());
-                } else {
+
+                if (workBean.getPass() == 3){
+                    //审核中
+                    workBeanDoing = workBean;
                     baseViewHolder.setVisible(R.id.recycler_view_item, false);
                     baseViewHolder.setVisible(R.id.content, true);
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                }else if (workBean.getPass() == 2){
+                    //审核未通过
+                    baseViewHolder.setVisible(R.id.recycler_view_item, false);
+                    baseViewHolder.setVisible(R.id.content, false);
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 暖通公司未通过");
+                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                }else {
+                    //审核通过
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
+                    baseViewHolder.setVisible(R.id.recycler_view_item, true);
+                    baseViewHolder.setVisible(R.id.content, false);
+
+                    if (workBean.getImages() != null && workBean.getImages().size() > 0) {
+                        baseViewHolder.setVisible(R.id.recycler_view_item, true);
+                        baseViewHolder.setVisible(R.id.content, false);
+                        RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
+
+                        imageAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
+                            @Override
+                            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                                baseViewHolder.setImageUrl(R.id.image, s);
+                            }
+                        };
+
+                        recyclerViewImages.setAdapter(imageAdapter);
+                        imageAdapter.clear();
+                        imageAdapter.addAll(workBean.getImages());
+                    } else {
+                        baseViewHolder.setVisible(R.id.recycler_view_item, false);
+                        baseViewHolder.setVisible(R.id.content, true);
+                    }
+
                 }
+
             }
         };
 
-        imageAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setImageUrl(R.id.image, s);
-            }
-        };
+
 
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
@@ -97,15 +124,19 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         presenter.myPublishOddWorkProgress(getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
-            MyPublicOddFailReq req = new MyPublicOddFailReq();
-            req.setWork_id(0);
-            req.setReason("reason");
-            req.setImages(imageAdapter.getAllData());
-            presenter.myPublishOddFail(req);
+//            MyPublicOddFailReq req = new MyPublicOddFailReq();
+//            req.setWork_id(workBeanDoing.getWork_id());
+//            req.setReason("reason");
+//            req.setImages(imageAdapter.getAllData());
+            //presenter.myPublishOddFail(req);
+
+            GetMoneyReq req = new GetMoneyReq();
+            req.setWork_id(workBeanDoing.getWork_id());
+            AppealActivity.startActivity(this, req, SKILL_RELEASE_LINGGONG_NO_PASS);
         });
 
         giveMoney.setOnClickListener(v -> {
-            presenter.myPublishOddSuccess(0);
+            presenter.myPublishOddSuccess(workBeanDoing.getWork_id());
         });
 
 
@@ -113,7 +144,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
 
     @Override
     public void getData(MyPublishOddWorkRes res) {
-
+        adapter.addAll(res.getWork());
     }
 
     @Override
