@@ -8,7 +8,6 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Utils.Dagger.Component.ApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Module.ApplicationModule;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -103,7 +102,7 @@ public class App  extends android.support.multidex.MultiDexApplication{
         mContext = getApplicationContext();
         //SMSSDK.initSDK(this, "1d79b47d1e280", "b4cfa85b04cfee6601067e1aa9b0b5d8");
 
-        CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", false);
+        //CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", false);
 
         JMessageClient.setDebugMode(true);
         JMessageClient.init(this);

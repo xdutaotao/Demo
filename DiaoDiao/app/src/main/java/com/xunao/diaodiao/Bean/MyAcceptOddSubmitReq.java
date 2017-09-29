@@ -11,11 +11,20 @@ public class MyAcceptOddSubmitReq {
     private int userid;
     private int type;
     private int odd_id;
+    private int apply_type;
     private String remark;
     private long sign_time;
     private String location;
     private List<String> images;
     private String verify;
+
+    public int getApply_type() {
+        return apply_type;
+    }
+
+    public void setApply_type(int apply_type) {
+        this.apply_type = apply_type;
+    }
 
     public int getUserid() {
         return userid;

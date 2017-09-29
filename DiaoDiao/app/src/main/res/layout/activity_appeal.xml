@@ -17,6 +17,45 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/appeal_type"
+                android:padding="50px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申诉类型"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:id="@+id/first"
+                    android:layout_marginLeft="50px"
+                    android:layout_marginRight="50px"
+                    android:text="扣款"
+                    android:textColor="@color/nav_gray"
+                    android:drawablePadding="10px"
+                    android:drawableRight="@drawable/checkbox_style"
+                    android:layout_gravity="center_vertical"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:text="结束项目"
+                    android:textColor="@color/nav_gray"
+                    android:id="@+id/second"
+                    android:drawablePadding="10px"
+                    android:drawableRight="@drawable/checkbox_style"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <View style="@style/item_divider" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:background="@null"
-                    android:hint="请填写意见反馈"
+                    android:hint="请填写申诉原因"
                     android:textColorHint="#D2D2D2"
                     android:gravity="top"
                     android:id="@+id/content"

@@ -12,21 +12,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view_layout"
-        android:visibility="gone">
+        android:id="@+id/recycler_view_layout">
 
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycler_view"/>
+            android:id="@+id/recycler_view"
+            android:layout_marginBottom="140px"
+            tools:listitem="@layout/project_recieve_progress_item"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160px"
+            android:layout_height="140px"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottom_btn_layout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,96 +55,7 @@
     </RelativeLayout>
 
 
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="50px"
-        android:paddingRight="50px"
-        android:id="@+id/sign_layout"
-        android:background="@color/activity_background">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_jingdu"
-                android:layout_marginTop="80px"/>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white"
-            android:paddingLeft="20px"
-            android:layout_marginTop="50px"
-            android:layout_marginLeft="50px">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50px"
-                android:id="@+id/time"
-                android:layout_marginBottom="20px"
-                android:text="06-29 签到"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50px"
-                android:id="@+id/address"
-                android:drawablePadding="20px"
-                android:drawableLeft="@drawable/arrow"
-                android:layout_marginBottom="20px"
-                android:text="上海"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                app:spanCount="4"
-                android:id="@+id/recycler_view_image"
-                tools:listitem="@layout/select_photo_item"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="50px"
-                android:layout_marginBottom="50px">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="仅提交"
-                    android:id="@+id/post"
-                    android:textColor="@color/colorAccent"
-                    android:gravity="center"
-                    android:layout_marginRight="50px"
-                    android:background="@drawable/btn02"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="申请打款"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:id="@+id/apply_money"
-                    android:background="@drawable/btn_code"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
 
 

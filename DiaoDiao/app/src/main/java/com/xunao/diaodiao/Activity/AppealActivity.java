@@ -10,8 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -38,11 +42,12 @@ import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
 /**
  * create by
  */
-public class AppealActivity extends BaseActivity implements AppealView {
+public class AppealActivity extends BaseActivity implements AppealView, CompoundButton.OnCheckedChangeListener {
 
     @Inject
     AppealPresenter presenter;
@@ -62,6 +67,12 @@ public class AppealActivity extends BaseActivity implements AppealView {
     TextView contentNum;
     @BindView(R.id.reason)
     TextView reason;
+    @BindView(R.id.first)
+    CheckBox first;
+    @BindView(R.id.second)
+    CheckBox second;
+    @BindView(R.id.appeal_type)
+    LinearLayout appealType;
 
     private RecyclerArrayAdapter<String> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
@@ -94,12 +105,16 @@ public class AppealActivity extends BaseActivity implements AppealView {
 
         req = (GetMoneyReq) getIntent().getSerializableExtra(INTENT_KEY);
         who = getIntent().getIntExtra("WHO", 0);
-        if (who == NO_PASS) {
+        if (who == SKILL_RELEASE_LINGGONG_NO_PASS) {
             showToolbarBack(toolBar, titleText, "输入不通过原因");
             post.setText("提交审核");
             reason.setText("不通过的原因");
-        } else {
+            appealType.setVisibility(View.GONE);
+        } else if (who == NO_PASS){
             showToolbarBack(toolBar, titleText, "申诉");
+            appealType.setVisibility(View.VISIBLE);
+            first.setOnCheckedChangeListener(this);
+            second.setOnCheckedChangeListener(this);
         }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
@@ -177,7 +192,13 @@ public class AppealActivity extends BaseActivity implements AppealView {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                contentNum.setText(s.length() + " / 200");
+                if (s.length() > 200){
+                    content.setText(s.subSequence(0, 200));
+                    contentNum.setText("200 / 200");
+                }else{
+                    contentNum.setText(s.length() + " / 200");
+                }
+
             }
 
             @Override
@@ -192,11 +213,38 @@ public class AppealActivity extends BaseActivity implements AppealView {
                 return;
             }
 
-            req.setReason(content.getText().toString());
+            if (who == NO_PASS){
+                req.setContent(content.getText().toString());
+
+            }else if (who == SKILL_RELEASE_LINGGONG_NO_PASS){
+                req.setReason(content.getText().toString());
+            }
+
             req.setImages(pathList);
 
             presenter.myProjectWorkFail(AppealActivity.this, req, who);
         });
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isChecked){
+            return;
+        }
+
+        switch (buttonView.getId()){
+            case R.id.first:
+                first.setChecked(isChecked);
+                second.setChecked(!isChecked);
+                break;
+
+            case R.id.second:
+                first.setChecked(!isChecked);
+                second.setChecked(isChecked);
+                break;
+        }
+        req.setAppeal_operate(buttonView.getText().toString());
 
     }
 
@@ -264,6 +312,7 @@ public class AppealActivity extends BaseActivity implements AppealView {
         super.onDestroy();
         presenter.detachView();
     }
+
 
 
 }

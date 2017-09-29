@@ -1458,7 +1458,7 @@ public class LoginModel extends BaseModel {
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+        sb.append(time+"").append(req.getApply_type()).append(req.getImages()).append(req.getLocation())
                 .append(req.getOdd_id()).append(req.getSign_time())
                 .append(req.getRemark()).append(type).append(userid)
                 .append("security");

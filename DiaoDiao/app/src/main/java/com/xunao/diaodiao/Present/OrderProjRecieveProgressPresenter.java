@@ -21,6 +21,7 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
     OrderProjRecieveProgressPresenter() {
     }
 
+    //进度列表
     public void myAcceptOddWork(int page){
         mCompositeSubscription.add(model.myAcceptOddWork(page)
                 .subscribe(new RxSubUtils<MyPublishOddWorkRes>(mCompositeSubscription) {
@@ -36,6 +37,7 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
                 }));
     }
 
+    //提交进度
     public void myAcceptOddSubmit(MyAcceptOddSubmitReq page){
         mCompositeSubscription.add(model.myAcceptOddSubmit(page)
                 .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
