@@ -30,16 +30,16 @@ public class GlideImageLoader implements ImageLoader {
                 .into(imageView);
     }
 
-    @Override
-    public void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height) {
-        Glide.with(activity)
-                .load(Uri.fromFile(new File(path)))
-                .override(width, height)//
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(imageView);
-    }
+//    @Override
+//    public void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height) {
+//        Glide.with(activity)
+//                .load(Uri.fromFile(new File(path)))
+//                .override(width, height)//
+//                .centerCrop()
+//                .skipMemoryCache(true)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .into(imageView);
+//    }
 
     @Override
     public void clearMemoryCache() {

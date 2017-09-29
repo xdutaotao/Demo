@@ -5,8 +5,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="50px"
-    android:paddingRight="50px"
+    android:paddingLeft="40px"
+    android:paddingRight="20px"
     android:id="@+id/sign_layout"
     android:background="@color/activity_background">
 
@@ -15,13 +15,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <View android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_jingdu"
-            android:layout_marginTop="80px"/>
+            android:src="@drawable/icon_jingdu"/>
 
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 

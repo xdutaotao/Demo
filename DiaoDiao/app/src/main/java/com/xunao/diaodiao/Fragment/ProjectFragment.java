@@ -105,6 +105,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
         hideToolbarBack(toolBar, titleText, "项目");
 
+        type = ShareUtils.getValue("TYPE", 0);
+
         adapter = new RecyclerArrayAdapter<HomeProjBean>(getContext(), R.layout.project_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeProjBean s) {
@@ -176,9 +178,9 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                     break;
 
                 case 2:
-                    if (type == 0){
+                    if (type == COMPANY_TYPE){
 
-                    }else{
+                    }else if(type == SKILL_TYPE){
                         ReleaseSKillTypeActivity.startActivity(getContext());
                     }
 
@@ -192,7 +194,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
         List<HomeProjBean> list = new ArrayList<>();
 
-        switch (ShareUtils.getValue("TYPE", 1)) {
+        switch (type) {
             case SKILL_TYPE:
             case COMPANY_TYPE:
                 for (int i = 0; i < COMPANY_IMAGES.length; i++) {

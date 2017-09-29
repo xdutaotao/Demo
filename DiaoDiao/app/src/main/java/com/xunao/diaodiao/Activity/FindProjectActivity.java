@@ -142,7 +142,8 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 //                        adapter.getAllData().get(i).getId(), type);
                 //presenter.projectDetail(this, adapter.getAllData().get(i).getId(), 0);
 
-                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
 
             } else {
                 LoginActivity.startActivity(FindProjectActivity.this);

@@ -56,9 +56,9 @@ public class OrderProjProgressPresenter extends BasePresenter<OrderProjProgressV
 
     public void myPublishOddFail(MyPublicOddFailReq page){
         mCompositeSubscription.add(model.myPublishOddFail(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().giveMoney(token);
                     }
 

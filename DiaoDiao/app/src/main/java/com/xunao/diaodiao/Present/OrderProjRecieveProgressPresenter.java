@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Present;
 
+import android.content.Context;
+
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
@@ -38,11 +40,11 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
     }
 
     //提交进度
-    public void myAcceptOddSubmit(MyAcceptOddSubmitReq page){
+    public void myAcceptOddSubmit(Context context, MyAcceptOddSubmitReq page){
         mCompositeSubscription.add(model.myAcceptOddSubmit(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().passData(token);
                     }
 
@@ -54,19 +56,19 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
     }
 
 
-    public void myPublishOddFail(MyPublicOddFailReq page){
-        mCompositeSubscription.add(model.myPublishOddFail(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
-                    @Override
-                    protected void _onNext(String token) {
-                        getView().giveMoney(token);
-                    }
-
-                    @Override
-                    public void _onError(String s) {
-                        getView().onFailure();
-                    }
-                }));
-    }
+//    public void myPublishOddFail(MyPublicOddFailReq page){
+//        mCompositeSubscription.add(model.myPublishOddFail(page)
+//                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+//                    @Override
+//                    protected void _onNext(String token) {
+//                        getView().giveMoney(token);
+//                    }
+//
+//                    @Override
+//                    public void _onError(String s) {
+//                        getView().onFailure();
+//                    }
+//                }));
+//    }
 
 }

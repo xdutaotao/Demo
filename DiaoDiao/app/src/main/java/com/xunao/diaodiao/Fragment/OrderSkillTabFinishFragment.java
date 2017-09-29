@@ -10,6 +10,7 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -93,10 +94,14 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
             }
         };
 
-//        adapter.setOnItemClickListener((v, i) -> {
+        adapter.setOnItemClickListener((v, i) -> {
 //            OrderSkillCompDetailActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
 //                    adapter.getAllData().get(i).getOdd_id());
-//        });
+
+            WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                    adapter.getAllData().get(i).getUrl(),
+                    adapter.getAllData().get(i).getOdd_id());
+        });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
         onRefresh();

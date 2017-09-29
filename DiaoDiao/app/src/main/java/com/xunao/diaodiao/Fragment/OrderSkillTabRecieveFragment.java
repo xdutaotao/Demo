@@ -12,6 +12,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -104,27 +105,28 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 
 
                 });
-
-                baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
-                    //RecommandActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext());
-                });
-
-                baseViewHolder.setOnClickListener(R.id.distance, v -> {
-                    //ApplyActivity.startActivity(OrderCompTabFragment.this.getContext());
-                });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
 
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
-                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getOdd_id());
-            }else if(who == Constants.SKILL_RECIEVE_PROJECT){
-                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getProject_id());
-            }
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getOdd_id());
 
+                WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+
+
+            }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getProject_id());
+
+                WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_PROJ_DETAIL);
+            }
 
         });
 

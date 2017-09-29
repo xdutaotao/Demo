@@ -13,6 +13,7 @@ import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -30,7 +31,7 @@ import butterknife.Unbinder;
 
 
 /**
- * Description:
+ * Description: 技术人员 我发布 零工 待确认
  * Created by guzhenfu on 2017/8/19.
  */
 
@@ -82,24 +83,17 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage());
 
-                baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    OrderSkillCompDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                            homeBean.getOdd_id());
-                });
-
-                baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
-                    //RecommandActivity.startActivity(OrderSkillTabFragment.this.getContext());
-                });
-
-                baseViewHolder.setOnClickListener(R.id.distance, v -> {
-                    //ApplyActivity.startActivity(OrderCompTabFragment.this.getContext());
-                });
+//                baseViewHolder.setOnClickListener(R.id.request, v -> {
+//                    OrderSkillCompDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+//                            homeBean.getOdd_id());
+//                });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            OrderSkillCompDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                    adapter.getAllData().get(i).getOdd_id());
+            WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                    adapter.getAllData().get(i).getUrl(),
+                    adapter.getAllData().get(i).getOdd_id(), WebViewActivity.LG_DETAIL);
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);

@@ -56,7 +56,7 @@ public class ReleaseSKillTypeActivity extends BaseActivity implements ReleaseSKi
 
         myGet.setOnClickListener(v -> {
             //        1 我接的
-            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_LINGGONG);
+            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RECIEVE_LINGGONG);
         });
     }
 

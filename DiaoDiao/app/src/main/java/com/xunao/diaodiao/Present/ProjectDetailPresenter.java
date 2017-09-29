@@ -62,9 +62,9 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
     //申请项目
     public void postProject(Context context, int id, int type){
         mCompositeSubscription.add(model.postProject(id, type)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().postProject(token);
                     }
 

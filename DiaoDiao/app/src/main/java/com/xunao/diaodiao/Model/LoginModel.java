@@ -928,7 +928,7 @@ public class LoginModel extends BaseModel {
     }
 
     //申请项目
-    public Observable<String> postProject(int id, int types){
+    public Observable<Object> postProject(int id, int types){
         String rateKey = "applyProject";
         if (types == 0){
 
@@ -1379,7 +1379,7 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我发布的 零工 进行中 付款
      */
-    public Observable<String> myPublishOddFail(MyPublicOddFailReq req){
+    public Observable<Object> myPublishOddFail(MyPublicOddFailReq req){
         String rateKey = "myPublishOddFail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
@@ -1450,7 +1450,7 @@ public class LoginModel extends BaseModel {
     }
 
 
-    public Observable<String> myAcceptOddSubmit(MyAcceptOddSubmitReq req){
+    public Observable<Object> myAcceptOddSubmit(MyAcceptOddSubmitReq req){
         String rateKey = "myAcceptOddSubmit";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());

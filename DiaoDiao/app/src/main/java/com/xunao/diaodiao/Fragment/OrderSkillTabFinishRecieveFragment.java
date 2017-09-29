@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -103,6 +104,28 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 }
             }
         };
+
+        adapter.setOnItemClickListener((v, i) -> {
+
+            if (who == Constants.SKILL_RECIEVE_LINGGONG){
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getOdd_id());
+
+                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+
+
+            }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getProject_id());
+
+                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id());
+            }
+
+        });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
         onRefresh();

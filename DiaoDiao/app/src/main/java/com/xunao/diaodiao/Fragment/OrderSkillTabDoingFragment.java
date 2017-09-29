@@ -13,6 +13,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -30,7 +31,7 @@ import butterknife.Unbinder;
 
 
 /**
- * Description:
+ * Description: 我发布的零工 进行中
  * Created by guzhenfu on 2017/8/19.
  */
 
@@ -83,11 +84,17 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                 if (!TextUtils.isEmpty(homeBean.getTotal_day()))
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                            homeBean.getOdd_id());
+                });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+            WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                    adapter.getAllData().get(i).getUrl(),
                     adapter.getAllData().get(i).getOdd_id());
         });
 

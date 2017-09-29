@@ -115,6 +115,15 @@ public class HomeResponseBean {
         private String distance;
         private String type;
         private String price;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getId() {
             return id;

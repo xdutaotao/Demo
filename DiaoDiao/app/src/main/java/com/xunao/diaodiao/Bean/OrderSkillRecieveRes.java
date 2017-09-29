@@ -39,6 +39,15 @@ public class OrderSkillRecieveRes {
         private int apply_time;
         private int project_id;
         private String project_price;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getOdd_id() {
             return odd_id;

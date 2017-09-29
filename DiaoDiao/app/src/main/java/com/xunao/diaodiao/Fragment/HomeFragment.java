@@ -205,6 +205,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             }
         };
 
+        adapter.setOnItemClickListener((view1, i) -> {
+            WebViewActivity.startActivity(HomeFragment.this.getContext(), adapter.getAllData().get(i).getUrl(),
+                    adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+        });
+
         adapterSkill = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
@@ -216,6 +221,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.price, s.getPrice());
             }
         };
+
+        adapterSkill.setOnItemClickListener((view1, i) -> {
+            WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterSkill.getAllData().get(i).getUrl(),
+                    adapterSkill.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+        });
 
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
             @Override
@@ -229,8 +239,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             }
         };
 
-
-        adapter.setOnItemClickListener((view1, i) -> {
+        adapterList.setOnItemClickListener((view1, i) -> {
+            WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterList.getAllData().get(i).getUrl(),
+                    adapterList.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
         });
 
         recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()) {

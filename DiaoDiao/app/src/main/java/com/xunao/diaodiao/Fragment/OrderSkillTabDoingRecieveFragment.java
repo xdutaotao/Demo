@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -99,9 +100,11 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                        //技术人员 我接的 零工
                         OrderProjRecieveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getOdd_id());
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                        //技术人员 我接的  项目
                         SkillProjReceiveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getProject_id(), who);
                     }
@@ -114,11 +117,21 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
         adapter.setOnItemClickListener((v, i) -> {
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
-                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getOdd_id());
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getOdd_id());
+
+                WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+
             }else if (who == Constants.SKILL_RECIEVE_PROJECT){
-                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getProject_id());
+//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getProject_id());
+
+                WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.HOME_DETAIL);
+
             }
 
 

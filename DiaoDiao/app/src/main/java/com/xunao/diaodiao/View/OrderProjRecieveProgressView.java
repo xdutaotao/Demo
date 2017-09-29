@@ -7,7 +7,7 @@ import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
  */
 public interface OrderProjRecieveProgressView extends BaseView {
     void getData(MyPublishOddWorkRes res);
-    void passData(String s);
+    void passData(Object s);
     void giveMoney(String s);
 
 }

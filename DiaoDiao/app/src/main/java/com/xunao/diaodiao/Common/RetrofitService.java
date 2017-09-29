@@ -175,7 +175,7 @@ public interface RetrofitService {
     Observable<BaseBean<FindProjDetailRes>> getFindProjDetail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> postProject(@Body RequestBody body);
+    Observable<BaseBean<Object>> postProject(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> collectWork(@Body RequestBody body);
@@ -229,12 +229,12 @@ public interface RetrofitService {
 
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myAcceptOddSubmit(@Body RequestBody body);
+    Observable<BaseBean<Object>> myAcceptOddSubmit(@Body RequestBody body);
 
 
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myPublishOddFail(@Body RequestBody body);
+    Observable<BaseBean<Object>> myPublishOddFail(@Body RequestBody body);
 
 
     @POST(ApiConstants.BASE_URL_INDEX)

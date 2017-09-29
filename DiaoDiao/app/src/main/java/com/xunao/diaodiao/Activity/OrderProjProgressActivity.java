@@ -28,6 +28,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
 /**
+ * 我发布的零工信息
  * create by
  */
 public class OrderProjProgressActivity extends BaseActivity implements OrderProjProgressView {
@@ -76,41 +77,34 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                 if (workBean.getPass() == 3){
                     //审核中
                     workBeanDoing = workBean;
-                    baseViewHolder.setVisible(R.id.recycler_view_item, false);
-                    baseViewHolder.setVisible(R.id.content, true);
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
                 }else if (workBean.getPass() == 2){
                     //审核未通过
-                    baseViewHolder.setVisible(R.id.recycler_view_item, false);
-                    baseViewHolder.setVisible(R.id.content, false);
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 暖通公司未通过");
-                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 暖通公司未通过");
+                    //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
                 }else {
                     //审核通过
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
-                    baseViewHolder.setVisible(R.id.recycler_view_item, true);
-                    baseViewHolder.setVisible(R.id.content, false);
+                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
+                }
 
-                    if (workBean.getImages() != null && workBean.getImages().size() > 0) {
-                        baseViewHolder.setVisible(R.id.recycler_view_item, true);
-                        baseViewHolder.setVisible(R.id.content, false);
-                        RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "+workBean.getLocation());
+                baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " "+workBean.getRemark());
 
-                        imageAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
-                            @Override
-                            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                                baseViewHolder.setImageUrl(R.id.image, s);
-                            }
-                        };
+                if (workBean.getImages() != null && workBean.getImages().size() > 0) {
+                    RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
 
-                        recyclerViewImages.setAdapter(imageAdapter);
-                        imageAdapter.clear();
-                        imageAdapter.addAll(workBean.getImages());
-                    } else {
-                        baseViewHolder.setVisible(R.id.recycler_view_item, false);
-                        baseViewHolder.setVisible(R.id.content, true);
-                    }
+                    imageAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
+                        @Override
+                        protected void convert(BaseViewHolder baseViewHolder, String s) {
+                            baseViewHolder.setImageUrl(R.id.image, s, R.drawable.zhanwei);
+                        }
+                    };
 
+                    recyclerViewImages.setAdapter(imageAdapter);
+                    imageAdapter.clear();
+                    imageAdapter.addAll(workBean.getImages());
+                } else {
+                    baseViewHolder.setVisible(R.id.recycler_view_item, false);
                 }
 
             }
@@ -154,7 +148,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     }
 
     @Override
-    public void giveMoney(String s) {
+    public void giveMoney(Object s) {
         ToastUtil.show("审核通过");
         finish();
     }

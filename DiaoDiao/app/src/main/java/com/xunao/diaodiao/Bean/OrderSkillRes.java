@@ -27,6 +27,15 @@ public class OrderSkillRes {
         private String total_day;
         private String daily_wage;
         private int apply_count;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getOdd_id() {
             return odd_id;

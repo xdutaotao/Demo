@@ -29,6 +29,15 @@ public class OrderSkillFinishRes {
         private int status;
         private int cancel_time;
         private int finish_time;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getOdd_id() {
             return odd_id;

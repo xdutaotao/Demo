@@ -153,42 +153,17 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        adapter.addFooter(new DefaultRecyclerViewItem() {
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skill_recieve_ling_footer, null);
                 RecyclerView recyclerViewImage = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-
-                signAdapter = new RecyclerArrayAdapter<String>(viewGroup.getContext(), R.layout.single_image_delete) {
-                    @Override
-                    protected void convert(BaseViewHolder baseViewHolder, String s) {
-                        if (TextUtils.equals(ADD, s)) {
-                            baseViewHolder.setVisible(R.id.delete, false);
-                            baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
-                        } else {
-                            baseViewHolder.setVisible(R.id.delete, true);
-                            baseViewHolder.setImageUrl(R.id.image, s);
-                        }
-                    }
-                };
-
-                signAdapter.setOnItemClickListener((view1, i) -> {
-                    view1.findViewById(R.id.delete).setOnClickListener(v -> {
-                        imageItems.remove(i);
-                        signAdapter.remove(i);
-                        if (!signAdapter.getAllData().contains(ADD)) {
-                            signAdapter.add(ADD);
-                        }
-                    });
-
-                    if (TextUtils.equals(signAdapter.getAllData().get(i), ADD)) {
-                        selectPhoto();
-                    }
-                });
-                signAdapter.clear();
-                signAdapter.add(ADD);
                 recyclerViewImage.setAdapter(signAdapter);
+                return view;
+            }
 
+            @Override
+            public void onBindView(View view) {
                 post = (TextView) view.findViewById(R.id.post);
                 applyMoney = (TextView) view.findViewById(R.id.apply_money);
                 post.setOnClickListener(v -> {
@@ -200,10 +175,38 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                     //申请打款
                     postProgress(1);
                 });
-
-                return view;
             }
         });
+
+        signAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                if (TextUtils.equals(ADD, s)) {
+                    baseViewHolder.setVisible(R.id.delete, false);
+                    baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
+                } else {
+                    baseViewHolder.setVisible(R.id.delete, true);
+                    baseViewHolder.setImageUrl(R.id.image, s);
+                }
+            }
+        };
+
+        signAdapter.setOnItemClickListener((view1, i) -> {
+            view1.findViewById(R.id.delete).setOnClickListener(v -> {
+                imageItems.remove(i);
+                signAdapter.remove(i);
+                if (!signAdapter.getAllData().contains(ADD)) {
+                    signAdapter.add(ADD);
+                }
+            });
+
+            if (TextUtils.equals(signAdapter.getAllData().get(i), ADD)) {
+                selectPhoto();
+            }
+        });
+        signAdapter.clear();
+        signAdapter.add(ADD);
+
 
 
 
@@ -235,7 +238,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         req.setSign_time(System.currentTimeMillis());
         req.setLocation(Constants.address);
         req.setImages(pathList);
-        presenter.myAcceptOddSubmit(req);
+        presenter.myAcceptOddSubmit(this, req);
     }
 
     private void initImagePicker() {
@@ -246,6 +249,8 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         imagePicker.setMultiMode(true);
         imagePicker.setShowCamera(false);
         imagePicker.setSelectLimit(10);
+        imagePicker.setOutPutY(100);
+        imagePicker.setOutPutX(100);
     }
 
     private void selectPhoto() {
@@ -266,7 +271,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     }
 
     @Override
-    public void passData(String s) {
+    public void passData(Object s) {
         ToastUtil.show("提交成功");
         finish();
     }

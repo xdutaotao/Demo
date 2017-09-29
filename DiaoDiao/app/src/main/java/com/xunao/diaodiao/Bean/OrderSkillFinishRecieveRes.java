@@ -40,9 +40,18 @@ public class OrderSkillFinishRecieveRes {
         private int status;
         private long cancel_time;
         private long finish_time;
+        private String url;
 
         private int project_id;
         private String project_price;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getOdd_id() {
             return odd_id;
