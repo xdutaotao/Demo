@@ -48,6 +48,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
     private RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean> adapter;
     private RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean> oddAdapter;
+    //首页type
     private int type;
     private int page = 1;
 
@@ -71,6 +72,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         type = getIntent().getIntExtra("TYPE", 0);
 
         if (type == 0){
+            //项目
             adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
@@ -81,7 +83,8 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             };
 
             recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        }else{
+        }else if(type == 2){
+            //零工
             oddAdapter = new RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
                 @Override
                 protected void convert(BaseViewHolder baseViewHolder, GetOddInfoRes.EvaluateInfoBean homeBean) {

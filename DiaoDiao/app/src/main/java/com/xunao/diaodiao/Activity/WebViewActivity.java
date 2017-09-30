@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
@@ -28,6 +29,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class WebViewActivity extends BaseActivity implements ProjectDetailView {
@@ -61,7 +64,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String HOME_DETAIL = "home_detail";
+    public static final String COMPANY_PROJ = "company_proj";
 
+    private OrderCompRes.Project projectBean;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -94,6 +99,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         context.startActivity(intent);
     }
 
+    //底部没有button 传递btn
+    public static void startActivity(Context context, String url, int id, String btnType, OrderCompRes.Project bean) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(ID_KEY, id);
+        intent.putExtra("BTN_TYPE", btnType);
+        intent.putExtra("BEAN", bean);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +122,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         type = getIntent().getIntExtra("TYPE", 0);
         id = getIntent().getIntExtra(ID_KEY, 0);
         btnType = getIntent().getStringExtra("BTN_TYPE");
+        projectBean = (OrderCompRes.Project) getIntent().getSerializableExtra("BEAN");
 //        if (id != 0) {
 //            webView.loadUrl(H5_URL + getIntent().getStringExtra(INTENT_KEY) +
 //                    "?project_id=" + id + "&userid=" + User.getInstance().getUserId() + "&type=" + type + "&typeRole=" + ShareUtils.getValue(TYPE_KEY, 0))
@@ -141,8 +157,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
                 .setWebViewClient(webView.new GWebViewClient() {
                     @Override
-                    public void onPageFinished(WebView view, String url) {
-                        super.onPageFinished(view, url);
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        super.shouldOverrideUrlLoading(view, url);
+                        if (url.contains("action=1")){
+                            //项目
+                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+                        }else if (url.contains("action=2")){
+                            //零工
+                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+                        }
+                        return true;
                     }
                 });
 
@@ -168,7 +192,10 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         changeInfo.setOnClickListener(v -> {
             //修改项目信息
-
+            int types = ShareUtils.getValue(TYPE_KEY, 0);
+            if (types == COMPANY_TYPE){
+                
+            }
         });
 
         if (TextUtils.equals(HOME_DETAIL, btnType)){
@@ -184,6 +211,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         }else if (TextUtils.equals(btnType, RECEIVE_PROJ_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
+        }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
+            apply.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.VISIBLE);
         }
         else{
             bottomBtnLayout.setVisibility(View.GONE);
@@ -197,6 +227,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (TextUtils.equals(btnType, HOME_DETAIL)){
             getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
+        }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
+            getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
         }
 
         return true;
@@ -204,11 +236,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (isCollect) {
-            menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
-        } else {
-            menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02);
+        if (TextUtils.equals(btnType, HOME_DETAIL)){
+            if (isCollect) {
+                menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
+            } else {
+                menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02);
+            }
         }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -216,27 +251,36 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_like:
-                int types = 0;
-                if (type == 0) {
-                    types = 1;
-                } else if (type == 1) {
-                    types = 3;
-                } else if (type == 2) {
-                    types = 4;
-                } else if (type == 3) {
-                    types = 5;
-                } else if (type == 4) {
-                    types = 2;
-                } else {
+                //收藏项目
+                if (TextUtils.equals(btnType, HOME_DETAIL)){
+                    int types = 0;
+                    if (type == 0) {
+                        types = 1;
+                    } else if (type == 1) {
+                        types = 3;
+                    } else if (type == 2) {
+                        types = 4;
+                    } else if (type == 3) {
+                        types = 5;
+                    } else if (type == 4) {
+                        types = 2;
+                    } else {
+
+                    }
+                    if (!isCollect) {
+                        presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
+                    } else {
+                        presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
+                    }
+                }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
 
                 }
-                if (!isCollect) {
-                    presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
-                } else {
-                    presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
-                }
-
                 return true;
+
+            case R.id.action_contact:
+                //取消项目
+                presenter.myProjectCancel(this, projectBean.getProject_id());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -281,5 +325,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         ToastUtil.show("取消收藏成功");
         isCollect = false;
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void myProjectCancel(Object s) {
+        ToastUtil.show("取消项目成功");
+        finish();
     }
 }

@@ -614,6 +614,32 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     *  取消已经发布的项目
+     * @param
+     * @return
+     */
+    public Observable<Object> myProjectCancel(int id){
+        String rateKey = "myProjectCancel";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setProject_id(id);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().myProjectCancel(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 银行卡列表
      * @return
      */

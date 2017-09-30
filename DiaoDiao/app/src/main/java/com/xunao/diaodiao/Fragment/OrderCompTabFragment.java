@@ -18,6 +18,7 @@ import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -123,8 +124,21 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                            homeBean.getProject_id(), who);
+                    if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                        //查看申请人
+                        ApplyActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                                homeBean.getProject_id());
+                    }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                        //项目进度
+                        SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                                homeBean.getProject_id(), who);
+                    }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                        //项目进度
+                        SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                                homeBean.getProject_id(), who);
+                    }
+
+
                     //OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
                 });
 
@@ -133,16 +147,12 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                     RecommandActivity.startActivity(OrderCompTabFragment.this.getContext(),
                         homeBean.getProject_id(), Integer.valueOf(homeBean.getProject_type()));
                 });
-
-                baseViewHolder.setOnClickListener(R.id.distance, v -> {
-                    //ApplyActivity.startActivity(OrderCompTabFragment.this.getContext());
-                });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            ApplyActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                    adapter.getAllData().get(i).getProject_id());
+            WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(), adapter.getAllData().get(i).getUrl(),
+                    adapter.getAllData().get(i).getProject_id(), WebViewActivity.COMPANY_PROJ, adapter.getAllData().get(i));
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);

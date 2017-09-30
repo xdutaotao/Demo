@@ -13,4 +13,5 @@ public interface ProjectDetailView extends BaseView {
     void postProject(Object res);
     void collectWork(String s);
     void cancleCollect(String s);
+    void myProjectCancel(Object s);
 }

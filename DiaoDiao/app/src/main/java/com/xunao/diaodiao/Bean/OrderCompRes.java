@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class OrderCompRes {
         this.project = project;
     }
 
-    public static class  Project{
+    public static class  Project implements Serializable{
         private int project_id;
         private String title;
         private int publish_time;
@@ -31,7 +32,23 @@ public class OrderCompRes {
         private long cancel_time;
         private int evaluate_status;
         private int status;
+        private String url;
 
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
 
         public int getProject_id() {
             return project_id;

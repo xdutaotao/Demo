@@ -136,6 +136,9 @@ public interface RetrofitService {
     Observable<BaseBean<String>> cancelCollect(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<Object>> myProjectCancel(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<BankListRes>> getBankList(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
