@@ -89,7 +89,8 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
 
         adapter.setOnItemClickListener((view1, i) -> {
                 RecommandActivity.startActivity(NoRateFragment.this.getActivity(),
-                        adapter.getAllData().get(i).getProject_id(), adapter.getAllData().get(i).getProject_type());
+                        adapter.getAllData().get(i).getProject_id(),
+                        adapter.getAllData().get(i).getProject_type());
             });
 
 

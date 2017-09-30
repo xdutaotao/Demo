@@ -67,6 +67,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String COMPANY_PROJ = "company_proj";
 
     private OrderCompRes.Project projectBean;
+    private int project_type;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -106,6 +107,15 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         intent.putExtra(ID_KEY, id);
         intent.putExtra("BTN_TYPE", btnType);
         intent.putExtra("BEAN", bean);
+        context.startActivity(intent);
+    }
+
+    //去评价
+    public static void startActivity(Context context, String url, int id, int project_type) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(ID_KEY, id);
+        intent.putExtra("project_type", project_type);
         context.startActivity(intent);
     }
 
