@@ -11,12 +11,11 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
-import com.xunao.diaodiao.Bean.ReleaseProjReq;
-import com.xunao.diaodiao.Bean.ReleaseSkillReq;
-import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
+import com.xunao.diaodiao.Bean.PayFeeReq;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
+import com.xunao.diaodiao.Present.PayPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ShareUtils;
-import com.xunao.diaodiao.View.ReleaseProjThirdView;
+import com.xunao.diaodiao.View.PayView;
 
 import javax.inject.Inject;
 
@@ -24,15 +23,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
  */
-public class PayActivity extends BaseActivity implements View.OnClickListener, ReleaseProjThirdView, CompoundButton.OnCheckedChangeListener {
+public class PayActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, PayView {
 
     @Inject
-    ReleaseProjThirdPresenter presenter;
+    PayPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -47,22 +45,19 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
     CheckBox zhifubao;
     @BindView(R.id.wechat)
     CheckBox wechat;
+    @BindView(R.id.balance)
+    TextView balance;
 
-    private ReleaseProjReq req;
-    private ReleaseSkillReq skillReq;
-    private int type = 0;
+    private ReleaseProjRes req;
+    private int projType = 0;
 
-    public static void startActivity(Context context, ReleaseProjReq req) {
+    public static void startActivity(Context context, ReleaseProjRes req, int projType) {
         Intent intent = new Intent(context, PayActivity.class);
         intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("projType", projType);
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, ReleaseSkillReq req) {
-        Intent intent = new Intent(context, PayActivity.class);
-        intent.putExtra(INTENT_KEY, req);
-        context.startActivity(intent);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,17 +68,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "支付");
-        type = ShareUtils.getValue(TYPE_KEY, 0);
-        if (type == 1){
-            //暖通公司
-            req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
-            fee.setText("￥" + req.getTotal_price());
-        }else if (type == 2){
-            skillReq = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
-            fee.setText("￥" + skillReq.getTotal_fee());
-        }
 
+        req = (ReleaseProjRes) getIntent().getSerializableExtra(INTENT_KEY);
+        projType = getIntent().getIntExtra("projType", 0);
 
+        fee.setText(req.getTotal_fee());
+        balance.setText("当前余额："+req.getBalance()+"元");
         pay.setOnClickListener(this);
         current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
@@ -95,18 +85,19 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                if (type == 1){
-                    presenter.publishProject(this, req);
-                }else{
-                    presenter.publishOdd(this, skillReq);
-                }
+                PayFeeReq payFeeReq = new PayFeeReq();
+                payFeeReq.setOrder_no(req.getOrder_no());
+                payFeeReq.setPay_fee(req.getTotal_fee());
+                //1项目2监理3零工4维保
+                payFeeReq.setProject_type(projType);
+                presenter.balancePay(this, payFeeReq);
 
                 break;
         }
     }
 
     @Override
-    public void getData(String s) {
+    public void getData(Object s) {
         new IOSDialog(this).builder()
                 .setContentView(R.layout.pay_dialog)
                 .setNegativeBtnColor(R.color.light_gray)
@@ -122,12 +113,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (!isChecked){
+        if (!isChecked) {
             return;
         }
 
 
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.current:
                 current.setChecked(isChecked);
                 zhifubao.setChecked(!isChecked);
@@ -159,7 +150,5 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, R
         super.onDestroy();
         presenter.detachView();
     }
-
-
 
 }

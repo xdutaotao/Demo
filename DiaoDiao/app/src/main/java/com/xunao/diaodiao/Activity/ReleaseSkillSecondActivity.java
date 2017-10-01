@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Present.ReleaseSkillSecondPresenter;
 import com.xunao.diaodiao.R;
@@ -129,7 +130,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
                     req.setImages(list);
                 }
 
-                PayActivity.startActivity(this, req);
+                presenter.publishOdd(this, req);
 
                 break;
         }
@@ -148,4 +149,9 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
     }
 
 
+    @Override
+    public void getData(ReleaseProjRes res) {
+        // 零工
+        PayActivity.startActivity(this, res, 3);
+    }
 }

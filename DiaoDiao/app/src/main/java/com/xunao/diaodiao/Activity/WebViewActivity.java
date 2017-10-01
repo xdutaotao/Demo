@@ -67,6 +67,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String COMPANY_PROJ = "company_proj";
 
     private OrderCompRes.Project projectBean;
+    /**
+     *  1项目2监理3零工4维保
+     */
     private int project_type;
 
     public static void startActivity(Context context, String url) {
@@ -133,6 +136,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         id = getIntent().getIntExtra(ID_KEY, 0);
         btnType = getIntent().getStringExtra("BTN_TYPE");
         projectBean = (OrderCompRes.Project) getIntent().getSerializableExtra("BEAN");
+        project_type = getIntent().getIntExtra("project_type", 0);
 //        if (id != 0) {
 //            webView.loadUrl(H5_URL + getIntent().getStringExtra(INTENT_KEY) +
 //                    "?project_id=" + id + "&userid=" + User.getInstance().getUserId() + "&type=" + type + "&typeRole=" + ShareUtils.getValue(TYPE_KEY, 0))
@@ -189,8 +193,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 }
                 presenter.postProject(this, id, type);
             }else {
-                //联系发布人
-                Utils.startCallActivity(this, "12345678900");
+                if (project_type == 0){
+                    //联系发布人
+                    Utils.startCallActivity(this, "12345678900");
+                }else if (project_type == 1){
+                    // 1 项目
+                    RecommandActivity.startActivity(this, id, project_type);
+                }
+
             }
 
         });
@@ -228,6 +238,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         else{
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.GONE);
+        }
+
+        if (project_type != 0){
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setVisibility(View.VISIBLE);
+            apply.setText("去评价");
         }
 
 

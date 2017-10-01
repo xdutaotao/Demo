@@ -14,6 +14,7 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
 import com.xunao.diaodiao.R;
@@ -143,6 +144,13 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         serviceFee.setText("￥"+req.getService_cost());
         allPrice.setText("￥"+req.getTotal_price());
 
+
+    }
+
+    @Override
+    public void getData(ReleaseProjRes s) {
+        // 1 项目
+        PayActivity.startActivity(this, s, 1);
     }
 
 
@@ -169,15 +177,12 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
                     req.setImages(list);
                 }
 
-                PayActivity.startActivity(this, req);
+                presenter.publishProject(this, req);
 
 
                 break;
         }
     }
 
-    @Override
-    public void getData(String s) {
 
-    }
 }

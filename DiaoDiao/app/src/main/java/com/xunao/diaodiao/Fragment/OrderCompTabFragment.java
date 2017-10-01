@@ -145,14 +145,26 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                     //评价 1 项目
                     RecommandActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                        homeBean.getProject_id(), 1);
+                            homeBean.getProject_id(), 1);
+
                 });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(), adapter.getAllData().get(i).getUrl(),
-                    adapter.getAllData().get(i).getProject_id(), WebViewActivity.COMPANY_PROJ, adapter.getAllData().get(i));
+            //评价 1 项目
+            if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getProject_id(),
+                        1);
+            }else {
+                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getProject_id(),
+                        WebViewActivity.COMPANY_PROJ,
+                        adapter.getAllData().get(i));
+            }
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);

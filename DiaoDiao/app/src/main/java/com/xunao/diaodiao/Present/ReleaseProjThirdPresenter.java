@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.ReleaseProjThirdModel;
@@ -26,26 +27,12 @@ public class ReleaseProjThirdPresenter extends BasePresenter<ReleaseProjThirdVie
     ReleaseProjThirdPresenter() {
     }
 
+
     public void publishProject(Context context, ReleaseProjReq address){
         mCompositeSubscription.add(model.publishProject(address)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<ReleaseProjRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
-                        getView().getData(token);
-                    }
-
-                    @Override
-                    protected void _onError(String msg) {
-                        getView().onFailure();
-                    }
-                }));
-    }
-
-    public void publishOdd(Context context, ReleaseSkillReq address){
-        mCompositeSubscription.add(model.publishOdd(address)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
-                    @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(ReleaseProjRes token) {
                         getView().getData(token);
                     }
 

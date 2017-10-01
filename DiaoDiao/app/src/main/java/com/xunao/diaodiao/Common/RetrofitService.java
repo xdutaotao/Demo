@@ -39,6 +39,7 @@ import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
 import com.xunao.diaodiao.Bean.BaseBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
@@ -294,7 +295,10 @@ public interface RetrofitService {
     Observable<BaseBean<ProjectTypeRes>> publishOddType(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> publishProject(@Body RequestBody body);
+    Observable<BaseBean<ReleaseProjRes>> publishProject(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<Object>> balancePay(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<CheckFinishRes>> checkFinish(@Body RequestBody body);

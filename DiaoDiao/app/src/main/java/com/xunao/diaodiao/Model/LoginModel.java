@@ -55,6 +55,7 @@ import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
+import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
@@ -63,6 +64,7 @@ import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Bean.SelectBean;
 import com.xunao.diaodiao.Bean.SignRes;
@@ -1861,7 +1863,7 @@ public class LoginModel extends BaseModel {
      * @param
      * @return
      */
-    public Observable<String> publishProject(ReleaseProjReq req){
+    public Observable<ReleaseProjRes> publishProject(ReleaseProjReq req){
         String rateKey = "publishProject";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
@@ -1889,11 +1891,38 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 支付项目
+     * @param req
+     * @return
+     */
+    public Observable<Object> balancePay(PayFeeReq req){
+        String rateKey = "balancePay";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getOrder_no())
+                .append(req.getPay_fee()).append(req.getProject_type())
+                .append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().balancePay(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 发布零工
      * @param
      * @return
      */
-    public Observable<String> publishOdd(ReleaseSkillReq req){
+    public Observable<ReleaseProjRes> publishOdd(ReleaseSkillReq req){
         String rateKey = "publishOdd";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());

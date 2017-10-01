@@ -50,7 +50,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前余额：3000元"/>
+                android:text="当前余额：3000元"
+                android:id="@+id/balance"/>
         </LinearLayout>
 
         <CheckBox
