@@ -34,6 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -136,6 +137,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     }
 
     private void weixinLogin(){
+        //ShareSDK.registerPlatform(CustomPlatform.Log);
         Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
         weixin.setPlatformActionListener(new PlatformActionListener() {
             @Override
