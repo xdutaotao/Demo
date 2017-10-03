@@ -100,7 +100,7 @@ public class App  extends android.support.multidex.MultiDexApplication{
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-        SMSSDK.initSDK(this, "20ad18688fcee", "a0536022d8f2db4260ae91feb3d84878");
+        //SMSSDK.initSDK(this, "20ad18688fcee", "a0536022d8f2db4260ae91feb3d84878");
 
         //CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", false);
 

@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     }
 
     private void weixinLogin(){
-        //ShareSDK.registerPlatform(CustomPlatform.Log);
+
         Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
         weixin.setPlatformActionListener(new PlatformActionListener() {
             @Override
