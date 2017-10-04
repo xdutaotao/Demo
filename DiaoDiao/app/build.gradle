@@ -140,16 +140,17 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile files('libs/MobCommons-2017.0914.1125.jar')
-    compile files('libs/MobTools-2017.0914.1125.jar')
-    compile files('libs/ShareSDK-Core-3.1.0.jar')
-    compile files('libs/ShareSDK-Wechat-3.1.0.jar')
-    compile files('libs/ShareSDK-Wechat-Core-3.1.0.jar')
-    compile files('libs/ShareSDK-Wechat-Moments-3.1.0.jar')
     compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
     compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.5') {
         exclude group: 'com.android.support'
     }
+    compile files('libs/MobCommons-2016.0426.1819.jar')
+    compile files('libs/MobTools-2016.0426.1819.jar')
+    compile files('libs/ShareSDK-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.2.jar')
 }
 
 //compile 'com.tencent.bugly:crashreport:latest.release'
