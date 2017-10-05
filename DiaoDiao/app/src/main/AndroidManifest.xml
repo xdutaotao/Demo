@@ -166,6 +166,12 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity android:name=".Activity.SelectMemoryActivity" />
         <activity android:name=".Activity.SelectCompanyActivity" />
         <activity android:name=".Activity.SelectSkillActivity" />

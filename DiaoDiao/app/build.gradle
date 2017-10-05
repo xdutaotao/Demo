@@ -68,6 +68,11 @@ android {
         }
     }
 
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     compileOptions {
         sourceCompatibility javaVersion
         targetCompatibility javaVersion
