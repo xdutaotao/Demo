@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.AddPhoneActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout style="@style/item_layout">
+        <TextView style="@style/item_left_text"
+            android:text="手机号"/>
+        <EditText style="@style/edit_personal_edit"
+            android:id="@+id/phone"
+            android:inputType="phone"
+            android:hint="请输入联系电话"/>
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+
+    <RelativeLayout style="@style/item_layout">
+
+        <TextView style="@style/item_left_text"
+            android:text="验证码"/>
+
+        <EditText
+            android:layout_width="700px"
+            android:layout_height="match_parent"
+            android:id="@+id/code_input"
+            android:hint="请输入验证码"
+            android:digits="1234567890"
+            android:inputType="phone"
+            android:maxLength="4"
+            style="@style/edit_style"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="80px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="100px"
+            android:id="@+id/get_code"
+            android:text="获取验证码"
+            android:textSize="35px"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_code"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <Button style="@style/login_btn_style"
+        android:layout_marginTop="100px"
+        android:id="@+id/addPhoneBtn"
+        android:text="绑定手机号"/>
+
+</LinearLayout>

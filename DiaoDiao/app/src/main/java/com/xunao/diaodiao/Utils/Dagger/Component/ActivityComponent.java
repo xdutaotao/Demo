@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Utils.Dagger.Component;
 
 
 import com.xunao.diaodiao.Activity.AddBankActivity;
+import com.xunao.diaodiao.Activity.AddPhoneActivity;
 import com.xunao.diaodiao.Activity.AddressActivity;
 import com.xunao.diaodiao.Activity.AppealActivity;
 import com.xunao.diaodiao.Activity.ApplyActivity;
@@ -172,4 +173,5 @@ public interface ActivityComponent {
     void inject(WebViewActivity activity);
     void inject(RecommandActivity activity);
     void inject(ReleaseSkillSecondActivity activity);
+    void inject(AddPhoneActivity activity);
 }

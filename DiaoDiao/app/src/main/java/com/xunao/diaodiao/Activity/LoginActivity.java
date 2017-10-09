@@ -143,25 +143,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     private void weixinLogin(){
         ShareSDK.initSDK(this);
         authorize(new Wechat(LoginActivity.this),true);
-//        Platform weixin = ShareSDK.getPlatform(Wechat.NAME);
-//        weixin.setPlatformActionListener(new PlatformActionListener() {
-//            @Override
-//            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                platform.getDb().exportData();
-//            }
-//
-//            @Override
-//            public void onError(Platform platform, int i, Throwable throwable) {
-//                throwable.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onCancel(Platform platform, int i) {
-//
-//            }
-//        });
-//        weixin.authorize();
-//        weixin.showUser(null);
     }
 
     // 授权登录
@@ -254,7 +235,8 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 String userId	= new Wechat(LoginActivity.this).getDb().getUserId();   // 用户Id
                 String platName = new Wechat(LoginActivity.this).getName();			   // 平台名称
 
-                login(platName, userId, null);
+                //login(platName, userId, null);
+                AddPhoneActivity.startActivity(this, userId);
                 break;
         }
         return false;

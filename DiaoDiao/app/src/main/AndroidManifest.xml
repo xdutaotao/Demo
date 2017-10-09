@@ -222,6 +222,7 @@
         <activity android:name=".Activity.SkillProjProgressActivity"/>
         <activity android:name=".Activity.CashRecordActivity"/>
         <activity android:name=".Activity.ReleaseSkillSecondActivity"/>
+        <activity android:name=".Activity.AddPhoneActivity"/>
 
     </application>
 

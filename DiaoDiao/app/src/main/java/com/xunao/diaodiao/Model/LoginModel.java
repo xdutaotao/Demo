@@ -77,6 +77,8 @@ import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Bean.WeiXinReq;
+import com.xunao.diaodiao.Bean.WeiXinRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillRecievePresenter;
 import com.xunao.diaodiao.Present.ProjectRes;
@@ -148,6 +150,48 @@ public class LoginModel extends BaseModel {
 
         return config.getRetrofitService().checkPhone(setBody("getVerify", time, bean))
                 .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 绑定微信 验证码
+     * @param phone
+     * @return
+     */
+    public Observable<String> wxPhone(String phone){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("bindingVerify");
+        sb.append(time+"").append(phone)
+                .append("security");
+
+        GetCodeBean bean = new GetCodeBean();
+        bean.setMobile(phone);
+        bean.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().checkPhone(setBody("bindingVerify", time, bean))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 绑定微信
+     * @param
+     * @return
+     */
+    public Observable<UserInfo> wxPhone(WeiXinReq req){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("bindingWx");
+        sb.append(time+"").append(req.getCode()).append(req.getMobile())
+                .append(req.getOpenID())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().bindingWx(setBody("bindingWx", time, req))
+                .compose(RxUtils.handleResult())
+                .map(weiXinRes -> {
+                    User.getInstance().setUserId(weiXinRes.getUserid()+"");
+                    User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(weiXinRes));
+                    return weiXinRes;
+                });
     }
 
     /**
