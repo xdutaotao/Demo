@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
@@ -278,29 +279,32 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         switch (item.getItemId()) {
             case R.id.action_like:
                 //收藏项目
-                if (TextUtils.equals(btnType, HOME_DETAIL)){
-                    int types = 0;
-                    if (type == 0) {
-                        types = 1;
-                    } else if (type == 1) {
-                        types = 3;
-                    } else if (type == 2) {
-                        types = 4;
-                    } else if (type == 3) {
-                        types = 5;
-                    } else if (type == 4) {
-                        types = 2;
-                    } else {
+                if (!TextUtils.isEmpty(User.getInstance().getUserId())){
+                    if (TextUtils.equals(btnType, HOME_DETAIL)){
+                        int types = 0;
+                        if (type == 0) {
+                            types = 1;
+                        } else if (type == 1) {
+                            types = 3;
+                        } else if (type == 2) {
+                            types = 4;
+                        } else if (type == 3) {
+                            types = 5;
+                        } else if (type == 4) {
+                            types = 2;
+                        } else {
+
+                        }
+                        if (!isCollect) {
+                            presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
+                        } else {
+                            presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
+                        }
+                    }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
 
                     }
-                    if (!isCollect) {
-                        presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
-                    } else {
-                        presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
-                    }
-                }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
-
                 }
+
                 return true;
 
             case R.id.action_contact:

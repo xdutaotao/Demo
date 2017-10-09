@@ -10,8 +10,11 @@ import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseSkillView;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import cn.qqtheme.framework.entity.Province;
 import rx.Subscriber;
 
 /**
@@ -48,6 +51,22 @@ public class ReleaseSkillPresenter extends BasePresenter<ReleaseSkillView> {
                     @Override
                     protected void _onNext(ProjectTypeRes token) {
                         getView().getProjectType(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
+                }));
+    }
+
+    //省市区
+    public void getAddressData(){
+        mCompositeSubscription.add(model.getAddressData()
+                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(ArrayList<Province> token) {
+                        getView().getAddressData(token);
                     }
 
                     @Override

@@ -33,7 +33,6 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjSecondView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
-import com.xunao.diaodiao.Widget.WheelPicker.AddressPickTask;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

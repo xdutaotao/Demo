@@ -36,7 +36,8 @@
             <View style="@style/item_divider" />
 
             <RelativeLayout
-                style="@style/item_layout">
+                style="@style/item_layout"
+                android:id="@+id/address_layout">
 
                 <TextView
                     style="@style/item_left_text"

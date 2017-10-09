@@ -39,12 +39,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.TimePicker;
 import rx.Observable;
-
-import static com.xunao.diaodiao.Common.Constants.latData;
-import static com.xunao.diaodiao.Common.Constants.lngData;
 
 /**
  * create by
@@ -87,6 +88,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     TextView time;
     @BindView(R.id.project_type_layout)
     RelativeLayout projectTypeLayout;
+    @BindView(R.id.address_layout)
+    RelativeLayout addressLayout;
 
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
@@ -103,6 +106,9 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     private RecyclerArrayAdapter<ProjectTypeRes.TypeBean> textAdapter;
     private CustomPopWindow popWindow;
     private ProjectTypeRes res;
+
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
@@ -187,6 +193,24 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         initImagePicker();
         presenter.getPercent(this);
         presenter.publishOddType();
+        presenter.getAddressData();
+
+        addressLayout.setOnClickListener(v -> {
+            if (picker != null){
+                if (TextUtils.isEmpty(address.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = address.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else{
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+        });
     }
 
     @Override
@@ -197,6 +221,35 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     @Override
     public void getProjectType(ProjectTypeRes res) {
         this.res = res;
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        address.setText(province.getAreaName() + "-" + city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        address.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
     }
 
     private void initImagePicker() {
@@ -308,9 +361,9 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                 }
                 ReleaseSkillReq req = new ReleaseSkillReq();
                 req.setTitle(title.getText().toString());
-                req.setProvince(1);
-                req.setCity(2);
-                req.setDistrict(3);
+                req.setProvince(provinceId);
+                req.setCity(cityId);
+                req.setDistrict(districtId);
                 req.setAddress(addressDetail.getText().toString());
                 req.setProject_type(projectType.getText().toString());
                 req.setContact(contact.getText().toString());
@@ -367,7 +420,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         }
     }
 
-    private void showPop(){
+    private void showPop() {
         View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
         RecyclerView popRecyclerView = (RecyclerView) popView.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);

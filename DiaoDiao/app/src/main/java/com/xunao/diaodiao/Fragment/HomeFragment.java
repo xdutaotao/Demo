@@ -201,7 +201,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
             }
         };
 
@@ -218,7 +218,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
             }
         };
 
@@ -235,7 +235,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
             }
         };
 
