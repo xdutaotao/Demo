@@ -33,6 +33,7 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjSecondView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
+import com.xunao.diaodiao.Widget.WheelPicker.AddressPickTask;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.TimePicker;
 import rx.Observable;
@@ -104,6 +109,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     private StringBuilder timeLong;
     private List<ReleaseProjReqTemp> tempList = new ArrayList<>();
     private String percent;
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context, ReleaseProjReq req, String names) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
@@ -203,13 +210,30 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeRecyclerView.setAdapter(typeAdapter);
 
         addressDetailLayout.setOnClickListener(v -> {
-            AddressActivity.startActivityForResult(this);
+            if (picker != null){
+                if (TextUtils.isEmpty(address.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = address.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else{
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+
+
         });
 
         time.setOnClickListener(this);
         presenter.typeExpenses(this, req.getProject_class());
         presenter.getPercent();
         initImagePicker();
+
+        presenter.getAddressData();
     }
 
     private void initImagePicker() {
@@ -240,6 +264,35 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     @Override
     public void getPercent(GetPercentRes res) {
         percent = res.getPercent();
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        address.setText(province.getAreaName()+"-"+city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        address.setText(province.getAreaName()+"-"
+                                +city.getAreaName()+"-"
+                                +county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
     }
 
     private void showDialog(ReleaseProjReqTemp temp) {
@@ -343,15 +396,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-//                if (TextUtils.isEmpty(type.getText())){
-//                    ToastUtil.show("类型不能为空");
-//                    return;
-//                }
-
-//                if (TextUtils.isEmpty(address.getText())){
-//                    ToastUtil.show("选择地区");
-//                    return;
-//                }
+                if (TextUtils.isEmpty(address.getText())){
+                    ToastUtil.show("选择地区");
+                    return;
+                }
 
                 if (TextUtils.isEmpty(addressDetail.getText())) {
                     ToastUtil.show("地址不能为空");
@@ -417,9 +465,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
                 req.setTitle(title.getText().toString());
                 req.setAddress(addressDetail.getText().toString());
-                req.setProvince(0);
-                req.setCity(1);
-                req.setDistrict(3);
+                req.setProvince(provinceId);
+                req.setCity(cityId);
+                req.setDistrict(districtId);
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
                 req.setBuild_time(Utils.convert2long(time.getText().toString()));

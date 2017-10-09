@@ -3,6 +3,8 @@ package com.xunao.diaodiao.Model;
 import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.xunao.diaodiao.App;
 import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
@@ -15,6 +17,7 @@ import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.CitiesBean;
+import com.xunao.diaodiao.Bean.CityBean;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.EvaluateReq;
@@ -83,8 +86,16 @@ import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.Utils;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +104,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cn.jpush.im.android.api.model.*;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -1976,24 +1990,84 @@ public class LoginModel extends BaseModel {
 
     /**
      * 区县选择
-     * @param req
      * @return
      */
-//    public Observable<String> getRegionId(List<CitiesBean.DatasBean> req){
-//        Observable.create(new Observable.OnSubscribe<List<String>>() {
-//            @Override
-//            public void call(Subscriber<? super List<String>> subscriber) {
-//                for(CitiesBean.DatasBean bean : req){
-//                    for(CitiesBean.DatasBean.AddressListBean item: bean.getAddressList()){
-//                        if (TextUtils.equals(item.getRegion_name(), address)){
-//
-//                        }
-//                    }
-//                }
-//                return null;
-//            }
-//        })
-//    }
+    public Observable<ArrayList<Province>> getAddressData(){
+         return Observable.create(new Observable.OnSubscribe<ArrayList<Province>>() {
+            @Override
+            public void call(Subscriber<? super ArrayList<Province>> subscriber) {
+                ArrayList<Province> data = new ArrayList<>();
+                List<CityBean.CityItemBean> sourceData = getCities();
+                for(CityBean.CityItemBean bean : sourceData){
+                    switch (Integer.valueOf(bean.getRegion_type())){
+                        case 1:
+                            //省份
+                            Province province = new Province(String.valueOf(bean.getId()), bean.getRegion_name());
+                            data.add(province);
+                            break;
+
+                        case 2:
+                            //市区
+                            City city = new City(String.valueOf(bean.getId()), bean.getRegion_name());
+                            city.setProvinceId(String.valueOf(bean.getParent_id()));
+                            for(Province p : data){
+                                if (TextUtils.equals(bean.getParent_id(), p.getAreaId())){
+                                    p.getCities().add(city);
+                                }
+                            }
+                            break;
+
+                        case 3:
+                            //县
+                            County county = new County(String.valueOf(bean.getId()), bean.getRegion_name());
+                            county.setCityId(String.valueOf(bean.getParent_id()));
+                            for(Province p: data){
+                                for(City city1: p.getCities()){
+                                    if (TextUtils.equals(bean.getParent_id(),city1.getAreaId())){
+                                        city1.getCounties().add(county);
+                                    }
+                                }
+                            }
+                            break;
+                    }
+
+                }
+
+                subscriber.onNext(data);
+                subscriber.onCompleted();
+            }
+        })
+        .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+    private List<CityBean.CityItemBean> getCities() {
+        List<CityBean.CityItemBean> resourceList = new ArrayList<>();
+        try {
+            InputStream is = App.getContext().getAssets().open("city.json");
+            String text = readTextFromSDcard(is);
+            Gson gson = new Gson();
+            resourceList = gson.fromJson(text, new TypeToken<List<CityBean.CityItemBean>>() {
+            }.getType());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return resourceList;
+    }
+
+    private String readTextFromSDcard(InputStream is) throws Exception {
+        InputStreamReader reader = new InputStreamReader(is, "UTF-8");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        StringBuffer buffer = new StringBuffer("");
+        String str;
+        while ((str = bufferedReader.readLine()) != null) {
+            buffer.append(str);
+            buffer.append("\n");
+        }
+        return buffer.toString();//把读取的数据返回
+    }
 
 
 
@@ -2010,28 +2084,6 @@ public class LoginModel extends BaseModel {
 
 
 
-    /**
-     *  更改个人地址
-     */
-    public Observable<String> changeAddress(String address){
-
-        return Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-
-            }
-        }).compose(RxUtils.applyIOToMainThreadSchedulers());
-
-    }
-
-
-    /**
-     *  更改性别
-     */
-    public Observable<String> changeSex(int sex){
-        return config.getRetrofitService().changeSex(sex, User.getInstance().getUserId())
-                .compose(RxUtils.handleResult());
-    }
 
     /**
      *  检查更新

@@ -70,7 +70,8 @@
                 <TextView style="@style/edit_personal_edit"
                     android:drawableRight="@drawable/arrow"
                     android:id="@+id/address"
-                    android:gravity="right"/>
+                    android:drawablePadding="20px"
+                    android:gravity="right|center_vertical"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
