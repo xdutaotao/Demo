@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +35,7 @@ import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
@@ -273,6 +278,18 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         });
 
         swipe.setOnRefreshListener(this);
+
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+                if (!TextUtils.isEmpty(editText.getText())){
+                    //FindProjectActivity.startActivity(HomeFragment.this, 1);
+                }
+
+                return true;
+            }else{
+                return false;
+            }
+        });
 
         return view;
     }

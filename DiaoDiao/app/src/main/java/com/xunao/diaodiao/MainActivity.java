@@ -1,5 +1,6 @@
 package com.xunao.diaodiao;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BaseActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
@@ -33,6 +35,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private BottomNavigationBar bottomNavigationBar;
     private String[] strings = {"首页","发布","订单","我的"};
 
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,6 +24,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditCompanyPresenter;
 import com.xunao.diaodiao.R;
@@ -392,7 +393,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code:
                 if (codeDelete.getVisibility() == View.GONE) {
-                    selectPhoto();
+                    getPicPath();
                     SELECT_TYPE = 4;
                 }
 
@@ -400,7 +401,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code_reverse:
                 if (codeReverseDelete.getVisibility() == View.GONE) {
-                    selectPhoto();
+                    getPicPath();
                     SELECT_TYPE = 5;
                 }
 
@@ -509,7 +510,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     @Override
     public void getData(LoginResBean bean) {
         ToastUtil.show("完善成功");
-        finish();
+        MainActivity.startActivity(this);
     }
 
     private void getPicPath() {
