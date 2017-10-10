@@ -24,6 +24,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.LoginPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
@@ -69,6 +70,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
     @BindView(R.id.wx_login)
     TextView wxLogin;
 
+    private String openID;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -152,8 +154,10 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             // 已经完成授权，直接读取本地授权信息，执行相关逻辑操作（如登录操作）
             String userId = plat.getDb().getUserId();
             if (!TextUtils.isEmpty(userId)) {
-                UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
-                login(plat.getName(), userId, null);
+                //UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
+                //login(plat.getName(), userId, null);
+                openID = userId;
+                presenter.WxLogin(this, userId);
                 return;
             }
         }
@@ -180,7 +184,9 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             String userId	= platform.getDb().getUserId();	  // 用户Id
             String platName = platform.getName();			  // 平台名称
 
-            login(platName, userName, res);
+            openID = userId;
+            presenter.WxLogin(this, openID);
+            //login(platName, userName, res);
         }
     }
     // 回调：授权失败
@@ -236,7 +242,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 String platName = new Wechat(LoginActivity.this).getName();			   // 平台名称
 
                 //login(platName, userId, null);
-                AddPhoneActivity.startActivity(this, userId);
+                presenter.WxLogin(this, userId);
                 break;
         }
         return false;
@@ -283,6 +289,18 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         ToastUtil.show("登录成功");
         RxBus.getInstance().post(LOGIN_AGAIN);
         finish();
+    }
+
+    @Override
+    public void getWXData(UserInfo data) {
+        if (data.getHas_binding() == 1){
+            //已经绑定
+            ToastUtil.show("登录成功");
+            finish();
+        }else{
+            AddPhoneActivity.startActivity(this, openID);
+            finish();
+        }
     }
 
     @Override

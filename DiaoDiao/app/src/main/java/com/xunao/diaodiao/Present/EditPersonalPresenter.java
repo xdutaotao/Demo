@@ -9,10 +9,14 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.EditPersonalModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.EditPersonalView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import cn.qqtheme.framework.entity.Province;
 import rx.Subscriber;
 
 /**
@@ -40,4 +44,22 @@ public class EditPersonalPresenter extends BasePresenter<EditPersonalView> {
                     }
                 }));
     }
+
+    //省市区
+    public void getAddressData(){
+        mCompositeSubscription.add(model.getAddressData()
+                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(ArrayList<Province> token) {
+                        getView().getAddressData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
+                }));
+    }
+
+
 }

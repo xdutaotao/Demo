@@ -113,5 +113,6 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     @Override
     public void getRes(UserInfo s) {
         ShareUtils.putValue(TYPE_KEY, s.getType());
+        finish();
     }
 }

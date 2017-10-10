@@ -33,6 +33,15 @@ public class GetMoneyReq implements Serializable{
     private int user_type;
     private String type_ids;
     private String appeal_operate;
+    private String openID;
+
+    public String getOpenID() {
+        return openID;
+    }
+
+    public void setOpenID(String openID) {
+        this.openID = openID;
+    }
 
     public String getAppeal_operate() {
         return appeal_operate;

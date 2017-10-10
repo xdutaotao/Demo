@@ -41,15 +41,17 @@
     <View style="@style/item_divider"/>
 
     <RelativeLayout
-        style="@style/item_layout">
+        style="@style/item_layout"
+        android:id="@+id/address_layout">
 
         <TextView
             style="@style/item_left_text"
             android:text="地区"/>
 
-        <EditText
+        <TextView
             style="@style/edit_personal_edit"
-            android:hint="3年"
+            android:drawableRight="@drawable/icon_arrow"
+            android:drawablePadding="10px"
             android:id="@+id/address"/>
 
     </RelativeLayout>

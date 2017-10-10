@@ -39,6 +39,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
@@ -100,7 +104,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     @BindView(R.id.name)
     EditText name;
     @BindView(R.id.address)
-    EditText address;
+    TextView address;
     @BindView(R.id.address_detail)
     EditText addressDetail;
     @BindView(R.id.phone)
@@ -111,6 +115,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     EditText contactCode;
     @BindView(R.id.contact_phone)
     EditText contactPhone;
+    @BindView(R.id.address_layout)
+    RelativeLayout addressLayout;
     private int SELECT_TYPE = 1;
     /**
      * 图片返回的items
@@ -122,6 +128,9 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     private String oneUrl;
     private String codeUrl;
     private String codeReverseUrl;
+
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
@@ -144,34 +153,34 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         showToolbarBack(toolBar, titleText, "完善资料");
 
-        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             PersonalRes.CompanyInfo info = (PersonalRes.CompanyInfo) getIntent().getSerializableExtra(INTENT_KEY);
             name.setText(info.getName());
             contactPhone.setText(info.getContact_mobile());
             contactCode.setText(info.getContact_card());
             address.setText(info.getAddress());
-            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+            addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
             contactName.setText(info.getContact());
             phone.setText(info.getTel());
 
             codeUrl = info.getCard_front();
-            if (!TextUtils.isEmpty(codeUrl)){
+            if (!TextUtils.isEmpty(codeUrl)) {
                 Glide.with(this).load(info.getCard_front()).placeholder(R.drawable.shangchuan_zheng).into(code);
                 codeDelete.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 codeDelete.setVisibility(View.GONE);
             }
 
             codeReverseUrl = info.getCard_back();
-            if (!TextUtils.isEmpty(codeReverseUrl)){
+            if (!TextUtils.isEmpty(codeReverseUrl)) {
                 Glide.with(this).load(info.getCard_front()).placeholder(R.drawable.shangchuan_fan).into(codeReverse);
                 codeReverseDelete.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 codeReverseDelete.setVisibility(View.GONE);
             }
 
 
-            if (info.getPictures() != null && info.getPictures().size() > 0){
+            if (info.getPictures() != null && info.getPictures().size() > 0) {
                 oneLayout.setVisibility(View.GONE);
                 allLayout.setVisibility(View.VISIBLE);
                 checkBoxAll.setChecked(false);
@@ -180,50 +189,50 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 firstUrl = info.getPictures().get(0);
                 secondUrl = info.getPictures().get(1);
                 thirdUrl = info.getPictures().get(2);
-                if (!TextUtils.isEmpty(firstUrl)){
+                if (!TextUtils.isEmpty(firstUrl)) {
                     Glide.with(this).load(firstUrl).into(firstIv);
                     firstDelete.setVisibility(View.VISIBLE);
                     firstPic.setVisibility(View.GONE);
                     firstIv.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     firstPic.setVisibility(View.VISIBLE);
                     firstDelete.setVisibility(View.GONE);
                     firstIv.setVisibility(View.GONE);
                 }
 
-                if (!TextUtils.isEmpty(secondUrl)){
+                if (!TextUtils.isEmpty(secondUrl)) {
                     Glide.with(this).load(secondUrl).into(secondIv);
                     secondIv.setVisibility(View.VISIBLE);
                     secondDelete.setVisibility(View.VISIBLE);
                     secondPic.setVisibility(View.GONE);
-                }else{
+                } else {
                     secondIv.setVisibility(View.GONE);
                     secondDelete.setVisibility(View.GONE);
                     secondPic.setVisibility(View.VISIBLE);
                 }
 
-                if (!TextUtils.isEmpty(thirdUrl)){
+                if (!TextUtils.isEmpty(thirdUrl)) {
                     Glide.with(this).load(thirdUrl).into(thirdIv);
                     thirdIv.setVisibility(View.VISIBLE);
                     thirdPic.setVisibility(View.GONE);
                     thirdDelete.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     thirdIv.setVisibility(View.GONE);
                     thirdPic.setVisibility(View.VISIBLE);
                     thirdDelete.setVisibility(View.GONE);
                 }
 
 
-            }else{
+            } else {
                 oneLayout.setVisibility(View.VISIBLE);
                 allLayout.setVisibility(View.GONE);
                 oneUrl = info.getImage();
-                if (!TextUtils.isEmpty(oneUrl)){
+                if (!TextUtils.isEmpty(oneUrl)) {
                     Glide.with(this).load(oneUrl).into(oneIv);
                     onePic.setVisibility(View.GONE);
                     oneIv.setVisibility(View.VISIBLE);
                     oneDelete.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     onePic.setVisibility(View.VISIBLE);
                     oneIv.setVisibility(View.GONE);
                     oneDelete.setVisibility(View.GONE);
@@ -234,7 +243,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 SELECT_TYPE = 0;
             }
 
-        }else{
+        } else {
             allLayout.setVisibility(View.VISIBLE);
             oneLayout.setVisibility(View.GONE);
 
@@ -264,6 +273,52 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         login.setOnClickListener(this);
         initImagePicker();
+
+        addressLayout.setOnClickListener(v -> {
+            if (picker != null){
+                if (TextUtils.isEmpty(address.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = address.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else{
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+        });
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        address.setText(province.getAreaName() + "-" + city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        address.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
     }
 
     private void initImagePicker() {
@@ -358,63 +413,63 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     }
 
     private void postAction() {
-        if (TextUtils.isEmpty(name.getText().toString())){
+        if (TextUtils.isEmpty(name.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(address.getText().toString())){
-            ToastUtil.show("不能为空");
-            return;
-        }
-
-
-        if (TextUtils.isEmpty(addressDetail.getText().toString())){
+        if (TextUtils.isEmpty(address.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
 
-        if (TextUtils.isEmpty(phone.getText().toString())){
+        if (TextUtils.isEmpty(addressDetail.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(contactName.getText().toString())){
+
+        if (TextUtils.isEmpty(phone.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(contactCode.getText().toString())){
+        if (TextUtils.isEmpty(contactName.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(contactPhone.getText().toString())){
+        if (TextUtils.isEmpty(contactCode.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(codeUrl)){
+        if (TextUtils.isEmpty(contactPhone.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(codeReverseUrl)){
+        if (TextUtils.isEmpty(codeUrl)) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (SELECT_TYPE == 0){
-            if (TextUtils.isEmpty(oneUrl)){
+        if (TextUtils.isEmpty(codeReverseUrl)) {
+            ToastUtil.show("不能为空");
+            return;
+        }
+
+        if (SELECT_TYPE == 0) {
+            if (TextUtils.isEmpty(oneUrl)) {
                 ToastUtil.show("不能为空");
                 return;
             }
         }
 
-        if (SELECT_TYPE <= 3){
+        if (SELECT_TYPE <= 3) {
             if (TextUtils.isEmpty(firstUrl) || TextUtils.isEmpty(secondUrl)
-                    || TextUtils.isEmpty(thirdUrl)){
+                    || TextUtils.isEmpty(thirdUrl)) {
                 ToastUtil.show("不能为空");
                 return;
             }
@@ -423,9 +478,9 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         FillCompanyReq req = new FillCompanyReq();
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setName(name.getText().toString());
-        req.setProvince(1);
-        req.setCity(2);
-        req.setDistrict(3);
+        req.setProvince(provinceId);
+        req.setCity(cityId);
+        req.setDistrict(districtId);
         req.setAddress(address.getText().toString());
         req.setTel(phone.getText().toString());
         req.setContact(contactName.getText().toString());
@@ -434,9 +489,9 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
         req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
         List<String> remarkList = new ArrayList<>();
-        if (oneLayout.getVisibility() == View.VISIBLE){
+        if (oneLayout.getVisibility() == View.VISIBLE) {
             remarkList.add(Utils.Bitmap2StrByBase64(oneUrl));
-        }else{
+        } else {
             remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
             remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
             remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
@@ -445,6 +500,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setAuthentication(remarkList);
         req.setYears(System.currentTimeMillis());
         presenter.fillInfor(this, req);
+
+        presenter.getAddressData();
     }
 
     @Override
@@ -621,7 +678,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

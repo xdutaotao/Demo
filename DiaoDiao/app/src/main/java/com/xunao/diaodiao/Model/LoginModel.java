@@ -195,6 +195,31 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 绑定微信
+     * @param
+     * @return
+     */
+    public Observable<UserInfo> WxLogin(String openid){
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder("WxLogin");
+        sb.append(time+"").append(openid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setOpenID(openid);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().bindingWx(setBody("WxLogin", time, req))
+                .compose(RxUtils.handleResult())
+                .map(weiXinRes -> {
+                    User.getInstance().setUserId(weiXinRes.getUserid()+"");
+                    User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(weiXinRes));
+                    ShareUtils.putValue(TYPE_KEY, weiXinRes.getType());
+                    return weiXinRes;
+                });
+    }
+
+    /**
      * 注册
      * @param email
      * @param pwd

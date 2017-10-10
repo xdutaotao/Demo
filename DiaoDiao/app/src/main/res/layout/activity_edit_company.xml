@@ -38,14 +38,17 @@
                 android:background="@color/divider"/>
 
             <RelativeLayout
-                style="@style/edit_personal_layout">
+                style="@style/edit_personal_layout"
+                android:id="@+id/address_layout">
 
                 <TextView
                     style="@style/edit_personal_text"
                     android:text="公司地区"/>
 
-                <EditText
+                <TextView
                     style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
                     android:id="@+id/address"/>
 
             </RelativeLayout>

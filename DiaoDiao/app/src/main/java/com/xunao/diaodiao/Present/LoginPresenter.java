@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.LoginModel;
+import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.LoginView;
@@ -28,6 +29,22 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     @Override
                     protected void _onNext(LoginResBean token) {
                         getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                        getView().onFailure();
+                    }
+                }));
+    }
+
+    public void WxLogin(Context context, String pwd){
+        mCompositeSubscription.add(model.WxLogin(pwd)
+                .subscribe(new RxSubUtils<UserInfo>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(UserInfo token) {
+                        getView().getWXData(token);
                     }
 
                     @Override

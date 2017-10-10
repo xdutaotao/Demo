@@ -8,10 +8,14 @@ import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.EditSkillModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.EditSkillView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import cn.qqtheme.framework.entity.Province;
 import rx.Subscriber;
 
 /**
@@ -37,6 +41,22 @@ public class EditSkillPresenter extends BasePresenter<EditSkillView> {
                     protected void _onError(String msg) {
                         super._onError(msg);
                         getView().onFailure();
+                    }
+                }));
+    }
+
+    //省市区
+    public void getAddressData(){
+        mCompositeSubscription.add(model.getAddressData()
+                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(ArrayList<Province> token) {
+                        getView().getAddressData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
                     }
                 }));
     }

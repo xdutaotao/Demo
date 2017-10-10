@@ -10,12 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +35,6 @@ import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.EditSkillView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +43,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
@@ -93,6 +95,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     ImageView certiDelete;
     @BindView(R.id.login)
     Button login;
+    @BindView(R.id.address_layout)
+    RelativeLayout addressLayout;
 
     private RecyclerArrayAdapter<String> adapter;
 
@@ -104,6 +108,9 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     private String codeUrl;
     private String codeReverseUrl;
     private String certifyUrl;
+
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditSkillActivity.class);
@@ -131,22 +138,22 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.skill_text, s);
 
-                if (skillsName.toString().contains(s)){
+                if (skillsName.toString().contains(s)) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                }else{
+                } else {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s)){
+                    if (skillsName.toString().contains(s)) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView)v).setTextColor(getResources().getColor(R.color.gray));
+                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
                         skillsName.remove(s);
-                    }else{
+                    } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView)v).setTextColor(Color.WHITE);
+                        ((TextView) v).setTextColor(Color.WHITE);
                         skillsName.add(s);
                     }
                 });
@@ -155,13 +162,13 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         adapter.setOnItemClickListener((view, i) -> {
             String skillItem = adapter.getAllData().get(i);
-            if (skillsName.toString().contains(skillItem)){
+            if (skillsName.toString().contains(skillItem)) {
                 view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView)view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
+                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
                 skillsName.remove(skillItem);
-            }else{
+            } else {
                 view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView)view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
+                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
                 skillsName.add(skillItem);
             }
 
@@ -181,7 +188,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int len = s.toString().length();
-                inforNum.setText(len+"/200");
+                inforNum.setText(len + "/200");
             }
 
             @Override
@@ -201,42 +208,42 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         certification.setOnClickListener(this);
         certiDelete.setOnClickListener(this);
 
-        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             PersonalRes.TechnicianInfo info = (PersonalRes.TechnicianInfo) getIntent().getSerializableExtra(INTENT_KEY);
             name.setText(info.getName());
             phone.setText(info.getMobile());
             personCode.setText(info.getCard());
             address.setText(info.getAddress());
-            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+            addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
             year.setText(info.getExperience());
-            personNum.setText(info.getTeam_number()+"");
+            personNum.setText(info.getTeam_number() + "");
             skillsName.addAll(Arrays.asList(info.getProject_type().split(",")));
 
             information.setText(info.getEvaluate());
-            inforNum.setText(info.getEvaluate().length()+" / 200");
-            if (!TextUtils.isEmpty(info.getCard_front())){
+            inforNum.setText(info.getEvaluate().length() + " / 200");
+            if (!TextUtils.isEmpty(info.getCard_front())) {
                 codeUrl = info.getCard_front();
                 Glide.with(this).load(codeUrl).into(code);
                 codeDelete.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
                 codeDelete.setVisibility(View.GONE);
             }
 
-            if (!TextUtils.isEmpty(info.getCard_back())){
+            if (!TextUtils.isEmpty(info.getCard_back())) {
                 codeReverseUrl = info.getCard_back();
                 Glide.with(this).load(codeReverseUrl).into(codeReverse);
                 codeReverseDelete.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
                 codeDelete.setVisibility(View.GONE);
             }
 
-            if (!TextUtils.isEmpty(info.getCertificate())){
+            if (!TextUtils.isEmpty(info.getCertificate())) {
                 certifyUrl = info.getCertificate();
                 Glide.with(this).load(certifyUrl).into(certification);
                 certiDelete.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 Glide.with(this).load(R.drawable.shangchuan).into(certification);
                 certiDelete.setVisibility(View.GONE);
             }
@@ -245,6 +252,24 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         adapter.addAll(skills);
         initImagePicker();
+
+        addressLayout.setOnClickListener(v -> {
+            if (picker != null){
+                if (TextUtils.isEmpty(address.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = address.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else{
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+        });
+        presenter.getAddressData();
     }
 
     private void initImagePicker() {
@@ -258,48 +283,48 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     }
 
 
-    private void goInAppAction(){
-        if (TextUtils.isEmpty(name.getText().toString())){
+    private void goInAppAction() {
+        if (TextUtils.isEmpty(name.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(phone.getText().toString())){
+        if (TextUtils.isEmpty(phone.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(personCode.getText().toString())){
+        if (TextUtils.isEmpty(personCode.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(address.getText().toString())){
+        if (TextUtils.isEmpty(address.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(addressDetail.getText().toString())){
+        if (TextUtils.isEmpty(addressDetail.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(year.getText().toString())){
+        if (TextUtils.isEmpty(year.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(personNum.getText().toString())){
+        if (TextUtils.isEmpty(personNum.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(skillsName.toString())){
+        if (TextUtils.isEmpty(skillsName.toString())) {
             ToastUtil.show("不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(information.getText().toString())){
+        if (TextUtils.isEmpty(information.getText().toString())) {
             ToastUtil.show("不能为空");
             return;
         }
@@ -308,16 +333,16 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setName(name.getText().toString());
         req.setMobile(phone.getText().toString());
-        req.setProvince(1);
-        req.setCity(2);
-        req.setDistrict(3);
+        req.setProvince(provinceId);
+        req.setCity(cityId);
+        req.setDistrict(districtId);
         req.setCard(personCode.getText().toString());
         req.setAddress(address.getText().toString());
         req.setExperience(year.getText().toString());
         req.setTeam_number(Integer.valueOf(personNum.getText().toString()));
         req.setEvaluate(information.getText().toString());
         String projectType = skillsName.toString();
-        projectType = projectType.substring(1, projectType.length()-1);
+        projectType = projectType.substring(1, projectType.length() - 1);
         req.setProject_type(projectType);
         req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
         req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
@@ -333,6 +358,35 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         ToastUtil.show("完善完成");
     }
 
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        address.setText(province.getAreaName() + "-" + city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        address.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
+    }
+
     private void selectPhoto() {
         Intent intent = new Intent(this, ImageGridActivity.class);
         intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, imageItems);
@@ -341,7 +395,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.code:
                 selectPhoto();
                 SELECT_TYPE = 4;
@@ -424,7 +478,6 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

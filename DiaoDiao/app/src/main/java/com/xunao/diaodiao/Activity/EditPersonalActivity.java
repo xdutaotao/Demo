@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.FillNormalReq;
@@ -18,10 +19,16 @@ import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.EditPersonalView;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
@@ -43,9 +50,14 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
     @BindView(R.id.phone)
     EditText phone;
     @BindView(R.id.address)
-    EditText address;
+    TextView address;
     @BindView(R.id.address_detail)
     EditText addressDetail;
+    @BindView(R.id.address_layout)
+    RelativeLayout addressLayout;
+
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditPersonalActivity.class);
@@ -70,35 +82,53 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
 
         login.setOnClickListener(this);
 
-        if (getIntent().getSerializableExtra(INTENT_KEY) != null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             PersonalRes.FamilyInfo info = new PersonalRes.FamilyInfo();
             name.setText(info.getName());
             phone.setText(info.getMobile());
-            address.setText(info.getAddress());
-            addressDetail.setText(info.getProvince()+info.getCity()+info.getDistrict()+"");
+            //address.setText(info.getAddress());
+            //addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
+            addressDetail.setText(info.getAddress());
         }
+
+        addressLayout.setOnClickListener(v -> {
+            if (picker != null){
+                if (TextUtils.isEmpty(address.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = address.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else{
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login:
-                if (TextUtils.isEmpty(name.getText())){
+                if (TextUtils.isEmpty(name.getText())) {
                     ToastUtil.show("不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(phone.getText())){
+                if (TextUtils.isEmpty(phone.getText())) {
                     ToastUtil.show("不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(address.getText())){
+                if (TextUtils.isEmpty(address.getText())) {
                     ToastUtil.show("不能为空");
                     return;
                 }
 
-                if (TextUtils.isEmpty(addressDetail.getText())){
+                if (TextUtils.isEmpty(addressDetail.getText())) {
                     ToastUtil.show("不能为空");
                     return;
                 }
@@ -106,9 +136,9 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
                 req.setName(name.getText().toString());
                 req.setMobile(phone.getText().toString());
                 req.setAddress(address.getText().toString());
-                req.setProvince(1);
-                req.setCity(2);
-                req.setDistrict(3);
+                req.setProvince(provinceId);
+                req.setCity(cityId);
+                req.setDistrict(districtId);
 
                 presenter.fillInfor(this, req);
 
@@ -120,6 +150,36 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
     public void getData(LoginResBean resBean) {
         ToastUtil.show("提交成功");
         finish();
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        address.setText(province.getAreaName() + "-" + city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        address.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
+
     }
 
 

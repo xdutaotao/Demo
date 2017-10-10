@@ -10,7 +10,15 @@ public class UserInfo {
     private String mobile;
     private int type;
     private int is_frozen;
+    private int has_binding;
 
+    public int getHas_binding() {
+        return has_binding;
+    }
+
+    public void setHas_binding(int has_binding) {
+        this.has_binding = has_binding;
+    }
 
     public int getUserid() {
         return userid;

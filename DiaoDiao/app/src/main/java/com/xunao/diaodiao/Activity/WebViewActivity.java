@@ -215,7 +215,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             //修改项目信息
             int types = ShareUtils.getValue(TYPE_KEY, 0);
             if (types == COMPANY_TYPE){
-                
+
             }
         });
 
