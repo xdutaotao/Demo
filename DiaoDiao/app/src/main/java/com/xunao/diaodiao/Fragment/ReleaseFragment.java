@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -175,12 +176,12 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 //        int status = ShareUtils.getValue(STATUS, 0);
 //        if (status != 1){
 //            if (status == 4){
-//                SpannableString string = new SpannableString("请先完善资料后才能 发布/接单");
+//                SpannableStringBuilder string = new SpannableStringBuilder("请先完善资料后才能 发布/接单");
 //                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-//                string.setSpan(span, 10, 14, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                string.setSpan(span, 10, 15, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //
 //                new IOSDialog(getContext()).builder()
-//                        .setMsg(string.toString())
+//                        .setMsg(string)
 //                        .setNegativeButton("稍后再说", null)
 //                        .setNegativeBtnColor(R.color.nav_gray)
 //                        .setPositiveBtnColor(R.color.black)
@@ -196,12 +197,12 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 //                        })
 //                        .show();
 //            }else{
-//                SpannableString string = new SpannableString("审核通过后才能 发布/接单");
+//                SpannableStringBuilder string = new SpannableStringBuilder("审核通过后才能 发布/接单");
 //                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.colorAccent));
-//                string.setSpan(span, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                string.setSpan(span, 8, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //
 //                new IOSDialog(getContext()).builder()
-//                        .setMsg(string.toString())
+//                        .setMsg(string)
 //                        .setNegativeButton("稍后再说", null)
 //                        .setNegativeBtnColor(R.color.nav_gray)
 //                        .setPositiveBtnColor(R.color.black)

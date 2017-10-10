@@ -290,6 +290,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 picker.show();
             }
         });
+
+        presenter.getAddressData(this);
     }
 
     @Override
@@ -501,7 +503,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setYears(System.currentTimeMillis());
         presenter.fillInfor(this, req);
 
-        presenter.getAddressData();
+        presenter.getAddressData(this);
     }
 
     @Override

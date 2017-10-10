@@ -127,10 +127,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:background="@null"
-                    android:hint="请填写意见反馈"
+                    android:hint="简单描述项目,以及对施工人员的要求"
                     android:textColorHint="#D2D2D2"
                     android:id="@+id/content"
-                    android:gravity="top"/>
+                    android:gravity="top"
+                    android:textSize="40px"/>
 
                 <TextView
                     android:layout_width="match_parent"

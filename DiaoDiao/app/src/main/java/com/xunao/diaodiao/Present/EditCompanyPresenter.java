@@ -45,9 +45,9 @@ public class EditCompanyPresenter extends BasePresenter<EditCompanyView> {
     }
 
     //省市区
-    public void getAddressData(){
+    public void getAddressData(Context context){
         mCompositeSubscription.add(model.getAddressData()
-                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(ArrayList<Province> token) {
                         getView().getAddressData(token);

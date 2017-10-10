@@ -134,7 +134,7 @@
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
-                        android:text="零工工费"/>
+                        android:text="项目工费"/>
                     <TextView style="@style/item_right_text"
                         android:id="@+id/project_fee"
                         android:text="采暖系统水处理"/>

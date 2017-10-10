@@ -99,6 +99,69 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                         }
 
                         baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                            //地暖和电地暖是唯一选择
+                            if (skillsName.toString().contains("6") &&
+                                    Integer.valueOf(s.getId()) == 7) {
+                                ToastUtil.show("和地暖重复");
+                                return;
+                            }
+                            if (skillsName.toString().contains("7") &&
+                                    Integer.valueOf(s.getId()) == 6) {
+                                ToastUtil.show("和电地暖重复");
+                                return;
+                            }
+                            //暖气片明装和暗装是唯一选择
+                            if (skillsName.toString().contains("8") &&
+                                    Integer.valueOf(s.getId()) == 9) {
+                                ToastUtil.show("和暖气片明装重复");
+                                return;
+                            }
+                            if (skillsName.toString().contains("9") &&
+                                    Integer.valueOf(s.getId()) == 8) {
+                                ToastUtil.show("和暖气片暗装重复");
+                                return;
+                            }
+                            //水处理只能选择一种
+                            if ((skillsName.toString().contains("10")
+                                    || skillsName.toString().contains("11")
+                                    || skillsName.toString().contains("12")
+                                    || skillsName.toString().contains("13"))
+                                    && (Integer.valueOf(s.getId()) > 9
+                                            && Integer.valueOf(s.getId()) < 14)){
+                                ToastUtil.show("水处理只能选择一个");
+                                return;
+                            }
+                            //空调系统只能选择一种
+                            if (skillsName.toString().contains("14")
+                                    && Integer.valueOf(s.getId()) == 15){
+                                ToastUtil.show("空调系统只能选择一个");
+                                return;
+                            }
+                            if (skillsName.toString().contains("15")
+                                    && Integer.valueOf(s.getId()) == 14){
+                                ToastUtil.show("空调系统只能选择一个");
+                                return;
+                            }
+                            //水泥回填选中时其他不能被选中
+                            if (Integer.valueOf(s.getId()) == 17){
+                                skillsName.clear();
+                                skillsName.add(s.getId());
+                                allSelectList.clear();
+                            }
+                            //空调和地暖不能同时被选中
+                            if (Integer.valueOf(s.getId()) == 6
+                                    && (skillsName.toString().contains("14")
+                                        || skillsName.toString().contains("15"))){
+                                ToastUtil.show("空调和地暖不能同时被选中");
+                                return;
+                            }
+
+                            if (Integer.valueOf(s.getId()) == 14 || Integer.valueOf(s.getId()) == 15
+                                    && skillsName.toString().contains("6")){
+                                ToastUtil.show("空调和地暖不能同时被选中");
+                                return;
+                            }
+
                             if (skillsName.toString().contains(s.getId())) {
                                 v.setBackgroundResource(R.drawable.btn_blank_bg);
                                 ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
@@ -130,25 +193,6 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     }
                 }
                 firstAdapter.addAll(temp);
-
-//                TagLayout tagLayout = (TagLayout) baseViewHolder.getConvertView().findViewById(R.id.tag_container_layout);
-//
-//                List<String> temp = new ArrayList<>();
-//                for(TypeInfoRes.Type_Info info : type_info){
-//                    if (Integer.valueOf(info.getParent_id()) == 0){
-//                        baseViewHolder.setText(R.id.type, info.getTitle());
-//                    }else{
-//                        temp.add(info.getTitle());
-//                    }
-//                }
-//                tagLayout.setTags(temp);
-//                tagLayout.setOnTagClickListener(new TagLayout.OnTagClickListener() {
-//                    @Override
-//                    public void onTagClick(Tag tag, int position) {
-//                        //if (skillsName.toString().contains(tag.text))
-//                    }
-//                });
-//                firstAdapter.addAll(temp);
 
             }
         };

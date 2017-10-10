@@ -469,7 +469,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 req.setDistrict(districtId);
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
-                req.setBuild_time(Utils.convert2long(time.getText().toString()));
+                req.setBuild_time(Utils.convert2long(time.getText().toString()+" 00:00"));
                 req.setImages(pathList);
                 req.setDescribe(content.getText().toString());
                 req.setExpenses(releaseProjReqs);
@@ -491,17 +491,18 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                         timeLong.append(year + "-")
                                 .append(month + "-")
                                 .append(day);
+                        time.setText(timeLong.toString());
 
-                        timePicker.show();
-                        timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
-                            @Override
-                            public void onTimePicked(String hour, String minute) {
-                                timeLong.append(" " + hour + ":")
-                                        .append(minute);
-
-                                time.setText(timeLong.toString());
-                            }
-                        });
+//                        timePicker.show();
+//                        timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+//                            @Override
+//                            public void onTimePicked(String hour, String minute) {
+//                                timeLong.append(" " + hour + ":")
+//                                        .append(minute);
+//
+//                                time.setText(timeLong.toString());
+//                            }
+//                        });
 
                     }
                 });
