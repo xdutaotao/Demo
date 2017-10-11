@@ -18,6 +18,7 @@ import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.HomeSearchRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
@@ -309,6 +310,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> getRegionId(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<HomeSearchRes>> indexSearch(@Body RequestBody body);
 
     @FormUrlEncoded
     @POST("personalCenter/personalData")

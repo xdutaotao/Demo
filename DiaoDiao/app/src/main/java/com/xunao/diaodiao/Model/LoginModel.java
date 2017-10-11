@@ -39,6 +39,7 @@ import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.HasRateRes;
 import com.xunao.diaodiao.Bean.HeadIconReq;
 import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.HomeSearchRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
@@ -124,6 +125,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
+import static com.xunao.diaodiao.Common.Constants.city;
 
 /**
  * Created by
@@ -970,7 +972,7 @@ public class LoginModel extends BaseModel {
                 .append(req.getLng()).append(req.getNearby())
                 .append(req.getPage())
                 .append(req.getPageSize()).append(req.getTime_type());
-        if (!TextUtils.isEmpty(req.getType())){
+        if (req.getType()==0){
             sb.append(req.getType());
         }
         sb.append("security");
@@ -2136,6 +2138,57 @@ public class LoginModel extends BaseModel {
             buffer.append("\n");
         }
         return buffer.toString();//把读取的数据返回
+    }
+
+    public Observable<Integer> getCityId(){
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                List<CityBean.CityItemBean> list = getCities();
+                String cityString="";
+                if (city.contains("市")) {
+                    cityString = city.substring(0, city.length() - 1);
+                }
+                for(CityBean.CityItemBean item: list){
+                    if (TextUtils.equals(item.getRegion_name(), cityString)){
+                        subscriber.onNext(Integer.valueOf(item.getId()));
+
+                        break;
+                    }
+                }
+
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+
+    public Observable<HomeSearchRes> indexSearch(FindProjReq req){
+        String rateKey = "indexSearch";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        return getCityId().map(integer -> {
+            req.setCity(integer);
+            StringBuilder sb = new StringBuilder(rateKey);
+            sb.append(time+"").append(req.getCity()).append(req.getKeyword())
+                    .append(req.getLat()).append(req.getLng())
+                    .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
+                    .append(req.getProject_type()).append(req.getTime_type())
+                    .append(req.getType())
+                    .append(userid)
+                    .append("security");
+
+
+            req.setVerify(sb.toString());
+            return req;
+        }).flatMap(req1 -> {
+            return config.getRetrofitService().indexSearch(setBody(rateKey, time, req1));
+        })
+        .compose(RxUtils.handleResult());
+
     }
 
 

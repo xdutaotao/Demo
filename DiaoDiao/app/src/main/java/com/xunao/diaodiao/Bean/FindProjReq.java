@@ -8,12 +8,61 @@ package com.xunao.diaodiao.Bean;
 public class FindProjReq {
     private int page;
     private int pageSize;
-    private String type;
+    private int type;
     private int nearby;
     private int time_type;
     private String lat;
     private String lng;
     private String verify;
+    private int city;
+    private String keyword;
+    private int userid;
+    private int usertype;
+    private int project_type;
+
+    public int getProject_type() {
+        return project_type;
+    }
+
+    public void setProject_type(int project_type) {
+        this.project_type = project_type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public void setCity(int city) {
+        this.city = city;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public int getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(int usertype) {
+        this.usertype = usertype;
+    }
 
     public int getPage() {
         return page;
@@ -31,15 +80,9 @@ public class FindProjReq {
         this.pageSize = pageSize;
     }
 
-
-    public String getType() {
+    public int getType() {
         return type;
     }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
 
     public String getLat() {
         return lat;

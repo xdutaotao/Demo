@@ -32,6 +32,7 @@ import com.gzfgeh.viewpagecycle.ImageCycleView;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
+import com.xunao.diaodiao.Activity.HomeSearchActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
@@ -282,7 +283,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
                 if (!TextUtils.isEmpty(editText.getText())){
-                    FindProjectActivity.startActivity(HomeFragment.this.getContext(), 1);
+                    HomeSearchActivity.startActivity(HomeFragment.this.getContext(), editText.getText().toString());
                 }
 
                 return true;

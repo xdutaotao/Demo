@@ -24,6 +24,7 @@ import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.GetMoneyActivity;
 import com.xunao.diaodiao.Activity.HelpDetailActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
+import com.xunao.diaodiao.Activity.HomeSearchActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.JoinDetailActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
@@ -174,4 +175,5 @@ public interface ActivityComponent {
     void inject(RecommandActivity activity);
     void inject(ReleaseSkillSecondActivity activity);
     void inject(AddPhoneActivity activity);
+    void inject(HomeSearchActivity activity);
 }

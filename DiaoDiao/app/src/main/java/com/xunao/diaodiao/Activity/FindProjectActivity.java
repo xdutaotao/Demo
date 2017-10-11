@@ -134,14 +134,6 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
         adapter.setOnItemClickListener((view, i) -> {
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
-//                ProjectDetailActivity.startActivity(FindProjectActivity.this,
-//                        adapter.getAllData().get(i).getId(), type);
-
-//                WebViewActivity.startActivity(FindProjectActivity.this,
-//                        "home_proj_detail.html",
-//                        adapter.getAllData().get(i).getId(), type);
-                //presenter.projectDetail(this, adapter.getAllData().get(i).getId(), 0);
-
                 WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
 
@@ -169,7 +161,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             req.setPage(page);
             req.setNearby(0);
             req.setTime_type(i);
-            req.setType("");
+            req.setType(0);
             presenter.getProjectList(FindProjectActivity.this, req, type);
         });
 
@@ -185,14 +177,11 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             projType.setTextColor(getResources().getColor(R.color.nav_gray));
             projTime.setTextColor(getResources().getColor(R.color.nav_gray));
 
-            //Drawable drawable = getResources().getDrawable(R.drawable.)
             req.setLat(latData);
             req.setLng(lngData);
             page = 1;
             req.setPage(page);
             req.setNearby(1);
-            req.setTime_type(0);
-            req.setType("");
             presenter.getProjectList(FindProjectActivity.this, req, type);
         });
 
@@ -222,8 +211,6 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             req.setLng(lngData);
             page = 1;
             req.setPage(page);
-            req.setNearby(0);
-            req.setTime_type(0);
             presenter.getProjectList(FindProjectActivity.this, req, type);
 
         });

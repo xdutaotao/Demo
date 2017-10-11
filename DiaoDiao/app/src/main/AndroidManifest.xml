@@ -224,6 +224,7 @@
         <activity android:name=".Activity.CashRecordActivity"/>
         <activity android:name=".Activity.ReleaseSkillSecondActivity"/>
         <activity android:name=".Activity.AddPhoneActivity"/>
+        <activity android:name=".Activity.HomeSearchActivity"/>
 
     </application>
 

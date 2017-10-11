@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <include layout="@layout/search_project" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160px"
+        android:layout_marginBottom="20px"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/near_layout"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近"
+                android:id="@+id/near"
+                android:drawablePadding="10px"
+                android:drawableRight="@drawable/icon_xiala"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/divider"
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="40px"/>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/proj_type_layout"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="项目类型"
+                android:id="@+id/proj_type"
+                android:drawablePadding="10px"
+                android:drawableRight="@drawable/icon_xiala"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/divider"
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="40px"/>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/proj_time_layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="施工时间"
+                android:id="@+id/proj_time"
+                android:drawablePadding="10px"
+                android:drawableRight="@drawable/icon_shaixan"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.gzfgeh.GRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"/>
+
+</LinearLayout>
