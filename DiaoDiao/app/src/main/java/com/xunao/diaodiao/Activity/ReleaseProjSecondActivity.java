@@ -480,9 +480,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             case R.id.time:
                 DatePicker datePicker = new DatePicker(this);
                 datePicker.show();
-
-                TimePicker timePicker = new TimePicker(this);
-
                 timeLong = new StringBuilder();
                 datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                     @Override

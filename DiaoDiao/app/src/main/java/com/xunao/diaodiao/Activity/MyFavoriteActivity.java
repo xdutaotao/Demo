@@ -95,7 +95,7 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
                 }
 
                 baseViewHolder.setOnClickListener(R.id.shou_cang, v -> {
-                    presenter.cancelCollect(s.getCollect_id());
+                    //presenter.cancelCollect(s.getCollect_id());
                     //baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang);
                 });
             }

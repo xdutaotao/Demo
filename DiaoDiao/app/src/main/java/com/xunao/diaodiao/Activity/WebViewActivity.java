@@ -60,6 +60,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private boolean isCollect = false;
     private int id;
     private String btnType;
+    private String url;
 
     public static final String LG_DETAIL = "release_lg_detail";
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
@@ -138,6 +139,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         btnType = getIntent().getStringExtra("BTN_TYPE");
         projectBean = (OrderCompRes.Project) getIntent().getSerializableExtra("BEAN");
         project_type = getIntent().getIntExtra("project_type", 0);
+        url = getIntent().getStringExtra(INTENT_KEY);
+        if (url.contains("has_collected=1")){
+            //收藏
+            isCollect = true;
+        }
 //        if (id != 0) {
 //            webView.loadUrl(H5_URL + getIntent().getStringExtra(INTENT_KEY) +
 //                    "?project_id=" + id + "&userid=" + User.getInstance().getUserId() + "&type=" + type + "&typeRole=" + ShareUtils.getValue(TYPE_KEY, 0))
@@ -254,6 +260,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (TextUtils.equals(btnType, HOME_DETAIL)){
             getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
+            if (isCollect) {
+                menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
+            } else {
+                menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02);
+            }
         }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
             getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
         }

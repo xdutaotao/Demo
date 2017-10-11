@@ -24,6 +24,15 @@ public class FillCompanyReq {
     private String card_front;
     private String card_back;
     private List<String> authentication;
+    private long establish_time;
+
+    public long getEstablish_time() {
+        return establish_time;
+    }
+
+    public void setEstablish_time(long establish_time) {
+        this.establish_time = establish_time;
+    }
 
     public int getUserid() {
         return userid;

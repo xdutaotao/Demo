@@ -203,7 +203,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
                 baseViewHolder.setText(R.id.item_content, s.getTitle());
                 baseViewHolder.setText(R.id.address, s.getDesc());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
                 baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
@@ -220,7 +220,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
                 baseViewHolder.setText(R.id.item_content, s.getTitle());
                 baseViewHolder.setText(R.id.address, s.getDesc());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
                 baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
@@ -237,7 +237,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project s) {
                 baseViewHolder.setText(R.id.item_content, s.getTitle());
                 baseViewHolder.setText(R.id.address, s.getDesc());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(Long.valueOf(s.getBuild_time())));
+                baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
                 baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
@@ -282,7 +282,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
                 if (!TextUtils.isEmpty(editText.getText())){
-                    //FindProjectActivity.startActivity(HomeFragment.this, 1);
+                    FindProjectActivity.startActivity(HomeFragment.this.getContext(), 1);
                 }
 
                 return true;

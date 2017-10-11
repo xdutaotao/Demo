@@ -44,6 +44,7 @@ import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.AddressPicker;
+import cn.qqtheme.framework.picker.DatePicker;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
@@ -118,6 +119,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     EditText contactPhone;
     @BindView(R.id.address_layout)
     RelativeLayout addressLayout;
+    @BindView(R.id.build_time)
+    TextView buildTime;
+    @BindView(R.id.build_time_layout)
+    RelativeLayout buildTimeLayout;
     private int SELECT_TYPE = 1;
     /**
      * 图片返回的items
@@ -132,6 +137,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
     private int provinceId, cityId, districtId;
     private AddressPicker picker;
+    private StringBuilder timeLong;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
@@ -276,20 +282,37 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         initImagePicker();
 
         addressLayout.setOnClickListener(v -> {
-            if (picker != null){
-                if (TextUtils.isEmpty(address.getText())){
+            if (picker != null) {
+                if (TextUtils.isEmpty(address.getText())) {
                     picker.setSelectedItem("上海", "上海", "长宁");
-                }else{
+                } else {
                     String[] addresss = address.getText().toString().split("-");
-                    if (addresss.length == 3){
+                    if (addresss.length == 3) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
-                    }else{
+                    } else if (addresss.length == 2) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
                     }
 
                 }
                 picker.show();
             }
+        });
+
+        buildTimeLayout.setOnClickListener(v -> {
+            DatePicker datePicker = new DatePicker(this);
+            datePicker.show();
+            timeLong = new StringBuilder();
+            datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                @Override
+                public void onDatePicked(String year, String month, String day) {
+                    //ToastUtil.show(year+month+day);
+                    timeLong.append(year + "-")
+                            .append(month + "-")
+                            .append(day);
+                    buildTime.setText(timeLong.toString());
+
+                }
+            });
         });
 
         presenter.getAddressData(this);
@@ -491,6 +514,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setContact_card(contactCode.getText().toString());
         req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
         req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
+        req.setEstablish_time(Utils.convert2long(buildTime.getText().toString()+" 00:00"));
         List<String> remarkList = new ArrayList<>();
         if (oneLayout.getVisibility() == View.VISIBLE) {
             remarkList.add(Utils.Bitmap2StrByBase64(oneUrl));
@@ -503,8 +527,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         req.setAuthentication(remarkList);
         req.setYears(System.currentTimeMillis());
         presenter.fillInfor(this, req);
-
-        presenter.getAddressData(this);
     }
 
     @Override

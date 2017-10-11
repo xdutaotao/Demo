@@ -116,7 +116,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             protected void convert(BaseViewHolder baseViewHolder, FindProjectRes.FindProject homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setText(R.id.address, homeBean.getDesc());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getBuild_time()));
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getType());
                 baseViewHolder.setText(R.id.distance, homeBean.getDistance());
                 if (type == 0) {

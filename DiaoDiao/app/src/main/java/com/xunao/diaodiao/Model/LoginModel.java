@@ -396,7 +396,7 @@ public class LoginModel extends BaseModel {
                 .append(req.getCard_front()).append(req.getCity())
                 .append(req.getContact())
                 .append(req.getContact_card()).append(req.getContact_mobile())
-                .append(req.getDistrict()).append(req.getName())
+                .append(req.getDistrict()).append(req.getEstablish_time()).append(req.getName())
                 .append(req.getProvince()).append(req.getTel()).append(req.getType())
                 .append(useid).append(req.getYears())
                 .append("security");
