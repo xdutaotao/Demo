@@ -165,10 +165,11 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             name.setText(info.getName());
             contactPhone.setText(info.getContact_mobile());
             contactCode.setText(info.getContact_card());
-            address.setText(info.getAddress());
-            addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
+            address.setText(info.getRegion());
+            addressDetail.setText(info.getAddress());
             contactName.setText(info.getContact());
             phone.setText(info.getTel());
+            buildTime.setText(Utils.strToDateLong(info.getEstablish_time()));
 
             codeUrl = info.getCard_front();
             if (!TextUtils.isEmpty(codeUrl)) {
@@ -187,7 +188,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             }
 
 
-            if (info.getPictures() != null && info.getPictures().size() > 0) {
+            if (info.getPictures() != null && info.getPictures().size() == 3) {
                 oneLayout.setVisibility(View.GONE);
                 allLayout.setVisibility(View.VISIBLE);
                 checkBoxAll.setChecked(false);
@@ -233,7 +234,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             } else {
                 oneLayout.setVisibility(View.VISIBLE);
                 allLayout.setVisibility(View.GONE);
-                oneUrl = info.getImage();
+                oneUrl = info.getPictures().get(0);
                 if (!TextUtils.isEmpty(oneUrl)) {
                     Glide.with(this).load(oneUrl).into(oneIv);
                     onePic.setVisibility(View.GONE);
@@ -440,55 +441,60 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
     private void postAction() {
         if (TextUtils.isEmpty(name.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("公司名称不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(address.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("公司地区不能为空");
             return;
         }
 
 
         if (TextUtils.isEmpty(addressDetail.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("公司地址不能为空");
             return;
         }
 
 
         if (TextUtils.isEmpty(phone.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("公司电话不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(buildTime.getText().toString())) {
+            ToastUtil.show("成立时间不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(contactName.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("联系人不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(contactCode.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("联系人身份证号码不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(contactPhone.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("联系人电话不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(codeUrl)) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("身份证正面不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(codeReverseUrl)) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("身份证反面不能为空");
             return;
         }
 
         if (SELECT_TYPE == 0) {
             if (TextUtils.isEmpty(oneUrl)) {
-                ToastUtil.show("不能为空");
+                ToastUtil.show("公司认证不能为空");
                 return;
             }
         }
@@ -496,7 +502,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         if (SELECT_TYPE <= 3) {
             if (TextUtils.isEmpty(firstUrl) || TextUtils.isEmpty(secondUrl)
                     || TextUtils.isEmpty(thirdUrl)) {
-                ToastUtil.show("不能为空");
+                ToastUtil.show("公司认证不能为空");
                 return;
             }
         }

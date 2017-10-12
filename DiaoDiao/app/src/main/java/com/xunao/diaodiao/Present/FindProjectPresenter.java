@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.FindProjectModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -69,6 +70,22 @@ public class FindProjectPresenter extends BasePresenter<FindProjectView> {
                     @Override
                     public void _onError(String s) {
                         getView().onFailure();
+                    }
+                }));
+    }
+
+    //项目类型
+    public void getTypeInfo(){
+        mCompositeSubscription.add(model.getTypeInfo()
+                .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(TypeInfoRes token) {
+                        getView().getProjType(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
                     }
                 }));
     }

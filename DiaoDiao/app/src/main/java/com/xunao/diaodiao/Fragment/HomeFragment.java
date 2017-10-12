@@ -292,6 +292,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             }
         });
 
+        moreOne.setOnClickListener(v -> {
+            //项目
+            FindProjectActivity.startActivity(HomeFragment.this.getContext(), 0);
+        });
+
+        moreTwo.setOnClickListener(v -> {
+            //零工
+            FindProjectActivity.startActivity(HomeFragment.this.getContext(), 1);
+        });
+
+        moreThree.setOnClickListener(v -> {
+
+        });
+
         return view;
     }
 

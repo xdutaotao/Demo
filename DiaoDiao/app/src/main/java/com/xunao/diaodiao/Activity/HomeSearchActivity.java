@@ -207,18 +207,15 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
 
 
         nearLayout.setOnClickListener(v -> {
-//            if (req.getNearby() == 0){
-//                near.setTextColor(getResources().getColor(R.color.colorAccent));
-//            }else{
-//                near.setTextColor(getResources().getColor(R.color.nav_gray));
-//            }
-            near.setTextColor(getResources().getColor(R.color.colorAccent));
-//            projType.setTextColor(getResources().getColor(R.color.nav_gray));
-//            projTime.setTextColor(getResources().getColor(R.color.nav_gray));
-
+            if (req.getNearby() == 0){
+                near.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setNearby(1);
+            }else{
+                near.setTextColor(getResources().getColor(R.color.nav_gray));
+                req.setNearby(0);
+            }
             page = 1;
             req.setPage(page);
-            req.setNearby(1);
             presenter.indexSearch(HomeSearchActivity.this, req);
         });
 

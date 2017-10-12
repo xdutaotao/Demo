@@ -8,8 +8,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +23,7 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.FindProjectPresenter;
 import com.xunao.diaodiao.R;
@@ -76,11 +79,13 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
     private RecyclerArrayAdapter<FindProjectRes.FindProject> adapter;
     private RecyclerArrayAdapter<String> textAdapter;
+    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> projAdapter;
 
     private int page;
     private FindProjReq req = new FindProjReq();
     private int type;
     private CustomPopWindow popWindow;
+    private int projectType = -1;
 
     public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, FindProjectActivity.class);
@@ -154,14 +159,16 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
         textAdapter.setOnItemClickListener((view, i) -> {
             popWindow.dissmiss();
-
+            if (i == req.getTime_type()){
+                projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+            }else{
+                projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
             req.setLat(latData);
             req.setLng(lngData);
             page = 1;
             req.setPage(page);
-            req.setNearby(0);
             req.setTime_type(i);
-            req.setType(0);
             presenter.getProjectList(FindProjectActivity.this, req, type);
         });
 
@@ -172,49 +179,84 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         timeData.add("7以上");
         textAdapter.addAll(timeData);
 
-        nearLayout.setOnClickListener(v -> {
-            near.setTextColor(getResources().getColor(R.color.colorAccent));
-            projType.setTextColor(getResources().getColor(R.color.nav_gray));
-            projTime.setTextColor(getResources().getColor(R.color.nav_gray));
-
-            req.setLat(latData);
-            req.setLng(lngData);
-            page = 1;
-            req.setPage(page);
-            req.setNearby(1);
-            presenter.getProjectList(FindProjectActivity.this, req, type);
-        });
-
         View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
         RecyclerView popRecyclerView = (RecyclerView) popView.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         popRecyclerView.setLayoutManager(manager);
-        popRecyclerView.setAdapter(textAdapter);
 
         projTimeLayout.setOnClickListener(v -> {
-            near.setTextColor(getResources().getColor(R.color.nav_gray));
-            projType.setTextColor(getResources().getColor(R.color.nav_gray));
+            popRecyclerView.setAdapter(textAdapter);
             projTime.setTextColor(getResources().getColor(R.color.colorAccent));
-
             popWindow = new CustomPopWindow.PopupWindowBuilder(FindProjectActivity.this)
                     .setView(popView)
                     .create()
                     .showAsDropDown(projTimeLayout, 0, 10);
         });
 
+
+        projAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.single_recycler_item_pop) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                baseViewHolder.setText(R.id.text, s.getTitle());
+            }
+        };
+
+        projAdapter.setOnItemClickListener((view, i) -> {
+            if (projectType == Integer.valueOf(projAdapter.getAllData().get(i).getId())){
+                projType.setTextColor(getResources().getColor(R.color.nav_gray));
+                projectType = -1;
+            }else{
+                projType.setTextColor(getResources().getColor(R.color.colorAccent));
+                projectType = Integer.valueOf(projAdapter.getAllData().get(i).getId());
+            }
+
+            req.setLat(latData);
+            req.setLng(lngData);
+            page = 1;
+            req.setPage(page);
+            req.setType(Integer.valueOf(projAdapter.getAllData().get(i).getId()));
+            presenter.getProjectList(FindProjectActivity.this, req, type);
+        });
+
         projTypeLayout.setOnClickListener(v -> {
-            near.setTextColor(getResources().getColor(R.color.nav_gray));
             projType.setTextColor(getResources().getColor(R.color.colorAccent));
-            projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+            popRecyclerView.setAdapter(projAdapter);
+            popWindow = new CustomPopWindow.PopupWindowBuilder(FindProjectActivity.this)
+                    .setView(popView)
+                    .create()
+                    .showAsDropDown(projTypeLayout, 0, 10);
+        });
+
+
+        nearLayout.setOnClickListener(v -> {
+            if (req.getNearby() == 0){
+                near.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setNearby(1);
+            }else{
+                near.setTextColor(getResources().getColor(R.color.nav_gray));
+                req.setNearby(0);
+            }
 
             req.setLat(latData);
             req.setLng(lngData);
             page = 1;
             req.setPage(page);
             presenter.getProjectList(FindProjectActivity.this, req, type);
-
         });
 
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+                req.setKeyword(editText.getText().toString());
+                page = 1;
+                req.setPage(1);
+                presenter.getProjectList(FindProjectActivity.this, req, type);
+                return true;
+            }else{
+                return false;
+            }
+        });
+
+        presenter.getTypeInfo();
         onRefresh();
     }
 
@@ -242,6 +284,17 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     public void getUrl(String url) {
         if (!TextUtils.isEmpty(url))
             WebViewActivity.startActivity(FindProjectActivity.this, url);
+    }
+
+    @Override
+    public void getProjType(TypeInfoRes res) {
+        List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+        for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
+            if (Integer.valueOf(typeInfo.getParent_id()) == 0){
+                itemData.add(typeInfo);
+            }
+        }
+
     }
 
     @Override

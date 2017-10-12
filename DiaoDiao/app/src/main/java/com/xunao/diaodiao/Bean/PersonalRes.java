@@ -51,8 +51,25 @@ public class PersonalRes {
         private String card_front;
         private String card_back;
         private List<String> pictures;
-        private String image;
         private String address;
+        private String region;
+        private long establish_time;
+
+        public long getEstablish_time() {
+            return establish_time;
+        }
+
+        public void setEstablish_time(long establish_time) {
+            this.establish_time = establish_time;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
 
         public String getName() {
             return name;
@@ -148,14 +165,6 @@ public class PersonalRes {
 
         public void setPictures(List<String> pictures) {
             this.pictures = pictures;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
         }
 
         public String getAddress() {

@@ -907,7 +907,7 @@ public class LoginModel extends BaseModel {
 
 
     /**
-     *  拿到资料库文件
+     *  项目类型
      */
     public Observable<TypeInfoRes> getTypeInfo(){
         String rateKey = "typeInfo";
@@ -968,16 +968,14 @@ public class LoginModel extends BaseModel {
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getLat())
+        sb.append(time+"").append(req.getKeyword()).append(req.getLat())
                 .append(req.getLng()).append(req.getNearby())
                 .append(req.getPage())
-                .append(req.getPageSize()).append(req.getTime_type());
-        if (req.getType()==0){
-            sb.append(req.getType());
-        }
-        sb.append("security");
+                .append(req.getPageSize()).append(req.getTime_type())
+                .append(req.getType())
+                .append("security");
 
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
 
         return config.getRetrofitService().getProjectList(setBody(rateKey, time, req))
