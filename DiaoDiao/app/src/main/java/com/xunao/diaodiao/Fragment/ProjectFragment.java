@@ -103,7 +103,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        hideToolbarBack(toolBar, titleText, "项目");
+        hideToolbarBack(toolBar, titleText, "订单");
 
         type = ShareUtils.getValue("TYPE", 0);
 
@@ -210,7 +210,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         }
         adapter.addAll(list);
 
-        presenter.getMyWork(getContext());
+        presenter.getMyWork();
         return view;
     }
 
@@ -233,7 +233,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     @Override
     public void updateData() {
         super.updateData();
-        presenter.getMyWork(getContext());
+        presenter.getMyWork();
     }
 
     @Override
@@ -270,6 +270,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 LoginActivity.startActivity(ProjectFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
+            }else{
+                presenter.getMyWork();
             }
         }
     }

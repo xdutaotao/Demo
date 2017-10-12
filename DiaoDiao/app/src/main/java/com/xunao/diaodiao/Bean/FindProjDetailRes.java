@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by guzhenfu on 2017/9/14.
  */
 
-public class FindProjDetailRes {
+public class FindProjDetailRes implements Serializable{
 
     /**
      * project_info : {"title":"采暖系统地暖安装","create_time":"1505357062","company_name":"测试账号1","type":"采暖系统","district":"上海上海长宁区","address":"交通路100号","build_time":"1506787200","describe":"需要懂地暖的技术员，工作经验最好是3年","project_fee":"2000","service_fee":"100"}
@@ -17,9 +18,6 @@ public class FindProjDetailRes {
      */
 
     private ProjectInfoBean project_info;
-    private int is_apply;
-    private List<String> project_drawing;
-    private List<ProjectExpensesBean> project_expenses;
 
     public ProjectInfoBean getProject_info() {
         return project_info;
@@ -27,30 +25,6 @@ public class FindProjDetailRes {
 
     public void setProject_info(ProjectInfoBean project_info) {
         this.project_info = project_info;
-    }
-
-    public int getIs_apply() {
-        return is_apply;
-    }
-
-    public void setIs_apply(int is_apply) {
-        this.is_apply = is_apply;
-    }
-
-    public List<String> getProject_drawing() {
-        return project_drawing;
-    }
-
-    public void setProject_drawing(List<String> project_drawing) {
-        this.project_drawing = project_drawing;
-    }
-
-    public List<ProjectExpensesBean> getProject_expenses() {
-        return project_expenses;
-    }
-
-    public void setProject_expenses(List<ProjectExpensesBean> project_expenses) {
-        this.project_expenses = project_expenses;
     }
 
     public static class ProjectInfoBean {
@@ -70,6 +44,8 @@ public class FindProjDetailRes {
         private String title;
         private String create_time;
         private String publish_name;
+        private String contact;
+        private String contact_mobile;
         private String type;
         private String district;
         private String address;
@@ -77,6 +53,58 @@ public class FindProjDetailRes {
         private String describe;
         private String project_fee;
         private String service_fee;
+        private int publish_type;
+        private List<ProjectExpensesBean> project_expenses;
+        private int is_apply;
+        private String url;
+
+        public int getIs_apply() {
+            return is_apply;
+        }
+
+        public void setIs_apply(int is_apply) {
+            this.is_apply = is_apply;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public List<ProjectExpensesBean> getProject_expenses() {
+            return project_expenses;
+        }
+
+        public void setProject_expenses(List<ProjectExpensesBean> project_expenses) {
+            this.project_expenses = project_expenses;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public void setContact(String contact) {
+            this.contact = contact;
+        }
+
+        public String getContact_mobile() {
+            return contact_mobile;
+        }
+
+        public void setContact_mobile(String contact_mobile) {
+            this.contact_mobile = contact_mobile;
+        }
+
+        public int getPublish_type() {
+            return publish_type;
+        }
+
+        public void setPublish_type(int publish_type) {
+            this.publish_type = publish_type;
+        }
 
         public String getTitle() {
             return title;

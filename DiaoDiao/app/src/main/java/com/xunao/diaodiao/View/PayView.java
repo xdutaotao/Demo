@@ -7,4 +7,5 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface PayView extends BaseView {
     void getData(Object s);
+    void paySuccess(Object s);
 }

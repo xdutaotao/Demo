@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0 - 1"
-        android:padding="20px"
+        android:padding="30px"
         android:id="@+id/text"
         android:gravity="center"
         android:layout_gravity="center"/>

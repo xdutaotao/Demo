@@ -52,15 +52,15 @@
                     android:id="@+id/title"
                     android:hint="请输入项目标题"/>
             </RelativeLayout>
-            <View style="@style/item_divider" />
+            <!--<View style="@style/item_divider" />-->
 
-            <RelativeLayout style="@style/item_layout">
-                <TextView style="@style/item_left_text"
-                    android:text="设备品牌"/>
-                <EditText style="@style/edit_personal_edit"
-                    android:id="@+id/type"
-                    android:hint="请输入设备品牌(选填)"/>
-            </RelativeLayout>
+            <!--<RelativeLayout style="@style/item_layout">-->
+                <!--<TextView style="@style/item_left_text"-->
+                    <!--android:text="设备品牌"/>-->
+                <!--<EditText style="@style/edit_personal_edit"-->
+                    <!--android:id="@+id/type"-->
+                    <!--android:hint="请输入设备品牌(选填)"/>-->
+            <!--</RelativeLayout>-->
             <View style="@style/item_divider" />
 
             <RelativeLayout style="@style/item_layout"

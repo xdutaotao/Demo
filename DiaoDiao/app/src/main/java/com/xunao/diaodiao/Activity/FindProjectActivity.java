@@ -86,6 +86,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     private int type;
     private CustomPopWindow popWindow;
     private int projectType = -1;
+    private String timeType = "";
 
     public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, FindProjectActivity.class);
@@ -154,6 +155,12 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.text, s);
+                if (TextUtils.equals(timeType, s)){
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.colorAccent);
+                }else{
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.nav_gray);
+                }
+
             }
         };
 
@@ -161,14 +168,18 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             popWindow.dissmiss();
             if (i == req.getTime_type()){
                 projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+                req.setTime_type(0);
+                timeType="";
             }else{
                 projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setTime_type(i);
+                timeType = textAdapter.getAllData().get(i);
             }
+
             req.setLat(latData);
             req.setLng(lngData);
             page = 1;
             req.setPage(page);
-            req.setTime_type(i);
             presenter.getProjectList(FindProjectActivity.this, req, type);
         });
 
@@ -185,8 +196,12 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         popRecyclerView.setLayoutManager(manager);
 
         projTimeLayout.setOnClickListener(v -> {
+            if (TextUtils.equals(timeType, "")){
+                projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+            }else{
+                projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
             popRecyclerView.setAdapter(textAdapter);
-            projTime.setTextColor(getResources().getColor(R.color.colorAccent));
             popWindow = new CustomPopWindow.PopupWindowBuilder(FindProjectActivity.this)
                     .setView(popView)
                     .create()
@@ -198,10 +213,17 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
                 baseViewHolder.setText(R.id.text, s.getTitle());
+
+                if (projectType == Integer.valueOf(s.getId())){
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.colorAccent);
+                }else{
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.nav_gray);
+                }
             }
         };
 
         projAdapter.setOnItemClickListener((view, i) -> {
+            popWindow.dissmiss();
             if (projectType == Integer.valueOf(projAdapter.getAllData().get(i).getId())){
                 projType.setTextColor(getResources().getColor(R.color.nav_gray));
                 projectType = -1;
@@ -219,7 +241,12 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         });
 
         projTypeLayout.setOnClickListener(v -> {
-            projType.setTextColor(getResources().getColor(R.color.colorAccent));
+            if (projectType == -1){
+                projType.setTextColor(getResources().getColor(R.color.nav_gray));
+            }else{
+                projType.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
+
             popRecyclerView.setAdapter(projAdapter);
             popWindow = new CustomPopWindow.PopupWindowBuilder(FindProjectActivity.this)
                     .setView(popView)
@@ -294,6 +321,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
                 itemData.add(typeInfo);
             }
         }
+        projAdapter.addAll(itemData);
 
     }
 
@@ -303,6 +331,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         req.setLng(lngData);
         page = 1;
         req.setPage(page);
+        req.setPageSize(10);
         presenter.getProjectList(req, type);
     }
 

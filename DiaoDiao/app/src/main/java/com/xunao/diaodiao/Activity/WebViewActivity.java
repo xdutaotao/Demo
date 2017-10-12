@@ -67,12 +67,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String HOME_DETAIL = "home_detail";
     public static final String COMPANY_PROJ = "company_proj";
-
-    private OrderCompRes.Project projectBean;
     /**
      *  1项目2监理3零工4维保
      */
     private int project_type;
+
+    private FindProjDetailRes projectBean;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -137,7 +137,6 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         type = getIntent().getIntExtra("TYPE", 0);
         id = getIntent().getIntExtra(ID_KEY, 0);
         btnType = getIntent().getStringExtra("BTN_TYPE");
-        projectBean = (OrderCompRes.Project) getIntent().getSerializableExtra("BEAN");
         project_type = getIntent().getIntExtra("project_type", 0);
         url = getIntent().getStringExtra(INTENT_KEY);
         if (url.contains("has_collected=1")){
@@ -193,8 +192,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         apply.setOnClickListener(v -> {
             if (TextUtils.equals(btnType, HOME_DETAIL)){
-                int type = ShareUtils.getValue(TYPE_KEY, 0);
-                if (type == 0) {
+                if (ShareUtils.getValue(TYPE_KEY, 0) == 0) {
                     ToastUtil.show("请完善个人信息");
                     return;
                 }
@@ -221,7 +219,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             //修改项目信息
             int types = ShareUtils.getValue(TYPE_KEY, 0);
             if (types == COMPANY_TYPE){
-
+                if (projectBean != null){
+                    ReleaseProjActivity.startActivity(this , projectBean);
+                }
             }
         });
 
@@ -251,6 +251,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.VISIBLE);
             apply.setText("去评价");
+        }
+
+        if (ShareUtils.getValue(TYPE_KEY, 0) == 1){
+            //公司角色
+            apply.setVisibility(View.GONE);
         }
 
 
@@ -320,7 +325,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
             case R.id.action_contact:
                 //取消项目
-                presenter.myProjectCancel(this, projectBean.getProject_id());
+                presenter.myProjectCancel(this, id);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -340,7 +345,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public void getData(FindProjDetailRes res) {
-
+        //拿到项目详情
+        projectBean = res;
     }
 
     @Override

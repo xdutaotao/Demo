@@ -27,8 +27,10 @@ import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjSecondView;
@@ -73,8 +75,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     TextView select;
     @BindView(R.id.title)
     EditText title;
-    @BindView(R.id.type)
-    EditText type;
     @BindView(R.id.address)
     TextView address;
     @BindView(R.id.address_detail)
@@ -228,11 +228,17 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         });
 
         time.setOnClickListener(this);
-        presenter.typeExpenses(this, req.getProject_class());
+        presenter.typeExpenses(req.getProject_class());
         presenter.getPercent();
         initImagePicker();
 
-        presenter.getAddressData();
+        presenter.getAddressData(this);
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
     }
 
     private void initImagePicker() {
@@ -287,8 +293,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                         address.setText(province.getAreaName()+"-"
                                 +city.getAreaName()+"-"
                                 +county.getAreaName());
+
                         //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     }
+                    req.setRegion(address.getText().toString());
                 }
             });
         }
@@ -489,17 +497,6 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                                 .append(month + "-")
                                 .append(day);
                         time.setText(timeLong.toString());
-
-//                        timePicker.show();
-//                        timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
-//                            @Override
-//                            public void onTimePicked(String hour, String minute) {
-//                                timeLong.append(" " + hour + ":")
-//                                        .append(minute);
-//
-//                                time.setText(timeLong.toString());
-//                            }
-//                        });
 
                     }
                 });

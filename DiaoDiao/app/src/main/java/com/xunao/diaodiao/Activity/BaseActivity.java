@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponentFactory;
 import com.gzfgeh.swipeback.SwipeBackActivity;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ViewServer;
 
 /**

@@ -20,6 +20,7 @@
         <EditText style="@style/edit_personal_edit"
             android:hint="请输入数量"
             android:id="@+id/amount"
+            android:inputType="number"
             android:layout_marginRight="100px"/>
 
         <TextView
@@ -41,6 +42,7 @@
         <EditText style="@style/edit_personal_edit"
             android:hint="请输入价格"
             android:id="@+id/price"
+            android:inputType="number"
             android:layout_marginRight="50px"/>
 
         <TextView
