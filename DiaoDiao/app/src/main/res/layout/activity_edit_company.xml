@@ -368,6 +368,7 @@
                 android:src="@drawable/cancle"
                 android:id="@+id/one_delete"
                 android:visibility="gone"
+                android:layout_marginTop="20px"
                 android:layout_alignParentRight="true"/>
 
             <ImageView
@@ -402,11 +403,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_margin="20px">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="300px"
                         android:src="@drawable/shangchuan_zheng"
                         android:minHeight="200px"
                         android:id="@+id/code"
@@ -418,7 +420,6 @@
                         android:layout_height="60px"
                         android:src="@drawable/cancle"
                         android:id="@+id/code_delete"
-                        android:layout_marginTop="20px"
                         android:layout_alignParentRight="true"/>
 
                 </RelativeLayout>
@@ -426,11 +427,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_margin="20px">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="300px"
                         android:src="@drawable/shangchuan_fan"
                         android:id="@+id/code_reverse"
                         android:scaleType="fitXY"
@@ -442,7 +444,6 @@
                         android:layout_height="60px"
                         android:src="@drawable/cancle"
                         android:id="@+id/code_reverse_delete"
-                        android:layout_marginTop="20px"
                         android:layout_alignParentRight="true"/>
 
                 </RelativeLayout>
