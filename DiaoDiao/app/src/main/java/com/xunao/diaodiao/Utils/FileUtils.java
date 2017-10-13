@@ -16,10 +16,16 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Xml;
 
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.UpdateInfo;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -928,66 +934,6 @@ public class FileUtils {
 				Environment.getExternalStorageDirectory(), path)));
 		context.startActivityForResult(intent, request);
 	}
-
-//	public static UpdateInfo GetUpdateInfo(@NonNull String path){
-//		UpdateInfo info = null;
-//		URL url;
-//		HttpURLConnection conn = null;
-//		InputStream is = null;
-//		try {
-//			url = new URL(path);
-//			conn = (HttpURLConnection) url.openConnection();
-//			conn.setConnectTimeout(10000);
-//			is = conn.getInputStream();
-//			info = GetUpdateInfoFromIs(is);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (is != null) {
-//				try {
-//					is.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return info;
-//	}
-
-
-//	/**
-//	 * 是否应该下载APP
-//	 * @param is
-//	 * @return
-//     */
-//	private static UpdateInfo GetUpdateInfoFromIs(InputStream is) {
-//		XmlPullParser parser = Xml.newPullParser();
-//		UpdateInfo infos = new UpdateInfo();// 实体
-//		int type;
-//		try {
-//			parser.setInput(is, "utf-8"); // 设置解析的数据源
-//			type = parser.getEventType();
-//			while (type != XmlPullParser.END_DOCUMENT) {
-//				switch (type) {
-//					case XmlPullParser.START_TAG:
-//						if ("Version".equals(parser.getName())) {
-//							infos.setVersion(parser.nextText()); // 获取版本号
-//						} else if ("Url".equals(parser.getName())) {
-//							infos.setUrl(parser.nextText()); // 获取要升级的APK文件
-//						} else if ("Info".equals(parser.getName())) {
-//							infos.setDescription(parser.nextText()); // 获取该文件的信息
-//						}
-//						break;
-//				}
-//				type = parser.next();
-//			}
-//		} catch (XmlPullParserException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return infos;
-//	}
 
 	/**
 	 * HttpURLConnection 下载文件

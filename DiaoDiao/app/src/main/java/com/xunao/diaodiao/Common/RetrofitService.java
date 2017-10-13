@@ -52,6 +52,7 @@ import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
+import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Bean.WeiXinRes;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -91,6 +92,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<HomeResponseBean>> getFirstPage(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<UpdateInfo>> versionControl(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> checkPhone(@Body RequestBody body);

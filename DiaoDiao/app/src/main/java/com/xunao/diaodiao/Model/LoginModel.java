@@ -1092,9 +1092,13 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
-
+    /**
+     * 零工详情
+     * @param id
+     * @return
+     */
     public Observable<FindLingGongRes> getFindLingGongDetail(int id){
-        String rateKey = "oddDetail";
+        String rateKey = "myPublishOddDetail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
@@ -1104,7 +1108,7 @@ public class LoginModel extends BaseModel {
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
-        req.setId(id);
+        req.setOdd_id(id);
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
@@ -2272,6 +2276,34 @@ public class LoginModel extends BaseModel {
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(req.getContact()).append(req.getContact_mobile()).append(req.getProject_id())
                 .append(req.getTitle()) .append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 更新零工
+     * @param
+     * @return
+     */
+    public Observable<Object> updateOdd(ReleaseSkillReq req){
+        String rateKey = "updateOdd";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getContact()).append(req.getContact_mobile())
+                .append(req.getOdd_id())
+                .append(req.getTitle()).append(type)
                 .append(userid)
                 .append("security");
 

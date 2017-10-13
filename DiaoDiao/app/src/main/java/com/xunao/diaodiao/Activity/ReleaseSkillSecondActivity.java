@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,8 +13,10 @@ import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseSkillSecondPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseSkillSecondView;
 
@@ -71,10 +74,18 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
 
     private ReleaseSkillReq req;
     private RecyclerArrayAdapter<String> adapter;
+    private boolean flag;
 
     public static void startActivity(Context context, ReleaseSkillReq req) {
         Intent intent = new Intent(context, ReleaseSkillSecondActivity.class);
         intent.putExtra(INTENT_KEY, req);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseSkillReq req, boolean flag) {
+        Intent intent = new Intent(context, ReleaseSkillSecondActivity.class);
+        intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -116,21 +127,35 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         allPrice.setText("￥"+req.getTotal_fee());
         pay.setOnClickListener(this);
 
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
+        flag = getIntent().getBooleanExtra("flag", false);
+        if (flag){
+            pay.setText("发布");
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.pay:
-                if(req.getImages().get(0).length() < 100){
-                    List<String> list = new ArrayList<>();
-                    for(String s : req.getImages()){
-                        list.add(Utils.Bitmap2StrByBase64(s));
+                if (!flag){
+                    if(req.getImages().get(0).length() < 100){
+                        List<String> list = new ArrayList<>();
+                        for(String s : req.getImages()){
+                            list.add(Utils.Bitmap2StrByBase64(s));
+                        }
+                        req.setImages(list);
                     }
-                    req.setImages(list);
+
+                    presenter.publishOdd(this, req);
+                }else{
+                    presenter.updateOdd(this, req);
                 }
 
-                presenter.publishOdd(this, req);
 
                 break;
         }
@@ -153,5 +178,11 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
     public void getData(ReleaseProjRes res) {
         // 零工
         PayActivity.startActivity(this, res, 3);
+    }
+
+    @Override
+    public void getData(Object res) {
+        RxBus.getInstance().post("update_project");
+        finish();
     }
 }

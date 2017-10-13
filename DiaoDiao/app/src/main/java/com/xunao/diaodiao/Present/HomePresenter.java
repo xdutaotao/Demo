@@ -4,10 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.xunao.diaodiao.Bean.HomeResponseBean;
+import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Model.HomeModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.HomeView;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -59,13 +62,36 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 }));
     }
 
-    public void checkToken(){
-        mCompositeSubscription.add(model.checkToken()
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+
+
+    /**
+     * 每次APP启动检查版本
+     */
+    public void getUpdateVersion(){
+        mCompositeSubscription.add(model.updateApp()
+                .subscribe(new RxSubUtils<UpdateInfo>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(String token) {
-                        getView().getTokenResult(token);
+                    protected void _onNext(UpdateInfo info) {
+                        getView().getData(info);
                     }
                 }));
     }
+
+    /**
+     * 下载APK
+     * @param url
+     * @param file
+     */
+    public void apkFileDownload(String url, File file){
+        mCompositeSubscription.add(model.apkFileDownload(url, file)
+                .subscribe(new RxSubUtils<Float>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(Float aFloat) {
+                        getView().getProgress(aFloat);
+                    }
+                }));
+    }
+
+
+
 }

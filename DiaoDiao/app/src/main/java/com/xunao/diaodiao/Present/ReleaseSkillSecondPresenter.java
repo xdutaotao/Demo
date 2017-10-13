@@ -38,4 +38,21 @@ public class ReleaseSkillSecondPresenter extends BasePresenter<ReleaseSkillSecon
                     }
                 }));
     }
+
+
+    public void updateOdd(Context context, ReleaseSkillReq address){
+        mCompositeSubscription.add(model.updateOdd(address)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 }

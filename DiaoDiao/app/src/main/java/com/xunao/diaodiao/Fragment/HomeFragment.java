@@ -1,7 +1,10 @@
 package com.xunao.diaodiao.Fragment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +29,7 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bumptech.glide.Glide;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 import com.gzfgeh.viewpagecycle.BannerInfo;
 import com.gzfgeh.viewpagecycle.ImageCycleView;
@@ -40,17 +44,22 @@ import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.SearchBean;
+import com.xunao.diaodiao.Bean.UpdateInfo;
+import com.xunao.diaodiao.Common.ApiConstants;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.HomePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.LocationUtils;
+import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
+import com.xunao.diaodiao.Widget.DownloadDialog.DownloadDialogFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +114,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     SwipeRefreshLayout swipe;
 
     private HomeResponseBean homeResponseBean;
+
+    private File file;
+    private String url;
 
     private int[] projImage = {R.drawable.icon_zhaoxiangmu, R.drawable.icon_zhaolingong, R.drawable.icon_zhaoweibao,
             R.drawable.icon_huzhuxinxi, R.drawable.icon_janlixinxi, R.drawable.icon_shangjia};
@@ -306,6 +318,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         });
 
+        presenter.getUpdateVersion();
+
         return view;
     }
 
@@ -386,12 +400,57 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     @Override
-    public void getTokenResult(String s) {
-        if (TextUtils.equals(s, LOGIN_AGAIN)) {
-            ToastUtil.show("用户过期，请重新登录");
-            Utils.startLoginActivity();
+    public void getData(UpdateInfo s) {
+        if (TextUtils.equals(s.getVersion(), Utils.getVersionCode())){
+            return;
+        }else{
+            file = new File(Environment.getExternalStorageDirectory(), ApiConstants.APPFILENAME);
+            url = s.getDownload_url();
+            if (url != null) {   //有更新的包
+                new IOSDialog(HomeFragment.this.getContext()).builder()
+                        .setTitle(String.format(getString(R.string.get_new_version), s.getVersion()), null)
+                        .setMsg("更新版本")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", v -> {
+                            if (!PermissionsUtils.hasPermission(HomeFragment.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                return;
+                            }
+                            DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
+                            presenter.apkFileDownload(url, file);
+                        })
+                        .show();
+            }
+        }
+
+    }
+
+    @Override
+    public void getProgress(float progress) {
+        DownloadDialogFactory.getDownloadDialogManager().showProgress(progress);
+        if (progress == 1.0f) {
+            DownloadDialogFactory.getDownloadDialogManager().dismissDialog();
+            Utils.installApk(HomeFragment.this.getContext(), file);
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // TODO: 2016/12/26 grantResults[0]
+        if (grantResults != null && grantResults.length > 0) {
+            switch (requestCode) {
+                //权限申请成功
+                case PermissionsUtils.WRITE_EXTERNAL_STORAGE_CODE:
+                    //showDownloadDialog();
+                    DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
+                    presenter.apkFileDownload(url, file);
+                    break;
+            }
+        } else {
+            PermissionsUtils.permissionNotice(HomeFragment.this.getActivity(), requestCode);
+        }
+    }
+
 
     @Override
     public void onDestroy() {

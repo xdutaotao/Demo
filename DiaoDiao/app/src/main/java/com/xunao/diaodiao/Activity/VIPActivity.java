@@ -20,38 +20,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class VIPActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.title_text)
-    TextView titleText;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
-    @BindView(R.id.head_icon)
-    ImageView headIcon;
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.level)
-    ImageView level;
-    @BindView(R.id.vip_one)
-    ImageView vipOne;
-    @BindView(R.id.vip_two)
-    ImageView vipTwo;
-    @BindView(R.id.vip_three)
-    ImageView vipThree;
-    @BindView(R.id.vip_four)
-    ImageView vipFour;
-    @BindView(R.id.vip_five)
-    ImageView vipFive;
-    @BindView(R.id.vip_six)
-    ImageView vipSix;
-    @BindView(R.id.vip_seven)
-    ImageView vipSeven;
-    @BindView(R.id.vip_eight)
-    ImageView vipEight;
-    @BindView(R.id.vip_nine)
-    ImageView vipNine;
-    @BindView(R.id.get_vip_btn)
-    Button getVipBtn;
-    @BindView(R.id.vip_days)
-    TextView vipDays;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, VIPActivity.class);
@@ -63,19 +31,6 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vip);
         ButterKnife.bind(this);
-        showToolbarBack(toolBar, titleText, "会员中心");
-        getVipBtn.setOnClickListener(this);
-
-
-        vipOne.setOnClickListener(this);
-        vipTwo.setOnClickListener(this);
-        vipThree.setOnClickListener(this);
-        vipFour.setOnClickListener(this);
-        vipFive.setOnClickListener(this);
-        vipSix.setOnClickListener(this);
-        vipSeven.setOnClickListener(this);
-        vipEight.setOnClickListener(this);
-        vipNine.setOnClickListener(this);
     }
 
     @Override
@@ -85,47 +40,7 @@ public class VIPActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.get_vip_btn:
-                BuyActivity.startActivity(this);
-                break;
 
-            case R.id.vip_one:
-                CustomDialog.showReboundPop(this, R.drawable.vip_one, "点亮会员尊贵无限");
-                break;
-
-            case R.id.vip_two:
-                CustomDialog.showReboundPop(this, R.drawable.vip_two, "千兆宽带快人一步");
-                break;
-
-            case R.id.vip_three:
-                CustomDialog.showReboundPop(this, R.drawable.vip_three, "海量资料随意翻阅");
-                break;
-
-            case R.id.vip_four:
-                CustomDialog.showReboundPop(this, R.drawable.vip_four, "加速通道极速下载");
-                break;
-
-            case R.id.vip_five:
-                CustomDialog.showReboundPop(this, R.drawable.vip_five, "私人客服告别等待");
-                break;
-
-            case R.id.vip_six:
-                CustomDialog.showReboundPop(this, R.drawable.vip_six, "每日签到更多奖励");
-                break;
-
-            case R.id.vip_seven:
-                CustomDialog.showReboundPop(this, R.drawable.vip_seven, "会员生日神秘礼物");
-                break;
-
-            case R.id.vip_eight:
-                CustomDialog.showReboundPop(this, R.drawable.vip_eight, "新版功能优先体验");
-                break;
-
-            case R.id.vip_nine:
-                CustomDialog.showReboundPop(this, R.drawable.vip_nine, "更多功能敬请期待");
-                break;
-        }
     }
 
 }

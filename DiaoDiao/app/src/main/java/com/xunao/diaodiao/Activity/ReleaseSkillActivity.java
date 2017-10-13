@@ -25,8 +25,10 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseSkillPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseSkillView;
@@ -44,8 +46,11 @@ import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.SinglePicker;
 import cn.qqtheme.framework.picker.TimePicker;
 import rx.Observable;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -104,14 +109,24 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     private String percent;
 
     private RecyclerArrayAdapter<ProjectTypeRes.TypeBean> textAdapter;
-    private CustomPopWindow popWindow;
+    //private CustomPopWindow popWindow;
     private ProjectTypeRes res;
+    private List<String> data = new ArrayList<>();
+    private SinglePicker<String> singlePicker;
 
     private int provinceId, cityId, districtId;
     private AddressPicker picker;
 
+    private ReleaseSkillReq req;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseSkillReq req) {
+        Intent intent = new Intent(context, ReleaseSkillActivity.class);
+        intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
     }
 
@@ -183,17 +198,12 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         };
 
         textAdapter.setOnItemClickListener((view, i) -> {
-            popWindow.dissmiss();
+            //popWindow.dissmiss();
             projectType.setText(textAdapter.getAllData().get(i).getName());
         });
 
         next.setOnClickListener(this);
-        projTimeLayout.setOnClickListener(this);
-        projectTypeLayout.setOnClickListener(this);
-        initImagePicker();
-        presenter.getPercent(this);
-        presenter.publishOddType();
-        presenter.getAddressData();
+
 
         addressLayout.setOnClickListener(v -> {
             if (picker != null){
@@ -211,6 +221,49 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                 picker.show();
             }
         });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
+
+        req = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
+        if (req != null){
+            title.setText(req.getTitle());
+            address.setText(req.getRegion());
+            addressDetail.setText(req.getAddress());
+            projectType.setText(req.getProject_type());
+            contact.setText(req.getContact());
+            phone.setText(req.getContact_mobile());
+            fee.setText(req.getDaily_wage());
+            days.setText(req.getTotal_day());
+            time.setText(Utils.millToYearString(req.getBuild_time()));
+            content.setText(req.getDescribe());
+            adapter.clear();
+            adapter.addAll(req.getImages());
+
+            addressLayout.setOnClickListener(null);
+            addressDetail.setFocusable(false);
+            days.setFocusable(false);
+            fee.setFocusable(false);
+            content.setFocusable(false);
+
+            RxBus.getInstance().toObservable(String.class)
+                    .filter(s -> TextUtils.equals(s, "update_project"))
+                    .subscribe(s -> {
+                        finish();
+                    });
+
+        }else{
+            projTimeLayout.setOnClickListener(this);
+            projectTypeLayout.setOnClickListener(this);
+            initImagePicker();
+            presenter.getPercent(this);
+            presenter.publishOddType();
+            presenter.getAddressData();
+        }
+
     }
 
     @Override
@@ -221,6 +274,22 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     @Override
     public void getProjectType(ProjectTypeRes res) {
         this.res = res;
+
+        for(ProjectTypeRes.TypeBean bean: res.getTypes()){
+            data.add(bean.getName());
+        }
+        singlePicker = new SinglePicker<>(this, data);
+        singlePicker.setCanceledOnTouchOutside(false);
+        singlePicker.setSelectedIndex(1);
+        singlePicker.setCycleDisable(true);
+        singlePicker.setOnItemPickListener(new SinglePicker.OnItemPickListener<String>() {
+            @Override
+            public void onItemPicked(int index, String item) {
+                //ToastUtil.show(item);
+                projectType.setText(item);
+            }
+        });
+
     }
 
     @Override
@@ -311,21 +380,6 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     return;
                 }
 
-                if (TextUtils.isEmpty(projectType.getText())) {
-                    ToastUtil.show("类型不能为空");
-                    return;
-                }
-
-//                if (TextUtils.isEmpty(address.getText())){
-//                    ToastUtil.show("选择地区");
-//                    return;
-//                }
-
-                if (TextUtils.isEmpty(addressDetail.getText())) {
-                    ToastUtil.show("地址不能为空");
-                    return;
-                }
-
                 if (TextUtils.isEmpty(contact.getText())) {
                     ToastUtil.show("联系人不能为空");
                     return;
@@ -335,60 +389,85 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     ToastUtil.show("联系人电话不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(fee.getText())) {
-                    ToastUtil.show("施工时间不能为空");
-                    return;
+
+
+                if (this.req == null){
+                    if (TextUtils.isEmpty(projectType.getText())) {
+                        ToastUtil.show("类型不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(address.getText())){
+                        ToastUtil.show("选择地区");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(addressDetail.getText())) {
+                        ToastUtil.show("地址不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(fee.getText())) {
+                        ToastUtil.show("施工时间不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(days.getText())) {
+                        ToastUtil.show("施工时间不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(time.getText())) {
+                        ToastUtil.show("施工时间不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(content.getText())) {
+                        ToastUtil.show("描述不能为空");
+                        return;
+                    }
+
+                    if (pathList.size() == 0) {
+                        ToastUtil.show("图纸不能为空");
+                        return;
+                    }
+                    ReleaseSkillReq req = new ReleaseSkillReq();
+                    req.setTitle(title.getText().toString());
+                    req.setProvince(provinceId);
+                    req.setCity(cityId);
+                    req.setDistrict(districtId);
+                    req.setAddress(addressDetail.getText().toString());
+                    req.setProject_type(projectType.getText().toString());
+                    req.setContact(contact.getText().toString());
+                    req.setContact_mobile(phone.getText().toString());
+                    req.setDaily_wage(fee.getText().toString());
+                    req.setTotal_day(days.getText().toString());
+                    req.setBuild_time(Utils.convert2long(time.getText().toString()));
+                    req.setDescribe(content.getText().toString());
+                    int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
+                    req.setOdd_fee(String.valueOf(oddFee));
+                    if (!TextUtils.isEmpty(percent)) {
+                        float serviceFee = oddFee / Integer.valueOf(percent);
+                        req.setService_fee(String.valueOf(serviceFee));
+
+                        req.setTotal_fee(String.valueOf(oddFee + serviceFee));
+                    }
+                    req.setImages(pathList);
+                    ReleaseSkillSecondActivity.startActivity(this, req);
+                }else{
+                    req.setTitle(title.getText().toString());
+                    req.setContact(contact.getText().toString());
+                    req.setContact_mobile(phone.getText().toString());
+                    ReleaseSkillSecondActivity.startActivity(this, req, true);
                 }
 
-                if (TextUtils.isEmpty(days.getText())) {
-                    ToastUtil.show("施工时间不能为空");
-                    return;
-                }
 
-                if (TextUtils.isEmpty(time.getText())) {
-                    ToastUtil.show("施工时间不能为空");
-                    return;
-                }
 
-                if (TextUtils.isEmpty(content.getText())) {
-                    ToastUtil.show("描述不能为空");
-                    return;
-                }
-
-                if (pathList.size() == 0) {
-                    ToastUtil.show("图纸不能为空");
-                    return;
-                }
-                ReleaseSkillReq req = new ReleaseSkillReq();
-                req.setTitle(title.getText().toString());
-                req.setProvince(provinceId);
-                req.setCity(cityId);
-                req.setDistrict(districtId);
-                req.setAddress(addressDetail.getText().toString());
-                req.setProject_type(projectType.getText().toString());
-                req.setContact(contact.getText().toString());
-                req.setContact_mobile(phone.getText().toString());
-                req.setDaily_wage(fee.getText().toString());
-                req.setTotal_day(days.getText().toString());
-                req.setBuild_time(Utils.convert2long(time.getText().toString()));
-                req.setDescribe(content.getText().toString());
-                int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
-                req.setOdd_fee(String.valueOf(oddFee));
-                if (!TextUtils.isEmpty(percent)) {
-                    float serviceFee = oddFee / Integer.valueOf(percent);
-                    req.setService_fee(String.valueOf(serviceFee));
-
-                    req.setTotal_fee(String.valueOf(oddFee + serviceFee));
-                }
-                req.setImages(pathList);
-                ReleaseSkillSecondActivity.startActivity(this, req);
                 break;
 
             case R.id.proj_time_layout:
                 DatePicker datePicker = new DatePicker(this);
                 datePicker.show();
-
-                TimePicker timePicker = new TimePicker(this);
 
                 timeLong = new StringBuilder();
                 datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -398,17 +477,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         timeLong.append(year + "-")
                                 .append(month + "-")
                                 .append(day);
-
-                        timePicker.show();
-                        timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
-                            @Override
-                            public void onTimePicked(String hour, String minute) {
-                                timeLong.append(" " + hour + ":")
-                                        .append(minute);
-
-                                time.setText(timeLong.toString());
-                            }
-                        });
+                        time.setText(timeLong.toString());
 
                     }
                 });
@@ -421,18 +490,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     }
 
     private void showPop() {
-        View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
-        RecyclerView popRecyclerView = (RecyclerView) popView.findViewById(R.id.recycler_view);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        popRecyclerView.setLayoutManager(manager);
-        popRecyclerView.setAdapter(textAdapter);
-        textAdapter.clear();
-        textAdapter.addAll(res.getTypes());
-
-        popWindow = new CustomPopWindow.PopupWindowBuilder(ReleaseSkillActivity.this)
-                .setView(popView)
-                .create()
-                .showAsDropDown(projectType, 0, 20);
+        singlePicker.show();
     }
 
 

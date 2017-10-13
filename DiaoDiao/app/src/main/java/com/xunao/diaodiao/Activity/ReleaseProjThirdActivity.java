@@ -151,6 +151,10 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
                 .subscribe(s -> {
                     finish();
                 });
+
+        if (getIntent().getBooleanExtra("flag", false)){
+            pay.setText("发布");
+        }
     }
 
     @Override

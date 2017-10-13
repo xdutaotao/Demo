@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by GUZHENFU on 2017/9/28 15:26.
  */
 
-public class ProjectTypeRes {
+public class ProjectTypeRes implements Serializable{
     private List<TypeBean> types;
 
     public List<TypeBean> getTypes() {
@@ -18,7 +19,7 @@ public class ProjectTypeRes {
         this.types = types;
     }
 
-    public static class TypeBean{
+    public static class TypeBean implements Serializable{
         private String name;
         private int id;
 

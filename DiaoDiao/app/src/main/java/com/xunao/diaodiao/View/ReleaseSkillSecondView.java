@@ -8,4 +8,5 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface ReleaseSkillSecondView extends BaseView {
     void getData(ReleaseProjRes res);
+    void getData(Object res);
 }

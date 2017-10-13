@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.View;
 
 import com.xunao.diaodiao.Bean.HomeResponseBean;
+import com.xunao.diaodiao.Bean.UpdateInfo;
 
 /**
  * Description:
@@ -9,5 +10,6 @@ import com.xunao.diaodiao.Bean.HomeResponseBean;
 
 public interface HomeView extends BaseView {
     void getData(HomeResponseBean bean);
-    void getTokenResult(String s);
+    void getData(UpdateInfo s);
+    void getProgress(float progress);
 }

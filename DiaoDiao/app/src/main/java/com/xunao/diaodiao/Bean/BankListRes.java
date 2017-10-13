@@ -22,6 +22,15 @@ public class BankListRes {
         private String card;
         private String card_name;
         private String card_type;
+        private String img;
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
 
         public String getCard() {
             return card;

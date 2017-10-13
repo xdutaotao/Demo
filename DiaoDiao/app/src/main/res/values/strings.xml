@@ -8,6 +8,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="help_txt"></string>
 
+    <string name="get_new_version">有新的版本：%1$s</string>
+
     <string-array name="homeProj">
         <item>找项目</item>
         <item>找零工</item>

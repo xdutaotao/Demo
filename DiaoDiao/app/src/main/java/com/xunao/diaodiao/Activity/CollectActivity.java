@@ -263,7 +263,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         checkedColor = getResources().getColor(R.color.colorPrimary);
         normalColor = getResources().getColor(R.color.black);
-        drawable = getResources().getDrawable(R.drawable.cancle);
+        //drawable = getResources().getDrawable(R.drawable.cancle);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_photo_item) {
             @Override

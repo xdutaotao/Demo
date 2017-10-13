@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -75,6 +76,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private int project_type;
 
     private FindProjDetailRes projectBean;
+    private FindLingGongRes oddBean;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -184,13 +186,17 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         againPost.setOnClickListener(v -> {
             //再次快捷发布
-            ReleaseProjActivity.startActivity(this);
+            if (TextUtils.equals(LG_DETAIL, btnType)){
+                ReleaseSkillActivity.startActivity(this);
+            }else if (TextUtils.equals(btnType, HOME_DETAIL)){
+                ReleaseProjActivity.startActivity(this);
+            }
+
         });
 
         changeInfo.setOnClickListener(v -> {
             //修改项目信息
-            int types = ShareUtils.getValue(TYPE_KEY, 0);
-            if (types == COMPANY_TYPE){
+            if (TextUtils.equals(HOME_DETAIL, btnType)){
                 if (projectBean != null){
 
                     FindProjDetailRes.DetailBean bean = projectBean.getDetail();
@@ -218,6 +224,29 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                     req.setProject_id(id);
                     ReleaseProjSecondActivity.startActivity(this , req, true);
                 }
+            }else if(TextUtils.equals(LG_DETAIL, btnType)){
+                //零工详情
+                if (oddBean != null){
+                    FindLingGongRes.DetailBean bean = oddBean.getDetail();
+                    ReleaseSkillReq req = new ReleaseSkillReq();
+                    req.setTitle(bean.getTitle());
+                    req.setProvince(bean.getProvince());
+                    req.setCity(bean.getCity());
+                    req.setDistrict(bean.getDistrict());
+                    req.setAddress(bean.getAddress());
+                    req.setProject_type(bean.getType());
+                    req.setContact(bean.getContact());
+                    req.setContact_mobile(bean.getContact_mobile());
+                    req.setDaily_wage(bean.getDaily_wage());
+                    req.setTotal_day(bean.getTotal_day());
+                    req.setBuild_time(bean.getBuild_time());
+                    req.setDescribe(bean.getDescribe());
+                    req.setService_fee(bean.getService_fee());
+                    req.setOdd_fee(bean.getOdd_fee());
+                    req.setTotal_fee(bean.getTotal_fee());
+                    req.setImages(bean.getImages());
+                    ReleaseSkillActivity.startActivity(this, req);
+                }
             }
         });
 
@@ -226,8 +255,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.VISIBLE);
         }else if (TextUtils.equals(LG_DETAIL, btnType)){
+            //零工详情
             bottomBtnLayout.setVisibility(View.VISIBLE);
             apply.setVisibility(View.GONE);
+            changeInfo.setText("修改零工信息");
+            presenter.getFindLingGongDetail(this, id);
+
         }else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
@@ -252,9 +285,10 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         if (ShareUtils.getValue(TYPE_KEY, 0) == 1){
             //公司角色
             apply.setVisibility(View.GONE);
+            presenter.getFindProjDetail(this, id);
         }
 
-        presenter.getFindProjDetail(this, id);
+
 
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, "update_project"))
@@ -354,7 +388,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public void getLingGongData(FindLingGongRes res) {
-
+        //零工详情
+        oddBean = res;
     }
 
     @Override

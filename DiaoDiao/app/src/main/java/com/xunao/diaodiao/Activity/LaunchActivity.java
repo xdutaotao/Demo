@@ -50,11 +50,11 @@ public class LaunchActivity extends FragmentActivity implements ViewPager.OnPage
 
         viewPager = (ViewPager) findViewById(R.id.vp_launcher);
         mFragmentList = new ArrayList<>();
-        FirstFragment rewardFragment = FirstFragment.newInstance(R.drawable.launcher_one, false);
-        FirstFragment rewardFragment1 = FirstFragment.newInstance(R.drawable.launcher_two, false);
-        FirstFragment rewardFragment2 = FirstFragment.newInstance(R.drawable.launcher_three, false);
-        FirstFragment rewardFragment3 = FirstFragment.newInstance(R.drawable.launcher_four, false);
-        FirstFragment rewardFragment4 = FirstFragment.newInstance(R.drawable.launcher_five, true);
+        FirstFragment rewardFragment = FirstFragment.newInstance(R.drawable.loading, false);
+        FirstFragment rewardFragment1 = FirstFragment.newInstance(R.drawable.loading, false);
+        FirstFragment rewardFragment2 = FirstFragment.newInstance(R.drawable.loading, false);
+        FirstFragment rewardFragment3 = FirstFragment.newInstance(R.drawable.loading, false);
+        FirstFragment rewardFragment4 = FirstFragment.newInstance(R.drawable.loading, true);
         mFragmentList.add(rewardFragment);
         mFragmentList.add(rewardFragment1);
         mFragmentList.add(rewardFragment2);

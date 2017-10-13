@@ -111,6 +111,14 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 .setContentView(R.layout.pay_dialog)
                 .setNegativeBtnColor(R.color.light_gray)
                 .setNegativeButton("再次发布", v1 -> {
+
+                    if (projType == 1){
+                        //项目
+                        ReleaseProjActivity.startActivity(this);
+                    }else if (projType == 3){
+                        //零工
+                        ReleaseSkillActivity.startActivity(this);
+                    }
                     finish();
                 })
                 .setPositiveBtnColor(R.color.light_blank)

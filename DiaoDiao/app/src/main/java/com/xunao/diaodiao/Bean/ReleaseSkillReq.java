@@ -29,6 +29,25 @@ public class ReleaseSkillReq implements Serializable{
     private List<String> images;
     private String verify;
 
+    private String region;
+    private String odd_id;
+
+    public String getOdd_id() {
+        return odd_id;
+    }
+
+    public void setOdd_id(String odd_id) {
+        this.odd_id = odd_id;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     public int getUserid() {
         return userid;
     }
