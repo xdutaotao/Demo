@@ -16,8 +16,10 @@ import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjThirdView;
 
@@ -123,11 +125,11 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         typeRecyclerView.setAdapter(typeAdapter);
 
         title.setText(req.getTitle());
-        address.setText(req.getAddress());
+        address.setText(req.getRegion());
         addressDetail.setText(req.getAddress());
         contact.setText(req.getContact());
         phone.setText(req.getContact_mobile());
-        time.setText(Utils.millToDateString(req.getBuild_time()));
+        time.setText(Utils.millToYearString(req.getBuild_time()));
         describe.setText(req.getDescribe());
         adapter.addAll(req.getImages());
 
@@ -144,7 +146,11 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         serviceFee.setText("￥"+req.getService_cost());
         allPrice.setText("￥"+req.getTotal_price());
 
-
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
     }
 
     @Override

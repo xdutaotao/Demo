@@ -25,13 +25,37 @@ public class PayPresenter extends BasePresenter<PayView> {
     PayPresenter() {
     }
 
-
+    /**
+     * 支付
+     * @param context
+     * @param address
+     */
     public void balancePay(Context context, PayFeeReq address){
         mCompositeSubscription.add(model.balancePay(address)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {
                         getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
+    /**
+     * 支付成功
+     * @param context
+     * @param address
+     */
+    public void paySuccess(Context context, PayFeeReq address){
+        mCompositeSubscription.add(model.paySuccess(address)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().paySuccess(token);
                     }
 
                     @Override

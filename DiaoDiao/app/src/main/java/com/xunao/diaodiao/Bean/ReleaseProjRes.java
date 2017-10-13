@@ -11,6 +11,15 @@ public class ReleaseProjRes implements Serializable{
     private String order_no;
     private String total_fee;
     private String balance;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getOrder_no() {
         return order_no;

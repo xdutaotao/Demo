@@ -28,6 +28,15 @@ public class ReleaseProjReq implements Serializable{
     private String total_price;
     private List<ExpensesBean> expenses;
     private String verify;
+    private String region;
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
     public int getUserid() {
         return userid;

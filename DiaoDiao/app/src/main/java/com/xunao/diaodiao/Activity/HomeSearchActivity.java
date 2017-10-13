@@ -80,6 +80,9 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
     private FindProjReq req;
     private int page = 1;
 
+    private String projectType="";
+    private String timeType="";
+
     private RecyclerArrayAdapter<HomeSearchRes.ProjectBean> adapter;
     private RecyclerArrayAdapter<String> textAdapter;
     private RecyclerArrayAdapter<String> projAdapter;
@@ -151,15 +154,29 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.text, s);
+                if (TextUtils.equals(timeType, s)){
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.colorAccent);
+                }else{
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.nav_gray);
+                }
             }
         };
 
         textAdapter.setOnItemClickListener((view, i) -> {
             popWindow.dissmiss();
+
+            if (i == req.getTime_type()){
+                projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+                req.setTime_type(0);
+                timeType="";
+            }else{
+                projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setTime_type(i);
+                timeType = textAdapter.getAllData().get(i);
+            }
+
             page = 1;
             req.setPage(page);
-            req.setTime_type(i);
-
             presenter.indexSearch(HomeSearchActivity.this, req);
 
         });
@@ -168,11 +185,25 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
                 baseViewHolder.setText(R.id.text, s);
+
+                if (TextUtils.equals(projectType, s)){
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.colorAccent);
+                }else{
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.nav_gray);
+                }
             }
         };
 
         projAdapter.setOnItemClickListener((view, i) -> {
             popWindow.dissmiss();
+            if (TextUtils.equals(projAdapter.getAllData().get(i), projectType)){
+                projType.setTextColor(getResources().getColor(R.color.nav_gray));
+                projectType = "";
+            }else{
+                projType.setTextColor(getResources().getColor(R.color.colorAccent));
+                projectType = projAdapter.getAllData().get(i);
+            }
+
             page = 1;
             req.setPage(page);
             req.setType(i+1);
@@ -194,10 +225,11 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         textAdapter.addAll(timeData);
         projTimeLayout.setOnClickListener(v -> {
             popRecyclerView.setAdapter(textAdapter);
-
-//            near.setTextColor(getResources().getColor(R.color.nav_gray));
-//            projType.setTextColor(getResources().getColor(R.color.nav_gray));
-            projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+            if (TextUtils.equals(timeType, "")){
+                projTime.setTextColor(getResources().getColor(R.color.nav_gray));
+            }else{
+                projTime.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
 
             popWindow = new CustomPopWindow.PopupWindowBuilder(HomeSearchActivity.this)
                     .setView(popView)
@@ -229,7 +261,11 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         projTypeLayout.setOnClickListener(v -> {
             popRecyclerView.setAdapter(projAdapter);
 
-            projType.setTextColor(getResources().getColor(R.color.colorAccent));
+            if (TextUtils.equals(projectType, "")){
+                projType.setTextColor(getResources().getColor(R.color.nav_gray));
+            }else{
+                projType.setTextColor(getResources().getColor(R.color.colorAccent));
+            }
 
             popWindow = new CustomPopWindow.PopupWindowBuilder(HomeSearchActivity.this)
                     .setView(popView)

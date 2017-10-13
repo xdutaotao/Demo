@@ -1018,7 +1018,7 @@ public class LoginModel extends BaseModel {
 
 
     /**
-     *  拿到资料库文件
+     *  项目详情
      */
     public Observable<FindProjDetailRes> getFindProjDetail(int id){
         String rateKey = "projectDetail";
@@ -1995,6 +1995,27 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setVerify(sb.toString());
+
+        return config.getRetrofitService().balancePay(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 支付项目 成功回调
+     * @param req
+     * @return
+     */
+    public Observable<Object> paySuccess(PayFeeReq req){
+        String rateKey = "paySuccess";
+
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getOrder_no())
+                .append(req.getProject_type())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().balancePay(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());

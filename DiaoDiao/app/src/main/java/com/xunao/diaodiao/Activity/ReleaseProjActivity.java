@@ -15,10 +15,14 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseProjView;
 import com.xunao.diaodiao.Widget.Tag.Tag;
@@ -32,6 +36,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -70,6 +76,12 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         context.startActivity(intent);
     }
 
+    public static void startActivity(Context context, FindProjDetailRes projectBean) {
+        Intent intent = new Intent(context, ReleaseProjActivity.class);
+        intent.putExtra(INTENT_KEY, projectBean);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +102,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                     protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
                         baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                        if (skillsName.toString().contains(s.getId())) {
+                        if (isContain(s.getId())) {
                             baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                             baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                         } else {
@@ -100,44 +112,45 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
 
                         baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
                             //地暖和电地暖是唯一选择
-                            if (skillsName.toString().contains("6") &&
+                            if (isContain("6") &&
                                     Integer.valueOf(s.getId()) == 7) {
                                 ToastUtil.show("和地暖重复");
                                 return;
                             }
-                            if (skillsName.toString().contains("7") &&
+                            if (isContain("7") &&
                                     Integer.valueOf(s.getId()) == 6) {
                                 ToastUtil.show("和电地暖重复");
                                 return;
                             }
                             //暖气片明装和暗装是唯一选择
-                            if (skillsName.toString().contains("8") &&
+                            if (isContain("8") &&
                                     Integer.valueOf(s.getId()) == 9) {
                                 ToastUtil.show("和暖气片明装重复");
                                 return;
                             }
-                            if (skillsName.toString().contains("9") &&
+                            if (isContain("9") &&
                                     Integer.valueOf(s.getId()) == 8) {
                                 ToastUtil.show("和暖气片暗装重复");
                                 return;
                             }
                             //水处理只能选择一种
-                            if ((skillsName.toString().contains("10")
-                                    || skillsName.toString().contains("11")
-                                    || skillsName.toString().contains("12")
-                                    || skillsName.toString().contains("13"))
+                            if ((isContain("10")
+                                    || isContain("11")
+                                    || isContain("12")
+                                    || isContain("13"))
+                                    && !isContain(s.getId())
                                     && (Integer.valueOf(s.getId()) > 9
                                             && Integer.valueOf(s.getId()) < 14)){
                                 ToastUtil.show("水处理只能选择一个");
                                 return;
                             }
                             //空调系统只能选择一种
-                            if (skillsName.toString().contains("14")
+                            if (isContain("14")
                                     && Integer.valueOf(s.getId()) == 15){
                                 ToastUtil.show("空调系统只能选择一个");
                                 return;
                             }
-                            if (skillsName.toString().contains("15")
+                            if (isContain("15")
                                     && Integer.valueOf(s.getId()) == 14){
                                 ToastUtil.show("空调系统只能选择一个");
                                 return;
@@ -145,24 +158,23 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                             //水泥回填选中时其他不能被选中
                             if (Integer.valueOf(s.getId()) == 17){
                                 skillsName.clear();
-                                skillsName.add(s.getId());
                                 allSelectList.clear();
                             }
                             //空调和地暖不能同时被选中
                             if (Integer.valueOf(s.getId()) == 6
-                                    && (skillsName.toString().contains("14")
-                                        || skillsName.toString().contains("15"))){
+                                    && (isContain("14")
+                                        || isContain("15"))){
                                 ToastUtil.show("空调和地暖不能同时被选中");
                                 return;
                             }
 
                             if (Integer.valueOf(s.getId()) == 14 || Integer.valueOf(s.getId()) == 15
-                                    && skillsName.toString().contains("6")){
+                                    && isContain("6")){
                                 ToastUtil.show("空调和地暖不能同时被选中");
                                 return;
                             }
 
-                            if (skillsName.toString().contains(s.getId())) {
+                            if (isContain(s.getId())) {
                                 v.setBackgroundResource(R.drawable.btn_blank_bg);
                                 ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
                                 skillsName.remove(s.getId());
@@ -204,6 +216,22 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         recyclerView.setAdapter(adapter);
 
         presenter.getTypeInfo(this);
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
+
+    }
+    
+    private boolean isContain(String s){
+        for(String item: skillsName){
+            if (TextUtils.equals(s, item)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -250,6 +278,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
             allSelectList.clear();
             allSelect.setText("");
         }
+        adapter.notifyDataSetChanged();
     }
 
     private void idsToString(){

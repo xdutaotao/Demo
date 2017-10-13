@@ -1,11 +1,14 @@
 package com.xunao.diaodiao;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
@@ -15,6 +18,7 @@ import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BaseActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
+import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
@@ -28,6 +32,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.container)
     LinearLayout container;
@@ -40,6 +46,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         context.startActivity(intent);
     }
 
+    public static void startActivity(Context context, String url) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +59,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         ButterKnife.bind(this);
 
         //禁止侧滑返回
-        setSwipeBackEnable(false);
+        //setSwipeBackEnable(false);
 
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar_container);
         bottomNavigationBar.setAutoHideEnabled(true);
@@ -67,7 +79,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         setDefaultFragment();
         bottomNavigationBar.setTabSelectedListener(this);
 
-
+        if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))){
+            WebViewActivity.startActivity(this, getIntent().getStringExtra(INTENT_KEY));
+        }
     }
 
     private void setDefaultFragment() {

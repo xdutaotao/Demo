@@ -27,6 +27,11 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
     ProjectDetailPresenter() {
     }
 
+    /**
+     * 项目详情
+     * @param context
+     * @param req
+     */
     public void getFindProjDetail(Context context, int req){
         mCompositeSubscription.add(model.getFindProjDetail(req)
                 .subscribe(new RxSubUtils<FindProjDetailRes>(mCompositeSubscription, context) {

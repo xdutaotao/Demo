@@ -13,8 +13,12 @@ import android.widget.TextView;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
+import com.xunao.diaodiao.Common.Constants;
+import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Present.PayPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.PayView;
 
 import javax.inject.Inject;
@@ -50,6 +54,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     private ReleaseProjRes req;
     private int projType = 0;
+    private PayFeeReq payFeeReq = new PayFeeReq();
 
     public static void startActivity(Context context, ReleaseProjRes req, int projType) {
         Intent intent = new Intent(context, PayActivity.class);
@@ -85,7 +90,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                PayFeeReq payFeeReq = new PayFeeReq();
                 payFeeReq.setOrder_no(req.getOrder_no());
                 payFeeReq.setPay_fee(req.getTotal_fee());
                 //1项目2监理3零工4维保
@@ -98,6 +102,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     @Override
     public void getData(Object s) {
+        presenter.paySuccess(this, payFeeReq);
+    }
+
+    @Override
+    public void paySuccess(Object s) {
         new IOSDialog(this).builder()
                 .setContentView(R.layout.pay_dialog)
                 .setNegativeBtnColor(R.color.light_gray)
@@ -106,6 +115,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 })
                 .setPositiveBtnColor(R.color.light_blank)
                 .setPositiveButton("查看订单", v1 -> {
+                    RxBus.getInstance().post(Constants.DESTORY);
+                    WebViewActivity.startActivity(this, req.getUrl());
                     finish();
                 })
                 .show();
@@ -142,7 +153,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     @Override
     public void onFailure() {
-
+        ToastUtil.show("支付失败");
     }
 
     @Override
