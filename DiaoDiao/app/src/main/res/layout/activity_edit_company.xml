@@ -91,7 +91,6 @@
                     style="@style/edit_personal_edit"
                     android:hint="请输入公司电话"
                     android:inputType="phone"
-                    android:maxLength="11"
                     android:id="@+id/phone"/>
 
             </RelativeLayout>
@@ -176,6 +175,7 @@
                     style="@style/edit_personal_edit"
                     android:id="@+id/contact_phone"
                     android:inputType="phone"
+                    android:maxLength="11"
                     android:hint="请输入联系人电话"/>
 
             </RelativeLayout>
