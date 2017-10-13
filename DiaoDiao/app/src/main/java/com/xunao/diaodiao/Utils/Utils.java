@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -828,6 +830,31 @@ public class Utils {
         bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
         byte[] bytes=bos.toByteArray();
         return "data:image/png;base64,"+Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    /**
+     * 通过Base32将Bitmap转换成Base64字符串
+     * @param
+     * @return
+     */
+    public static String url2StrByBase64(@NonNull String imgURL){
+        byte[] data = null;
+        try {
+            // 创建URL
+            URL url = new URL(imgURL);
+            // 创建链接
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5 * 1000);
+            InputStream inStream = conn.getInputStream();
+            data = new byte[inStream.available()];
+            inStream.read(data);
+            inStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        return "data:image/png;base64,"+Base64.encodeToString(data, Base64.DEFAULT);
     }
 
     public static String floatToString(float data){

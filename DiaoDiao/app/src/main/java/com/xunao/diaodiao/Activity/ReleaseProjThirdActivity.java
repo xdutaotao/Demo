@@ -74,15 +74,15 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     TextView allPrice;
 
     private ReleaseProjReq req;
-    private List<ReleaseProjReqTemp> list;
+    private List<ReleaseProjReq.ExpensesBean> list;
 
     private RecyclerArrayAdapter<String> adapter;
-    private RecyclerArrayAdapter<ReleaseProjReqTemp> typeAdapter;
+    private RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean> typeAdapter;
 
-    public static void startActivity(Context context, ReleaseProjReq req, List<ReleaseProjReqTemp> temp) {
+    public static void startActivity(Context context, ReleaseProjReq req, boolean flag) {
         Intent intent = new Intent(context, ReleaseProjThirdActivity.class);
         intent.putExtra(INTENT_KEY, req);
-        intent.putExtra("TEMP", (Serializable) temp);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -97,7 +97,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         showToolbarBack(toolBar, titleText, "确认项目信息");
 
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
-        list = (List<ReleaseProjReqTemp>) getIntent().getSerializableExtra("TEMP");
+        list = req.getExpenses();
         pay.setOnClickListener(this);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
@@ -108,9 +108,9 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
             }
         };
 
-        typeAdapter = new RecyclerArrayAdapter<ReleaseProjReqTemp>(this, R.layout.res_proj_type_item) {
+        typeAdapter = new RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean>(this, R.layout.res_proj_type_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReqTemp s) {
+            protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReq.ExpensesBean s) {
                 baseViewHolder.setText(R.id.name, s.getName());
                 baseViewHolder.setVisible(R.id.type_detail, true);
                 baseViewHolder.setVisible(R.id.type_temp, false);
@@ -134,7 +134,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         adapter.addAll(req.getImages());
 
 
-        for(ReleaseProjReqTemp item: list){
+        for(ReleaseProjReq.ExpensesBean item: list){
             BigDecimal bigDecimal = new BigDecimal(Float.valueOf(item.getUnit_price()) * Float.valueOf(item.getAmount()));
             bigDecimal.setScale(2, 4);
             item.setTotal_price(String.valueOf(bigDecimal.floatValue()));
@@ -159,6 +159,18 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         PayActivity.startActivity(this, s, 1);
     }
 
+    @Override
+    public void getBase64List(List<String> s) {
+        req.setImages(s);
+        presenter.publishProject(this, req);
+    }
+
+    @Override
+    public void updateProject(Object s) {
+        RxBus.getInstance().post("update_project");
+        finish();
+    }
+
 
     @Override
     public void onFailure() {
@@ -175,15 +187,18 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                if(req.getImages().get(0).length() < 100){
-                    List<String> list = new ArrayList<>();
-                    for(String s : req.getImages()){
-                        list.add(Utils.Bitmap2StrByBase64(s));
+                if (!getIntent().getBooleanExtra("flag", false)){
+                    if(req.getImages().get(0).length() < 100){
+                        List<String> list = new ArrayList<>();
+                        for(String s : req.getImages()){
+                            list.add(Utils.Bitmap2StrByBase64(s));
+                        }
+                        req.setImages(list);
                     }
-                    req.setImages(list);
+                    presenter.publishProject(this, req);
+                }else{
+                    presenter.updateProject(this, req);
                 }
-
-                presenter.publishProject(this, req);
 
 
                 break;

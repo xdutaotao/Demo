@@ -309,6 +309,9 @@ public interface RetrofitService {
     Observable<BaseBean<CheckFinishRes>> checkFinish(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<Object>> updateProject(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> getRegionId(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)

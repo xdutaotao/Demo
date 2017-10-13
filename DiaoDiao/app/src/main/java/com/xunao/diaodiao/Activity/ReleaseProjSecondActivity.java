@@ -27,6 +27,7 @@ import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
+import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
 import com.xunao.diaodiao.R;
@@ -94,8 +95,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
     private ReleaseProjReq req;
     private IOSDialog dialog;
-    private RecyclerArrayAdapter<ReleaseProjReqTemp> typeAdapter;
-
+    private RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean> typeAdapter;
+    private List<ReleaseProjReq.ExpensesBean> tempList = new ArrayList<>();
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
     /**
@@ -106,15 +107,22 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
     private RecyclerArrayAdapter<String> adapter;
     private StringBuilder timeLong;
-    private List<ReleaseProjReqTemp> tempList = new ArrayList<>();
     private String percent;
     private int provinceId, cityId, districtId;
     private AddressPicker picker;
 
-    public static void startActivity(Context context, ReleaseProjReq req, String names) {
+    private boolean flag = false;
+
+    public static void startActivity(Context context, ReleaseProjReq req) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
-        intent.putExtra("NAMES", names);
         intent.putExtra(INTENT_KEY, req);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseProjReq req,  boolean flag) {
+        Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
+        intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -128,10 +136,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         showToolbarBack(toolBar, titleText, "发布项目信息");
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
-        String names = getIntent().getStringExtra("NAMES");
-        select.setText(names);
+        select.setText(req.getProject_type_class());
         next.setOnClickListener(this);
-
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -140,7 +146,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
                 } else {
-                    baseViewHolder.setVisible(R.id.delete, true);
+                    baseViewHolder.setVisible(R.id.delete, flag? false: true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
             }
@@ -185,9 +191,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         });
 
 
-        typeAdapter = new RecyclerArrayAdapter<ReleaseProjReqTemp>(this, R.layout.res_proj_type_item) {
+        typeAdapter = new RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean>(this, R.layout.res_proj_type_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReqTemp s) {
+            protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReq.ExpensesBean s) {
                 baseViewHolder.setText(R.id.name, s.getName());
                 if (TextUtils.isEmpty(s.getAmount())) {
                     baseViewHolder.setVisible(R.id.type_detail, false);
@@ -227,18 +233,47 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         });
 
-        time.setOnClickListener(this);
-        presenter.typeExpenses(req.getProject_class());
-        presenter.getPercent();
-        initImagePicker();
-
-        presenter.getAddressData(this);
-
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, Constants.DESTORY))
                 .subscribe(s -> {
                     finish();
                 });
+
+        flag = getIntent().getBooleanExtra("flag", false);
+        if (flag){
+            //再次编辑
+            title.setText(req.getTitle());
+            address.setText(req.getRegion());
+            addressDetail.setText(req.getAddress());
+            name.setText(req.getContact());
+            phone.setText(req.getContact_mobile());
+            time.setText(Utils.millToYearString(req.getBuild_time()));
+            content.setText(req.getDescribe());
+            adapter.clear();
+            adapter.addAll(req.getImages());
+            tempList.clear();
+            tempList.addAll(req.getExpenses());
+            typeAdapter.addAll(tempList);
+
+            addressDetailLayout.setOnClickListener(null);
+            addressDetail.setFocusable(false);
+            time.setOnClickListener(null);
+            content.setFocusable(false);
+            typeAdapter.setOnItemClickListener(null);
+
+            RxBus.getInstance().toObservable(String.class)
+                    .filter(s -> TextUtils.equals(s, "update_project"))
+                    .subscribe(s -> {
+                       finish();
+                    });
+
+        }else{
+            presenter.typeExpenses(req.getProject_class());
+            time.setOnClickListener(this);
+            initImagePicker();
+            presenter.getPercent();
+            presenter.getAddressData(this);
+        }
     }
 
     private void initImagePicker() {
@@ -253,17 +288,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
     @Override
     public void getData(ExpensesInfoRes res) {
-
-        for (ExpensesInfoRes.ExpensesInfoBean item : res.getExpenses_info()) {
-            ReleaseProjReqTemp temp = new ReleaseProjReqTemp();
-            temp.setExpenses_id(item.getExpenses_id());
-            temp.setName(item.getName());
-            temp.setUnit(item.getUnit());
-            temp.setCost(item.getCost());
-            tempList.add(temp);
-        }
-
-        typeAdapter.addAll(tempList);
+        tempList.clear();
+        tempList.addAll(res.getExpenses_info());
+        typeAdapter.addAll(res.getExpenses_info());
     }
 
     @Override
@@ -302,7 +329,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         }
     }
 
-    private void showDialog(ReleaseProjReqTemp temp) {
+    private void showDialog(ReleaseProjReq.ExpensesBean temp) {
         View view = LayoutInflater.from(this)
                 .inflate(R.layout.release_proj_dialog, null);
         ImageView cancle = (ImageView) view.findViewById(R.id.cancle_dialog);
@@ -433,56 +460,59 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-                if (pathList.size() == 0) {
+                if (adapter.getAllData().size() == 0) {
                     ToastUtil.show("图纸不能为空");
                     return;
                 }
 
-                List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
-                req.setProject_fee("0");
-                for (ReleaseProjReqTemp temp : tempList) {
-                    if (TextUtils.isEmpty(temp.getAmount())) {
-                        ToastUtil.show("请输入价格和数量");
-                        return;
+                if (!flag){
+                    List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
+                    req.setProject_fee("0");
+                    for (ReleaseProjReq.ExpensesBean temp : tempList) {
+                        if (TextUtils.isEmpty(temp.getAmount())) {
+                            ToastUtil.show("请输入价格和数量");
+                            return;
+                        }
+
+                        ReleaseProjReq.ExpensesBean bean = new ReleaseProjReq.ExpensesBean();
+                        bean.setExpenses_id(temp.getExpenses_id());
+                        bean.setUnit_price(temp.getUnit_price());
+                        bean.setAmount(temp.getAmount());
+                        BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
+                                * Float.valueOf(temp.getAmount()));
+                        bigDecimal.setScale(2, 4);
+                        req.setProject_fee(String.valueOf(Float.valueOf(req.getProject_fee()) +
+                                bigDecimal.floatValue()));
+                        String totalPrice = String.valueOf(bigDecimal.floatValue());
+                        bean.setTotal_price(totalPrice);
+                        releaseProjReqs.add(bean);
                     }
 
-                    ReleaseProjReq.ExpensesBean bean = new ReleaseProjReq.ExpensesBean();
-                    bean.setExpenses_id(temp.getExpenses_id());
-                    bean.setUnit_price(temp.getUnit_price());
-                    bean.setAmount(temp.getAmount());
-                    BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
-                            * Float.valueOf(temp.getAmount()));
-                    bigDecimal.setScale(2, 4);
-                    req.setProject_fee(String.valueOf(Float.valueOf(req.getProject_fee()) +
-                            bigDecimal.floatValue()));
-                    String totalPrice = String.valueOf(bigDecimal.floatValue());
-                    bean.setTotal_price(totalPrice);
-                    releaseProjReqs.add(bean);
-                }
+                    if (TextUtils.isEmpty(percent)){
+                        percent = "10";
+                    }
+                    BigDecimal serviceFee = new BigDecimal(Float.valueOf(req.getProject_fee())/Integer.valueOf(percent));
+                    serviceFee.setScale(2, 4);
+                    req.setService_cost(String.valueOf(serviceFee.floatValue()));
+                    BigDecimal allFee = serviceFee.add(new BigDecimal(Float.valueOf(req.getProject_fee())));
+                    allFee.setScale(2, 4);
+                    req.setTotal_price(String.valueOf(allFee.floatValue()));
 
-                if (TextUtils.isEmpty(percent)){
-                    percent = "10";
+                    req.setAddress(addressDetail.getText().toString());
+                    req.setProvince(provinceId);
+                    req.setCity(cityId);
+                    req.setDistrict(districtId);
+                    req.setBuild_time(Utils.convert2long(time.getText().toString()+" 00:00"));
+                    req.setImages(pathList);
+                    req.setDescribe(content.getText().toString());
+                    req.setExpenses(releaseProjReqs);
                 }
-                BigDecimal serviceFee = new BigDecimal(Float.valueOf(req.getProject_fee())/Integer.valueOf(percent));
-                serviceFee.setScale(2, 4);
-                req.setService_cost(String.valueOf(serviceFee.floatValue()));
-                BigDecimal allFee = serviceFee.add(new BigDecimal(Float.valueOf(req.getProject_fee())));
-                allFee.setScale(2, 4);
-                req.setTotal_price(String.valueOf(allFee.floatValue()));
 
                 req.setTitle(title.getText().toString());
-                req.setAddress(addressDetail.getText().toString());
-                req.setProvince(provinceId);
-                req.setCity(cityId);
-                req.setDistrict(districtId);
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
-                req.setBuild_time(Utils.convert2long(time.getText().toString()+" 00:00"));
-                req.setImages(pathList);
-                req.setDescribe(content.getText().toString());
-                req.setExpenses(releaseProjReqs);
 
-                ReleaseProjThirdActivity.startActivity(this, req, tempList);
+                ReleaseProjThirdActivity.startActivity(this, req, flag);
                 break;
 
             case R.id.time:

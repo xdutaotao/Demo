@@ -16,9 +16,11 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
@@ -143,36 +145,6 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             //收藏
             isCollect = true;
         }
-//        if (id != 0) {
-//            webView.loadUrl(H5_URL + getIntent().getStringExtra(INTENT_KEY) +
-//                    "?project_id=" + id + "&userid=" + User.getInstance().getUserId() + "&type=" + type + "&typeRole=" + ShareUtils.getValue(TYPE_KEY, 0))
-//                    .setWebViewClient(webView.new GWebViewClient() {
-//                        @Override
-//                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                            super.shouldOverrideUrlLoading(view, url);
-//                            if (url.contains("action=1")) {
-//                                //申请成功
-//                                ToastUtil.show("申请成功");
-//                                WebViewActivity.this.finish();
-//                            } else if (url.contains("action=2")) {
-//                                JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), type);
-//                            } else if (url.contains("action=3")) {
-//                                //没有权限
-//                                ToastUtil.show("请选择角色");
-//                                SelectMemoryActivity.startActivity(WebViewActivity.this);
-//                            }
-//                            return true;
-//                        }
-//                    });
-//        } else {
-//            webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
-//                    .setWebViewClient(webView.new GWebViewClient() {
-//                        @Override
-//                        public void onPageFinished(WebView view, String url) {
-//                            super.onPageFinished(view, url);
-//                        }
-//                    });
-//        }
 
         webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
                 .setWebViewClient(webView.new GWebViewClient() {
@@ -212,7 +184,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         againPost.setOnClickListener(v -> {
             //再次快捷发布
-
+            ReleaseProjActivity.startActivity(this);
         });
 
         changeInfo.setOnClickListener(v -> {
@@ -220,7 +192,31 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             int types = ShareUtils.getValue(TYPE_KEY, 0);
             if (types == COMPANY_TYPE){
                 if (projectBean != null){
-                    ReleaseProjActivity.startActivity(this , projectBean);
+
+                    FindProjDetailRes.DetailBean bean = projectBean.getDetail();
+                    ReleaseProjReq req = new ReleaseProjReq();
+                    req.setProject_type(bean.getProject_type());
+                    req.setProject_class(bean.getProject_class());
+                    req.setTitle(bean.getTitle());
+                    req.setProvince(bean.getProvince());
+                    req.setCity(bean.getCity());
+                    req.setDistrict(bean.getDistrict());
+                    req.setAddress(bean.getAddress());
+                    req.setContact(bean.getContact());
+                    req.setContact_mobile(bean.getContact_mobile());
+                    req.setBuild_time(bean.getBuild_time());
+                    req.setDescribe(bean.getDescribe());
+                    req.setImages(bean.getImages());
+                    req.setService_cost(bean.getService_cost());
+                    req.setProject_fee(bean.getProject_fee());
+                    req.setTotal_price(bean.getTotal_price());
+                    req.setExpenses(bean.getExpenses());
+
+                    req.setRegion(projectBean.getProject().getRegion());
+                    req.setProject_type_class(bean.getProject_type_class());
+                    req.setProject_type_name(bean.getProject_type_name());
+                    req.setProject_id(id);
+                    ReleaseProjSecondActivity.startActivity(this , req, true);
                 }
             }
         });
@@ -258,6 +254,13 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             apply.setVisibility(View.GONE);
         }
 
+        presenter.getFindProjDetail(this, id);
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, "update_project"))
+                .subscribe(s -> {
+                    finish();
+                });
 
     }
 

@@ -29,6 +29,33 @@ public class ReleaseProjReq implements Serializable{
     private List<ExpensesBean> expenses;
     private String verify;
     private String region;
+    private String project_type_name;
+    private String project_type_class;
+    private int project_id;
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
+    }
+
+    public String getProject_type_name() {
+        return project_type_name;
+    }
+
+    public void setProject_type_name(String project_type_name) {
+        this.project_type_name = project_type_name;
+    }
+
+    public String getProject_type_class() {
+        return project_type_class;
+    }
+
+    public void setProject_type_class(String project_type_class) {
+        this.project_type_class = project_type_class;
+    }
 
     public String getRegion() {
         return region;
@@ -195,6 +222,33 @@ public class ReleaseProjReq implements Serializable{
         private String unit_price;
         private String amount;
         private String total_price;
+        private String name;
+        private String unit;
+        private String cost;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
+        }
 
         public int getExpenses_id() {
             return expenses_id;

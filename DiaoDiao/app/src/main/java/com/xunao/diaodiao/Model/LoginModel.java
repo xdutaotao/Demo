@@ -1,6 +1,8 @@
 package com.xunao.diaodiao.Model;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -98,6 +100,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1021,17 +1025,19 @@ public class LoginModel extends BaseModel {
      *  项目详情
      */
     public Observable<FindProjDetailRes> getFindProjDetail(int id){
-        String rateKey = "projectDetail";
+        String rateKey = "myProjectDetail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(userid)
+        sb.append(time+"").append(id).append(type).append(userid)
             .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
-        req.setId(id);
+        req.setProject_id(id);
+        req.setType(type);
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getFindProjDetail(setBody(rateKey, time, req))
@@ -2208,6 +2214,73 @@ public class LoginModel extends BaseModel {
         })
         .compose(RxUtils.handleResult());
 
+    }
+
+
+    /**
+     * url 转 base64
+     * @return
+     */
+    public Observable<List<String>> urlToBase64(List<String> images){
+        return Observable.create(new Observable.OnSubscribe<List<String>>() {
+            @Override
+            public void call(Subscriber<? super List<String>> subscriber) {
+                List<String> result = new ArrayList<>();
+                for(String url: images){
+                    result.add(url2StrByBase64(url));
+                }
+                subscriber.onNext(result);
+                subscriber.onCompleted();
+            }
+        })
+        .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
+
+    private  String url2StrByBase64(@NonNull String imgURL){
+        byte[] data = null;
+        try {
+            // 创建URL
+            URL url = new URL(imgURL);
+            // 创建链接
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5 * 1000);
+            InputStream inStream = conn.getInputStream();
+            data = new byte[inStream.available()];
+            inStream.read(data);
+            inStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        return "data:image/png;base64,"+ Base64.encodeToString(data, Base64.DEFAULT);
+    }
+
+
+    /**
+     * 更新项目
+     * @param
+     * @return
+     */
+    public Observable<Object> updateProject(ReleaseProjReq req){
+        String rateKey = "updateProject";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getContact()).append(req.getContact_mobile()).append(req.getProject_id())
+                .append(req.getTitle()) .append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
     }
 
 

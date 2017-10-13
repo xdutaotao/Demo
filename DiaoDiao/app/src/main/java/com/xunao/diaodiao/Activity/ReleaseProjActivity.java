@@ -76,7 +76,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, FindProjDetailRes projectBean) {
+    public static void startActivity(Context context, ReleaseProjReq projectBean) {
         Intent intent = new Intent(context, ReleaseProjActivity.class);
         intent.putExtra(INTENT_KEY, projectBean);
         context.startActivity(intent);
@@ -208,9 +208,6 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
 
             }
         };
-
-
-
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
@@ -222,7 +219,6 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                 .subscribe(s -> {
                     finish();
                 });
-
     }
     
     private boolean isContain(String s){
@@ -324,7 +320,9 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                         fatherIds.toString().length() - 1));
                 req.setProject_class(allSelectList.toString().substring(1,
                         allSelectList.toString().length() - 1));
-                ReleaseProjSecondActivity.startActivity(this, req, allSelect.getText().toString());
+                req.setProject_type_name(allSelect.getText().toString());
+                req.setProject_type_class(allSelect.getText().toString());
+                ReleaseProjSecondActivity.startActivity(this, req);
                 break;
         }
     }

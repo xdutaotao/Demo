@@ -17,14 +17,32 @@ public class FindProjDetailRes implements Serializable{
      * is_apply : false
      */
 
-    private ProjectInfoBean project_info;
+    private ProjectInfoBean project;
+    private DetailBean detail;
+    private String url;
 
-    public ProjectInfoBean getProject_info() {
-        return project_info;
+    public ProjectInfoBean getProject() {
+        return project;
     }
 
-    public void setProject_info(ProjectInfoBean project_info) {
-        this.project_info = project_info;
+    public void setProject(ProjectInfoBean project) {
+        this.project = project;
+    }
+
+    public DetailBean getDetail() {
+        return detail;
+    }
+
+    public void setDetail(DetailBean detail) {
+        this.detail = detail;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public static class ProjectInfoBean {
@@ -42,44 +60,40 @@ public class FindProjDetailRes implements Serializable{
          */
 
         private String title;
-        private String create_time;
-        private String publish_name;
+        private String region;
+        private String address;
         private String contact;
         private String contact_mobile;
-        private String type;
-        private String district;
-        private String address;
-        private String build_time;
+        private String close_time;
         private String describe;
+        private List<String> images;
+        private List<ProjectExpensesBean> expenses;
         private String project_fee;
         private String service_fee;
         private int publish_type;
-        private List<ProjectExpensesBean> project_expenses;
-        private int is_apply;
-        private String url;
 
-        public int getIs_apply() {
-            return is_apply;
+        public String getTitle() {
+            return title;
         }
 
-        public void setIs_apply(int is_apply) {
-            this.is_apply = is_apply;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public String getUrl() {
-            return url;
+        public String getRegion() {
+            return region;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
+        public void setRegion(String region) {
+            this.region = region;
         }
 
-        public List<ProjectExpensesBean> getProject_expenses() {
-            return project_expenses;
+        public String getAddress() {
+            return address;
         }
 
-        public void setProject_expenses(List<ProjectExpensesBean> project_expenses) {
-            this.project_expenses = project_expenses;
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public String getContact() {
@@ -98,68 +112,12 @@ public class FindProjDetailRes implements Serializable{
             this.contact_mobile = contact_mobile;
         }
 
-        public int getPublish_type() {
-            return publish_type;
+        public String getClose_time() {
+            return close_time;
         }
 
-        public void setPublish_type(int publish_type) {
-            this.publish_type = publish_type;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getCreate_time() {
-            return create_time;
-        }
-
-        public void setCreate_time(String create_time) {
-            this.create_time = create_time;
-        }
-
-        public String getPublish_name() {
-            return publish_name;
-        }
-
-        public void setPublish_name(String publish_name) {
-            this.publish_name = publish_name;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getDistrict() {
-            return district;
-        }
-
-        public void setDistrict(String district) {
-            this.district = district;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getBuild_time() {
-            return build_time;
-        }
-
-        public void setBuild_time(String build_time) {
-            this.build_time = build_time;
+        public void setClose_time(String close_time) {
+            this.close_time = close_time;
         }
 
         public String getDescribe() {
@@ -168,6 +126,22 @@ public class FindProjDetailRes implements Serializable{
 
         public void setDescribe(String describe) {
             this.describe = describe;
+        }
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+
+        public List<ProjectExpensesBean> getExpenses() {
+            return expenses;
+        }
+
+        public void setExpenses(List<ProjectExpensesBean> expenses) {
+            this.expenses = expenses;
         }
 
         public String getProject_fee() {
@@ -185,7 +159,199 @@ public class FindProjDetailRes implements Serializable{
         public void setService_fee(String service_fee) {
             this.service_fee = service_fee;
         }
+
+        public int getPublish_type() {
+            return publish_type;
+        }
+
+        public void setPublish_type(int publish_type) {
+            this.publish_type = publish_type;
+        }
     }
+
+    public static class DetailBean{
+        private String project_type;
+        private String project_class;
+        private String title;
+        private int province;
+        private int city;
+        private int district;
+        private String address;
+        private String contact;
+        private String contact_mobile;
+        private long build_time;
+        private String describe;
+        private List<String> images;
+        private String service_cost;
+        private String project_fee;
+        private String total_price;
+        private List<ReleaseProjReq.ExpensesBean> expenses;
+        private String verify;
+        private String region;
+        private String project_type_name;
+        private String project_type_class;
+
+        public String getProject_type_name() {
+            return project_type_name;
+        }
+
+        public void setProject_type_name(String project_type_name) {
+            this.project_type_name = project_type_name;
+        }
+
+        public String getProject_type_class() {
+            return project_type_class;
+        }
+
+        public void setProject_type_class(String project_type_class) {
+            this.project_type_class = project_type_class;
+        }
+
+        public String getProject_type() {
+            return project_type;
+        }
+
+        public void setProject_type(String project_type) {
+            this.project_type = project_type;
+        }
+
+        public String getProject_class() {
+            return project_class;
+        }
+
+        public void setProject_class(String project_class) {
+            this.project_class = project_class;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getProvince() {
+            return province;
+        }
+
+        public void setProvince(int province) {
+            this.province = province;
+        }
+
+        public int getCity() {
+            return city;
+        }
+
+        public void setCity(int city) {
+            this.city = city;
+        }
+
+        public int getDistrict() {
+            return district;
+        }
+
+        public void setDistrict(int district) {
+            this.district = district;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public void setContact(String contact) {
+            this.contact = contact;
+        }
+
+        public String getContact_mobile() {
+            return contact_mobile;
+        }
+
+        public void setContact_mobile(String contact_mobile) {
+            this.contact_mobile = contact_mobile;
+        }
+
+        public long getBuild_time() {
+            return build_time;
+        }
+
+        public void setBuild_time(long build_time) {
+            this.build_time = build_time;
+        }
+
+        public String getDescribe() {
+            return describe;
+        }
+
+        public void setDescribe(String describe) {
+            this.describe = describe;
+        }
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+
+        public String getService_cost() {
+            return service_cost;
+        }
+
+        public void setService_cost(String service_cost) {
+            this.service_cost = service_cost;
+        }
+
+        public String getProject_fee() {
+            return project_fee;
+        }
+
+        public void setProject_fee(String project_fee) {
+            this.project_fee = project_fee;
+        }
+
+        public String getTotal_price() {
+            return total_price;
+        }
+
+        public void setTotal_price(String total_price) {
+            this.total_price = total_price;
+        }
+
+        public List<ReleaseProjReq.ExpensesBean> getExpenses() {
+            return expenses;
+        }
+
+        public void setExpenses(List<ReleaseProjReq.ExpensesBean> expenses) {
+            this.expenses = expenses;
+        }
+
+        public String getVerify() {
+            return verify;
+        }
+
+        public void setVerify(String verify) {
+            this.verify = verify;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+    }
+
 
     public static class ProjectExpensesBean {
         /**
@@ -196,26 +362,35 @@ public class FindProjDetailRes implements Serializable{
          * total_price : 200
          */
 
-        private String min_cost;
-        private String expenses_name;
+        private int expenses_id;
+        private String name;
+        private String unit;
         private String unit_price;
         private String amount;
         private String total_price;
 
-        public String getMin_cost() {
-            return min_cost;
+        public int getExpenses_id() {
+            return expenses_id;
         }
 
-        public void setMin_cost(String min_cost) {
-            this.min_cost = min_cost;
+        public void setExpenses_id(int expenses_id) {
+            this.expenses_id = expenses_id;
         }
 
-        public String getExpenses_name() {
-            return expenses_name;
+        public String getName() {
+            return name;
         }
 
-        public void setExpenses_name(String expenses_name) {
-            this.expenses_name = expenses_name;
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        public void setUnit(String unit) {
+            this.unit = unit;
         }
 
         public String getUnit_price() {
