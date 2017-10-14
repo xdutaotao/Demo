@@ -27,6 +27,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -68,7 +69,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     @BindView(R.id.person_code)
     EditText personCode;
     @BindView(R.id.address)
-    EditText address;
+    TextView address;
     @BindView(R.id.address_detail)
     EditText addressDetail;
     @BindView(R.id.year)
@@ -98,10 +99,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     @BindView(R.id.address_layout)
     RelativeLayout addressLayout;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> adapter;
+    private List<TypeInfoRes.Type_Info> listData = new ArrayList<>();
 
-    private String[] skills = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
     private List<String> skillsName = new ArrayList<>();
+
+
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
     private static final int IMAGE_PICKER = 8888;
     private int SELECT_TYPE = 1;
@@ -133,12 +136,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         showToolbarBack(toolBar, titleText, "完善资料");
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
+        adapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.select_skill_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
+            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                if (skillsName.toString().contains(s)) {
+                if (skillsName.toString().contains(s.getId())) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                 } else {
@@ -147,32 +150,19 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s)) {
+                    if (skillsName.toString().contains(s.getId())) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
                         ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s);
+                        skillsName.remove(s.getId());
                     } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
                         ((TextView) v).setTextColor(Color.WHITE);
-                        skillsName.add(s);
+                        skillsName.add(s.getId());
                     }
                 });
             }
         };
 
-        adapter.setOnItemClickListener((view, i) -> {
-            String skillItem = adapter.getAllData().get(i);
-            if (skillsName.toString().contains(skillItem)) {
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsName.remove(skillItem);
-            } else {
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView) view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsName.add(skillItem);
-            }
-
-        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -250,7 +240,6 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         }
 
-        adapter.addAll(skills);
         initImagePicker();
 
         addressLayout.setOnClickListener(v -> {
@@ -269,7 +258,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 picker.show();
             }
         });
-        presenter.getAddressData();
+        presenter.getAddressData(this);
+        presenter.getTypeInfo();
     }
 
     private void initImagePicker() {
@@ -344,9 +334,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         String projectType = skillsName.toString();
         projectType = projectType.substring(1, projectType.length() - 1);
         req.setProject_type(projectType);
-        req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
-        req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
-        req.setCertificate(Utils.Bitmap2StrByBase64(certifyUrl));
+        if (!TextUtils.isEmpty(codeUrl) && !codeUrl.contains("http"))
+            req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
+        if (!TextUtils.isEmpty(codeReverseUrl) && !codeReverseUrl.contains("http"))
+            req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
+        if (!TextUtils.isEmpty(certifyUrl) && !certifyUrl.contains("http"))
+            req.setCertificate(Utils.Bitmap2StrByBase64(certifyUrl));
 
         presenter.fillSkillInfor(this, req);
 
@@ -356,6 +349,16 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     public void getData(LoginResBean bean) {
         finish();
         ToastUtil.show("完善完成");
+    }
+
+    @Override
+    public void getData(TypeInfoRes bean) {
+        for (TypeInfoRes.Type_Info typeInfo : bean.getType_info()){
+            if (Integer.valueOf(typeInfo.getParent_id()) == 0){
+                listData.add(typeInfo);
+            }
+        }
+        adapter.addAll(listData);
     }
 
     @Override

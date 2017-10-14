@@ -29,8 +29,10 @@ public class ReleaseSkillReq implements Serializable{
     private List<String> images;
     private String verify;
 
-    private String region;
     private String odd_id;
+    private String region;
+
+
 
     public String getOdd_id() {
         return odd_id;

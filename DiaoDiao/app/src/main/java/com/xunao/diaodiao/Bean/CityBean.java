@@ -27,7 +27,7 @@ public class CityBean {
          */
 
         private String id;
-        private String region_name;
+        private String name;
         private String parent_id;
         private String region_type;
 
@@ -39,12 +39,12 @@ public class CityBean {
             this.id = id;
         }
 
-        public String getRegion_name() {
-            return region_name;
+        public String getName() {
+            return name;
         }
 
-        public void setRegion_name(String region_name) {
-            this.region_name = region_name;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getParent_id() {

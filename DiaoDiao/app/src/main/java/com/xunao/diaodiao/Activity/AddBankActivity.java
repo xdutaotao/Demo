@@ -89,7 +89,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             @Override
             protected void convert(BaseViewHolder baseViewHolder, BankListRes.BankCard s) {
                 baseViewHolder.setText(R.id.bank_text, s.getCard_name());
-                baseViewHolder.setText(R.id.bank_icon, s.getImg());
+                baseViewHolder.setImageUrl(R.id.bank_icon, s.getImg());
                 if (selectNames.size() > 0)
                     baseViewHolder.setVisible(R.id.select, TextUtils.equals(s.getCard_name(), selectNames.get(0)));
             }

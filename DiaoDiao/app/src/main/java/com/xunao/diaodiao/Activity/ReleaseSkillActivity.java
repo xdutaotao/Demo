@@ -140,6 +140,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
         showToolbarBack(toolBar, titleText, "发布零工信息");
 
+        req = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
+
         content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,7 +170,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
                 } else {
-                    baseViewHolder.setVisible(R.id.delete, true);
+                    baseViewHolder.setVisible(R.id.delete, req!=null ? false: true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
             }
@@ -228,7 +230,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     finish();
                 });
 
-        req = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
+
         if (req != null){
             title.setText(req.getTitle());
             address.setText(req.getRegion());

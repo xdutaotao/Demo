@@ -71,8 +71,10 @@ import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
+import static com.xunao.diaodiao.Common.Constants.city;
 import static com.xunao.diaodiao.Common.Constants.latData;
 import static com.xunao.diaodiao.Common.Constants.lngData;
+import static com.xunao.diaodiao.Common.Constants.selectCity;
 
 public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, GeocodeSearch.OnGeocodeSearchListener
 {
@@ -326,6 +328,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void onRefresh() {
         locationAdd.setText(Constants.city);
+        selectCity = city;
         presenter.getFirstPage(latData, lngData);
     }
 

@@ -110,7 +110,7 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
                 //returnHome(searchCity.getText().toString());
                 for(CitiesBean.DatasBean bean: allData){
                     for(CitiesBean.DatasBean.AddressListBean addressListBean: bean.getAddressList()){
-                        if (TextUtils.equals(addressListBean.getRegion_name(), searchCity.getText().toString())){
+                        if (TextUtils.equals(addressListBean.getName(), searchCity.getText().toString())){
                             returnHome(searchCity.getText().toString());
                             return true;
                         }
@@ -174,11 +174,11 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
                 CitiesBean.DatasBean.AddressListBean addressListBean = new CitiesBean.DatasBean.AddressListBean();
                 addressListBean.setId(Integer.valueOf(itemBean.getId()));
                 addressListBean.setParent_id(Integer.valueOf(itemBean.getParent_id()));
-                addressListBean.setRegion_name(itemBean.getRegion_name());
+                addressListBean.setName(itemBean.getName());
                 addressListBean.setRegion_type(Integer.valueOf(itemBean.getRegion_type()));
                 HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
                 format.setCaseType(HanyuPinyinCaseType.UPPERCASE);
-                String alifName = PinyinHelper.toHanyuPinyinStringArray(itemBean.getRegion_name().charAt(0),
+                String alifName = PinyinHelper.toHanyuPinyinStringArray(itemBean.getName().charAt(0),
                         format)[0].substring(0, 1);
 
                 if (addressListBean.getParent_id() == 0) {

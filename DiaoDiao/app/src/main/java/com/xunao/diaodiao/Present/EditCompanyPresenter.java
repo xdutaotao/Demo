@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Model.EditCompanyModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;

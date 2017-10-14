@@ -139,6 +139,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     private AddressPicker picker;
     private StringBuilder timeLong;
 
+    FillCompanyReq req = new FillCompanyReq();
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
         context.startActivity(intent);
@@ -169,7 +171,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             addressDetail.setText(info.getAddress());
             contactName.setText(info.getContact());
             phone.setText(info.getTel());
-            buildTime.setText(Utils.strToDateLong(info.getEstablish_time()));
+            buildTime.setText(Utils.millToYearString(info.getEstablish_time()));
+            provinceId = info.getProvince();
+            cityId = info.getCity();
+            districtId = info.getDistrict();
 
             codeUrl = info.getCard_front();
             if (!TextUtils.isEmpty(codeUrl)) {
@@ -499,7 +504,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             }
         }
 
-        if (SELECT_TYPE <= 3) {
+        if (SELECT_TYPE == 3) {
             if (TextUtils.isEmpty(firstUrl) || TextUtils.isEmpty(secondUrl)
                     || TextUtils.isEmpty(thirdUrl)) {
                 ToastUtil.show("公司认证不能为空");
@@ -507,27 +512,45 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             }
         }
 
-        FillCompanyReq req = new FillCompanyReq();
+
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setName(name.getText().toString());
         req.setProvince(provinceId);
         req.setCity(cityId);
         req.setDistrict(districtId);
-        req.setAddress(address.getText().toString());
+        req.setAddress(addressDetail.getText().toString());
         req.setTel(phone.getText().toString());
         req.setContact(contactName.getText().toString());
         req.setContact_mobile(contactPhone.getText().toString());
         req.setContact_card(contactCode.getText().toString());
-        req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
-        req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
-        req.setEstablish_time(Utils.convert2long(buildTime.getText().toString()+" 00:00"));
+        req.setEstablish_time(Utils.convert2long(buildTime.getText().toString()));
+
+        if (!TextUtils.isEmpty(codeUrl) && !codeUrl.contains("http")){
+            req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
+        }
+
+        if (!TextUtils.isEmpty(codeReverseUrl) && !codeReverseUrl.contains("http")){
+            req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
+        }
+
+        req.setEstablish_time(Utils.convert2long(buildTime.getText().toString()));
         List<String> remarkList = new ArrayList<>();
         if (oneLayout.getVisibility() == View.VISIBLE) {
-            remarkList.add(Utils.Bitmap2StrByBase64(oneUrl));
+            if (!TextUtils.isEmpty(oneUrl) && !oneUrl.contains("http")){
+                remarkList.add(Utils.Bitmap2StrByBase64(oneUrl));
+            }
+
         } else {
-            remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
-            remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
-            remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
+            if (!TextUtils.isEmpty(firstUrl) && !firstUrl.contains("http")){
+                remarkList.add(Utils.Bitmap2StrByBase64(firstUrl));
+            }
+            if (!TextUtils.isEmpty(secondUrl) && !secondUrl.contains("http")){
+                remarkList.add(Utils.Bitmap2StrByBase64(secondUrl));
+            }
+            if (!TextUtils.isEmpty(thirdUrl) && !thirdUrl.contains("http")){
+                remarkList.add(Utils.Bitmap2StrByBase64(thirdUrl));
+            }
+
         }
 
         req.setAuthentication(remarkList);
@@ -673,12 +696,14 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 Glide.with(this).load(path).placeholder(getResources().getDrawable(R.drawable.shangchuan_zheng)).into(code);
                 codeDelete.setVisibility(View.VISIBLE);
                 codeUrl = path;
+                req.setCard_front(Utils.Bitmap2StrByBase64(codeUrl));
                 break;
 
             case 5:
                 Glide.with(this).load(path).placeholder(getResources().getDrawable(R.drawable.shangchuan_fan)).into(codeReverse);
                 codeReverseDelete.setVisibility(View.VISIBLE);
                 codeReverseUrl = path;
+                req.setCard_back(Utils.Bitmap2StrByBase64(codeReverseUrl));
                 break;
         }
 

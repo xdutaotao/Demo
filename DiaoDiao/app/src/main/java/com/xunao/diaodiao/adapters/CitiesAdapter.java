@@ -139,10 +139,10 @@ public class CitiesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     if(position==count){
                         CityViewHolder cityViewHolder = (CityViewHolder) holder;
                         CitiesBean.DatasBean.AddressListBean addressListBean = addressList.get(j);
-                        cityViewHolder.textCity.setText(addressListBean.getRegion_name());
+                        cityViewHolder.textCity.setText(addressListBean.getName());
                         cityViewHolder.textCity.setOnClickListener(v -> {
                             if (hotItemClickListener != null)
-                                hotItemClickListener.onItemClick(v, addressListBean.getRegion_name());
+                                hotItemClickListener.onItemClick(v, addressListBean.getName());
                         });
                     }
                 }

@@ -14,7 +14,7 @@ public class FindProjReq {
     private String lat;
     private String lng;
     private String verify;
-    private int city;
+    private String city;
     private String keyword;
     private int userid;
     private int usertype;
@@ -32,11 +32,11 @@ public class FindProjReq {
         this.type = type;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

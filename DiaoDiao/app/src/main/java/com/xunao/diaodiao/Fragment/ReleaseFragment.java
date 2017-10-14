@@ -25,6 +25,7 @@ import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SearchPresenter;
@@ -77,6 +78,13 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     private String mParam1;
     private int index = 0;
     private int selectIndex = 0;
+    private int type;
+
+    private int status;
+
+    private PersonalRes.CompanyInfo companyInfo;
+    private PersonalRes.TechnicianInfo technicianInfo;
+    private PersonalRes.FamilyInfo familyInfo;
 
     public static ReleaseFragment newInstance(String param1) {
         ReleaseFragment fragment = new ReleaseFragment();
@@ -122,7 +130,7 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     public void onResume() {
         super.onResume();
 
-        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        type = ShareUtils.getValue(TYPE_KEY, 0);
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
             index++;
             if (index == 1) {
@@ -161,11 +169,13 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 LoginActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             }else{
-                if (ShareUtils.getValue(STATUS, 0) != 1){
-                    presenter.checkFinish();
-                }else{
-
-                }
+//                if (ShareUtils.getValue(STATUS, 0) != 1){
+//                    presenter.checkFinish();
+//                }else{
+//
+//                }
+                presenter.checkFinish();
+                presenter.getPersonalInfo(ReleaseFragment.this.getContext());
             }
         }
 
@@ -173,7 +183,6 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        int status = ShareUtils.getValue(STATUS, 0);
         if (status != 1){
             if (status == 4){
                 SpannableStringBuilder string = new SpannableStringBuilder("请先完善资料后才能 发布/接单");
@@ -186,13 +195,27 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                         .setNegativeBtnColor(R.color.nav_gray)
                         .setPositiveBtnColor(R.color.black)
                         .setPositiveButton("去完善", v1 -> {
-                            int type = ShareUtils.getValue(TYPE_KEY, 0);
                             if (type == 1){
-                                EditCompanyActivity.startActivity(getContext());
+                                if (companyInfo == null){
+                                    EditCompanyActivity.startActivity(getContext());
+                                }else{
+                                    EditCompanyActivity.startActivity(getContext(), companyInfo);
+                                }
+
                             }else if (type == 2){
-                                EditSkillActivity.startActivity(getContext());
+                                if (technicianInfo == null){
+                                    EditSkillActivity.startActivity(getContext());
+                                }else{
+                                    EditSkillActivity.startActivity(getContext(), technicianInfo);
+                                }
+
                             }else{
-                                EditPersonalActivity.startActivity(getContext());
+                                if (familyInfo == null){
+                                    EditPersonalActivity.startActivity(getContext());
+                                }else{
+                                    EditPersonalActivity.startActivity(getContext(), familyInfo);
+                                }
+
                             }
                         })
                         .show();
@@ -206,7 +229,30 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                         .setNegativeButton("稍后再说", null)
                         .setNegativeBtnColor(R.color.nav_gray)
                         .setPositiveBtnColor(R.color.black)
-                        .setPositiveButton("去完善", null)
+                        .setPositiveButton("去完善", v1 -> {
+                            if (type == 1){
+                                if (companyInfo == null){
+                                    EditCompanyActivity.startActivity(getContext());
+                                }else{
+                                    EditCompanyActivity.startActivity(getContext(), companyInfo);
+                                }
+
+                            }else if (type == 2){
+                                if (technicianInfo == null){
+                                    EditSkillActivity.startActivity(getContext());
+                                }else{
+                                    EditSkillActivity.startActivity(getContext(), technicianInfo);
+                                }
+
+                            }else{
+                                if (familyInfo == null){
+                                    EditPersonalActivity.startActivity(getContext());
+                                }else{
+                                    EditPersonalActivity.startActivity(getContext(), familyInfo);
+                                }
+
+                            }
+                        })
                         .show();
             }
 
@@ -261,5 +307,13 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void getData(CheckFinishRes bean) {
         ShareUtils.putValue(STATUS, bean.getStatus());
+        status = bean.getStatus();
+    }
+
+    @Override
+    public void getPersonalData(PersonalRes result) {
+        companyInfo = result.getCompanyInfo();
+        technicianInfo = result.getTechnicianInfo();
+        familyInfo = result.getFamilyInfo();
     }
 }

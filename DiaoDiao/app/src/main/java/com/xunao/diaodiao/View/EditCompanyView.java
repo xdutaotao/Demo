@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.View;
 
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.PersonalRes;
 
 import java.util.ArrayList;
 

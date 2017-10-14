@@ -245,6 +245,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                     req.setOdd_fee(bean.getOdd_fee());
                     req.setTotal_fee(bean.getTotal_fee());
                     req.setImages(bean.getImages());
+                    req.setRegion(bean.getRegion());
                     ReleaseSkillActivity.startActivity(this, req);
                 }
             }

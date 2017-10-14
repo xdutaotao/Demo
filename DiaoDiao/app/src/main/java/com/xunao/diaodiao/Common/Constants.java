@@ -2,6 +2,11 @@ package com.xunao.diaodiao.Common;
 
 import android.graphics.Color;
 
+import com.xunao.diaodiao.Bean.TypeInfoRes;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Description:
  * Created by GUZHENFU on 2017/5/16 16:45.
@@ -27,6 +32,7 @@ public class Constants {
     public static String lngData;
     public static String address;
     public static String city;
+    public static String selectCity=" ";
 
     public static final String STATUS = "STATUS";
     public static final String DESTORY = "destory";
@@ -65,6 +71,9 @@ public class Constants {
     public static final float DEFAULT_TAG_TEXT_PADDING_BOTTOM = 5;
 
     public static final float LAYOUT_WIDTH_OFFSET = 2;
+
+    //承接项目类型
+    public static List<TypeInfoRes.Type_Info> projectTypeList = new ArrayList<>();
 
 
 }

@@ -130,6 +130,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 import static com.xunao.diaodiao.Common.Constants.city;
+import static com.xunao.diaodiao.Common.Constants.selectCity;
 
 /**
  * Created by
@@ -972,13 +973,14 @@ public class LoginModel extends BaseModel {
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getKeyword()).append(req.getLat())
+        sb.append(time+"").append(selectCity).append(req.getKeyword()).append(req.getLat())
                 .append(req.getLng()).append(req.getNearby())
                 .append(req.getPage())
                 .append(req.getPageSize()).append(req.getTime_type())
                 .append(req.getType())
                 .append("security");
 
+        req.setCity(selectCity);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1101,14 +1103,16 @@ public class LoginModel extends BaseModel {
         String rateKey = "myPublishOddDetail";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(userid)
+        sb.append(time+"").append(id).append(type).append(userid)
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setOdd_id(id);
+        req.setType(type);
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
@@ -2102,13 +2106,13 @@ public class LoginModel extends BaseModel {
                     switch (Integer.valueOf(bean.getRegion_type())){
                         case 1:
                             //省份
-                            Province province = new Province(String.valueOf(bean.getId()), bean.getRegion_name());
+                            Province province = new Province(String.valueOf(bean.getId()), bean.getName());
                             data.add(province);
                             break;
 
                         case 2:
                             //市区
-                            City city = new City(String.valueOf(bean.getId()), bean.getRegion_name());
+                            City city = new City(String.valueOf(bean.getId()), bean.getName());
                             city.setProvinceId(String.valueOf(bean.getParent_id()));
                             for(Province p : data){
                                 if (TextUtils.equals(bean.getParent_id(), p.getAreaId())){
@@ -2119,7 +2123,7 @@ public class LoginModel extends BaseModel {
 
                         case 3:
                             //县
-                            County county = new County(String.valueOf(bean.getId()), bean.getRegion_name());
+                            County county = new County(String.valueOf(bean.getId()), bean.getName());
                             county.setCityId(String.valueOf(bean.getParent_id()));
                             for(Province p: data){
                                 for(City city1: p.getCities()){
@@ -2179,7 +2183,7 @@ public class LoginModel extends BaseModel {
                     cityString = city.substring(0, city.length() - 1);
                 }
                 for(CityBean.CityItemBean item: list){
-                    if (TextUtils.equals(item.getRegion_name(), cityString)){
+                    if (TextUtils.equals(item.getName(), cityString)){
                         subscriber.onNext(Integer.valueOf(item.getId()));
 
                         break;
@@ -2200,9 +2204,9 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         return getCityId().map(integer -> {
-            req.setCity(integer);
+            req.setCity(selectCity);
             StringBuilder sb = new StringBuilder(rateKey);
-            sb.append(time+"").append(req.getCity()).append(req.getKeyword())
+            sb.append(time+"").append(selectCity).append(req.getKeyword())
                     .append(req.getLat()).append(req.getLng())
                     .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
                     .append(req.getProject_type()).append(req.getTime_type())
@@ -2210,7 +2214,7 @@ public class LoginModel extends BaseModel {
                     .append(userid)
                     .append("security");
 
-
+            req.setCity(selectCity);
             req.setVerify(sb.toString());
             return req;
         }).flatMap(req1 -> {

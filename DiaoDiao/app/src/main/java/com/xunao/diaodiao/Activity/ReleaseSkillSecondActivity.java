@@ -99,6 +99,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
 
         showToolbarBack(toolBar, titleText, "确认零工信息");
         req = (ReleaseSkillReq) getIntent().getSerializableExtra(INTENT_KEY);
+        flag = getIntent().getBooleanExtra("flag", false);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -111,7 +112,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
 
 
         title.setText(req.getTitle());
-        address.setText(req.getAddress());
+        address.setText(req.getRegion());
         addressDetail.setText(req.getAddress());
         projectType.setText(req.getProject_type());
         contact.setText(req.getContact());
@@ -132,7 +133,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
                 .subscribe(s -> {
                     finish();
                 });
-        flag = getIntent().getBooleanExtra("flag", false);
+
         if (flag){
             pay.setText("发布");
         }

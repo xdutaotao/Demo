@@ -502,7 +502,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     req.setProvince(provinceId);
                     req.setCity(cityId);
                     req.setDistrict(districtId);
-                    req.setBuild_time(Utils.convert2long(time.getText().toString()+" 00:00"));
+                    req.setBuild_time(Utils.convert2long(time.getText().toString()));
                     req.setImages(pathList);
                     req.setDescribe(content.getText().toString());
                     req.setExpenses(releaseProjReqs);

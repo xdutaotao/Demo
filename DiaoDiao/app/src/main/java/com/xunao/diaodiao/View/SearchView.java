@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.View;
 
 import com.xunao.diaodiao.Bean.CheckFinishRes;
+import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.SearchResponseBean;
 
 import java.util.List;
@@ -10,4 +11,5 @@ import java.util.List;
  */
 public interface SearchView extends BaseView {
     void getData(CheckFinishRes bean);
+    void getPersonalData(PersonalRes result);
 }

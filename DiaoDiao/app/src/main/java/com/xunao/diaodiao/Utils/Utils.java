@@ -285,7 +285,7 @@ public class Utils {
     public static long convert2long(String date) {
         try {
             if (!TextUtils.isEmpty(date)) {
-                String format = "yyyy-MM-dd HH:mm";
+                String format = "yyyy-MM-dd";
                 SimpleDateFormat sf = new SimpleDateFormat(format);
                 return sf.parse(date).getTime();
             }

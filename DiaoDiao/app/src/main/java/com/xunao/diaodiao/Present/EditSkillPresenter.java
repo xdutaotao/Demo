@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.EditSkillModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -46,9 +47,9 @@ public class EditSkillPresenter extends BasePresenter<EditSkillView> {
     }
 
     //省市区
-    public void getAddressData(){
+    public void getAddressData(Context context){
         mCompositeSubscription.add(model.getAddressData()
-                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<ArrayList<Province>>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(ArrayList<Province> token) {
                         getView().getAddressData(token);
@@ -57,6 +58,21 @@ public class EditSkillPresenter extends BasePresenter<EditSkillView> {
                     @Override
                     protected void _onError(String msg) {
                         ToastUtil.show(msg);
+                    }
+                }));
+    }
+
+    public void getTypeInfo(){
+        mCompositeSubscription.add(model.getTypeInfo()
+                .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(TypeInfoRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
                     }
                 }));
     }

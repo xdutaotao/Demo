@@ -51,6 +51,7 @@ import rx.observables.SyncOnSubscribe;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 import static com.xunao.diaodiao.Common.Constants.city;
+import static com.xunao.diaodiao.Common.Constants.selectCity;
 import static com.xunao.diaodiao.Fragment.HomeFragment.REQUEST_KEY;
 
 /**
@@ -110,7 +111,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
                 //returnHome(searchCity.getText().toString());
                 for(CitiesBean.DatasBean bean: allData){
                     for(CitiesBean.DatasBean.AddressListBean addressListBean: bean.getAddressList()){
-                        if (TextUtils.equals(addressListBean.getRegion_name(), searchCity.getText().toString())){
+                        if (TextUtils.equals(addressListBean.getName(), searchCity.getText().toString())){
                             returnHome(searchCity.getText().toString());
                             return true;
                         }
@@ -131,7 +132,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         List<CitiesBean.DatasBean> destList = new ArrayList<>();
 
         try {
-            InputStream is = getAssets().open("city.json");
+            InputStream is = getAssets().open("city2.json");
             String text = readTextFromSDcard(is);
             Gson gson = new Gson();
             List<CityBean.CityItemBean> resourceList = gson.fromJson(text, new TypeToken<List<CityBean.CityItemBean>>() {
@@ -139,23 +140,28 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
 
 
             for (CityBean.CityItemBean itemBean : resourceList) {
+
+                if (Integer.valueOf(itemBean.getRegion_type()) != 2) {
+                    continue;
+                }
+
                 CitiesBean.DatasBean bean = new CitiesBean.DatasBean();
 
                 CitiesBean.DatasBean.AddressListBean addressListBean = new CitiesBean.DatasBean.AddressListBean();
                 addressListBean.setId(Integer.valueOf(itemBean.getId()));
                 addressListBean.setParent_id(Integer.valueOf(itemBean.getParent_id()));
-                addressListBean.setRegion_name(itemBean.getRegion_name());
+                addressListBean.setName(itemBean.getName());
                 addressListBean.setRegion_type(Integer.valueOf(itemBean.getRegion_type()));
+                if (Integer.valueOf(itemBean.getId()) == 394){
+                    isFind = false;
+                }
                 HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
                 format.setCaseType(HanyuPinyinCaseType.UPPERCASE);
-                String alifName = PinyinHelper.toHanyuPinyinStringArray(itemBean.getRegion_name().charAt(0),
+                String alifName = PinyinHelper.toHanyuPinyinStringArray(itemBean.getName().charAt(0),
                         format)[0].substring(0, 1);
 
-                if (addressListBean.getParent_id() == 0) {
-                    continue;
-                }
-
                 if (destList.size() == 0) {
+                    //第一次
                     bean.setAlifName(alifName);
                     List<CitiesBean.DatasBean.AddressListBean> listBean = new ArrayList<>();
                     listBean.add(addressListBean);
@@ -280,6 +286,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
     private void returnHome(String data){
         Intent intent = new Intent();
         intent.putExtra(INTENT_KEY, data);
+        selectCity = data;
         setResult(RESULT_OK, intent);
         finish();
     }
