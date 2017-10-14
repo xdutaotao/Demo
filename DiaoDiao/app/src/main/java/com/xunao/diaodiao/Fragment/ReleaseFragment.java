@@ -123,6 +123,9 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         customReleaseWeibaoInfo.setOnClickListener(this);
 
 
+        presenter.checkFinish();
+        presenter.getPersonalInfo(ReleaseFragment.this.getContext());
+
         return view;
     }
 

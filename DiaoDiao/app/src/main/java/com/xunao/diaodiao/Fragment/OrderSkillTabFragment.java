@@ -97,9 +97,18 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
+
         return view;
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+
     @Override
     public void getData(OrderSkillRes list) {
         if (page == 1)

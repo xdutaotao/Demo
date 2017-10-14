@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -61,6 +63,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     private int type;
     private boolean isCollect = false;
+    private boolean isApply = false;
     private int id;
     private String btnType;
     private String url;
@@ -69,6 +72,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String HOME_DETAIL = "home_detail";
+    public static final String HOME_SKILL_DETAIL = "home_skill_detail";
     public static final String COMPANY_PROJ = "company_proj";
     /**
      *  1项目2监理3零工4维保
@@ -77,6 +81,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     private FindProjDetailRes projectBean;
     private FindLingGongRes oddBean;
+
+    private FindProjectRes.FindProject findProject;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -128,6 +134,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         context.startActivity(intent);
     }
 
+
+    //首页进来
+    public static void startActivity(Context context, FindProjectRes.FindProject projectBean, String btnType) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra("project_bean", projectBean);
+        intent.putExtra("BTN_TYPE", btnType);
+        context.startActivity(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,10 +159,17 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         btnType = getIntent().getStringExtra("BTN_TYPE");
         project_type = getIntent().getIntExtra("project_type", 0);
         url = getIntent().getStringExtra(INTENT_KEY);
-        if (url.contains("has_collected=1")){
-            //收藏
-            isCollect = true;
+
+
+        findProject = (FindProjectRes.FindProject) getIntent().getSerializableExtra("project_bean");
+        if(findProject != null){
+            id = findProject.getId();
+            url = findProject.getUrl();
+            isCollect = findProject.getCollected()==1?true:false;
+            isApply = findProject.getApply()==1?true:false;
         }
+
+
 
         webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
                 .setWebViewClient(webView.new GWebViewClient() {
@@ -174,7 +197,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             }else {
                 if (project_type == 0){
                     //联系发布人
-                    Utils.startCallActivity(this, "12345678900");
+                    Utils.startCallActivity(this, Constants.tel);
                 }else if (project_type == 1){
                     // 1 项目
                     RecommandActivity.startActivity(this, id, project_type);
@@ -254,7 +277,19 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         if (TextUtils.equals(HOME_DETAIL, btnType)){
             //首页
             bottomBtnLayout.setVisibility(View.GONE);
-            apply.setVisibility(View.VISIBLE);
+            if(isApply){
+                apply.setVisibility(View.GONE);
+            }else{
+                apply.setVisibility(View.VISIBLE);
+            }
+
+        }else if(TextUtils.equals(HOME_SKILL_DETAIL, btnType)) {
+            //首页 找零工详情
+            if(isApply){
+                apply.setVisibility(View.GONE);
+            }else{
+                apply.setVisibility(View.VISIBLE);
+            }
         }else if (TextUtils.equals(LG_DETAIL, btnType)){
             //零工详情
             bottomBtnLayout.setVisibility(View.VISIBLE);
@@ -265,9 +300,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         }else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
+            apply.setVisibility(View.GONE);
         }else if (TextUtils.equals(btnType, RECEIVE_PROJ_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
+            apply.setVisibility(View.GONE);
         }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);

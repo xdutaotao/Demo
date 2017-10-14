@@ -349,6 +349,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
         if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size()>0){
             LatLonPoint point =  geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
+            selectCity = city;
             presenter.getFirstPage(getContext(), String.valueOf(point.getLatitude()),
                     String.valueOf(point.getLongitude()));
         }

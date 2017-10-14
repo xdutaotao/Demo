@@ -1,7 +1,9 @@
 package com.xunao.diaodiao.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -50,6 +52,26 @@ public class PersonalPresenter extends BasePresenter<PersonalView> {
                     @Override
                     public void _onError(String s) {
                         ToastUtil.show(s);
+                    }
+                }));
+    }
+
+    /**
+     * 审核
+     */
+    public void checkFinish(){
+        mCompositeSubscription.add(model.checkFinish()
+                .subscribe(new RxSubUtils<CheckFinishRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(CheckFinishRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String msg) {
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "请求失败";
+                        getView().onFailure();
                     }
                 }));
     }

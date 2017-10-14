@@ -110,6 +110,8 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 
         adapter.setOnItemClickListener((v, i) -> {
 
+
+
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
@@ -125,9 +127,16 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+
     @Override
     public void getData(OrderSkillRecieveRes list) {
         if (page == 1)

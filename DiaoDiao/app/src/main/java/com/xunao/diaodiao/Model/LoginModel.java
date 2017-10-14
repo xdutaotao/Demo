@@ -1627,20 +1627,18 @@ public class LoginModel extends BaseModel {
      * 申请列表
      */
     public Observable<ApplyDetailRes> getApplyDetail(int id){
-        String rateKey = "applyList";
+        String rateKey = "applyInfo";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(type).append(userid)
+        sb.append(time+"").append(id)
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
-        req.setUserid(userid);
-        req.setType(type);
-        req.setProject_id(id);
+        req.setTechnician_id(id+"");
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getApplyDetail(setBody(rateKey, time, req))
@@ -1648,16 +1646,19 @@ public class LoginModel extends BaseModel {
     }
 
 
-    public Observable<String> getApplyPass(ApplyPassReq req){
-        String rateKey = "applyList";
+    public Observable<Object> getApplyPass(ApplyPassReq req){
+        String rateKey = "applyPass";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(id).append(type).append(userid)
+        sb.append(time+"").append(req.getProject_id())
+                .append(req.getProject_type()).append(req.getTechnician_id())
                 .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
 
 
         return config.getRetrofitService().getApplyPass(setBody(rateKey, time, req))

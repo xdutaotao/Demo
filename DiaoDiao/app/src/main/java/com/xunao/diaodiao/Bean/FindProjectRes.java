@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by guzhenfu on 2017/9/14.
  */
 
-public class FindProjectRes {
+public class FindProjectRes implements Serializable{
     private List<FindProject> project;
     private List<FindProject> odd;
 
@@ -27,7 +28,7 @@ public class FindProjectRes {
         this.project = project;
     }
 
-    public static class FindProject{
+    public static class FindProject implements Serializable{
         private int id;
         private String title;
         private int build_time;
@@ -39,6 +40,24 @@ public class FindProjectRes {
         private String daily_wage;
         private String url;
         private String issue_time;
+        private int collected;
+        private int apply;
+
+        public int getCollected() {
+            return collected;
+        }
+
+        public void setCollected(int collected) {
+            this.collected = collected;
+        }
+
+        public int getApply() {
+            return apply;
+        }
+
+        public void setApply(int apply) {
+            this.apply = apply;
+        }
 
         public String getIssue_time() {
             return issue_time;

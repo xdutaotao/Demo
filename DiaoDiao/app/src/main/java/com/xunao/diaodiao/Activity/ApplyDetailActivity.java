@@ -3,15 +3,21 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ApplyDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ApplyDetailView;
 
 import javax.inject.Inject;
@@ -53,9 +59,14 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
     @BindView(R.id.agree)
     TextView agree;
 
-    public static void startActivity(Context context, int id) {
+    private ApplyPassReq req;
+    private ApplyDetailRes res;
+
+    private RecyclerArrayAdapter<ApplyDetailRes.EvaluateBean> adapter;
+
+    public static void startActivity(Context context, ApplyPassReq req) {
         Intent intent = new Intent(context, ApplyDetailActivity.class);
-        intent.putExtra(INTENT_KEY, id);
+        intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
     }
 
@@ -69,27 +80,60 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
 
         showToolbarBack(toolBar, titleText, "人员详情");
 
-        presenter.getApplyDetail(getIntent().getIntExtra(INTENT_KEY, 0));
+        req = (ApplyPassReq) getIntent().getSerializableExtra(INTENT_KEY);
+        presenter.getApplyDetail(this, req.getTechnician_id());
         agree.setOnClickListener(v -> {
-            ApplyPassReq req = new ApplyPassReq();
             presenter.getApplyPass(req);
+        });
+
+
+        adapter = new RecyclerArrayAdapter<ApplyDetailRes.EvaluateBean>(this, R.layout.apply_detail_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, ApplyDetailRes.EvaluateBean s) {
+                baseViewHolder.setText(R.id.name, s.getName());
+                baseViewHolder.setImageUrl(R.id.head_icon, s.getHead_img(), R.drawable.head_icon_boby);
+                baseViewHolder.setText(R.id.content, s.getContent());
+            }
+        };
+
+        LinearLayoutManager manager = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
+
+        contactHi.setOnClickListener(v -> {
+            if (res!=null)
+                Utils.startCallActivity(this, res.getMobile());
         });
     }
 
     @Override
     public void getData(ApplyDetailRes res) {
-
+        this.res = res;
+        name.setText(res.getName());
+        ratingStar.setRating(Float.valueOf(res.getPoint()));
+        ratingStar.setIsIndicator(true);
+        workYear.setText(res.getExperience()+"年");
+        skillContent.setText(res.getProject_type());
+        projectExper.setText(res.getProject_amount()+"年");
+        projDetail.setText(res.getEvaluate());
+        adapter.addAll(res.getEvaluates());
     }
 
     @Override
-    public void getPass(String s) {
-
+    public void getPass(Object s) {
+        ToastUtil.show("申请成功");
+        finish();
     }
 
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
     @Override

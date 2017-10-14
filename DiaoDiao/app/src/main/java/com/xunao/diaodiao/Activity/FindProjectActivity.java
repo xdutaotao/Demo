@@ -140,8 +140,16 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
         adapter.setOnItemClickListener((view, i) -> {
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
-                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                if (type == 0){
+                    WebViewActivity.startActivity(this, adapter.getAllData().get(i), WebViewActivity.HOME_DETAIL);
+//                    WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+//                            adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                }else if(type == 1){
+                    WebViewActivity.startActivity(this, adapter.getAllData().get(i), WebViewActivity.HOME_SKILL_DETAIL);
+//                    WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+//                            adapter.getAllData().get(i).getId(), WebViewActivity.HOME_SKILL_DETAIL);
+                }
+
 
             } else {
                 LoginActivity.startActivity(FindProjectActivity.this);

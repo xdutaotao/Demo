@@ -210,7 +210,12 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeAdapter.setOnItemClickListener((view, i) -> {
             showDialog(typeAdapter.getAllData().get(i));
         });
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         typeRecyclerView.setLayoutManager(manager);
         typeRecyclerView.setAdapter(typeAdapter);
 
@@ -485,6 +490,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                                 bigDecimal.floatValue()));
                         String totalPrice = String.valueOf(bigDecimal.floatValue());
                         bean.setTotal_price(totalPrice);
+                        bean.setName(temp.getName());
+                        bean.setUnit(temp.getUnit());
                         releaseProjReqs.add(bean);
                     }
 

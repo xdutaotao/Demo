@@ -74,6 +74,7 @@ public class Constants {
 
     //承接项目类型
     public static List<TypeInfoRes.Type_Info> projectTypeList = new ArrayList<>();
+    public static final String tel = "13918509095";
 
 
 }

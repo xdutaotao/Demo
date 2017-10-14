@@ -36,26 +36,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30px">
+        android:layout_marginTop="30px"
+        android:orientation="horizontal">
 
         <RatingBar
+            android:id="@+id/rating_star"
+            style="@style/foodRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="40px"
-            style="@style/foodRatingBar"
-            android:id="@+id/rating_star"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="80px"/>
+            android:layout_marginRight="80px" />
 
         <TextView
+            android:id="@+id/percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5.0"
             android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/rating_star"
             android:layout_centerVertical="true"
-            android:id="@+id/percent"
-            android:layout_alignRight="@+id/rating_star"/>
+            android:text="5.0" />
     </LinearLayout>
 
     <View

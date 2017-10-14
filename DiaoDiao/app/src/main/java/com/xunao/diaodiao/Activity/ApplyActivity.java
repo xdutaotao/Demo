@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Present.ApplyPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ApplyView;
 
 import javax.inject.Inject;
@@ -41,9 +44,10 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
     private RecyclerArrayAdapter<ApplyProjRes.ApplicantBean> adapter;
     private int page = 1;
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, int projectType) {
         Intent intent = new Intent(context, ApplyActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("projectType", projectType);
         context.startActivity(intent);
     }
 
@@ -60,12 +64,30 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
         adapter = new RecyclerArrayAdapter<ApplyProjRes.ApplicantBean>(this, R.layout.apply_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ApplyProjRes.ApplicantBean s) {
+                baseViewHolder.setText(R.id.address, s.getName());
+                baseViewHolder.setText(R.id.percent, s.getPoint());
+                baseViewHolder.setText(R.id.days, s.getExperience()+"年工作经验");
 
+                RatingBar bar = ((RatingBar)baseViewHolder.getConvertView().findViewById(R.id.rating_star));
+                bar.setRating(Float.valueOf(s.getPoint()));
+                bar.setIsIndicator(true);
+
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    ApplyPassReq req = new ApplyPassReq();
+                    req.setTechnician_id(s.getTechnician_id());
+                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                    req.setProject_type(getIntent().getIntExtra("projectType", 0));
+                    presenter.getApplyPass(req);
+                });
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            ApplyDetailActivity.startActivity(ApplyActivity.this, 0);
+            ApplyPassReq req = new ApplyPassReq();
+            req.setTechnician_id(adapter.getAllData().get(i).getTechnician_id());
+            req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+            req.setProject_type(getIntent().getIntExtra("projectType", 0));
+            ApplyDetailActivity.startActivity(ApplyActivity.this, req);
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -83,6 +105,12 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
     }
 
     @Override
+    public void getPass(Object res) {
+        ToastUtil.show("申请成功");
+        finish();
+    }
+
+    @Override
     public void onRefresh() {
         page = 1;
         presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), 1);
@@ -97,7 +125,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
     @Override

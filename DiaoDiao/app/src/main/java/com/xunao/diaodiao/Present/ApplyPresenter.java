@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Present;
 
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Model.ApplyModel;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -28,6 +29,21 @@ public class ApplyPresenter extends BasePresenter<ApplyView> {
                     @Override
                     protected void _onNext(ApplyProjRes token) {
                         getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+    public void getApplyPass(ApplyPassReq req){
+        mCompositeSubscription.add(model.getApplyPass(req)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().getPass(token);
                     }
 
                     @Override

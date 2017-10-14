@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.SkillProjProgressPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SkillProjProgressView;
@@ -48,6 +49,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -189,7 +191,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
             //电话投诉
             noPass.setOnClickListener(v -> {
-                Utils.startCallActivity(this, "12345678900");
+                Utils.startCallActivity(this, Constants.tel);
             });
 
             //再次提交
@@ -258,10 +260,16 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             signAction(stage);
         });
 
-        if (stage == 2) {
+        if (stage == 2 && getIntent().getIntExtra(TYPE_KEY, 0) == 1) {
             post.setText("第二阶段提交审核");
         } else {
             post.setText("第一阶段提交审核");
+        }
+
+        if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
+            //公司角色
+            post.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.VISIBLE);
         }
     }
 

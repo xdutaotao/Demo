@@ -1,11 +1,13 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
+
 /**
  * Description:
  * Created by guzhenfu on 2017/9/16.
  */
 
-public class ApplyPassReq {
+public class ApplyPassReq implements Serializable{
     private int technician_id;
     private int project_id;
     private int project_type;

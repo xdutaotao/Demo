@@ -139,9 +139,16 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
+
     @Override
     public void getData(OrderSkillDoingRes list) {
         if (page == 1)

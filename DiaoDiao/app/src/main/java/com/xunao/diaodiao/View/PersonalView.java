@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.View;
 
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 
@@ -10,5 +11,6 @@ import com.xunao.diaodiao.Bean.PersonalRes;
 
 public interface PersonalView extends BaseView{
     void getData(HeadIconRes s);
+    void getData(CheckFinishRes s);
     void getPersonalData(PersonalRes s);
 }

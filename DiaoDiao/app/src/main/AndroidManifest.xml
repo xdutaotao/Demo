@@ -225,6 +225,7 @@
         <activity android:name=".Activity.ReleaseSkillSecondActivity"/>
         <activity android:name=".Activity.AddPhoneActivity"/>
         <activity android:name=".Activity.HomeSearchActivity"/>
+        <activity android:name=".Activity.WebViewDetailActivity"/>
 
     </application>
 

@@ -19,6 +19,7 @@ import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -88,7 +89,12 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                    baseViewHolder.setVisible(R.id.evaluation, true);
+                    if(homeBean.getEvaluate_status() == 1){
+                        baseViewHolder.setText(R.id.evaluation, "查看评价");
+                    }else{
+                        baseViewHolder.setText(R.id.evaluation, "去评价");
+                    }
+
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
                 }
@@ -123,11 +129,17 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                     baseViewHolder.setText(R.id.request, "项目进度");
                 }
 
+                if(homeBean.getStatus() == 4){
+                    //已取消
+                    baseViewHolder.setVisible(R.id.request, false);
+                    baseViewHolder.setVisible(R.id.evaluation, false);
+                }
+
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
-                        //查看申请人
+                        //查看申请人  1项目2监理3零工4维保
                         ApplyActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id());
+                                homeBean.getProject_id(), 1);
                     }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
                         //项目进度
                         SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
@@ -153,24 +165,40 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
         adapter.setOnItemClickListener((v, i) -> {
             //评价 1 项目
-            if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                        adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getProject_id(),
-                        1);
-            }else {
-                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                        adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getProject_id(),
-                        WebViewActivity.COMPANY_PROJ,
-                        adapter.getAllData().get(i));
-            }
+            WebViewDetailActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                    adapter.getAllData().get(i)
+                    ,who);
+
+//            if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+//                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getUrl(),
+//                        adapter.getAllData().get(i).getProject_id(),
+//                        1);
+//
+//                WebViewDetailActivity.startActivity(OrderCompTabFragment.this.getContext(),
+//                        adapter.getAllData().get(i)
+//                    ,who);
+//
+//            }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+//                WebViewActivity.startActivity(OrderCompTabFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getUrl(),
+//                        adapter.getAllData().get(i).getProject_id(),
+//                        WebViewActivity.COMPANY_PROJ,
+//                        adapter.getAllData().get(i));
+//            }
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
         return view;
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
     @Override
     public void getData(OrderCompRes list) {
         if (page == 1)

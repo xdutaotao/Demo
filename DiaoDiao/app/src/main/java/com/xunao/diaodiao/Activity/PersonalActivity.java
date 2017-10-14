@@ -18,6 +18,7 @@ import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Present.PersonalPresenter;
@@ -140,16 +141,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
 
-        status = ShareUtils.getValue(STATUS, 0);
-        if (status == 1){
-            editPersonal.setText("审核通过");
-        }else if (status == 2){
-            editPersonal.setText("审核中");
-        }else if (status == 3){
-            editPersonal.setText("审核未通过");
-        }else {
-            editPersonal.setText("未完善资料");
-        }
+        presenter.checkFinish();
 
     }
 
@@ -197,6 +189,22 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(headIcon);
 
+    }
+
+    @Override
+    public void getData(CheckFinishRes s) {
+        status = s.getStatus();
+        ShareUtils.putValue(STATUS, status);
+        if (status == 1){
+            editPersonal.setText("审核通过");
+            editPersonal.setVisibility(View.GONE);
+        }else if (status == 2){
+            editPersonal.setText("审核中");
+        }else if (status == 3){
+            editPersonal.setText("审核未通过");
+        }else {
+            editPersonal.setText("未完善资料");
+        }
     }
 
     @Override

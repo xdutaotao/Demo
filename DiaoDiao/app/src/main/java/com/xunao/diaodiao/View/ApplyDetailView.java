@@ -8,5 +8,5 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface ApplyDetailView extends BaseView {
     void getData(ApplyDetailRes res);
-    void getPass(String s);
+    void getPass(Object s);
 }

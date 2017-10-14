@@ -68,6 +68,7 @@ import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.SkillRecieveProjectDetailActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Fragment.AddFragment;
 import com.xunao.diaodiao.Fragment.FriendFragment;
 import com.xunao.diaodiao.Fragment.HasRateFragment;
@@ -176,4 +177,5 @@ public interface ActivityComponent {
     void inject(ReleaseSkillSecondActivity activity);
     void inject(AddPhoneActivity activity);
     void inject(HomeSearchActivity activity);
+    void inject(WebViewDetailActivity activity);
 }

@@ -128,9 +128,15 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
     @Override
     public void getData(OrderSkillFinishRecieveRes list) {
         if (page == 1)

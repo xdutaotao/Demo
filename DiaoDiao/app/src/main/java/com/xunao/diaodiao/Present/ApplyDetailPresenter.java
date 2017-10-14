@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Present;
 
+import android.content.Context;
+
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Model.ApplyDetailModel;
@@ -23,9 +25,9 @@ public class ApplyDetailPresenter extends BasePresenter<ApplyDetailView> {
     ApplyDetailPresenter() {
     }
 
-    public void getApplyDetail(int id){
+    public void getApplyDetail(Context context, int id){
         mCompositeSubscription.add(model.getApplyDetail(id)
-                .subscribe(new RxSubUtils<ApplyDetailRes>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<ApplyDetailRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(ApplyDetailRes token) {
                         getView().getData(token);
@@ -41,9 +43,9 @@ public class ApplyDetailPresenter extends BasePresenter<ApplyDetailView> {
 
     public void getApplyPass(ApplyPassReq req){
         mCompositeSubscription.add(model.getApplyPass(req)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getPass(token);
                     }
 

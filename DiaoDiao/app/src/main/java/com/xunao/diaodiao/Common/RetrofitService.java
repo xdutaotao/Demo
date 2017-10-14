@@ -265,7 +265,7 @@ public interface RetrofitService {
 
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> getApplyPass(@Body RequestBody body);
+    Observable<BaseBean<Object>> getApplyPass(@Body RequestBody body);
 
 
     @POST(ApiConstants.BASE_URL_INDEX)

@@ -160,6 +160,12 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                                 skillsName.clear();
                                 allSelectList.clear();
                             }
+
+                            if (isContain("17")){
+                                skillsName.clear();
+                                allSelectList.clear();
+                            }
+
                             //空调和地暖不能同时被选中
                             if (Integer.valueOf(s.getId()) == 6
                                     && (isContain("14")

@@ -99,9 +99,15 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        onRefresh();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
     @Override
     public void getData(OrderSkillDoingRes list) {
         if (page == 1)
