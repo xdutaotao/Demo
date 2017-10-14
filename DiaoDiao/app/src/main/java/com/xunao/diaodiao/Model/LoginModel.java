@@ -121,6 +121,7 @@ import rx.Subscriber;
 
 import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
@@ -1843,11 +1844,16 @@ public class LoginModel extends BaseModel {
                     .append(req.getProject_id())
                     .append(type).append(userid)
                     .append("security");
+        }else if(who == COMPANY_PROJECT_NO_PASS){
+            rateKey = "myProjectWorkFail";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getImages()).append(req.getProject_id())
+                    .append(req.getReason())
+                    .append(req.getStage())
+                    .append(type).append(userid).append(req.getWork_id())
+                    .append(req.getWorks_id())
+                    .append("security");
         }
-
-
-
-
 
         req.setUserid(userid);
         req.setType(type);
@@ -1862,7 +1868,7 @@ public class LoginModel extends BaseModel {
      * @param req
      * @return
      */
-    public Observable<String> myProjectWorkPass(GetMoneyReq req){
+    public Observable<Object> myProjectWorkPass(GetMoneyReq req){
         String rateKey = "myProjectWorkPass";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());

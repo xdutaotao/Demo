@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.SkillProjProgressPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
@@ -92,10 +94,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private int worksid;
     private int workid;
     private EditText postRemark;
+    //阶段
     private int stage = 0;
     private int who;
-    private boolean canPost = true;
-    private SkillProjProgPhotoRes.InfoBean noPassInfoBean;
+    //审核状态
+    private int status = 0;
+    private boolean photoPost;
 
     public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
@@ -133,89 +137,25 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
-                baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-                        + " 工作拍照");
+
                 baseViewHolder.setText(R.id.address, s.getLocation());
                 if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
                     workid = s.getWork_id();
-                }
-                if (!TextUtils.isEmpty(s.getRemark())){
-                    baseViewHolder.setVisible(R.id.remark, true);
-                    baseViewHolder.setText(R.id.remark, s.getRemark());
-                }
-
-                if (s.getAudit_status() == 3){
                     //审核中
-                    canPost = false;
-                }else if (s.getAudit_status() == 2){
-                    //审核不通过
-                    bottomBtnLayout.setVisibility(View.VISIBLE);
-                    post.setVisibility(View.GONE);
-                    noPass.setText("电话申诉");
-                    pass.setText("再次提交");
-                    adapter.removeAllFooter();
-                    noPassInfoBean = s;
+                    status = 3;
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+                            + (stage == 1 ? " 第一阶段审核" : " 第二阶段审核"));
+                }else if (s.getAudit_status() == 2 && (s.getAudit() == 1 || s.getAudit() == 2)){
+                    //未通过审核
+                    status = 2;
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+                            + " 未通过审核");
+                }else{
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+                            + " 工作拍照");
                 }
             }
         };
-
-        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
-            bottomBtnLayout.setVisibility(View.VISIBLE);
-
-            adapter.addFooter(new DefaultRecyclerViewItem() {
-                @Override
-                public View onCreateView(ViewGroup viewGroup) {
-                    View view = LayoutInflater.from(SkillProjProgressActivity.this)
-                            .inflate(R.layout.company_project_footer, null);
-                    return view;
-                }
-            });
-
-            noPass.setOnClickListener(v -> {
-                GetMoneyReq req = new GetMoneyReq();
-                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                req.setWorks_id(worksid);
-                req.setStage(stage);
-                req.setWork_id(workid);
-                AppealActivity.startActivity(SkillProjProgressActivity.this,
-                        req, NO_PASS);
-            });
-
-            pass.setOnClickListener(v -> {
-                GetMoneyReq req = new GetMoneyReq();
-                presenter.myProjectWorkPass(SkillProjProgressActivity.this, req);
-            });
-
-        }else {
-            AdapterAddFooter();
-
-            //电话投诉
-            noPass.setOnClickListener(v -> {
-                Utils.startCallActivity(this, Constants.tel);
-            });
-
-            //再次提交
-            pass.setOnClickListener(v -> {
-//                GetMoneyReq req = new GetMoneyReq();
-//                req.setLocation(noPassInfoBean.getLocation());
-//                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-//                List<String> path = new ArrayList<>();
-//                for(String url: noPassInfoBean.getImages()){
-//                    path.add(Utils.Bitmap2StrByBase64(url));
-//                }
-//                req.setImages(path);
-//                req.setWorks_id(worksid);
-//                req.setSign_time(noPassInfoBean.getDate());
-//                req.setRemark(noPassInfoBean.getRemark());
-//                req.setAudit(noPassInfoBean.getAudit());
-//                presenter.myAcceptProjectWorkSub(this, req);
-
-                bottomBtnLayout.setVisibility(View.GONE);
-                canPost = true;
-                AdapterAddFooter();
-            });
-
-        }
 
         footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -260,53 +200,189 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             signAction(stage);
         });
 
-        if (stage == 2 && getIntent().getIntExtra(TYPE_KEY, 0) == 1) {
-            post.setText("第二阶段提交审核");
-        } else {
-            post.setText("第一阶段提交审核");
-        }
 
         if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
             //公司角色
             post.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);
+        }else{
+            //技术人员
+            if (stage == 2) {
+                post.setText("第二阶段提交审核");
+            } else {
+                post.setText("第一阶段提交审核");
+            }
         }
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, AppealActivity.APPEAL))
+                .subscribe(s -> {
+                    finish();
+                });
     }
 
     private void AdapterAddFooter(){
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
-                RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                recyclerViewFooter.setAdapter(footerAdapter);
-                return view;
+        adapter.removeAllFooter();
+        if(status == 3){
+            //审核中
+            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+                //暖通公司
+                bottomBtnLayout.setVisibility(View.VISIBLE);
+
+                adapter.addFooter(new DefaultRecyclerViewItem() {
+                    @Override
+                    public View onCreateView(ViewGroup viewGroup) {
+                        View view = LayoutInflater.from(SkillProjProgressActivity.this)
+                                .inflate(R.layout.company_project_footer, null);
+                        return view;
+                    }
+                });
+                //不通过
+                noPass.setOnClickListener(v -> {
+                    GetMoneyReq req = new GetMoneyReq();
+                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                    req.setWorks_id(worksid);
+                    req.setStage(stage);
+                    req.setWork_id(workid);
+                    AppealActivity.startActivity(SkillProjProgressActivity.this,
+                            req, COMPANY_PROJECT_NO_PASS);
+                });
+
+                //通过原因
+                pass.setOnClickListener(v -> {
+                    GetMoneyReq req = new GetMoneyReq();
+                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                    req.setWorks_id(worksid);
+                    req.setWork_id(workid);
+                    req.setStage(stage);
+                    presenter.myProjectWorkPass(SkillProjProgressActivity.this, req);
+                });
+
+            }else{
+                //技术人员
+                adapter.addFooter(new DefaultRecyclerViewItem() {
+                    @Override
+                    public View onCreateView(ViewGroup viewGroup) {
+                        View view = LayoutInflater.from(viewGroup.getContext())
+                                .inflate(R.layout.status_footer, null);
+                        return view;
+                    }
+                });
+
+                bottomBtnLayout.setVisibility(View.GONE);
+                post.setVisibility(View.GONE);
             }
 
-            @Override
-            public void onBindView(View view) {
-                postText = (TextView) view.findViewById(R.id.post);
-                postRemark = (EditText) view.findViewById(R.id.remark);
-                TextView time = (TextView) view.findViewById(R.id.time);
-                time.setText(Utils.getNowDateMonth());
-                TextView address = (TextView) view.findViewById(R.id.address);
-                address.setText(Constants.address);
-                View headLine = view.findViewById(R.id.head_line);
-                if (adapter.getAllData().size() == 0) {
-                    headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
-                } else {
-                    headLine.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                }
-                postText.setOnClickListener(v -> {
-                    signAction(0);
+
+        }else if(status == 2){
+            //未通过
+            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+                bottomBtnLayout.setVisibility(View.GONE);
+                post.setVisibility(View.GONE);
+            }else{
+                //技术人员
+                bottomBtnLayout.setVisibility(View.VISIBLE);
+                post.setVisibility(View.GONE);
+                noPass.setText("电话申诉");
+                pass.setText("再次提交");
+
+                //电话投诉
+                noPass.setOnClickListener(v -> {
+                    Utils.startCallActivity(this, Constants.tel);
                 });
+
+                //再次提交
+                pass.setOnClickListener(v -> {
+                    bottomBtnLayout.setVisibility(View.GONE);
+                    post.setVisibility(View.VISIBLE);
+                    adapter.removeAllFooter();
+
+                    if (stage == 2) {
+                        post.setText("第二阶段提交审核");
+                    } else {
+                        post.setText("第一阶段提交审核");
+                    }
+
+                    setFooter();
+                });
+
             }
-        });
+            adapter.addFooter(new DefaultRecyclerViewItem() {
+                @Override
+                public View onCreateView(ViewGroup viewGroup) {
+                    View view = LayoutInflater.from(viewGroup.getContext())
+                            .inflate(R.layout.status_footer, null);
+                    ((TextView)(view.findViewById(R.id.status)))
+                            .setText("暖通公司审核未通过");
+                    return view;
+                }
+            });
+
+
+            //noPassInfoBean = s;
+
+        }else{
+            setFooter();
+        }
+
     }
+
+    private void setFooter(){
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+
+        }else{
+            //技术人员
+            adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+                @Override
+                public View onCreateView(ViewGroup viewGroup) {
+                    View view = LayoutInflater.from(SkillProjProgressActivity.this).inflate(R.layout.skill_proj_prog_footer, null);
+                    RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                    recyclerViewFooter.setAdapter(footerAdapter);
+                    return view;
+                }
+
+                @Override
+                public void onBindView(View view) {
+                    postText = (TextView) view.findViewById(R.id.post);
+                    postRemark = (EditText) view.findViewById(R.id.remark);
+                    TextView time = (TextView) view.findViewById(R.id.time);
+                    time.setText(Utils.getNowDateMonth());
+                    TextView address = (TextView) view.findViewById(R.id.address);
+                    address.setText(Constants.address);
+                    View headLine = view.findViewById(R.id.head_line);
+                    if (adapter.getAllData().size() == 0) {
+                        headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
+                    } else {
+                        headLine.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    postText.setOnClickListener(v -> {
+                        signAction(0);
+                    });
+                }
+            });
+        }
+
+    }
+
+
 
     @Override
     public void getData(String s) {
         ToastUtil.show("提交审核成功");
+        finish();
+        //刷新列表
+//        if(photoPost){
+//            presenter.myAcceptProjectWorkList(this,
+//                    getIntent().getIntExtra(INTENT_KEY, 0), worksid, who);
+//        }
+
+
+    }
+
+    @Override
+    public void getPass(Object s) {
+        //阶段提交
+        ToastUtil.show("审核成功");
         finish();
     }
 
@@ -314,10 +390,21 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     public void getList(SkillProjProgPhotoRes list) {
         if (list.getInfo() != null && list.getInfo().size() > 0) {
             adapter.addAll(list.getInfo());
+
+            titleText.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AdapterAddFooter();
+                }
+            }, 500);
+
         }else{
             pass.setVisibility(View.GONE);
             noPass.setVisibility(View.GONE);
+            recyclerView.showEmpty();
         }
+
+
     }
 
     private void initImagePicker() {
@@ -333,18 +420,25 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     }
 
     private void signAction(int audit) {
-        if (!canPost){
-            ToastUtil.show("上次提交，正在审核中...");
-            return;
-        }
-        if (pathList.size() ==0){
-            ToastUtil.show("请选择照片");
-            return;
-        }
         GetMoneyReq req = new GetMoneyReq();
+
+        if(audit == 0){
+            photoPost = true;
+
+            if (pathList.size() ==0){
+                ToastUtil.show("请选择照片");
+                return;
+            }
+
+
+        }else{
+            photoPost = false;
+        }
+
+        req.setImages(pathList);
         req.setLocation(address);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-        req.setImages(pathList);
+
         req.setWorks_id(worksid);
         req.setSign_time(System.currentTimeMillis());
         req.setRemark(postRemark.getText().toString());
@@ -375,7 +469,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
         if (images.size() > 0) {
-            postText.setText("确认签到");
             postText.setVisibility(View.VISIBLE);
         }
 
@@ -400,7 +493,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         getMenuInflater().inflate(R.menu.menu_collect, menu);
         MenuItem item = menu.findItem(R.id.action_contact);
         if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
-            item.setTitle("申诉");
+            item.setTitle("");
         }else{
             item.setTitle("");
         }

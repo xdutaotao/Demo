@@ -17,6 +17,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Present.SkillProjReceiveProgressPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SkillProjReceiveProgressView;
 
@@ -29,6 +30,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -241,7 +243,8 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        if(ShareUtils.getValue(TYPE_KEY, 0) != 1)
+            getMenuInflater().inflate(R.menu.menu_collect, menu);
         return true;
     }
 

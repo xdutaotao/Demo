@@ -57,10 +57,10 @@ public class SkillProjProgressPresenter extends BasePresenter<SkillProjProgressV
 
     public void myProjectWorkPass(Context context, GetMoneyReq req){
         mCompositeSubscription.add(model.myProjectWorkPass(req)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
-                        getView().getData(token);
+                    protected void _onNext(Object token) {
+                        getView().getPass(token);
                     }
 
                     @Override

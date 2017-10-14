@@ -14,7 +14,7 @@
         <com.gzfgeh.GRecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="160px"
+            android:paddingBottom="160px"
             android:id="@+id/recycler_view"/>
 
         <Button style="@style/login_btn_style"

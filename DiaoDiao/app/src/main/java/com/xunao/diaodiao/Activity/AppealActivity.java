@@ -26,6 +26,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Present.AppealPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.AppealView;
@@ -40,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
@@ -76,6 +78,7 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
 
     private RecyclerArrayAdapter<String> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
+    public static final String APPEAL = "appeal";
 
     private ArrayList<ImageItem> imageItems = new ArrayList<>();
     private String[] reasonList = {"工程质量不合格", "没完工"};
@@ -110,11 +113,18 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             post.setText("提交审核");
             reason.setText("不通过的原因");
             appealType.setVisibility(View.GONE);
+            content.setHint("请输入不通过原因");
         } else if (who == NO_PASS){
             showToolbarBack(toolBar, titleText, "申诉");
             appealType.setVisibility(View.VISIBLE);
             first.setOnCheckedChangeListener(this);
             second.setOnCheckedChangeListener(this);
+        }else if(who == COMPANY_PROJECT_NO_PASS){
+            showToolbarBack(toolBar, titleText, "输入不通过原因");
+            post.setText("提交审核");
+            reason.setText("不通过的原因");
+            appealType.setVisibility(View.GONE);
+            content.setHint("请输入不通过原因");
         }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
@@ -218,6 +228,8 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
 
             }else if (who == SKILL_RELEASE_LINGGONG_NO_PASS){
                 req.setReason(content.getText().toString());
+            } else if(who == COMPANY_PROJECT_NO_PASS){
+                req.setReason(content.getText().toString());
             }
 
             req.setImages(pathList);
@@ -250,7 +262,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
 
     @Override
     public void getData(String s) {
-
+        ToastUtil.show(s);
+        RxBus.getInstance().post("appeal");
+        finish();
     }
 
     private void selectPhoto() {
