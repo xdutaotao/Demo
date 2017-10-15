@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by guzhenfu on 2017/9/18.
  */
 
-public class OrderSkillFinishRecieveRes {
+public class OrderSkillFinishRecieveRes implements Serializable{
     private List<OddBean> odd;
 
     public List<OddBean> getOdd() {
@@ -28,7 +29,7 @@ public class OrderSkillFinishRecieveRes {
         this.project = project;
     }
 
-    public static class OddBean{
+    public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
         private long publish_time;
@@ -41,9 +42,27 @@ public class OrderSkillFinishRecieveRes {
         private long cancel_time;
         private long finish_time;
         private String url;
+        private String issue_time;
+        private int evaluate_status;
 
         private int project_id;
         private String project_price;
+
+        public int getEvaluate_status() {
+            return evaluate_status;
+        }
+
+        public void setEvaluate_status(int evaluate_status) {
+            this.evaluate_status = evaluate_status;
+        }
+
+        public String getIssue_time() {
+            return issue_time;
+        }
+
+        public void setIssue_time(String issue_time) {
+            this.issue_time = issue_time;
+        }
 
         public String getUrl() {
             return url;

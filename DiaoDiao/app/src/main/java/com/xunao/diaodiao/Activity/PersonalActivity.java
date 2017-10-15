@@ -123,7 +123,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
         editPersonal.setOnClickListener(this);
         headLayout.setOnClickListener(this);
-        presenter.getPersonalInfo(this);
+
         type = ShareUtils.getValue(TYPE_KEY, 0);
         switch (type) {
             case COMPANY_TYPE:
@@ -143,6 +143,12 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
         presenter.checkFinish();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getPersonalInfo(this);
     }
 
     @Override
@@ -215,8 +221,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 companyInfo = s.getCompanyInfo();
                 name.setText(companyInfo.getName());
                 phone.setText(companyInfo.getTel());
-                address.setText(companyInfo.getAddress());
-                addressDetail.setText(companyInfo.getCity() + companyInfo.getDistrict() + companyInfo.getProvince() + "");
+                address.setText(companyInfo.getRegion());
+                addressDetail.setText(companyInfo.getAddress());
 
                 break;
 
@@ -224,8 +230,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 technicianInfo = s.getTechnicianInfo();
                 name.setText(technicianInfo.getName());
                 phone.setText(technicianInfo.getMobile());
-                address.setText(technicianInfo.getAddress());
-                addressDetail.setText(technicianInfo.getCity() + technicianInfo.getDistrict() + technicianInfo.getProvince() + "");
+                address.setText(technicianInfo.getRegion());
+                addressDetail.setText(technicianInfo.getAddress());
                 workYear.setText(technicianInfo.getExperience());
                 workNum.setText(technicianInfo.getTeam_number()+"");
                 project.setText(technicianInfo.getProject_type());
@@ -236,8 +242,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 familyInfo = s.getFamilyInfo();
                 name.setText(familyInfo.getName());
                 phone.setText(familyInfo.getMobile());
-                address.setText(familyInfo.getAddress());
-                addressDetail.setText(familyInfo.getCity() + familyInfo.getDistrict() + familyInfo.getProvince() + "");
+                address.setText(familyInfo.getRegion());
+                addressDetail.setText(familyInfo.getAddress());
 
                 break;
         }

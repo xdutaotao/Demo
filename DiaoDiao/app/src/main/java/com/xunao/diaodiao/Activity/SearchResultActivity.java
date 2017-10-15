@@ -140,7 +140,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
 
 
             for (CityBean.CityItemBean itemBean : resourceList) {
-
+                isFind = false;
                 if (Integer.valueOf(itemBean.getRegion_type()) != 2) {
                     continue;
                 }
@@ -181,7 +181,6 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
                         listBean.add(addressListBean);
                         bean.setAddressList(listBean);
                         destList.add(bean);
-                        isFind = false;
                     }
                 }
             }

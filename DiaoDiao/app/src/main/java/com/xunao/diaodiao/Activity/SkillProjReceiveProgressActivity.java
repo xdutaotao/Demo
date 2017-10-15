@@ -165,7 +165,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                         baseViewHolder.setVisible(R.id.status_text, false);
                         baseViewHolder.setVisible(R.id.status, true);
                         baseViewHolder.setText(R.id.status, "已完成");
-                    }else{
+                    }else if(workBean.getStage2() == 3){
                         //第二阶段审核
                         baseViewHolder.setText(R.id.progress, "第二阶段审核中");
                         baseViewHolder.setVisible(R.id.middle_btn, false);
@@ -177,15 +177,37 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                         baseViewHolder.setVisible(R.id.status_text, false);
                         baseViewHolder.setVisible(R.id.status, true);
                         baseViewHolder.setText(R.id.status, "审核中");
+                    }else if(workBean.getStage2() == 4){
+                        //审核失败
+                        baseViewHolder.setText(R.id.progress, "第二阶段审核不通过");
+                        baseViewHolder.setVisible(R.id.middle_btn, false);
+                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                        baseViewHolder.setText(R.id.middle, "已完成");
+
+                        baseViewHolder.setVisible(R.id.status_btn, false);
+                        baseViewHolder.setVisible(R.id.status_text, false);
+                        baseViewHolder.setVisible(R.id.status, true);
+                        baseViewHolder.setText(R.id.status, "审核不通过");
                     }
 
-                }else{
+                }else if(workBean.getStage1() == 3){
                     //第一阶段审核中
                     baseViewHolder.setText(R.id.progress, "第一阶段审核中");
                     baseViewHolder.setVisible(R.id.middle_btn, false);
                     baseViewHolder.setVisible(R.id.middle_text, false);
                     baseViewHolder.setVisible(R.id.middle, true);
                     baseViewHolder.setText(R.id.middle, "审核中");
+
+                    baseViewHolder.setVisible(R.id.status_btn, false);
+                    baseViewHolder.setVisible(R.id.status_text, true);
+                    baseViewHolder.setVisible(R.id.status, false);
+                }else if(workBean.getStage1() == 4){
+                    baseViewHolder.setText(R.id.progress, "第一阶段审核不通过");
+                    baseViewHolder.setVisible(R.id.middle_btn, false);
+                    baseViewHolder.setVisible(R.id.middle_text, false);
+                    baseViewHolder.setVisible(R.id.middle, true);
+                    baseViewHolder.setText(R.id.middle, "审核不通过");
 
                     baseViewHolder.setVisible(R.id.status_btn, false);
                     baseViewHolder.setVisible(R.id.status_text, true);
@@ -217,7 +239,6 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        presenter.myAcceptProjectWork(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
 
         sign.setOnClickListener(v -> {
             SignDetailActivity.startActivity(SkillProjReceiveProgressActivity.this,
@@ -227,12 +248,20 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.myAcceptProjectWork(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
+
+    }
+
+    @Override
     public void getData(MyAcceptProjectWorkRes res) {
         if (res.getWorks() != null){
             MyAcceptProjectWorkRes.WorksBean worksBean = res.getWorks();
             title.setText(worksBean.getTitle());
             address.setText(worksBean.getAddress());
             addressDetail.setText(worksBean.getRegion());
+            adapter.clear();
             adapter.addAll(worksBean.getWork());
             phone = worksBean.getContact_mobile();
 

@@ -129,7 +129,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         addressDetail.setText(req.getAddress());
         contact.setText(req.getContact());
         phone.setText(req.getContact_mobile());
-        time.setText(Utils.millToYearString(req.getBuild_time()));
+        time.setText(req.getBuild_time_string());
         describe.setText(req.getDescribe());
         adapter.addAll(req.getImages());
 

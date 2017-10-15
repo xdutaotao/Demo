@@ -8,7 +8,7 @@ import java.util.List;
  * Created by GUZHENFU on 2017/5/17 16:49.
  */
 
-public class HomeResponseBean {
+public class HomeResponseBean implements Serializable{
     private List<Carousel> carousel;
     private List<Advertisement> advertisement;
     private List<Project> project;
@@ -55,10 +55,19 @@ public class HomeResponseBean {
         this.maintenance = maintenance;
     }
 
-    public static class Carousel {
+    public static class Carousel implements Serializable{
         private String name;
         private String image;
         private String link;
+        private int type;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
 
         public String getName() {
             return name;

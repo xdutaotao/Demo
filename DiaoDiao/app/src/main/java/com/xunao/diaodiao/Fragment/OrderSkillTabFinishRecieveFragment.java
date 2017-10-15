@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -95,13 +97,24 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 if (homeBean.getStatus() == 1){
                     //已完成
                     baseViewHolder.setText(R.id.request, "查看");
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getCancel_time())+ " 取消");
-                }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
-                    baseViewHolder.setText(R.id.time, "去评价");
+                    baseViewHolder.setText(R.id.time, homeBean.getEvaluate_status() == 1 ? "查看评价" : "去评价");
                     baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
 
+                }else{
+                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 }
+
+                baseViewHolder.setOnClickListener(R.id.time, v -> {
+                    //评价 1 项目
+                    if(homeBean.getEvaluate_status() != 1){
+                        RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                homeBean.getProject_id(), 1);
+                    }
+
+                });
+
+
             }
         };
 
@@ -120,9 +133,11 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 //                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
 //                        adapter.getAllData().get(i).getProject_id());
 
-                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id());
+//                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getUrl(),
+//                        adapter.getAllData().get(i).getOdd_id());
+                WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i), who);
             }
 
         });

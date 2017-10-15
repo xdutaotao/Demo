@@ -53,6 +53,15 @@ public class BankListRes {
         private String card_name;
         private String card_type;
         private String img;
+        private String card_num;
+
+        public String getCard_num() {
+            return card_num;
+        }
+
+        public void setCard_num(String card_num) {
+            this.card_num = card_num;
+        }
 
         public String getImg() {
             return img;

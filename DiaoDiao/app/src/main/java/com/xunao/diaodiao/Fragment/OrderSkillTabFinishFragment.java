@@ -10,6 +10,7 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
+import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
@@ -84,12 +85,33 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 if (homeBean.getStatus() == 1){
                     //已完成
                     baseViewHolder.setText(R.id.request, "查看");
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getCancel_time())+ " 取消");
-                }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
+
                     baseViewHolder.setText(R.id.time, "去评价");
                     baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
 
+                    baseViewHolder.setOnClickListener(R.id.time, v -> {
+                        //评价 1 项目 待改
+                        if(homeBean.getStatus() != 1){
+                            RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                    homeBean.getOdd_id(), 1);
+                        }
+
+                    });
+
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getCancel_time()));
+                }else{
+                    baseViewHolder.setText(R.id.request, "项目进度");
+//                    baseViewHolder.setText(R.id.time, "去评价");
+//                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+//
+//                    baseViewHolder.setOnClickListener(R.id.time, v -> {
+//                        //评价 1 项目 待改
+//                        if(homeBean.getStatus() != 1){
+//                            RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+//                                    homeBean.getOdd_id(), 1);
+//                        }
+//
+//                    });
                 }
             }
         };

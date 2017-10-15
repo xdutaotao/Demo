@@ -2,9 +2,12 @@ package com.xunao.diaodiao.Fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +43,7 @@ import com.xunao.diaodiao.Activity.HomeSearchActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
@@ -255,7 +259,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice() + " /天");
             }
         };
 
@@ -328,6 +332,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void onRefresh() {
         locationAdd.setText(Constants.city);
+        //刷新切换城市
         selectCity = city;
         presenter.getFirstPage(latData, lngData);
     }
@@ -349,7 +354,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
         if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size()>0){
             LatLonPoint point =  geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
-            selectCity = city;
             presenter.getFirstPage(getContext(), String.valueOf(point.getLatitude()),
                     String.valueOf(point.getLongitude()));
         }
@@ -385,8 +389,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         }
 
         imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
-            WebViewActivity.startActivity(HomeFragment.this.getContext(),
-                    bean.getCarousel().get(i).getLink(), bean.getCarousel().get(i).getName());
+            WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
+                    bean.getCarousel().get(i));
         });
 
         adapter.clear();
@@ -401,7 +405,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         Glide.with(this).load(bean.getAdvertisement().get(0).getImage())
                 .placeholder(R.drawable.banner02)
                 .into(banner);
+
     }
+
+
 
     @Override
     public void getData(UpdateInfo s) {

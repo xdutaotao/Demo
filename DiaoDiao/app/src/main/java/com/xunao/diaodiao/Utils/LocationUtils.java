@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.Utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -28,6 +29,9 @@ public class LocationUtils {
 //                    ToastUtil.show(amapLocation.getCity());//城市信息
                     Constants.city = amapLocation.getCity();
                     Constants.address = amapLocation.getDistrict()+amapLocation.getStreet();
+                    if(TextUtils.isEmpty(Constants.selectCity)){
+                        Constants.selectCity = Constants.city;
+                    }
                     StringBuilder sb = new StringBuilder();
                     sb.append(amapLocation.getCity()).append("#")
                             .append(amapLocation.getLatitude()).append("#")

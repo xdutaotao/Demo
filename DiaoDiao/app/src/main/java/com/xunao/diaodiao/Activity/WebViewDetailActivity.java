@@ -15,11 +15,14 @@ import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
+import com.xunao.diaodiao.Fragment.OrderSkillTabFinishRecieveFragment;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.WebViewDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -33,6 +36,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.provider.MediaStore.Audio.AudioColumns.TITLE_KEY;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
@@ -62,7 +66,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     LinearLayout bottomBtnLayout;
 
     OrderCompRes.Project project;
-    OrderSkillRecieveRes.OddBean odd;
+    OrderSkillFinishRecieveRes.OddBean odd;
+    HomeResponseBean.Carousel carousel;
     int who;
     String url;
     private boolean isCancle = false;
@@ -79,10 +84,17 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     }
 
     //技术人员  项目
-    public static void startActivity(Context context, OrderSkillRecieveRes.OddBean bean, int status) {
+    public static void startActivity(Context context, OrderSkillFinishRecieveRes.OddBean bean, int status) {
         Intent intent = new Intent(context, WebViewDetailActivity.class);
-        intent.putExtra(INTENT_KEY, bean);
+        intent.putExtra("skill_proj_finish", bean);
         intent.putExtra("who", status);
+        context.startActivity(intent);
+    }
+
+    //首页轮播
+    public static void startActivity(Context context, HomeResponseBean.Carousel carousel) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra("carousel", carousel);
         context.startActivity(intent);
     }
 
@@ -97,8 +109,10 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         showToolbarBack(toolBar, titleText, "详情");
 
         project = (OrderCompRes.Project) getIntent().getSerializableExtra(INTENT_KEY);
-        //odd = (OrderSkillRecieveRes.OddBean) getIntent().getSerializableExtra(INTENT_KEY);
+        odd = (OrderSkillFinishRecieveRes.OddBean) getIntent().getSerializableExtra("skill_proj_finish");
         who = getIntent().getIntExtra("who", 0);
+
+        carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
 
         if (project != null){
             url = project.getUrl();
@@ -130,26 +144,59 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         if(odd != null){
             url = odd.getUrl();
             if(who == SKILL_RECIEVE_PROJECT){
-
+                bottomBtnLayout.setVisibility(View.GONE);
+                if(odd.getEvaluate_status() == 1){
+                    //已评价
+                    apply.setVisibility(View.GONE);
+                }else{
+                    apply.setVisibility(View.VISIBLE);
+                    apply.setText("去评价");
+                }
             }
         }
 
 
-        webView.loadUrl(url)
-                .setWebViewClient(webView.new GWebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        super.shouldOverrideUrlLoading(view, url);
-                        if (url.contains("action=1")){
-                            //项目
-                            JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
-                        }else if (url.contains("action=2")){
-                            //零工
-                            JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+        if(carousel != null){
+            if( carousel.getType() == 1){
+                //站外
+                url = carousel.getLink();
+                webView.getWebView().loadUrl(url);
+            }else{
+                webView.loadUrl(url)
+                        .setWebViewClient(webView.new GWebViewClient() {
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                super.shouldOverrideUrlLoading(view, url);
+                                if (url.contains("action=1")){
+                                    //项目
+                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+                                }else if (url.contains("action=2")){
+                                    //零工
+                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+                                }
+                                return true;
+                            }
+                        });
+            }
+
+        }else{
+            webView.loadUrl(url)
+                    .setWebViewClient(webView.new GWebViewClient() {
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            super.shouldOverrideUrlLoading(view, url);
+                            if (url.contains("action=1")){
+                                //项目
+                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+                            }else if (url.contains("action=2")){
+                                //零工
+                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+                            }
+                            return true;
                         }
-                        return true;
-                    }
-                });
+                    });
+        }
+
 
 
 
@@ -187,7 +234,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     req.setTotal_price(bean.getTotal_price());
                     req.setExpenses(bean.getExpenses());
 
-                    req.setRegion(projectBean.getProject().getRegion());
+                    req.setRegion(bean.getRegion());
                     req.setProject_type_class(bean.getProject_type_class());
                     req.setProject_type_name(bean.getProject_type_name());
                     req.setProject_id(project.getProject_id());
@@ -203,7 +250,17 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     finish();
                 });
 
+        apply.setOnClickListener(v -> {
+            //评价 1 项目
+            if(who == SKILL_RECIEVE_PROJECT){
+                RecommandActivity.startActivity(this,
+                        odd.getProject_id(), 1);
+            }else {
+                RecommandActivity.startActivity(this,
+                        odd.getProject_id(), 1);
+            }
 
+        });
 
     }
 

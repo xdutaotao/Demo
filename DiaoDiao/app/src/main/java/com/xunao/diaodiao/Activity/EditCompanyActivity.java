@@ -295,7 +295,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                     String[] addresss = address.getText().toString().split("-");
                     if (addresss.length == 3) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
-                    } else if (addresss.length == 2) {
+                    } else if (addresss.length > 0) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
                     }
 

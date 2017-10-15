@@ -26,10 +26,12 @@ import com.xunao.diaodiao.Activity.PersonalActivity;
 import com.xunao.diaodiao.Activity.SettingActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Bean.MyBean;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.MyView;
 
 import javax.inject.Inject;
@@ -246,8 +248,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 //                    }
 //                }
 
-                EditPersonalActivity.startActivity(getContext());
-
+                //EditPersonalActivity.startActivity(getContext());
+                Utils.startCallActivity(MyFragment.this.getContext(), Constants.tel);
                 break;
 
             case R.id.setting:

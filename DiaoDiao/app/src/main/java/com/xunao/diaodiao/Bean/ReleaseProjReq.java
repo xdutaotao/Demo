@@ -33,6 +33,16 @@ public class ReleaseProjReq implements Serializable{
     private String project_type_class;
     private int project_id;
 
+    private String build_time_string;
+
+    public String getBuild_time_string() {
+        return build_time_string;
+    }
+
+    public void setBuild_time_string(String build_time_string) {
+        this.build_time_string = build_time_string;
+    }
+
     public int getProject_id() {
         return project_id;
     }

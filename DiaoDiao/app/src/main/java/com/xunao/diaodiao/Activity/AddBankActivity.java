@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Present.AddBankPresenter;
@@ -73,6 +74,8 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
     private BottomSheetDialog dialog;
     private BankListRes.ListBean bankCard;
     private SinglePicker singlePicker;
+
+    private String trade_no;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddBankActivity.class);
@@ -184,7 +187,15 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         req.setBank_name(selectNames.get(0));
         req.setMobile(phone.getText().toString());
         req.setCard(card.getText().toString());
-        req.setIdentity_card(getCode.getText().toString());
+        req.setIdentity_card(personCode.getText().toString());
+
+//        BindBankReq req = new BindBankReq();
+//        req.setName("顾振福");
+//        req.setBank_name("工商银行");
+//        req.setMobile("18513212904");
+//        req.setCard("6222021001096916918");
+//        req.setIdentity_card("41142219910613003X");
+
         //区分标志
         req.setTrade_no("");
         if(TextUtils.equals("信用卡", bankType.getText())){
@@ -192,8 +203,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         }else{
             req.setCard_type(101);
         }
-
-        presenter.bindingCard(this, req);
+        presenter.bindingCardGetVerify(this, req);
 
     }
 
@@ -225,8 +235,8 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         req.setMobile(phone.getText().toString());
         req.setCard(card.getText().toString());
         req.setCode(phoneCode.getText().toString());
-        req.setIdentity_card(getCode.getText().toString());
-        req.setTrade_no("123");
+        req.setIdentity_card(personCode.getText().toString());
+        req.setTrade_no(trade_no);
         if(TextUtils.equals("信用卡", bankType.getText())){
             req.setCard_type(102);
         }else{
@@ -252,8 +262,14 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
     }
 
     @Override
-    public void getData(String s) {
+    public void getData(AddBankRes s) {
+        trade_no = s.getTrade_no();
+    }
 
+    @Override
+    public void getData(Object s) {
+        ToastUtil.show("绑定成功");
+        finish();
     }
 
     @Override

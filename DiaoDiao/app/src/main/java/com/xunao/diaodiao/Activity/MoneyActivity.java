@@ -80,6 +80,12 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         getMoney.setOnClickListener(v -> {
             GetMoneyActivity.startActivity(MoneyActivity.this, money.getText().toString());
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         presenter.getMoney(this);
     }
 

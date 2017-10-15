@@ -203,8 +203,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             name.setText(info.getName());
             phone.setText(info.getMobile());
             personCode.setText(info.getCard());
-            address.setText(info.getAddress());
-            addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
+            address.setText(info.getRegion());
+            addressDetail.setText(info.getAddress());
             year.setText(info.getExperience());
             personNum.setText(info.getTeam_number() + "");
             skillsName.addAll(Arrays.asList(info.getProject_type().split(",")));
@@ -250,7 +250,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                     String[] addresss = address.getText().toString().split("-");
                     if (addresss.length == 3){
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
-                    }else{
+                    }else if(addresss.length > 0){
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
                     }
 
@@ -260,6 +260,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         });
         presenter.getAddressData(this);
         presenter.getTypeInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void initImagePicker() {

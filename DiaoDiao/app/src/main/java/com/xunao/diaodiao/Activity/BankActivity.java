@@ -88,6 +88,12 @@ public class BankActivity extends BaseActivity implements BankView {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         presenter.getBankList(this);
     }
 

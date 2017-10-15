@@ -32,7 +32,7 @@ public class Constants {
     public static String lngData;
     public static String address;
     public static String city;
-    public static String selectCity=" ";
+    public static String selectCity;
 
     public static final String STATUS = "STATUS";
     public static final String DESTORY = "destory";
@@ -49,6 +49,7 @@ public class Constants {
     public static final int SKILL_RELEASE_LINGGONG_NO_PASS = 9998;
     public static final int COMPANY_PROJECT_NO_PASS = 9997;
     public static final int JIA_TYPE = 9996;
+    public static final int YI_TYPE = 9995;
 
 
     //----------------- separator Tag Item-----------------//

@@ -46,6 +46,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 
 /**
  * create by
@@ -131,6 +132,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             appealType.setVisibility(View.VISIBLE);
             first.setOnCheckedChangeListener(this);
             second.setOnCheckedChangeListener(this);
+        }else if(who == YI_TYPE){
+            showToolbarBack(toolBar, titleText, "申诉");
+            appealType.setVisibility(View.GONE);
         }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
@@ -156,6 +160,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
                         ((TextView) v).setTextColor(Color.WHITE);
                         skillsName.add(s);
                     }
+
+                    content.setText(skillsName.toString().subSequence(1,
+                            skillsName.toString().length()-1));
                 });
             }
         };
@@ -237,6 +244,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             } else if(who == COMPANY_PROJECT_NO_PASS){
                 req.setReason(content.getText().toString());
             }else if(who == JIA_TYPE){
+                req.setContent(content.getText().toString());
+                req.setProject_type(1);
+            }else if(who == YI_TYPE){
                 req.setContent(content.getText().toString());
                 req.setProject_type(1);
             }

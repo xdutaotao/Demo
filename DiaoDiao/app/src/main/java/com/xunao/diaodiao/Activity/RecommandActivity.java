@@ -21,6 +21,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.EvaluateReq;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.SuggestPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -72,10 +73,9 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
     private static final int IMAGE_PICKER = 8888;
 
     private RecyclerArrayAdapter<String> adapter;
-    private RecyclerArrayAdapter<String> typeAdapter;
+    private RecyclerArrayAdapter<TypeInfoRes.Type_Info> typeAdapter;
     private int projectType;
 
-    private String[] skills = {"家电维修", "水泥回填", "家睡维修", "水点回填", "国电维修", "水我回填"};
     private List<String> skillsName = new ArrayList<>();
 
     public static void startActivity(Context context, int id, int projType) {
@@ -168,12 +168,12 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
 
 
 
-        typeAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
+        typeAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.select_skill_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
+            protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
+                baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                if (skillsName.toString().contains(s)){
+                if (skillsName.toString().contains(s.getId())){
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                 }else{
@@ -182,40 +182,26 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s)){
+                    if (skillsName.toString().contains(s.getId())){
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
                         ((TextView)v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s);
+                        skillsName.remove(s.getId());
                     }else{
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
                         ((TextView)v).setTextColor(Color.WHITE);
-                        skillsName.add(s);
+                        skillsName.add(s.getId());
                     }
                 });
             }
         };
 
-        typeAdapter.setOnItemClickListener((view, i) -> {
-            String skillItem = typeAdapter.getAllData().get(i);
-            if (skillsName.toString().contains(skillItem)){
-                view.setBackgroundResource(R.drawable.btn_blank_bg);
-                ((TextView)view.findViewById(R.id.skill_text)).setTextColor(getResources().getColor(R.color.gray));
-                skillsName.remove(skillItem);
-            }else{
-                view.setBackgroundResource(R.drawable.btn_blue_bg);
-                ((TextView)view.findViewById(R.id.skill_text)).setTextColor(Color.WHITE);
-                skillsName.add(skillItem);
-            }
-
-        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         typeRecyclerView.setLayoutManager(linearLayoutManager);
         typeRecyclerView.setAdapter(typeAdapter);
-        typeAdapter.addAll(skills);
 
-
+        presenter.getTypeInfo(this);
     }
 
     private void initImagePicker() {
@@ -277,5 +263,10 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
     public void getData(String s) {
         ToastUtil.show("提交成功");
         finish();
+    }
+
+    @Override
+    public void getData(TypeInfoRes s) {
+        typeAdapter.addAll(s.getType_info());
     }
 }

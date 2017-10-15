@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BindBankReq;
 import com.xunao.diaodiao.Model.AddBankModel;
@@ -25,11 +26,12 @@ public class AddBankPresenter extends BasePresenter<AddBankView> {
     AddBankPresenter() {
     }
 
+    //绑定卡
     public void bindingCard(Context context, BindBankReq req){
         mCompositeSubscription.add(model.bindingCard(req)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 
@@ -39,6 +41,23 @@ public class AddBankPresenter extends BasePresenter<AddBankView> {
                     }
                 }));
     }
+
+    //短信
+    public void bindingCardGetVerify(Context context, BindBankReq req){
+        mCompositeSubscription.add(model.bindingCardGetVerify(req)
+                .subscribe(new RxSubUtils<AddBankRes>(mCompositeSubscription,context) {
+                    @Override
+                    protected void _onNext(AddBankRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
 
     /**
      * bank list

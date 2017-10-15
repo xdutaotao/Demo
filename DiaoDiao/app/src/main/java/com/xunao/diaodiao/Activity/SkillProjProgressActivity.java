@@ -53,6 +53,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
+import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -141,9 +142,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
 
+                baseViewHolder.setText(R.id.time, Utils.millToYearString(s.getDate()));
                 baseViewHolder.setText(R.id.address, s.getLocation());
                 if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
-                    workid = s.getWork_id();
                     //审核中
                     status = 3;
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
@@ -282,12 +283,13 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 //技术人员
                 bottomBtnLayout.setVisibility(View.VISIBLE);
                 post.setVisibility(View.GONE);
-                noPass.setText("电话申诉");
+                noPass.setText("申诉");
                 pass.setText("再次提交");
 
                 //电话投诉
                 noPass.setOnClickListener(v -> {
-                    Utils.startCallActivity(this, Constants.tel);
+                    //Utils.startCallActivity(this, Constants.tel);
+                    AppealActivity.startActivity(this, req, YI_TYPE);
                 });
 
                 //再次提交
@@ -371,7 +373,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
     @Override
     public void getData(String s) {
-        ToastUtil.show("提交审核成功");
+        ToastUtil.show("提交成功");
         finish();
         //刷新列表
 //        if(photoPost){
@@ -407,6 +409,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 //项目结束
                 projStatus = 1;
             }
+
+            workid = s.getWork_id();
+            req.setWork_id(workid);
 
             titleText.postDelayed(new Runnable() {
                 @Override

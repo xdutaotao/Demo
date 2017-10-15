@@ -534,7 +534,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                                 .append(month + "-")
                                 .append(day);
                         time.setText(timeLong.toString());
-
+                        req.setBuild_time_string(timeLong.toString());
                     }
                 });
                 break;

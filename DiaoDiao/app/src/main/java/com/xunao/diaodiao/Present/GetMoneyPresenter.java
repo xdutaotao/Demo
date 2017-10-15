@@ -27,9 +27,9 @@ public class GetMoneyPresenter extends BasePresenter<GetMoneyView> {
 
     public void applyCash(Context context, GetCashRes res){
         mCompositeSubscription.add(model.applyCash(res)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 

@@ -91,10 +91,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     }
 
     //首页轮播
-    public static void startActivity(Context context, String url, String id) {
+    public static void startActivity(Context context, String url, String id, int type) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(INTENT_KEY, url);
         intent.putExtra(TITLE_KEY, id);
+        intent.putExtra("type", type);
         context.startActivity(intent);
     }
 
@@ -167,11 +168,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             url = findProject.getUrl();
             isCollect = findProject.getCollected()==1?true:false;
             isApply = findProject.getApply()==1?true:false;
+            bottomBtnLayout.setVisibility(View.GONE);
         }
 
 
 
-        webView.loadUrl(getIntent().getStringExtra(INTENT_KEY))
+        webView.loadUrl(url)
                 .setWebViewClient(webView.new GWebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {

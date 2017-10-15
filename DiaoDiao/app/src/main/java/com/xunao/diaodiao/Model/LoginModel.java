@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
@@ -130,6 +131,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
+import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
 import static com.xunao.diaodiao.Common.Constants.city;
 import static com.xunao.diaodiao.Common.Constants.selectCity;
@@ -810,7 +812,7 @@ public class LoginModel extends BaseModel {
      * 银行卡列表
      * @return
      */
-    public Observable<String> applyCash(GetCashRes req){
+    public Observable<Object> applyCash(GetCashRes req){
         String rateKey = "applyCash";
 
         long time = System.currentTimeMillis()/1000;
@@ -836,7 +838,7 @@ public class LoginModel extends BaseModel {
      * 银行卡列表
      * @return
      */
-    public Observable<String> bindingCard(BindBankReq req){
+    public Observable<AddBankRes> bindingCardGetVerify(BindBankReq req){
         String rateKey = "bindingCard";
         boolean isCode = TextUtils.isEmpty(req.getTrade_no());
         if (isCode){
@@ -858,6 +860,43 @@ public class LoginModel extends BaseModel {
         sb.append(req.getType())
         .append(User.getInstance().getUserId())
         .append("security");
+
+
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().bindingCardGetVerify(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 银行卡列表
+     * @return
+     */
+    public Observable<Object> bindingCard(BindBankReq req){
+        String rateKey = "bindingCard";
+        boolean isCode = TextUtils.isEmpty(req.getTrade_no());
+        if (isCode){
+            rateKey = "bindingCardGetVerify";
+        }
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getCard()).append(req.getCard_type());
+        if (!isCode){
+            sb.append(req.getCode());
+        }
+        sb.append(req.getIdentity_card())
+                .append(req.getMobile()).append(req.getBank_name());
+        if(!isCode){
+            sb.append(req.getTrade_no());
+        }
+        sb.append(req.getType())
+                .append(User.getInstance().getUserId())
+                .append("security");
 
 
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
@@ -899,13 +938,21 @@ public class LoginModel extends BaseModel {
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(type)
-                .append(User.getInstance().getUserId())
+                .append(userid)
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
-        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setUserid(userid);
         req.setType(type);
         req.setVerify(Utils.getMD5(sb.toString()));
 
@@ -943,7 +990,12 @@ public class LoginModel extends BaseModel {
         String rateKey = "typeInfo";
 
         long time = System.currentTimeMillis()/1000;
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(userid)
                 .append("security");
@@ -965,7 +1017,15 @@ public class LoginModel extends BaseModel {
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+
+
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(type).append(userid)
                 .append("security");
@@ -1031,7 +1091,12 @@ public class LoginModel extends BaseModel {
         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
 
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(id).append(type).append(userid)
@@ -1054,7 +1119,7 @@ public class LoginModel extends BaseModel {
     public Observable<FindProjDetailRes> getFindProjDetail(int id){
         String rateKey = "myProjectDetail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1079,7 +1144,7 @@ public class LoginModel extends BaseModel {
         }else{
             rateKey = "applyOdd";
         }
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1100,7 +1165,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> collectWork(int id, int types){
         String rateKey = "collectWork";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1127,7 +1192,7 @@ public class LoginModel extends BaseModel {
     public Observable<FindLingGongRes> getFindLingGongDetail(int id){
         String rateKey = "myPublishOddDetail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1148,7 +1213,7 @@ public class LoginModel extends BaseModel {
     public Observable<JoinDetailRes> getCompanyInfo(int id, int page){
         String rateKey = "companyInfo";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(id).append(page).append(10).append(userid)
@@ -1170,7 +1235,7 @@ public class LoginModel extends BaseModel {
     public Observable<GetOddInfoRes> getOddInfo(int id, int page){
         String rateKey = "oddInfo";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(id).append(page).append(10).append(userid)
@@ -1191,7 +1256,7 @@ public class LoginModel extends BaseModel {
     public Observable<SkillProjDetailRes> mySkillProjDetail(int id){
         String rateKey = "myPublishOddDetail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1212,7 +1277,7 @@ public class LoginModel extends BaseModel {
     public Observable<SkillProjRecieveDetailRes> mySkillProjRecieveDetail(int id){
         String rateKey = "myAcceptOddDetail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1235,7 +1300,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> submitSuggest(String content){
         String rateKey = "feedBack";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1259,7 +1324,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> toEvaluate(EvaluateReq req){
         String rateKey = "toEvaluate";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1289,7 +1354,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myProjectFinish";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1314,7 +1379,7 @@ public class LoginModel extends BaseModel {
     public Observable<OrderSkillRes> mySkillWait(int page){
         String rateKey = "myPublishOddWait";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1342,7 +1407,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectWait";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1370,7 +1435,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectCancel";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1399,7 +1464,7 @@ public class LoginModel extends BaseModel {
     public Observable<OrderSkillDoingRes> mySkillDoing(int page){
         String rateKey = "myPublishOddDoing";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1428,7 +1493,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectDoing";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1453,7 +1518,7 @@ public class LoginModel extends BaseModel {
     public Observable<OrderSkillFinishRes> mySkillFinish(int page){
         String rateKey = "myPublishOddFinish";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1481,7 +1546,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectFinish";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1506,7 +1571,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> myPublishOddSuccess(int id){
         String rateKey = "myPublishOddSuccess";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1532,7 +1597,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myPublishOddFail(MyPublicOddFailReq req){
         String rateKey = "myPublishOddFail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1557,7 +1622,7 @@ public class LoginModel extends BaseModel {
     public Observable<MyPublishOddWorkRes> myPublishOddWorkProgress(int id){
         String rateKey = "myPublishOddWork";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1581,7 +1646,7 @@ public class LoginModel extends BaseModel {
     public Observable<MyPublishOddWorkRes> myAcceptOddWork(int id){
         String rateKey = "myAcceptOddWork";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1603,7 +1668,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myAcceptOddSubmit(MyAcceptOddSubmitReq req){
         String rateKey = "myAcceptOddSubmit";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1629,7 +1694,7 @@ public class LoginModel extends BaseModel {
     public Observable<ApplyProjRes> getApplyList(int id, int projType){
         String rateKey = "applyList";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1654,7 +1719,7 @@ public class LoginModel extends BaseModel {
     public Observable<ApplyDetailRes> getApplyDetail(int id){
         String rateKey = "applyInfo";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1674,7 +1739,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> getApplyPass(ApplyPassReq req){
         String rateKey = "applyPass";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
@@ -1693,7 +1758,7 @@ public class LoginModel extends BaseModel {
     public Observable<SkillRecieveProjDetailRes> myAcceptProjectDetail(int id){
         String rateKey = "myAcceptProjectDetail";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(id).append(userid)
@@ -1718,7 +1783,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myProjectWork";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1744,7 +1809,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myProjectWorkSign";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1774,7 +1839,7 @@ public class LoginModel extends BaseModel {
             rateKey = "myProjectWorkList";
         }
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1800,7 +1865,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> myAcceptProjectWorkSub(GetMoneyReq req){
         String rateKey = "myAcceptProjectWorkSub";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1826,7 +1891,7 @@ public class LoginModel extends BaseModel {
     public Observable<String> myAcceptProjectSign(GetMoneyReq req){
         String rateKey = "myAcceptProjectSign";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1850,7 +1915,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myProjectWorkFail(GetMoneyReq req, int who){
         String rateKey = "myAcceptProjectSign";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1887,6 +1952,16 @@ public class LoginModel extends BaseModel {
                     .append(req.getProject_type())
                     .append(type).append(userid)
                     .append("security");
+        }else if(who == YI_TYPE){
+            //甲方申诉
+            rateKey = "myAcceptAppeal";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getAppeal_operate()).append(req.getContent())
+                    .append(req.getImages())
+                    .append(req.getProject_id())
+                    .append(req.getProject_type())
+                    .append(type).append(userid)
+                    .append("security");
         }
 
         req.setUserid(userid);
@@ -1905,7 +1980,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myProjectWorkPass(GetMoneyReq req){
         String rateKey = "myProjectWorkPass";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1931,7 +2006,7 @@ public class LoginModel extends BaseModel {
     public Observable<ExpensesInfoRes> typeExpenses(String s){
         String rateKey = "typeExpenses";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1955,7 +2030,7 @@ public class LoginModel extends BaseModel {
     public Observable<GetPercentRes> getPercent(){
         String rateKey = "getPercent";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1979,7 +2054,7 @@ public class LoginModel extends BaseModel {
     public Observable<ProjectTypeRes> publishOddType(){
         String rateKey = "publishOddType";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2004,7 +2079,7 @@ public class LoginModel extends BaseModel {
     public Observable<ReleaseProjRes> publishProject(ReleaseProjReq req){
         String rateKey = "publishProject";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2036,7 +2111,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> balancePay(PayFeeReq req){
         String rateKey = "balancePay";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2084,7 +2159,7 @@ public class LoginModel extends BaseModel {
     public Observable<ReleaseProjRes> publishOdd(ReleaseSkillReq req){
         String rateKey = "publishOdd";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2115,7 +2190,12 @@ public class LoginModel extends BaseModel {
     public Observable<CheckFinishRes> checkFinish(){
         String rateKey = "checkFinish";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2240,28 +2320,43 @@ public class LoginModel extends BaseModel {
     public Observable<HomeSearchRes> indexSearch(FindProjReq req){
         String rateKey = "indexSearch";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
-        return getCityId().map(integer -> {
-            req.setCity(selectCity);
-            StringBuilder sb = new StringBuilder(rateKey);
-            sb.append(time+"").append(selectCity).append(req.getKeyword())
-                    .append(req.getLat()).append(req.getLng())
-                    .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
-                    .append(req.getProject_type()).append(req.getTime_type())
-                    .append(req.getType())
-                    .append(userid)
-                    .append("security");
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(selectCity).append(req.getKeyword())
+                .append(req.getLat()).append(req.getLng())
+                .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
+                .append(req.getProject_type()).append(req.getTime_type())
+                .append(req.getType())
+                .append(userid)
+                .append("security");
 
-            req.setCity(selectCity);
-            req.setVerify(sb.toString());
-            return req;
-        }).flatMap(req1 -> {
-            return config.getRetrofitService().indexSearch(setBody(rateKey, time, req1));
-        })
-        .compose(RxUtils.handleResult());
+        req.setCity(selectCity);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().indexSearch(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+
+
+//        return getCityId().map(integer -> {
+//            StringBuilder sb = new StringBuilder(rateKey);
+//            sb.append(time+"").append(selectCity).append(req.getKeyword())
+//                    .append(req.getLat()).append(req.getLng())
+//                    .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
+//                    .append(req.getProject_type()).append(req.getTime_type())
+//                    .append(req.getType())
+//                    .append(userid)
+//                    .append("security");
+//
+//            req.setCity(selectCity);
+//            req.setVerify(sb.toString());
+//            return req;
+//        }).flatMap(req1 -> {
+//            return config.getRetrofitService().indexSearch(setBody(rateKey, time, req1));
+//        })
+//        .compose(RxUtils.handleResult());
 
     }
 
@@ -2314,7 +2409,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> updateProject(ReleaseProjReq req){
         String rateKey = "updateProject";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2341,7 +2436,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> updateOdd(ReleaseSkillReq req){
         String rateKey = "updateOdd";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2364,7 +2459,7 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myPublishAppeal(ReleaseSkillReq req){
         String rateKey = "myPublishAppeal";
 
-        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 

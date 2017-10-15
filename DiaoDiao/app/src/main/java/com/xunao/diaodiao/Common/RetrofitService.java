@@ -1,6 +1,7 @@
 package com.xunao.diaodiao.Common;
 
 
+import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Bean.BankListRes;
@@ -155,10 +156,13 @@ public interface RetrofitService {
     Observable<BaseBean<CashRecordRes>> cashRecord(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> applyCash(@Body RequestBody body);
+    Observable<BaseBean<Object>> applyCash(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> bindingCard(@Body RequestBody body);
+    Observable<BaseBean<Object>> bindingCard(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<AddBankRes>> bindingCardGetVerify(@Body RequestBody body);
 
     //上传图片
     @POST(ApiConstants.BASE_URL_INDEX)

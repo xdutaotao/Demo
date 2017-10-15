@@ -1,9 +1,13 @@
 package com.xunao.diaodiao;
 
+import android.*;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -24,6 +29,7 @@ import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Fragment.ReleaseFragment;
 import com.xunao.diaodiao.Model.User;
+import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
@@ -82,7 +88,81 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))){
             WebViewActivity.startActivity(this, getIntent().getStringExtra(INTENT_KEY));
         }
+
+        showContacts();
     }
+
+    private static final int BAIDU_READ_PHONE_STATE =100;
+
+    public void showContacts(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(),"没有权限,请手动开启定位权限",Toast.LENGTH_SHORT).show();
+            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.READ_PHONE_STATE
+            }, BAIDU_READ_PHONE_STATE);
+        }else{
+
+        }
+    }
+
+
+    //Android6.0申请权限的回调方法
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case BAIDU_READ_PHONE_STATE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+
+                } else {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getApplicationContext(), "获取位置权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+//    private void getPermission(){
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.WRITE_SETTINGS);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.CAMERA);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.SEND_SMS);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//        PermissionsUtils.hasPermission(this, android.Manifest.permission.READ_PHONE_STATE);
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (grantResults != null && grantResults.length > 0) {
+//            //ToastUtil.show("权限申请成功");
+//        } else {
+//            PermissionsUtils.permissionNotice(this, requestCode);
+//        }
+//    }
+
 
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();

@@ -192,6 +192,15 @@ public class PersonalRes {
         private String card_front;
         private String card_back;
         private String certificate;
+        private String region;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
 
         public String getName() {
             return name;
@@ -314,6 +323,15 @@ public class PersonalRes {
         private int city;
         private int district;
         private String address;
+        private String region;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
 
         public String getName() {
             return name;
