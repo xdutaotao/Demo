@@ -50,6 +50,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -99,7 +100,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private int who;
     //审核状态
     private int status = 0;
+    private int projStatus = 0;
     private boolean photoPost;
+    GetMoneyReq req;
 
     public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
@@ -219,11 +222,17 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 .subscribe(s -> {
                     finish();
                 });
+
+        req = new GetMoneyReq();
+        req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        req.setWorks_id(worksid);
+        req.setStage(stage);
+        req.setWork_id(workid);
     }
 
     private void AdapterAddFooter(){
         adapter.removeAllFooter();
-        if(status == 3){
+        if(projStatus == 3){
             //审核中
             if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
                 //暖通公司
@@ -239,22 +248,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 });
                 //不通过
                 noPass.setOnClickListener(v -> {
-                    GetMoneyReq req = new GetMoneyReq();
-                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    req.setWorks_id(worksid);
-                    req.setStage(stage);
-                    req.setWork_id(workid);
                     AppealActivity.startActivity(SkillProjProgressActivity.this,
                             req, COMPANY_PROJECT_NO_PASS);
                 });
 
                 //通过原因
                 pass.setOnClickListener(v -> {
-                    GetMoneyReq req = new GetMoneyReq();
-                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    req.setWorks_id(worksid);
-                    req.setWork_id(workid);
-                    req.setStage(stage);
                     presenter.myProjectWorkPass(SkillProjProgressActivity.this, req);
                 });
 
@@ -274,7 +273,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             }
 
 
-        }else if(status == 2){
+        }else if(projStatus == 2){
             //未通过
             if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
                 bottomBtnLayout.setVisibility(View.GONE);
@@ -321,6 +320,10 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
             //noPassInfoBean = s;
 
+        }else if(projStatus == 1) {
+            //项目结束
+            bottomBtnLayout.setVisibility(View.GONE);
+            post.setVisibility(View.GONE);
         }else{
             setFooter();
         }
@@ -329,7 +332,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
     private void setFooter(){
         if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
-
+            bottomBtnLayout.setVisibility(View.GONE);
         }else{
             //技术人员
             adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
@@ -391,6 +394,20 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         if (list.getInfo() != null && list.getInfo().size() > 0) {
             adapter.addAll(list.getInfo());
 
+            SkillProjProgPhotoRes.InfoBean s = list.getInfo().get(list.getInfo().size() - 1);
+            if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
+                //审核中
+                projStatus = 3;
+
+            }else if (s.getAudit_status() == 2 && (s.getAudit() == 1 || s.getAudit() == 2)){
+                //未通过审核
+                projStatus = 2;
+
+            }else if (s.getAudit_status() == 1 && s.getAudit() == 2){
+                //项目结束
+                projStatus = 1;
+            }
+
             titleText.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -401,7 +418,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         }else{
             pass.setVisibility(View.GONE);
             noPass.setVisibility(View.GONE);
-            recyclerView.showEmpty();
+            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+                //暖通公司
+                recyclerView.showEmpty();
+            }else{
+
+                setFooter();
+            }
+
         }
 
 
@@ -492,8 +516,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_collect, menu);
         MenuItem item = menu.findItem(R.id.action_contact);
-        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
-            item.setTitle("");
+        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE
+                && projStatus != 1){
+            item.setTitle("申诉");
         }else{
             item.setTitle("");
         }
@@ -504,7 +529,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_contact:
-                ToastUtil.show("申诉");
+                //ToastUtil.show("申诉");
+                AppealActivity.startActivity(SkillProjProgressActivity.this,
+                        req, JIA_TYPE);
                 return true;
         }
         return super.onOptionsItemSelected(item);

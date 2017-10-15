@@ -6,5 +6,5 @@ import com.xunao.diaodiao.View.BaseView;
  * Created by
  */
 public interface AppealView extends BaseView {
-    void getData(String s);
+    void getData(Object s);
 }

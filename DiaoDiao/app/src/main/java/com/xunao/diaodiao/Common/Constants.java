@@ -48,6 +48,7 @@ public class Constants {
     public static final int NO_PASS = 9999;
     public static final int SKILL_RELEASE_LINGGONG_NO_PASS = 9998;
     public static final int COMPANY_PROJECT_NO_PASS = 9997;
+    public static final int JIA_TYPE = 9996;
 
 
     //----------------- separator Tag Item-----------------//

@@ -15,6 +15,7 @@ import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
@@ -43,6 +44,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
+import static com.xunao.diaodiao.Common.Constants.city;
 
 /**
  * create by 签到  签到详情
@@ -56,7 +58,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
 
     private RecyclerArrayAdapter<SignRes.SignBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
@@ -106,8 +108,9 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
+
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
-                            + " 工作拍照");
+                            + " 签到");
                 baseViewHolder.setText(R.id.address, s.getLocation());
             }
         };
@@ -115,23 +118,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
 
         }else{
-            adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-                @Override
-                public View onCreateView(ViewGroup viewGroup) {
-                    View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
-                    RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                    recyclerViewFooter.setAdapter(footerAdapter);
-                    return view;
-                }
-
-                @Override
-                public void onBindView(View view) {
-                    postText = (TextView) view.findViewById(R.id.post);
-                    postText.setOnClickListener(v -> {
-                        signAction();
-                    });
-                }
-            });
+            setFooter();
 
             footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
                 @Override
@@ -181,9 +168,36 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
 
     @Override
     public void getList(SignRes list) {
-        if (list != null && list.getSign().size() > 0){
+        if (list.getSign() != null && list.getSign().size() > 0){
             adapter.addAll(list.getSign());
+        }else{
+            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
+                recyclerView.showEmpty();
+            }else{
+
+            }
+
         }
+    }
+
+    private void setFooter(){
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup viewGroup) {
+                View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
+                RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                recyclerViewFooter.setAdapter(footerAdapter);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View view) {
+                postText = (TextView) view.findViewById(R.id.post);
+                postText.setOnClickListener(v -> {
+                    signAction();
+                });
+            }
+        });
     }
 
     private void initImagePicker() {
@@ -198,7 +212,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
 
     private void signAction(){
         GetMoneyReq req = new GetMoneyReq();
-        req.setLocation(address);
+        req.setLocation(city);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
         presenter.myAcceptProjectSign(this, req);

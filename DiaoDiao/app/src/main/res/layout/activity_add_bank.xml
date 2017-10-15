@@ -82,7 +82,32 @@
         <EditText
             style="@style/edit_personal_edit"
             android:id="@+id/card"
+            android:inputType="phone"
             android:hint="请输入银行卡号"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_card_type">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡类型"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_type"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/icon_arrow"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 

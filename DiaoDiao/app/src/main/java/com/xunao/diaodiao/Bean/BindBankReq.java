@@ -9,14 +9,22 @@ public class BindBankReq {
     private int userid;
     private int type;
     private String name;
+    private String bank_name;
     private String mobile;
     private String card;
     private String identity_card;
     private String trade_no;
     private String code;
-    private String card_type;
+    private int card_type;
     private String verify;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getUserid() {
         return userid;
@@ -34,12 +42,12 @@ public class BindBankReq {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getBank_name() {
+        return bank_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
     }
 
     public String getMobile() {
@@ -82,11 +90,11 @@ public class BindBankReq {
         this.code = code;
     }
 
-    public String getCard_type() {
+    public int getCard_type() {
         return card_type;
     }
 
-    public void setCard_type(String card_type) {
+    public void setCard_type(int card_type) {
         this.card_type = card_type;
     }
 

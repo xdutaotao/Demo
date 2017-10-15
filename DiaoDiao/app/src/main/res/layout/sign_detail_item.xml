@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="万科时一区"
                 android:id="@+id/address"
+                android:layout_centerVertical="true"
                 android:drawablePadding="10px"
                 android:drawableLeft="@drawable/icon_dizhi"/>
 

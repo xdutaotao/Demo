@@ -46,7 +46,7 @@ public class AddBankPresenter extends BasePresenter<AddBankView> {
      * @param
      */
     public void getBankList(Context context){
-        mCompositeSubscription.add(model.getBankList()
+        mCompositeSubscription.add(model.getBankCardList()
                 .subscribe(new RxSubUtils<BankListRes>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(BankListRes token) {

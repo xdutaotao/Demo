@@ -9,6 +9,15 @@ import java.util.List;
 
 public class BankListRes {
     private List<BankCard> bankCard;
+    private List<ListBean> list;
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
 
     public List<BankCard> getBankCard() {
         return bankCard;
@@ -16,6 +25,27 @@ public class BankListRes {
 
     public void setBankCard(List<BankCard> bankCard) {
         this.bankCard = bankCard;
+    }
+
+    public static class ListBean{
+        private String name;
+        private String logo;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLogo() {
+            return logo;
+        }
+
+        public void setLogo(String logo) {
+            this.logo = logo;
+        }
     }
 
     public static class BankCard{

@@ -289,7 +289,7 @@ public interface RetrofitService {
 
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myProjectWorkFail(@Body RequestBody body);
+    Observable<BaseBean<Object>> myProjectWorkFail(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<Object>> myProjectWorkPass(@Body RequestBody body);

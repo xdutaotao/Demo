@@ -124,6 +124,7 @@ import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
@@ -756,6 +757,29 @@ public class LoginModel extends BaseModel {
                 .compose(RxUtils.handleResult());
     }
 
+
+    public Observable<BankListRes> getBankCardList(){
+        String rateKey = "bindingCardBankList";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getBankList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
     /**
      * 提现记录
      * @return
@@ -827,7 +851,7 @@ public class LoginModel extends BaseModel {
             sb.append(req.getCode());
         }
         sb.append(req.getIdentity_card())
-        .append(req.getMobile()).append(req.getName());
+        .append(req.getMobile()).append(req.getBank_name());
         if(!isCode){
             sb.append(req.getTrade_no());
         }
@@ -1823,7 +1847,7 @@ public class LoginModel extends BaseModel {
     /**
      *  审核不通过
      */
-    public Observable<String> myProjectWorkFail(GetMoneyReq req, int who){
+    public Observable<Object> myProjectWorkFail(GetMoneyReq req, int who){
         String rateKey = "myAcceptProjectSign";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
@@ -1852,6 +1876,16 @@ public class LoginModel extends BaseModel {
                     .append(req.getStage())
                     .append(type).append(userid).append(req.getWork_id())
                     .append(req.getWorks_id())
+                    .append("security");
+        }else if(who == JIA_TYPE){
+            //甲方申诉
+            rateKey = "myPublishAppeal";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getAppeal_operate()).append(req.getContent())
+                    .append(req.getImages())
+                    .append(req.getProject_id())
+                    .append(req.getProject_type())
+                    .append(type).append(userid)
                     .append("security");
         }
 
@@ -2306,6 +2340,29 @@ public class LoginModel extends BaseModel {
      */
     public Observable<Object> updateOdd(ReleaseSkillReq req){
         String rateKey = "updateOdd";
+
+        int userid = Integer.valueOf(User.getInstance().getUserId());
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getContact()).append(req.getContact_mobile())
+                .append(req.getOdd_id())
+                .append(req.getTitle()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    //甲方申诉
+    public Observable<Object> myPublishAppeal(ReleaseSkillReq req){
+        String rateKey = "myPublishAppeal";
 
         int userid = Integer.valueOf(User.getInstance().getUserId());
         int type = ShareUtils.getValue("TYPE", 0);

@@ -167,8 +167,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             name.setText(info.getName());
             contactPhone.setText(info.getContact_mobile());
             contactCode.setText(info.getContact_card());
-            address.setText(info.getRegion());
-            addressDetail.setText(info.getAddress());
+            address.setText(info.getAddress());
+            addressDetail.setText(info.getRegion());
             contactName.setText(info.getContact());
             phone.setText(info.getTel());
             buildTime.setText(Utils.millToYearString(info.getEstablish_time()));

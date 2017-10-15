@@ -312,7 +312,7 @@ public class Utils {
     }
 
     public static String millToDateString(long time) {
-        Date date = new Date(time);
+        Date date = new Date(time*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String result = formatter.format(date);
         String[] results = result.split(" ");
@@ -323,7 +323,7 @@ public class Utils {
     }
 
     public static String millToYearString(long time) {
-        Date date = new Date(time);
+        Date date = new Date(time*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String result = formatter.format(date);
         return result;

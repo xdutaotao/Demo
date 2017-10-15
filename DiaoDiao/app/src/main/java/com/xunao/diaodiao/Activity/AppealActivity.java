@@ -43,6 +43,7 @@ import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
@@ -125,6 +126,11 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             reason.setText("不通过的原因");
             appealType.setVisibility(View.GONE);
             content.setHint("请输入不通过原因");
+        }else if(who == JIA_TYPE){
+            showToolbarBack(toolBar, titleText, "申诉");
+            appealType.setVisibility(View.VISIBLE);
+            first.setOnCheckedChangeListener(this);
+            second.setOnCheckedChangeListener(this);
         }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
@@ -230,6 +236,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
                 req.setReason(content.getText().toString());
             } else if(who == COMPANY_PROJECT_NO_PASS){
                 req.setReason(content.getText().toString());
+            }else if(who == JIA_TYPE){
+                req.setContent(content.getText().toString());
+                req.setProject_type(1);
             }
 
             req.setImages(pathList);
@@ -261,9 +270,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
     }
 
     @Override
-    public void getData(String s) {
-        ToastUtil.show(s);
+    public void getData(Object s) {
         RxBus.getInstance().post("appeal");
+        ToastUtil.show("提交成功");
         finish();
     }
 

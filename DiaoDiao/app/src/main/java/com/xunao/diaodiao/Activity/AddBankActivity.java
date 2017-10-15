@@ -32,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.picker.SinglePicker;
 
 /**
  * create by
@@ -62,11 +63,16 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
     EditText personCode;
     @BindView(R.id.get_code)
     TextView getCode;
+    @BindView(R.id.bank_type)
+    TextView bankType;
+    @BindView(R.id.select_card_type)
+    RelativeLayout selectCardType;
 
-    private RecyclerArrayAdapter<BankListRes.BankCard> adapter;
+    private RecyclerArrayAdapter<BankListRes.ListBean> adapter;
     private List<String> selectNames = new ArrayList<>();
     private BottomSheetDialog dialog;
-    private BankListRes.BankCard bankCard;
+    private BankListRes.ListBean bankCard;
+    private SinglePicker singlePicker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddBankActivity.class);
@@ -85,19 +91,19 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         selectBank.setOnClickListener(this);
         post.setOnClickListener(this);
 
-        adapter = new RecyclerArrayAdapter<BankListRes.BankCard>(this, R.layout.add_bank_item) {
+        adapter = new RecyclerArrayAdapter<BankListRes.ListBean>(this, R.layout.add_bank_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, BankListRes.BankCard s) {
-                baseViewHolder.setText(R.id.bank_text, s.getCard_name());
-                baseViewHolder.setImageUrl(R.id.bank_icon, s.getImg());
+            protected void convert(BaseViewHolder baseViewHolder, BankListRes.ListBean s) {
+                baseViewHolder.setText(R.id.bank_text, s.getName());
+                baseViewHolder.setImageUrl(R.id.bank_icon, s.getLogo());
                 if (selectNames.size() > 0)
-                    baseViewHolder.setVisible(R.id.select, TextUtils.equals(s.getCard_name(), selectNames.get(0)));
+                    baseViewHolder.setVisible(R.id.select, TextUtils.equals(s.getName(), selectNames.get(0)));
             }
         };
 
         adapter.setOnItemClickListener((view1, i) -> {
             bankCard = adapter.getAllData().get(i);
-            String select = bankCard.getCard_name();
+            String select = bankCard.getName();
             bankName.setText(select);
             if (selectNames.contains(select)) {
                 ((ImageView) view1.findViewById(R.id.select)).setVisibility(View.GONE);
@@ -114,6 +120,25 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         dialog = new BottomSheetDialog(this);
         presenter.getBankList(this);
         getCode.setOnClickListener(this);
+
+        List<String> data = new ArrayList<>();
+        data.add("借记卡");
+        data.add("信用卡");
+
+        selectCardType.setOnClickListener(v -> {
+            singlePicker = new SinglePicker<>(this, data);
+            singlePicker.setCanceledOnTouchOutside(false);
+            singlePicker.setSelectedIndex(1);
+            singlePicker.setCycleDisable(true);
+            singlePicker.setOnItemPickListener(new SinglePicker.OnItemPickListener<String>() {
+                @Override
+                public void onItemPicked(int index, String item) {
+                    //ToastUtil.show(item);
+                    bankType.setText(item);
+                }
+            });
+            singlePicker.show();
+        });
     }
 
     @Override
@@ -133,7 +158,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         }
     }
 
-    private void getCode(){
+    private void getCode() {
         if (TextUtils.isEmpty(name.getText().toString())) {
             ToastUtil.show("开户人不能为空");
             return;
@@ -149,19 +174,25 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             return;
         }
 
-        if (TextUtils.isEmpty(getCode.getText().toString())){
+        if (TextUtils.isEmpty(getCode.getText().toString())) {
             ToastUtil.show("身份证不能为空");
             return;
         }
 
         BindBankReq req = new BindBankReq();
         req.setName(name.getText().toString());
+        req.setBank_name(selectNames.get(0));
         req.setMobile(phone.getText().toString());
-        req.setCard(bankCard.getCard());
+        req.setCard(card.getText().toString());
         req.setIdentity_card(getCode.getText().toString());
         //区分标志
         req.setTrade_no("");
-        req.setType(101);
+        if(TextUtils.equals("信用卡", bankType.getText())){
+            req.setCard_type(102);
+        }else{
+            req.setCard_type(101);
+        }
+
         presenter.bindingCard(this, req);
 
     }
@@ -190,12 +221,17 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
 
         BindBankReq req = new BindBankReq();
         req.setName(name.getText().toString());
+        req.setBank_name(selectNames.get(0));
         req.setMobile(phone.getText().toString());
-        req.setCard(bankCard.getCard());
+        req.setCard(card.getText().toString());
         req.setCode(phoneCode.getText().toString());
         req.setIdentity_card(getCode.getText().toString());
         req.setTrade_no("123");
-        req.setType(101);
+        if(TextUtils.equals("信用卡", bankType.getText())){
+            req.setCard_type(102);
+        }else{
+            req.setCard_type(101);
+        }
         presenter.bindingCard(this, req);
     }
 
@@ -222,7 +258,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
 
     @Override
     public void getBankList(BankListRes res) {
-        adapter.addAll(res.getBankCard());
+        adapter.addAll(res.getList());
     }
 
 
