@@ -207,7 +207,13 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             addressDetail.setText(info.getAddress());
             year.setText(info.getExperience());
             personNum.setText(info.getTeam_number() + "");
-            skillsName.addAll(Arrays.asList(info.getProject_type().split(",")));
+
+            skillsName.clear();
+
+            List<String> types = Arrays.asList(info.getProject_type().split(","));
+            for(String item: types){
+                skillsName.add(item.trim());
+            }
 
             information.setText(info.getEvaluate());
             inforNum.setText(info.getEvaluate().length() + " / 200");
@@ -333,7 +339,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         req.setCity(cityId);
         req.setDistrict(districtId);
         req.setCard(personCode.getText().toString());
-        req.setAddress(address.getText().toString());
+        req.setAddress(addressDetail.getText().toString());
         req.setExperience(year.getText().toString());
         req.setTeam_number(Integer.valueOf(personNum.getText().toString()));
         req.setEvaluate(information.getText().toString());

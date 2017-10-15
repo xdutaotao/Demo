@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -72,6 +73,21 @@ public class PersonalPresenter extends BasePresenter<PersonalView> {
                         if (!TextUtils.equals(msg, "网络错误"))
                             msg = "请求失败";
                         getView().onFailure();
+                    }
+                }));
+    }
+
+    public void getTypeInfo(){
+        mCompositeSubscription.add(model.getTypeInfo()
+                .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(TypeInfoRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
                     }
                 }));
     }

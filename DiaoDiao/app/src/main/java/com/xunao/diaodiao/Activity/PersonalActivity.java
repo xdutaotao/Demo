@@ -21,12 +21,15 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.PersonalPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.PersonalView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -97,6 +100,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private PersonalRes.TechnicianInfo technicianInfo;
     private PersonalRes.FamilyInfo familyInfo;
 
+    TypeInfoRes res;
+
     public static void startActivity(Context context, String path) {
         Intent intent = new Intent(context, PersonalActivity.class);
         intent.putExtra(INTENT_KEY, path);
@@ -142,7 +147,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         }
 
         presenter.checkFinish();
-
+        presenter.getTypeInfo();
     }
 
     @Override
@@ -198,6 +203,11 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
+    public void getData(TypeInfoRes s) {
+        this.res = s;
+    }
+
+    @Override
     public void getData(CheckFinishRes s) {
         status = s.getStatus();
         ShareUtils.putValue(STATUS, status);
@@ -235,6 +245,17 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 workYear.setText(technicianInfo.getExperience());
                 workNum.setText(technicianInfo.getTeam_number()+"");
                 project.setText(technicianInfo.getProject_type());
+                StringBuilder sb = new StringBuilder();
+                List<String> types = Arrays.asList(technicianInfo.getProject_type().split(","));
+                for(String item: types){
+                    for(TypeInfoRes.Type_Info info: res.getType_info()){
+                        if(TextUtils.equals(info.getId(), item.trim())){
+                            sb.append(info.getTitle()+" ");
+                        }
+                    }
+                }
+                project.setText(sb.toString());
+
                 work.setText(technicianInfo.getExperience());
                 break;
 
