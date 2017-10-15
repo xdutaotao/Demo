@@ -100,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="50px"
-        android:text="本次提现银行收取1元手续费，预计3-7个工作日到账"/>
+        android:text="本次提现银行收取2元手续费，预计3-7个工作日到账"/>
 
 
     <Button

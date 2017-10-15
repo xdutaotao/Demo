@@ -27,6 +27,7 @@ import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.FindProjectPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.FindProjectView;
@@ -40,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.latData;
 import static com.xunao.diaodiao.Common.Constants.lngData;
 
@@ -108,6 +110,15 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         });
 
         back.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(User.getInstance().getUserId())){
+                ToastUtil.show("请登录");
+                return;
+            }
+
+            if(ShareUtils.getValue(TYPE_KEY, 0) == 0){
+                ToastUtil.show("请完善资料");
+                return;
+            }
             if (type == 0){
                 //项目
                 ReleaseProjActivity.startActivity(FindProjectActivity.this);
@@ -126,10 +137,11 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
                 baseViewHolder.setText(R.id.name, homeBean.getType());
                 baseViewHolder.setText(R.id.distance, homeBean.getDistance());
                 if (type == 0) {
+                    //项目
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice()+ " / 天");
                 } else if (type == 1) {
                     baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage() + " / 天");
                 } else if (type == 2) {
                     baseViewHolder.setText(R.id.price_text, "上门费");
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");

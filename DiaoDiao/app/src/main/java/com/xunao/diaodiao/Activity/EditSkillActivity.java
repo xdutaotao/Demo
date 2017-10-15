@@ -209,14 +209,17 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             personNum.setText(info.getTeam_number() + "");
 
             skillsName.clear();
-
-            List<String> types = Arrays.asList(info.getProject_type().split(","));
-            for(String item: types){
-                skillsName.add(item.trim());
+            if(info.getProject_type() != null){
+                List<String> types = Arrays.asList(info.getProject_type().split(","));
+                for(String item: types){
+                    skillsName.add(item.trim());
+                }
             }
 
+
             information.setText(info.getEvaluate());
-            inforNum.setText(info.getEvaluate().length() + " / 200");
+            if(info.getEvaluate() != null)
+                inforNum.setText(info.getEvaluate().length() + " / 200");
             if (!TextUtils.isEmpty(info.getCard_front())) {
                 codeUrl = info.getCard_front();
                 Glide.with(this).load(codeUrl).into(code);
@@ -232,7 +235,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 codeReverseDelete.setVisibility(View.VISIBLE);
             } else {
                 Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
-                codeDelete.setVisibility(View.GONE);
+                codeReverseDelete.setVisibility(View.GONE);
             }
 
             if (!TextUtils.isEmpty(info.getCertificate())) {

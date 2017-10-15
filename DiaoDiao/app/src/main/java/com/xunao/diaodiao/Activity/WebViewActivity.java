@@ -195,6 +195,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                     ToastUtil.show("请完善个人信息");
                     return;
                 }
+
+                if(TextUtils.isEmpty(User.getInstance().getUserId())){
+                    ToastUtil.show("请登录");
+                    return;
+                }
+
                 presenter.postProject(this, id, type);
             }else {
                 if (project_type == 0){
@@ -327,8 +333,6 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             apply.setVisibility(View.GONE);
             presenter.getFindProjDetail(this, id);
         }
-
-
 
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, "update_project"))
