@@ -98,10 +98,14 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f7abdf589693fd6baeabb2edeb044b0b">
-            //开发者申请的key</meta-data>
-
-        <meta-data android:name="Mob-AppKey" android:value="20ad18688fcee"/>
-        <meta-data android:name="Mob-AppSecret" android:value="a0536022d8f2db4260ae91feb3d84878"/>
+            //开发者申请的key
+        </meta-data>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="20ad18688fcee" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="a0536022d8f2db4260ae91feb3d84878" />
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
@@ -109,12 +113,13 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent100371282" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
@@ -122,15 +127,17 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name=".Activity.CheckPhoneActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".Activity.CheckPhoneActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".Activity.CheckEmailActivity" />
         <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.HomeDetailActivity" />
         <activity android:name=".Activity.PDFActivity" />
-        <activity android:name=".Activity.SearchResultActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Activity.SearchResultActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.CollectActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -141,8 +148,9 @@
         <activity android:name=".Activity.WrapActivity" />
         <activity android:name=".Activity.CameraActivity" />
         <activity android:name=".Activity.PersonalActivity" />
-        <activity android:name=".Activity.AddressActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Activity.AddressActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activity.VIPActivity" />
         <activity android:name=".Activity.BuyActivity" />
         <activity android:name=".Activity.SettingActivity" />
@@ -162,17 +170,15 @@
 
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity android:name=".Activity.SelectMemoryActivity" />
         <activity android:name=".Activity.SelectCompanyActivity" />
         <activity android:name=".Activity.SelectSkillActivity" />
@@ -181,52 +187,52 @@
         <activity android:name=".Activity.MyRatingActivity" />
         <activity android:name=".Activity.ComplaintRecordActivity" />
         <activity android:name=".Activity.RecordDetailActivity" />
-        <activity android:name=".Activity.MessageActivity"/>
-        <activity android:name=".Activity.FeedBackDetailActivity"/>
-        <activity android:name=".Activity.EditPersonalActivity"/>
-        <activity android:name=".Activity.ComponyPersonalActivity"/>
-        <activity android:name=".Activity.EditCompanyActivity"/>
-        <activity android:name=".Activity.EditSkillActivity"/>
-        <activity android:name=".Activity.NormalPersonalActivity"/>
-        <activity android:name=".Activity.MoneyActivity"/>
-        <activity android:name=".Activity.BankActivity"/>
-        <activity android:name=".Activity.AddBankActivity"/>
-        <activity android:name=".Activity.FindProjectActivity"/>
-        <activity android:name=".Activity.HelpDetailActivity"/>
-        <activity android:name=".Activity.JoinActivity"/>
-        <activity android:name=".Activity.DocDetailActivity"/>
-        <activity android:name=".Activity.ProjectDetailActivity"/>
-        <activity android:name=".Activity.JoinDetailActivity"/>
-        <activity android:name=".Activity.ReleaseSkillActivity"/>
-        <activity android:name=".Activity.ReleaseCompanyActivity"/>
-        <activity android:name=".Activity.ReleaseProjActivity"/>
-        <activity android:name=".Activity.ReleaseProjSecondActivity"/>
-        <activity android:name=".Activity.ReleaseProjThirdActivity"/>
-        <activity android:name=".Activity.PayActivity"/>
-        <activity android:name=".Activity.ReleaseHelpActivity"/>
-        <activity android:name=".Activity.ReleaseSkillInforActivity"/>
-        <activity android:name=".Activity.ReleaseSkillSureInfoActivity"/>
-        <activity android:name=".Activity.OrderCompProjActivity"/>
-        <activity android:name=".Activity.OrderCompProjDetailActivity"/>
-        <activity android:name=".Activity.OrderProjProgressActivity"/>
-        <activity android:name=".Activity.SignDetailActivity"/>
-        <activity android:name=".Activity.ApplyActivity"/>
-        <activity android:name=".Activity.ApplyDetailActivity"/>
-        <activity android:name=".Activity.GetMoneyActivity"/>
-        <activity android:name=".Activity.ReleaseSKillTypeActivity"/>
-        <activity android:name=".Activity.OrderSkillCompDetailActivity"/>
-        <activity android:name=".Activity.OrderSkillCompRecieveDetailActivity"/>
-        <activity android:name=".Activity.OrderProjRecieveProgressActivity"/>
-        <activity android:name=".Activity.AppealActivity"/>
-        <activity android:name=".Activity.SkillRecieveProjectDetailActivity"/>
-        <activity android:name=".Activity.SkillProjReceiveProgressActivity"/>
-        <activity android:name=".Activity.SkillProjProgressActivity"/>
-        <activity android:name=".Activity.CashRecordActivity"/>
-        <activity android:name=".Activity.ReleaseSkillSecondActivity"/>
-        <activity android:name=".Activity.AddPhoneActivity"/>
-        <activity android:name=".Activity.HomeSearchActivity"/>
-        <activity android:name=".Activity.WebViewDetailActivity"/>
-
+        <activity android:name=".Activity.MessageActivity" />
+        <activity android:name=".Activity.FeedBackDetailActivity" />
+        <activity android:name=".Activity.EditPersonalActivity" />
+        <activity android:name=".Activity.ComponyPersonalActivity" />
+        <activity android:name=".Activity.EditCompanyActivity" />
+        <activity android:name=".Activity.EditSkillActivity" />
+        <activity android:name=".Activity.NormalPersonalActivity" />
+        <activity android:name=".Activity.MoneyActivity" />
+        <activity android:name=".Activity.BankActivity" />
+        <activity android:name=".Activity.AddBankActivity" />
+        <activity android:name=".Activity.FindProjectActivity" />
+        <activity android:name=".Activity.HelpDetailActivity" />
+        <activity android:name=".Activity.JoinActivity" />
+        <activity android:name=".Activity.DocDetailActivity" />
+        <activity android:name=".Activity.ProjectDetailActivity" />
+        <activity android:name=".Activity.JoinDetailActivity" />
+        <activity android:name=".Activity.ReleaseSkillActivity" />
+        <activity android:name=".Activity.ReleaseCompanyActivity" />
+        <activity android:name=".Activity.ReleaseProjActivity" />
+        <activity android:name=".Activity.ReleaseProjSecondActivity" />
+        <activity android:name=".Activity.ReleaseProjThirdActivity" />
+        <activity android:name=".Activity.PayActivity" />
+        <activity android:name=".Activity.ReleaseHelpActivity" />
+        <activity android:name=".Activity.ReleaseSkillInforActivity" />
+        <activity android:name=".Activity.ReleaseSkillSureInfoActivity" />
+        <activity android:name=".Activity.OrderCompProjActivity" />
+        <activity android:name=".Activity.OrderCompProjDetailActivity" />
+        <activity android:name=".Activity.OrderProjProgressActivity" />
+        <activity android:name=".Activity.SignDetailActivity" />
+        <activity android:name=".Activity.ApplyActivity" />
+        <activity android:name=".Activity.ApplyDetailActivity" />
+        <activity android:name=".Activity.GetMoneyActivity" />
+        <activity android:name=".Activity.ReleaseSKillTypeActivity" />
+        <activity android:name=".Activity.OrderSkillCompDetailActivity" />
+        <activity android:name=".Activity.OrderSkillCompRecieveDetailActivity" />
+        <activity android:name=".Activity.OrderProjRecieveProgressActivity" />
+        <activity android:name=".Activity.AppealActivity" />
+        <activity android:name=".Activity.SkillRecieveProjectDetailActivity" />
+        <activity android:name=".Activity.SkillProjReceiveProgressActivity" />
+        <activity android:name=".Activity.SkillProjProgressActivity" />
+        <activity android:name=".Activity.CashRecordActivity" />
+        <activity android:name=".Activity.ReleaseSkillSecondActivity" />
+        <activity android:name=".Activity.AddPhoneActivity" />
+        <activity android:name=".Activity.HomeSearchActivity" />
+        <activity android:name=".Activity.WebViewDetailActivity" />
+        <activity android:name=".Activity.WebViewOutActivity"></activity>
     </application>
 
 </manifest>

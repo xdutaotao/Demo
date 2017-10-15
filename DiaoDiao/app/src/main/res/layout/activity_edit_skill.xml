@@ -254,7 +254,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="300px"
                         android:src="@drawable/shangchuan_zheng"
                         android:minHeight="200px"
                         android:scaleType="fitXY"
@@ -278,7 +278,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="300px"
                         android:src="@drawable/shangchuan_fan"
                         android:id="@+id/code_reverse"
                         android:scaleType="fitXY"
@@ -316,7 +316,7 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="300px"
                     android:minHeight="200px"
                     android:src="@drawable/shangchuan"
                     android:id="@+id/certification"

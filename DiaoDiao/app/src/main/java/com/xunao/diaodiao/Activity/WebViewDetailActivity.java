@@ -93,7 +93,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
     //首页轮播
     public static void startActivity(Context context, HomeResponseBean.Carousel carousel) {
-        Intent intent = new Intent(context, WebViewActivity.class);
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
         intent.putExtra("carousel", carousel);
         context.startActivity(intent);
     }
@@ -162,6 +162,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 url = carousel.getLink();
                 webView.getWebView().loadUrl(url);
             }else{
+                bottomBtnLayout.setVisibility(View.GONE);
+                apply.setVisibility(View.GONE);
                 webView.loadUrl(url)
                         .setWebViewClient(webView.new GWebViewClient() {
                             @Override

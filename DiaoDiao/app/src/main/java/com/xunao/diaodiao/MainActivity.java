@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         ButterKnife.bind(this);
 
         //禁止侧滑返回
-        //setSwipeBackEnable(false);
+        setSwipeBackEnable(false);
 
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar_container);
         bottomNavigationBar.setAutoHideEnabled(true);

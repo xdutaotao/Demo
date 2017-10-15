@@ -44,6 +44,7 @@ import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Activity.WebViewOutActivity;
 import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
@@ -389,8 +390,15 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         }
 
         imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
-            WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
-                    bean.getCarousel().get(i));
+
+
+            if(bean.getCarousel().get(i).getType() == 1){
+                WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
+                        bean.getCarousel().get(i).getLink());
+            }else{
+                WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
+                        bean.getCarousel().get(i));
+            }
         });
 
         adapter.clear();
