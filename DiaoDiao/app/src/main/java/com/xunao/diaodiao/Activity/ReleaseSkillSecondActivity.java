@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.OddFeeRes;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
@@ -114,19 +115,17 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         title.setText(req.getTitle());
         address.setText(req.getRegion());
         addressDetail.setText(req.getAddress());
-        projectType.setText(req.getProject_type());
+        projectType.setText(req.getProject_type_string());
         contact.setText(req.getContact());
         phone.setText(req.getContact_mobile());
         days.setText(req.getTotal_day());
         fee.setText(req.getDaily_wage());
-        time.setText(Utils.millToDateString(req.getBuild_time()));
+        time.setText(req.getBuild_time_string());
         describe.setText(req.getDescribe());
         adapter.addAll(req.getImages());
-        projectFee.setText("￥"+req.getOdd_fee());
-        serviceFee.setText("￥"+req.getService_fee());
 
-        allPrice.setText("￥"+req.getTotal_fee());
         pay.setOnClickListener(this);
+
 
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, Constants.DESTORY))
@@ -135,7 +134,14 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
                 });
 
         if (flag){
+            projectFee.setText("￥"+req.getOdd_fee());
+            serviceFee.setText("￥"+req.getService_fee());
+            allPrice.setText("￥"+req.getTotal_fee());
+
             pay.setText("发布");
+
+        }else{
+            presenter.countOddExpenses(this, req);
         }
     }
 
@@ -185,5 +191,16 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
     public void getData(Object res) {
         RxBus.getInstance().post("update_project");
         finish();
+    }
+
+    @Override
+    public void getData(OddFeeRes res) {
+        projectFee.setText("￥"+res.getOdd_fee());
+        serviceFee.setText("￥"+res.getService_fee());
+        allPrice.setText("￥"+res.getTotal_fee());
+
+        req.setService_fee(res.getService_fee());
+        req.setTotal_fee(res.getTotal_fee());
+        req.setOdd_fee(res.getOdd_fee());
     }
 }

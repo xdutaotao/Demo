@@ -287,7 +287,7 @@ public class Utils {
             if (!TextUtils.isEmpty(date)) {
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sf = new SimpleDateFormat(format);
-                return sf.parse(date).getTime();
+                return sf.parse(date).getTime()/1000;
             }
         } catch (ParseException e) {
             e.printStackTrace();

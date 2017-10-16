@@ -39,8 +39,8 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
                     @Override
                     public void _onError(String msg) {
-                        if (!TextUtils.equals(msg, "网络错误"))
-                            msg = "请求失败";
+//                        if (!TextUtils.equals(msg, "网络错误"))
+//                            msg = "请求失败";
                         getView().onFailure();
                     }
                 }));
@@ -58,7 +58,7 @@ public class SearchPresenter extends BasePresenter<SearchView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

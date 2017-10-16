@@ -21,12 +21,14 @@ import com.example.zhouwei.library.CustomPopWindow;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.FindProjectPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
@@ -90,6 +92,8 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     private int projectType = -1;
     private String timeType = "";
 
+    private int status;
+
     public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, FindProjectActivity.class);
         intent.putExtra(INTENT_KEY, type);
@@ -116,16 +120,24 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             }
 
             if(ShareUtils.getValue(TYPE_KEY, 0) == 0){
-                ToastUtil.show("请完善资料");
+                ToastUtil.show("请选择角色");
                 return;
             }
-            if (type == 0){
-                //项目
-                ReleaseProjActivity.startActivity(FindProjectActivity.this);
-            }else if (type == 1){
-                //零工
-                ReleaseSkillActivity.startActivity(FindProjectActivity.this);
-            }
+
+            RxBus.getInstance().post("release");
+            finish();
+//            if(status == 1){
+//                if (type == 0){
+//                    //项目
+//                    ReleaseProjActivity.startActivity(FindProjectActivity.this);
+//                }else if (type == 1){
+//                    //零工
+//                    ReleaseSkillActivity.startActivity(FindProjectActivity.this);
+//                }
+//            }else{
+//                ToastUtil.show("未完善资料");
+//            }
+
         });
 
         adapter = new RecyclerArrayAdapter<FindProjectRes.FindProject>(this, R.layout.home_vertical_list) {
@@ -338,6 +350,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         });
 
         presenter.getTypeInfo();
+        presenter.checkFinish();
         onRefresh();
     }
 
@@ -353,6 +366,11 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             adapter.addAll(res.getOdd());
         }
 
+    }
+
+    @Override
+    public void getData(CheckFinishRes list) {
+        status = list.getStatus();
     }
 
     @Override

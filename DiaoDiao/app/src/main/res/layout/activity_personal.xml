@@ -75,7 +75,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1111"
+                    android:text=""
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="50px"
@@ -241,7 +241,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:gravity="right"
-                        android:text="自己项目自己自己项目自己项目自己项目"
+                        android:text=""
                         android:layout_marginRight="50px"
                         android:id="@+id/project"/>
 
@@ -261,7 +261,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="工作经验"
+                        android:text="工作内容"
                         android:layout_centerVertical="true"/>
 
                     <TextView

@@ -256,7 +256,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 }
                 project.setText(sb.toString());
 
-                work.setText(technicianInfo.getExperience());
+                work.setText(technicianInfo.getEvaluate());
                 break;
 
             case CUSTOM_TYPE:

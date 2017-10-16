@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Fragment.ReleaseFragment;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 
@@ -90,6 +91,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
 
         showContacts();
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, "release"))
+                .subscribe(s -> {
+                    goToFragment(0);
+                });
     }
 
     private static final int BAIDU_READ_PHONE_STATE =100;
@@ -222,6 +229,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void goToFragment(int index){
         if (index == 1)
             bottomNavigationBar.selectTab(0);
+        else
+            bottomNavigationBar.selectTab(1);
     }
 
     @Override

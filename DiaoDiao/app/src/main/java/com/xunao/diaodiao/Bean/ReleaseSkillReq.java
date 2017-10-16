@@ -28,11 +28,27 @@ public class ReleaseSkillReq implements Serializable{
     private String total_fee;
     private List<String> images;
     private String verify;
+    private String build_time_string;
+    private String project_type_string;
 
     private String odd_id;
     private String region;
 
+    public String getProject_type_string() {
+        return project_type_string;
+    }
 
+    public void setProject_type_string(String project_type_string) {
+        this.project_type_string = project_type_string;
+    }
+
+    public String getBuild_time_string() {
+        return build_time_string;
+    }
+
+    public void setBuild_time_string(String build_time_string) {
+        this.build_time_string = build_time_string;
+    }
 
     public String getOdd_id() {
         return odd_id;

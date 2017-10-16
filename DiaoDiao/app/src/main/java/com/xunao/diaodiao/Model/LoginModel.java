@@ -56,6 +56,7 @@ import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
+import com.xunao.diaodiao.Bean.OddFeeRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
@@ -2436,7 +2437,12 @@ public class LoginModel extends BaseModel {
     public Observable<Object> updateOdd(ReleaseSkillReq req){
         String rateKey = "updateOdd";
 
-        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -2454,6 +2460,35 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
+
+
+    /**
+     * 计算零工费用
+     * @param
+     * @return
+     */
+    public Observable<OddFeeRes> countOddExpenses(ReleaseSkillReq req){
+        String rateKey = "countOddExpenses";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getDaily_wage()).append(req.getTotal_day())
+                .append("security");
+
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().countOddExpenses(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
 
     //甲方申诉
     public Observable<Object> myPublishAppeal(ReleaseSkillReq req){

@@ -82,37 +82,34 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                 baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
 
-                if (homeBean.getStatus() == 1){
-                    //已完成
+                if(homeBean.getStatus() == 4){
+                    //已取消
                     baseViewHolder.setText(R.id.request, "查看");
 
-                    baseViewHolder.setText(R.id.time, "去评价");
-                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
-
-                    baseViewHolder.setOnClickListener(R.id.time, v -> {
-                        //评价 1 项目 待改
-                        if(homeBean.getStatus() != 1){
-                            RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                                    homeBean.getOdd_id(), 1);
-                        }
-
-                    });
-
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getCancel_time()));
+                    baseViewHolder.setVisible(R.id.time, false);
                 }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    //已完成
+                    baseViewHolder.setText(R.id.request, "查看");
+                    if (homeBean.getEvaluate_status() == 2){
+                        //未评价
+                        baseViewHolder.setText(R.id.time, "去评价");
+                        baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+
+                        baseViewHolder.setOnClickListener(R.id.time, v -> {
+                            //评价 1 项目 待改
+                            if(homeBean.getStatus() != 1){
+                                RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                        homeBean.getOdd_id(), 1);
+                            }
+
+                        });
+
+                    }else{
+                        baseViewHolder.setText(R.id.time, "查看评价");
 //                    baseViewHolder.setText(R.id.time, "去评价");
-//                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
-//
-//                    baseViewHolder.setOnClickListener(R.id.time, v -> {
-//                        //评价 1 项目 待改
-//                        if(homeBean.getStatus() != 1){
-//                            RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-//                                    homeBean.getOdd_id(), 1);
-//                        }
-//
-//                    });
+                    }
                 }
+
             }
         };
 

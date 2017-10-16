@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Bean.MyFavoriteRes;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.MyRateRes;
 import com.xunao.diaodiao.Bean.NumberBean;
+import com.xunao.diaodiao.Bean.OddFeeRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
@@ -318,6 +319,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<Object>> updateProject(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<OddFeeRes>> countOddExpenses(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<String>> getRegionId(@Body RequestBody body);

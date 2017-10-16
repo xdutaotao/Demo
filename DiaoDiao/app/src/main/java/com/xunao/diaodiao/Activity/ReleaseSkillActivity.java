@@ -235,7 +235,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             title.setText(req.getTitle());
             address.setText(req.getRegion());
             addressDetail.setText(req.getAddress());
-            projectType.setText(req.getProject_type());
+
+            //projectType.setText(req.getProject_type());
             contact.setText(req.getContact());
             phone.setText(req.getContact_mobile());
             fee.setText(req.getDaily_wage());
@@ -262,9 +263,11 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             projectTypeLayout.setOnClickListener(this);
             initImagePicker();
             presenter.getPercent(this);
-            presenter.publishOddType();
-            presenter.getAddressData();
+
+            presenter.getAddressData(this);
         }
+
+        presenter.publishOddType();
 
     }
 
@@ -279,6 +282,12 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
         for(ProjectTypeRes.TypeBean bean: res.getTypes()){
             data.add(bean.getName());
+            if(req != null){
+                if(bean.getId() == Integer.valueOf(req.getProject_type())) {
+                    projectType.setText(bean.getName());
+                    req.setProject_type_string(bean.getName());
+                }
+            }
         }
         singlePicker = new SinglePicker<>(this, data);
         singlePicker.setCanceledOnTouchOutside(false);
@@ -316,6 +325,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         address.setText(province.getAreaName() + "-"
                                 + city.getAreaName() + "-"
                                 + county.getAreaName());
+
                         //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     }
                 }
@@ -438,22 +448,32 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     req.setProvince(provinceId);
                     req.setCity(cityId);
                     req.setDistrict(districtId);
+                    req.setRegion(address.getText().toString());
                     req.setAddress(addressDetail.getText().toString());
-                    req.setProject_type(projectType.getText().toString());
+
+                    for(ProjectTypeRes.TypeBean bean: res.getTypes()){
+                        if(TextUtils.equals(bean.getName(), projectType.getText().toString())){
+                            req.setProject_type(bean.getId()+"");
+                        }
+                    }
+
+                    req.setProject_type_string(projectType.getText().toString());
                     req.setContact(contact.getText().toString());
                     req.setContact_mobile(phone.getText().toString());
                     req.setDaily_wage(fee.getText().toString());
                     req.setTotal_day(days.getText().toString());
+                    req.setBuild_time_string(time.getText().toString());
                     req.setBuild_time(Utils.convert2long(time.getText().toString()));
                     req.setDescribe(content.getText().toString());
-                    int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
-                    req.setOdd_fee(String.valueOf(oddFee));
-                    if (!TextUtils.isEmpty(percent)) {
-                        float serviceFee = oddFee / Integer.valueOf(percent);
-                        req.setService_fee(String.valueOf(serviceFee));
-
-                        req.setTotal_fee(String.valueOf(oddFee + serviceFee));
-                    }
+                    req.setDescribe(content.getText().toString());
+//                    int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
+//                    req.setOdd_fee(String.valueOf(oddFee));
+//                    if (!TextUtils.isEmpty(percent)) {
+//                        float serviceFee = oddFee / Integer.valueOf(percent);
+//                        req.setService_fee(String.valueOf(serviceFee));
+//
+//                        req.setTotal_fee(String.valueOf(oddFee + serviceFee));
+//                    }
                     req.setImages(pathList);
                     ReleaseSkillSecondActivity.startActivity(this, req);
                 }else{

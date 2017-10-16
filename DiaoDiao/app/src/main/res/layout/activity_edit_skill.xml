@@ -28,7 +28,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:id="@+id/name"
-                    android:hint="张三"/>
+                    android:hint="姓名"/>
 
             </RelativeLayout>
 
