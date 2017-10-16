@@ -166,8 +166,8 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     }
 
     @Override
-    public void passData(String s) {
-        ToastUtil.show("审核不通过");
+    public void passData(Object s) {
+        ToastUtil.show("打款成功");
         finish();
     }
 

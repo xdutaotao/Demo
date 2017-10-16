@@ -42,9 +42,9 @@ public class OrderProjProgressPresenter extends BasePresenter<OrderProjProgressV
 
     public void myPublishOddSuccess(Context context, int page){
         mCompositeSubscription.add(model.myPublishOddSuccess(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().passData(token);
                     }
 

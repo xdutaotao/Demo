@@ -8,7 +8,7 @@ import com.xunao.diaodiao.View.BaseView;
  */
 public interface OrderProjProgressView extends BaseView {
     void getData(MyPublishOddWorkRes res);
-    void passData(String s);
+    void passData(Object s);
     void giveMoney(Object s);
 
 }

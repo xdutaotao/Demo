@@ -1569,10 +1569,15 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我发布的 零工 进行中 通过
      */
-    public Observable<String> myPublishOddSuccess(int id){
+    public Observable<Object> myPublishOddSuccess(int id){
         String rateKey = "myPublishOddSuccess";
 
-        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
 
