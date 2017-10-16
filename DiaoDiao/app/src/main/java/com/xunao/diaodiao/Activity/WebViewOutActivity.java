@@ -37,5 +37,7 @@ public class WebViewOutActivity extends AppCompatActivity {
         Uri content_url = Uri.parse(getIntent().getStringExtra(INTENT_KEY));
         intent.setData(content_url);
         startActivity(intent);
+
+        finish();
     }
 }

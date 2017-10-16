@@ -98,6 +98,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         context.startActivity(intent);
     }
 
+
+    //收藏列表
+    public static void startActivity(Context context, String url) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("favorite", url);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +121,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         who = getIntent().getIntExtra("who", 0);
 
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
+
+        url = getIntent().getStringExtra("favorite");
+        if(!TextUtils.isEmpty(url)){
+            //我的收藏
+            apply.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
 
         if (project != null){
             url = project.getUrl();

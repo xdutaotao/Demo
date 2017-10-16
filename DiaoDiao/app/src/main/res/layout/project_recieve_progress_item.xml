@@ -5,8 +5,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="200px"
-    android:maxHeight="500px"
     android:paddingLeft="40px"
     android:paddingRight="20px"
     android:background="@color/activity_background">
@@ -15,8 +13,6 @@
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200px"
-        android:maxHeight="500px"
         android:id="@+id/image_layout"
         android:background="@color/activity_background">
 
@@ -57,18 +53,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="50px"
-                android:paddingLeft="50px"
+                android:paddingLeft="20px"
                 android:id="@+id/time"
                 android:layout_marginBottom="20px"
-                android:text="06-29 签到"/>
+                android:text="06-29 工作拍照"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="50px"
-                android:paddingLeft="50px"
+                android:paddingLeft="20px"
                 android:id="@+id/address"
                 android:layout_marginBottom="20px"
-                android:text="06-29 签到"/>
+                android:text="上海"
+                android:drawablePadding="20px"
+                android:drawableLeft="@drawable/dinwei"/>
 
 
             <android.support.v7.widget.RecyclerView
@@ -88,8 +86,6 @@
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200px"
-        android:maxHeight="500px"
         android:background="@color/activity_background">
 
         <LinearLayout

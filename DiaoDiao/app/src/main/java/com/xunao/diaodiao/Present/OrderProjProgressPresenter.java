@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Present;
 
+import android.content.Context;
+
 import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
@@ -38,9 +40,9 @@ public class OrderProjProgressPresenter extends BasePresenter<OrderProjProgressV
                 }));
     }
 
-    public void myPublishOddSuccess(int page){
+    public void myPublishOddSuccess(Context context, int page){
         mCompositeSubscription.add(model.myPublishOddSuccess(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(String token) {
                         getView().passData(token);

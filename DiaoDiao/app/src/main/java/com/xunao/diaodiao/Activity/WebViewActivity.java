@@ -202,6 +202,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 }
 
                 presenter.postProject(this, id, type);
+            }else if(TextUtils.equals(btnType, HOME_SKILL_DETAIL)) {
+                //零工申请
+                presenter.postProject(this, id, 1);
             }else {
                 if (project_type == 0){
                     //联系发布人
@@ -308,11 +311,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         }else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
-            apply.setVisibility(View.GONE);
+            apply.setVisibility(View.VISIBLE);
         }else if (TextUtils.equals(btnType, RECEIVE_PROJ_DETAIL)){
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
-            apply.setVisibility(View.GONE);
+            apply.setVisibility(View.VISIBLE);
         }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);

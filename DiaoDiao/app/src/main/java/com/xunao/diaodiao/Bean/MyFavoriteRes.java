@@ -27,6 +27,15 @@ public class MyFavoriteRes {
         private String type;
         private String project_fee;
         private int collect_id;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public int getId() {
             return id;

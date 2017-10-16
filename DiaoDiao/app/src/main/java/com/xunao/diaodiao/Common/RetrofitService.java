@@ -220,7 +220,7 @@ public interface RetrofitService {
     Observable<BaseBean<OrderSkillRecieveRes>> myAcceptOddWait(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myAcceptOddCancel(@Body RequestBody body);
+    Observable<BaseBean<Object>> myAcceptOddCancel(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<OrderSkillDoingRes>> mySkillDoing(@Body RequestBody body);

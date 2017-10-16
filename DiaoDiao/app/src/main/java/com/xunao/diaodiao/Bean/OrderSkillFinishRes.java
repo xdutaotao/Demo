@@ -31,6 +31,15 @@ public class OrderSkillFinishRes {
         private int finish_time;
         private String url;
         private int evaluate_status;
+        private String issue_time;
+
+        public String getIssue_time() {
+            return issue_time;
+        }
+
+        public void setIssue_time(String issue_time) {
+            this.issue_time = issue_time;
+        }
 
         public int getEvaluate_status() {
             return evaluate_status;

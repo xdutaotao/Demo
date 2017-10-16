@@ -78,12 +78,15 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time())+ " 开始");
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                 if (!TextUtils.isEmpty(homeBean.getTotal_day()))
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+
+                baseViewHolder.setText(R.id.request, "项目进度");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),

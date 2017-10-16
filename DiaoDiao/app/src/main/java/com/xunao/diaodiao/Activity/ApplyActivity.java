@@ -44,6 +44,8 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
     private RecyclerArrayAdapter<ApplyProjRes.ApplicantBean> adapter;
     private int page = 1;
 
+    private int projectType = 0;
+
     public static void startActivity(Context context, int id, int projectType) {
         Intent intent = new Intent(context, ApplyActivity.class);
         intent.putExtra(INTENT_KEY, id);
@@ -61,6 +63,8 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
 
         showToolbarBack(toolBar, titleText, "申请人员");
 
+        projectType = getIntent().getIntExtra("projectType", 0);
+
         adapter = new RecyclerArrayAdapter<ApplyProjRes.ApplicantBean>(this, R.layout.apply_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ApplyProjRes.ApplicantBean s) {
@@ -76,7 +80,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
                     ApplyPassReq req = new ApplyPassReq();
                     req.setTechnician_id(s.getTechnician_id());
                     req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    req.setProject_type(getIntent().getIntExtra("projectType", 0));
+                    req.setProject_type(projectType);
                     presenter.getApplyPass(req);
                 });
             }
@@ -86,7 +90,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
             ApplyPassReq req = new ApplyPassReq();
             req.setTechnician_id(adapter.getAllData().get(i).getTechnician_id());
             req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-            req.setProject_type(getIntent().getIntExtra("projectType", 0));
+            req.setProject_type(projectType);
             ApplyDetailActivity.startActivity(ApplyActivity.this, req);
         });
 
@@ -113,13 +117,13 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), 1);
+        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), projectType);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), 1);
+        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), projectType);
     }
 
 

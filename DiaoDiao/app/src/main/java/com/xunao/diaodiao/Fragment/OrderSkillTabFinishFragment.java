@@ -74,9 +74,9 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
             @Override
             protected void convert(BaseViewHolder baseViewHolder, OrderSkillFinishRes.OddBean homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
-                baseViewHolder.setVisible(R.id.evaluation, false);
+                //baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
@@ -85,19 +85,17 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 if(homeBean.getStatus() == 4){
                     //已取消
                     baseViewHolder.setText(R.id.request, "查看");
-
-                    baseViewHolder.setVisible(R.id.time, false);
                 }else{
                     //已完成
-                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setText(R.id.request, "项目进度");
                     if (homeBean.getEvaluate_status() == 2){
                         //未评价
-                        baseViewHolder.setText(R.id.time, "去评价");
-                        baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                        baseViewHolder.setText(R.id.evaluation, "去评价");
+                        baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
 
-                        baseViewHolder.setOnClickListener(R.id.time, v -> {
+                        baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                             //评价 1 项目 待改
-                            if(homeBean.getStatus() != 1){
+                            if(homeBean.getEvaluate_status() == 2){
                                 RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                                         homeBean.getOdd_id(), 1);
                             }

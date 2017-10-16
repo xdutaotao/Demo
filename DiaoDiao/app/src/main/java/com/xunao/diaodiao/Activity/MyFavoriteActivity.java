@@ -101,6 +101,10 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
             }
         };
 
+        adapter.setOnItemClickListener((view, i) -> {
+            WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+        });
+
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
 
         onRefresh();

@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Present;
 
+import android.content.Context;
+
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -23,9 +25,9 @@ public class OrderSkillRecievePresenter extends BasePresenter<OrderSkillRecieveV
     OrderSkillRecievePresenter() {
     }
 
-    public void mySkillWait(int page, int who){
+    public void mySkillWait(Context context, int page, int who){
         mCompositeSubscription.add(model.myAcceptOddWait(page, who)
-                .subscribe(new RxSubUtils<OrderSkillRecieveRes>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<OrderSkillRecieveRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(OrderSkillRecieveRes token) {
                         getView().getData(token);
@@ -38,11 +40,11 @@ public class OrderSkillRecievePresenter extends BasePresenter<OrderSkillRecieveV
                 }));
     }
 
-    public void myAcceptOddCancel(int page, int who){
+    public void myAcceptOddCancel(Context context, int page, int who){
         mCompositeSubscription.add(model.myAcceptOddCancel(page, who)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().cancle(token);
                     }
 

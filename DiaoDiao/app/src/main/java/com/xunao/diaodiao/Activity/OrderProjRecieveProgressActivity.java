@@ -109,24 +109,19 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                 String content = "";
                 if (workBean.getPass() == 1) {
                     //审核通过
-                    if (workBean.getPaid() == 1) {
+                    if (workBean.getApply() == 1) {
                         //已打款
                         baseViewHolder.setText(R.id.content, "已打款");
-                    } else if (workBean.getPaid() == 2) {
-                        //未打款
-                        baseViewHolder.setText(R.id.content, "未打款");
-                    } else {
-                        baseViewHolder.setText(R.id.content, "部分打款");
                     }
-                    bottomBtnLayout.setVisibility(View.GONE);
+                    //bottomBtnLayout.setVisibility(View.GONE);
                 } else if (workBean.getPass() == 2) {
                     baseViewHolder.setText(R.id.content, "审核未通过");
-                    bottomBtnLayout.setVisibility(View.VISIBLE);
-                    adapter.removeAllFooter();
-                    workBeanNoPass = workBean;
+                    //bottomBtnLayout.setVisibility(View.VISIBLE);
+                    //adapter.removeAllFooter();
+                    //workBeanNoPass = workBean;
                 } else {
                     baseViewHolder.setText(R.id.content, "审核中");
-                    bottomBtnLayout.setVisibility(View.GONE);
+                    //bottomBtnLayout.setVisibility(View.GONE);
                 }
 
 
@@ -153,30 +148,6 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skill_recieve_ling_footer, null);
-                RecyclerView recyclerViewImage = (RecyclerView) view.findViewById(R.id.recycler_view_image);
-                recyclerViewImage.setAdapter(signAdapter);
-                return view;
-            }
-
-            @Override
-            public void onBindView(View view) {
-                post = (TextView) view.findViewById(R.id.post);
-                applyMoney = (TextView) view.findViewById(R.id.apply_money);
-                post.setOnClickListener(v -> {
-                    //提交进度
-                    postProgress(2);
-                });
-
-                applyMoney.setOnClickListener(v -> {
-                    //申请打款
-                    postProgress(1);
-                });
-            }
-        });
 
         signAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -208,8 +179,6 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         signAdapter.add(ADD);
 
 
-
-
         presenter.myAcceptOddWork(getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
@@ -228,6 +197,8 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         });
         initImagePicker();
 
+        setFooter();
+
     }
 
     private void postProgress(int apply_type){
@@ -235,7 +206,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         req.setOdd_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setRemark("工作拍照");
         req.setApply_type(apply_type);
-        req.setSign_time(System.currentTimeMillis());
+        req.setSign_time(System.currentTimeMillis()/1000);
         req.setLocation(Constants.address);
         req.setImages(pathList);
         presenter.myAcceptOddSubmit(this, req);
@@ -262,12 +233,52 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     @Override
     public void getData(MyPublishOddWorkRes res) {
         if (res.getWork() == null || res.getWork().size() == 0) {
-            bottomBtnLayout.setVisibility(View.VISIBLE);
+            bottomBtnLayout.setVisibility(View.GONE);
 
         } else {
             adapter.addAll(res.getWork());
+            workBeanNoPass = res.getWork().get(res.getWork().size()-1);
+            if(workBeanNoPass.getPass() == 2){
+                //审核未通过
+                bottomBtnLayout.setVisibility(View.VISIBLE);
+
+            }else if(workBeanNoPass.getPass() == 3){
+                //审核中
+                bottomBtnLayout.setVisibility(View.GONE);
+                adapter.removeAllFooter();
+            }else{
+                bottomBtnLayout.setVisibility(View.GONE);
+
+            }
         }
 
+    }
+
+    private void setFooter(){
+        adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
+            @Override
+            public View onCreateView(ViewGroup viewGroup) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.skill_recieve_ling_footer, null);
+                RecyclerView recyclerViewImage = (RecyclerView) view.findViewById(R.id.recycler_view_image);
+                recyclerViewImage.setAdapter(signAdapter);
+                return view;
+            }
+
+            @Override
+            public void onBindView(View view) {
+                post = (TextView) view.findViewById(R.id.post);
+                applyMoney = (TextView) view.findViewById(R.id.apply_money);
+                post.setOnClickListener(v -> {
+                    //提交进度
+                    postProgress(2);
+                });
+
+                applyMoney.setOnClickListener(v -> {
+                    //申请打款
+                    postProgress(1);
+                });
+            }
+        });
     }
 
     @Override

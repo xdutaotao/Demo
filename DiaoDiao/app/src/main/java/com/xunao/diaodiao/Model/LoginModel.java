@@ -1430,7 +1430,7 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我接的 零工 取消申请
      */
-    public Observable<String> myAcceptOddCancel(int odd_id, int who){
+    public Observable<Object> myAcceptOddCancel(int odd_id, int who){
         String rateKey = "myAcceptOddCancel";
         if (who == SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectCancel";
@@ -1916,7 +1916,12 @@ public class LoginModel extends BaseModel {
     public Observable<Object> myProjectWorkFail(GetMoneyReq req, int who){
         String rateKey = "myAcceptProjectSign";
 
-        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
@@ -1967,7 +1972,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myProjectWorkFail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());

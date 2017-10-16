@@ -82,7 +82,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time())+ " 开始");
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
 

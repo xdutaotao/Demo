@@ -10,5 +10,5 @@ import com.xunao.diaodiao.Bean.OrderSkillRes;
 
 public interface OrderSkillRecieveView extends BaseView {
     void getData(OrderSkillRecieveRes list);
-    void cancle(String list);
+    void cancle(Object list);
 }

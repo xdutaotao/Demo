@@ -46,17 +46,18 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50px"
+            android:layout_height="wrap_content"
             android:id="@+id/time"
-            android:layout_marginBottom="20px"
+            android:padding="20px"
             android:text="06-29 签到"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50px"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20px"
             android:id="@+id/address"
-            android:drawablePadding="20px"
-            android:drawableLeft="@drawable/arrow"
+            android:drawablePadding="10px"
+            android:drawableLeft="@drawable/dinwei"
             android:layout_marginBottom="20px"
             android:text="上海"/>
 

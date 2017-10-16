@@ -42,6 +42,16 @@ public class OrderSkillRecieveRes implements Serializable{
         private String project_price;
         private String url;
 
+        private String issue_time;
+
+        public String getIssue_time() {
+            return issue_time;
+        }
+
+        public void setIssue_time(String issue_time) {
+            this.issue_time = issue_time;
+        }
+
         public String getUrl() {
             return url;
         }

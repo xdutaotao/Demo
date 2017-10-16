@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.AppealActivity;
 import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
@@ -78,15 +79,16 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage());
+                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+"/天");
 
-//                baseViewHolder.setOnClickListener(R.id.request, v -> {
-//                    OrderSkillCompDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-//                            homeBean.getOdd_id());
-//                });
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    ApplyActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                            homeBean.getOdd_id(), 3);
+                });
             }
         };
 

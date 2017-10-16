@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
-import com.xunao.diaodiao.Bean.MyPublicOddFailReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Present.OrderProjProgressPresenter;
 import com.xunao.diaodiao.R;
@@ -40,11 +42,13 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     @BindView(R.id.pass)
     TextView pass;
     @BindView(R.id.give_money)
     TextView giveMoney;
+    @BindView(R.id.bottom_btn_layout)
+    LinearLayout bottomBtnLayout;
 
     //审核中的 work
     private MyPublishOddWorkRes.WorkBean workBeanDoing;
@@ -74,21 +78,27 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
 
-                if (workBean.getPass() == 3){
-                    //审核中
-                    workBeanDoing = workBean;
-                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                }else if (workBean.getPass() == 2){
-                    //审核未通过
-                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 暖通公司未通过");
-                    //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
-                }else {
-                    //审核通过
-                    //baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
-                }
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
+                baseViewHolder.setText(R.id.address, workBean.getLocation());
+                baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "+workBean.getLocation());
-                baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " "+workBean.getRemark());
+                if (workBean.getPass() == 3) {
+                    //审核中
+
+
+                } else if (workBean.getPass() == 2) {
+                    //审核未通过
+                    baseViewHolder.setText(R.id.content, "审核未通过");
+                    //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                } else {
+                    //审核通过
+                    if (workBean.getApply() == 1) {
+                        baseViewHolder.setText(R.id.content, "已确认打款");
+                    } else {
+                        baseViewHolder.setText(R.id.content, "审核通过");
+                    }
+
+                }
 
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
@@ -111,7 +121,6 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         };
 
 
-
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
@@ -130,7 +139,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         });
 
         giveMoney.setOnClickListener(v -> {
-            presenter.myPublishOddSuccess(workBeanDoing.getWork_id());
+            presenter.myPublishOddSuccess(this, workBeanDoing.getWork_id());
         });
 
 
@@ -138,7 +147,22 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
 
     @Override
     public void getData(MyPublishOddWorkRes res) {
-        adapter.addAll(res.getWork());
+        if (res.getWork() != null && res.getWork().size() > 0) {
+            adapter.addAll(res.getWork());
+
+            workBeanDoing = res.getWork().get(res.getWork().size() - 1);
+            if (workBeanDoing.getApply() == 1 && workBeanDoing.getPass() == 1) {
+                //已确认打款
+                bottomBtnLayout.setVisibility(View.GONE);
+            }else if(workBeanDoing.getPass() == 2){
+                bottomBtnLayout.setVisibility(View.GONE);
+            }
+
+        } else {
+            recyclerView.showEmpty();
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

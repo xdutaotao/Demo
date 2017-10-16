@@ -83,7 +83,8 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 if (who == Constants.SKILL_RECIEVE_LINGGONG){
@@ -98,9 +99,11 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.SKILL_RECIEVE_LINGGONG){
-                        presenter.myAcceptOddCancel(homeBean.getOdd_id(), who);
+                        presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
+                                homeBean.getOdd_id(), who);
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
-                        presenter.myAcceptOddCancel(homeBean.getProject_id(), who);
+                        presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
+                                homeBean.getProject_id(), who);
                     }
 
 
@@ -161,21 +164,22 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
     }
 
     @Override
-    public void cancle(String list) {
+    public void cancle(Object list) {
         ToastUtil.show("取消成功");
+        onRefresh();
     }
 
 
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillWait(page, who);
+        presenter.mySkillWait(this.getContext(), page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillWait(page, who);
+        presenter.mySkillWait(this.getContext(), page, who);
     }
 
     public String getTitle(){

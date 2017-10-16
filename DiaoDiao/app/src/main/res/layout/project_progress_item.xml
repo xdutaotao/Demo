@@ -5,8 +5,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="200px"
-    android:maxHeight="500px"
     android:paddingLeft="40px"
     android:paddingRight="20px"
     android:background="@color/activity_background">
@@ -50,30 +48,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:paddingTop="50px"
+            android:paddingTop="20px"
             android:layout_marginTop="50px"
             android:layout_marginLeft="50px">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50px"
-                android:paddingLeft="50px"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20px"
                 android:id="@+id/time"
                 android:layout_marginBottom="20px"
                 android:text="06-29 签到"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50px"
-                android:paddingLeft="50px"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20px"
                 android:id="@+id/address"
+                android:drawableLeft="@drawable/dinwei"
+                android:drawablePadding="10px"
                 android:layout_marginBottom="20px"
                 android:text="06-29 签到"/>
 
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="200px"
+                android:layout_height="wrap_content"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="4"
                 android:id="@+id/recycler_view_item"
@@ -88,8 +88,6 @@
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200px"
-        android:maxHeight="500px"
         android:background="@color/activity_background">
 
         <LinearLayout
@@ -128,16 +126,16 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50px"
+                android:layout_height="wrap_content"
                 android:id="@+id/content_time"
-                android:text="06-29 签到"
+                android:text="06-29 审核"
                 android:layout_marginBottom="20px"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50px"
+                android:layout_height="wrap_content"
                 android:id="@+id/content"
-                android:textColor="@color/nav_gray"
+                android:textColor="@color/accept_btn_default"
                 android:text="通过后将工钱汇入零工账户"/>
 
         </LinearLayout>
