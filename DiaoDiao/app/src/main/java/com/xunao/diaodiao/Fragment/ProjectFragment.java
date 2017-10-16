@@ -64,7 +64,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     private static final String[] COMPANY_TEXTS = {"我的项目信息", "我的监理信息", "零工信息",
             "维保信息", "互助信息"};
 
-    private static final String[] PROJECT_TYPE = {"待确认 ", "进行中 "};
+    private static final String[] PROJECT_TYPE = {"待确认 ", "进行中 ", "申请中 "};
 
     private RecyclerArrayAdapter<HomeProjBean> adapter;
 
@@ -78,6 +78,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     private String mutual;
 
     private int type;
+
+    List<HomeProjBean> list = new ArrayList<>();
 
     public static ProjectFragment newInstance(String param1) {
         ProjectFragment fragment = new ProjectFragment();
@@ -137,7 +139,12 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
                                 }
                                 if (!TextUtils.isEmpty(oddBean.getOdd_wait())){
-                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + oddBean.getOdd_wait());
+                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + oddBean.getOdd_apply());
+                                }
+
+                                if(!TextUtils.isEmpty(oddBean.getOdd_apply())){
+                                    baseViewHolder.setVisible(R.id.apply, true);
+                                    baseViewHolder.setText(R.id.apply, PROJECT_TYPE[2] + oddBean.getOdd_wait());
                                 }
                             }else if (TextUtils.equals(COMPANY_TEXTS[3], s.getProjText()) && maintenanceBean != null){
                                 if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
@@ -192,8 +199,43 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         recyclerView.setAdapter(adapter);
 
 
-        List<HomeProjBean> list = new ArrayList<>();
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())){
+            //recyclerView.setVisibility(View.GONE);
 
+
+            LoginActivity.startActivity(ProjectFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
+
+        }else if(type ==0){
+            //recyclerView.setVisibility(View.GONE);
+
+
+            SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
+
+
+        }
+
+        presenter.getMyWork(this.getContext());
+
+
+
+
+
+        return view;
+    }
+
+    @Override
+    public void getData(ProjectRes s) {
+        projectBean = s.getProject();
+        supervisorBean = s.getSupervisor();
+        maintenanceBean = s.getMaintenance();
+        oddBean = s.getOdd();
+        mutual = s.getMutual();
+
+
+        list.clear();
         switch (type) {
             case SKILL_TYPE:
             case COMPANY_TYPE:
@@ -208,20 +250,10 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             case 3:
                 break;
         }
+
+        adapter.clear();
         adapter.addAll(list);
-
-        presenter.getMyWork();
-        return view;
-    }
-
-    @Override
-    public void getData(ProjectRes s) {
-        projectBean = s.getProject();
-        supervisorBean = s.getSupervisor();
-        maintenanceBean = s.getMaintenance();
-        oddBean = s.getOdd();
-        mutual = s.getMutual();
-        adapter.notifyDataSetChanged();
+        
     }
 
     @Override
@@ -233,33 +265,14 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     @Override
     public void updateData() {
         super.updateData();
-        presenter.getMyWork();
+        presenter.getMyWork(this.getContext());
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        type = ShareUtils.getValue(TYPE_KEY, 0);
-        if (TextUtils.isEmpty(User.getInstance().getUserId())){
-            recyclerView.setVisibility(View.GONE);
-            index++;
-            if (index == 1) {
-                LoginActivity.startActivity(ProjectFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
-        }else if(type ==0){
-            recyclerView.setVisibility(View.GONE);
 
-            selectIndex++;
-            if (selectIndex == 1) {
-                SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
-
-        }else{
-            recyclerView.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -267,13 +280,35 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden){
-            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
-                LoginActivity.startActivity(ProjectFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }else{
-                presenter.getMyWork();
+
+            type = ShareUtils.getValue(TYPE_KEY, 0);
+            if (TextUtils.isEmpty(User.getInstance().getUserId())){
+                //recyclerView.setVisibility(View.GONE);
+
+
+                    LoginActivity.startActivity(ProjectFragment.this.getContext());
+                    ((MainActivity) getActivity()).goToFragment(1);
+
+            }else if(type ==0){
+                //recyclerView.setVisibility(View.GONE);
+
+
+                    SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+                    ((MainActivity) getActivity()).goToFragment(1);
+
+
             }
+
+            recyclerView.showRecycler();
+                presenter.getMyWork(this.getContext());
+
+
+
+
+
         }
+
+
     }
 
 
