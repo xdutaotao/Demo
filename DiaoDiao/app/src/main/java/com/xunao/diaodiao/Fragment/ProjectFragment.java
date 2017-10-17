@@ -6,10 +6,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.LoginActivity;
+import com.xunao.diaodiao.Activity.OrderCompProjActivity;
+import com.xunao.diaodiao.Activity.ReleaseSKillTypeActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.MainActivity;
@@ -28,6 +31,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
@@ -61,6 +67,16 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.proj_layout)
+    LinearLayout projLayout;
+    @BindView(R.id.jianli_layout)
+    LinearLayout jianliLayout;
+    @BindView(R.id.lg_layout)
+    LinearLayout lgLayout;
+    @BindView(R.id.wb_layout)
+    LinearLayout wbLayout;
+    @BindView(R.id.hz_layout)
+    LinearLayout hzLayout;
 
 
     private String mParam1;
@@ -115,8 +131,44 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         hideToolbarBack(toolBar, titleText, "订单");
         type = ShareUtils.getValue("TYPE", 0);
 
-        presenter.getMyWork();
+        presenter.getMyWork(this.getContext());
+
+        projLayout.setOnClickListener(this);
+
+
+
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.proj_layout:
+                if (type == COMPANY_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                } else if (type == SKILL_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_PROJECT);
+                }
+                break;
+            case R.id.jianli_layout:
+                break;
+
+            case R.id.lg_layout:
+                if (type == COMPANY_TYPE) {
+
+                } else if (type == SKILL_TYPE) {
+                    ReleaseSKillTypeActivity.startActivity(getContext());
+                }
+                break;
+
+            case R.id.wb_layout:
+
+                break;
+
+            case R.id.hz_layout:
+                break;
+
+        }
     }
 
     @Override
@@ -129,75 +181,52 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
         if (projectBean != null) {
             if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
-                projWaiting.setText(projectBean.getProject_wait());
+                projWaiting.setText("待确认 " + projectBean.getProject_wait());
             }
             if (!TextUtils.isEmpty(projectBean.getProject_doing())) {
-                projDoing.setText(projectBean.getProject_doing());
+                projDoing.setText("进行中 " + projectBean.getProject_doing());
             }
         } else if (supervisorBean != null) {
             if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
-                jianliWaiting.setText(supervisorBean.getSupervisor_wait());
+                jianliWaiting.setText("待确认 " + supervisorBean.getSupervisor_wait());
 
             }
             if (!TextUtils.isEmpty(supervisorBean.getSupervisor_doing())) {
-                jianliDoing.setText(supervisorBean.getSupervisor_doing());
+                jianliDoing.setText("进行中 " + supervisorBean.getSupervisor_doing());
             }
         } else if (oddBean != null) {
             if (!TextUtils.isEmpty(oddBean.getOdd_wait())) {
-                lgWaiting.setText(oddBean.getOdd_wait());
+                lgWaiting.setText("待确认 " + oddBean.getOdd_wait());
 
             }
             if (!TextUtils.isEmpty(oddBean.getOdd_doing())) {
-                lgDoing.setText(oddBean.getOdd_doing());
+                lgDoing.setText("进行中 " + oddBean.getOdd_doing());
             }
 
             if (!TextUtils.isEmpty(oddBean.getOdd_apply())) {
-                lgApply.setText(oddBean.getOdd_apply());
+                lgApply.setText("申请中 " + oddBean.getOdd_apply());
             }
 
         } else if (maintenanceBean != null) {
             if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
-                wbDoing.setText(maintenanceBean.getMaintenance_doing());
+                wbDoing.setText("进行中 " + maintenanceBean.getMaintenance_doing());
 
             }
             if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
-                wbWaiting.setText(maintenanceBean.getMaintenance_wait());
+                wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());
             }
         } else if (!TextUtils.isEmpty(mutual)) {
             hzDoing.setText(mutual);
         }
 
-
-//        list.clear();
-//        switch (type) {
-//            case SKILL_TYPE:
-//            case COMPANY_TYPE:
-//                for (int i = 0; i < COMPANY_IMAGES.length; i++) {
-//                    HomeProjBean bean = new HomeProjBean();
-//                    bean.setProjImage(COMPANY_IMAGES[i]);
-//                    bean.setProjText(COMPANY_TEXTS[i]);
-//                    list.add(bean);
-//                }
-//                break;
-//
-//            case 3:
-//                break;
-//        }
-//        adapter.clear();
-//        adapter.addAll(list);
-
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        }
-    }
+
 
     @Override
     public void updateData() {
         super.updateData();
-        presenter.getMyWork();
+        presenter.getMyWork(this.getContext());
     }
 
     @Override
@@ -235,7 +264,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 LoginActivity.startActivity(ProjectFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             } else {
-                presenter.getMyWork();
+                presenter.getMyWork(this.getContext());
             }
         }
     }
@@ -251,6 +280,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         super.onDestroy();
         presenter.detachView();
     }
+
 
 
 }

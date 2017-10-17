@@ -24,9 +24,9 @@ public class ProjectPresenter extends BasePresenter<ProjectView> {
     }
 
 
-    public void getMyWork(){
+    public void getMyWork(Context context){
         mCompositeSubscription.add(model.getMyWork()
-                .subscribe(new RxSubUtils<ProjectRes>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<ProjectRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(ProjectRes token) {
                         getView().getData(token);
