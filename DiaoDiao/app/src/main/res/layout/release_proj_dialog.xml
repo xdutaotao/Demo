@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_guanbi"
         android:id="@+id/cancle_dialog"
-        android:paddingLeft="50px"
-        android:paddingTop="50px"/>
+        android:padding="30px"/>
 
     <RelativeLayout style="@style/item_layout"
         android:layout_marginTop="40px">
@@ -56,6 +55,14 @@
         android:layout_height="2px"
         android:layout_marginBottom="50px"
         android:background="@color/divider"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="50px"
+        android:text="实际铺设面积需大于地暖所需面积"
+        android:id="@+id/warning"/>
 
     <Button
         style="@style/login_btn_style"

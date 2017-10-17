@@ -244,6 +244,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     finish();
                 });
 
+        time.setText(Utils.getNowDate());
+
         flag = getIntent().getBooleanExtra("flag", false);
         if (flag){
             //再次编辑
@@ -348,6 +350,13 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         TextView unit = (TextView) view.findViewById(R.id.unit);
         unit.setText(temp.getUnit());
         price.setHint("最小输入" + temp.getCost());
+
+        TextView warning = (TextView) view.findViewById(R.id.warning);
+        if(select.getText().toString().contains("水泥回填")){
+            warning.setVisibility(View.VISIBLE);
+        }else{
+            warning.setVisibility(View.GONE);
+        }
 
         if (TextUtils.isEmpty(temp.getAmount())){
             amount.setText(temp.getAmount());
@@ -526,6 +535,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             case R.id.time:
                 DatePicker datePicker = new DatePicker(this);
                 datePicker.show();
+                String[] dates = Utils.getNowDate().split("-");
+                datePicker.setRangeStart(Integer.valueOf(dates[0]),
+                        Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
                 timeLong = new StringBuilder();
                 datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                     @Override

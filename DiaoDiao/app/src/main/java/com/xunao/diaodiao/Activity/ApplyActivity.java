@@ -28,7 +28,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
+public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     ApplyPresenter presenter;
@@ -94,7 +94,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
             ApplyDetailActivity.startActivity(ApplyActivity.this, req);
         });
 
-        recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        recyclerView.setAdapterDefaultConfig(adapter, this);
         onRefresh();
     }
 
@@ -120,11 +120,11 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
         presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), projectType);
     }
 
-    @Override
-    public void onLoadMore() {
-        page++;
-        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), projectType);
-    }
+//    @Override
+//    public void onLoadMore() {
+//        page++;
+//        presenter.myProjectWait(getIntent().getIntExtra(INTENT_KEY, 0), projectType);
+//    }
 
 
     @Override

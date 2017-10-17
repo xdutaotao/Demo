@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Present.OrderProjProgressPresenter;
@@ -139,7 +140,20 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         });
 
         giveMoney.setOnClickListener(v -> {
-            presenter.myPublishOddSuccess(this, workBeanDoing.getWork_id());
+
+            new IOSDialog(this).builder()
+                    .setTitle("点击确认打款给对方")
+                    .setMsg("打款给对方了")
+                    .setPositiveButton("确认", v1 -> {
+                        presenter.myPublishOddSuccess(this, workBeanDoing.getWork_id());
+                    })
+                    .setNegativeButton("取消", v1 -> {
+
+                    })
+                    .show();
+
+
+
         });
 
 

@@ -117,6 +117,7 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         name.setText(res.getName());
         ratingStar.setRating(Float.valueOf(res.getPoint()));
         ratingStar.setIsIndicator(true);
+        time.setText(res.getPoint());
         workYear.setText(res.getExperience()+"年");
         skillContent.setText(res.getProject_type());
         projectExper.setText(res.getProject_amount()+"年");

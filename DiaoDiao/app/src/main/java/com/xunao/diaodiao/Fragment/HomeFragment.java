@@ -41,6 +41,7 @@ import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.HomeSearchActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
+import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
@@ -52,6 +53,7 @@ import com.xunao.diaodiao.Bean.SearchBean;
 import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Common.ApiConstants;
 import com.xunao.diaodiao.Common.Constants;
+import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.HomePresenter;
 import com.xunao.diaodiao.R;
@@ -59,6 +61,7 @@ import com.xunao.diaodiao.Utils.LocationUtils;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.RxUtils;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
@@ -76,6 +79,7 @@ import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.city;
 import static com.xunao.diaodiao.Common.Constants.latData;
 import static com.xunao.diaodiao.Common.Constants.lngData;
@@ -337,6 +341,17 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         selectCity = city;
         presenter.getFirstPage(latData, lngData);
     }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if(presenter != null)
+                presenter.getFirstPage(latData, lngData);
+        }
+    }
+
 
     private void changeAddress(String address){
         locationAdd.setText(address);

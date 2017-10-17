@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Present.SkillProjReceiveProgressPresenter;
 import com.xunao.diaodiao.R;
@@ -272,8 +273,16 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(ShareUtils.getValue(TYPE_KEY, 0) != 1)
+        if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
+            //暖通公司角色
             getMenuInflater().inflate(R.menu.menu_collect, menu);
+            menu.findItem(R.id.action_contact).setTitle("施工人员");
+        }else {
+            //技术员
+            getMenuInflater().inflate(R.menu.menu_collect, menu);
+            menu.findItem(R.id.action_contact).setTitle("暖通公司");
+        }
+
         return true;
     }
 
@@ -281,9 +290,24 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_contact:
-                if (!TextUtils.isEmpty(phone)){
-                    Utils.startCallActivity(this, phone);
+                if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
+
+                    if (!TextUtils.isEmpty(phone)){
+                        Utils.startCallActivity(this, phone);
+                    }
+
+//                    ApplyPassReq req = new ApplyPassReq();
+//                    req.setTechnician_id(adapter.getAllData().get(i).getTechnician_id());
+//                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+//                    req.setProject_type(1);
+//                    ApplyDetailActivity.startActivity(SkillProjReceiveProgressActivity.this, req);
+
+                }else{
+                    if (!TextUtils.isEmpty(phone)){
+                        Utils.startCallActivity(this, phone);
+                    }
                 }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

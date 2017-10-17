@@ -134,7 +134,10 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         presenter.getMyWork(this.getContext());
 
         projLayout.setOnClickListener(this);
-
+        lgLayout.setOnClickListener(this);
+        jianliLayout.setOnClickListener(this);
+        wbLayout.setOnClickListener(this);
+        hzLayout.setOnClickListener(this);
 
 
         return view;
@@ -264,6 +267,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 LoginActivity.startActivity(ProjectFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             } else {
+                type = ShareUtils.getValue(TYPE_KEY, 0);
                 presenter.getMyWork(this.getContext());
             }
         }
