@@ -1298,7 +1298,7 @@ public class LoginModel extends BaseModel {
     /**
      * 提交意见
      */
-    public Observable<String> submitSuggest(String content){
+    public Observable<Object> submitSuggest(String content){
         String rateKey = "feedBack";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1322,7 +1322,7 @@ public class LoginModel extends BaseModel {
     /**
      * 评价
      */
-    public Observable<String> toEvaluate(EvaluateReq req){
+    public Observable<Object> toEvaluate(EvaluateReq req){
         String rateKey = "toEvaluate";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1337,7 +1337,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());

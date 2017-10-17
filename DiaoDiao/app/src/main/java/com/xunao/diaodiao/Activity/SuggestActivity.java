@@ -93,6 +93,12 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
     }
 
     @Override
+    public void getData(Object s) {
+        ToastUtil.show("发送成功!");
+        finish();
+    }
+
+    @Override
     public void getData(String s) {
         ToastUtil.show("发送成功!");
         finish();

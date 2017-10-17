@@ -208,7 +208,7 @@ public interface RetrofitService {
     Observable<BaseBean<GetOddInfoRes>> getOddInfo(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> submitSuggest(@Body RequestBody body);
+    Observable<BaseBean<Object>> submitSuggest(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<OrderCompRes>> myProjectWait(@Body RequestBody body);

@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="320px"
+    android:layout_height="280px"
     android:padding="30px"
-    android:layout_marginBottom="40px"
+    android:layout_marginBottom="10px"
     android:gravity="center"
     android:background="@color/white">
 
     <ImageView
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="180px"
+        android:layout_height="180px"
         android:src="@drawable/icon_huzhuxinxi"
         android:layout_gravity="center_vertical"
         android:id="@+id/item_image"/>

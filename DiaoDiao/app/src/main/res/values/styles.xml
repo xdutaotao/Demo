@@ -669,7 +669,7 @@
 
 
     <style name="project_layout">
-        <item name="android:layout_height">320px</item>
+        <item name="android:layout_height">280px</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:padding">50px</item>
@@ -679,14 +679,15 @@
     </style>
 
     <style name="project_image">
-        <item name="android:layout_height">200px</item>
-        <item name="android:layout_width">200px</item>
+        <item name="android:layout_height">180px</item>
+        <item name="android:layout_width">180px</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="project_re">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:layout_marginLeft">40px</item>
         <item name="android:layout_weight">1</item>
     </style>
@@ -694,7 +695,7 @@
     <style name="project_circle">
         <item name="android:layout_height">20px</item>
         <item name="android:layout_width">20px</item>
-        <item name="android:layout_marginLeft">30px</item>
+        <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@drawable/circle</item>
     </style>
 

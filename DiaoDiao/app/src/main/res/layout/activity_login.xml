@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_back"
-        android:layout_margin="50px"
+        android:padding="50px"
         android:id="@+id/back"/>
 
     <ScrollView

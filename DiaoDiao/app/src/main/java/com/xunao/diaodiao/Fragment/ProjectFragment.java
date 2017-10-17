@@ -1,32 +1,26 @@
 package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gzfgeh.GRecyclerView;
-import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseSKillTypeActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
 import com.xunao.diaodiao.Bean.HomeProjBean;
-import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
-import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.Present.ProjectPresenter;
 import com.xunao.diaodiao.Present.ProjectRes;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
-import com.xunao.diaodiao.View.MessageView;
 import com.xunao.diaodiao.View.ProjectView;
 
 import java.util.ArrayList;
@@ -49,12 +43,41 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     private static final String ARG_PARAM1 = "param1";
     @Inject
     ProjectPresenter presenter;
+    @BindView(R.id.proj_waiting)
+    TextView projWaiting;
+    @BindView(R.id.proj_doing)
+    TextView projDoing;
+    @BindView(R.id.jianli_waiting)
+    TextView jianliWaiting;
+    @BindView(R.id.jianli_doing)
+    TextView jianliDoing;
+    @BindView(R.id.lg_waiting)
+    TextView lgWaiting;
+    @BindView(R.id.lg_apply)
+    TextView lgApply;
+    @BindView(R.id.lg_doing)
+    TextView lgDoing;
+    @BindView(R.id.wb_waiting)
+    TextView wbWaiting;
+    @BindView(R.id.wb_doing)
+    TextView wbDoing;
+    @BindView(R.id.hz_doing)
+    TextView hzDoing;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    @BindView(R.id.proj_layout)
+    LinearLayout projLayout;
+    @BindView(R.id.jianli_layout)
+    LinearLayout jianliLayout;
+    @BindView(R.id.lg_layout)
+    LinearLayout lgLayout;
+    @BindView(R.id.wb_layout)
+    LinearLayout wbLayout;
+    @BindView(R.id.hz_layout)
+    LinearLayout hzLayout;
+
 
     private String mParam1;
 
@@ -64,7 +87,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     private static final String[] COMPANY_TEXTS = {"我的项目信息", "我的监理信息", "零工信息",
             "维保信息", "互助信息"};
 
-    private static final String[] PROJECT_TYPE = {"待确认 ", "进行中 ", "申请中 "};
+    private static final String[] PROJECT_TYPE = {"待确认 ", "进行中 "};
 
     private RecyclerArrayAdapter<HomeProjBean> adapter;
 
@@ -100,130 +123,52 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.single_recycler_view, container, false);
+        //View view = inflater.inflate(R.layout.single_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_project, container, false);
         ButterKnife.bind(this, view);
         getActivityComponent().inject(this);
         presenter.attachView(this);
-
         hideToolbarBack(toolBar, titleText, "订单");
-
         type = ShareUtils.getValue("TYPE", 0);
-
-        adapter = new RecyclerArrayAdapter<HomeProjBean>(getContext(), R.layout.project_item) {
-            @Override
-            protected void convert(BaseViewHolder baseViewHolder, HomeProjBean s) {
-                switch (type){
-                    case 2:
-                    case 1:{
-                            baseViewHolder.setText(R.id.item_text, s.getProjText());
-                            baseViewHolder.setImageResource(R.id.item_image, s.getProjImage());
-                            if (TextUtils.equals(COMPANY_TEXTS[0], s.getProjText()) && projectBean != null){
-                                if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
-                                    baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + projectBean.getProject_wait());
-
-                                }
-                                if (!TextUtils.isEmpty(projectBean.getProject_doing())){
-                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + projectBean.getProject_doing());
-                                }
-                            }else if(TextUtils.equals(COMPANY_TEXTS[1], s.getProjText()) && supervisorBean != null){
-                                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
-                                    baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + supervisorBean.getSupervisor_wait());
-
-                                }
-                                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())){
-                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + supervisorBean.getSupervisor_wait());
-                                }
-                            }else if(TextUtils.equals(COMPANY_TEXTS[2], s.getProjText()) && oddBean != null){
-                                if (!TextUtils.isEmpty(oddBean.getOdd_doing() )) {
-                                    baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + oddBean.getOdd_doing());
-
-                                }
-                                if (!TextUtils.isEmpty(oddBean.getOdd_wait())){
-                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + oddBean.getOdd_apply());
-                                }
-
-                                if(!TextUtils.isEmpty(oddBean.getOdd_apply())){
-                                    baseViewHolder.setVisible(R.id.apply, true);
-                                    baseViewHolder.setText(R.id.apply, PROJECT_TYPE[2] + oddBean.getOdd_wait());
-                                }
-                            }else if (TextUtils.equals(COMPANY_TEXTS[3], s.getProjText()) && maintenanceBean != null){
-                                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
-                                    baseViewHolder.setText(R.id.waiting, PROJECT_TYPE[0] + maintenanceBean.getMaintenance_doing());
-
-                                }
-                                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait() )){
-                                    baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + maintenanceBean.getMaintenance_wait());
-                                }
-                            }else if(TextUtils.equals(COMPANY_TEXTS[4], s.getProjText()) && !TextUtils.isEmpty(mutual)){
-                                baseViewHolder.setText(R.id.doing, PROJECT_TYPE[1] + mutual);
-                                baseViewHolder.setVisible(R.id.waiting, false);
-                            }
-                        }
-
-                        break;
-                }
-
-
-            }
-        };
-
-        adapter.setOnItemClickListener((view1, i) -> {
-            switch (i) {
-                case 0:
-                    //OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
-                    //公司
-                    if (type == COMPANY_TYPE){
-                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
-                    }else if (type == SKILL_TYPE){
-                        //技术员
-                        OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_PROJECT);
-                    }
-
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    if (type == COMPANY_TYPE){
-
-                    }else if(type == SKILL_TYPE){
-                        ReleaseSKillTypeActivity.startActivity(getContext());
-                    }
-
-                    break;
-            }
-        });
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-
-
-        type = ShareUtils.getValue(TYPE_KEY, 0);
-        if (TextUtils.isEmpty(User.getInstance().getUserId())){
-            //recyclerView.setVisibility(View.GONE);
-
-
-            LoginActivity.startActivity(ProjectFragment.this.getContext());
-            ((MainActivity) getActivity()).goToFragment(1);
-
-        }else if(type ==0){
-            //recyclerView.setVisibility(View.GONE);
-
-
-            SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
-            ((MainActivity) getActivity()).goToFragment(1);
-
-
-        }
 
         presenter.getMyWork(this.getContext());
 
-
+        projLayout.setOnClickListener(this);
 
 
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.proj_layout:
+                if (type == COMPANY_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
+                } else if (type == SKILL_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_PROJECT);
+                }
+                break;
+            case R.id.jianli_layout:
+                break;
+
+            case R.id.lg_layout:
+                if (type == COMPANY_TYPE) {
+
+                } else if (type == SKILL_TYPE) {
+                    ReleaseSKillTypeActivity.startActivity(getContext());
+                }
+                break;
+
+            case R.id.wb_layout:
+
+                break;
+
+            case R.id.hz_layout:
+                break;
+
+        }
     }
 
     @Override
@@ -234,33 +179,49 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         oddBean = s.getOdd();
         mutual = s.getMutual();
 
+        if (projectBean != null) {
+            if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
+                projWaiting.setText("待确认 " + projectBean.getProject_wait());
+            }
+            if (!TextUtils.isEmpty(projectBean.getProject_doing())) {
+                projDoing.setText("进行中 " + projectBean.getProject_doing());
+            }
+        } else if (supervisorBean != null) {
+            if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
+                jianliWaiting.setText("待确认 " + supervisorBean.getSupervisor_wait());
 
-        list.clear();
-        switch (type) {
-            case SKILL_TYPE:
-            case COMPANY_TYPE:
-                for (int i = 0; i < COMPANY_IMAGES.length; i++) {
-                    HomeProjBean bean = new HomeProjBean();
-                    bean.setProjImage(COMPANY_IMAGES[i]);
-                    bean.setProjText(COMPANY_TEXTS[i]);
-                    list.add(bean);
-                }
-                break;
+            }
+            if (!TextUtils.isEmpty(supervisorBean.getSupervisor_doing())) {
+                jianliDoing.setText("进行中 " + supervisorBean.getSupervisor_doing());
+            }
+        } else if (oddBean != null) {
+            if (!TextUtils.isEmpty(oddBean.getOdd_wait())) {
+                lgWaiting.setText("待确认 " + oddBean.getOdd_wait());
 
-            case 3:
-                break;
+            }
+            if (!TextUtils.isEmpty(oddBean.getOdd_doing())) {
+                lgDoing.setText("进行中 " + oddBean.getOdd_doing());
+            }
+
+            if (!TextUtils.isEmpty(oddBean.getOdd_apply())) {
+                lgApply.setText("申请中 " + oddBean.getOdd_apply());
+            }
+
+        } else if (maintenanceBean != null) {
+            if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
+                wbDoing.setText("进行中 " + maintenanceBean.getMaintenance_doing());
+
+            }
+            if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
+                wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());
+            }
+        } else if (!TextUtils.isEmpty(mutual)) {
+            hzDoing.setText(mutual);
         }
 
-        adapter.clear();
-        adapter.addAll(list);
-        
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-        }
-    }
+
 
     @Override
     public void updateData() {
@@ -272,46 +233,41 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     public void onResume() {
         super.onResume();
 
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+            //recyclerView.setVisibility(View.GONE);
+            index++;
+            if (index == 1) {
+                LoginActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
+        } else if (type == 0) {
+            //recyclerView.setVisibility(View.GONE);
 
+            selectIndex++;
+            if (selectIndex == 1) {
+                SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            }
+
+        } else {
+            //recyclerView.setVisibility(View.VISIBLE);
+        }
 
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
-
-            type = ShareUtils.getValue(TYPE_KEY, 0);
-            if (TextUtils.isEmpty(User.getInstance().getUserId())){
-                //recyclerView.setVisibility(View.GONE);
-
-
-                    LoginActivity.startActivity(ProjectFragment.this.getContext());
-                    ((MainActivity) getActivity()).goToFragment(1);
-
-            }else if(type ==0){
-                //recyclerView.setVisibility(View.GONE);
-
-
-                    SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
-                    ((MainActivity) getActivity()).goToFragment(1);
-
-
-            }
-
-            recyclerView.showRecycler();
+        if (!hidden) {
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                LoginActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+            } else {
                 presenter.getMyWork(this.getContext());
-
-
-
-
-
+            }
         }
-
-
     }
-
-
 
 
     @Override
