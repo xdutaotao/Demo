@@ -24,9 +24,9 @@ public class SuggestPresenter extends BasePresenter<SuggestView> {
 
     public void submitSuggest(Context context, String content){
         mCompositeSubscription.add(model.submitSuggest(content)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 
@@ -40,9 +40,9 @@ public class SuggestPresenter extends BasePresenter<SuggestView> {
     //评价
     public void toEvaluate(Context context, EvaluateReq content){
         mCompositeSubscription.add(model.toEvaluate(content)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 

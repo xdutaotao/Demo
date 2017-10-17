@@ -121,7 +121,12 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
 
         recyclerView.setAdapter(adapter);
 
-        typeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        typeRecyclerView.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         typeRecyclerView.setAdapter(typeAdapter);
 
         title.setText(req.getTitle());
