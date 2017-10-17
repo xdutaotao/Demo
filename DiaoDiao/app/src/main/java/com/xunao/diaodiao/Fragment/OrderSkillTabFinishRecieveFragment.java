@@ -28,6 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+
 
 /**
  * Description:
@@ -108,8 +111,14 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 baseViewHolder.setOnClickListener(R.id.time, v -> {
                     //评价 1 项目
                     if(homeBean.getEvaluate_status() != 1){
-                        RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                                homeBean.getProject_id(), 1);
+                        if(who == SKILL_RECIEVE_PROJECT){
+                            RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getProject_id(), 1);
+                        }else if(who == SKILL_RECIEVE_LINGGONG){
+                            RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getProject_id(), 3);
+                        }
+
                     }
 
                 });

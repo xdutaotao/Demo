@@ -72,6 +72,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String HOME_DETAIL = "home_detail";
+    public static final String SKILL_RECIEVE_PROJECT_DOING = "SKILL_RECIEVE_PROJECT_DOING";
     public static final String HOME_SKILL_DETAIL = "home_skill_detail";
     public static final String COMPANY_PROJ = "company_proj";
     /**
@@ -319,6 +320,10 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         }else if (TextUtils.equals(btnType, COMPANY_PROJ)){
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);
+        } else if(TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)){
+            //技术人员 发布项目 进行中
+            apply.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.GONE);
         }
         else{
             bottomBtnLayout.setVisibility(View.GONE);
@@ -347,7 +352,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (TextUtils.equals(btnType, HOME_DETAIL)){
+        if (TextUtils.equals(btnType, HOME_DETAIL) || TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)){
             getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
@@ -363,7 +368,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (TextUtils.equals(btnType, HOME_DETAIL)){
+        if (TextUtils.equals(btnType, HOME_DETAIL) || TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)){
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
             } else {
@@ -380,7 +385,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             case R.id.action_like:
                 //收藏项目
                 if (!TextUtils.isEmpty(User.getInstance().getUserId())){
-                    if (TextUtils.equals(btnType, HOME_DETAIL)){
+                    if (TextUtils.equals(btnType, HOME_DETAIL) || TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)){
                         int types = 0;
                         if (type == 0) {
                             types = 1;

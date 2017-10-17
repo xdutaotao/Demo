@@ -130,7 +130,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.HOME_DETAIL);
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
 
             }
 

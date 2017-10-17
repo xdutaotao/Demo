@@ -97,7 +97,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                             //评价 1 项目 待改
                             if(homeBean.getEvaluate_status() == 2){
                                 RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                                        homeBean.getOdd_id(), 1);
+                                        homeBean.getOdd_id(), 3);
                             }
 
                         });
