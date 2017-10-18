@@ -18,10 +18,14 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xunao.diaodiao.Bean.AuthResult;
 import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.PayResult;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
+import com.xunao.diaodiao.Bean.WeiXinPayRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Present.PayPresenter;
@@ -152,13 +156,23 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         req = (ReleaseProjRes) getIntent().getSerializableExtra(INTENT_KEY);
         projType = getIntent().getIntExtra("projType", 0);
 
-        fee.setText(req.getTotal_fee());
+        fee.setText("￥ "+req.getTotal_fee()+"元");
         balance.setText("当前余额："+req.getBalance()+"元");
         pay.setOnClickListener(this);
         current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
         wechat.setOnCheckedChangeListener(this);
         current.setChecked(true);
+
+        registerWeiXin();
+    }
+
+    private static final String APP_ID = "wxfa5af658b9f2e5d4";
+    private IWXAPI api;
+
+    private void registerWeiXin(){
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        api.registerApp(APP_ID);
     }
 
     @Override
@@ -191,11 +205,28 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
+                }else if(wechat.isChecked()){
+                    weixinPay();
                 }
 
 
                 break;
         }
+    }
+
+    private void weixinPay(){
+        WeiXinPayRes res = new WeiXinPayRes();
+
+        PayReq payReq = new PayReq();
+        payReq.appId = APP_ID;
+        payReq.partnerId = res.getPartnerId();
+        payReq.prepayId = res.getPrepayId();
+        payReq.packageValue = res.getPackageValue();
+        payReq.nonceStr = res.getNonceStr();
+        payReq.timeStamp = res.getTimeStamp();
+        payReq.sign = res.getSign();
+
+        api.sendReq(payReq);
     }
 
     @Override

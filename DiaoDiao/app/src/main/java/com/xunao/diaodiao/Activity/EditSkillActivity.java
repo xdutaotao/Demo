@@ -207,6 +207,9 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             addressDetail.setText(info.getAddress());
             year.setText(info.getExperience());
             personNum.setText(info.getTeam_number() + "");
+            provinceId = info.getProvince();
+            cityId = info.getCity();
+            districtId = info.getDistrict();
 
             skillsName.clear();
             if(info.getProject_type() != null){

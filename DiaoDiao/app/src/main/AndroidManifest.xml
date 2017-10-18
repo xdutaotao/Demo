@@ -248,7 +248,8 @@
         <activity android:name=".Activity.AddPhoneActivity" />
         <activity android:name=".Activity.HomeSearchActivity" />
         <activity android:name=".Activity.WebViewDetailActivity" />
-        <activity android:name=".Activity.WebViewOutActivity"></activity>
+        <activity android:name=".Activity.WebViewOutActivity"/>
+        <activity android:name="com.xunao.diaodiao.wxapi.WXPayEntryActivity"/>
     </application>
 
 </manifest>

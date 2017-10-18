@@ -242,6 +242,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             fee.setText(req.getDaily_wage());
             days.setText(req.getTotal_day());
             time.setText(Utils.millToYearString(req.getBuild_time()));
+            req.setBuild_time_string(time.getText().toString());
             content.setText(req.getDescribe());
             adapter.clear();
             adapter.addAll(req.getImages());
@@ -489,7 +490,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
             case R.id.proj_time_layout:
                 DatePicker datePicker = new DatePicker(this);
-                datePicker.show();
+
                 String[] dates = Utils.getNowDate().split("-");
                 datePicker.setRangeStart(Integer.valueOf(dates[0]),
                         Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
@@ -506,6 +507,25 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
                     }
                 });
+
+                datePicker.setOnWheelListener(new DatePicker.OnWheelListener() {
+                    @Override
+                    public void onYearWheeled(int index, String year) {
+                        datePicker.setTitleText(year + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay());
+                    }
+
+                    @Override
+                    public void onMonthWheeled(int index, String month) {
+                        datePicker.setTitleText(datePicker.getSelectedYear() + "-" + month + "-" + datePicker.getSelectedDay());
+                    }
+
+                    @Override
+                    public void onDayWheeled(int index, String day) {
+                        datePicker.setTitleText(datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + day);
+                    }
+                });
+                datePicker.show();
+
                 break;
 
             case R.id.project_type_layout:

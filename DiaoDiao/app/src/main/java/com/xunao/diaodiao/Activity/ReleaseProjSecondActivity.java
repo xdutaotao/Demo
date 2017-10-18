@@ -534,7 +534,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
             case R.id.time:
                 DatePicker datePicker = new DatePicker(this);
-                datePicker.show();
+
                 String[] dates = Utils.getNowDate().split("-");
                 datePicker.setRangeStart(Integer.valueOf(dates[0]),
                         Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
@@ -550,6 +550,25 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                         req.setBuild_time_string(timeLong.toString());
                     }
                 });
+
+                datePicker.setOnWheelListener(new DatePicker.OnWheelListener() {
+                    @Override
+                    public void onYearWheeled(int index, String year) {
+                        datePicker.setTitleText(year + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay());
+                    }
+
+                    @Override
+                    public void onMonthWheeled(int index, String month) {
+                        datePicker.setTitleText(datePicker.getSelectedYear() + "-" + month + "-" + datePicker.getSelectedDay());
+                    }
+
+                    @Override
+                    public void onDayWheeled(int index, String day) {
+                        datePicker.setTitleText(datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + day);
+                    }
+                });
+                datePicker.show();
+
                 break;
         }
     }
