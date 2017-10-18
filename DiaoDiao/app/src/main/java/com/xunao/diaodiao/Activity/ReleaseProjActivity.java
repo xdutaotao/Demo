@@ -111,17 +111,31 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                         }
 
                         baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+                            //采暖和新风不能同时选择
+                            if((isContain("6") || isContain("7") || isContain("8") || isContain("9"))
+                                    && Integer.valueOf(s.getId()) == 16){
+                                ToastUtil.show("采暖和新风不能同时选择");
+                                return;
+                            }
+
+                            if(isContain("16")
+                                    && (Integer.valueOf(s.getId()) == 6 || Integer.valueOf(s.getId()) == 7
+                                        || Integer.valueOf(s.getId()) == 8 || Integer.valueOf(s.getId()) == 9)){
+                                ToastUtil.show("采暖和新风不能同时选择");
+                                return;
+                            }
+
                             //地暖和电地暖是唯一选择
-                            if (isContain("6") &&
-                                    Integer.valueOf(s.getId()) == 7) {
-                                ToastUtil.show("和地暖重复");
-                                return;
-                            }
-                            if (isContain("7") &&
-                                    Integer.valueOf(s.getId()) == 6) {
-                                ToastUtil.show("和电地暖重复");
-                                return;
-                            }
+//                            if (isContain("6") &&
+//                                    Integer.valueOf(s.getId()) == 7) {
+//                                ToastUtil.show("和地暖重复");
+//                                return;
+//                            }
+//                            if (isContain("7") &&
+//                                    Integer.valueOf(s.getId()) == 6) {
+//                                ToastUtil.show("和电地暖重复");
+//                                return;
+//                            }
                             //暖气片明装和暗装是唯一选择
                             if (isContain("8") &&
                                     Integer.valueOf(s.getId()) == 9) {
@@ -134,16 +148,16 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                                 return;
                             }
                             //水处理只能选择一种
-                            if ((isContain("10")
-                                    || isContain("11")
-                                    || isContain("12")
-                                    || isContain("13"))
-                                    && !isContain(s.getId())
-                                    && (Integer.valueOf(s.getId()) > 9
-                                            && Integer.valueOf(s.getId()) < 14)){
-                                ToastUtil.show("水处理只能选择一个");
-                                return;
-                            }
+//                            if ((isContain("10")
+//                                    || isContain("11")
+//                                    || isContain("12")
+//                                    || isContain("13"))
+//                                    && !isContain(s.getId())
+//                                    && (Integer.valueOf(s.getId()) > 9
+//                                            && Integer.valueOf(s.getId()) < 14)){
+//                                ToastUtil.show("水处理只能选择一个");
+//                                return;
+//                            }
                             //空调系统只能选择一种
                             if (isContain("14")
                                     && Integer.valueOf(s.getId()) == 15){
