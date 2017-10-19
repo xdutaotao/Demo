@@ -250,7 +250,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     @Override
     public void payAli(PayRes s) {
-        
         String orderInfo=s.getOrderInfo();
         Runnable payRunnable = new Runnable() {
             @Override
