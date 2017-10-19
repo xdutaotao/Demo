@@ -135,11 +135,11 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() ==0){
+        if(list.getOdd().size() != 10)
             adapter.stopMore();
-        }else{
-            adapter.addAll(list.getOdd());
-        }
+
+        adapter.addAll(list.getOdd());
+
 
     }
 

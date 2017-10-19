@@ -12,6 +12,15 @@ public class PayFeeReq {
     private String order_no;
     private String pay_fee;
     private int project_type;
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public int getUserid() {
         return userid;

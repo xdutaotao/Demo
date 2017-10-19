@@ -64,6 +64,7 @@ import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.PayFeeReq;
+import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.ProjectTypeRes;
 import com.xunao.diaodiao.Bean.RateDetailReq;
@@ -2159,6 +2160,27 @@ public class LoginModel extends BaseModel {
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().balancePay(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 支付项目 成功回调
+     * @param req
+     * @return
+     */
+    public Observable<PayRes> aliPay(PayFeeReq req){
+        String rateKey = "aliPay";
+
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getOrder_no())
+                .append(req.getProject_type())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().aliPay(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

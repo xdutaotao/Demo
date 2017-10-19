@@ -23,6 +23,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xunao.diaodiao.Bean.AuthResult;
 import com.xunao.diaodiao.Bean.PayFeeReq;
+import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.PayResult;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.WeiXinPayRes;
@@ -188,23 +189,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     presenter.balancePay(this, payFeeReq);
 
                 }else if(zhifubao.isChecked()){
-                    String orderInfo="";
-                    Runnable payRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            PayTask alipay = new PayTask(PayActivity.this);
-                            Map<String, String> result = alipay.payV2(orderInfo, true);
-                            Log.i("msp", result.toString());
+                    payFeeReq.setOrder_no(req.getOrder_no());
+                    payFeeReq.setPrice(req.getTotal_fee());
+                    presenter.aliPay(this, payFeeReq);
 
-                            Message msg = new Message();
-                            msg.what = SDK_PAY_FLAG;
-                            msg.obj = result;
-                            mHandler.sendMessage(msg);
-                        }
-                    };
 
-                    Thread payThread = new Thread(payRunnable);
-                    payThread.start();
                 }else if(wechat.isChecked()){
                     weixinPay();
                 }
@@ -257,6 +246,28 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     finish();
                 })
                 .show();
+    }
+
+    @Override
+    public void payAli(PayRes s) {
+        
+        String orderInfo=s.getOrderInfo();
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(PayActivity.this);
+                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Log.i("msp", result.toString());
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 
     @Override

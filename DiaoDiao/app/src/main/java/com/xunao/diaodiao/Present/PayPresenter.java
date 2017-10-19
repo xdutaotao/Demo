@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.PayFeeReq;
+import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -64,5 +65,28 @@ public class PayPresenter extends BasePresenter<PayView> {
                     }
                 }));
     }
+
+
+
+    /**
+     * 支付成功
+     * @param context
+     * @param address
+     */
+    public void aliPay(Context context, PayFeeReq address){
+        mCompositeSubscription.add(model.aliPay(address)
+                .subscribe(new RxSubUtils<PayRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(PayRes token) {
+                        getView().payAli(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 
 }

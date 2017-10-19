@@ -206,11 +206,11 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
         if (page == 1)
             adapter.clear();
 
-        if (list.getProject().size() == 0){
+        if (list.getProject().size() != 10)
             adapter.stopMore();
-        }else{
-            adapter.addAll(list.getProject());
-        }
+
+        adapter.addAll(list.getProject());
+
 
     }
 

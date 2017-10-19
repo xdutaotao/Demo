@@ -155,17 +155,17 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
             adapter.clear();
 
         if (who == Constants.SKILL_RECIEVE_LINGGONG){
-            if(list.getOdd().size() ==0){
+            if(list.getOdd().size() != 10)
                 adapter.stopMore();
-            }else{
-                adapter.addAll(list.getOdd());
-            }
+
+            adapter.addAll(list.getOdd());
+
         }else if (who == Constants.SKILL_RECIEVE_PROJECT){
-            if(list.getProject().size() ==0){
+            if(list.getProject().size() ==0)
                 adapter.stopMore();
-            }else{
-                adapter.addAll(list.getProject());
-            }
+
+            adapter.addAll(list.getProject());
+
         }
 
 

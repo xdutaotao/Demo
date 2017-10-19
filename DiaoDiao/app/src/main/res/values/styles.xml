@@ -669,7 +669,7 @@
 
 
     <style name="project_layout">
-        <item name="android:layout_height">320px</item>
+        <item name="android:layout_height">340px</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:padding">50px</item>
