@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjectRes;
@@ -21,6 +22,7 @@ import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
+import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.ProjectDetailPresenter;
 import com.xunao.diaodiao.R;
@@ -42,6 +44,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -94,6 +97,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private FindProjectRes.FindProject findProject;
 
     private ShareSDK myShareSDK;
+    private String title;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -197,6 +201,13 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         }
                         return true;
                     }
+                })
+                .setWebChromeClient(webView.new GWebChromeClient(){
+                    @Override
+                    public void onReceivedTitle(WebView view, String title) {
+                        super.onReceivedTitle(view, title);
+                        WebViewActivity.this.title = title;
+                    }
                 });
 
         apply.setOnClickListener(v -> {
@@ -218,7 +229,18 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             } else {
                 if (project_type == 0) {
                     //联系发布人
-                    Utils.startCallActivity(this, Constants.tel);
+
+                    new IOSDialog(this).builder()
+                            .setMsg(Constants.tel)
+                            .setNegativeButton("取消", null)
+                            .setNegativeBtnColor(R.color.accept_btn_default)
+                            .setPositiveBtnColor(R.color.accept_btn_default)
+                            .setPositiveButton("呼叫", v1 -> {
+                                Utils.startCallActivity(this, Constants.tel);
+                            })
+                            .show();
+
+
                 } else if (project_type == 1) {
                     // 1 项目
                     RecommandActivity.startActivity(this, id, project_type);
@@ -361,15 +383,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
             myShareSDK = new ShareSDK();
             myShareSDK.initSDK(this);
-            Wechat.ShareParams sp=new Wechat.ShareParams();
+            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
             sp.setShareType(Platform.SHARE_WEBPAGE);
 
             sp.setUrl(url);
             sp.setTitleUrl(url);
-            sp.setText("text");
-            sp.setTitle("标题");
 
-            Platform wx = myShareSDK.getPlatform (Wechat.NAME);
+            sp.setText(title);
+            sp.setTitle(title);
+
+            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
             wx.share(sp);
 
 //            oks.setPlatform(Wechat.NAME);

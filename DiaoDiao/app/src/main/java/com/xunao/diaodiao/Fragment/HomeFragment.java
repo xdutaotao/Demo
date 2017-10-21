@@ -230,7 +230,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice()+"/天");
             }
         };
 
@@ -247,7 +247,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice()+"/天");
             }
         };
 
@@ -303,16 +303,21 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         swipe.setOnRefreshListener(this);
 
-        editText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
-                if (!TextUtils.isEmpty(editText.getText())){
-                    HomeSearchActivity.startActivity(HomeFragment.this.getContext(), editText.getText().toString());
-                }
+//        editText.setOnEditorActionListener((v, actionId, event) -> {
+//            if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+//                if (!TextUtils.isEmpty(editText.getText())){
+//                    HomeSearchActivity.startActivity(HomeFragment.this.getContext(), editText.getText().toString());
+//                }
+//
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        });
 
-                return true;
-            }else{
-                return false;
-            }
+        editText.setFocusable(false);
+        editText.setOnClickListener(v -> {
+            HomeSearchActivity.startActivity(HomeFragment.this.getContext());
         });
 
         moreOne.setOnClickListener(v -> {

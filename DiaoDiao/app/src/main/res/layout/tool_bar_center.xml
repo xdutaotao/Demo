@@ -20,5 +20,6 @@
         android:id="@+id/title_text"
         android:textSize="@dimen/default_font_size"
         android:maxLines="1"
+        android:maxEms="10"
         android:ellipsize="end"/>
 </android.support.v7.widget.Toolbar>

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import butterknife.ButterKnife;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
@@ -77,6 +79,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     private FindLingGongRes oddBean;
 
     private ShareSDK myShareSDK;
+    private String title;
 
     //暖通公司 项目
     public static void startActivity(Context context, OrderCompRes.Project bean, int status) {
@@ -112,7 +115,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     //Notification
     public static void startActivityFromNotification(Context context, String url) {
         Intent intent = new Intent(context, WebViewDetailActivity.class);
-        intent.putExtra("favorite", url);
+        intent.putExtra("notification", url);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -134,6 +137,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
 
         url = getIntent().getStringExtra("favorite");
+        String notification = getIntent().getStringExtra("notification");
+        if(!TextUtils.isEmpty(notification)){
+            share.setVisibility(View.GONE);
+
+            url = notification;
+        }
         if (!TextUtils.isEmpty(url)) {
             //我的收藏
             apply.setVisibility(View.GONE);
@@ -204,7 +213,15 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                                 }
                                 return true;
                             }
+                        })
+                        .setWebChromeClient(webView.new GWebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                super.onReceivedTitle(view, title);
+                                WebViewDetailActivity.this.title = title;
+                            }
                         });
+
             }
 
         } else {
@@ -221,6 +238,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                                 JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
                             }
                             return true;
+                        }
+                    })
+                    .setWebChromeClient(webView.new GWebChromeClient(){
+                        @Override
+                        public void onReceivedTitle(WebView view, String title) {
+                            super.onReceivedTitle(view, title);
+                            WebViewDetailActivity.this.title = title;
                         }
                     });
         }
@@ -288,18 +312,33 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         });
 
+
         share.setOnClickListener(v -> {
+
             myShareSDK = new ShareSDK();
             myShareSDK.initSDK(this);
-            Wechat.ShareParams sp=new Wechat.ShareParams();
+            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
             sp.setShareType(Platform.SHARE_WEBPAGE);
 
             sp.setUrl(url);
             sp.setTitleUrl(url);
-            sp.setText("text");
-            sp.setTitle("标题");
+            if(project != null){
+                sp.setText(project.getTitle());
+                sp.setTitle(project.getTitle());
+            }else if(odd != null){
+                sp.setText(odd.getTitle());
+                sp.setTitle(odd.getTitle());
+            }else if(carousel != null){
+                sp.setText(carousel.getName());
+                sp.setTitle(carousel.getName());
+            }else{
+                sp.setText(title);
+                sp.setTitle(title);
+            }
 
-            Platform wx = myShareSDK.getPlatform (Wechat.NAME);
+
+
+            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
             wx.share(sp);
         });
 

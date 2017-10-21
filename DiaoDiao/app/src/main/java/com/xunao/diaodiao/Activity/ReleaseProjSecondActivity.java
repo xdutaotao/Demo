@@ -349,6 +349,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         EditText price = (EditText) view.findViewById(R.id.price);
         TextView unit = (TextView) view.findViewById(R.id.unit);
         unit.setText(temp.getUnit());
+
         price.setHint("最小输入" + temp.getCost());
 
         TextView warning = (TextView) view.findViewById(R.id.warning);

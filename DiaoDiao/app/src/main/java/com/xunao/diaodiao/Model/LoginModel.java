@@ -173,10 +173,11 @@ public class LoginModel extends BaseModel {
     public Observable<String> wxPhone(String phone){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("bindingVerify");
-        sb.append(time+"").append(phone)
+        sb.append(time+"").append(phone).append(2)
                 .append("security");
 
         GetCodeBean bean = new GetCodeBean();
+        bean.setPhone_type(2);
         bean.setMobile(phone);
         bean.setVerify(Utils.getMD5(sb.toString()));
 
@@ -857,13 +858,13 @@ public class LoginModel extends BaseModel {
             sb.append(req.getCode());
         }
         sb.append(req.getIdentity_card())
-        .append(req.getMobile()).append(req.getBank_name());
+                .append(req.getMobile()).append(req.getBank_name());
         if(!isCode){
             sb.append(req.getTrade_no());
         }
         sb.append(req.getType())
-        .append(User.getInstance().getUserId())
-        .append("security");
+                .append(User.getInstance().getUserId())
+                .append("security");
 
 
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
@@ -1128,7 +1129,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(id).append(type).append(userid)
-            .append("security");
+                .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
@@ -2253,7 +2254,7 @@ public class LoginModel extends BaseModel {
      * @return
      */
     public Observable<ArrayList<Province>> getAddressData(){
-         return Observable.create(new Observable.OnSubscribe<ArrayList<Province>>() {
+        return Observable.create(new Observable.OnSubscribe<ArrayList<Province>>() {
             @Override
             public void call(Subscriber<? super ArrayList<Province>> subscriber) {
                 ArrayList<Province> data = new ArrayList<>();
@@ -2297,7 +2298,7 @@ public class LoginModel extends BaseModel {
                 subscriber.onCompleted();
             }
         })
-        .compose(RxUtils.applyIOToMainThreadSchedulers());
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     private List<CityBean.CityItemBean> getCities() {
@@ -2412,7 +2413,7 @@ public class LoginModel extends BaseModel {
                 subscriber.onCompleted();
             }
         })
-        .compose(RxUtils.applyIOToMainThreadSchedulers());
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 
     private  String url2StrByBase64(@NonNull String imgURL){

@@ -88,9 +88,9 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
     private RecyclerArrayAdapter<String> projAdapter;
     private CustomPopWindow popWindow;
 
-    public static void startActivity(Context context, String key) {
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, HomeSearchActivity.class);
-        intent.putExtra(INTENT_KEY, key);
+        //intent.putExtra(INTENT_KEY, key);
         context.startActivity(intent);
     }
 
