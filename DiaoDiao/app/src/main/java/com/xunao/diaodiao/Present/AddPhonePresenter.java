@@ -4,9 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.xunao.diaodiao.Bean.WeiXinReq;
-import com.xunao.diaodiao.Bean.WeiXinRes;
-import com.xunao.diaodiao.Model.AddPhoneModel;
-import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;

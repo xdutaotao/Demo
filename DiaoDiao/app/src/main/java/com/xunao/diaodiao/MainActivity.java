@@ -19,11 +19,13 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.umeng.analytics.MobclickAgent;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BaseActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
@@ -33,6 +35,7 @@ import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Utils.Utils;
 
 import java.util.ArrayList;
 
@@ -97,6 +100,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .subscribe(s -> {
                     goToFragment(0);
                 });
+
+        /**
+         * 通知栏点击 传递消息
+         */
+        if (getIntent()!= null && getIntent().getStringExtra(Utils.MAIN_INTENT_KEY) != null){
+            WebViewDetailActivity.startActivity(this, getIntent().getStringExtra(Utils.MAIN_INTENT_KEY));
+        }
     }
 
     private static final int BAIDU_READ_PHONE_STATE =100;
@@ -140,35 +150,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 break;
         }
     }
-
-
-//    private void getPermission(){
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.WRITE_SETTINGS);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.CAMERA);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.SEND_SMS);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
-//
-//        PermissionsUtils.hasPermission(this, android.Manifest.permission.READ_PHONE_STATE);
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (grantResults != null && grantResults.length > 0) {
-//            //ToastUtil.show("权限申请成功");
-//        } else {
-//            PermissionsUtils.permissionNotice(this, requestCode);
-//        }
-//    }
 
 
     private void setDefaultFragment() {
@@ -258,6 +239,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             ToastUtil.show("再按一次退出");
             mExitTime = System.currentTimeMillis();
         } else {
+            MobclickAgent.onKillProcess(this);
             finish();
             System.exit(0);
         }

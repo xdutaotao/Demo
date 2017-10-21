@@ -5,9 +5,14 @@ import android.content.Context;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 import com.xunao.diaodiao.Utils.Dagger.Component.ApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Module.ApplicationModule;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -104,11 +109,35 @@ public class App  extends android.support.multidex.MultiDexApplication{
 
         //CrashReport.initCrashReport(getApplicationContext(), "9ce26c6dd7", false);
 
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(this);
+        //友盟推送
+        //注册推送服务，每次调用register方法都会回调该接口
+        PushAgent.getInstance(this).register(new IUmengRegisterCallback() {
 
-        //设置Notification的模式
-        JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
+
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+            @Override
+            public void dealWithCustomAction(Context context, UMessage uMessage) {
+                Utils.handleNotification(context, uMessage.custom);
+            }
+        };
+        PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
+
+
+//        JMessageClient.setDebugMode(true);
+//        JMessageClient.init(this);
+//
+//        //设置Notification的模式
+//        JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
         initPicker();
     }
 

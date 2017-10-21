@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -51,6 +52,19 @@
                 android:text="再次快捷发布"/>
 
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:id="@+id/share"
+            android:src="@drawable/share"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="180px"
+            android:layout_marginRight="60px"/>
 
     </RelativeLayout>
 

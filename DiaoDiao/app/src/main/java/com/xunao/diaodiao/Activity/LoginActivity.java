@@ -23,7 +23,10 @@ import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.LoginPresenter;
 import com.xunao.diaodiao.R;
@@ -286,14 +289,31 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             ShareUtils.putValue(TYPE_KEY, data.getType());
         }
 
+        //登录成功 增加alias
+        addAlias();
+
         ToastUtil.show("登录成功");
         RxBus.getInstance().post(LOGIN_AGAIN);
         finish();
     }
 
+
+    private void addAlias(){
+        PushAgent.getInstance(this)
+                .addExclusiveAlias(name.getText().toString(),
+                        PushAgent.getInstance(this).getRegistrationId(),
+                        new UTrack.ICallBack() {
+                            @Override
+                            public void onMessage(boolean isSuccess, String message) {
+                                ToastUtil.show(message);
+                            }
+                        });
+    }
+
     @Override
     public void getWXData(UserInfo data) {
         if (data.getHas_binding() == 1){
+            addAlias();
             //已经绑定
             ToastUtil.show("登录成功");
             finish();

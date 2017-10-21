@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponentFactory;
@@ -32,7 +34,12 @@ public class BaseActivity extends SwipeBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewServer.get(this).addWindow(this);
+
+        //友盟推送 添加
+        PushAgent.getInstance(this).onAppStart();
     }
+
+
 
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
@@ -67,6 +74,13 @@ public class BaseActivity extends SwipeBackActivity {
     protected void onResume() {
         super.onResume();
         ViewServer.get(this).setFocusedWindow(this);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**

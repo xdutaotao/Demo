@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.SettingPresenter;
@@ -30,6 +32,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -56,8 +60,9 @@ public class SettingActivity extends BaseActivity implements SettingView {
     private TextView progressText;
     private File file;
 
-    public static void startActivity(Context context) {
+    public static void startActivity(Context context, String phone) {
         Intent intent = new Intent(context, SettingActivity.class);
+        intent.putExtra(INTENT_KEY, phone);
         context.startActivity(intent);
     }
 
@@ -87,11 +92,28 @@ public class SettingActivity extends BaseActivity implements SettingView {
 
 
         login.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(User.getInstance().getUserId())){
+                ToastUtil.show("未登录");
+                return;
+            }
             User.getInstance().clearUser();
             ShareUtils.delete();
+            removeAlias();
             ToastUtil.show("退出成功");
             finish();
         });
+    }
+
+    private void removeAlias(){
+        PushAgent.getInstance(this)
+                .removeAlias(getIntent().getStringExtra(INTENT_KEY),
+                        PushAgent.getInstance(this).getRegistrationId(),
+                        new UTrack.ICallBack() {
+                            @Override
+                            public void onMessage(boolean isSuccess, String message) {
+
+                            }
+                        });
     }
 
     @Override

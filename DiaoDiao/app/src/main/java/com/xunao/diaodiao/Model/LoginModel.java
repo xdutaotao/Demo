@@ -310,9 +310,11 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(actionName);
         sb.append(time+"").append(code).append(phone).append(pwd)
+                .append(2)
                 .append("security");
 
         RegisterBean registerBean = new RegisterBean();
+        registerBean.setPhone_type(2);
         registerBean.setMobile(phone);
         registerBean.setPassword(pwd);
         registerBean.setCode(code);

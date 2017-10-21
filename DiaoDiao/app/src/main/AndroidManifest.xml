@@ -111,17 +111,30 @@
         <meta-data
             android:name="design_height"
             android:value="1920" />
+        //高德
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f7abdf589693fd6baeabb2edeb044b0b">
             //开发者申请的key
         </meta-data>
+        //微信登录
         <meta-data
             android:name="Mob-AppKey"
             android:value="20ad18688fcee" />
         <meta-data
             android:name="Mob-AppSecret"
             android:value="a0536022d8f2db4260ae91feb3d84878" />
+        //友盟统计
+        <!--替换为在友盟后台申请的应用Appkey-->
+        <meta-data android:value="59eabfff310c93042300000c" android:name="UMENG_APPKEY"></meta-data>
+        <!--应用的推广渠道名称，Channel ID自定义-->
+        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
+        //友盟推送
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="7354c8f32e551dfb95620c10f52b3d24" >
+        </meta-data>
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"

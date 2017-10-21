@@ -85,10 +85,10 @@ public class LaunchActivity extends FragmentActivity implements ViewPager.OnPage
 
         PermissionsUtils.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (Utils.isActiveTime()){
-            finish();
-            System.exit(0);
-        }
+//        if (Utils.isActiveTime()){
+//            finish();
+//            System.exit(0);
+//        }
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.SignRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.SignDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -212,7 +213,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
 
     private void signAction(){
         GetMoneyReq req = new GetMoneyReq();
-        req.setLocation(city);
+        req.setLocation(Constants.address);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
         presenter.myAcceptProjectSign(this, req);

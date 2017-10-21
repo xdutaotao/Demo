@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.xunao.diaodiao.Activity.LoginActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.App;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -105,11 +106,7 @@ public class Utils {
      * @param url
      */
     public static void startH5Activity(Context mContext, String url) {
-        Intent intent = null;
-        intent.putExtra("intent_url",url);
-        intent.putExtra("intent_type", true);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+
     }
 
     public static String subZeroAnd6Dot(double f){
@@ -875,6 +872,27 @@ public class Utils {
         }
         String result =  sb.toString();
         return result;
+    }
+
+    /**
+     * 推送通知的处理逻辑
+     */
+    public static void handleNotification(Context context, String msgID){
+        if (Utils.getAppStatus(context) == Utils.APP_START_FORE){
+            /**
+             * 点击通知栏通知，假如app正在运行，则直接跳转到H5Activity显示具体内容，
+             * 在H5Activity中按Back键返回MainActivity
+             */
+            //ActivityMgr.getActivityMgr().keepCurrentClass(MainActivity.class);
+            WebViewDetailActivity.startActivityFromNotification(context, msgID);
+        }else{
+            /**
+             * 点击通知栏通知，假如app已经退出，先从SplashActivity进入，
+             * 显示app启动界面，初始化操作完成后进入MainActivity再跳转到H5Activity显示具体内容，
+             * 在H5Activity中按Back键返回MainActivity。
+             */
+            Utils.startAPP(context, "com.xunao.diaodiao.MainActivity", msgID);
+        }
     }
 
 

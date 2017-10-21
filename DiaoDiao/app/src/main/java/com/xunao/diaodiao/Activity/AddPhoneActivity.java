@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 import com.xunao.diaodiao.Bean.WeiXinReq;
 import com.xunao.diaodiao.Bean.WeiXinRes;
 import com.xunao.diaodiao.Model.User;
@@ -114,6 +116,19 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     public void getRes(UserInfo s) {
         ShareUtils.putValue(TYPE_KEY, s.getType());
         ToastUtil.show("绑定成功");
+        addAlias();
         finish();
+    }
+
+    private void addAlias(){
+        PushAgent.getInstance(this)
+                .addExclusiveAlias(getIntent().getStringExtra(INTENT_KEY),
+                        PushAgent.getInstance(this).getRegistrationId(),
+                        new UTrack.ICallBack() {
+                            @Override
+                            public void onMessage(boolean isSuccess, String message) {
+                                ToastUtil.show(message);
+                            }
+                        });
     }
 }

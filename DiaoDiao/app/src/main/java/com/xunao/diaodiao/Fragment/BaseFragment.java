@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.ActivityComponentFactory;
 import com.xunao.diaodiao.Utils.RxBus;
@@ -38,6 +39,18 @@ public class BaseFragment extends Fragment implements View.OnTouchListener {
             activityComponent = ActivityComponentFactory.create(getActivity());
         }
         return activityComponent;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getClass().getName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getActivity().getLocalClassName());
     }
 
     @Override

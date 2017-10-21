@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
@@ -238,22 +239,21 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.contact_service:
-//                if (TextUtils.isEmpty(User.getInstance().getUserId())){
-//                    LoginActivity.startActivity(getActivity());
-//                }else{
-//                    if (ShareUtils.getValue(TYPE_KEY, 0) == 0)
-//                        SelectMemoryActivity.startActivity(getActivity());
-//                    else{
-//
-//                    }
-//                }
+                new IOSDialog(this.getContext()).builder()
+                        .setMsg(Constants.tel)
+                        .setNegativeButton("取消", null)
+                        .setNegativeBtnColor(R.color.accept_btn_default)
+                        .setPositiveBtnColor(R.color.accept_btn_default)
+                        .setPositiveButton("呼叫", v1 -> {
+                            Utils.startCallActivity(MyFragment.this.getContext(), Constants.tel);
+                        })
+                        .show();
 
-                //EditPersonalActivity.startActivity(getContext());
-                Utils.startCallActivity(MyFragment.this.getContext(), Constants.tel);
+
                 break;
 
             case R.id.setting:
-                SettingActivity.startActivity(getActivity());
+                SettingActivity.startActivity(getActivity(), User.getInstance().getUserInfo().getMobile());
                 break;
 
             case R.id.message:

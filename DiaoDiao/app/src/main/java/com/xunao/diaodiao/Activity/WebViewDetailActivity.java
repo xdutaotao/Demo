@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,12 +19,8 @@ import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
-import com.xunao.diaodiao.Bean.OrderSkillRecieveRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
-import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
-import com.xunao.diaodiao.Fragment.OrderSkillTabFinishRecieveFragment;
-import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.WebViewDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
@@ -35,8 +32,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 
-import static android.provider.MediaStore.Audio.AudioColumns.TITLE_KEY;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
@@ -70,10 +69,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     HomeResponseBean.Carousel carousel;
     int who;
     String url;
+    @BindView(R.id.share)
+    FloatingActionButton share;
     private boolean isCancle = false;
 
     private FindProjDetailRes projectBean;
     private FindLingGongRes oddBean;
+
+    private ShareSDK myShareSDK;
 
     //暖通公司 项目
     public static void startActivity(Context context, OrderCompRes.Project bean, int status) {
@@ -106,6 +109,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         context.startActivity(intent);
     }
 
+    //Notification
+    public static void startActivityFromNotification(Context context, String url) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("favorite", url);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,31 +134,31 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
 
         url = getIntent().getStringExtra("favorite");
-        if(!TextUtils.isEmpty(url)){
+        if (!TextUtils.isEmpty(url)) {
             //我的收藏
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.GONE);
         }
 
-        if (project != null){
+        if (project != null) {
             url = project.getUrl();
-            if(who == COMPANY_RELEASE_PROJECT_WAIT){
+            if (who == COMPANY_RELEASE_PROJECT_WAIT) {
                 bottomBtnLayout.setVisibility(View.VISIBLE);
                 apply.setVisibility(View.GONE);
-                if(project.getStatus() == 4){
+                if (project.getStatus() == 4) {
                     isCancle = true;
                 }
                 presenter.getFindProjDetail(this, project.getProject_id());
-            }else if(who == COMPANY_RELEASE_PROJECT_DOING){
+            } else if (who == COMPANY_RELEASE_PROJECT_DOING) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.GONE);
 
-            }else if(who == COMPANY_RELEASE_PROJECT_DONE){
+            } else if (who == COMPANY_RELEASE_PROJECT_DONE) {
                 bottomBtnLayout.setVisibility(View.GONE);
-                if(project.getEvaluate_status() == 1 || project.getStatus() == 4){
+                if (project.getEvaluate_status() == 1 || project.getStatus() == 4) {
                     //已评价
                     apply.setVisibility(View.GONE);
-                }else{
+                } else {
                     apply.setVisibility(View.VISIBLE);
                     apply.setText("去评价");
                 }
@@ -156,14 +167,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         }
 
 
-        if(odd != null){
+        if (odd != null) {
             url = odd.getUrl();
-            if(who == SKILL_RECIEVE_PROJECT){
+            if (who == SKILL_RECIEVE_PROJECT) {
                 bottomBtnLayout.setVisibility(View.GONE);
-                if(odd.getEvaluate_status() == 1){
+                if (odd.getEvaluate_status() == 1) {
                     //已评价
                     apply.setVisibility(View.GONE);
-                }else{
+                } else {
                     apply.setVisibility(View.VISIBLE);
                     apply.setText("去评价");
                 }
@@ -171,12 +182,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         }
 
 
-        if(carousel != null){
-            if( carousel.getType() == 1){
+        if (carousel != null) {
+            if (carousel.getType() == 1) {
                 //站外
                 url = carousel.getLink();
                 webView.getWebView().loadUrl(url);
-            }else{
+            } else {
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.GONE);
                 webView.loadUrl(url)
@@ -184,10 +195,10 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                             @Override
                             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                                 super.shouldOverrideUrlLoading(view, url);
-                                if (url.contains("action=1")){
+                                if (url.contains("action=1")) {
                                     //项目
                                     JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
-                                }else if (url.contains("action=2")){
+                                } else if (url.contains("action=2")) {
                                     //零工
                                     JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
                                 }
@@ -196,16 +207,16 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                         });
             }
 
-        }else{
+        } else {
             webView.loadUrl(url)
                     .setWebViewClient(webView.new GWebViewClient() {
                         @Override
                         public boolean shouldOverrideUrlLoading(WebView view, String url) {
                             super.shouldOverrideUrlLoading(view, url);
-                            if (url.contains("action=1")){
+                            if (url.contains("action=1")) {
                                 //项目
                                 JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
-                            }else if (url.contains("action=2")){
+                            } else if (url.contains("action=2")) {
                                 //零工
                                 JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
                             }
@@ -215,13 +226,11 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         }
 
 
-
-
         againPost.setOnClickListener(v -> {
             //再次快捷发布
-            if (false){
+            if (false) {
                 ReleaseSkillActivity.startActivity(this);
-            }else if (who == COMPANY_RELEASE_PROJECT_WAIT){
+            } else if (who == COMPANY_RELEASE_PROJECT_WAIT) {
                 ReleaseProjActivity.startActivity(this);
             }
 
@@ -229,8 +238,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         changeInfo.setOnClickListener(v -> {
             //修改项目信息
-            if (who == COMPANY_RELEASE_PROJECT_WAIT){
-                if (projectBean != null){
+            if (who == COMPANY_RELEASE_PROJECT_WAIT) {
+                if (projectBean != null) {
 
                     FindProjDetailRes.DetailBean bean = projectBean.getDetail();
                     ReleaseProjReq req = new ReleaseProjReq();
@@ -255,7 +264,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     req.setProject_type_class(bean.getProject_type_class());
                     req.setProject_type_name(bean.getProject_type_name());
                     req.setProject_id(project.getProject_id());
-                    ReleaseProjSecondActivity.startActivity(this , req, true);
+                    ReleaseProjSecondActivity.startActivity(this, req, true);
                 }
 
             }
@@ -269,21 +278,36 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         apply.setOnClickListener(v -> {
             //评价 1 项目
-            if(who == SKILL_RECIEVE_PROJECT){
+            if (who == SKILL_RECIEVE_PROJECT) {
                 RecommandActivity.startActivity(this,
                         odd.getProject_id(), 1);
-            }else {
+            } else {
                 RecommandActivity.startActivity(this,
                         odd.getProject_id(), 1);
             }
 
         });
 
+        share.setOnClickListener(v -> {
+            myShareSDK = new ShareSDK();
+            myShareSDK.initSDK(this);
+            Wechat.ShareParams sp=new Wechat.ShareParams();
+            sp.setShareType(Platform.SHARE_WEBPAGE);
+
+            sp.setUrl(url);
+            sp.setTitleUrl(url);
+            sp.setText("text");
+            sp.setTitle("标题");
+
+            Platform wx = myShareSDK.getPlatform (Wechat.NAME);
+            wx.share(sp);
+        });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+        if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT) {
             getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
         }
 
@@ -307,7 +331,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         webView.getWebView().destroy();
         webView = null;
     }
-
 
 
     @Override
