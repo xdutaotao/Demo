@@ -109,29 +109,21 @@ public class SettingActivity extends BaseActivity implements SettingView {
             finish();
         });
 
-        setting.setChecked(Utils.isNotificationEnabled(this));
 
-        setting.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                goToSetting();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+        setting.setOnClickListener(view -> {
+            goToSetting();
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(setting.isChecked() != Utils.isNotificationEnabled(this))
+            setting.setChecked(Utils.isNotificationEnabled(this));
+    }
+
     private void goToSetting(){
-        Intent intent = new Intent(Settings.ACTION_SETTINGS);
-        startActivity(intent);
+        Utils.getAppDetailSettingIntent(this);
     }
 
     private void removeAlias() {

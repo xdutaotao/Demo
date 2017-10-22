@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +17,6 @@ import com.xunao.diaodiao.Present.DocDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.DocDetailView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,6 +43,8 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
     TextView back;
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
+    @BindView(R.id.back_icon)
+    ImageView backIcon;
 
     private RecyclerArrayAdapter<DocRes> adapter;
     private int page = 1;
@@ -63,6 +63,9 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
+        backIcon.setOnClickListener(v -> {
+            finish();
+        });
         back.setVisibility(View.GONE);
 
         adapter = new RecyclerArrayAdapter<DocRes>(this, R.layout.doc_detail_item) {
@@ -104,9 +107,9 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
 
     @Override
     public void onFailure() {
-        if(adapter.getAllData().size() > 0){
+        if (adapter.getAllData().size() > 0) {
             adapter.stopMore();
-        }else{
+        } else {
             recyclerView.showEmpty();
         }
     }
