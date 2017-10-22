@@ -193,7 +193,8 @@ public class LoginModel extends BaseModel {
     public Observable<UserInfo> wxPhone(WeiXinReq req){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("bindingWx");
-        sb.append(time+"").append(req.getCode()).append(req.getMobile())
+        sb.append(time+"").append(req.getCode()).append(req.getDeviceToken())
+                .append(req.getMobile())
                 .append(req.getOpenID())
                 .append("security");
 
@@ -260,7 +261,7 @@ public class LoginModel extends BaseModel {
      * 登录
      * @return
      */
-    public Observable<LoginResBean> login(String mobile, String pwd){
+    public Observable<LoginResBean> login(String mobile, String pwd, String deviceToken){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("login");
         sb.append(time+"").append(mobile).append(pwd)
@@ -269,6 +270,7 @@ public class LoginModel extends BaseModel {
         LoginBean loginBean = new LoginBean();
         loginBean.setMobile(mobile);
         loginBean.setPassword(pwd);
+        loginBean.setDevice_token(deviceToken);
         loginBean.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().login(setBody("login", time, loginBean))
@@ -980,6 +982,29 @@ public class LoginModel extends BaseModel {
                 .append("security");
 
         DocReq req = new DocReq();
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getDataBase(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  拿到资料库文件
+     */
+    public Observable<List<DocRes>> database(int id, int page){
+        String rateKey = "database";
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(page).append(10)
+                .append("security");
+
+        DocReq req = new DocReq();
+        req.setId(id);
+        req.setPage(page);
+        req.setPageSize(10);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 

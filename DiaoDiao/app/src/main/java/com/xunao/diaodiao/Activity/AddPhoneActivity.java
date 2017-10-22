@@ -80,6 +80,7 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
             req.setCode(codeInput.getText().toString());
             req.setMobile(phone.getText().toString());
             req.setOpenID(getIntent().getStringExtra(INTENT_KEY));
+            req.setDeviceToken(PushAgent.getInstance(this).getRegistrationId());
             presenter.wxPhone(this, req);
         });
 

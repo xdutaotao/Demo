@@ -9,5 +9,5 @@ public class ApiConstants {
 	public static final String H5_URL = "http://ydts.ews.m.jaeapp.com/html/";
 
 	public static String UPDATEURL = "https://appu.shcem.com/frey/publish/update/Android/AppVersion.xml?"+System.currentTimeMillis();
-    public static final String APPFILENAME = "huajiao.apk";
+    public static final String APPFILENAME = "diaodiao.apk";
 }

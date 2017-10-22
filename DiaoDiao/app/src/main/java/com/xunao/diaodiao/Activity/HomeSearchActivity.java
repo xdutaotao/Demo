@@ -140,7 +140,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         adapter.setOnItemClickListener((view, i) -> {
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
                 WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                        Integer.valueOf(adapter.getAllData().get(i).getId()), WebViewActivity.HOME_DETAIL);
 
             } else {
                 LoginActivity.startActivity(HomeSearchActivity.this);
@@ -277,14 +277,14 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         req = new FindProjReq();
         req.setLat(latData);
         req.setLng(lngData);
-        req.setKeyword(getIntent().getStringExtra(INTENT_KEY));
+        req.setKeyword("");
         req.setPageSize(10);
         req.setPage(page);
         req.setUserid(0);
-        req.setUsertype(0);
+        req.setUsertype(ShareUtils.getValue(TYPE_KEY, 0));
         req.setNearby(0);
         req.setTime_type(0);
-        req.setType(ShareUtils.getValue(TYPE_KEY, 0));
+        req.setType(0);
         req.setProject_type(0);
         onRefresh();
 
@@ -326,7 +326,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        recyclerView.showEmpty();
     }
 
     @Override

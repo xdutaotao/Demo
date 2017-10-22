@@ -19,7 +19,7 @@ public class HomeSearchRes {
     }
 
     public static class ProjectBean{
-        private int id;
+        private String id;
         private String title;
         private long create_time;
         private String desc;
@@ -30,12 +30,30 @@ public class HomeSearchRes {
         private String issue_time;
         private int project_type;
         private String file;
+        private int collected;
+        private int apply;
 
-        public int getId() {
+        public int getCollected() {
+            return collected;
+        }
+
+        public void setCollected(int collected) {
+            this.collected = collected;
+        }
+
+        public int getApply() {
+            return apply;
+        }
+
+        public void setApply(int apply) {
+            this.apply = apply;
+        }
+
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

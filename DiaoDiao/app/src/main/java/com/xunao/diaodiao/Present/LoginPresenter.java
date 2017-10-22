@@ -23,8 +23,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     LoginPresenter() {
     }
 
-    public void login(Context context, String phone, String pwd){
-        mCompositeSubscription.add(model.login(phone, pwd)
+    public void login(Context context, String phone, String pwd, String deviceToken){
+        mCompositeSubscription.add(model.login(phone, pwd, deviceToken)
                 .subscribe(new RxSubUtils<LoginResBean>(mCompositeSubscription,context) {
                     @Override
                     protected void _onNext(LoginResBean token) {

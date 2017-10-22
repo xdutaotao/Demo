@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.DocRes;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 public class DocActivity extends BaseActivity implements DocView {
 
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -36,6 +37,7 @@ public class DocActivity extends BaseActivity implements DocView {
     DocPresenter presenter;
 
     private RecyclerArrayAdapter<DocRes> adapter;
+    private int page = 1;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, DocActivity.class);
@@ -61,7 +63,7 @@ public class DocActivity extends BaseActivity implements DocView {
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            DocDetailActivity.startActivity(DocActivity.this, 0);
+            DocDetailActivity.startActivity(DocActivity.this, adapter.getAllData().get(i).getId());
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,7 +74,7 @@ public class DocActivity extends BaseActivity implements DocView {
 
     @Override
     public void onFailure() {
-
+        adapter.stopMore();
     }
 
     @Override
