@@ -37,6 +37,7 @@ android {
                 storePassword "xunao123456"
                 keyAlias "key_diaodiao"
                 keyPassword "xunao123456"
+                v2SigningEnabled false
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }
@@ -48,6 +49,7 @@ android {
                 storePassword "xunao123456"
                 keyAlias "key_diaodiao"
                 keyPassword "xunao123456"
+                v2SigningEnabled false
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }

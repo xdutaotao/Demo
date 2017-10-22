@@ -385,7 +385,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             myShareSDK.initSDK(this);
             WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
             sp.setShareType(Platform.SHARE_WEBPAGE);
-
+            url += "&hd=1";
             sp.setUrl(url);
             sp.setTitleUrl(url);
 

@@ -3,11 +3,14 @@ package com.xunao.diaodiao.Fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -444,8 +447,27 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                             if (!PermissionsUtils.hasPermission(HomeFragment.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                                 return;
                             }
-                            DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
-                            presenter.apkFileDownload(url, file);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                                try {
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse("market://details?id=com.xunao.diaodiao"));
+                                    startActivity(i);
+                                } catch (Exception e) {
+                                    ToastUtil.show("您的手机上没有安装Android应用市场");
+                                    e.printStackTrace();
+                                }
+
+                            }else{
+                                DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
+                                presenter.apkFileDownload(url, file);
+                            }
+
+
+
+
+
                         })
                         .show();
             }
@@ -458,7 +480,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         DownloadDialogFactory.getDownloadDialogManager().showProgress(progress);
         if (progress == 1.0f) {
             DownloadDialogFactory.getDownloadDialogManager().dismissDialog();
-            Utils.installApk(HomeFragment.this.getContext(), file);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Utils.startActionFile(HomeFragment.this.getContext(), file);
+//                File file = (new File(file.getPath()));
+//                // 由于没有在Activity环境下启动Activity,设置下面的标签
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
+//                Uri apkUri = FileProvider.getUriForFile(HomeFragment.this.getActivity(), "com.example.chenfengyao.installapkdemo", file);
+//                //添加这一句表示对目标应用临时授权该Uri所代表的文件
+//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            }else {
+                Utils.installApk(HomeFragment.this.getContext(), file);
+            }
+
         }
     }
 
