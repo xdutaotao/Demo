@@ -155,6 +155,11 @@ public class SelectMemoryActivity extends BaseActivity implements CompoundButton
     }
 
     @Override
+    public void getData(Object result) {
+
+    }
+
+    @Override
     public void getData(String result) {
         int type = Integer.valueOf(result);
         ShareUtils.putValue(Constants.TYPE_KEY, type);

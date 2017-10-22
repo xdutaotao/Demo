@@ -15,9 +15,6 @@ import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Activity.AboutActivity;
 import com.xunao.diaodiao.Activity.BankActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
-import com.xunao.diaodiao.Activity.EditCompanyActivity;
-import com.xunao.diaodiao.Activity.EditPersonalActivity;
-import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.MessageActivity;
 import com.xunao.diaodiao.Activity.MoneyActivity;
@@ -31,7 +28,7 @@ import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.MyView;
 
@@ -40,6 +37,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
+import static com.xunao.diaodiao.Common.Constants.MESSAGE;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener, MyView {
     private static final String ARG_PARAM1 = "param1";
@@ -81,6 +80,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView thirdStar;
     @BindView(R.id.fourth_star)
     ImageView fourthStar;
+    @BindView(R.id.msg_icon)
+    View msgIcon;
     private String mParam1;
 
     @Inject
@@ -125,6 +126,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         bank.setOnClickListener(this);
         name.setOnClickListener(this);
         login.setOnClickListener(this);
+
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, MESSAGE))
+                .subscribe(s -> {
+                    msgIcon.setVisibility(View.VISIBLE);
+                });
+
         return view;
     }
 
@@ -146,7 +155,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                     .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         }
 
-        if(!TextUtils.isEmpty(User.getInstance().getUserId()))
+        if (!TextUtils.isEmpty(User.getInstance().getUserId()))
             presenter.getInfo();
     }
 
@@ -165,7 +174,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");
 
-        switch (Integer.valueOf(data.getUser_point())){
+        switch (Integer.valueOf(data.getUser_point())) {
             case 0:
                 firstStar.setImageResource(R.drawable.pinfeng2);
                 secondStar.setImageResource(R.drawable.pinfeng2);
@@ -253,10 +262,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.setting:
-                SettingActivity.startActivity(getActivity(), User.getInstance().getUserInfo().getMobile());
+                if(User.getInstance().getUserInfo() != null &&
+                        !TextUtils.isEmpty(User.getInstance().getUserInfo().getMobile())){
+                    SettingActivity.startActivity(getActivity(), User.getInstance().getUserInfo().getMobile());
+                }else{
+                    SettingActivity.startActivity(getActivity(), "");
+                }
+
                 break;
 
             case R.id.message:
+                msgIcon.setVisibility(View.GONE);
                 MessageActivity.startActivity(getActivity());
                 break;
 

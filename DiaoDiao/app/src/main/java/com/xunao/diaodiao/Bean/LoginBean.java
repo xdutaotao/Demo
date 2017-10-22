@@ -10,6 +10,15 @@ public class LoginBean {
     private String password;
     private String verify;
     private String device_token;
+    private int device_type;
+
+    public int getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(int device_type) {
+        this.device_type = device_type;
+    }
 
     public String getDevice_token() {
         return device_token;

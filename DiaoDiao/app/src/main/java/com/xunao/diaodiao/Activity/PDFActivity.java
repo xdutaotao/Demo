@@ -98,7 +98,9 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
 
     @Override
     public void onFailure() {
-
+        ToastUtil.show("文档地址错误");
+        if(dialog != null)
+            dialog.dismiss();
     }
 
     @Override

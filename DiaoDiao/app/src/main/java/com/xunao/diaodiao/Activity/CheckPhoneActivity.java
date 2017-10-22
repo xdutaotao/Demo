@@ -15,14 +15,18 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.RegisterView;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.Subscription;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
@@ -116,9 +120,28 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             return;
         }
 
-        getCode.setBackgroundResource(R.drawable.btn_code_not);
+        //getCode.setBackgroundResource(R.drawable.btn_code_not);
 
-        presenter.checkPhone(this, phoneInput.getText().toString());
+        if (TextUtils.equals(getCode.getText().toString(), "获取验证码")){
+            subscriber = Observable.interval(1, TimeUnit.SECONDS)
+                    .compose(RxUtils.applyIOToMainThreadSchedulers())
+                    .subscribe(aLong -> {
+                        if (subscriber != null){
+                            if (aLong >= 60) {
+                                stopTime();
+                            } else {
+                                getCode.setText((60 - aLong) + " s");
+                            }
+                        }
+
+                    });
+            presenter.checkPhone(this, phoneInput.getText().toString());
+        }else {
+
+            ToastUtil.show("一分钟内不能重复发送");
+        }
+
+
 
 
     }
@@ -158,16 +181,18 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
     @Override
     public void getData(String result) {
-        if (result.length() == 4) { //注册
-            getCode.setBackgroundResource(R.drawable.btn_code);
-            codeInput.setText(result);
-        } else {
-            if (TextUtils.isEmpty(User.getInstance().getUserId()))
-                LoginActivity.startActivity(this);
-            finish();
-        }
+        if (TextUtils.isEmpty(User.getInstance().getUserId()))
+            LoginActivity.startActivity(this);
+        finish();
+    }
+
+    @Override
+    public void getData(Object result) {
+        ToastUtil.show("获取验证码成功");
 
     }
+
+
 
     private void stopTime() {
         if (subscriber != null && !subscriber.isUnsubscribed()) {
@@ -187,6 +212,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        stopTime();
     }
 
 

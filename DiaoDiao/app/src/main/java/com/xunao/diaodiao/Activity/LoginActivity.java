@@ -279,7 +279,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         }
 
         presenter.login(this, name.getText().toString().trim(), pwd.getText().toString().trim(),
-                PushAgent.getInstance(this).getRegistrationId());
+                PushAgent.getInstance(this).getRegistrationId(), 2);
     }
 
     @Override

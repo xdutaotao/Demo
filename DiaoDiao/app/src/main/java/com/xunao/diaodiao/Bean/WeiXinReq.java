@@ -11,6 +11,15 @@ public class WeiXinReq {
     private String openID;
     private String verify;
     private String deviceToken;
+    private int device_type;
+
+    public int getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(int device_type) {
+        this.device_type = device_type;
+    }
 
     public String getDeviceToken() {
         return deviceToken;

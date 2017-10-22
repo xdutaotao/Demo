@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
@@ -54,6 +58,8 @@ public class SettingActivity extends BaseActivity implements SettingView {
     RelativeLayout abc;
     @BindView(R.id.login)
     Button login;
+    @BindView(R.id.setting)
+    Switch setting;
 
     private IOSDialog dialog;
     private ProgressBar progressBar;
@@ -92,7 +98,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
 
 
         login.setOnClickListener(v -> {
-            if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 ToastUtil.show("未登录");
                 return;
             }
@@ -102,9 +108,33 @@ public class SettingActivity extends BaseActivity implements SettingView {
             ToastUtil.show("退出成功");
             finish();
         });
+
+        setting.setChecked(Utils.isNotificationEnabled(this));
+
+        setting.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                goToSetting();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
-    private void removeAlias(){
+    private void goToSetting(){
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        startActivity(intent);
+    }
+
+    private void removeAlias() {
         PushAgent.getInstance(this)
                 .removeAlias(getIntent().getStringExtra(INTENT_KEY),
                         PushAgent.getInstance(this).getRegistrationId(),

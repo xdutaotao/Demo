@@ -31,6 +31,12 @@ public class PDFPresenter extends BasePresenter<PDFView> {
                     protected void _onNext(Float aFloat) {
                         getView().getProgress(aFloat);
                     }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        super._onError(msg);
+                        getView().onFailure();
+                    }
                 }));
     }
 }

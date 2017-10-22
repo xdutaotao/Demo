@@ -100,7 +100,7 @@ public interface RetrofitService {
     Observable<BaseBean<UpdateInfo>> versionControl(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> checkPhone(@Body RequestBody body);
+    Observable<BaseBean<Object>> checkPhone(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<UserInfo>> bindingWx(@Body RequestBody body);

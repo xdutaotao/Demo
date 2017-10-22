@@ -27,9 +27,9 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
 
     public void checkPhone(Context context, String name){
         mCompositeSubscription.add(model.wxPhone(name)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 

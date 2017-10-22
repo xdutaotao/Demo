@@ -22,6 +22,7 @@ public class Constants {
     public static final String POST_COLLECT_TIME = "POST_COLLECT_TIME";
     public static final String COLLECT_LIST = "COLLECT_LIST";
     public static final String IS_COME_OVER = "IS_COME_OVER";
+    public static final String MESSAGE = "message";
 
     public static final String TYPE_KEY = "TYPE";
     public static final int COMPANY_TYPE = 1;

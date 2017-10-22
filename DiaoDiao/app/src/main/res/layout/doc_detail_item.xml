@@ -17,6 +17,7 @@
         android:drawablePadding="20px"
         android:layout_gravity="center"
         android:gravity="center"
+        android:id="@+id/name"
         android:drawableTop="@drawable/icon_weixinzhifu"/>
 
 </LinearLayout>

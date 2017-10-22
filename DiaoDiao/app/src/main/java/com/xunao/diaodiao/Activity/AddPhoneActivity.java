@@ -17,14 +17,19 @@ import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.AddPhonePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.AddPhoneView;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscription;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
@@ -48,6 +53,8 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     TextView getCode;
     @BindView(R.id.addPhoneBtn)
     Button addPhoneBtn;
+
+    private Subscription subscriber;
 
     public static void startActivity(Context context, String openID) {
         Intent intent = new Intent(context, AddPhoneActivity.class);
@@ -77,6 +84,7 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
             }
 
             WeiXinReq req = new WeiXinReq();
+            req.setDevice_type(2);
             req.setCode(codeInput.getText().toString());
             req.setMobile(phone.getText().toString());
             req.setOpenID(getIntent().getStringExtra(INTENT_KEY));
@@ -90,10 +98,34 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
                 return;
             }
 
-            getCode.setBackgroundResource(R.drawable.btn_code_not);
+            if (TextUtils.equals(getCode.getText().toString(), "获取验证码")){
+                subscriber = Observable.interval(1, TimeUnit.SECONDS)
+                        .compose(RxUtils.applyIOToMainThreadSchedulers())
+                        .subscribe(aLong -> {
+                            if (subscriber != null){
+                                if (aLong >= 60) {
+                                    stopTime();
+                                } else {
+                                    getCode.setText((60 - aLong) + " s");
+                                }
+                            }
 
-            presenter.checkPhone(this, phone.getText().toString());
+                        });
+                presenter.checkPhone(this, phone.getText().toString());
+            }else{
+                ToastUtil.show("一分钟内不能重复发送");
+            }
+
+
         });
+    }
+
+    private void stopTime() {
+        if (subscriber != null && !subscriber.isUnsubscribed()) {
+            subscriber.unsubscribe();
+            subscriber = null;
+        }
+        getCode.setText("获取验证码");
     }
 
 
@@ -106,11 +138,12 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        stopTime();
     }
 
     @Override
-    public void getData(String s) {
-        codeInput.setText(s);
+    public void getData(Object s) {
+        ToastUtil.show("获取验证码成功");
     }
 
     @Override

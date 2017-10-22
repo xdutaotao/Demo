@@ -151,7 +151,7 @@ public class LoginModel extends BaseModel {
      * @param phone
      * @return
      */
-    public Observable<String> checkPhone(String phone){
+    public Observable<Object> checkPhone(String phone){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("getVerify");
         sb.append(time+"").append(phone)
@@ -170,14 +170,13 @@ public class LoginModel extends BaseModel {
      * @param phone
      * @return
      */
-    public Observable<String> wxPhone(String phone){
+    public Observable<Object> wxPhone(String phone){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("bindingVerify");
-        sb.append(time+"").append(phone).append(2)
+        sb.append(time+"").append(phone)
                 .append("security");
 
         GetCodeBean bean = new GetCodeBean();
-        bean.setPhone_type(2);
         bean.setMobile(phone);
         bean.setVerify(Utils.getMD5(sb.toString()));
 
@@ -194,6 +193,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("bindingWx");
         sb.append(time+"").append(req.getCode()).append(req.getDeviceToken())
+                .append(req.getDevice_type())
                 .append(req.getMobile())
                 .append(req.getOpenID())
                 .append("security");
@@ -261,7 +261,7 @@ public class LoginModel extends BaseModel {
      * 登录
      * @return
      */
-    public Observable<LoginResBean> login(String mobile, String pwd, String deviceToken){
+    public Observable<LoginResBean> login(String mobile, String pwd, String deviceToken, int deviceType){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("login");
         sb.append(time+"").append(mobile).append(pwd)
@@ -270,6 +270,7 @@ public class LoginModel extends BaseModel {
         LoginBean loginBean = new LoginBean();
         loginBean.setMobile(mobile);
         loginBean.setPassword(pwd);
+        loginBean.setDevice_type(2);
         loginBean.setDevice_token(deviceToken);
         loginBean.setVerify(Utils.getMD5(sb.toString()));
 

@@ -68,20 +68,47 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
         adapter = new RecyclerArrayAdapter<DocRes>(this, R.layout.doc_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, DocRes homeBean) {
+                baseViewHolder.setText(R.id.name, homeBean.getTitle());
             }
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-
+            PDFActivity.startActivity(this, adapter.getAllData().get(i).getTitle(),
+                    adapter.getAllData().get(i).getFile());
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        onRefresh();
+    }
+
+    @Override
+    public void getData(List<DocRes> list) {
+        if (page == 1)
+            adapter.clear();
+
+        adapter.addAll(list);
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        presenter.database(this, getIntent().getIntExtra(INTENT_KEY, 0), page);
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        presenter.database(this, getIntent().getIntExtra(INTENT_KEY, 0), page);
     }
 
 
     @Override
     public void onFailure() {
-
+        if(adapter.getAllData().size() > 0){
+            adapter.stopMore();
+        }else{
+            recyclerView.showEmpty();
+        }
     }
 
     @Override
@@ -90,18 +117,5 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
         presenter.detachView();
     }
 
-    @Override
-    public void getData(List<DocRes> list) {
 
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
 }

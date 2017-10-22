@@ -5,4 +5,5 @@ package com.xunao.diaodiao.View;
  */
 public interface RegisterView extends BaseView {
     void getData(String result);
+    void getData(Object result);
 }

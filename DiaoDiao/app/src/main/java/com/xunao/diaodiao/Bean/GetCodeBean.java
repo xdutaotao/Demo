@@ -8,15 +8,6 @@ package com.xunao.diaodiao.Bean;
 public class GetCodeBean {
     private String mobile;
     private String verify;
-    private int phone_type;
-
-    public int getPhone_type() {
-        return phone_type;
-    }
-
-    public void setPhone_type(int phone_type) {
-        this.phone_type = phone_type;
-    }
 
     public String getMobile() {
         return mobile;

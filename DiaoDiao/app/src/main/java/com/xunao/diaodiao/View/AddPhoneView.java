@@ -8,6 +8,6 @@ import com.xunao.diaodiao.View.BaseView;
  * Created by
  */
 public interface AddPhoneView extends BaseView {
-    void getData(String s);
+    void getData(Object s);
     void getRes(UserInfo s);
 }
