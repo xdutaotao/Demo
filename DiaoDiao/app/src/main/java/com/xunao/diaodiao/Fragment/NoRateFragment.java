@@ -84,6 +84,8 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
                         baseViewHolder.setText(R.id.price, "￥"+s.getDaily_wage());
                     }
 
+                    baseViewHolder.setVisible(R.id.project_detail, false);
+
                 }
             };
 
