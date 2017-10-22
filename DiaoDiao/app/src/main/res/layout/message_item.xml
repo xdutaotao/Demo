@@ -20,19 +20,34 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20px"/>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80px"
-            android:layout_marginBottom="80px">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="系统消息"
-                android:id="@+id/title"
-                android:textColor="@color/black"
-                android:textSize="50px"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="系统消息"
+                    android:layout_weight="1"
+                    android:id="@+id/title"
+                    android:textColor="@color/black"
+                    android:textSize="50px"/>
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5月18日 16：30"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,15 +55,12 @@
                 android:text="有项目需要你确认, 点击查看"
                 android:maxEms="16"
                 android:ellipsize="end"
-                android:id="@+id/look"
-                android:layout_alignParentBottom="true"/>
-        </RelativeLayout>
+                android:layout_marginTop="20px"
+                android:id="@+id/look"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80px"
-            android:text="5月18日 16：30"/>
+
+
 
 
     </LinearLayout>

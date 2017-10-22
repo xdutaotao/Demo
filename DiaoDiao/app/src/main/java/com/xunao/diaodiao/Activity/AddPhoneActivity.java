@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.AddPhonePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -150,6 +151,9 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     public void getRes(UserInfo s) {
         ShareUtils.putValue(TYPE_KEY, s.getType());
         ToastUtil.show("绑定成功");
+
+        RxBus.getInstance().post("WeiXin");
+
         addAlias();
         finish();
     }

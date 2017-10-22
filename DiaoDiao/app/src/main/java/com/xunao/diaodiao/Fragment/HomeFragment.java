@@ -203,16 +203,17 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 1);
                     break;
                 case 2:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 2);
-                    break;
+                    //FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 2);
+                    //break;
                 case 3:
-                    HelpActivity.startActivity(HomeFragment.this.getActivity());
-                    break;
+                    //HelpActivity.startActivity(HomeFragment.this.getActivity());
+                    //break;
                 case 4:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 4);
-                    break;
+                    //FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 4);
+                    //break;
                 case 5:
-                    JoinActivity.startActivity(HomeFragment.this.getActivity());
+                    //JoinActivity.startActivity(HomeFragment.this.getActivity());
+                    ToastUtil.show("敬请期待");
                     break;
             }
         });
@@ -436,8 +437,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             url = s.getDownload_url();
             if (url != null) {   //有更新的包
                 new IOSDialog(HomeFragment.this.getContext()).builder()
-                        .setTitle(String.format(getString(R.string.get_new_version), s.getVersion()), null)
-                        .setMsg("更新版本")
+                        .setTitle("更新版本", null)
+                        .setMsg(String.format(getString(R.string.get_new_version), s.getVersion()))
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", v -> {
                             if (!PermissionsUtils.hasPermission(HomeFragment.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {

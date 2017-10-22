@@ -959,12 +959,12 @@ public class FileUtils {
 
 			is = conn.getInputStream();
 //             如果相等的话表示当前的sdcard挂载在手机上并且是可用的
-			if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-				return;
-			}
-			if (!file.exists()){
-				file.createNewFile();
-			}
+//			if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//				return;
+//			}
+//			if (!file.exists()){
+//				file.createNewFile();
+//			}
 
 			fos=new FileOutputStream(file);
 			bis = new BufferedInputStream(is);
@@ -976,7 +976,7 @@ public class FileUtils {
 				total += len;
 				temp += len;
 				progress = ((float)total)/length;
-				if (temp > length/100){
+				if (temp > length/20){
 					temp = 0;
 					LogUtils.i("progress:--" + progress);
 					subscriber.onNext(progress);

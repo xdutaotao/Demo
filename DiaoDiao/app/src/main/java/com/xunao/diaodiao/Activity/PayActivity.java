@@ -196,7 +196,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
 
                 }else if(wechat.isChecked()){
-                    weixinPay();
+                    //weixinPay();
+                    ToastUtil.show("敬请期待");
                 }
 
 

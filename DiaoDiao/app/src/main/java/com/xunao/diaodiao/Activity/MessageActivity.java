@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
@@ -78,7 +79,8 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         adapter.setOnItemClickListener((view, i) -> {
             if(adapter.getAllData().get(i).getInfo_type() == 1){
                 //Web
-                WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i));
+                if(!TextUtils.isEmpty(adapter.getAllData().get(i).getUrl()))
+                    WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i));
             }else{
                 MessageDetail.startActivity(this, adapter.getAllData().get(i).getContent());
             }

@@ -88,7 +88,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     //暖通公司 项目
     public static void startActivity(Context context, OrderCompRes.Project bean, int status) {
         Intent intent = new Intent(context, WebViewDetailActivity.class);
-        intent.putExtra(INTENT_KEY, bean);
+        intent.putExtra("project", bean);
         intent.putExtra("who", status);
         context.startActivity(intent);
     }
@@ -141,7 +141,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         showToolbarBack(toolBar, titleText, "详情");
 
-        project = (OrderCompRes.Project) getIntent().getSerializableExtra(INTENT_KEY);
+        project = (OrderCompRes.Project) getIntent().getSerializableExtra("project");
         odd = (OrderSkillFinishRecieveRes.OddBean) getIntent().getSerializableExtra("skill_proj_finish");
         who = getIntent().getIntExtra("who", 0);
 
@@ -206,6 +206,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             url = messageBean.getUrl();
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.GONE);
+            share.setVisibility(View.GONE);
         }
 
 

@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.barteksc.pdfviewer.listener.OnDrawListener;
 import com.xunao.diaodiao.Present.PDFPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -32,7 +34,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 /**
  * create by
  */
-public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeListener, OnErrorListener, OnLoadCompleteListener {
+public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeListener, OnErrorListener, OnLoadCompleteListener, OnDrawListener {
 
     @Inject
     PDFPresenter presenter;
@@ -68,19 +70,16 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
 
         if (getIntent().getStringExtra(INTENT_KEY) != null) {
             String[] temp = getIntent().getStringExtra(INTENT_KEY).split("/");
-            String[] names = temp[temp.length - 1].split(" ");
-            String name;
-            if (names.length == 3){
-                name = names[0] + names[1] + ".pdf";
-            }else if (names.length == 2){
-                name = names[0] + ".pdf";
-            }else{
-                name = "pdf.pdf";
-            }
+            String name = temp[temp.length - 1];
 
             file = new File(Environment.getExternalStorageDirectory(), name);
-            showDownloadDialog();
-            presenter.apkFileDownload(getIntent().getStringExtra(INTENT_KEY), file);
+            if(file.exists()){
+                showPDF();
+            }else{
+                showDownloadDialog();
+                presenter.apkFileDownload(getIntent().getStringExtra(INTENT_KEY), file);
+            }
+
         }
     }
 
@@ -90,7 +89,7 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
         progressText = (TextView) view.findViewById(R.id.progress_text);
         dialog = new IOSDialog(this);
         dialog.builder()
-                .setTitle("下载文件")
+                .setTitle("加载中...")
                 .setContentView(view)
                 .show();
     }
@@ -116,18 +115,51 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
         progressText.setText(String.valueOf(downProgress) + "%");
         if (progress == 1.0f) {
             dialog.dismiss();
-            pdf.fromUri(Uri.fromFile(file))
-                    .pages(pageNumber) // all pages are displayed by default
-                    .enableSwipe(true) // allows to block changing pages using swipe
-                    .enableDoubletap(true)
-                    .onError(this)
-                    .defaultPage(0)
-                    .onLoad(this)
-                    .onPageChange(this)
-                    .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
-                    .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-                    .load();
+            showPDF();
         }
+
+    }
+
+    private void showPDF(){
+//        pdf.fromFile(file)
+//                .load();
+
+//        pdf.fromUri(Uri.fromFile(file))
+//                .defaultPage(pageNumber)
+//                .enableDoubletap(true)
+//                .onDraw(this)
+//                .onPageChange(this)
+//                .enableAnnotationRendering(true)
+//                .onLoad(this)
+//                .enableDoubletap(true)
+//                .load();
+
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+            startActivity(intent);
+            finish();
+        }catch (Exception e){
+            ToastUtil.show("请安装pdf阅读器查看");
+        }
+
+
+
+//        pdf.fromFile(file)
+//                .defaultPage(1)
+//                .onPageChange(this)
+//                .load();
+
+//        pdf.fromUri(Uri.fromFile(file))
+//                .pages(pageNumber) // all pages are displayed by default
+//                .enableSwipe(true) // allows to block changing pages using swipe
+//                .enableDoubletap(true)
+//                .onError(this)
+//                .defaultPage(0)
+//                .onLoad(this)
+//                .onPageChange(this)
+//                .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
+//                .enableAntialiasing(true) // improve rendering a little bit on low-res screens
+//                .load();
     }
 
 
@@ -144,5 +176,10 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
     @Override
     public void loadComplete(int nbPages) {
         ToastUtil.show(nbPages + "");
+    }
+
+    @Override
+    public void onLayerDrawn(Canvas canvas, float pageWidth, float pageHeight, int displayedPage) {
+
     }
 }

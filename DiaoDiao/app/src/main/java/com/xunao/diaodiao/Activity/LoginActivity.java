@@ -115,6 +115,12 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
 //
 //            }
 //        });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, "WeiXin"))
+                .subscribe(s -> {
+                   finish();
+                });
     }
 
 
@@ -320,7 +326,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             finish();
         }else{
             AddPhoneActivity.startActivity(this, openID);
-            finish();
+
         }
     }
 

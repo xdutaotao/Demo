@@ -133,7 +133,8 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
                 break;
 
             case R.id.get_all_money:
-                postMoney(getIntent().getStringExtra(INTENT_KEY));
+                //postMoney(getIntent().getStringExtra(INTENT_KEY));
+                inputMoney.setText(moneyUser.getText());
                 break;
 
             case R.id.get_money:

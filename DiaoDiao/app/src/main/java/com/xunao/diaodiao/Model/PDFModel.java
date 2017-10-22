@@ -4,6 +4,7 @@ import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.RxUtils;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,6 +33,7 @@ public class PDFModel extends BaseModel {
                 FileUtils.downloadApk(subscriber, url, file);
                 subscriber.onCompleted();
             }
-        }).compose(RxUtils.applyIOToMainThreadSchedulers());
+        }).sample(500, TimeUnit.MILLISECONDS)
+        .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 }
