@@ -47,6 +47,8 @@ import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MessageListReq;
+import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.MyAppealDetailRes;
@@ -1037,6 +1039,39 @@ public class LoginModel extends BaseModel {
 
 
         return config.getRetrofitService().getTypeInfo(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  项目类型
+     */
+    public Observable<MessageListRes> messageList(int page){
+        String rateKey = "messageList";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(page).append(10).append(type)
+                .append(userid)
+                .append("security");
+
+        MessageListReq req = new MessageListReq();
+        req.setPage(page);
+        req.setPageSize(10);
+        req.setType(type);
+        req.setUserid(userid);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().messageList(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

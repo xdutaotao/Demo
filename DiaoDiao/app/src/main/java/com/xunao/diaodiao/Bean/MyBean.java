@@ -11,7 +11,15 @@ public class MyBean {
     private String balance;
     private int card_number;
     private String head_img;
+    private int unread_message;
 
+    public int getUnread_message() {
+        return unread_message;
+    }
+
+    public void setUnread_message(int unread_message) {
+        this.unread_message = unread_message;
+    }
 
     public String getName() {
         return name;

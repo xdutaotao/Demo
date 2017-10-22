@@ -188,8 +188,15 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                                 return;
                             }
 
-                            if (Integer.valueOf(s.getId()) == 14 || Integer.valueOf(s.getId()) == 15
-                                    && isContain("6")){
+                            if (Integer.valueOf(s.getId()) == 7
+                                    && (isContain("14")
+                                    || isContain("15"))){
+                                ToastUtil.show("空调和地暖不能同时被选中");
+                                return;
+                            }
+
+                            if ((Integer.valueOf(s.getId()) == 14 || Integer.valueOf(s.getId()) == 15)
+                                    && (isContain("6") || isContain("7")) ){
                                 ToastUtil.show("空调和地暖不能同时被选中");
                                 return;
                             }

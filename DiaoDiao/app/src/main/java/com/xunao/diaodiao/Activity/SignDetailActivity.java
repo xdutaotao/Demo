@@ -144,7 +144,8 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
                 });
 
                 if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                    selectPhoto();
+                    //selectPhoto();
+                    takePhoto();
                 }
             });
             footerAdapter.add(ADD);
@@ -217,6 +218,12 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
         presenter.myAcceptProjectSign(this, req);
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        startActivityForResult(intent, IMAGE_PICKER);
     }
 
     private void selectPhoto() {

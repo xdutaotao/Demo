@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
+import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
@@ -69,6 +70,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     OrderCompRes.Project project;
     OrderSkillFinishRecieveRes.OddBean odd;
     HomeResponseBean.Carousel carousel;
+    MessageListRes.MessageBean messageBean;
+
+
     int who;
     String url;
     @BindView(R.id.share)
@@ -120,6 +124,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         context.startActivity(intent);
     }
 
+    //消息列表
+    public static void startActivity(Context context, MessageListRes.MessageBean carousel) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("message", carousel);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +146,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         who = getIntent().getIntExtra("who", 0);
 
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
+        messageBean = (MessageListRes.MessageBean) getIntent().getSerializableExtra("message");
 
         url = getIntent().getStringExtra("favorite");
         String notification = getIntent().getStringExtra("notification");
@@ -188,6 +200,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     apply.setText("去评价");
                 }
             }
+        }
+
+        if(messageBean != null){
+            url = messageBean.getUrl();
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setVisibility(View.GONE);
         }
 
 

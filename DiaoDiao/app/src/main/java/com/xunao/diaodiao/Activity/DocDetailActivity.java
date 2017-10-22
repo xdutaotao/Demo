@@ -89,7 +89,14 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
         if (page == 1)
             adapter.clear();
 
+
+        if(list.size() != 10){
+            adapter.stopMore();
+        }
+
         adapter.addAll(list);
+
+
     }
 
     @Override

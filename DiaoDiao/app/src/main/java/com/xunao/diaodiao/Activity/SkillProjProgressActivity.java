@@ -184,7 +184,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             });
 
             if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                selectPhoto();
+                //selectPhoto();
+                takePhoto();
             }
         });
         footerAdapter.add(ADD);
@@ -473,6 +474,12 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         req.setRemark(postRemark.getText().toString());
         req.setAudit(audit);
         presenter.myAcceptProjectWorkSub(this, req);
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        startActivityForResult(intent, IMAGE_PICKER);
     }
 
     private void selectPhoto() {

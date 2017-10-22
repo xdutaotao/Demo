@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.HeadIconRes;
+import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.MessageModel;
@@ -23,11 +24,11 @@ public class MessagePresenter extends BasePresenter<MessageView> {
     MessagePresenter() {
     }
 
-    public void getTypeInfo(Context context){
-        mCompositeSubscription.add(model.getTypeInfo()
-                .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription, context) {
+    public void messageList(Context context, int page){
+        mCompositeSubscription.add(model.messageList(page)
+                .subscribe(new RxSubUtils<MessageListRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(TypeInfoRes token) {
+                    protected void _onNext(MessageListRes token) {
                         getView().getData(token);
                     }
 

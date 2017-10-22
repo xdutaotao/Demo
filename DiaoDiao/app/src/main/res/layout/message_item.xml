@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="系统消息"
+                android:id="@+id/title"
                 android:textColor="@color/black"
                 android:textSize="50px"/>
 
@@ -37,6 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="有项目需要你确认, 点击查看"
+                android:maxEms="16"
+                android:ellipsize="end"
                 android:id="@+id/look"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>

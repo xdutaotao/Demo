@@ -173,6 +173,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");
+        msgIcon.setVisibility(data.getUnread_message() == 1? View.VISIBLE: View.GONE);
 
         switch (Integer.valueOf(data.getUser_point())) {
             case 0:

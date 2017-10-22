@@ -22,6 +22,7 @@ import com.xunao.diaodiao.Bean.HeadIconRes;
 import com.xunao.diaodiao.Bean.HomeSearchRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.MyAppealDetailRes;
 import com.xunao.diaodiao.Bean.MyBean;
@@ -179,6 +180,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<TypeInfoRes>> getTypeInfo(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<MessageListRes>> messageList(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ProjectRes>> getMyWork(@Body RequestBody body);

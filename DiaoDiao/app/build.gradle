@@ -33,10 +33,10 @@ android {
     signingConfigs {
         release {
             try {
-                storeFile file("./keystore/gzfgeh.jks")
-                storePassword "gzfgeh"
-                keyAlias "gzfgeh"
-                keyPassword "gzfgeh"
+                storeFile file("./keystore/xunao.jks")
+                storePassword "xunao123456"
+                keyAlias "key_diaodiao"
+                keyPassword "xunao123456"
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }
@@ -44,10 +44,10 @@ android {
 
         debug {
             try {
-                storeFile file("./keystore/gzfgeh.jks")
-                storePassword "gzfgeh"
-                keyAlias "gzfgeh"
-                keyPassword "gzfgeh"
+                storeFile file("./keystore/xunao.jks")
+                storePassword "xunao123456"
+                keyAlias "key_diaodiao"
+                keyPassword "xunao123456"
             } catch (ex) {
                 throw new InvalidUserDataException(ex.toString())
             }
@@ -113,6 +113,8 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.2.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.7.2.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.2.jar')
+    compile files('libs/alipaySdk-20170922.jar')
+    compile project(':PushSDK')
     compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.0.0'
@@ -153,12 +155,10 @@ dependencies {
     compile 'com.amap.api:search:latest.integration'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile files('libs/alipaySdk-20170922.jar')
-    compile 'com.umeng.analytics:analytics:latest.integration'
-    compile project(':PushSDK')
 }
 
 //compile 'com.tencent.bugly:crashreport:latest.release'

@@ -88,22 +88,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         //支付宝 支付
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
 
         <meta-data
             android:name="design_width"
@@ -125,16 +122,18 @@
             android:name="Mob-AppSecret"
             android:value="a0536022d8f2db4260ae91feb3d84878" />
         //友盟统计
-        <!--替换为在友盟后台申请的应用Appkey-->
-        <meta-data android:value="59eabfff310c93042300000c" android:name="UMENG_APPKEY"></meta-data>
-        <!--应用的推广渠道名称，Channel ID自定义-->
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
-
+        <!-- 替换为在友盟后台申请的应用Appkey -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59eabfff310c93042300000c" />
+        <!-- 应用的推广渠道名称，Channel ID自定义 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
         //友盟推送
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="7354c8f32e551dfb95620c10f52b3d24" >
-        </meta-data>
+            android:value="7354c8f32e551dfb95620c10f52b3d24"></meta-data>
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
@@ -261,8 +260,9 @@
         <activity android:name=".Activity.AddPhoneActivity" />
         <activity android:name=".Activity.HomeSearchActivity" />
         <activity android:name=".Activity.WebViewDetailActivity" />
-        <activity android:name=".Activity.WebViewOutActivity"/>
-        <activity android:name="com.xunao.diaodiao.wxapi.WXPayEntryActivity"/>
+        <activity android:name=".Activity.WebViewOutActivity" />
+        <activity android:name=".wxapi.WXPayEntryActivity" />
+        <activity android:name=".Activity.MessageDetail"></activity>
     </application>
 
 </manifest>
