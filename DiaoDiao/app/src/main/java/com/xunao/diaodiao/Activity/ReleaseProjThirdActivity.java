@@ -145,7 +145,10 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
             item.setTotal_price(String.valueOf(bigDecimal.floatValue()));
         }
 
-        typeAdapter.addAll(list);
+        if(list != null && list.size()!=0){
+            typeAdapter.addAll(list);
+        }
+
 
         projectFee.setText("￥"+req.getProject_fee());
         serviceFee.setText("￥"+req.getService_cost());

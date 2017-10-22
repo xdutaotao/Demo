@@ -521,6 +521,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     req.setDistrict(districtId);
                     req.setBuild_time(Utils.convert2long(time.getText().toString()));
                     req.setBuild_time_string(time.getText().toString());
+                    if(pathList.size() == 0){
+                        ToastUtil.show("请添加图片");
+                        return;
+                    }
                     req.setImages(pathList);
                     req.setDescribe(content.getText().toString());
                     req.setExpenses(releaseProjReqs);
