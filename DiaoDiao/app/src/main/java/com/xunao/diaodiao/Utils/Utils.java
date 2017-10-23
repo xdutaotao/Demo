@@ -403,7 +403,7 @@ public class Utils {
         }
         Uri uri;
         if (Build.VERSION.SDK_INT >= 24) {
-            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.xunao.diaodiao.provider", file);
+            uri = FileProvider.getUriForFile(context, "com.xunao.diaodiao.provider", file);
         } else {
             uri = Uri.fromFile(file);
         }

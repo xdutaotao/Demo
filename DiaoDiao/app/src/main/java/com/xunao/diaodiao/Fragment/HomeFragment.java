@@ -393,39 +393,54 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void getData(HomeResponseBean bean) {
         homeResponseBean = bean;
         swipe.setRefreshing(false);
-        List<BannerInfo> bannerInfos = new ArrayList<>();
-        for (int i = 0; i < bean.getCarousel().size(); i++) {
-            BannerInfo info = new BannerInfo();
-            info.setImg(bean.getCarousel().get(i).getImage());
-            info.setLink(bean.getCarousel().get(i).getLink());
-            info.setOt(i);
-            bannerInfos.add(info);
+        if(bean.getCarousel() != null){
+            List<BannerInfo> bannerInfos = new ArrayList<>();
+            for (int i = 0; i < bean.getCarousel().size(); i++) {
+                BannerInfo info = new BannerInfo();
+                info.setImg(bean.getCarousel().get(i).getImage());
+                info.setLink(bean.getCarousel().get(i).getLink());
+                info.setOt(i);
+                bannerInfos.add(info);
+            }
+
+            imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
+
+
+                if(bean.getCarousel().get(i).getType() == 1){
+                    WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
+                            bean.getCarousel().get(i).getLink());
+                }else{
+                    WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
+                            bean.getCarousel().get(i));
+                }
+            });
         }
 
-        imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
+        if(bean.getProject() != null){
+            adapter.clear();
+            adapter.addAll(bean.getProject());
+        }
 
+        if(bean.getOdd() != null){
+            adapterSkill.clear();
+            adapterSkill.addAll(bean.getOdd());
+        }
 
-            if(bean.getCarousel().get(i).getType() == 1){
-                WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
-                        bean.getCarousel().get(i).getLink());
-            }else{
-                WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
-                        bean.getCarousel().get(i));
-            }
-        });
+        if(bean.getMaintenance() != null){
+            adapterList.clear();
+            adapterList.addAll(bean.getMaintenance());
+        }
 
-        adapter.clear();
-        adapter.addAll(bean.getProject());
+        if(bean.getAdvertisement() != null){
+            Glide.with(this).load(bean.getAdvertisement().get(0).getImage())
+                    .placeholder(R.drawable.banner02)
+                    .into(banner);
+        }else{
+            Glide.with(this).load("")
+                    .placeholder(R.drawable.banner02)
+                    .into(banner);
+        }
 
-        adapterSkill.clear();
-        adapterSkill.addAll(bean.getOdd());
-
-        adapterList.clear();
-        adapterList.addAll(bean.getMaintenance());
-
-        Glide.with(this).load(bean.getAdvertisement().get(0).getImage())
-                .placeholder(R.drawable.banner02)
-                .into(banner);
 
     }
 
@@ -436,7 +451,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         if (TextUtils.equals(s.getVersion(), Utils.getVersionCode())){
             return;
         }else{
-            file = new File(Environment.getExternalStorageDirectory(), ApiConstants.APPFILENAME);
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ApiConstants.APPFILENAME);
             url = s.getDownload_url();
             if (url != null) {   //有更新的包
                 new IOSDialog(HomeFragment.this.getContext()).builder()

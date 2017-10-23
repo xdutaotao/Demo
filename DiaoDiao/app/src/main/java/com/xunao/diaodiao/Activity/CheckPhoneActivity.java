@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +19,6 @@ import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.RegisterPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxUtils;
-import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.RegisterView;
 
@@ -30,7 +32,6 @@ import rx.Observable;
 import rx.Subscription;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class CheckPhoneActivity extends BaseActivity implements RegisterView, View.OnClickListener {
 
@@ -56,6 +57,10 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     LinearLayout goLogin;
     @BindView(R.id.login)
     TextView login;
+    @BindView(R.id.agree)
+    CheckBox agree;
+    @BindView(R.id.agree_content)
+    TextView agreeContent;
 
     private Subscription subscriber;
 
@@ -82,11 +87,18 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
         goLogin.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
 
+        agree.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
+
         phoneInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         getCode.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
         login.setOnClickListener(this);
+
+        agreeContent.setOnClickListener(v -> {
+            PDFActivity.startActivity(this, "协议", "协议");
+        });
+
 
     }
 
@@ -122,11 +134,11 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
         //getCode.setBackgroundResource(R.drawable.btn_code_not);
 
-        if (TextUtils.equals(getCode.getText().toString(), "获取验证码")){
+        if (TextUtils.equals(getCode.getText().toString(), "获取验证码")) {
             subscriber = Observable.interval(1, TimeUnit.SECONDS)
                     .compose(RxUtils.applyIOToMainThreadSchedulers())
                     .subscribe(aLong -> {
-                        if (subscriber != null){
+                        if (subscriber != null) {
                             if (aLong >= 60) {
                                 stopTime();
                             } else {
@@ -136,12 +148,10 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
 
                     });
             presenter.checkPhone(this, phoneInput.getText().toString());
-        }else {
+        } else {
 
             ToastUtil.show("一分钟内不能重复发送");
         }
-
-
 
 
     }
@@ -167,11 +177,16 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             return;
         }
 
-        if (type == 1){
+        if (!agree.isChecked()) {
+            ToastUtil.show("请同意协议");
+            return;
+        }
+
+        if (type == 1) {
             //忘记密码
             presenter.forgetPwd(this, phoneInput.getText().toString(),
                     pwdInput.getText().toString(), codeInput.getText().toString(), type);
-        }else{
+        } else {
             //注册
             presenter.register(this, phoneInput.getText().toString(),
                     pwdInput.getText().toString(), codeInput.getText().toString(), type);
@@ -191,7 +206,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         ToastUtil.show("获取验证码成功");
 
     }
-
 
 
     private void stopTime() {

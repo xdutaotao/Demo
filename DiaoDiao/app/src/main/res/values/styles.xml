@@ -694,8 +694,8 @@
     </style>
 
     <style name="project_circle">
-        <item name="android:layout_height">20px</item>
-        <item name="android:layout_width">20px</item>
+        <item name="android:layout_height">30px</item>
+        <item name="android:layout_width">30px</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@drawable/circle</item>
         <item name="android:visibility">gone</item>

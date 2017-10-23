@@ -369,7 +369,6 @@
                 android:src="@drawable/icon_shanchu"
                 android:id="@+id/one_delete"
                 android:visibility="gone"
-                android:layout_marginTop="20px"
                 android:layout_alignParentRight="true"/>
 
             <ImageView

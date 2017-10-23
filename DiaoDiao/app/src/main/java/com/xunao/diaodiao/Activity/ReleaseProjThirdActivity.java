@@ -200,7 +200,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         switch (v.getId()) {
             case R.id.pay:
                 if (!getIntent().getBooleanExtra("flag", false)){
-                    if(req.getImages().get(0).length() < 100){
+                    if(req.getImages() != null && (req.getImages().size()>0) &&  (req.getImages().get(0).length() < 100)){
                         List<String> list = new ArrayList<>();
                         for(String s : req.getImages()){
                             list.add(Utils.Bitmap2StrByBase64(s));

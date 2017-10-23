@@ -29,6 +29,7 @@ import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.MyView;
 
@@ -82,6 +83,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
     ImageView fourthStar;
     @BindView(R.id.msg_icon)
     View msgIcon;
+    @BindView(R.id.five_star)
+    ImageView fiveStar;
+    @BindView(R.id.star_layout)
+    LinearLayout starLayout;
     private String mParam1;
 
     @Inject
@@ -146,11 +151,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             login.setVisibility(View.GONE);
             String mobile = User.getInstance().getUserInfo().getMobile();
             name.setText(mobile);
+            starLayout.setVisibility(View.VISIBLE);
         } else {
             name.setVisibility(View.GONE);
             login.setVisibility(View.VISIBLE);
             moneyText.setText("- / -");
             bankText.setText("- / -");
+            starLayout.setVisibility(View.GONE);
             Glide.with(this).load(R.drawable.weidenglu)
                     .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         }
@@ -173,7 +180,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 .bitmapTransform(new CropCircleTransformation(getContext())).into(headIcon);
         moneyText.setText(data.getBalance());
         bankText.setText(data.getCard_number() + "张");
-        msgIcon.setVisibility(data.getUnread_message() == 1? View.VISIBLE: View.GONE);
+        msgIcon.setVisibility(data.getUnread_message() == 1 ? View.VISIBLE : View.GONE);
+
+        if(data.getUnread_message() == 1){
+            ShareUtils.putValue("message", 1);
+        }else{
+            ShareUtils.putValue("message", 0);
+        }
 
         switch (Integer.valueOf(data.getUser_point())) {
             case 0:
@@ -181,30 +194,42 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 secondStar.setImageResource(R.drawable.pinfeng2);
                 thirdStar.setImageResource(R.drawable.pinfeng2);
                 fourthStar.setImageResource(R.drawable.pinfeng2);
+                fiveStar.setImageResource(R.drawable.pinfeng2);
                 break;
             case 1:
                 firstStar.setImageResource(R.drawable.pinfeng);
                 secondStar.setImageResource(R.drawable.pinfeng2);
                 thirdStar.setImageResource(R.drawable.pinfeng2);
                 fourthStar.setImageResource(R.drawable.pinfeng2);
+                fiveStar.setImageResource(R.drawable.pinfeng2);
                 break;
             case 2:
                 firstStar.setImageResource(R.drawable.pinfeng);
                 secondStar.setImageResource(R.drawable.pinfeng);
                 thirdStar.setImageResource(R.drawable.pinfeng2);
                 fourthStar.setImageResource(R.drawable.pinfeng2);
+                fiveStar.setImageResource(R.drawable.pinfeng2);
                 break;
             case 3:
                 firstStar.setImageResource(R.drawable.pinfeng);
                 secondStar.setImageResource(R.drawable.pinfeng);
                 thirdStar.setImageResource(R.drawable.pinfeng);
                 fourthStar.setImageResource(R.drawable.pinfeng2);
+                fiveStar.setImageResource(R.drawable.pinfeng2);
                 break;
             case 4:
                 firstStar.setImageResource(R.drawable.pinfeng);
                 secondStar.setImageResource(R.drawable.pinfeng);
                 thirdStar.setImageResource(R.drawable.pinfeng);
                 fourthStar.setImageResource(R.drawable.pinfeng);
+                fiveStar.setImageResource(R.drawable.pinfeng2);
+                break;
+            case 5:
+                firstStar.setImageResource(R.drawable.pinfeng);
+                secondStar.setImageResource(R.drawable.pinfeng);
+                thirdStar.setImageResource(R.drawable.pinfeng);
+                fourthStar.setImageResource(R.drawable.pinfeng);
+                fiveStar.setImageResource(R.drawable.pinfeng);
                 break;
         }
     }
@@ -263,10 +288,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.setting:
-                if(User.getInstance().getUserInfo() != null &&
-                        !TextUtils.isEmpty(User.getInstance().getUserInfo().getMobile())){
+                if (User.getInstance().getUserInfo() != null &&
+                        !TextUtils.isEmpty(User.getInstance().getUserInfo().getMobile())) {
                     SettingActivity.startActivity(getActivity(), User.getInstance().getUserInfo().getMobile());
-                }else{
+                } else {
                     SettingActivity.startActivity(getActivity(), "");
                 }
 

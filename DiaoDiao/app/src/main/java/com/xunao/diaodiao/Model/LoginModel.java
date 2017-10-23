@@ -2173,7 +2173,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());

@@ -133,10 +133,40 @@
                     style="@style/edit_style" />
             </RelativeLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:layout_marginTop="20px"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:button="@null"
+                    android:id="@+id/agree"
+                    android:layout_marginRight="10px"
+                    android:drawablePadding="10px"
+                    android:drawableLeft="@drawable/checkbox_style"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注册即同意调调用户协议"
+                    android:padding="20px"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/agree_content"/>
+
+
+            </LinearLayout>
+
+
             <Button
                 android:id="@+id/register_btn"
                 android:text="修改"
-                android:layout_marginTop="150px"
+                android:layout_marginTop="50px"
                 style="@style/login_btn_style"/>
 
             <LinearLayout

@@ -97,6 +97,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/colorPrimary"
+            android:id="@+id/star_layout"
             android:gravity="center">
 
             <ImageView
@@ -104,28 +105,35 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/pinfeng"
                 android:id="@+id/first_star"
-                android:layout_margin="20px"/>
+                android:layout_margin="10px"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pinfeng"
                 android:id="@+id/second_star"
-                android:layout_margin="20px"/>
+                android:layout_margin="10px"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pinfeng"
                 android:id="@+id/third_star"
-                android:layout_margin="20px"/>
+                android:layout_margin="10px"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pinfeng"
                 android:id="@+id/fourth_star"
-                android:layout_margin="20px"/>
+                android:layout_margin="10px"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pinfeng"
+                android:id="@+id/five_star"
+                android:layout_margin="10px"/>
         </LinearLayout>
 
         <LinearLayout

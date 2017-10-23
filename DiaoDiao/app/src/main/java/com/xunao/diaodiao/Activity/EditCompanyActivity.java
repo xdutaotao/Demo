@@ -167,8 +167,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             name.setText(info.getName());
             contactPhone.setText(info.getContact_mobile());
             contactCode.setText(info.getContact_card());
-            address.setText(info.getAddress());
-            addressDetail.setText(info.getRegion());
+            address.setText(info.getRegion());
+            addressDetail.setText(info.getAddress());
             contactName.setText(info.getContact());
             phone.setText(info.getTel());
             buildTime.setText(Utils.millToYearString(info.getEstablish_time()));
@@ -239,7 +239,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             } else {
                 oneLayout.setVisibility(View.VISIBLE);
                 allLayout.setVisibility(View.GONE);
-                oneUrl = info.getPictures().get(0);
+                if(info.getPictures() != null){
+                    oneUrl = info.getPictures().get(0);
+                }
+
                 if (!TextUtils.isEmpty(oneUrl)) {
                     Glide.with(this).load(oneUrl).into(oneIv);
                     onePic.setVisibility(View.GONE);
@@ -554,7 +557,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         }
 
         req.setAuthentication(remarkList);
-        req.setYears(System.currentTimeMillis());
+        req.setYears(System.currentTimeMillis()/1000);
         presenter.fillInfor(this, req);
     }
 

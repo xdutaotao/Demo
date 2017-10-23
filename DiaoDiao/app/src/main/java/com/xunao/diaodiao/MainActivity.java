@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.umeng.analytics.MobclickAgent;
@@ -33,6 +34,7 @@ import com.xunao.diaodiao.Fragment.ReleaseFragment;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Utils.Utils;
@@ -50,6 +52,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private ArrayList<Fragment> fragments;
     private BottomNavigationBar bottomNavigationBar;
     private String[] strings = {"首页","发布","订单","我的"};
+    private BadgeItem msgBadgeItem;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -71,6 +74,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         //禁止侧滑返回
         setSwipeBackEnable(false);
 
+        msgBadgeItem = new BadgeItem();
+
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar_container);
         bottomNavigationBar.setAutoHideEnabled(true);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
@@ -82,7 +87,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.home_fill, strings[0]).setInactiveIconResource(R.drawable.home))
                 .addItem(new BottomNavigationItem(R.drawable.fabu_fill, strings[1]).setInactiveIconResource(R.drawable.fabu))
                 .addItem(new BottomNavigationItem(R.drawable.dindan_fill, strings[2]).setInactiveIconResource(R.drawable.dindan))
-                .addItem(new BottomNavigationItem(R.drawable.wode_fill, strings[3]).setInactiveIconResource(R.drawable.wode));
+                .addItem(new BottomNavigationItem(R.drawable.wode_fill, strings[3])
+                        .setBadgeItem(msgBadgeItem).setInactiveIconResource(R.drawable.wode));
 
         fragments = getFragments();
         bottomNavigationBar.setFirstSelectedPosition(0).initialise();
@@ -151,6 +157,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int msgCnt = ShareUtils.getValue("message", 0);
+        if (msgCnt == 0){
+            msgBadgeItem.hide();
+        }else{
+            msgBadgeItem.show();
+        }
+    }
 
     private void setDefaultFragment() {
         FragmentManager fm = getSupportFragmentManager();
