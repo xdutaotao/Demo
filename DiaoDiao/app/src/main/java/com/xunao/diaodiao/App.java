@@ -2,6 +2,8 @@ package com.xunao.diaodiao;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
@@ -139,6 +141,14 @@ public class App  extends android.support.multidex.MultiDexApplication{
 //        //设置Notification的模式
 //        JMessageClient.setNotificationMode(JMessageClient.NOTI_MODE_DEFAULT);
         initPicker();
+
+
+        if (Build.VERSION.SDK_INT >23) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+        }
+
     }
 
     private void initPicker() {

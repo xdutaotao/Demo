@@ -463,21 +463,24 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                                 return;
                             }
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
+                            presenter.apkFileDownload(url, file);
 
-                                try {
-                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                    i.setData(Uri.parse("market://details?id=com.xunao.diaodiao"));
-                                    startActivity(i);
-                                } catch (Exception e) {
-                                    ToastUtil.show("您的手机上没有安装Android应用市场");
-                                    e.printStackTrace();
-                                }
-
-                            }else{
-                                DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
-                                presenter.apkFileDownload(url, file);
-                            }
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//
+//                                try {
+//                                    Intent i = new Intent(Intent.ACTION_VIEW);
+//                                    i.setData(Uri.parse("market://details?id=com.xunao.diaodiao"));
+//                                    startActivity(i);
+//                                } catch (Exception e) {
+//                                    ToastUtil.show("您的手机上没有安装Android应用市场");
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }else{
+//                                DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
+//                                presenter.apkFileDownload(url, file);
+//                            }
 
 
 
@@ -496,6 +499,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         if (progress == 1.0f) {
             DownloadDialogFactory.getDownloadDialogManager().dismissDialog();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Utils.startActionFile(HomeFragment.this.getContext(), file);
 //                File file = (new File(file.getPath()));
 //                // 由于没有在Activity环境下启动Activity,设置下面的标签

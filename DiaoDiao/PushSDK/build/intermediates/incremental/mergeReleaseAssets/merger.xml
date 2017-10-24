@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/guzhenfu/Documents/Demo/DiaoDiao/PushSDK/assets"/><source path="/Users/guzhenfu/Documents/Demo/DiaoDiao/PushSDK/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/guzhenfu/Documents/Demo/DiaoDiao/PushSDK/build-types/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="F:\Demo\DiaoDiao\PushSDK\assets"/><source path="F:\Demo\DiaoDiao\PushSDK\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="F:\Demo\DiaoDiao\PushSDK\build-types\release\assets"/></dataSet></merger>
