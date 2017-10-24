@@ -214,8 +214,13 @@
                     <EditText
                         android:id="@+id/out_length"
                         style="@style/collect_edit"
-                        android:hint="mm"
                         android:inputType="numberDecimal" />
+
+                    <ImageView style="@style/collect_edit_img"
+                        android:id="@+id/out_length_im"/>
+
+                    <TextView style="@style/collect_edit_text"/>
+
                 </RelativeLayout>
 
                 <View
@@ -238,8 +243,13 @@
                     <EditText
                         android:id="@+id/out_width"
                         style="@style/collect_edit"
-                        android:hint="mm"
                         android:inputType="numberDecimal" />
+
+                    <ImageView style="@style/collect_edit_img"
+                        android:id="@+id/out_width_im"/>
+
+                    <TextView style="@style/collect_edit_text"/>
+
                 </RelativeLayout>
 
                 <View
@@ -262,8 +272,13 @@
                     <EditText
                         android:id="@+id/out_height"
                         style="@style/collect_edit"
-                        android:hint="mm"
                         android:inputType="numberDecimal" />
+
+                    <ImageView style="@style/collect_edit_img"
+                        android:id="@+id/out_height_im"/>
+
+                    <TextView style="@style/collect_edit_text"/>
+
                 </RelativeLayout>
 
                 <View
@@ -286,8 +301,14 @@
                     <EditText
                         android:id="@+id/out_weight"
                         style="@style/collect_edit"
-                        android:hint="kg"
                         android:inputType="numberDecimal" />
+
+                    <ImageView style="@style/collect_edit_img"
+                        android:id="@+id/out_weight_im"/>
+
+                    <TextView style="@style/collect_edit_text"
+                        android:text="kg"/>
+
                 </RelativeLayout>
 
                 <View
@@ -342,8 +363,13 @@
                         <EditText
                             android:id="@+id/single_length"
                             style="@style/collect_edit"
-                            android:hint="mm"
                             android:inputType="numberDecimal" />
+
+                        <ImageView style="@style/collect_edit_img"
+                            android:id="@+id/single_length_im"/>
+
+                        <TextView style="@style/collect_edit_text"/>
+
                     </RelativeLayout>
 
                     <View
@@ -368,8 +394,13 @@
                         <EditText
                             android:id="@+id/single_width"
                             style="@style/collect_edit"
-                            android:hint="mm"
                             android:inputType="numberDecimal" />
+
+                        <ImageView style="@style/collect_edit_img"
+                            android:id="@+id/single_width_im"/>
+
+                        <TextView style="@style/collect_edit_text"/>
+
                     </RelativeLayout>
 
                     <View
@@ -394,8 +425,13 @@
                         <EditText
                             android:id="@+id/single_height"
                             style="@style/collect_edit"
-                            android:hint="mm"
                             android:inputType="numberDecimal" />
+
+                        <ImageView style="@style/collect_edit_img"
+                            android:id="@+id/single_height_im"/>
+
+                        <TextView style="@style/collect_edit_text"/>
+
                     </RelativeLayout>
 
                     <View
@@ -420,8 +456,13 @@
                         <EditText
                             android:id="@+id/single_weight"
                             style="@style/collect_edit"
-                            android:hint="kg"
                             android:inputType="numberDecimal" />
+
+                        <ImageView style="@style/collect_edit_img"
+                            android:id="@+id/single_weight_im"/>
+
+                        <TextView style="@style/collect_edit_text"/>
+
                     </RelativeLayout>
 
                     <View
@@ -452,8 +493,13 @@
                 <EditText
                     android:id="@+id/length"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/length_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View
@@ -476,8 +522,13 @@
                 <EditText
                     android:id="@+id/width"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/width_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View
@@ -500,8 +551,13 @@
                 <EditText
                     android:id="@+id/height"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/hight_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View
@@ -524,8 +580,14 @@
                 <EditText
                     android:id="@+id/weight"
                     style="@style/collect_edit"
-                    android:hint="kg"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/weight_im"/>
+
+                <TextView style="@style/collect_edit_text"
+                    android:text="kg"/>
+
             </RelativeLayout>
 
             <View
@@ -547,8 +609,13 @@
                 <EditText
                     android:id="@+id/all_length"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/all_length_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View
@@ -571,8 +638,13 @@
                 <EditText
                     android:id="@+id/all_width"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/all_width_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View
@@ -595,8 +667,13 @@
                 <EditText
                     android:id="@+id/all_height"
                     style="@style/collect_edit"
-                    android:hint="mm"
                     android:inputType="numberDecimal" />
+
+                <ImageView style="@style/collect_edit_img"
+                    android:id="@+id/all_height_im"/>
+
+                <TextView style="@style/collect_edit_text"/>
+
             </RelativeLayout>
 
             <View

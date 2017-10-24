@@ -13,11 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,31 +27,31 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.seafire.cworker.Bean.CollectBean;
-import com.seafire.cworker.Bean.NumberBean;
-import com.seafire.cworker.Bean.PackageBean;
-import com.seafire.cworker.Model.User;
-import com.seafire.cworker.Present.CollectPresenter;
-import com.seafire.cworker.R;
-import com.seafire.cworker.Utils.JsonUtils;
-import com.seafire.cworker.Utils.ToastUtil;
-import com.seafire.cworker.Utils.Utils;
-import com.seafire.cworker.View.CollectView;
-import com.seafire.cworker.View.SystemBarTintManager;
-import com.seafire.cworker.Widget.CustomTextWatcher;
-import com.seafire.cworker.Widget.GlideImageLoader;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.seafire.cworker.Bean.CollectBean;
+import com.seafire.cworker.Bean.NumberBean;
+import com.seafire.cworker.Bean.PackageBean;
+import com.seafire.cworker.Model.User;
+import com.seafire.cworker.Present.CollectPresenter;
+import com.seafire.cworker.R;
+import com.seafire.cworker.Utils.ToastUtil;
+import com.seafire.cworker.Utils.Utils;
+import com.seafire.cworker.View.CollectView;
+import com.seafire.cworker.View.SystemBarTintManager;
+import com.seafire.cworker.Widget.CustomTextWatcher;
+import com.seafire.cworker.Widget.GlideImageLoader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -200,6 +198,36 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     @BindView(R.id.name_layout)
     RelativeLayout nameLayout;
+    @BindView(R.id.length_im)
+    ImageView lengthIm;
+    @BindView(R.id.width_im)
+    ImageView widthIm;
+    @BindView(R.id.hight_im)
+    ImageView hightIm;
+    @BindView(R.id.weight_im)
+    ImageView weightIm;
+    @BindView(R.id.all_length_im)
+    ImageView allLengthIm;
+    @BindView(R.id.all_width_im)
+    ImageView allWidthIm;
+    @BindView(R.id.all_height_im)
+    ImageView allHeightIm;
+    @BindView(R.id.out_length_im)
+    ImageView outLengthIm;
+    @BindView(R.id.out_width_im)
+    ImageView outWidthIm;
+    @BindView(R.id.out_height_im)
+    ImageView outHeightIm;
+    @BindView(R.id.out_weight_im)
+    ImageView outWeightIm;
+    @BindView(R.id.single_length_im)
+    ImageView singleLengthIm;
+    @BindView(R.id.single_width_im)
+    ImageView singleWidthIm;
+    @BindView(R.id.single_height_im)
+    ImageView singleHeightIm;
+    @BindView(R.id.single_weight_im)
+    ImageView singleWeightIm;
 
     /**
      * 图片adapter
@@ -309,7 +337,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 scrollView.setFocusable(true);
                 scrollView.setFocusableInTouchMode(true);
                 clearFocus();
-            }else{
+            } else {
                 v.getParent().requestDisallowInterceptTouchEvent(false);
                 scrollView.clearFocus();
                 getFocus();
@@ -317,7 +345,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return false;
         });
 
-        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
             adapter.add(ADD);
             adapter.setOnItemClickListener((view, i) -> {
                 view.findViewById(R.id.delete).setOnClickListener(v -> {
@@ -349,91 +377,91 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             wrapLayout.setOnClickListener(this);
             typeLayout.setOnClickListener(this);
 
-            modleNumWatcher = new CustomTextWatcher(modleNum, drawable, false);
-            numberWatcher = new CustomTextWatcher(number, drawable, false);
-            lengthWatcher = new CustomTextWatcher(length, drawable, true);
-            widthWatcher = new CustomTextWatcher(width, drawable, true);
-            heightWatcher = new CustomTextWatcher(height, drawable, true);
-            weightWatcher = new CustomTextWatcher(weight, drawable, true);
-            allHeightWatcher = new CustomTextWatcher(allHeight, drawable, true);
-            allWidthWatcher = new CustomTextWatcher(allWidth, drawable, true);
-            allLengthWatcher = new CustomTextWatcher(allLength, drawable, true);
-            singleWidthWatcher = new CustomTextWatcher(singleWidth, drawable, true);
-            singleHeightWatcher = new CustomTextWatcher(singleHeight, drawable, true);
-            singleLengthWatcher = new CustomTextWatcher(singleLength, drawable, true);
-            singleWeightWatcher = new CustomTextWatcher(singleWeight, drawable, true);
-            outWeightWatcher = new CustomTextWatcher(outWeight, drawable, true);
-            outLengthWatcher = new CustomTextWatcher(outLength, drawable, true);
-            outWidthWatcher = new CustomTextWatcher(outWidth, drawable, true);
-            outHeightWatcher = new CustomTextWatcher(outHeight, drawable, true);
+            modleNumWatcher = new CustomTextWatcher(modleNum, false);
+            numberWatcher = new CustomTextWatcher(number, false);
+            lengthWatcher = new CustomTextWatcher(length, lengthIm, true);
+            widthWatcher = new CustomTextWatcher(width, widthIm, true);
+            heightWatcher = new CustomTextWatcher(height, hightIm, true);
+            weightWatcher = new CustomTextWatcher(weight, weightIm, true);
+            allHeightWatcher = new CustomTextWatcher(allHeight, allHeightIm, true);
+            allWidthWatcher = new CustomTextWatcher(allWidth, allWidthIm, true);
+            allLengthWatcher = new CustomTextWatcher(allLength, allLengthIm, true);
+            singleWidthWatcher = new CustomTextWatcher(singleWidth, singleWidthIm, true);
+            singleHeightWatcher = new CustomTextWatcher(singleHeight, singleHeightIm, true);
+            singleLengthWatcher = new CustomTextWatcher(singleLength, singleLengthIm, true);
+            singleWeightWatcher = new CustomTextWatcher(singleWeight, singleWeightIm, true);
+            outWeightWatcher = new CustomTextWatcher(outWeight, outWeightIm, true);
+            outLengthWatcher = new CustomTextWatcher(outLength, outLengthIm, true);
+            outWidthWatcher = new CustomTextWatcher(outWidth, outWidthIm, true);
+            outHeightWatcher = new CustomTextWatcher(outHeight, outHeightIm, true);
 
             modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-            modleNum.setOnTouchListener(this);
-            modleNum.setOnFocusChangeListener(this);
+//            modleNum.setOnTouchListener(this);
+//            modleNum.setOnFocusChangeListener(this);
             modleNum.addTextChangedListener(modleNumWatcher);
 
-            number.setOnTouchListener(this);
-            number.setOnFocusChangeListener(this);
+//            number.setOnTouchListener(this);
+//            number.setOnFocusChangeListener(this);
             number.addTextChangedListener(numberWatcher);
 
-            length.setOnTouchListener(this);
-            length.setOnFocusChangeListener(this);
+//            length.setOnTouchListener(this);
+//            length.setOnFocusChangeListener(this);
             length.addTextChangedListener(lengthWatcher);
 
-            width.setOnTouchListener(this);
-            width.setOnFocusChangeListener(this);
+//            width.setOnTouchListener(this);
+//            width.setOnFocusChangeListener(this);
             width.addTextChangedListener(widthWatcher);
 
-            height.setOnTouchListener(this);
-            height.setOnFocusChangeListener(this);
+//            height.setOnTouchListener(this);
+//            height.setOnFocusChangeListener(this);
             height.addTextChangedListener(heightWatcher);
 
-            weight.setOnTouchListener(this);
-            weight.setOnFocusChangeListener(this);
+//            weight.setOnTouchListener(this);
+//            weight.setOnFocusChangeListener(this);
             weight.addTextChangedListener(weightWatcher);
 
-            allLength.setOnTouchListener(this);
-            allLength.setOnFocusChangeListener(this);
+//            allLength.setOnTouchListener(this);
+//            allLength.setOnFocusChangeListener(this);
             allLength.addTextChangedListener(allLengthWatcher);
 
-            allWidth.setOnTouchListener(this);
-            allWidth.setOnFocusChangeListener(this);
+//            allWidth.setOnTouchListener(this);
+//            allWidth.setOnFocusChangeListener(this);
             allWidth.addTextChangedListener(allWidthWatcher);
 
-            allHeight.setOnTouchListener(this);
-            allHeight.setOnFocusChangeListener(this);
+//            allHeight.setOnTouchListener(this);
+//            allHeight.setOnFocusChangeListener(this);
             allHeight.addTextChangedListener(allHeightWatcher);
 
-            outLength.setOnTouchListener(this);
-            outLength.setOnFocusChangeListener(this);
+//            outLength.setOnTouchListener(this);
+//            outLength.setOnFocusChangeListener(this);
             outLength.addTextChangedListener(outLengthWatcher);
 
-            outWidth.setOnTouchListener(this);
-            outWidth.setOnFocusChangeListener(this);
+//            outWidth.setOnTouchListener(this);
+//            outWidth.setOnFocusChangeListener(this);
             outWidth.addTextChangedListener(outWidthWatcher);
 
-            outHeight.setOnTouchListener(this);
-            outHeight.setOnFocusChangeListener(this);
+//            outHeight.setOnTouchListener(this);
+//            outHeight.setOnFocusChangeListener(this);
             outHeight.addTextChangedListener(outHeightWatcher);
 
-            outWeight.setOnTouchListener(this);
-            outWeight.setOnFocusChangeListener(this);
+//            outWeight.setOnTouchListener(this);
+//            outWeight.setOnFocusChangeListener(this);
             outWeight.addTextChangedListener(outWeightWatcher);
 
-            singleWeight.setOnTouchListener(this);
-            singleWeight.setOnFocusChangeListener(this);
+//            singleWeight.setOnTouchListener(this);
+//            singleWeight.setOnFocusChangeListener(this);
             singleWeight.addTextChangedListener(singleWeightWatcher);
 
-            singleLength.setOnTouchListener(this);
-            singleLength.setOnFocusChangeListener(this);
+//            singleLength.setOnTouchListener(this);
+//            singleLength.setOnFocusChangeListener(this);
             singleLength.addTextChangedListener(singleLengthWatcher);
 
-            singleWidth.setOnTouchListener(this);
-            singleWidth.setOnFocusChangeListener(this);
+//            singleWidth.setOnTouchListener(this);
+//            singleWidth.setOnFocusChangeListener(this);
             singleWidth.addTextChangedListener(singleWidthWatcher);
 
-            singleHeight.setOnTouchListener(this);
-            singleHeight.setOnFocusChangeListener(this);
+//            singleHeight.setOnTouchListener(this);
+//            singleHeight.setOnFocusChangeListener(this);
             singleHeight.addTextChangedListener(singleHeightWatcher);
             setEditTextChangedListener();
 
@@ -452,41 +480,41 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     RecommandActivity.startActivityForResult(this, resultBean.getPmts(), resultBean.getPms(), recommandChangeList);
             });
             presenter.packagingForm();
-        }else{
+        } else {
             collectBean = (CollectBean) getIntent().getSerializableExtra(INTENT_KEY);
             number.setText(collectBean.getPartCode());
             name.setText(collectBean.getPartName());
             source.setText(collectBean.getSystemResource());
             wrapText.setText(collectBean.getPackageStypeName());
             typeTxt.setText(collectBean.getPartMaterialName());
-            modleNum.setText(collectBean.getPackageModelCount()+"");
+            modleNum.setText(collectBean.getPackageModelCount() + "");
 
             outLayout.setVisibility(View.VISIBLE);
             singleSwitch.setChecked(true);
 
-            length.setText(Utils.formatData(collectBean.getPartLength())+"mm");
-            width.setText(Utils.formatData(collectBean.getPartWidth())+"mm");
-            height.setText(Utils.formatData(collectBean.getPartHeigth())+"mm");
-            weight.setText(Utils.formatData(collectBean.getNetWeight())+"kg");
+            length.setText(Utils.formatData(collectBean.getPartLength()) + "");
+            width.setText(Utils.formatData(collectBean.getPartWidth()) + "");
+            height.setText(Utils.formatData(collectBean.getPartHeigth()) + "");
+            weight.setText(Utils.formatData(collectBean.getNetWeight()) + "");
 
-            outLength.setText(Utils.formatData(collectBean.getPackageLength())+"mm");
-            outWidth.setText(Utils.formatData(collectBean.getPackageWidth())+"mm");
-            outHeight.setText(Utils.formatData(collectBean.getPackageHeight())+"mm");
-            outWeight.setText(Utils.formatData(collectBean.getRoughWeight())+"kg");
+            outLength.setText(Utils.formatData(collectBean.getPackageLength()) + "");
+            outWidth.setText(Utils.formatData(collectBean.getPackageWidth()) + "");
+            outHeight.setText(Utils.formatData(collectBean.getPackageHeight()) + "");
+            outWeight.setText(Utils.formatData(collectBean.getRoughWeight()) + "");
 
-            singleLength.setText(Utils.formatData(collectBean.getSinglePackageLength())+"mm");
-            singleWidth.setText(Utils.formatData(collectBean.getSinglePackageWidth())+"mm");
-            singleHeight.setText(Utils.formatData(collectBean.getSinglePackageHeight())+"mm");
-            singleWeight.setText(Utils.formatData(collectBean.getSinglePackageWeight())+"kg");
+            singleLength.setText(Utils.formatData(collectBean.getSinglePackageLength()) + "");
+            singleWidth.setText(Utils.formatData(collectBean.getSinglePackageWidth()) + "");
+            singleHeight.setText(Utils.formatData(collectBean.getSinglePackageHeight()) + "");
+            singleWeight.setText(Utils.formatData(collectBean.getSinglePackageWeight()) + "");
 
-            allLength.setText(Utils.formatData(collectBean.getAddedLength())+"mm");
-            allWidth.setText(Utils.formatData(collectBean.getAddedWidth())+"mm");
-            allHeight.setText(Utils.formatData(collectBean.getAddedHeight())+"mm");
+            allLength.setText(Utils.formatData(collectBean.getAddedLength()) + "");
+            allWidth.setText(Utils.formatData(collectBean.getAddedWidth()) + "");
+            allHeight.setText(Utils.formatData(collectBean.getAddedHeight()) + "");
 
             checkTv.setText(collectBean.getAuditType());
             recommendTv.setText(collectBean.getProcessRecommendation());
             information.setText(collectBean.getRemark());
-            infoNum.setText(information.getText().length()+"/100");
+            infoNum.setText(information.getText().length() + "/100");
             historyPathList.addAll(Arrays.asList(collectBean.getDocumentCodes().split(",")));
             adapter.addAll(historyPathList);
 //            if (historyPathList.size() < 10){
@@ -537,26 +565,25 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             information.setEnabled(false);
 
 
-
         }
 
         number.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId==EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 clearData();
                 number.clearFocus();
                 isNumberSearch = true;
                 presenter.getPartInfoByCode(CollectActivity.this, number.getText().toString(),
                         User.getInstance().getUserInfo().getPerson().getProject());
                 return true;
-            }else{
+            } else {
                 return false;
             }
         });
 
         name.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(name.getText().toString())){
+            if (TextUtils.isEmpty(name.getText().toString())) {
                 return;
-            }else{
+            } else {
                 new IOSDialog(CollectActivity.this).builder()
                         .setTitle("详情")
                         .setMsg(name.getText().toString())
@@ -566,9 +593,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         source.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(source.getText().toString())){
+            if (TextUtils.isEmpty(source.getText().toString())) {
                 return;
-            }else{
+            } else {
                 new IOSDialog(CollectActivity.this).builder()
                         .setTitle("详情")
                         .setMsg(source.getText().toString())
@@ -578,7 +605,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         nameLayout.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(name.getText().toString())){
+            if (!TextUtils.isEmpty(name.getText().toString())) {
                 new IOSDialog(CollectActivity.this).builder()
                         .setTitle("详情")
                         .setMsg(name.getText().toString())
@@ -588,7 +615,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         });
 
         name.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(name.getText().toString())){
+            if (!TextUtils.isEmpty(name.getText().toString())) {
                 new IOSDialog(CollectActivity.this).builder()
                         .setTitle("详情")
                         .setMsg(name.getText().toString())
@@ -599,7 +626,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         recommendTv.setOnClickListener(v -> {
             String recommandData = recommendTv.getText().toString();
-            if (!TextUtils.isEmpty(recommandData)){
+            if (!TextUtils.isEmpty(recommandData)) {
                 View recommandView = LayoutInflater.from(CollectActivity.this)
                         .inflate(R.layout.recommand_list, null);
                 RecyclerView recyclerView = (RecyclerView) recommandView.findViewById(R.id.recycler_view);
@@ -626,7 +653,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 };
     }
 
-    private void clearData(){
+    private void clearData() {
         //number.setText("");
         name.setText("");
         source.setText("");
@@ -673,7 +700,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         scrollView.scrollTo(0, 0);
         number.setText("");
-        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
             clearData();
         }
 
@@ -692,93 +719,75 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             clearData();
             isNumberSearch = false;
             new IOSDialog(this).builder()
-                    .setTitle("该零件号已被"+s.getOldData().getCollectorName()+"于"+Utils.strToDateLong(s.getOldData().getDateline()*1000) + "采集!")
+                    .setTitle("该零件号已被" + s.getOldData().getCollectorName() + "于" + Utils.strToDateLong(s.getOldData().getDateline() * 1000) + "采集!")
                     .setMsg("是否重新采集当前数据?")
                     .setPositiveButton("确定", v -> {
-
-//                        modleNum.removeTextChangedListener(modleNumWatcher);
-//                        number.removeTextChangedListener(numberWatcher);
-//                        length.removeTextChangedListener(lengthWatcher);
-//                        width.removeTextChangedListener(widthWatcher);
-//                        height.removeTextChangedListener(heightWatcher);
-//                        weight.removeTextChangedListener(weightWatcher);
-//                        allLength.removeTextChangedListener(allLengthWatcher);
-//                        allWidth.removeTextChangedListener(allWidthWatcher);
-//                        allHeight.removeTextChangedListener(allHeightWatcher);
-//                        outLength.removeTextChangedListener(outLengthWatcher);
-//                        outWidth.removeTextChangedListener(outWidthWatcher);
-//                        outHeight.removeTextChangedListener(outHeightWatcher);
-//                        outWeight.removeTextChangedListener(outWeightWatcher);
-//                        singleWeight.removeTextChangedListener(singleWeightWatcher);
-//                        singleLength.removeTextChangedListener(singleLengthWatcher);
-//                        singleWidth.removeTextChangedListener(singleWidthWatcher);
-//                        singleHeight.removeTextChangedListener(singleHeightWatcher);
 
                         wrapText.setText(s.getOldData().getPackageStypeName());
                         typeTxt.setText(s.getOldData().getPartMaterialName());
                         modleNum.setText(s.getOldData().getPackageModelCount() + "");
                         clearImg(modleNum);
-                        length.setText(Utils.formatData(s.getOldData().getPartLength()) +"mm");
+                        length.setText(Utils.formatData(s.getOldData().getPartLength()) + "");
                         clearImg(length);
-                        width.setText(Utils.formatData(s.getOldData().getPartWidth())+"mm");
+                        width.setText(Utils.formatData(s.getOldData().getPartWidth()) + "");
                         clearImg(width);
-                        height.setText(Utils.formatData(s.getOldData().getPartHeight())+"mm");
+                        height.setText(Utils.formatData(s.getOldData().getPartHeight()) + "");
                         clearImg(height);
-                        weight.setText(Utils.formatData(s.getOldData().getNetWeight())+"kg");
+                        weight.setText(Utils.formatData(s.getOldData().getNetWeight()) + "");
                         clearImg(weight);
 
                         NumberBean.OldDataBean oldDataBean = s.getOldData();
                         if (Math.abs(oldDataBean.getPackageLength()) > 0.0001 ||
                                 Math.abs(oldDataBean.getPackageWidth()) > 0.0001 ||
-                                    Math.abs(oldDataBean.getPackageHeight()) > 0.0001){
+                                Math.abs(oldDataBean.getPackageHeight()) > 0.0001) {
                             outLayout.setVisibility(View.VISIBLE);
 
-                            outLength.setText(Utils.formatData(s.getOldData().getPackageLength())+"mm");
+                            outLength.setText(Utils.formatData(s.getOldData().getPackageLength()) + "");
                             clearImg(outLength);
-                            outWidth.setText(Utils.formatData(s.getOldData().getPackageWidth())+"mm");
+                            outWidth.setText(Utils.formatData(s.getOldData().getPackageWidth()) + "");
                             clearImg(outWidth);
-                            outHeight.setText(Utils.formatData(s.getOldData().getPackageHeight())+"mm");
+                            outHeight.setText(Utils.formatData(s.getOldData().getPackageHeight()) + "");
                             clearImg(outHeight);
-                            outWeight.setText(Utils.formatData(s.getOldData().getRoughWeight())+"kg");
+                            outWeight.setText(Utils.formatData(s.getOldData().getRoughWeight()) + "");
                             clearImg(outWeight);
 
                             if (Math.abs(oldDataBean.getSinglePackageLength()) > 0.0001 ||
                                     Math.abs(oldDataBean.getSinglePackageWidth()) > 0.0001 ||
                                     Math.abs(oldDataBean.getSinglePackageHeight()) > 0.0001 ||
-                                    Math.abs(oldDataBean.getSinglePackageWeight()) > 0.0001){
+                                    Math.abs(oldDataBean.getSinglePackageWeight()) > 0.0001) {
                                 singleSwitch.setChecked(true);
 
-                                singleLength.setText(Utils.formatData(s.getOldData().getSinglePackageLength())+"mm");
+                                singleLength.setText(Utils.formatData(s.getOldData().getSinglePackageLength()) + "");
                                 clearImg(singleLength);
-                                singleWidth.setText(Utils.formatData(s.getOldData().getSinglePackageWidth())+"mm");
+                                singleWidth.setText(Utils.formatData(s.getOldData().getSinglePackageWidth()) + "");
                                 clearImg(singleWidth);
-                                singleHeight.setText(Utils.formatData(s.getOldData().getSinglePackageHeight())+"mm");
+                                singleHeight.setText(Utils.formatData(s.getOldData().getSinglePackageHeight()) + "");
                                 clearImg(singleHeight);
-                                singleWeight.setText(Utils.formatData(s.getOldData().getSinglePackageWeight())+"kg");
+                                singleWeight.setText(Utils.formatData(s.getOldData().getSinglePackageWeight()) + "");
                                 clearImg(singleWeight);
 
-                            }else{
+                            } else {
                                 singleSwitch.setChecked(false);
                                 singleLength.setText("");
-                                singleLength.setHint("mm");
+                                singleLength.setHint("");
                                 singleWidth.setText("");
-                                singleWidth.setHint("mm");
+                                singleWidth.setHint("");
                                 singleHeight.setText("");
-                                singleHeight.setHint("mm");
+                                singleHeight.setHint("");
                                 singleWeight.setText("");
-                                singleWeight.setHint("kg");
+                                singleWeight.setHint("");
                             }
 
-                        }else{
+                        } else {
                             outLayout.setVisibility(View.GONE);
                             hideOutLayout();
                         }
 
-                        allLength.setText(Utils.formatData(s.getOldData().getAddedLength()) + "mm");
+                        allLength.setText(Utils.formatData(s.getOldData().getAddedLength()) + "");
                         clearImg(allLength);
-                        allWidth.setText(Utils.formatData(s.getOldData().getAddedWidth()) + "mm");
+                        allWidth.setText(Utils.formatData(s.getOldData().getAddedWidth()) + "");
                         clearImg(allWidth);
-                        allHeight.setText(Utils.formatData(s.getOldData().getAddedHeight()) + "mm");
+                        allHeight.setText(Utils.formatData(s.getOldData().getAddedHeight()) + "");
                         clearImg(allHeight);
 
 
@@ -797,24 +806,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                                     imageItems.addAll(imageItems1);
                                     setResultToAdapter(imageItems);
                                 });
-
-//                        modleNum.addTextChangedListener(modleNumWatcher);
-//                        number.addTextChangedListener(numberWatcher);
-//                        length.addTextChangedListener(lengthWatcher);
-//                        width.addTextChangedListener(widthWatcher);
-//                        height.addTextChangedListener(heightWatcher);
-//                        weight.addTextChangedListener(weightWatcher);
-//                        allLength.addTextChangedListener(allLengthWatcher);
-//                        allWidth.addTextChangedListener(allWidthWatcher);
-//                        allHeight.addTextChangedListener(allHeightWatcher);
-//                        outLength.addTextChangedListener(outLengthWatcher);
-//                        outWidth.addTextChangedListener(outWidthWatcher);
-//                        outHeight.addTextChangedListener(outHeightWatcher);
-//                        outWeight.addTextChangedListener(outWeightWatcher);
-//                        singleWeight.addTextChangedListener(singleWeightWatcher);
-//                        singleLength.addTextChangedListener(singleLengthWatcher);
-//                        singleWidth.addTextChangedListener(singleWidthWatcher);
-//                        singleHeight.addTextChangedListener(singleHeightWatcher);
                     })
                     .setNegativeButton("取消", v -> {
                         number.setText("");
@@ -874,7 +865,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 recommandChangeList.addAll((List<String>) data.getSerializableExtra(INTENT_KEY));
                 String tempTwo = recommandChangeList.toString().replace("[", "").replace("]", "");
                 recommendTv.setText(tempTwo);
-            }else if (data != null && requestCode == REQUEST_SCAN_CODE){
+            } else if (data != null && requestCode == REQUEST_SCAN_CODE) {
                 String result = data.getStringExtra(INTENT_KEY);
                 number.setText(result);
                 if (!TextUtils.isEmpty(number.getText().toString())) {
@@ -886,10 +877,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     @Override
-    public void postTxtError(){
+    public void postTxtError() {
         scrollView.scrollTo(0, 0);
         number.setText("");
-        if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+        if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
             clearData();
         }
     }
@@ -916,9 +907,9 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-                if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+                if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
                     postCollectTxt();
-                }else{
+                } else {
                     postHistoryCollect();
                 }
 
@@ -936,7 +927,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
     }
 
-    private void postHistoryCollect(){
+    private void postHistoryCollect() {
         presenter.postCollectData(this, collectBean, historyPathList);
     }
 
@@ -970,7 +961,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             return;
         }
 
-        if (imageItems.size() < 3){
+        if (imageItems.size() < 3) {
             ToastUtil.show("照片数量至少要3个");
             return;
         }
@@ -980,9 +971,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             stringLength = dataString.length();
 
 
-
             if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                 ToastUtil.show("外包装长不能为空");
                 return;
             }
@@ -990,7 +980,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             dataString = outWidth.getText().toString();
             stringLength = dataString.length();
             if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                 ToastUtil.show("外包装宽不能为空");
                 return;
             }
@@ -998,7 +988,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             dataString = outHeight.getText().toString();
             stringLength = dataString.length();
             if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                 ToastUtil.show("外包装高不能为空");
                 return;
             }
@@ -1006,7 +996,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             dataString = outWeight.getText().toString();
             stringLength = dataString.length();
             if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                 ToastUtil.show("毛重不能为空");
                 return;
             }
@@ -1020,7 +1010,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 dataString = singleLength.getText().toString();
                 stringLength = dataString.length();
                 if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                     ToastUtil.show("单个包装长不能为空");
                     return;
                 }
@@ -1028,7 +1018,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 dataString = singleWidth.getText().toString();
                 stringLength = dataString.length();
                 if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                     ToastUtil.show("单个包装宽不能为空");
                     return;
                 }
@@ -1036,7 +1026,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 dataString = singleHeight.getText().toString();
                 stringLength = dataString.length();
                 if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                     ToastUtil.show("单个包装高不能为空");
                     return;
                 }
@@ -1044,7 +1034,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 dataString = singleWeight.getText().toString();
                 stringLength = dataString.length();
                 if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
                     ToastUtil.show("单个包装重不能为空");
                     return;
                 }
@@ -1061,7 +1051,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         dataString = length.getText().toString();
         stringLength = dataString.length();
         if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
             ToastUtil.show("零件长不能为空");
             return;
         }
@@ -1069,7 +1059,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         dataString = width.getText().toString();
         stringLength = dataString.length();
         if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
             ToastUtil.show("零件宽不能为空");
             return;
         }
@@ -1077,7 +1067,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         dataString = height.getText().toString();
         stringLength = dataString.length();
         if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
             ToastUtil.show("零件高不能为空");
             return;
         }
@@ -1085,7 +1075,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         dataString = weight.getText().toString();
         stringLength = dataString.length();
         if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength-2), "0")) {
+                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
             ToastUtil.show("净重不能为空");
             return;
         }
@@ -1129,18 +1119,18 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         }
 
         if (outLayout.getVisibility() == View.VISIBLE &&
-                singleLayout.getVisibility() == View.GONE){
-            if ((Utils.subText(outLength.getText().toString()) <  Utils.subText(length.getText().toString())) ||
-                    (Utils.subText(outHeight.getText().toString()) <  Utils.subText(height.getText().toString())) ||
-                    (Utils.subText(outWidth.getText().toString()) <  Utils.subText(width.getText().toString())) ||
-                    (Utils.subText(outWeight.getText().toString()) <  Utils.subText(weight.getText().toString()))
-                    ){
+                singleLayout.getVisibility() == View.GONE) {
+            if ((Utils.subText(outLength.getText().toString()) < Utils.subText(length.getText().toString())) ||
+                    (Utils.subText(outHeight.getText().toString()) < Utils.subText(height.getText().toString())) ||
+                    (Utils.subText(outWidth.getText().toString()) < Utils.subText(width.getText().toString())) ||
+                    (Utils.subText(outWeight.getText().toString()) < Utils.subText(weight.getText().toString()))
+                    ) {
                 ToastUtil.show("外包装应大于零件包装");
                 return;
             }
         }
 
-        if (outLayout.getVisibility() == View.VISIBLE && singleLayout.getVisibility() == View.VISIBLE){
+        if (outLayout.getVisibility() == View.VISIBLE && singleLayout.getVisibility() == View.VISIBLE) {
             if ((Utils.subText(outLength.getText().toString()) < Utils.subText(singleLength.getText().toString())) ||
                     (Utils.subText(singleLength.getText().toString()) < Utils.subText(length.getText().toString())) ||
                     (Utils.subText(outHeight.getText().toString()) < Utils.subText(singleHeight.getText().toString())) ||
@@ -1149,7 +1139,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     (Utils.subText(singleWidth.getText().toString()) < Utils.subText(width.getText().toString())) ||
                     (Utils.subText(outWeight.getText().toString()) < Utils.subText(singleWeight.getText().toString())) ||
                     (Utils.subText(singleWeight.getText().toString()) < Utils.subText(weight.getText().toString()))
-                    ){
+                    ) {
                 ToastUtil.show("外包装大于单个包装，单个包装大于零件包装");
                 return;
             }
@@ -1214,25 +1204,25 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                     Observable.from(pathList)
                             .map(s -> {
                                 sb.append(s).append(",");
-                                String paths = sb.toString().substring(0, sb.toString().length()-1);
+                                String paths = sb.toString().substring(0, sb.toString().length() - 1);
                                 return paths;
                             })
                             .subscribe(s -> bean.setDocumentCodes(s));
                     if (TextUtils.isEmpty(bean.getTime()))
                         bean.setTime(Utils.getNowTime());
 
-                    if (outLayout.getVisibility() == View.GONE){
+                    if (outLayout.getVisibility() == View.GONE) {
                         hideOutLayout();
-                    }else{
-                        if (singleLayout.getVisibility() == View.GONE){
+                    } else {
+                        if (singleLayout.getVisibility() == View.GONE) {
                             singleLength.setText("");
-                            singleLength.setHint("mm");
+                            singleLength.setHint("");
                             singleWidth.setText("");
-                            singleWidth.setHint("mm");
+                            singleWidth.setHint("");
                             singleHeight.setText("");
-                            singleHeight.setHint("mm");
+                            singleHeight.setHint("");
                             singleWeight.setText("");
-                            singleWeight.setHint("kg");
+                            singleWeight.setHint("");
                         }
                     }
 
@@ -1270,7 +1260,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void setEditTextChangedListener() {
-        information.addTextChangedListener(new CustomTextWatcher(modleNum, drawable, false) {
+        information.addTextChangedListener(new CustomTextWatcher(modleNum, false) {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
@@ -1301,15 +1291,15 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             case R.id.number:
                 if (!hasFocus) {
                     numberTv.setTextColor(normalColor);
-                    if (!TextUtils.isEmpty(number.getText().toString())){
+                    if (!TextUtils.isEmpty(number.getText().toString())) {
                         if (!isNumberSearch && numHasFocus) {
                             numHasFocus = false;
                             presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
                         }
-                    }else{
+                    } else {
                         clearData();
                     }
-                }else{
+                } else {
                     v.getParent().requestDisallowInterceptTouchEvent(true);
                 }
                 break;
@@ -1375,19 +1365,19 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 break;
         }
         clearImg(v);
-        if (hasFocus){
+        if (hasFocus) {
             v.post(new Runnable() {
                 @Override
                 public void run() {
-                    ((EditText)v).setSelection(((EditText) v).getText().length());
+                    ((EditText) v).setSelection(((EditText) v).getText().length());
                 }
             });
 
         }
 
-        if (v.getId() != R.id.number){
+        if (v.getId() != R.id.number) {
             numHasFocus = false;
-            if (hasFocus){
+            if (hasFocus) {
                 isNumberSearch = false;
             }
         }
@@ -1467,7 +1457,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         v.post(new Runnable() {
             @Override
             public void run() {
-                ((EditText)v).setSelection(((EditText) v).getText().length());
+                ((EditText) v).setSelection(((EditText) v).getText().length());
             }
         });
 
@@ -1476,6 +1466,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     /**
      * 获取焦点和失去焦点事件
+     *
      * @param et
      * @param tv
      * @param hasFocus
@@ -1483,27 +1474,27 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private void setEditText(EditText et, TextView tv, boolean hasFocus) {
         if (TextUtils.equals("净重", tv.getText().toString()) ||
                 TextUtils.equals("毛重", tv.getText().toString()) ||
-                    TextUtils.equals("单个包装重", tv.getText().toString())) {
+                TextUtils.equals("单个包装重", tv.getText().toString())) {
             if (!hasFocus) {
                 tv.setTextColor(normalColor);
                 if (et.getText().length() > 0) {
-                    InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
+                    InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length() + 2)};
                     et.setFilters(filters);
                     int length = et.getText().length();
-                    if (TextUtils.equals(et.getText().subSequence(length-1, length), ".")){
-                        et.setText(et.getText().subSequence(0, length-1) + "kg");
-                    }else{
-                        et.setText(et.getText() + "kg");
+                    if (TextUtils.equals(et.getText().subSequence(length - 1, length), ".")) {
+                        et.setText(et.getText().subSequence(0, length - 1) + "");
+                    } else {
+                        et.setText(et.getText() + "");
                     }
 
                 } else {
-                    et.setHint("kg");
+                    et.setHint("");
                 }
             } else {
                 if (et.getText().length() > 0) {
                     String s = et.getText().toString();
-                    int index = s.indexOf("kg");
-                    if (index > 0){
+                    int index = s.indexOf("");
+                    if (index > 0) {
                         String temp = s.substring(0, index);
                         et.setText(temp);
                     }
@@ -1515,24 +1506,24 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         if (!hasFocus) {
             tv.setTextColor(normalColor);
             if (et.getText().length() > 0) {
-                InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length()+2)};
+                InputFilter[] filters = {new InputFilter.LengthFilter(et.getText().length() + 2)};
                 et.setFilters(filters);
 
                 int length = et.getText().length();
-                if (TextUtils.equals(et.getText().subSequence(length-1, length), ".")){
-                    et.setText(et.getText().subSequence(0, length-1) + "mm");
-                }else{
-                    et.setText(et.getText() + "mm");
+                if (TextUtils.equals(et.getText().subSequence(length - 1, length), ".")) {
+                    et.setText(et.getText().subSequence(0, length - 1) + "");
+                } else {
+                    et.setText(et.getText() + "");
                 }
 
             } else {
-                et.setHint("mm");
+                et.setHint("");
             }
         } else {
             if (et.getText().length() > 0) {
                 String s = et.getText().toString();
-                int index = s.indexOf("mm");
-                if (index > 0){
+                int index = s.indexOf("");
+                if (index > 0) {
                     String temp = s.substring(0, index);
                     et.setText(temp);
                 }
@@ -1543,6 +1534,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     /**
      * 失去焦点 去除右边 x 号
+     *
      * @param view
      */
     private void clearImg(View view) {
@@ -1554,6 +1546,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     /**
      * EditText 获取焦点，改变字体颜色
+     *
      * @param event
      * @param et
      * @param tv
@@ -1590,9 +1583,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
     /**
      * scrollView 获取焦点，所有edittext 失去焦点
+     *
      * @return
      */
-    private void clearFocus(){
+    private void clearFocus() {
         modleNum.setInputType(InputType.TYPE_NULL);
 
         length.setInputType(InputType.TYPE_NULL);
@@ -1617,7 +1611,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         information.setInputType(InputType.TYPE_NULL);
     }
 
-    private void getFocus(){
+    private void getFocus() {
         modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
         length.setInputType(8194);
@@ -1652,7 +1646,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_scan:
-                if (getIntent().getSerializableExtra(INTENT_KEY) == null){
+                if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
                     actionScan();
                 }
                 return true;
@@ -1677,6 +1671,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.colorAccent);//通知栏所需颜色
     }
+
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
@@ -1689,25 +1684,25 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         win.setAttributes(winParams);
     }
 
-    private void hideOutLayout(){
+    private void hideOutLayout() {
         outLength.setText("");
-        outLength.setHint("mm");
+        outLength.setHint("");
         outWidth.setText("");
-        outWidth.setHint("mm");
+        outWidth.setHint("");
         outHeight.setText("");
-        outHeight.setHint("mm");
+        outHeight.setHint("");
         outWeight.setText("");
-        outWeight.setHint("kg");
+        outWeight.setHint("");
 
         singleSwitch.setChecked(true);
 
         singleLength.setText("");
-        singleLength.setHint("mm");
+        singleLength.setHint("");
         singleWidth.setText("");
-        singleWidth.setHint("mm");
+        singleWidth.setHint("");
         singleHeight.setText("");
-        singleHeight.setHint("mm");
+        singleHeight.setHint("");
         singleWeight.setText("");
-        singleWeight.setHint("kg");
+        singleWeight.setHint("");
     }
 }

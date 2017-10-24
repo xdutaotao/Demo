@@ -6,7 +6,9 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.seafire.cworker.Activity.CollectActivity;
 import com.seafire.cworker.Utils.Utils;
@@ -17,12 +19,17 @@ import com.seafire.cworker.Utils.Utils;
 
 public class CustomTextWatcher implements TextWatcher {
     private EditText editText;
-    private Drawable drawable;
+    private ImageView drawable;
     private boolean isNumPoint;
 
-    public CustomTextWatcher(EditText et, Drawable d, boolean b) {
+    public CustomTextWatcher(EditText et, ImageView d, boolean b) {
         this.editText = et;
         this.drawable = d;
+        this.isNumPoint = b;
+    }
+
+    public CustomTextWatcher(EditText et, boolean b) {
+        this.editText = et;
         this.isNumPoint = b;
     }
 
@@ -50,10 +57,13 @@ public class CustomTextWatcher implements TextWatcher {
                     return;
                 }
             }
-            editText.setCompoundDrawablePadding(20);
-            editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            //editText.setCompoundDrawablePadding(20);
+            //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            if(drawable != null)
+                drawable.setVisibility(View.VISIBLE);
         } else {
-            editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+            drawable.setVisibility(View.GONE);
         }
         if (isNumPoint){
 
