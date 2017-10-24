@@ -69,6 +69,7 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
 import com.xunao.diaodiao.Widget.DownloadDialog.DownloadDialogFactory;
+import com.zhy.base.fileprovider.FileProvider7;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -504,15 +505,16 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Utils.startActionFile(HomeFragment.this.getContext(), file);
-//                File file = (new File(file.getPath()));
-//                // 由于没有在Activity环境下启动Activity,设置下面的标签
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
-//                Uri apkUri = FileProvider.getUriForFile(HomeFragment.this.getActivity(), "com.example.chenfengyao.installapkdemo", file);
-//                //添加这一句表示对目标应用临时授权该Uri所代表的文件
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                //Utils.startActionFile(HomeFragment.this.getContext(), file);
+
+                File file = new File(Environment.getExternalStorageDirectory(),
+                        ApiConstants.APPFILENAME);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                // 仅需改变这一行
+                FileProvider7.setIntentDataAndType(this.getContext(),
+                        intent, "application/vnd.android.package-archive", file, true);
+                startActivity(intent);
+
             }else {
                 Utils.installApk(HomeFragment.this.getContext(), file);
             }

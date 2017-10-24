@@ -135,15 +135,15 @@
             android:name="UMENG_MESSAGE_SECRET"
             android:value="7354c8f32e551dfb95620c10f52b3d24"></meta-data>
 
-        <provider
-            android:authorities="com.xunao.diaodiao.provider"
-            android:name="android.support.v4.content.FileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
-        </provider>
+        <!--<provider-->
+            <!--android:authorities="com.xunao.diaodiao.provider"-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:grantUriPermissions="true"-->
+            <!--android:exported="false">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/filepaths"/>-->
+        <!--</provider>-->
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
