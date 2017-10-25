@@ -185,6 +185,7 @@
                     android:id="@+id/modle_num"
                     style="@style/collect_edit"
                     android:digits="1234567890"
+                    android:layout_marginRight="0px"
                     android:maxLength="3" />
             </RelativeLayout>
 

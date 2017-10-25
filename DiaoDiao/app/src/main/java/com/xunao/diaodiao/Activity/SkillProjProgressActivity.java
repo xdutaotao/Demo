@@ -138,6 +138,11 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     }
                 };
 
+                itemAdapter.setOnItemClickListener((view, i) -> {
+                    PhotoActivity.startActivity(SkillProjProgressActivity.this, itemAdapter.getAllData().get(i),
+                            itemAdapter.getAllData().get(i).contains("http"));
+                });
+
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
@@ -186,6 +191,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
                 //selectPhoto();
                 takePhoto();
+            }else{
+                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
         });
         footerAdapter.add(ADD);

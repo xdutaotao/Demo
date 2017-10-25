@@ -163,6 +163,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
+            }else{
+                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
         });
         adapter.add(ADD);

@@ -330,20 +330,20 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         recyclerView.setAdapter(adapter);
         submit.setOnClickListener(this);
 
-        scrollView.setOnTouchListener((v, event) -> {
-
-            if (event.getAction() == MotionEvent.ACTION_MOVE && !numHasFocus) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                scrollView.setFocusable(true);
-                scrollView.setFocusableInTouchMode(true);
-                clearFocus();
-            } else {
-                v.getParent().requestDisallowInterceptTouchEvent(false);
-                scrollView.clearFocus();
-                getFocus();
-            }
-            return false;
-        });
+//        scrollView.setOnTouchListener((v, event) -> {
+//
+//            if (event.getAction() == MotionEvent.ACTION_MOVE && !numHasFocus) {
+//                v.getParent().requestDisallowInterceptTouchEvent(true);
+//                scrollView.setFocusable(true);
+//                scrollView.setFocusableInTouchMode(true);
+//                clearFocus();
+//            } else {
+//                v.getParent().requestDisallowInterceptTouchEvent(false);
+//                scrollView.clearFocus();
+//                getFocus();
+//            }
+//            return false;
+//        });
 
         if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
             adapter.add(ADD);
@@ -396,72 +396,25 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             outHeightWatcher = new CustomTextWatcher(outHeight, outHeightIm, true);
 
             modleNum.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-//            modleNum.setOnTouchListener(this);
-//            modleNum.setOnFocusChangeListener(this);
             modleNum.addTextChangedListener(modleNumWatcher);
+            modleNum.setOnTouchListener(this);
+            modleNum.setOnFocusChangeListener(this);
 
-//            number.setOnTouchListener(this);
-//            number.setOnFocusChangeListener(this);
             number.addTextChangedListener(numberWatcher);
-
-//            length.setOnTouchListener(this);
-//            length.setOnFocusChangeListener(this);
             length.addTextChangedListener(lengthWatcher);
-
-//            width.setOnTouchListener(this);
-//            width.setOnFocusChangeListener(this);
             width.addTextChangedListener(widthWatcher);
-
-//            height.setOnTouchListener(this);
-//            height.setOnFocusChangeListener(this);
             height.addTextChangedListener(heightWatcher);
-
-//            weight.setOnTouchListener(this);
-//            weight.setOnFocusChangeListener(this);
             weight.addTextChangedListener(weightWatcher);
-
-//            allLength.setOnTouchListener(this);
-//            allLength.setOnFocusChangeListener(this);
             allLength.addTextChangedListener(allLengthWatcher);
-
-//            allWidth.setOnTouchListener(this);
-//            allWidth.setOnFocusChangeListener(this);
             allWidth.addTextChangedListener(allWidthWatcher);
-
-//            allHeight.setOnTouchListener(this);
-//            allHeight.setOnFocusChangeListener(this);
             allHeight.addTextChangedListener(allHeightWatcher);
-
-//            outLength.setOnTouchListener(this);
-//            outLength.setOnFocusChangeListener(this);
             outLength.addTextChangedListener(outLengthWatcher);
-
-//            outWidth.setOnTouchListener(this);
-//            outWidth.setOnFocusChangeListener(this);
             outWidth.addTextChangedListener(outWidthWatcher);
-
-//            outHeight.setOnTouchListener(this);
-//            outHeight.setOnFocusChangeListener(this);
             outHeight.addTextChangedListener(outHeightWatcher);
-
-//            outWeight.setOnTouchListener(this);
-//            outWeight.setOnFocusChangeListener(this);
             outWeight.addTextChangedListener(outWeightWatcher);
-
-//            singleWeight.setOnTouchListener(this);
-//            singleWeight.setOnFocusChangeListener(this);
             singleWeight.addTextChangedListener(singleWeightWatcher);
-
-//            singleLength.setOnTouchListener(this);
-//            singleLength.setOnFocusChangeListener(this);
             singleLength.addTextChangedListener(singleLengthWatcher);
-
-//            singleWidth.setOnTouchListener(this);
-//            singleWidth.setOnFocusChangeListener(this);
             singleWidth.addTextChangedListener(singleWidthWatcher);
-
-//            singleHeight.setOnTouchListener(this);
-//            singleHeight.setOnFocusChangeListener(this);
             singleHeight.addTextChangedListener(singleHeightWatcher);
             setEditTextChangedListener();
 
@@ -1282,11 +1235,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public void onFocusChange(View v, boolean hasFocus) {
 
         switch (v.getId()) {
-            case R.id.modle_num:
-                if (!hasFocus) {
-                    modleTv.setTextColor(normalColor);
-                }
-                break;
 
             case R.id.number:
                 if (!hasFocus) {
@@ -1302,66 +1250,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 } else {
                     v.getParent().requestDisallowInterceptTouchEvent(true);
                 }
-                break;
-
-            case R.id.length:
-                setEditText(length, lengthTv, hasFocus);
-                break;
-
-            case R.id.width:
-                setEditText(width, widthTv, hasFocus);
-                break;
-
-            case R.id.height:
-                setEditText(height, hightTv, hasFocus);
-                break;
-
-            case R.id.weight:
-                setEditText(weight, weightTv, hasFocus);
-                break;
-
-            case R.id.all_length:
-                setEditText(allLength, allLengthTv, hasFocus);
-                break;
-
-            case R.id.all_width:
-                setEditText(allWidth, allWidthTv, hasFocus);
-                break;
-
-            case R.id.all_height:
-                setEditText(allHeight, allHeightTv, hasFocus);
-                break;
-
-            case R.id.out_length:
-                setEditText(outLength, outLengthTv, hasFocus);
-                break;
-
-            case R.id.out_width:
-                setEditText(outWidth, outWidthTv, hasFocus);
-                break;
-
-            case R.id.out_height:
-                setEditText(outHeight, outHeightTv, hasFocus);
-                break;
-
-            case R.id.out_weight:
-                setEditText(outWeight, outWeightTv, hasFocus);
-                break;
-
-            case R.id.single_weight:
-                setEditText(singleWeight, singleWeightTv, hasFocus);
-                break;
-
-            case R.id.single_length:
-                setEditText(singleLength, singleLengthTv, hasFocus);
-                break;
-
-            case R.id.single_width:
-                setEditText(singleWidth, singleWidthTv, hasFocus);
-                break;
-
-            case R.id.single_height:
-                setEditText(singleHeight, singleHeightTv, hasFocus);
                 break;
         }
         clearImg(v);
@@ -1387,70 +1275,13 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             switch (v.getId()) {
-                case R.id.modle_num:
-                    changeUI(event, modleNum, modleTv);
-                    break;
 
                 case R.id.number:
                     numHasFocus = true;
                     changeUI(event, number, numberTv);
                     break;
 
-                case R.id.length:
-                    changeUI(event, length, lengthTv);
-                    break;
 
-                case R.id.width:
-                    changeUI(event, width, widthTv);
-                    break;
-
-                case R.id.height:
-                    changeUI(event, height, hightTv);
-                    break;
-
-                case R.id.weight:
-                    changeUI(event, weight, weightTv);
-                    break;
-
-                case R.id.all_length:
-                    changeUI(event, allLength, allLengthTv);
-                    break;
-
-                case R.id.all_width:
-                    changeUI(event, allWidth, allWidthTv);
-                    break;
-
-                case R.id.all_height:
-                    changeUI(event, allHeight, allHeightTv);
-                    break;
-
-                case R.id.out_length:
-                    changeUI(event, outLength, outLengthTv);
-                    break;
-
-                case R.id.out_width:
-                    changeUI(event, outWidth, outWidthTv);
-                    break;
-
-                case R.id.out_height:
-                    changeUI(event, outHeight, outHeightTv);
-                    break;
-
-                case R.id.single_weight:
-                    changeUI(event, singleWeight, singleWeightTv);
-                    break;
-
-                case R.id.single_length:
-                    changeUI(event, singleLength, singleLengthTv);
-                    break;
-
-                case R.id.single_width:
-                    changeUI(event, singleWidth, singleWidthTv);
-                    break;
-
-                case R.id.single_height:
-                    changeUI(event, singleHeight, singleHeightTv);
-                    break;
             }
         }
 

@@ -418,13 +418,23 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.code:
-                selectPhoto();
-                SELECT_TYPE = 4;
+                if(codeDelete.getVisibility() == View.VISIBLE){
+                    PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
+                }else{
+                    selectPhoto();
+                    SELECT_TYPE = 4;
+                }
+
                 break;
 
             case R.id.code_reverse:
-                selectPhoto();
-                SELECT_TYPE = 5;
+                if(codeReverseDelete.getVisibility() == View.VISIBLE){
+                    PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
+                }else{
+                    selectPhoto();
+                    SELECT_TYPE = 5;
+                }
+
                 break;
 
             case R.id.code_delete:
@@ -438,8 +448,13 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 break;
 
             case R.id.certification:
-                selectPhoto();
-                SELECT_TYPE = 3;
+                if(certiDelete.getVisibility() == View.VISIBLE){
+                    PhotoActivity.startActivity(this, certifyUrl, certifyUrl.contains("http"));
+                }else{
+                    selectPhoto();
+                    SELECT_TYPE = 3;
+                }
+
                 break;
 
             case R.id.certi_delete:

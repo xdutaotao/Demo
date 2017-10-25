@@ -141,6 +141,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
     FillCompanyReq req = new FillCompanyReq();
 
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
         context.startActivity(intent);
@@ -352,6 +353,11 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         presenter.getAddressData(this);
 
         oneIv.setOnClickListener(this);
+        firstIv.setOnClickListener(this);
+        secondIv.setOnClickListener(this);
+        thirdIv.setOnClickListener(this);
+        code.setOnClickListener(this);
+        codeReverse.setOnClickListener(this);
     }
 
     @Override
@@ -454,6 +460,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 if (codeDelete.getVisibility() == View.GONE) {
                     getPicPath();
                     SELECT_TYPE = 4;
+                }else{
+                    PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
                 }
 
                 break;
@@ -462,6 +470,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 if (codeReverseDelete.getVisibility() == View.GONE) {
                     getPicPath();
                     SELECT_TYPE = 5;
+                }else{
+                    PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
                 }
 
                 break;
@@ -471,7 +481,19 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 break;
 
             case R.id.one_iv:
-                PhotoActivity.startActivity(this, oneUrl, false);
+                PhotoActivity.startActivity(this, oneUrl, oneUrl.contains("http"));
+                break;
+
+            case R.id.first_iv:
+                PhotoActivity.startActivity(this, firstUrl, firstUrl.contains("http"));
+                break;
+
+            case R.id.second_iv:
+                PhotoActivity.startActivity(this, secondUrl, secondUrl.contains("http"));
+                break;
+
+            case R.id.third_iv:
+                PhotoActivity.startActivity(this, thirdUrl, thirdUrl.contains("http"));
                 break;
         }
 

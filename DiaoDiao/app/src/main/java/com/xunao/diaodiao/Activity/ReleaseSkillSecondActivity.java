@@ -109,6 +109,14 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
                 baseViewHolder.setVisible(R.id.delete, false);
             }
         };
+
+        adapter.setOnItemClickListener((view, i) -> {
+            PhotoActivity.startActivity(this, adapter.getAllData().get(i),
+                    adapter.getAllData().get(i).contains("http"));
+
+        });
+
+
         recyclerView.setAdapter(adapter);
 
 

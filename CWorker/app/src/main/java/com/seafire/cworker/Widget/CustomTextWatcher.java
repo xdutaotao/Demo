@@ -59,8 +59,13 @@ public class CustomTextWatcher implements TextWatcher {
             }
             //editText.setCompoundDrawablePadding(20);
             //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
-            if(drawable != null)
+            if(drawable != null) {
                 drawable.setVisibility(View.VISIBLE);
+                drawable.setOnClickListener(v -> {
+                    editText.setText("");
+                    drawable.setVisibility(View.GONE);
+                });
+            }
         } else {
             //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             drawable.setVisibility(View.GONE);

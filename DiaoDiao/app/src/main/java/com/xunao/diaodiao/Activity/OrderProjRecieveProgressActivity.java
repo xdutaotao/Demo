@@ -173,6 +173,8 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
 
             if (TextUtils.equals(signAdapter.getAllData().get(i), ADD)) {
                 selectPhoto();
+            }else{
+                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
         });
         signAdapter.clear();

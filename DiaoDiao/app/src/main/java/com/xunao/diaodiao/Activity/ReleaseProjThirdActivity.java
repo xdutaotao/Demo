@@ -108,6 +108,12 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
             }
         };
 
+        adapter.setOnItemClickListener((view, i) -> {
+            PhotoActivity.startActivity(this, adapter.getAllData().get(i),
+                    adapter.getAllData().get(i).contains("http"));
+
+        });
+
         typeAdapter = new RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean>(this, R.layout.res_proj_type_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, ReleaseProjReq.ExpensesBean s) {

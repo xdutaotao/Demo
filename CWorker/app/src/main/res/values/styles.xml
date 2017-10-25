@@ -121,6 +121,7 @@
         <item name="android:paddingRight">50px</item>
         <item name="android:paddingLeft">50px</item>
         <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
