@@ -43,6 +43,7 @@ import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.PDFActivity;
 import com.xunao.diaodiao.Activity.PayActivity;
 import com.xunao.diaodiao.Activity.PersonalActivity;
+import com.xunao.diaodiao.Activity.PhotoActivity;
 import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
@@ -178,4 +179,5 @@ public interface ActivityComponent {
     void inject(AddPhoneActivity activity);
     void inject(HomeSearchActivity activity);
     void inject(WebViewDetailActivity activity);
+    void inject(PhotoActivity activity);
 }

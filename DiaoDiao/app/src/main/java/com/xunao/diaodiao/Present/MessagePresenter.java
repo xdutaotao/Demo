@@ -34,7 +34,7 @@ public class MessagePresenter extends BasePresenter<MessageView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

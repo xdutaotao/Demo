@@ -376,6 +376,7 @@
                 android:layout_height="300px"
                 android:id="@+id/one_iv"
                 android:visibility="gone"
+                android:padding="20px"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="50px"/>
 

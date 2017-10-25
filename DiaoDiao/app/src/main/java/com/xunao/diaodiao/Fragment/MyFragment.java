@@ -149,8 +149,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
         if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
             name.setVisibility(View.VISIBLE);
             login.setVisibility(View.GONE);
-            String mobile = User.getInstance().getUserInfo().getMobile();
-            name.setText(mobile);
+            if(User.getInstance().getUserInfo() != null){
+                String mobile = User.getInstance().getUserInfo().getMobile();
+                if(!TextUtils.isEmpty(mobile))
+                    name.setText(mobile);
+            }
+
             starLayout.setVisibility(View.VISIBLE);
         } else {
             name.setVisibility(View.GONE);

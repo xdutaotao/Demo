@@ -46,7 +46,7 @@
                     android:id="@+id/message"/>
 
                 <View style="@style/project_circle"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:id="@+id/msg_icon"
                     android:layout_marginLeft="90px"
                     android:layout_marginTop="20px"/>

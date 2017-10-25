@@ -94,13 +94,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <meta-data
             android:name="design_width"
@@ -133,17 +133,17 @@
         //友盟推送
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="7354c8f32e551dfb95620c10f52b3d24"></meta-data>
+            android:value="7354c8f32e551dfb95620c10f52b3d24" />
 
-        <!--<provider-->
-            <!--android:authorities="com.xunao.diaodiao.provider"-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:grantUriPermissions="true"-->
-            <!--android:exported="false">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/filepaths"/>-->
-        <!--</provider>-->
+        <!-- <provider -->
+        <!-- android:authorities="com.xunao.diaodiao.provider" -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:grantUriPermissions="true" -->
+        <!-- android:exported="false"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/filepaths"/> -->
+        <!-- </provider> -->
 
         <activity
             android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
@@ -272,7 +272,8 @@
         <activity android:name=".Activity.WebViewDetailActivity" />
         <activity android:name=".Activity.WebViewOutActivity" />
         <activity android:name=".wxapi.WXPayEntryActivity" />
-        <activity android:name=".Activity.MessageDetail"></activity>
+        <activity android:name=".Activity.MessageDetail" />
+        <activity android:name=".Activity.PhotoActivity"></activity>
     </application>
 
 </manifest>

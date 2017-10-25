@@ -309,7 +309,12 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         buildTimeLayout.setOnClickListener(v -> {
             DatePicker datePicker = new DatePicker(this);
-            datePicker.show();
+
+            datePicker.setRangeStart(1900, 1, 1);
+            String[] dates = Utils.getNowDate().split("-");
+            datePicker.setRangeEnd(Integer.valueOf(dates[0]),
+                    Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
+
             timeLong = new StringBuilder();
             datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                 @Override
@@ -322,9 +327,31 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
                 }
             });
+
+            datePicker.setOnWheelListener(new DatePicker.OnWheelListener() {
+                @Override
+                public void onYearWheeled(int index, String year) {
+                    datePicker.setTitleText(year + "-" + datePicker.getSelectedMonth() + "-" + datePicker.getSelectedDay());
+                }
+
+                @Override
+                public void onMonthWheeled(int index, String month) {
+                    datePicker.setTitleText(datePicker.getSelectedYear() + "-" + month + "-" + datePicker.getSelectedDay());
+                }
+
+                @Override
+                public void onDayWheeled(int index, String day) {
+                    datePicker.setTitleText(datePicker.getSelectedYear() + "-" + datePicker.getSelectedMonth() + "-" + day);
+                }
+            });
+            datePicker.show();
+
+
         });
 
         presenter.getAddressData(this);
+
+        oneIv.setOnClickListener(this);
     }
 
     @Override
@@ -441,6 +468,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.login:
                 postAction();
+                break;
+
+            case R.id.one_iv:
+                PhotoActivity.startActivity(this, oneUrl, false);
                 break;
         }
 
