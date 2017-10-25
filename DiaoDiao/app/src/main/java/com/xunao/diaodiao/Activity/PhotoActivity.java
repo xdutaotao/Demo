@@ -141,7 +141,10 @@ public class PhotoActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bitmap.recycle();
-        bitmap = null;
+        if(bitmap != null){
+            bitmap.recycle();
+            bitmap = null;
+        }
+
     }
 }
