@@ -1075,6 +1075,35 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     *  阅读消息
+     */
+    public Observable<Object> readMessage(int msgID){
+        String rateKey = "readMessage";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(msgID)
+                .append("security");
+
+        MessageListReq req = new MessageListReq();
+        req.setMessage_id(msgID);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().readMessage(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      *  拿到资料库文件
      */
     public Observable<ProjectRes> getMyWork(){

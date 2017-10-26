@@ -39,5 +39,21 @@ public class MessagePresenter extends BasePresenter<MessageView> {
                 }));
     }
 
+    //阅读消息
+    public void readMessage(Context context, int page){
+        mCompositeSubscription.add(model.readMessage(page)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 
 }

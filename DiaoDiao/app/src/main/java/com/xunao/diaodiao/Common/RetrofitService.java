@@ -185,6 +185,9 @@ public interface RetrofitService {
     Observable<BaseBean<MessageListRes>> messageList(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<Object>> readMessage(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ProjectRes>> getMyWork(@Body RequestBody body);
 
 

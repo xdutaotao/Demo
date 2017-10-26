@@ -8,4 +8,5 @@ import com.xunao.diaodiao.Bean.TypeInfoRes;
  */
 public interface MessageView extends BaseView {
     void getData(MessageListRes res);
+    void getData(Object res);
 }

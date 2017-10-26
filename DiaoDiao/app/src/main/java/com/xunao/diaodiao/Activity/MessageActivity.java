@@ -45,6 +45,8 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
     private SpannableStringBuilder builder;
     private int page = 1;
 
+    MessageListRes.MessageBean select;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MessageActivity.class);
         context.startActivity(intent);
@@ -77,13 +79,8 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            if(adapter.getAllData().get(i).getInfo_type() == 1){
-                //Web
-                if(!TextUtils.isEmpty(adapter.getAllData().get(i).getUrl()))
-                    WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i));
-            }else{
-                MessageDetail.startActivity(this, adapter.getAllData().get(i).getContent());
-            }
+            select = adapter.getAllData().get(i);
+            presenter.readMessage(this, adapter.getAllData().get(i).getMessage_id());
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -100,6 +97,17 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         }
 
         adapter.addAll(res.getMessage());
+    }
+
+    @Override
+    public void getData(Object res) {
+        if(select.getInfo_type() == 1){
+            //Web
+            if(!TextUtils.isEmpty(select.getUrl()))
+                WebViewDetailActivity.startActivity(this, select);
+        }else{
+            MessageDetail.startActivity(this, select.getContent());
+        }
     }
 
     @Override
