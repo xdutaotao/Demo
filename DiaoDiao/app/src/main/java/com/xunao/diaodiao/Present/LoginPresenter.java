@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -39,7 +40,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 }));
     }
 
-    public void WxLogin(Context context, String pwd){
+    public void WxLogin(Context context, GetMoneyReq pwd){
         mCompositeSubscription.add(model.WxLogin(pwd)
                 .subscribe(new RxSubUtils<UserInfo>(mCompositeSubscription,context) {
                     @Override

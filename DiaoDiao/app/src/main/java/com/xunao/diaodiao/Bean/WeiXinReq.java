@@ -10,7 +10,7 @@ public class WeiXinReq {
     private String code;
     private String openID;
     private String verify;
-    private String deviceToken;
+    private String device_token;
     private int device_type;
 
     public int getDevice_type() {
@@ -21,12 +21,12 @@ public class WeiXinReq {
         this.device_type = device_type;
     }
 
-    public String getDeviceToken() {
-        return deviceToken;
+    public String getDevice_token() {
+        return device_token;
     }
 
-    public void setDeviceToken(String deviceToken) {
-        this.deviceToken = deviceToken;
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
     }
 
     public String getMobile() {

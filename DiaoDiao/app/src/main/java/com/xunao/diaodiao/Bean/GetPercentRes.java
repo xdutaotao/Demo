@@ -7,6 +7,15 @@ package com.xunao.diaodiao.Bean;
 
 public class GetPercentRes {
     private String percent;
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
     public String getPercent() {
         return percent;

@@ -13,6 +13,7 @@ import cn.qqtheme.framework.entity.Province;
  */
 public interface ReleaseSkillView extends BaseView {
     void getData(GetPercentRes res);
+    void getPrice(GetPercentRes res);
     void getProjectType(ProjectTypeRes res);
     void getAddressData(ArrayList<Province> data);
 }

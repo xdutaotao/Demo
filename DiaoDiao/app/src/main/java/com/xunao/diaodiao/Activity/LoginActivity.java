@@ -25,6 +25,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
+import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Model.UserInfo;
@@ -166,7 +167,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 //UIHandler.sendEmptyMessage(MSG_USERID_FOUND, this);
                 //login(plat.getName(), userId, null);
                 openID = userId;
-                presenter.WxLogin(this, userId);
+                wxLogin(openID);
                 return;
             }
         }
@@ -194,7 +195,7 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
             String platName = platform.getName();			  // 平台名称
 
             openID = userId;
-            presenter.WxLogin(this, openID);
+            wxLogin(openID);
             //login(platName, userName, res);
         }
     }
@@ -251,10 +252,18 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                 String platName = new Wechat(LoginActivity.this).getName();			   // 平台名称
 
                 //login(platName, userId, null);
-                presenter.WxLogin(this, userId);
+                wxLogin(openID);
                 break;
         }
         return false;
+    }
+
+    private void wxLogin(String openID){
+        GetMoneyReq req = new GetMoneyReq();
+        req.setOpenID(openID);
+        req.setDevice_type(2);
+        req.setDevice_token(PushAgent.getInstance(this).getRegistrationId());
+        presenter.WxLogin(this, req);
     }
 
 

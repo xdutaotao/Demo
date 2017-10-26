@@ -119,6 +119,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
     private ReleaseSkillReq req;
 
+    private String price;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseSkillActivity.class);
         context.startActivity(intent);
@@ -272,12 +274,17 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
         }
 
         presenter.publishOddType();
-
+        presenter.publishOddPrice(this);
     }
 
     @Override
     public void getData(GetPercentRes res) {
         percent = res.getPercent();
+    }
+
+    @Override
+    public void getPrice(GetPercentRes res) {
+        price = res.getPrice();
     }
 
     @Override
@@ -424,12 +431,17 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     }
 
                     if (TextUtils.isEmpty(fee.getText())) {
-                        ToastUtil.show("施工时间不能为空");
+                        ToastUtil.show("日薪不能为空");
+                        return;
+                    }
+
+                    if(Integer.valueOf(price) > Integer.valueOf(fee.getText().toString())){
+                        ToastUtil.show("日薪不能低于"+price);
                         return;
                     }
 
                     if (TextUtils.isEmpty(days.getText())) {
-                        ToastUtil.show("施工时间不能为空");
+                        ToastUtil.show("工作天数不能为空");
                         return;
                     }
 

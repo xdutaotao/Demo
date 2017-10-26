@@ -35,6 +35,24 @@ public class GetMoneyReq implements Serializable{
     private String appeal_operate;
     private String openID;
     private String technician_id;
+    private String device_token;
+    private int device_type;
+
+    public String getDevice_token() {
+        return device_token;
+    }
+
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
+    }
+
+    public int getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(int device_type) {
+        this.device_type = device_type;
+    }
 
     public String getTechnician_id() {
         return technician_id;

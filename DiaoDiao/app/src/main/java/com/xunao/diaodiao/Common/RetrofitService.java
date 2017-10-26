@@ -311,6 +311,9 @@ public interface RetrofitService {
     Observable<BaseBean<GetPercentRes>> getPercent(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<GetPercentRes>> publishOddPrice(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<ProjectTypeRes>> publishOddType(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)

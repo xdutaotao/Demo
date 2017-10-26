@@ -133,6 +133,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         switch (type) {
             case COMPANY_TYPE:
                 nameText.setText("公司名称");
+                phoneText.setText("公司电话");
                 hideLayout.setVisibility(View.GONE);
                 break;
 

@@ -194,7 +194,7 @@ public class LoginModel extends BaseModel {
     public Observable<UserInfo> wxPhone(WeiXinReq req){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("bindingWx");
-        sb.append(time+"").append(req.getCode()).append(req.getDeviceToken())
+        sb.append(time+"").append(req.getCode()).append(req.getDevice_token())
                 .append(req.getDevice_type())
                 .append(req.getMobile())
                 .append(req.getOpenID())
@@ -216,14 +216,13 @@ public class LoginModel extends BaseModel {
      * @param
      * @return
      */
-    public Observable<UserInfo> WxLogin(String openid){
+    public Observable<UserInfo> WxLogin(GetMoneyReq req){
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder("WxLogin");
-        sb.append(time+"").append(openid)
+        sb.append(time+"").append(req.getDevice_token()).append(req.getDevice_type())
+                .append(req.getOpenID())
                 .append("security");
 
-        GetMoneyReq req = new GetMoneyReq();
-        req.setOpenID(openid);
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().bindingWx(setBody("WxLogin", time, req))
@@ -2119,6 +2118,36 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 服务费用
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> publishOddPrice(){
+        String rateKey = "publishOddPrice";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setType(type);
+        req.setUserid(userid);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().publishOddPrice(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

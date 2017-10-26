@@ -44,6 +44,22 @@ public class ReleaseSkillPresenter extends BasePresenter<ReleaseSkillView> {
                 }));
     }
 
+    //最低单价
+    public void publishOddPrice(Context context){
+        mCompositeSubscription.add(model.publishOddPrice()
+                .subscribe(new RxSubUtils<GetPercentRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(GetPercentRes token) {
+                        getView().getPrice(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
+                }));
+    }
+
     //项目类型
     public void publishOddType(){
         mCompositeSubscription.add(model.publishOddType()

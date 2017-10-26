@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/activity_background">
 
@@ -270,7 +271,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:gravity="right"
-                        android:text="自己项目自己项己项目自己项目自己项目"
+                        tools:text="自己项目自己项己项目自己项目自己项目"
                         android:layout_marginRight="50px"
                         android:id="@+id/work"/>
 

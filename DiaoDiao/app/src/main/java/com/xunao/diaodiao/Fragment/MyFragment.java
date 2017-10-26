@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Present.MyPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.MyView;
 
@@ -302,8 +303,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 break;
 
             case R.id.message:
-                msgIcon.setVisibility(View.GONE);
-                MessageActivity.startActivity(getActivity());
+                if(TextUtils.isEmpty(User.getInstance().getUserId())){
+                    ToastUtil.show("未登录");
+                }else{
+                    msgIcon.setVisibility(View.GONE);
+                    MessageActivity.startActivity(getActivity());
+                }
+
                 break;
 
             case R.id.feedback:
