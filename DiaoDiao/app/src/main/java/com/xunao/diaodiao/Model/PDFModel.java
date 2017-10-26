@@ -33,7 +33,7 @@ public class PDFModel extends BaseModel {
                 FileUtils.downloadApk(subscriber, url, file);
                 subscriber.onCompleted();
             }
-        }).sample(500, TimeUnit.MILLISECONDS)
+        })
         .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 }

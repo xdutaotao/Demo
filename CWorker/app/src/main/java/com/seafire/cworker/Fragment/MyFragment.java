@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.seafire.cworker.Activity.AboutActivity;
 import com.seafire.cworker.Activity.CheckPhoneActivity;
 import com.seafire.cworker.Activity.CollectHistoryActivity;
@@ -167,6 +168,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             total.setText("0");
             Glide.with(this)
                     .load(R.drawable.my_head)
+                    .placeholder(R.drawable.my_head)
                     .bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(headIcon);
             level.setVisibility(View.GONE);
@@ -178,7 +180,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
                 if (!TextUtils.isEmpty(userInfo.getPerson().getFace())) {
                     Glide.with(this)
                             .load(userInfo.getPerson().getFace())
-                            .placeholder(R.drawable.my_head)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(getContext()))
                             .into(headIcon);
                 }
@@ -326,9 +328,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
 
                 days.setText(Html.fromHtml("<font color='#ffa400'><big><big><big><big><big><big>" + continueDays + "</big></big></big></big></big></big></font>天"));
 
-                if (popView.getVisibility() == View.GONE)
+                if (popView.getVisibility() == View.GONE) {
                     CustomDialog.viewShow(popView);
-
+                }
                 //CustomDialog.showContinuePop(getActivity(), continueDays, User.getInstance().getUserInfo().getPerson().getVIP() != 0);
                 break;
 
