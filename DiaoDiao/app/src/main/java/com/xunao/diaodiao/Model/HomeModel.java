@@ -7,6 +7,7 @@ import com.xunao.diaodiao.Bean.HomeBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Common.ApiConstants;
+import com.xunao.diaodiao.Common.RetrofitService;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.RxUtils;
 import com.xunao.diaodiao.Utils.Utils;
@@ -16,6 +17,7 @@ import java.io.File;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -30,6 +32,18 @@ import static com.xunao.diaodiao.Common.Constants.city;
 public class HomeModel extends BaseModel {
     @Inject
     public HomeModel() {}
+
+    public Observable<String> checkApp(){
+
+        return new Retrofit.Builder().baseUrl("http://gotocoding.com:7000/")
+                .build().create(RetrofitService.class)
+                .getAppControl("hello")
+                .compose(RxUtils.applyIOToMainThreadSchedulers());
+
+
+//        return config.getRetrofitService().getAppControl("http://gotocoding.com:7000/?id=hello")
+//                .compose(RxUtils.applyIOToMainThreadSchedulers());
+    }
 
     public Observable<HomeResponseBean> getFirstPage(@NonNull String lat, @NonNull String lng){
         long time = System.currentTimeMillis()/1000;

@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.App;
+import com.xunao.diaodiao.Common.RetrofitConfig;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
@@ -1000,5 +1001,23 @@ public class Utils {
         }
         context.startActivity(intent);
     }
+
+
+//    //app control
+//    public static int getAppControl(){
+//        try {
+//
+//            RetrofitConfig.getInstance().getRetrofitService().getAppControl("hello")
+//                    .compose(RxUtils.applyIOToMainThreadSchedulers())
+//                    .subscribe(s -> {
+//                        ToastUtil.show(s);
+//                    });
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        return 0;
+//    }
 
 }

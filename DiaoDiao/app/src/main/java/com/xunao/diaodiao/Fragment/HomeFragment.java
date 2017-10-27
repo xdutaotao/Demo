@@ -339,6 +339,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         //刷新切换城市
         selectCity = city;
         presenter.getFirstPage(latData, lngData);
+
+        presenter.checkApp();
     }
 
 
@@ -445,6 +447,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     }
 
+    @Override
+    public void getData(String bean) {
+        ToastUtil.show(bean);
+    }
 
 
     @Override

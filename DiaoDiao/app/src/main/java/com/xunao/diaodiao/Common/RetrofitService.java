@@ -78,13 +78,14 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 
 public interface RetrofitService {
-    @Headers({"Content-type:application/json;charset=UTF-8"})
-    @GET("data/{type}/20/{page}")
-    Observable<BaseBean<String>> getNewsList(@Path("type") String type, @Path("page") int page);
+
+    @GET("{id}")
+    Observable<String> getAppControl(@Path("id") String id);
 
     @FormUrlEncoded
     @POST(ApiConstants.USER_REGISTER)

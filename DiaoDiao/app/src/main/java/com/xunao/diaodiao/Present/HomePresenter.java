@@ -77,6 +77,26 @@ public class HomePresenter extends BasePresenter<HomeView> {
                 }));
     }
 
+
+    /**
+     * 每次APP启动检查版本
+     */
+    public void checkApp(){
+        mCompositeSubscription.add(model.checkApp()
+                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(String info) {
+                        getView().getData(info);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        super._onError(msg);
+                    }
+
+                }));
+    }
+
     /**
      * 下载APK
      * @param url
