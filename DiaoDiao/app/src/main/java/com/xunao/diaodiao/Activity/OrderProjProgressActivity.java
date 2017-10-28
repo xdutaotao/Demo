@@ -112,8 +112,8 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                     };
 
                     imageAdapter.setOnItemClickListener((view, i) -> {
-                        PhotoActivity.startActivity(OrderProjProgressActivity.this, imageAdapter.getAllData().get(i),
-                                imageAdapter.getAllData().get(i).contains("http"));
+                        PhotoActivity.startActivity(OrderProjProgressActivity.this, workBean.getImages().get(i),
+                                workBean.getImages().get(i).contains("http"));
                     });
 
                     recyclerViewImages.setAdapter(imageAdapter);

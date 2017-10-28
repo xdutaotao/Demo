@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingBottom="50px"
-        android:text="实际铺设面积需大于地暖所需面积"
+        android:text="请与甲方确认实际铺设面积"
         android:id="@+id/warning"/>
 
     <Button

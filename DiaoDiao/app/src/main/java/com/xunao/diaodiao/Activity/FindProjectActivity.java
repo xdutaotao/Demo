@@ -201,7 +201,7 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             if (i == req.getTime_type()){
                 projTime.setTextColor(getResources().getColor(R.color.nav_gray));
                 req.setTime_type(0);
-                timeType="";
+                timeType="全部";
             }else{
                 projTime.setTextColor(getResources().getColor(R.color.colorAccent));
                 req.setTime_type(i);
@@ -395,6 +395,13 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
     @Override
     public void getProjType(TypeInfoRes res) {
         List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+
+        TypeInfoRes.Type_Info type_info = new TypeInfoRes.Type_Info();
+        type_info.setTitle("全部");
+        type_info.setId("0");
+        type_info.setParent_id("0");
+        itemData.add(type_info);
+
         for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
             if (Integer.valueOf(typeInfo.getParent_id()) == 0){
                 itemData.add(typeInfo);

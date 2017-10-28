@@ -140,6 +140,20 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         hzLayout.setOnClickListener(this);
 
 
+        type = ShareUtils.getValue(TYPE_KEY, 0);
+        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+            LoginActivity.startActivity(ProjectFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
+
+        } else if (type == 0) {
+            SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
+
+        } else {
+        }
+
+
+
         return view;
     }
 
@@ -240,25 +254,13 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     public void onResume() {
         super.onResume();
 
-        type = ShareUtils.getValue(TYPE_KEY, 0);
+
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
-            //recyclerView.setVisibility(View.GONE);
-            index++;
-            if (index == 1) {
-                LoginActivity.startActivity(ProjectFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
-        } else if (type == 0) {
-            //recyclerView.setVisibility(View.GONE);
-
-            selectIndex++;
-            if (selectIndex == 1) {
-                SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
-
+            LoginActivity.startActivity(ProjectFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
         } else {
-            //recyclerView.setVisibility(View.VISIBLE);
+            type = ShareUtils.getValue(TYPE_KEY, 0);
+            presenter.getMyWork(this.getContext());
         }
 
     }
@@ -267,6 +269,21 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+
+            type = ShareUtils.getValue(TYPE_KEY, 0);
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                LoginActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+
+            } else if (type == 0) {
+                SelectMemoryActivity.startActivity(ProjectFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+                return;
+
+            } else {
+            }
+
+
             if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 LoginActivity.startActivity(ProjectFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);

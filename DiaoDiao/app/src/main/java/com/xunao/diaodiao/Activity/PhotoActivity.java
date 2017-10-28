@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.FileUtils;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Widget.DownloadDialog.DownloadDialogFactory;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 import com.xunao.diaodiao.Widget.PhotoView.PhotoView;
@@ -39,7 +40,7 @@ public class PhotoActivity extends BaseActivity {
 
     String path;
     boolean isNet;
-    Bitmap bitmap;
+    Bitmap bitmap ;
 
     public static void startActivity(Context context, String path, boolean isNet) {
         Intent intent = new Intent(context, PhotoActivity.class);
@@ -69,18 +70,20 @@ public class PhotoActivity extends BaseActivity {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
                     .into(imageView);
 
-            toolBar.post(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
+
                     try {
-                        bitmap = Glide.with(PhotoActivity.this).load(path).asBitmap().into(imageView.getWidth(), imageView.getHeight()).get();
+                        bitmap = Glide.with(PhotoActivity.this).load(path).asBitmap().into(500, 500).get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
+
                 }
-            });
+            }).start();
 
 
         }else{
@@ -116,7 +119,12 @@ public class PhotoActivity extends BaseActivity {
                     return true;
                 }
 
-                FileUtils.saveImageToGallery(this, bitmap);
+                boolean isSuccess = FileUtils.saveImageToGallery(this, bitmap);
+                if(isSuccess){
+                    ToastUtil.show("保存成功");
+                }else{
+                    ToastUtil.show("保存失败");
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

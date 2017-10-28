@@ -111,6 +111,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         };
 
         adapter.setOnItemClickListener((view, i) -> {
+            if(adapter.getAllData() != null && (adapter.getAllData().size() > 0))
             PhotoActivity.startActivity(this, adapter.getAllData().get(i),
                     adapter.getAllData().get(i).contains("http"));
 

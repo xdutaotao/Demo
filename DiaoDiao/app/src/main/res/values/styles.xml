@@ -587,6 +587,8 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textSize">40px</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionNext</item>
     </style>
 
     <style name="item_layout">

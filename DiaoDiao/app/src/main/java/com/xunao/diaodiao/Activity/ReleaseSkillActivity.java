@@ -190,6 +190,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
             }else{
+                if(pathList.size() > 0)
                 PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
 

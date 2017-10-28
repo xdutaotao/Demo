@@ -109,6 +109,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         };
 
         adapter.setOnItemClickListener((view, i) -> {
+            if(adapter.getAllData().size() > 0)
             PhotoActivity.startActivity(this, adapter.getAllData().get(i),
                     adapter.getAllData().get(i).contains("http"));
 

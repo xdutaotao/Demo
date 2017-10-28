@@ -164,6 +164,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
             }else{
+                if(pathList.size() > 0)
                 PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
         });
@@ -363,6 +364,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
         if (TextUtils.isEmpty(temp.getAmount())){
             amount.setText(temp.getAmount());
+        }
+
+        if(select.getText().toString().contains("氟机系统") || select.getText().toString().contains("水机系统")){
+            amount.setHint("请输入室内机数量");
         }
 
         if (TextUtils.isEmpty(temp.getUnit_price())){

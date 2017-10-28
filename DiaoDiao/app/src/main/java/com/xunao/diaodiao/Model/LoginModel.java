@@ -228,9 +228,9 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().bindingWx(setBody("WxLogin", time, req))
                 .compose(RxUtils.handleResult())
                 .map(weiXinRes -> {
-//                    User.getInstance().setUserId(weiXinRes.getUserid()+"");
-//                    User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(weiXinRes));
-//                    ShareUtils.putValue(TYPE_KEY, weiXinRes.getType());
+                    User.getInstance().setUserId(weiXinRes.getUserid()+"");
+                    User.getInstance().setUserInfo(JsonUtils.getInstance().UserInfoToJson(weiXinRes));
+                    ShareUtils.putValue(TYPE_KEY, weiXinRes.getType());
                     return weiXinRes;
                 });
     }

@@ -126,26 +126,15 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         presenter.checkFinish();
         presenter.getPersonalInfo(ReleaseFragment.this.getContext());
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
         type = ShareUtils.getValue(TYPE_KEY, 0);
         if (TextUtils.isEmpty(User.getInstance().getUserId())) {
-            index++;
-            if (index == 1) {
-                LoginActivity.startActivity(ReleaseFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
+            LoginActivity.startActivity(ReleaseFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
+
         } else if (type == 0) {
-            selectIndex++;
-            if (selectIndex == 1) {
-                SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
-                ((MainActivity) getActivity()).goToFragment(1);
-            }
+
+            SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
+            ((MainActivity) getActivity()).goToFragment(1);
         } else if (type == 1) {
             companyRelease.setVisibility(View.VISIBLE);
             skillRelease.setVisibility(View.GONE);
@@ -160,6 +149,15 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
             homeRelease.setVisibility(View.VISIBLE);
         }
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
     }
 
 
@@ -168,6 +166,40 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
         super.onHiddenChanged(hidden);
 
         if (!hidden) {
+
+            type = ShareUtils.getValue(TYPE_KEY, 0);
+            if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+                index++;
+                if (index == 1) {
+                    LoginActivity.startActivity(ReleaseFragment.this.getContext());
+                    ((MainActivity) getActivity()).goToFragment(1);
+                }
+            } else if (type == 0) {
+
+                SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
+                ((MainActivity) getActivity()).goToFragment(1);
+                return;
+
+//                selectIndex++;
+//                if (selectIndex == 1) {
+//                    SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
+//                    ((MainActivity) getActivity()).goToFragment(1);
+//                    return;
+//                }
+            } else if (type == 1) {
+                companyRelease.setVisibility(View.VISIBLE);
+                skillRelease.setVisibility(View.GONE);
+                homeRelease.setVisibility(View.GONE);
+            } else if (type == 2) {
+                companyRelease.setVisibility(View.GONE);
+                skillRelease.setVisibility(View.VISIBLE);
+                homeRelease.setVisibility(View.GONE);
+            } else {
+                companyRelease.setVisibility(View.GONE);
+                skillRelease.setVisibility(View.GONE);
+                homeRelease.setVisibility(View.VISIBLE);
+            }
+
             if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 LoginActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
@@ -180,6 +212,7 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 presenter.checkFinish();
                 presenter.getPersonalInfo(ReleaseFragment.this.getContext());
             }
+
         }
 
     }
