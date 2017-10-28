@@ -28,7 +28,6 @@ import com.xunao.diaodiao.Bean.PayResult;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.WeiXinPayRes;
 import com.xunao.diaodiao.Common.Constants;
-import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Present.PayPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
@@ -67,6 +66,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     CheckBox wechat;
     @BindView(R.id.balance)
     TextView balance;
+    @BindView(R.id.canclePay)
+    Button canclePay;
 
     private ReleaseProjRes req;
     private int projType = 0;
@@ -74,14 +75,18 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
-    /** 支付宝支付业务：入参app_id */
+    /**
+     * 支付宝支付业务：入参app_id
+     */
     public static final String APPID = "2017083108479643";
     /** 商户私钥，pkcs8格式 */
     /** 如下私钥，RSA2_PRIVATE 或者 RSA_PRIVATE 只需要填入一个 */
     /** 如果商户两个都设置了，优先使用 RSA2_PRIVATE */
     /** RSA2_PRIVATE 可以保证商户交易在更加安全的环境下进行，建议使用 RSA2_PRIVATE */
     /** 获取 RSA2_PRIVATE，建议使用支付宝提供的公私钥生成工具生成， */
-    /** 工具地址：https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=106097&docType=1 */
+    /**
+     * 工具地址：https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=106097&docType=1
+     */
     public static final String RSA2_PRIVATE = "";
 
     public static void startActivity(Context context, ReleaseProjRes req, int projType) {
@@ -140,9 +145,10 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 default:
                     break;
             }
-        };
-    };
+        }
 
+        ;
+    };
 
 
     @Override
@@ -158,13 +164,14 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         req = (ReleaseProjRes) getIntent().getSerializableExtra(INTENT_KEY);
         projType = getIntent().getIntExtra("projType", 0);
 
-        fee.setText("￥ "+req.getTotal_fee()+"元");
-        balance.setText("当前余额："+req.getBalance()+"元");
+        fee.setText("￥ " + req.getTotal_fee() + "元");
+        balance.setText("当前余额：" + req.getBalance() + "元");
         pay.setOnClickListener(this);
         current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
         wechat.setOnCheckedChangeListener(this);
         current.setChecked(true);
+        canclePay.setOnClickListener(this);
 
         registerWeiXin();
     }
@@ -172,7 +179,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     private static final String APP_ID = "wxfa5af658b9f2e5d4";
     private IWXAPI api;
 
-    private void registerWeiXin(){
+    private void registerWeiXin() {
         api = WXAPIFactory.createWXAPI(this, APP_ID, true);
         api.registerApp(APP_ID);
     }
@@ -181,7 +188,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                if(current.isChecked()){
+                if (current.isChecked()) {
 
                     payFeeReq.setOrder_no(req.getOrder_no());
                     payFeeReq.setPay_fee(req.getTotal_fee());
@@ -189,23 +196,32 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     payFeeReq.setProject_type(projType);
                     presenter.balancePay(this, payFeeReq);
 
-                }else if(zhifubao.isChecked()){
+                } else if (zhifubao.isChecked()) {
                     payFeeReq.setOrder_no(req.getOrder_no());
                     payFeeReq.setPrice(req.getTotal_fee());
                     presenter.aliPay(this, payFeeReq);
 
 
-                }else if(wechat.isChecked()){
+                } else if (wechat.isChecked()) {
                     //weixinPay();
                     ToastUtil.show("敬请期待");
                 }
 
 
                 break;
+
+
+            case R.id.canclePay:
+
+                payFeeReq.setOrder_no(req.getOrder_no());
+                //1项目2监理3零工4维保
+                payFeeReq.setProject_type(projType);
+                presenter.cancelPublish(this, payFeeReq);
+                break;
         }
     }
 
-    private void weixinPay(){
+    private void weixinPay() {
         WeiXinPayRes res = new WeiXinPayRes();
 
         PayReq payReq = new PayReq();
@@ -232,10 +248,10 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 .setNegativeBtnColor(R.color.light_gray)
                 .setNegativeButton("再次发布", v1 -> {
 
-                    if (projType == 1){
+                    if (projType == 1) {
                         //项目
                         ReleaseProjActivity.startActivity(this);
-                    }else if (projType == 3){
+                    } else if (projType == 3) {
                         //零工
                         ReleaseSkillActivity.startActivity(this);
                     }
@@ -252,7 +268,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     @Override
     public void payAli(PayRes s) {
-        String orderInfo=s.getOrderInfo();
+        String orderInfo = s.getOrderInfo();
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
@@ -269,6 +285,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
         Thread payThread = new Thread(payRunnable);
         payThread.start();
+    }
+
+    @Override
+    public void canclePublish(Object s) {
+        ToastUtil.show("取消订单成功");
+        RxBus.getInstance().post(Constants.DESTORY);
     }
 
     @Override

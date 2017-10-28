@@ -71,10 +71,14 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
                 baseViewHolder.setText(R.id.title, s.getTitle());
                 baseViewHolder.setText(R.id.look, s.getContent());
 
-                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.accept_btn_default));
-                builder = new SpannableStringBuilder(s.getContent());
-                builder.setSpan(span, s.getContent().toString().length()-4,
-                        s.getContent().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if(s.getIs_read() == 2){
+                    //未读
+                    baseViewHolder.setTextColorRes(R.id.look, R.color.accept_btn_default);
+                }
+//                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.accept_btn_default));
+//                builder = new SpannableStringBuilder(s.getContent());
+//                builder.setSpan(span, s.getContent().toString().length()-4,
+//                        s.getContent().toString().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         };
 
@@ -84,6 +88,12 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        //onRefresh();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         onRefresh();
     }
 

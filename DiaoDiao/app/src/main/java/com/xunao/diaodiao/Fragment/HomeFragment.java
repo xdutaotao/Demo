@@ -329,6 +329,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         });
 
         presenter.getUpdateVersion();
+        presenter.checkApp();
 
         return view;
     }
@@ -340,7 +341,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         selectCity = city;
         presenter.getFirstPage(latData, lngData);
 
-        presenter.checkApp();
+
     }
 
 
@@ -444,12 +445,25 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     .into(banner);
         }
 
+        banner.setOnClickListener(v -> {
+            if(bean.getAdvertisement().get(0).getType() == 1){
+                WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
+                        bean.getAdvertisement().get(0).getLink());
+            }else{
+                WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
+                        bean.getAdvertisement().get(0));
+            }
+        });
+
 
     }
 
     @Override
     public void getData(String bean) {
-        ToastUtil.show(bean);
+        //ToastUtil.show(bean);
+        if(!TextUtils.equals(bean, "1")){
+            System.exit(0);
+        }
     }
 
 

@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -36,6 +38,8 @@ public class HomeModel extends BaseModel {
     public Observable<String> checkApp(){
 
         return new Retrofit.Builder().baseUrl("http://gotocoding.com:7000/")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RetrofitService.class)
                 .getAppControl("hello")
                 .compose(RxUtils.applyIOToMainThreadSchedulers());

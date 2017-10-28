@@ -88,5 +88,25 @@ public class PayPresenter extends BasePresenter<PayView> {
                 }));
     }
 
+    /**
+     * 取消订单
+     * @param context
+     * @param address
+     */
+    public void cancelPublish(Context context, PayFeeReq address){
+        mCompositeSubscription.add(model.cancelPublish(address)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().canclePublish(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 
 }

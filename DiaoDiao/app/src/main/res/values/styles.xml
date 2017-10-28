@@ -53,6 +53,17 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="cancle_btn_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">130px</item>
+        <item name="android:layout_marginLeft">40px</item>
+        <item name="android:layout_marginRight">40px</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">50px</item>
+        <item name="android:background">@drawable/cancle_btn_seletor</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
     <style name="setting_divider_line_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2px</item>

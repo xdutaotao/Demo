@@ -164,13 +164,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200px"
+        android:layout_height="400px"
         android:background="@color/white"
         android:orientation="vertical">
 
         <Button style="@style/login_btn_style"
             android:text="确认支付"
             android:id="@+id/pay"/>
+
+        <Button style="@style/cancle_btn_style"
+            android:text="取消订单"
+            android:layout_marginTop="50px"
+            android:id="@+id/canclePay"/>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -2307,6 +2307,37 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 取消支付
+     * @param req
+     * @return
+     */
+    public Observable<Object> cancelPublish(PayFeeReq req){
+        String rateKey = "cancelPublish";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getOrder_no())
+                .append(req.getProject_type()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().cancelPublish(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 发布零工
      * @param
      * @return

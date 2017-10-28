@@ -71,6 +71,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     OrderSkillFinishRecieveRes.OddBean odd;
     HomeResponseBean.Carousel carousel;
     MessageListRes.MessageBean messageBean;
+    HomeResponseBean.Advertisement advertisement;
 
 
     int who;
@@ -105,6 +106,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     public static void startActivity(Context context, HomeResponseBean.Carousel carousel) {
         Intent intent = new Intent(context, WebViewDetailActivity.class);
         intent.putExtra("carousel", carousel);
+        context.startActivity(intent);
+    }
+
+    //首页广告
+    public static void startActivity(Context context, HomeResponseBean.Advertisement advertisement) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("advertisement", advertisement);
         context.startActivity(intent);
     }
 
@@ -147,6 +155,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
         messageBean = (MessageListRes.MessageBean) getIntent().getSerializableExtra("message");
+        advertisement = (HomeResponseBean.Advertisement) getIntent().getSerializableExtra("advertisement");
 
         url = getIntent().getStringExtra("favorite");
         String notification = getIntent().getStringExtra("notification");
@@ -204,6 +213,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         if(messageBean != null){
             url = messageBean.getUrl();
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setVisibility(View.GONE);
+            share.setVisibility(View.GONE);
+        }
+
+        if(advertisement != null){
+            url = advertisement.getLink();
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.GONE);
             share.setVisibility(View.GONE);

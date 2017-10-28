@@ -222,6 +222,10 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             hzDoing.setText(mutual);
         }
 
+        if(type == COMPANY_TYPE){
+            lgLayout.setVisibility(View.GONE);
+        }
+
     }
 
 

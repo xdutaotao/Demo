@@ -84,8 +84,9 @@ import rx.Observable;
 
 public interface RetrofitService {
 
-    @GET("{id}")
-    Observable<String> getAppControl(@Path("id") String id);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @GET("/")
+    Observable<String> getAppControl(@Query("id") String id);
 
     @FormUrlEncoded
     @POST(ApiConstants.USER_REGISTER)
@@ -328,6 +329,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<PayRes>> aliPay(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<Object>> cancelPublish(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<CheckFinishRes>> checkFinish(@Body RequestBody body);

@@ -10,4 +10,5 @@ public interface PayView extends BaseView {
     void getData(Object s);
     void paySuccess(Object s);
     void payAli(PayRes s);
+    void canclePublish(Object s);
 }

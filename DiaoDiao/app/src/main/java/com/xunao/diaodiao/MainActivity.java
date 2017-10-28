@@ -32,6 +32,7 @@ import com.xunao.diaodiao.Fragment.ProjectFragment;
 import com.xunao.diaodiao.Fragment.MyFragment;
 import com.xunao.diaodiao.Fragment.ReleaseFragment;
 import com.xunao.diaodiao.Model.User;
+import com.xunao.diaodiao.Utils.BadgeUtil;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ShareUtils;
@@ -164,7 +165,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (msgCnt == 0){
             msgBadgeItem.hide();
         }else{
-            msgBadgeItem.show();
+            msgBadgeItem.show().setText("10");
+            BadgeUtil.setBadgeCount(this, 1, R.mipmap.ic_launcher);
         }
     }
 
