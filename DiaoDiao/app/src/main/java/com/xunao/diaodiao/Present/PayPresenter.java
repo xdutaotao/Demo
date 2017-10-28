@@ -9,6 +9,7 @@ import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.PayModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.PayView;
 
 import javax.inject.Inject;
@@ -103,7 +104,7 @@ public class PayPresenter extends BasePresenter<PayView> {
 
                     @Override
                     protected void _onError(String msg) {
-                        getView().onFailure();
+                        ToastUtil.show("取消订单失败");
                     }
                 }));
     }

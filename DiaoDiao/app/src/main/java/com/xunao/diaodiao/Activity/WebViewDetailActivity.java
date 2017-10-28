@@ -356,6 +356,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             sp.setShareType(Platform.SHARE_WEBPAGE);
             url += "&hd=1";
             sp.setUrl(url);
+            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
             sp.setTitleUrl(url);
             if(project != null){
                 sp.setText(project.getTitle());

@@ -388,7 +388,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             url += "&hd=1";
             sp.setUrl(url);
             sp.setTitleUrl(url);
-
+            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
             sp.setText(title);
             sp.setTitle(title);
 

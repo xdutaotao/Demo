@@ -216,10 +216,10 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         });
 
         List<String> timeData = new ArrayList<>();
-        timeData.add("无");
-        timeData.add("0 - 3");
-        timeData.add("4 - 7");
-        timeData.add("7以上");
+        timeData.add("全部");
+        timeData.add("0 - 3 天");
+        timeData.add("4 - 7 天");
+        timeData.add("7天以上");
         textAdapter.addAll(timeData);
 
         View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);

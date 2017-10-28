@@ -238,7 +238,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                imageItems.clear();
+                //imageItems.clear();
                 imageItems.addAll(images);
                 setResultToAdapter(imageItems);
             } else {

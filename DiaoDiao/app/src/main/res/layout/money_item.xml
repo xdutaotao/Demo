@@ -18,6 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="项目取消"
+            android:maxLines="1"
+            android:maxEms="16"
+            android:ellipsize="end"
             android:id="@+id/type"
             android:textColor="@color/black"/>
 

@@ -78,27 +78,27 @@ public class SelectCompanyActivity extends BaseActivity implements SelectCompany
         }
 
         if (TextUtils.isEmpty(address.getText().toString())){
-            ToastUtil.show("公司名称不能为空");
+            ToastUtil.show("公司地区不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(addressDetail.getText().toString())){
-            ToastUtil.show("公司名称不能为空");
+            ToastUtil.show("公司地址不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(phone.getText().toString())){
-            ToastUtil.show("公司名称不能为空");
+            ToastUtil.show("公司电话不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(contact.getText().toString())){
-            ToastUtil.show("公司名称不能为空");
+            ToastUtil.show("联系人不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(contactPhone.getText().toString())){
-            ToastUtil.show("公司名称不能为空");
+            ToastUtil.show("联系人电话不能为空");
             return;
         }
 

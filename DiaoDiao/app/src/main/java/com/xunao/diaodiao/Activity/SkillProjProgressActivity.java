@@ -122,7 +122,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "定位及隐藏工程施工");
+        showToolbarBack(toolBar, titleText, "工作拍照");
 
         who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
@@ -477,7 +477,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
 
         req.setWorks_id(worksid);
-        req.setSign_time(System.currentTimeMillis());
+        req.setSign_time(System.currentTimeMillis()/1000);
         req.setRemark(postRemark.getText().toString());
         req.setAudit(audit);
         presenter.myAcceptProjectWorkSub(this, req);
@@ -501,7 +501,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             if (data != null && requestCode == IMAGE_PICKER) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                imageItems.clear();
+                //imageItems.clear();
                 imageItems.addAll(images);
                 setResultToAdapter(imageItems);
             } else {

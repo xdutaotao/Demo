@@ -88,6 +88,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         goLogin.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
 
         agree.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
+        agreeContent.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
 
         phoneInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         codeInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);

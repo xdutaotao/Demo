@@ -458,7 +458,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code:
                 if (codeDelete.getVisibility() == View.GONE) {
-                    getPicPath();
+                    //getPicPath();
+                    selectPhoto();
                     SELECT_TYPE = 4;
                 }else{
                     PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
@@ -468,7 +469,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code_reverse:
                 if (codeReverseDelete.getVisibility() == View.GONE) {
-                    getPicPath();
+                    //getPicPath();
+                    selectPhoto();
                     SELECT_TYPE = 5;
                 }else{
                     PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
