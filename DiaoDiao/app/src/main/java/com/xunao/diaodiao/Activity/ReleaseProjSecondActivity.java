@@ -521,7 +521,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     req.setProvince(provinceId);
                     req.setCity(cityId);
                     req.setDistrict(districtId);
-                    req.setBuild_time(Utils.convert2long(time.getText().toString()));
+                    req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
                     req.setBuild_time_string(time.getText().toString());
                     if(pathList.size() == 0){
                         ToastUtil.show("请添加图片");
@@ -546,6 +546,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 datePicker.setRangeStart(Integer.valueOf(dates[0]),
                         Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
                 timeLong = new StringBuilder();
+
+
+                TimePicker timePicker = new TimePicker(this);
+
                 datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                     @Override
                     public void onDatePicked(String year, String month, String day) {
@@ -553,8 +557,10 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                         timeLong.append(year + "-")
                                 .append(month + "-")
                                 .append(day);
-                        time.setText(timeLong.toString());
-                        req.setBuild_time_string(timeLong.toString());
+//                        time.setText(timeLong.toString());
+//                        req.setBuild_time_string(timeLong.toString());
+
+                        timePicker.show();
                     }
                 });
 
@@ -575,6 +581,15 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     }
                 });
                 datePicker.show();
+
+                timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+                    @Override
+                    public void onTimePicked(String hour, String minute) {
+                        timeLong.append(" " + hour+":"+minute);
+                        time.setText(timeLong.toString());
+                        req.setBuild_time_string(timeLong.toString());
+                    }
+                });
 
                 break;
         }

@@ -306,6 +306,24 @@ public class Utils {
     }
 
     /**
+     * 将日期格式的字符串转换为长整型
+     * @param date
+     * @return
+     */
+    public static long convertTime2long(String date) {
+        try {
+            if (!TextUtils.isEmpty(date)) {
+                String format = "yyyy-MM-dd HH:mm";
+                SimpleDateFormat sf = new SimpleDateFormat(format);
+                return sf.parse(date).getTime()/1000;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0l;
+    }
+
+    /**
      * 将长整型格式转 日期格式
      * @param time
      * @return

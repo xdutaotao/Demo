@@ -65,6 +65,7 @@ public class BankActivity extends BaseActivity implements BankView {
                 int length = s.getCard().length();
                 String cardFoot = s.getCard().substring(length-4, length);
                 baseViewHolder.setText(R.id.bank_foot, cardFoot);
+                baseViewHolder.setImageUrl(R.id.bank_icon, s.getImg());
             }
         };
 

@@ -9,8 +9,9 @@
     android:background="@drawable/bg_yinhangka">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140px"
+        android:layout_height="140px"
+        android:id="@+id/bank_icon"
         android:src="@drawable/icon_fabuhuzhu"/>
 
     <RelativeLayout

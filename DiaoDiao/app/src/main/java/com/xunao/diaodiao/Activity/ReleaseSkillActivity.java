@@ -479,7 +479,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     req.setDaily_wage(fee.getText().toString());
                     req.setTotal_day(days.getText().toString());
                     req.setBuild_time_string(time.getText().toString());
-                    req.setBuild_time(Utils.convert2long(time.getText().toString()));
+                    req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
                     req.setDescribe(content.getText().toString());
                     req.setDescribe(content.getText().toString());
 //                    int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
@@ -511,6 +511,11 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
 
                 timeLong = new StringBuilder();
+
+
+                TimePicker timePicker = new TimePicker(this);
+
+
                 datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                     @Override
                     public void onDatePicked(String year, String month, String day) {
@@ -518,8 +523,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         timeLong.append(year + "-")
                                 .append(month + "-")
                                 .append(day);
-                        time.setText(timeLong.toString());
-
+                        //time.setText(timeLong.toString());
+                        timePicker.show();
                     }
                 });
 
@@ -540,6 +545,16 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     }
                 });
                 datePicker.show();
+
+
+                timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+                    @Override
+                    public void onTimePicked(String hour, String minute) {
+                        timeLong.append(" " + hour+":"+minute);
+                        time.setText(timeLong.toString());
+                        //req.setBuild_time_string(timeLong.toString());
+                    }
+                });
 
                 break;
 
