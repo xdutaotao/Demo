@@ -292,6 +292,9 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             @Override
             protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
                 baseViewHolder.setText(R.id.text, s.getTitle());
+                if (projectType == Integer.valueOf(s.getId())){
+                    baseViewHolder.setTextColorRes(R.id.text, R.color.colorAccent);
+                }
             }
         };
 
@@ -309,6 +312,10 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             page = 1;
             req.setPage(page);
             req.setType(Integer.valueOf(projAdapter.getAllData().get(i).getId()));
+
+            if(popWindow != null){
+                popWindow.dissmiss();
+            }
             presenter.getProjectList(FindProjectActivity.this, req, type);
         });
 

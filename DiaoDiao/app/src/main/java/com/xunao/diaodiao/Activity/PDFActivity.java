@@ -105,7 +105,8 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
                 e.printStackTrace();
             }
             content.setMovementMethod(ScrollingMovementMethod.getInstance());
-            content.setText(text.substring(0, text.length()-30));
+            if(!TextUtils.isEmpty(text))
+                content.setText(text.substring(0, text.length()-30));
 
         }
     }
