@@ -14,11 +14,13 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Present.SkillProjReceiveProgressPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SkillProjReceiveProgressView;
 
@@ -169,6 +171,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     }else if(workBean.getStage2() == 3){
                         //第二阶段审核
                         baseViewHolder.setText(R.id.progress, "第二阶段审核中");
+                        baseViewHolder.setTextColorRes(R.id.progress, R.color.colorAccent);
                         baseViewHolder.setVisible(R.id.middle_btn, false);
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
@@ -195,6 +198,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                 }else if(workBean.getStage1() == 3){
                     //第一阶段审核中
                     baseViewHolder.setText(R.id.progress, "第一阶段审核中");
+                    baseViewHolder.setTextColorRes(R.id.progress, R.color.colorAccent);
                     baseViewHolder.setVisible(R.id.middle_btn, false);
                     baseViewHolder.setVisible(R.id.middle_text, false);
                     baseViewHolder.setVisible(R.id.middle, true);
@@ -292,15 +296,17 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
             case R.id.action_contact:
                 if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
 
-                    if (!TextUtils.isEmpty(phone)){
-                        Utils.startCallActivity(this, phone);
-                    }
 
-//                    ApplyPassReq req = new ApplyPassReq();
-//                    req.setTechnician_id(adapter.getAllData().get(i).getTechnician_id());
-//                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-//                    req.setProject_type(1);
-//                    ApplyDetailActivity.startActivity(SkillProjReceiveProgressActivity.this, req);
+
+                    new IOSDialog(this).builder()
+                            .setMsg(phone)
+                            .setPositiveButton("呼叫", v -> {
+                                if (!TextUtils.isEmpty(phone)){
+                                    Utils.startCallActivity(this, phone);
+                                }
+                            })
+                            .setNegativeButton("取消", null)
+                            .show();
 
                 }else{
                     if (!TextUtils.isEmpty(phone)){

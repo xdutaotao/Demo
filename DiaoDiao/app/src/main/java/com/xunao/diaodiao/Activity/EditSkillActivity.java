@@ -293,48 +293,73 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
     private void goInAppAction() {
         if (TextUtils.isEmpty(name.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("姓名不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(phone.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("手机号不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(personCode.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("身份证不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(address.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("地区不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(addressDetail.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("地址不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(year.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("工作经验不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(personNum.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("团队人数不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(skillsName.toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("承接项目类型不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(information.getText().toString())) {
-            ToastUtil.show("不能为空");
+            ToastUtil.show("自我评价不能为空");
             return;
+        }
+
+        String codeStr = personCode.getText().toString();
+        if (personCode.getText().toString().length() != 18) {
+            ToastUtil.show("联系人身份证号码不合法");
+            return;
+        }
+
+        String str = personCode.getText().toString().substring(0, 17);
+        try{
+            int num = Integer.valueOf(str);
+        }catch (Exception e){
+            ToastUtil.show("联系人身份证号码不合法");
+            return;
+        }
+
+        try{
+            int num = Integer.valueOf(codeStr.substring(17, 18));
+        }catch (Exception e){
+            if(!TextUtils.equals("x", codeStr.substring(18, 18))
+                    && !TextUtils.equals("X", codeStr.substring(18, 18))){
+                ToastUtil.show("联系人身份证号码不合法");
+                return;
+            }
+
         }
 
         FillSkillReq req = new FillSkillReq();

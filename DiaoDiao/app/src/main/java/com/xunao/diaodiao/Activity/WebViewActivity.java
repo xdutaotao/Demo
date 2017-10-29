@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjectRes;
@@ -98,6 +99,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     private ShareSDK myShareSDK;
     private String title;
+    private int collectID;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -119,6 +121,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(INTENT_KEY, url);
         intent.putExtra(ID_KEY, id);
+        context.startActivity(intent);
+    }
+
+    //是否收藏
+    public static void startActivity(Context context, String url, int id, String btnType, int isCollect) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(ID_KEY, id);
+        intent.putExtra("BTN_TYPE", btnType);
+        intent.putExtra("isCollect", isCollect);
         context.startActivity(intent);
     }
 
@@ -184,6 +196,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             isCollect = findProject.getCollected() == 1 ? true : false;
             isApply = findProject.getApply() == 1 ? true : false;
             bottomBtnLayout.setVisibility(View.GONE);
+        }else{
+            isCollect = getIntent().getIntExtra("isCollect", 0) == 1? true: false;
         }
 
 
@@ -199,6 +213,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                             //零工
                             JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
                         }
+
+                        //collectID =
+
                         return true;
                     }
                 })
@@ -209,6 +226,13 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         WebViewActivity.this.title = title;
                     }
                 });
+
+        try {
+            collectID = Integer.valueOf(Utils.getValueByName(url, "collect_id"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         apply.setOnClickListener(v -> {
             if (TextUtils.equals(btnType, HOME_DETAIL)) {
@@ -379,26 +403,72 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 });
 
         share.setOnClickListener(v -> {
-            //OnekeyShare oks = new OnekeyShare();
+            showPicDialog();
 
-            myShareSDK = new ShareSDK();
-            myShareSDK.initSDK(this);
-            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
-            sp.setShareType(Platform.SHARE_WEBPAGE);
-            url += "&hd=1";
-            sp.setUrl(url);
-            sp.setTitleUrl(url);
-            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
-            sp.setText(title);
-            sp.setTitle(title);
+//            myShareSDK = new ShareSDK();
+//            myShareSDK.initSDK(this);
+//            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+//            sp.setShareType(Platform.SHARE_WEBPAGE);
+//            url += "&hd=1";
+//            sp.setUrl(url);
+//            sp.setTitleUrl(url);
+//            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+//            sp.setText(title);
+//            sp.setTitle(title);
+//
+//            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
+//            wx.share(sp);
 
-            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
-            wx.share(sp);
-
-//            oks.setPlatform(Wechat.NAME);
-//            oks.show(this);
         });
 
+    }
+
+    private void friend(){
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
+        //WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);
+        url += "&hd=1";
+        sp.setUrl(url);
+        sp.setTitleUrl(url);
+        sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+        sp.setText(title);
+        sp.setTitle(title);
+
+        Platform wx = myShareSDK.getPlatform (Wechat.NAME);
+        wx.share(sp);
+    }
+
+    private void friends(){
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
+        WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);
+        url += "&hd=1";
+        sp.setUrl(url);
+        sp.setTitleUrl(url);
+        sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+        sp.setText(title);
+        sp.setTitle(title);
+
+        Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
+        wx.share(sp);
+    }
+
+    private void showPicDialog() {
+        new IOSDialog(this).builder()
+                .setCancelable(true)
+                .setTitle("朋友圈", v -> {
+                    friends();
+                })
+                .setMsg("好友", v -> {
+                    friend();
+                })
+                .setMsgSize(R.dimen.dialog_msg_size)
+                .setMsgColor("#333333")
+                .setNegativeButton("取消", null)
+                .show();
     }
 
     @Override
@@ -454,7 +524,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         if (!isCollect) {
                             presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
                         } else {
-                            presenter.cancelCollect(this, getIntent().getIntExtra(ID_KEY, 0));
+                            presenter.cancelCollect(this, collectID);
                         }
                     } else if (TextUtils.equals(btnType, COMPANY_PROJ)) {
 
@@ -502,14 +572,15 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     }
 
     @Override
-    public void collectWork(String s) {
+    public void collectWork(CollectRes s) {
         ToastUtil.show("收藏成功");
         isCollect = true;
+        collectID = s.getCollect_id();
         invalidateOptionsMenu();
     }
 
     @Override
-    public void cancleCollect(String s) {
+    public void cancleCollect(Object s) {
         ToastUtil.show("取消收藏成功");
         isCollect = false;
         invalidateOptionsMenu();

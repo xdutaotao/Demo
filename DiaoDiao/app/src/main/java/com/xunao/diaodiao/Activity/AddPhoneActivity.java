@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.xunao.diaodiao.Bean.WeiXinReq;
-import com.xunao.diaodiao.Bean.WeiXinRes;
-import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.AddPhonePresenter;
 import com.xunao.diaodiao.R;
@@ -54,6 +52,8 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     TextView getCode;
     @BindView(R.id.addPhoneBtn)
     Button addPhoneBtn;
+    @BindView(R.id.pwd)
+    EditText pwd;
 
     private Subscription subscriber;
 
@@ -74,18 +74,24 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
         showToolbarBack(toolBar, titleText, "绑定手机号");
 
         addPhoneBtn.setOnClickListener(v -> {
-            if(TextUtils.isEmpty(phone.getText())){
+            if (TextUtils.isEmpty(phone.getText())) {
                 ToastUtil.show("请输入手机号");
                 return;
             }
 
-            if (TextUtils.isEmpty(codeInput.getText())){
+            if (TextUtils.isEmpty(codeInput.getText())) {
                 ToastUtil.show("请获取验证码");
+                return;
+            }
+
+            if (TextUtils.isEmpty(pwd.getText())) {
+                ToastUtil.show("请输入密码");
                 return;
             }
 
             WeiXinReq req = new WeiXinReq();
             req.setDevice_type(2);
+            req.setPassword(pwd.getText().toString());
             req.setCode(codeInput.getText().toString());
             req.setMobile(phone.getText().toString());
             req.setOpenID(getIntent().getStringExtra(INTENT_KEY));
@@ -94,16 +100,16 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
         });
 
         getCode.setOnClickListener(v -> {
-            if(TextUtils.isEmpty(phone.getText())){
+            if (TextUtils.isEmpty(phone.getText())) {
                 ToastUtil.show("请输入手机号");
                 return;
             }
 
-            if (TextUtils.equals(getCode.getText().toString(), "获取验证码")){
+            if (TextUtils.equals(getCode.getText().toString(), "获取验证码")) {
                 subscriber = Observable.interval(1, TimeUnit.SECONDS)
                         .compose(RxUtils.applyIOToMainThreadSchedulers())
                         .subscribe(aLong -> {
-                            if (subscriber != null){
+                            if (subscriber != null) {
                                 if (aLong >= 60) {
                                     stopTime();
                                 } else {
@@ -113,7 +119,7 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
 
                         });
                 presenter.checkPhone(this, phone.getText().toString());
-            }else{
+            } else {
                 ToastUtil.show("一分钟内不能重复发送");
             }
 
@@ -158,7 +164,7 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
         finish();
     }
 
-    private void addAlias(){
+    private void addAlias() {
         PushAgent.getInstance(this)
                 .addExclusiveAlias(getIntent().getStringExtra(INTENT_KEY),
                         PushAgent.getInstance(this).getRegistrationId(),

@@ -19,6 +19,16 @@
     <View style="@style/item_divider" />
 
     <RelativeLayout style="@style/item_layout">
+        <TextView style="@style/item_left_text"
+            android:text="密码"/>
+        <EditText style="@style/edit_personal_edit"
+            android:id="@+id/pwd"
+            android:hint="请输入密码"/>
+    </RelativeLayout>
+
+    <View style="@style/item_divider" />
+
+    <RelativeLayout style="@style/item_layout">
 
         <TextView style="@style/item_left_text"
             android:text="验证码"/>

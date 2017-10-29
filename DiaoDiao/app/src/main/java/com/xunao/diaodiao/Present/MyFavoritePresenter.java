@@ -47,9 +47,9 @@ public class MyFavoritePresenter extends BasePresenter<MyFavoriteView> {
      */
     public void cancelCollect(int page){
         mCompositeSubscription.add(model.cancelCollect(page)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().cancelCollect(token);
                     }
 

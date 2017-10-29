@@ -140,7 +140,8 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         adapter.setOnItemClickListener((view, i) -> {
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
                 WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
-                        Integer.valueOf(adapter.getAllData().get(i).getId()), WebViewActivity.HOME_DETAIL);
+                        Integer.valueOf(adapter.getAllData().get(i).getId()),
+                        WebViewActivity.HOME_DETAIL, adapter.getAllData().get(i).getCollected());
 
             } else {
                 LoginActivity.startActivity(HomeSearchActivity.this);

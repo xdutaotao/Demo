@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
@@ -349,35 +350,84 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
 
         share.setOnClickListener(v -> {
+            
+            showPicDialog();
+//            myShareSDK = new ShareSDK();
+//            myShareSDK.initSDK(this);
+//            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+//            sp.setShareType(Platform.SHARE_WEBPAGE);
+//            url += "&hd=1";
+//            sp.setUrl(url);
+//            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+//            sp.setTitleUrl(url);
+//            if(project != null){
+//                sp.setText(project.getTitle());
+//                sp.setTitle(project.getTitle());
+//            }else if(odd != null){
+//                sp.setText(odd.getTitle());
+//                sp.setTitle(odd.getTitle());
+//            }else if(carousel != null){
+//                sp.setText(carousel.getName());
+//                sp.setTitle(carousel.getName());
+//            }else{
+//                sp.setText(title);
+//                sp.setTitle(title);
+//            }
+//
+//            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
+//            wx.share(sp);
 
-            myShareSDK = new ShareSDK();
-            myShareSDK.initSDK(this);
-            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
-            sp.setShareType(Platform.SHARE_WEBPAGE);
-            url += "&hd=1";
-            sp.setUrl(url);
-            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
-            sp.setTitleUrl(url);
-            if(project != null){
-                sp.setText(project.getTitle());
-                sp.setTitle(project.getTitle());
-            }else if(odd != null){
-                sp.setText(odd.getTitle());
-                sp.setTitle(odd.getTitle());
-            }else if(carousel != null){
-                sp.setText(carousel.getName());
-                sp.setTitle(carousel.getName());
-            }else{
-                sp.setText(title);
-                sp.setTitle(title);
-            }
 
-
-
-            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
-            wx.share(sp);
         });
 
+    }
+
+    private void showPicDialog() {
+        new IOSDialog(this).builder()
+                .setCancelable(true)
+                .setTitle("朋友圈", v -> {
+                    friends();
+                })
+                .setMsg("好友", v -> {
+                    friend();
+                })
+                .setMsgSize(R.dimen.dialog_msg_size)
+                .setMsgColor("#333333")
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private void friend(){
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
+        //WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);
+        url += "&hd=1";
+        sp.setUrl(url);
+        sp.setTitleUrl(url);
+        sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+        sp.setText(title);
+        sp.setTitle(title);
+
+        Platform wx = myShareSDK.getPlatform (Wechat.NAME);
+        wx.share(sp);
+    }
+
+    private void friends(){
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
+        WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
+        sp.setShareType(Platform.SHARE_WEBPAGE);
+        url += "&hd=1";
+        sp.setUrl(url);
+        sp.setTitleUrl(url);
+        sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+        sp.setText(title);
+        sp.setTitle(title);
+
+        Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
+        wx.share(sp);
     }
 
     @Override

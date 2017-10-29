@@ -4,7 +4,7 @@
     android:shape="oval"
     android:useLevel="false" >
 
-    <solid android:color="#FFFFFF" />
+    <solid android:color="@color/accept_btn_default" />
 
     <size android:width="15dp"
         android:height="15dp" />

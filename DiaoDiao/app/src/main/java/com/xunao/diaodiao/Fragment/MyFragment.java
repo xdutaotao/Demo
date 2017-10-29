@@ -191,6 +191,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, My
             ShareUtils.putValue("message", 1);
         }else{
             ShareUtils.putValue("message", 0);
+            RxBus.getInstance().post("dismiss");
         }
 
         switch (Integer.valueOf(data.getUser_point())) {

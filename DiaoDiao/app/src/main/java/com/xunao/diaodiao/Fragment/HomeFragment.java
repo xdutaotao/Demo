@@ -241,7 +241,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         adapter.setOnItemClickListener((view1, i) -> {
             WebViewActivity.startActivity(HomeFragment.this.getContext(), adapter.getAllData().get(i).getUrl(),
-                    adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                    adapter.getAllData().get(i).getId(),
+                    WebViewActivity.HOME_DETAIL, adapter.getAllData().get(i).getCollected());
         });
 
         adapterSkill = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
@@ -258,7 +259,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         adapterSkill.setOnItemClickListener((view1, i) -> {
             WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterSkill.getAllData().get(i).getUrl(),
-                    adapterSkill.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                    adapterSkill.getAllData().get(i).getId(),
+                    WebViewActivity.HOME_DETAIL);
         });
 
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
@@ -275,7 +277,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         adapterList.setOnItemClickListener((view1, i) -> {
             WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterList.getAllData().get(i).getUrl(),
-                    adapterList.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                    adapterList.getAllData().get(i).getId(),
+                    WebViewActivity.HOME_DETAIL);
         });
 
         recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()) {
@@ -332,6 +335,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         presenter.checkApp();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getFirstPage(latData, lngData);
     }
 
     @Override

@@ -32,6 +32,7 @@ import com.xunao.diaodiao.Present.PayPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.PayView;
 
 import java.util.Map;
@@ -75,6 +76,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
+
+    private boolean isWeixin = false;
     /**
      * 支付宝支付业务：入参app_id
      */
@@ -173,7 +176,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         current.setChecked(true);
         canclePay.setOnClickListener(this);
 
-        registerWeiXin();
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, "weixinpay"))
+                .subscribe(s -> {
+                    paySuccess(new Object());
+                });
+
     }
 
     private static final String APP_ID = "wxfa5af658b9f2e5d4";
@@ -204,7 +212,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
                 } else if (wechat.isChecked()) {
                     //weixinPay();
-                    ToastUtil.show("敬请期待");
+                    //ToastUtil.show("敬请期待");
+                    payFeeReq.setOrder_no(req.getOrder_no());
+                    payFeeReq.setPrice(req.getTotal_fee());
+                    payFeeReq.setIp(Utils.getHostIP());
+                    presenter.wxPay(this, payFeeReq);
                 }
 
 
@@ -221,20 +233,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         }
     }
 
-    private void weixinPay() {
-        WeiXinPayRes res = new WeiXinPayRes();
-
-        PayReq payReq = new PayReq();
-        payReq.appId = APP_ID;
-        payReq.partnerId = res.getPartnerId();
-        payReq.prepayId = res.getPrepayId();
-        payReq.packageValue = res.getPackageValue();
-        payReq.nonceStr = res.getNonceStr();
-        payReq.timeStamp = res.getTimeStamp();
-        payReq.sign = res.getSign();
-
-        api.sendReq(payReq);
-    }
 
     @Override
     public void getData(Object s) {
@@ -285,6 +283,30 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
         Thread payThread = new Thread(payRunnable);
         payThread.start();
+    }
+
+    @Override
+    public void payWX(PayRes res) {
+        registerWeiXin();
+
+        PayReq payReq = new PayReq();
+        payReq.appId = APP_ID;
+        payReq.partnerId = res.getPartnerid();
+        payReq.prepayId = res.getPrepayid();
+        payReq.packageValue = res.getPack_age();
+        payReq.nonceStr = res.getNoncestr();
+        payReq.timeStamp = res.getTimestamp();
+        payReq.sign = res.getSign();
+
+        isWeixin = api.sendReq(payReq);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isWeixin){
+            paySuccess(new Object());
+        }
     }
 
     @Override

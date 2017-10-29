@@ -8,6 +8,7 @@ import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
+import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
@@ -149,7 +150,7 @@ public interface RetrofitService {
     Observable<BaseBean<MyFavoriteRes>> getCollectList(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> cancelCollect(@Body RequestBody body);
+    Observable<BaseBean<Object>> cancelCollect(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<Object>> myProjectCancel(@Body RequestBody body);
@@ -206,7 +207,7 @@ public interface RetrofitService {
     Observable<BaseBean<Object>> postProject(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> collectWork(@Body RequestBody body);
+    Observable<BaseBean<CollectRes>> collectWork(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<FindLingGongRes>> getFindLingGongDetail(@Body RequestBody body);

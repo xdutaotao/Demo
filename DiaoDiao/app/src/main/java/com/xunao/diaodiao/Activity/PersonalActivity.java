@@ -92,6 +92,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     RelativeLayout phoneLayout;
     @BindView(R.id.hide_layout)
     LinearLayout hideLayout;
+    @BindView(R.id.work_content)
+    TextView workContent;
 
 
     private int type;
@@ -139,6 +141,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
             case SKILL_TYPE:
                 nameText.setText("姓名");
+                workContent.setText("个人评价");
                 break;
 
             case CUSTOM_TYPE:
@@ -212,14 +215,14 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     public void getData(CheckFinishRes s) {
         status = s.getStatus();
         ShareUtils.putValue(STATUS, status);
-        if (status == 1){
+        if (status == 1) {
             editPersonal.setText("审核通过");
             editPersonal.setVisibility(View.GONE);
-        }else if (status == 2){
+        } else if (status == 2) {
             editPersonal.setText("审核中");
-        }else if (status == 3){
+        } else if (status == 3) {
             editPersonal.setText("审核未通过");
-        }else {
+        } else {
             editPersonal.setText("未完善资料");
         }
     }
@@ -244,14 +247,14 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 address.setText(technicianInfo.getRegion());
                 addressDetail.setText(technicianInfo.getAddress());
                 workYear.setText(technicianInfo.getExperience());
-                workNum.setText(technicianInfo.getTeam_number()+"");
+                workNum.setText(technicianInfo.getTeam_number() + "");
                 project.setText(technicianInfo.getProject_type());
                 StringBuilder sb = new StringBuilder();
                 List<String> types = Arrays.asList(technicianInfo.getProject_type().split(","));
-                for(String item: types){
-                    for(TypeInfoRes.Type_Info info: res.getType_info()){
-                        if(TextUtils.equals(info.getId(), item.trim())){
-                            sb.append(info.getTitle()+" ");
+                for (String item : types) {
+                    for (TypeInfoRes.Type_Info info : res.getType_info()) {
+                        if (TextUtils.equals(info.getId(), item.trim())) {
+                            sb.append(info.getTitle() + " ");
                         }
                     }
                 }

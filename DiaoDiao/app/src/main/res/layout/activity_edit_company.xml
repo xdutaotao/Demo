@@ -154,6 +154,7 @@
                 <EditText
                     style="@style/edit_personal_edit"
                     android:id="@+id/contact_code"
+                    android:maxLength="18"
                     android:hint="请输入联系人身份证号码"/>
 
             </RelativeLayout>

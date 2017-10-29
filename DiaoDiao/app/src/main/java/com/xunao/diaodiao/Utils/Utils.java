@@ -20,6 +20,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
 import android.view.View;
@@ -47,6 +48,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -58,8 +63,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -886,17 +895,47 @@ public class Utils {
      * @return
      */
     public static String Bitmap2StrByBase64(@NonNull String path){
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
+//        FileInputStream fis = null;
+//        try {
+//            fis = new FileInputStream(path);
+//            Bitmap bit = BitmapFactory.decodeStream(fis);
+//            ByteArrayOutputStream bos=new ByteArrayOutputStream();
+//            bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
+//            byte[] bytes=bos.toByteArray();
+//            return "data:image/png;base64,"+Base64.encodeToString(bytes, Base64.DEFAULT);
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+
+        try{
+
+            // 设置参数
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true; // 只获取图片的大小信息，而不是将整张图片载入在内存中，避免内存溢出
+            BitmapFactory.decodeFile(path, options);
+            int height = options.outHeight;
+            int width= options.outWidth;
+            int inSampleSize = 4; // 默认像素压缩比例，压缩为原图的1/2
+            int minLen = Math.min(height, width); // 原图的最小边长
+            if(minLen > 100) { // 如果原始图像的最小边长大于100dp（此处单位我认为是dp，而非px）
+                float ratio = (float)minLen / 100.0f; // 计算像素压缩比例
+                inSampleSize = (int)ratio;
+            }
+            options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
+            options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
+            Bitmap bit = BitmapFactory.decodeFile(path, options); // 解码文件
+            ByteArrayOutputStream bos=new ByteArrayOutputStream();
+            bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
+            byte[] bytes=bos.toByteArray();
+            return "data:image/png;base64,"+Base64.encodeToString(bytes, Base64.DEFAULT);
+
+
+        }catch (Exception e){
             e.printStackTrace();
         }
-        Bitmap bit = BitmapFactory.decodeStream(fis);
-        ByteArrayOutputStream bos=new ByteArrayOutputStream();
-        bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
-        byte[] bytes=bos.toByteArray();
-        return "data:image/png;base64,"+Base64.encodeToString(bytes, Base64.DEFAULT);
+        return "";
     }
 
     /**
@@ -948,7 +987,7 @@ public class Utils {
      * 推送通知的处理逻辑
      */
     public static void handleNotification(Context context, String msgID){
-        RxBus.getInstance().post(MESSAGE);
+
         if (Utils.getAppStatus(context) == Utils.APP_START_FORE){
             /**
              * 点击通知栏通知，假如app正在运行，则直接跳转到H5Activity显示具体内容，
@@ -1021,21 +1060,68 @@ public class Utils {
     }
 
 
-//    //app control
-//    public static int getAppControl(){
-//        try {
-//
-//            RetrofitConfig.getInstance().getRetrofitService().getAppControl("hello")
-//                    .compose(RxUtils.applyIOToMainThreadSchedulers())
-//                    .subscribe(s -> {
-//                        ToastUtil.show(s);
-//                    });
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
+    public static final String REGEX_ID_CARD = "(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)";
+    public static String stringFilter(String str)throws PatternSyntaxException {
+        // 只允许字母和数字
+        String   regEx  =  REGEX_ID_CARD;
+        Pattern   p   =   Pattern.compile(regEx);
+        Matcher m   =   p.matcher(str);
+        return   m.replaceAll("").trim();
+    }
+
+
+    /***
+     * 获取url 指定name的value;
+     * @param url
+     * @param name
+     * @return
+     */
+    public static String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        String[] keyValue = temp.split("&");
+        for (String str : keyValue) {
+            if (str.contains(name)) {
+                result = str.replace(name + "=", "");
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 获取ip地址
+     * @return
+     */
+    public static String getHostIP() {
+
+        String hostIp = null;
+        try {
+            Enumeration nis = NetworkInterface.getNetworkInterfaces();
+            InetAddress ia = null;
+            while (nis.hasMoreElements()) {
+                NetworkInterface ni = (NetworkInterface) nis.nextElement();
+                Enumeration<InetAddress> ias = ni.getInetAddresses();
+                while (ias.hasMoreElements()) {
+                    ia = ias.nextElement();
+                    if (ia instanceof Inet6Address) {
+                        continue;// skip ipv6
+                    }
+                    String ip = ia.getHostAddress();
+                    if (!"127.0.0.1".equals(ip)) {
+                        hostIp = ia.getHostAddress();
+                        break;
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            Log.i("yao", "SocketException");
+            e.printStackTrace();
+        }
+        return hostIp;
+
+    }
+
 
 }

@@ -46,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.MESSAGE;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.container)
@@ -108,6 +109,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                     goToFragment(0);
                 });
 
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, MESSAGE))
+                .subscribe(s -> {
+                    msgBadgeItem.show().setText("");
+                    BadgeUtil.setBadgeCount(this, 1, R.mipmap.ic_launcher);
+                });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, "dismiss"))
+                .subscribe(s -> {
+                    msgBadgeItem.hide();
+                });
+
         /**
          * 通知栏点击 传递消息
          */
@@ -165,7 +179,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (msgCnt == 0){
             msgBadgeItem.hide();
         }else{
-            msgBadgeItem.show().setText("10");
+            msgBadgeItem.show().setText("");
             BadgeUtil.setBadgeCount(this, 1, R.mipmap.ic_launcher);
         }
     }

@@ -21,6 +21,7 @@ import com.xunao.diaodiao.Bean.CashRecordRes;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.CitiesBean;
 import com.xunao.diaodiao.Bean.CityBean;
+import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
 import com.xunao.diaodiao.Bean.EvaluateReq;
@@ -198,6 +199,7 @@ public class LoginModel extends BaseModel {
                 .append(req.getDevice_type())
                 .append(req.getMobile())
                 .append(req.getOpenID())
+                .append(req.getPassword())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));
@@ -697,7 +699,7 @@ public class LoginModel extends BaseModel {
      * @param
      * @return
      */
-    public Observable<String> cancelCollect(int id){
+    public Observable<Object> cancelCollect(int id){
         String rateKey = "cancelCollect";
 
         long time = System.currentTimeMillis()/1000;
@@ -1256,7 +1258,7 @@ public class LoginModel extends BaseModel {
     }
 
     //收藏
-    public Observable<String> collectWork(int id, int types){
+    public Observable<CollectRes> collectWork(int id, int types){
         String rateKey = "collectWork";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -2297,7 +2299,23 @@ public class LoginModel extends BaseModel {
 
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(req.getOrder_no())
-                .append(req.getProject_type())
+                .append(req.getPrice())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().aliPay(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    public Observable<PayRes> wxPay(PayFeeReq req){
+        String rateKey = "wxPay";
+
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getIp())
+                .append(req.getOrder_no()).append(req.getPrice())
                 .append("security");
 
         req.setVerify(Utils.getMD5(sb.toString()));

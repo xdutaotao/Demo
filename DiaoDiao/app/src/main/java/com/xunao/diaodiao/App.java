@@ -9,16 +9,20 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.xunao.diaodiao.Utils.Dagger.Component.ApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Component.DaggerApplicationComponent;
 import com.xunao.diaodiao.Utils.Dagger.Module.ApplicationModule;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.smssdk.SMSSDK;
+
+import static com.xunao.diaodiao.Common.Constants.MESSAGE;
 
 /**
  * Description:
@@ -129,9 +133,23 @@ public class App  extends android.support.multidex.MultiDexApplication{
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
             @Override
             public void dealWithCustomAction(Context context, UMessage uMessage) {
+                //消息点击
                 Utils.handleNotification(context, uMessage.custom);
             }
+
+
         };
+
+        UmengMessageHandler handler = new UmengMessageHandler(){
+            @Override
+            public void dealWithNotificationMessage(Context context, UMessage uMessage) {
+                super.dealWithNotificationMessage(context, uMessage);
+                //消息到达
+                RxBus.getInstance().post(MESSAGE);
+            }
+        };
+
+        PushAgent.getInstance(this).setMessageHandler(handler);
         PushAgent.getInstance(this).setNotificationClickHandler(notificationClickHandler);
 
 

@@ -135,7 +135,7 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
     }
 
     @Override
-    public void cancelCollect(String s) {
+    public void cancelCollect(Object s) {
         ToastUtil.show("取消收藏成功");
     }
 

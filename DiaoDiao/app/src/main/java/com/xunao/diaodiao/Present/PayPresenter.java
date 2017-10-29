@@ -89,6 +89,21 @@ public class PayPresenter extends BasePresenter<PayView> {
                 }));
     }
 
+    public void wxPay(Context context, PayFeeReq address){
+        mCompositeSubscription.add(model.wxPay(address)
+                .subscribe(new RxSubUtils<PayRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(PayRes token) {
+                        getView().payWX(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
     /**
      * 取消订单
      * @param context

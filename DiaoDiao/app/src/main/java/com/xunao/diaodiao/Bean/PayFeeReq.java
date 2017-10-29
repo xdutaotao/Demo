@@ -13,6 +13,15 @@ public class PayFeeReq {
     private String pay_fee;
     private int project_type;
     private String price;
+    private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     public String getPrice() {
         return price;

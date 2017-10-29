@@ -134,6 +134,15 @@ public class HomeResponseBean implements Serializable{
         private String price;
         private String url;
         private String issue_time;
+        private int collected;
+
+        public int getCollected() {
+            return collected;
+        }
+
+        public void setCollected(int collected) {
+            this.collected = collected;
+        }
 
         public String getIssue_time() {
             return issue_time;

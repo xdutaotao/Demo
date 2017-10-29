@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -162,6 +164,27 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "完善资料");
+
+//        contactCode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String str = Utils.stringFilter(contactCode.getText().toString());
+//                if(!str.equals(contactCode.getText().toString())){
+//                    contactCode.setText(str);
+//                    contactCode.setSelection(str.length());
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             PersonalRes.CompanyInfo info = (PersonalRes.CompanyInfo) getIntent().getSerializableExtra(INTENT_KEY);
@@ -539,6 +562,32 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             ToastUtil.show("联系人身份证号码不能为空");
             return;
         }
+
+        String codeStr = contactCode.getText().toString();
+        if (contactCode.getText().toString().length() != 18) {
+            ToastUtil.show("联系人身份证号码不合法");
+            return;
+        }
+
+        String str = contactCode.getText().toString().substring(0, 17);
+        try{
+            int num = Integer.valueOf(str);
+        }catch (Exception e){
+            ToastUtil.show("联系人身份证号码不合法");
+            return;
+        }
+
+        try{
+            int num = Integer.valueOf(codeStr.substring(17, 18));
+        }catch (Exception e){
+            if(!TextUtils.equals("x", codeStr.substring(18, 18))
+                    && !TextUtils.equals("X", codeStr.substring(18, 18))){
+                ToastUtil.show("联系人身份证号码不合法");
+                return;
+            }
+
+        }
+
 
         if (TextUtils.isEmpty(contactPhone.getText().toString())) {
             ToastUtil.show("联系人电话不能为空");

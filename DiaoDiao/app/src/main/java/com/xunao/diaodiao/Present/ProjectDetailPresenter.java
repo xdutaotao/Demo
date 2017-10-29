@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjReq;
@@ -84,9 +85,9 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
     //收藏
     public void collectWork(Context context, int id, int type){
         mCompositeSubscription.add(model.collectWork(id, type)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<CollectRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(CollectRes token) {
                         getView().collectWork(token);
                     }
 
@@ -100,9 +101,9 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
     //取消收藏
     public void cancelCollect(Context context, int id){
         mCompositeSubscription.add(model.cancelCollect(id)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().cancleCollect(token);
                     }
 
