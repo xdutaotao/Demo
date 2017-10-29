@@ -507,9 +507,9 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             case R.id.proj_time_layout:
                 DatePicker datePicker = new DatePicker(this);
 
-                String[] dates = Utils.getNowDate().split("-");
-                datePicker.setRangeStart(Integer.valueOf(dates[0]),
-                        Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
+//                String[] dates = Utils.getNowDate().split("-");
+//                datePicker.setRangeStart(Integer.valueOf(dates[0]),
+//                        Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
 
                 timeLong = new StringBuilder();
 
