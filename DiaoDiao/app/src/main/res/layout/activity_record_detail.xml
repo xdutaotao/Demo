@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="150px"
         android:layout_marginLeft="40px"
-        android:layout_marginRight="40px">
+        android:layout_marginRight="40px"
+        android:id="@+id/detail_layout">
 
         <TextView
             android:layout_width="wrap_content"

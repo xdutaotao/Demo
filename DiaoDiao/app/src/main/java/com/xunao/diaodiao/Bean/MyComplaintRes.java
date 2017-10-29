@@ -26,6 +26,15 @@ public class MyComplaintRes {
         private int project_id;
         private int project_type;
         private int appeal_id;
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
         public long getAppeal_order() {
             return appeal_order;

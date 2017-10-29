@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -44,12 +45,15 @@ public class RecordDetailActivity extends BaseActivity implements RecordDetailVi
     TextView result;
     @BindView(R.id.status)
     TextView status;
+    @BindView(R.id.detail_layout)
+    RelativeLayout detailLayout;
 
     private RecyclerArrayAdapter<String> adapter;
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, String url) {
         Intent intent = new Intent(context, RecordDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("url", url);
         context.startActivity(intent);
     }
 
@@ -74,6 +78,10 @@ public class RecordDetailActivity extends BaseActivity implements RecordDetailVi
 
 
         presenter.myAppealDetail(getIntent().getIntExtra(INTENT_KEY, 0));
+
+        detailLayout.setOnClickListener(v -> {
+            WebViewDetailActivity.startActivity(this, getIntent().getStringExtra("url"));
+        });
     }
 
     @Override
@@ -83,9 +91,9 @@ public class RecordDetailActivity extends BaseActivity implements RecordDetailVi
         content.setText(bean.getContent());
         adapter.addAll(bean.getImages());
         result.setText(bean.getRemark());
-        if (bean.getStatus() == 1){
+        if (bean.getStatus() == 1) {
             status.setText("已处理");
-        }else{
+        } else {
             status.setText("处理中");
         }
 

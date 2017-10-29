@@ -84,7 +84,8 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
 
         adapter.setOnItemClickListener((view1, i) -> {
             RecordDetailActivity.startActivity(MyComplaintRecordFragment.this.getActivity(),
-                    adapter.getAllData().get(i).getAppeal_id());
+                    adapter.getAllData().get(i).getAppeal_id(),
+                    adapter.getAllData().get(i).getUrl());
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
