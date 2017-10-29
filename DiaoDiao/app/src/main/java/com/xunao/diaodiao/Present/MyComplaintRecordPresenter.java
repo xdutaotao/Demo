@@ -33,7 +33,7 @@ public class MyComplaintRecordPresenter extends BasePresenter<MyComplaintRecordV
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        //ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));

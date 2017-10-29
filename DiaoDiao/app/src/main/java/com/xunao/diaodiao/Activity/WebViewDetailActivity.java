@@ -350,7 +350,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
 
         share.setOnClickListener(v -> {
-            
+
             showPicDialog();
 //            myShareSDK = new ShareSDK();
 //            myShareSDK.initSDK(this);

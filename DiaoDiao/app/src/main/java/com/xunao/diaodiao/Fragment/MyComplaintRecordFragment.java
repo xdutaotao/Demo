@@ -122,8 +122,11 @@ public class MyComplaintRecordFragment extends BaseFragment implements MyComplai
     @Override
     public void onFailure() {
         //adapter.stopMore();
-
-        recyclerView.showError();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
     }
 
     @Override
