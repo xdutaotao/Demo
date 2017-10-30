@@ -79,7 +79,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
             ToastUtil.show("目前是最新版本");
         }else{
             new IOSDialog(this).builder()
-                    .setTitle("升级版本")
+                    .setTitle("有新版本")
                     .setMsg(bean.getRemark())
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", v -> {

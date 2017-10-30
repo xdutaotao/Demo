@@ -580,8 +580,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         try{
             int num = Integer.valueOf(codeStr.substring(17, 18));
         }catch (Exception e){
-            if(!TextUtils.equals("x", codeStr.substring(18, 18))
-                    && !TextUtils.equals("X", codeStr.substring(18, 18))){
+            if(!TextUtils.equals("x", codeStr.substring(17, 18))
+                    && !TextUtils.equals("X", codeStr.substring(17, 18))){
                 ToastUtil.show("联系人身份证号码不合法");
                 return;
             }

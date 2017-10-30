@@ -60,6 +60,7 @@
             android:digits="1234567890"
             android:inputType="phone"
             android:maxLength="4"
+            android:maxEms="4"
             android:textSize="@dimen/edit_text_size"/>
 
         <TextView

@@ -41,6 +41,7 @@
                     android:textSize="45px"
                     android:textCursorDrawable="@null"
                     android:singleLine="true"
+                    android:layout_marginRight="20px"
                     android:imeOptions="actionSearch"
                     android:background="@null"
                     android:gravity="right|center_vertical" />

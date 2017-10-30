@@ -81,7 +81,7 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
         if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             bean = (HomeResponseBean.TopicBean.GroupDataBean) getIntent().getSerializableExtra(INTENT_KEY);
             showToolbarBack(toolBar, titleText, bean.getTitle());
-            Glide.with(this).load(bean.getPic()).placeholder(R.drawable.ic_launcher_round).into(image);
+            Glide.with(this).load(bean.getPic()).placeholder(R.drawable.default_pic).into(image);
             title.setText(bean.getTitle());
             author.setText("作者:" + bean.getAuthor());
             time.setText("上传时间:" + Utils.getStrTime(String.valueOf(bean.getUpdateTime())));

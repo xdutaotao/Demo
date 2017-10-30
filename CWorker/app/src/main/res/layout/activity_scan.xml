@@ -28,7 +28,7 @@
         app:qrcv_isShowTipBackground="true"
         app:qrcv_isShowTipTextAsSingleLine="false"
         app:qrcv_isTipTextBelowRect="false"
-        app:qrcv_maskColor="#AA959595"
+        app:qrcv_maskColor="#AA000000"
         app:qrcv_rectWidth="240dp"
         app:qrcv_scanLineColor="@color/colorPrimaryDark"
         app:qrcv_scanLineMargin="0dp"
@@ -53,8 +53,8 @@
         android:textColor="@android:color/white"/>
 
     <ImageView
-        android:layout_width="100px"
-        android:layout_height="100px"
+        android:layout_width="160px"
+        android:layout_height="160px"
         android:src="@drawable/turn_on"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

@@ -11,7 +11,8 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="120px"
+        android:layout_height="wrap_content"
+        android:minHeight="120px"
         android:layout_margin="100px"
         android:id="@+id/address"
         android:textColor="@android:color/black"

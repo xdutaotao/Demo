@@ -255,13 +255,13 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         super.onResume();
 
 
-        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
-            LoginActivity.startActivity(ProjectFragment.this.getContext());
-            ((MainActivity) getActivity()).goToFragment(1);
-        } else {
-            type = ShareUtils.getValue(TYPE_KEY, 0);
-            presenter.getMyWork(this.getContext());
-        }
+//        if (TextUtils.isEmpty(User.getInstance().getUserId())) {
+//            LoginActivity.startActivity(ProjectFragment.this.getContext());
+//            ((MainActivity) getActivity()).goToFragment(1);
+//        } else {
+//            type = ShareUtils.getValue(TYPE_KEY, 0);
+//            presenter.getMyWork(this.getContext());
+//        }
 
     }
 

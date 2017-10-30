@@ -286,12 +286,12 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
 
     @Override
     public void fail(String msg) {
-        ToastUtil.show(msg);
-        if (resultAdapter.getAllData().size() == 0)
-            resultRecyclerView.setVisibility(View.GONE);
-        else
+        //ToastUtil.show(msg);
+        if (resultAdapter.getAllData().size() == 0) {
+            resultRecyclerView.showEmpty();
+        }else {
             resultAdapter.stopMore();
-
+        }
         if (TextUtils.equals(msg, "请登录!")) {
             User.getInstance().clearUser();
             RxBus.getInstance().post(LOGIN_AGAIN);
