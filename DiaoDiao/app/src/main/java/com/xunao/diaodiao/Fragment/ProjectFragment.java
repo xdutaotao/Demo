@@ -203,7 +203,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             if (!TextUtils.isEmpty(projectBean.getProject_doing())) {
                 projDoing.setText("进行中 " + projectBean.getProject_doing());
             }
-        } else if (supervisorBean != null) {
+        }
+        if (supervisorBean != null) {
             if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
                 jianliWaiting.setText("待确认 " + supervisorBean.getSupervisor_wait());
 
@@ -211,7 +212,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             if (!TextUtils.isEmpty(supervisorBean.getSupervisor_doing())) {
                 jianliDoing.setText("进行中 " + supervisorBean.getSupervisor_doing());
             }
-        } else if (oddBean != null) {
+        }
+        if (oddBean != null) {
             if (!TextUtils.isEmpty(oddBean.getOdd_wait())) {
                 lgWaiting.setText("待确认 " + oddBean.getOdd_wait());
 
@@ -224,7 +226,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 lgApply.setText("申请中 " + oddBean.getOdd_apply());
             }
 
-        } else if (maintenanceBean != null) {
+        }
+        if (maintenanceBean != null) {
             if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
                 wbDoing.setText("进行中 " + maintenanceBean.getMaintenance_doing());
 
@@ -232,7 +235,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
                 wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());
             }
-        } else if (!TextUtils.isEmpty(mutual)) {
+        }
+        if (!TextUtils.isEmpty(mutual)) {
             hzDoing.setText(mutual);
         }
 
