@@ -128,6 +128,7 @@
                     android:layout_marginRight="50px"
                     android:hint="填写日薪(不低于300元)"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:id="@+id/fee"/>
 
                 <TextView
@@ -152,6 +153,7 @@
                     android:hint=""
                     android:id="@+id/days"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:layout_marginRight="50px"/>
 
                 <TextView

@@ -11,6 +11,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xunao.diaodiao.Activity.PayActivity;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -51,6 +52,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if(resp.errCode == 0){
                 ToastUtil.show("支付成功");
+                PayActivity.isWeixin = true;
                 RxBus.getInstance().post("weixinpay");
             }else{
                 ToastUtil.show("支付失败");

@@ -133,6 +133,7 @@
                     android:layout_marginRight="60px"
                     android:id="@+id/year"
                     android:inputType="phone"
+                    android:digits="123456789"
                     android:hint="请输入工作经验"/>
 
                 <TextView
@@ -267,7 +268,6 @@
                         android:layout_height="60px"
                         android:src="@drawable/icon_shanchu"
                         android:id="@+id/code_delete"
-                        android:layout_marginTop="20px"
                         android:layout_alignParentRight="true"/>
 
                 </RelativeLayout>
@@ -291,7 +291,6 @@
                         android:layout_height="60px"
                         android:src="@drawable/icon_shanchu"
                         android:id="@+id/code_reverse_delete"
-                        android:layout_marginTop="20px"
                         android:layout_alignParentRight="true"/>
 
                 </RelativeLayout>
@@ -329,7 +328,6 @@
                     android:layout_height="60px"
                     android:src="@drawable/icon_shanchu"
                     android:id="@+id/certi_delete"
-                    android:layout_marginTop="20px"
                     android:layout_alignParentRight="true"/>
 
             </RelativeLayout>

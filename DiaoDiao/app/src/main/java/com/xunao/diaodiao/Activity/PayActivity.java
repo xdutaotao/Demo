@@ -77,7 +77,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
 
-    private boolean isWeixin = false;
+    public static boolean isWeixin = false;
     /**
      * 支付宝支付业务：入参app_id
      */
@@ -298,7 +298,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         payReq.timeStamp = res.getTimestamp();
         payReq.sign = res.getSign();
 
-        isWeixin = api.sendReq(payReq);
+        api.sendReq(payReq);
     }
 
     @Override
