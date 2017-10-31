@@ -345,14 +345,14 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         String str = personCode.getText().toString().substring(0, 17);
         try{
-            int num = Integer.valueOf(str);
+            long num = Long.valueOf(str);
         }catch (Exception e){
             ToastUtil.show("联系人身份证号码不合法");
             return;
         }
 
         try{
-            int num = Integer.valueOf(codeStr.substring(17, 18));
+            long num = Long.valueOf(codeStr.substring(17, 18));
         }catch (Exception e){
             if(!TextUtils.equals("x", codeStr.substring(17, 18))
                     && !TextUtils.equals("X", codeStr.substring(17, 18))){
