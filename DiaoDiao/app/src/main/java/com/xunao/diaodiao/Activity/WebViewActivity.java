@@ -356,6 +356,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 apply.setVisibility(View.GONE);
             } else {
                 apply.setVisibility(View.VISIBLE);
+                bottomBtnLayout.setVisibility(View.GONE);
             }
         } else if (TextUtils.equals(LG_DETAIL, btnType)) {
             //零工详情

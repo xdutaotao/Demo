@@ -260,7 +260,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         adapterSkill.setOnItemClickListener((view1, i) -> {
             WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterSkill.getAllData().get(i).getUrl(),
                     adapterSkill.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_DETAIL);
+                    WebViewActivity.HOME_SKILL_DETAIL);
         });
 
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {

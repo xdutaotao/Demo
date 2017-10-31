@@ -48,6 +48,7 @@ import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Bean.LoginBaseReq;
 import com.xunao.diaodiao.Bean.LoginBean;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.MaintenanceTypeRes;
 import com.xunao.diaodiao.Bean.MessageListReq;
 import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
@@ -1251,7 +1252,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setId(id);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().postProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2713,6 +2714,34 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    //甲方申诉
+    public Observable<MaintenanceTypeRes> maintenanceType(){
+        String rateKey = "maintenanceType";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().maintenanceType(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
