@@ -37,7 +37,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
                     public void _onError(String s) {
                         if (!TextUtils.equals(s, "网络错误"))
                             s = "请求失败";
-                        ToastUtil.show(s);
+                        //ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));
