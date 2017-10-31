@@ -162,6 +162,7 @@
                     android:hint="请输入团队人数"
                     android:id="@+id/person_num"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:layout_marginRight="60px"/>
 
                 <TextView
