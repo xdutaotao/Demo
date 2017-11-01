@@ -37,6 +37,15 @@ public class GetMoneyReq implements Serializable{
     private String technician_id;
     private String device_token;
     private int device_type;
+    private String door_fee;
+
+    public String getDoor_fee() {
+        return door_fee;
+    }
+
+    public void setDoor_fee(String door_fee) {
+        this.door_fee = door_fee;
+    }
 
     public String getDevice_token() {
         return device_token;

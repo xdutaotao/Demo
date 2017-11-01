@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="请选择品牌"
-        android:padding="50px"/>
+        android:paddingLeft="50px"
+        android:paddingTop="50px"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

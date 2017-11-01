@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.gzfgeh.adapter.BaseViewHolder;
+import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.GetPercentRes;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Present.ReleaseSkillSureInfoPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.ReleaseSkillSureInfoView;
@@ -15,6 +19,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
  * create by
@@ -31,9 +37,36 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
     RecyclerView recyclerView;
     @BindView(R.id.pay)
     TextView pay;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.region)
+    TextView region;
+    @BindView(R.id.address)
+    TextView address;
+    @BindView(R.id.contact)
+    TextView contact;
+    @BindView(R.id.contact_phone)
+    TextView contactPhone;
+    @BindView(R.id.door_time)
+    TextView doorTime;
+    @BindView(R.id.type)
+    TextView type;
+    @BindView(R.id.content)
+    TextView content;
+    @BindView(R.id.fee)
+    TextView fee;
+    @BindView(R.id.service_fee)
+    TextView serviceFee;
+    @BindView(R.id.all_fee)
+    TextView allFee;
 
-    public static void startActivity(Context context) {
+    private ReleaseHelpReq req;
+    private RecyclerArrayAdapter<String> adapter;
+
+
+    public static void startActivity(Context context, ReleaseHelpReq req) {
         Intent intent = new Intent(context, ReleaseSkillSureInfoActivity.class);
+        intent.putExtra(INTENT_KEY, req);
         context.startActivity(intent);
     }
 
@@ -46,8 +79,42 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "发布维修信息");
+
+
+        req = (ReleaseHelpReq) getIntent().getSerializableExtra(INTENT_KEY);
+        title.setText(req.getTitle());
+        region.setText(req.getRegion());
+        address.setText(req.getAddress());
+        contact.setText(req.getContact());
+        contactPhone.setText(req.getContact_mobile());
+        doorTime.setText(req.getBuildTimeString());
+        type.setText(req.getTypeString());
+        content.setText(req.getDescribe());
+
+
+        adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                baseViewHolder.setImageUrl(R.id.image, s);
+                baseViewHolder.setVisible(R.id.delete, false);
+            }
+        };
+
+        adapter.setOnItemClickListener((view, i) -> {
+            if(adapter.getAllData().size() > 0)
+                PhotoActivity.startActivity(this, adapter.getAllData().get(i),
+                        adapter.getAllData().get(i).contains("http"));
+
+        });
+        recyclerView.setAdapter(adapter);
+        adapter.addAll(req.getImages());
+        fee.setText(req.getDoor_fee());
+        presenter.countMaintenanceExpenses(this, req.getDoor_fee());
+
+
         pay.setOnClickListener(v -> {
-           // PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, null);
+
+            PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, null);
         });
     }
 
@@ -63,4 +130,10 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
         presenter.detachView();
     }
 
+    @Override
+    public void getPercent(GetPercentRes res) {
+        req.setDoor_fee("￥"+res.getDoor_fee());
+        req.setService_fee("￥"+res.getService_fee());
+        allFee.setText("￥"+res.getTotal_fee());
+    }
 }

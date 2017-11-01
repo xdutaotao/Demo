@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
@@ -22,6 +23,7 @@
                 <TextView style="@style/item_left_text"
                     android:text="标题"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/title"
                     android:hint="请输入项目标题"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -29,23 +31,31 @@
             <RelativeLayout style="@style/item_layout">
                 <TextView style="@style/item_left_text"
                     android:text="联系人"/>
-                <TextView style="@style/item_right_text"
-                    android:text="张三"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/name"
+                    android:hint="请输入联系人"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
             <RelativeLayout style="@style/item_layout">
                 <TextView style="@style/item_left_text"
                     android:text="联系电话"/>
-                <TextView style="@style/item_right_text"
-                    android:text="15678909876"/>
+                <EditText style="@style/edit_personal_edit"
+                    android:inputType="phone"
+                    android:digits="1234567890"
+                    android:id="@+id/phone"
+                    android:hint="请输入联系电话"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout">
+            <RelativeLayout style="@style/item_layout"
+                android:id="@+id/address_layout">
                 <TextView style="@style/item_left_text"
                     android:text="地区"/>
-                <TextView style="@style/item_right_text"
+                <TextView
+                    style="@style/item_right_text"
+                    android:id="@+id/region"
+                    android:drawableRight="@drawable/arrow"
                     android:text=""/>
             </RelativeLayout>
             <View style="@style/item_divider" />
@@ -54,15 +64,21 @@
                 <TextView style="@style/item_left_text"
                     android:text="地址"/>
                 <EditText style="@style/edit_personal_edit"
+                    android:id="@+id/address"
                     android:hint="请输入项目地址"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout">
+            <RelativeLayout
+                style="@style/item_layout"
+                android:minHeight="160px"
+                android:layout_height="wrap_content">
                 <TextView style="@style/item_left_text"
                     android:text="类型/品牌"/>
                 <TextView style="@style/item_right_text"
-                    android:text="请输入项目地址"/>
+                    android:gravity="right"
+                    android:id="@+id/type"
+                    android:text="请输入项目地址\n目地址"/>
             </RelativeLayout>
             <View style="@style/item_divider" />
 
@@ -70,7 +86,10 @@
                 <TextView style="@style/item_left_text"
                     android:text="上门费"/>
                 <EditText style="@style/edit_personal_edit"
-                    android:hint="不低于20元"
+                    android:hint="不低于20"
+                    android:id="@+id/fee"
+                    android:inputType="phone"
+                    android:digits="1234567890"
                     android:layout_marginRight="60px"/>
 
                 <TextView
@@ -82,11 +101,13 @@
             </RelativeLayout>
             <View style="@style/item_divider" />
 
-            <RelativeLayout style="@style/item_layout">
+            <RelativeLayout style="@style/item_layout"
+                android:id="@+id/build_time_layout">
                 <TextView style="@style/item_left_text"
                     android:text="上门时间"/>
-                <EditText style="@style/edit_personal_edit"
-                    android:hint="到时间自动上门"
+                <TextView style="@style/edit_personal_edit"
+                    tools:text="到时间自动上门"
+                    android:id="@+id/build_time"
                     android:drawablePadding="20px"
                     android:drawableRight="@drawable/icon_rili"/>
             </RelativeLayout>
@@ -104,7 +125,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:background="@null"
-                    android:hint="请填写意见反馈"
+                    android:id="@+id/content"
+                    android:hint="简单情况描述，例如：地暖清洗、空调清洗加氟、水处理滤芯更换资金变动"
                     android:textColorHint="#D2D2D2"
                     android:gravity="top"/>
 
@@ -116,10 +138,23 @@
 
             </LinearLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                android:id="@+id/recycler_view"
+                app:spanCount="4"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                tools:listitem="@layout/select_skill_item"/>
+
+            <View style="@style/item_divider" />
+
 
             <Button
                 style="@style/login_btn_style"
                 android:text="下一步"
+                android:layout_marginTop="100px"
+                android:layout_marginBottom="100px"
                 android:id="@+id/next"/>
         </LinearLayout>
     </ScrollView>

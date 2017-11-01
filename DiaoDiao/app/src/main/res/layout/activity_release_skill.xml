@@ -224,13 +224,13 @@
                 android:layout_margin="50px"/>
 
             <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50px"
-            android:id="@+id/recycler_view"
-            app:spanCount="4"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            tools:listitem="@layout/select_skill_item"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                android:id="@+id/recycler_view"
+                app:spanCount="4"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                tools:listitem="@layout/select_skill_item"/>
 
             <View style="@style/item_divider" />
 

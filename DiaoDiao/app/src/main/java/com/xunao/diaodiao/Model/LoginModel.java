@@ -2154,6 +2154,35 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 维保服务费用
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> countMaintenanceExpenses(String door_fee){
+        String rateKey = "countMaintenanceExpenses";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(door_fee)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setDoor_fee(door_fee);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 服务费用
      * @param
      * @return

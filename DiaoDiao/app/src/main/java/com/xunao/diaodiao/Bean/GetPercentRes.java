@@ -8,6 +8,33 @@ package com.xunao.diaodiao.Bean;
 public class GetPercentRes {
     private String percent;
     private String price;
+    private String door_fee;
+    private String service_fee;
+    private String total_fee;
+
+    public String getService_fee() {
+        return service_fee;
+    }
+
+    public void setService_fee(String service_fee) {
+        this.service_fee = service_fee;
+    }
+
+    public String getTotal_fee() {
+        return total_fee;
+    }
+
+    public void setTotal_fee(String total_fee) {
+        this.total_fee = total_fee;
+    }
+
+    public String getDoor_fee() {
+        return door_fee;
+    }
+
+    public void setDoor_fee(String door_fee) {
+        this.door_fee = door_fee;
+    }
 
     public String getPrice() {
         return price;

@@ -7,6 +7,8 @@ import com.xunao.diaodiao.Bean.TypeInfoRes;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.entity.Province;
+
 /**
  * Description:
  * Created by GUZHENFU on 2017/5/16 16:45.
@@ -79,6 +81,7 @@ public class Constants {
     //承接项目类型
     public static List<TypeInfoRes.Type_Info> projectTypeList = new ArrayList<>();
     public static final String tel = "15921561300";
+    public static ArrayList<Province> addressResult = new ArrayList<>();
 
 
 }

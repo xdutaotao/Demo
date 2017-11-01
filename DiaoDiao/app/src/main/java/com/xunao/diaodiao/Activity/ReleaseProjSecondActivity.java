@@ -54,6 +54,7 @@ import cn.qqtheme.framework.picker.TimePicker;
 import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.addressResult;
 
 /**
  * create by
@@ -311,6 +312,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
+            addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);

@@ -29,16 +29,16 @@ public class MaintenanceTypeRes {
         this.maintain = maintain;
     }
 
-    public static class RepairBean{
-        private int class_id;
+    public static class RepairBean implements Serializable{
+        private String class_id;
         private String class_name;
         private List<BrandBean> brands;
 
-        public int getClass_id() {
+        public String getClass_id() {
             return class_id;
         }
 
-        public void setClass_id(int class_id) {
+        public void setClass_id(String class_id) {
             this.class_id = class_id;
         }
 
@@ -59,14 +59,14 @@ public class MaintenanceTypeRes {
         }
 
         public static class BrandBean implements Serializable{
-            private int brand_id;
+            private String brand_id;
             private String brand_name;
 
-            public int getBrand_id() {
+            public String getBrand_id() {
                 return brand_id;
             }
 
-            public void setBrand_id(int brand_id) {
+            public void setBrand_id(String brand_id) {
                 this.brand_id = brand_id;
             }
 

@@ -25,6 +25,7 @@ import com.xunao.diaodiao.Bean.AuthResult;
 import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.PayResult;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.WeiXinPayRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -96,6 +97,12 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         Intent intent = new Intent(context, PayActivity.class);
         intent.putExtra(INTENT_KEY, req);
         intent.putExtra("projType", projType);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseHelpReq req) {
+        Intent intent = new Intent(context, PayActivity.class);
+        intent.putExtra("help", req);
         context.startActivity(intent);
     }
 
