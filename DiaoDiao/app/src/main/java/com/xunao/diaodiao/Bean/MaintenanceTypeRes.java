@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -57,7 +58,7 @@ public class MaintenanceTypeRes {
             this.brands = brands;
         }
 
-        public static class BrandBean{
+        public static class BrandBean implements Serializable{
             private int brand_id;
             private String brand_name;
 

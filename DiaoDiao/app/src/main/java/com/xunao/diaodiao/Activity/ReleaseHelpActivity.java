@@ -46,8 +46,8 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
     TextView maintain;
 
     private boolean isMaintain = false;
-    private List<MaintenanceTypeRes.RepairBean> repairList;
-    private List<MaintenanceTypeRes.RepairBean> maintainList;
+    private List<MaintenanceTypeRes.RepairBean> repairList = new ArrayList<>();
+    private List<MaintenanceTypeRes.RepairBean> maintainList = new ArrayList<>();
 
     private List<String> repairTitles = new ArrayList<>();
     private List<String> mainTainTitles = new ArrayList<>();
@@ -56,7 +56,7 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
     private List<String> repairNames = new ArrayList<>();
     private List<String> mainTainNames = new ArrayList<>();
 
-    private List<Fragment> list;
+    private List<Fragment> list = new ArrayList<>();
     private SimpleFragmentPagerAdapter adapter;
     private String[] titles = {"壁挂炉", "中央空调", "分体空调", "新风系统", "水处理", "空调"};
 
@@ -96,21 +96,7 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
             isMaintain = true;
         });
 
-        list = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(titles[i]));
-            list.add(ReleaseTabItemFragment.newInstance(titles[i]));
-            tabLayout.getTabAt(i).setText(titles[i]);
-        }
 
-        adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), list);
-        viewpager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewpager);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-        for (int i = 0; i < titles.length; i++) {
-            tabLayout.getTabAt(i).setText(titles[i]);
-        }
     }
 
     @Override
@@ -120,7 +106,32 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
 
         for(MaintenanceTypeRes.RepairBean bean: repairList){
             repairTitles.add(bean.getClass_name());
+
+            tabLayout.addTab(tabLayout.newTab().setText(bean.getClass_name()));
+            ArrayList<String> temp = new ArrayList<>();
+            for(MaintenanceTypeRes.RepairBean.BrandBean brandBean: bean.getBrands()){
+                temp.add(brandBean.getBrand_name());
+            }
+            list.add(ReleaseTabItemFragment.newInstance(bean.getClass_name(), temp, new ArrayList<>()));
+
         }
+
+//        list = new ArrayList<>();
+//        for (int i = 0; i < repairTitles.size(); i++) {
+//            tabLayout.addTab(tabLayout.newTab().setText(repairTitles.get(i)));
+//            list.add(ReleaseTabItemFragment.newInstance(repairTitles.get(i)));
+//            tabLayout.getTabAt(i).setText(titles[i]);
+//        }
+
+        adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), list);
+        viewpager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewpager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setText(repairTitles.get(i));
+        }
+
     }
 
 
