@@ -64,8 +64,15 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="600px"/>
+
+    <View style="@style/item_divider"/>
+
+    <Button
+        style="@style/login_btn_style"
+        android:layout_marginTop="100px"
+        android:text="下一步"
+        android:id="@+id/next"/>
 
 
 </LinearLayout>

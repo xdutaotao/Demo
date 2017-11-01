@@ -34,9 +34,6 @@ public class ReleaseTabItemFragment extends BaseFragment {
     RecyclerView recyclerView;
     Unbinder unbinder;
 
-    @BindView(R.id.next)
-    Button next;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
 
@@ -105,10 +102,6 @@ public class ReleaseTabItemFragment extends BaseFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         recyclerView.setAdapter(adapter);
         adapter.addAll(listBean);
-
-        next.setOnClickListener(v -> {
-            ReleaseSkillInforActivity.startActivity(ReleaseTabItemFragment.this.getContext());
-        });
 
         return view;
     }

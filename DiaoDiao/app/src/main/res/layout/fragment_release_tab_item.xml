@@ -22,11 +22,6 @@
         app:spanCount="4"
         tools:listitem="@layout/release_tab_item"/>
 
-    <View style="@style/item_divider"/>
 
-    <Button
-        style="@style/login_btn_style"
-        android:text="下一步"
-        android:id="@+id/next"/>
 
 </LinearLayout>

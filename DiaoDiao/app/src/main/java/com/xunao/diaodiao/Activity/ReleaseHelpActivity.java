@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.MaintenanceTypeRes;
@@ -44,6 +45,8 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
     TextView repair;
     @BindView(R.id.maintain)
     TextView maintain;
+    @BindView(R.id.next)
+    Button next;
 
     private boolean isMaintain = false;
     private List<MaintenanceTypeRes.RepairBean> repairList = new ArrayList<>();
@@ -58,7 +61,6 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
 
     private List<Fragment> list = new ArrayList<>();
     private SimpleFragmentPagerAdapter adapter;
-    private String[] titles = {"壁挂炉", "中央空调", "分体空调", "新风系统", "水处理", "空调"};
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, ReleaseHelpActivity.class);
@@ -77,7 +79,7 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
         presenter.maintenanceType(this);
 
         repair.setOnClickListener(v -> {
-            if(isMaintain){
+            if (isMaintain) {
                 repair.setTextColor(getResources().getColor(R.color.white));
                 repair.setBackgroundResource(R.drawable.btn_blue_bg);
                 maintain.setTextColor(getResources().getColor(R.color.nav_gray));
@@ -87,13 +89,17 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
         });
 
         maintain.setOnClickListener(v -> {
-            if(!isMaintain){
+            if (!isMaintain) {
                 maintain.setTextColor(getResources().getColor(R.color.white));
                 maintain.setBackgroundResource(R.drawable.btn_blue_bg);
                 repair.setTextColor(getResources().getColor(R.color.nav_gray));
                 repair.setBackgroundResource(R.drawable.btn_blank_bg);
             }
             isMaintain = true;
+        });
+
+        next.setOnClickListener(v -> {
+            ReleaseSkillInforActivity.startActivity(this);
         });
 
 
@@ -104,24 +110,17 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
         repairList = res.getRepair();
         maintainList = res.getMaintain();
 
-        for(MaintenanceTypeRes.RepairBean bean: repairList){
+        for (MaintenanceTypeRes.RepairBean bean : repairList) {
             repairTitles.add(bean.getClass_name());
 
             tabLayout.addTab(tabLayout.newTab().setText(bean.getClass_name()));
             ArrayList<String> temp = new ArrayList<>();
-            for(MaintenanceTypeRes.RepairBean.BrandBean brandBean: bean.getBrands()){
+            for (MaintenanceTypeRes.RepairBean.BrandBean brandBean : bean.getBrands()) {
                 temp.add(brandBean.getBrand_name());
             }
             list.add(ReleaseTabItemFragment.newInstance(bean.getClass_name(), temp, new ArrayList<>()));
 
         }
-
-//        list = new ArrayList<>();
-//        for (int i = 0; i < repairTitles.size(); i++) {
-//            tabLayout.addTab(tabLayout.newTab().setText(repairTitles.get(i)));
-//            list.add(ReleaseTabItemFragment.newInstance(repairTitles.get(i)));
-//            tabLayout.getTabAt(i).setText(titles[i]);
-//        }
 
         adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), list);
         viewpager.setAdapter(adapter);
