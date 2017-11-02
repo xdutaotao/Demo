@@ -3,7 +3,11 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.GetPercentRes;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
+import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Model.LoginModel;
+import com.xunao.diaodiao.Model.ReleaseHelpModel;
 import com.xunao.diaodiao.Model.ReleaseSkillSureInfoModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -22,6 +26,21 @@ public class ReleaseSkillSureInfoPresenter extends BasePresenter<ReleaseSkillSur
 
     @Inject
     ReleaseSkillSureInfoPresenter() {
+    }
+
+    public void publishMaintenance(Context context, ReleaseHelpReq address){
+        mCompositeSubscription.add(model.publishMaintenance(address)
+                .subscribe(new RxSubUtils<ReleaseProjRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(ReleaseProjRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
     }
 
     //服务费

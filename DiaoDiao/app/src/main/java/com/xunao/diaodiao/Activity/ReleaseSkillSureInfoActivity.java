@@ -5,15 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseHelpReq;
+import com.xunao.diaodiao.Bean.ReleaseProjRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseSkillSureInfoPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseSkillSureInfoView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -111,11 +119,35 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
         fee.setText(req.getDoor_fee());
         presenter.countMaintenanceExpenses(this, req.getDoor_fee());
 
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
 
         pay.setOnClickListener(v -> {
 
-            PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, null);
+            if(req.getImages() != null && (req.getImages().size()>0) &&  (req.getImages().get(0).length() < 100)){
+                List<String> list = new ArrayList<>();
+                for(String s : req.getImages()){
+                    list.add(Utils.Bitmap2StrByBase64(s));
+                }
+                req.setImages(list);
+            }
+
+            presenter.publishMaintenance(this, req);
         });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
+        
+        if (getIntent().getBooleanExtra("flag", false)){
+            pay.setText("发布");
+        }
+
     }
 
 
@@ -134,6 +166,13 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
     public void getPercent(GetPercentRes res) {
         req.setDoor_fee("￥"+res.getDoor_fee());
         req.setService_fee("￥"+res.getService_fee());
+        fee.setText("￥"+res.getDoor_fee());
+        serviceFee.setText("￥"+res.getService_fee());
         allFee.setText("￥"+res.getTotal_fee());
+    }
+
+    @Override
+    public void getData(ReleaseProjRes res) {
+        PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, res, 4);
     }
 }

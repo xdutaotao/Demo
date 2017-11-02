@@ -9,14 +9,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.xunao.diaodiao.Bean.MaintenanceTypeRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Fragment.ReleaseTabItemFragment;
 import com.xunao.diaodiao.Present.ReleaseHelpPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ReleaseHelpView;
 
@@ -147,6 +150,12 @@ public class ReleaseHelpActivity extends BaseActivity implements ReleaseHelpView
             }
             ReleaseSkillInforActivity.startActivity(this);
         });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
 
 
         mainViewpager.setVisibility(View.GONE);

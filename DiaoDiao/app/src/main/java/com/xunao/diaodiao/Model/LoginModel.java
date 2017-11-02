@@ -76,6 +76,7 @@ import com.xunao.diaodiao.Bean.RateDetailRes;
 import com.xunao.diaodiao.Bean.RateReq;
 import com.xunao.diaodiao.Bean.RegisterBean;
 import com.xunao.diaodiao.Bean.RegisterRespBean;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
@@ -2258,6 +2259,39 @@ public class LoginModel extends BaseModel {
                 .append(req.getProject_type()).append(req.getProvince())
                 .append(req.getService_cost()).append(req.getTitle())
                 .append(req.getTotal_price()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
+     * 发布维保
+     * @param
+     * @return
+     */
+    public Observable<ReleaseProjRes> publishMaintenance(ReleaseHelpReq req){
+        String rateKey = "publishMaintenance";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getAddress())
+                .append(req.getCity()).append(req.getContact())
+                .append(req.getContact_mobile()).append(req.getDescribe())
+                .append(req.getDistrict()).append(req.getDoor_fee()).append(req.getDoor_time()).append(req.getImages())
+                .append(req.getProject_brand())
+                .append(req.getProject_class())
+                .append(req.getProject_type()).append(req.getProvince()).append(req.getService_fee())
+                .append(req.getTitle()).append(type)
                 .append(userid)
                 .append("security");
 

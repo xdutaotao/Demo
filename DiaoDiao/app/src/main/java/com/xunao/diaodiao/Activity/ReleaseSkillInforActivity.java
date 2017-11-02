@@ -23,6 +23,7 @@ import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseSkillInforView;
+import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,9 +102,10 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, boolean flag) {
+    public static void startActivity(Context context, ReleaseHelpReq req, boolean flag) {
         Intent intent = new Intent(context, ReleaseSkillInforActivity.class);
         intent.putExtra(INTENT_KEY, flag);
+        intent.putExtra("req", req);
         context.startActivity(intent);
     }
 
@@ -150,16 +152,6 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
         adapter.add(ADD);
         recyclerView.setAdapter(adapter);
 
-
-//        StringBuilder sb = new StringBuilder();
-//        for (String repairItem : ReleaseHelpActivity.repairNames) {
-//            sb.append(repairItem).append("\n");
-//        }
-//
-//        for (String mainItem : ReleaseHelpActivity.mainTainNames) {
-//            sb.append(mainItem).append("\n");
-//        }
-
         type.setText(ReleaseHelpActivity.projectTypeName+"-"+
                 ReleaseHelpActivity.projectClassName+"-"+
                 ReleaseHelpActivity.projectBrandName);
@@ -170,7 +162,41 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
             presenter.getAddressData(this);
         next.setOnClickListener(this);
 
-        req = new ReleaseHelpReq();
+        req = (ReleaseHelpReq) getIntent().getSerializableExtra("req");
+        if(req == null)
+            req = new ReleaseHelpReq();
+
+        if(flag){
+            //再次编辑
+            title.setText(req.getTitle());
+            region.setText(req.getRegion());
+            address.setText(req.getAddress());
+            name.setText(req.getContact());
+            phone.setText(req.getContact_mobile());
+            buildTime.setText(Utils.millToDateString(req.getDoor_time()));
+            fee.setText(req.getDoor_fee());
+            content.setText(req.getDescribe());
+            adapter.clear();
+            adapter.addAll(req.getImages());
+
+            address.setFocusable(false);
+            addressLayout.setOnClickListener(null);
+            buildTimeLayout.setOnClickListener(null);
+            content.setFocusable(false);
+            fee.setFocusable(false);
+
+        }
+        initImagePicker();
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setCrop(false);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setMultiMode(true);
+        imagePicker.setShowCamera(false);
+        imagePicker.setSelectLimit(10);
     }
 
     @Override
@@ -259,22 +285,25 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
                 req.setTitle(title.getText().toString());
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
-                req.setAddress(address.getText().toString());
-                req.setDescribe(content.getText().toString());
-                req.setDoor_fee(fee.getText().toString());
-                req.setTypeString(ReleaseHelpActivity.projectTypeName+"-"+
-                        ReleaseHelpActivity.projectClassName+"-"+
-                        ReleaseHelpActivity.projectBrandName);
+                if(!flag){
+                    req.setAddress(address.getText().toString());
+                    req.setDescribe(content.getText().toString());
+                    req.setDoor_fee(fee.getText().toString());
+                    req.setTypeString(ReleaseHelpActivity.projectTypeName+"-"+
+                            ReleaseHelpActivity.projectClassName+"-"+
+                            ReleaseHelpActivity.projectBrandName);
 
-                req.setBuildTimeString(buildTime.getText().toString());
-                req.setProvince(provinceId);
-                req.setCity(cityId);
-                req.setDistrict(districtId);
-                req.setDoor_time(Utils.convertTime2long(buildTime.getText().toString()));
-                req.setProject_class(ReleaseHelpActivity.project_class);
-                req.setProject_brand(ReleaseHelpActivity.project_brand);
-                req.setProject_type(ReleaseHelpActivity.project_type);
-                req.setImages(pathList);
+                    req.setBuildTimeString(buildTime.getText().toString());
+                    req.setProvince(provinceId);
+                    req.setCity(cityId);
+                    req.setDistrict(districtId);
+                    req.setDoor_time(Utils.convertTime2long(buildTime.getText().toString()));
+                    req.setProject_class(ReleaseHelpActivity.project_class);
+                    req.setProject_brand(ReleaseHelpActivity.project_brand);
+                    req.setProject_type(ReleaseHelpActivity.project_type);
+                    req.setImages(pathList);
+                }
+
 
                 ReleaseSkillSureInfoActivity.startActivity(this, req);
                 break;

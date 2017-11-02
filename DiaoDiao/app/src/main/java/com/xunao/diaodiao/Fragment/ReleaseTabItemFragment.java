@@ -111,7 +111,7 @@ public class ReleaseTabItemFragment extends BaseFragment {
 
                         project_brand = Integer.valueOf(s.getBrand_id());
                         project_class = Integer.valueOf(bean.getClass_id());
-                        project_type = 0;
+                        project_type = 1;
 
                         projectClassName = bean.getClass_name();
                         projectBrandName = s.getBrand_name();
@@ -167,7 +167,7 @@ public class ReleaseTabItemFragment extends BaseFragment {
 
                         project_brand = Integer.valueOf(s.getBrand_id());
                         project_class = Integer.valueOf(bean.getClass_id());
-                        project_type = 1;
+                        project_type = 2;
                         projectClassName = bean.getClass_name();
                         projectBrandName = s.getBrand_name();
                         projectTypeName = "保养";

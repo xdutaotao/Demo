@@ -100,12 +100,6 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, ReleaseHelpReq req) {
-        Intent intent = new Intent(context, PayActivity.class);
-        intent.putExtra("help", req);
-        context.startActivity(intent);
-    }
-
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -259,6 +253,9 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     } else if (projType == 3) {
                         //零工
                         ReleaseSkillActivity.startActivity(this);
+                    }else if(projType == 4){
+                        //维保
+                        ReleaseHelpActivity.startActivity(this);
                     }
                     finish();
                 })

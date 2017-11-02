@@ -55,6 +55,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:id="@+id/region"
+                    android:drawablePadding="20px"
                     android:drawableRight="@drawable/arrow"
                     android:text=""/>
             </RelativeLayout>

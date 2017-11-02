@@ -146,14 +146,14 @@
             android:layout_height="160px"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingLeft="50px"
+            android:paddingLeft="20px"
             android:layout_alignParentBottom="true">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="总计："/>
+                android:text="总计:"/>
 
             <TextView
                 android:layout_width="wrap_content"
