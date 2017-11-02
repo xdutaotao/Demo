@@ -249,13 +249,16 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
                     if (projType == 1) {
                         //项目
-                        ReleaseProjActivity.startActivity(this);
+                        ReleaseProjActivity.startActivity(this, false);
                     } else if (projType == 3) {
                         //零工
                         ReleaseSkillActivity.startActivity(this);
                     }else if(projType == 4){
                         //维保
                         ReleaseHelpActivity.startActivity(this);
+                    }else if(projType == 2){
+                        //监理
+                        ReleaseProjActivity.startActivity(this, true);
                     }
                     finish();
                 })

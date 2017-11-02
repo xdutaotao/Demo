@@ -38,6 +38,15 @@ public class GetMoneyReq implements Serializable{
     private String device_token;
     private int device_type;
     private String door_fee;
+    private String supervisor_fee;
+
+    public String getSupervisor_fee() {
+        return supervisor_fee;
+    }
+
+    public void setSupervisor_fee(String supervisor_fee) {
+        this.supervisor_fee = supervisor_fee;
+    }
 
     public String getDoor_fee() {
         return door_fee;

@@ -25,61 +25,12 @@
 
                 <TextView
                     style="@style/item_left_text"
-                    android:text="项目标题"/>
+                    android:text="标题"/>
 
                 <EditText
                     style="@style/edit_personal_edit"
                     android:hint="请输入项目标题"
                     android:id="@+id/title"/>
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
-
-            <RelativeLayout
-                style="@style/item_layout"
-                android:id="@+id/address_layout">
-
-                <TextView
-                    style="@style/item_left_text"
-                    android:text="项目地区"/>
-
-                <TextView
-                    style="@style/edit_personal_edit"
-                    android:drawableRight="@drawable/icon_arrow"
-                    android:drawablePadding="10px"
-                    android:id="@+id/address"/>
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
-
-            <RelativeLayout
-                style="@style/item_layout">
-
-                <TextView
-                    style="@style/item_left_text"
-                    android:text="项目地址"/>
-
-                <EditText
-                    style="@style/edit_personal_edit"
-                    android:hint="请输入项目地址"
-                    android:id="@+id/address_detail"/>
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
-
-            <RelativeLayout
-                style="@style/item_layout"
-                android:id="@+id/project_type_layout">
-
-                <TextView
-                    style="@style/item_left_text"
-                    android:text="项目类型"/>
-
-                <TextView
-                    style="@style/edit_personal_edit"
-                    android:drawableRight="@drawable/icon_arrow"
-                    android:drawablePadding="10px"
-                    android:id="@+id/project_type"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -115,79 +66,38 @@
                     android:id="@+id/phone"/>
             </RelativeLayout>
 
-            <View style="@style/item_divider" />
 
-            <RelativeLayout
-                style="@style/item_layout">
-
-                <TextView
-                    style="@style/item_left_text"
-                    android:text="日薪"/>
-
-                <EditText
-                    style="@style/edit_personal_edit"
-                    android:layout_marginRight="50px"
-                    android:hint="填写日薪(不低于300元)"
-                    android:inputType="phone"
-                    android:digits="1234567890"
-                    android:id="@+id/fee"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="元"/>
-            </RelativeLayout>
-
-            <View style="@style/item_divider" />
-
-            <RelativeLayout
-                style="@style/item_layout">
-
-                <TextView
-                    style="@style/item_left_text"
-                    android:text="工作天数"/>
-
-                <EditText
-                    style="@style/edit_personal_edit"
-                    android:hint=""
-                    android:id="@+id/days"
-                    android:inputType="phone"
-                    android:digits="1234567890"
-                    android:layout_marginRight="50px"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="天"/>
-            </RelativeLayout>
 
             <View style="@style/item_divider" />
 
             <RelativeLayout
                 style="@style/item_layout"
-                android:id="@+id/proj_time_layout">
+                android:id="@+id/address_layout">
 
                 <TextView
                     style="@style/item_left_text"
-                    android:text="施工时间"/>
+                    android:text="地区"/>
 
                 <TextView
                     style="@style/edit_personal_edit"
-                    android:layout_marginRight="70px"
-                    android:textColor="@color/nav_gray"
-                    android:id="@+id/time"
-                    android:text="到时间自动取消，工费退款到余额"/>
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
+                    android:id="@+id/address"/>
+            </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icon_rili"/>
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="地址"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入项目地址"
+                    android:id="@+id/address_detail"/>
             </RelativeLayout>
 
             <View style="@style/item_divider" />
@@ -204,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:background="@null"
-                    android:hint="简单零工的工作内容"
+                    android:hint="简单描述需要求助、分享的物品"
                     android:textColorHint="#D2D2D2"
                     android:id="@+id/content"
                     android:gravity="top"/>
@@ -218,11 +128,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="添加图纸(不超过10张)"
-                android:layout_margin="50px"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -240,7 +145,7 @@
                 android:id="@+id/next"
                 android:layout_marginTop="100px"
                 android:layout_marginBottom="100px"
-                android:text="下一步"/>
+                android:text="发布"/>
         </LinearLayout>
     </ScrollView>
 

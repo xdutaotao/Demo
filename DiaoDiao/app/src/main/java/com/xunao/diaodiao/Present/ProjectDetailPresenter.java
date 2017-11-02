@@ -43,7 +43,7 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
@@ -76,7 +76,7 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        //ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));

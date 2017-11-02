@@ -49,6 +49,7 @@ import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.RecordDetailActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
 import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
+import com.xunao.diaodiao.Activity.ReleaseHelpInfoActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjSecondActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjThirdActivity;
@@ -180,4 +181,5 @@ public interface ActivityComponent {
     void inject(HomeSearchActivity activity);
     void inject(WebViewDetailActivity activity);
     void inject(PhotoActivity activity);
+    void inject(ReleaseHelpInfoActivity activity);
 }

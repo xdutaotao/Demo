@@ -164,8 +164,8 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
 
     @Override
     public void getPercent(GetPercentRes res) {
-        req.setDoor_fee("￥"+res.getDoor_fee());
-        req.setService_fee("￥"+res.getService_fee());
+        req.setDoor_fee(res.getDoor_fee());
+        req.setService_fee(res.getService_fee());
         fee.setText("￥"+res.getDoor_fee());
         serviceFee.setText("￥"+res.getService_fee());
         allFee.setText("￥"+res.getTotal_fee());

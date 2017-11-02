@@ -291,7 +291,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             if (false) {
                 ReleaseSkillActivity.startActivity(this);
             } else if (who == COMPANY_RELEASE_PROJECT_WAIT) {
-                ReleaseProjActivity.startActivity(this);
+                ReleaseProjActivity.startActivity(this, false);
             }
 
         });

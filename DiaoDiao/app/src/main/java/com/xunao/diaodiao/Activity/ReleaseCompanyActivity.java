@@ -63,7 +63,7 @@ public class ReleaseCompanyActivity extends BaseActivity implements ReleaseCompa
         switch (v.getId()){
             case R.id.release_find_people:
                 //
-                ReleaseProjActivity.startActivity(this);
+                ReleaseProjActivity.startActivity(this, true);
                 break;
 
             case R.id.release_help_info:
@@ -72,7 +72,7 @@ public class ReleaseCompanyActivity extends BaseActivity implements ReleaseCompa
                 break;
 
             case R.id.release_proj_info:
-                ReleaseProjActivity.startActivity(this);
+                ReleaseProjActivity.startActivity(this, false);
                 break;
 
             case R.id.release_skill_info:

@@ -21,6 +21,7 @@ import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.ReleaseCompanyActivity;
 import com.xunao.diaodiao.Activity.ReleaseHelpActivity;
+import com.xunao.diaodiao.Activity.ReleaseHelpInfoActivity;
 import com.xunao.diaodiao.Activity.ReleaseProjActivity;
 import com.xunao.diaodiao.Activity.ReleaseSkillActivity;
 import com.xunao.diaodiao.Activity.SelectMemoryActivity;
@@ -179,13 +180,6 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
                 return;
-
-//                selectIndex++;
-//                if (selectIndex == 1) {
-//                    SelectMemoryActivity.startActivity(ReleaseFragment.this.getContext());
-//                    ((MainActivity) getActivity()).goToFragment(1);
-//                    return;
-//                }
             } else if (type == 1) {
                 companyRelease.setVisibility(View.VISIBLE);
                 skillRelease.setVisibility(View.GONE);
@@ -204,11 +198,6 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 LoginActivity.startActivity(ReleaseFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
             }else{
-//                if (ShareUtils.getValue(STATUS, 0) != 1){
-//                    presenter.checkFinish();
-//                }else{
-//
-//                }
                 presenter.checkFinish();
                 presenter.getPersonalInfo(ReleaseFragment.this.getContext());
             }
@@ -297,17 +286,17 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
         switch (v.getId()) {
             case R.id.release_proj_info:
-                ReleaseProjActivity.startActivity(getContext());
+                ReleaseProjActivity.startActivity(getContext(), false);
                 break;
 
             case R.id.release_find_people:
                 //
-                ReleaseProjActivity.startActivity(getContext());
+                ReleaseProjActivity.startActivity(getContext(), true);
                 break;
 
             case R.id.release_help_info:
                 //
-                ReleaseHelpActivity.startActivity(getContext());
+                ReleaseHelpInfoActivity.startActivity(getContext());
                 break;
 
             case R.id.release_skill_info:
@@ -319,12 +308,15 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 break;
 
             case R.id.skill_release_help_info:
+                ReleaseHelpInfoActivity.startActivity(getContext());
                 break;
 
             case R.id.skill_release_weibao_info:
+                ReleaseHelpActivity.startActivity(getContext());
                 break;
 
             case R.id.custom_release_weibao_info:
+                ReleaseHelpActivity.startActivity(getContext());
                 break;
         }
     }

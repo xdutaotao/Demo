@@ -71,8 +71,11 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
     private TypeInfoRes response = new TypeInfoRes();
     private List<String> fatherIds = new ArrayList<>();
 
-    public static void startActivity(Context context) {
+    private boolean jianli = false;
+
+    public static void startActivity(Context context, boolean jianli) {
         Intent intent = new Intent(context, ReleaseProjActivity.class);
+        intent.putExtra("jianli", jianli);
         context.startActivity(intent);
     }
 
@@ -92,6 +95,8 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
 
         showToolbarBack(toolBar, titleText, "选择项目");
         next.setOnClickListener(this);
+
+        jianli = getIntent().getBooleanExtra("jianli", false);
 
         adapter = new RecyclerArrayAdapter<List<TypeInfoRes.Type_Info>>(this, R.layout.type_info_item) {
             @Override
@@ -349,7 +354,7 @@ public class ReleaseProjActivity extends BaseActivity implements ReleaseProjView
                         allSelectList.toString().length() - 1));
                 req.setProject_type_name(allSelect.getText().toString());
                 req.setProject_type_class(allSelect.getText().toString());
-                ReleaseProjSecondActivity.startActivity(this, req);
+                ReleaseProjSecondActivity.startActivity(this, req, false, jianli);
                 break;
         }
     }

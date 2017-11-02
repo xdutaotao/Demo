@@ -21,6 +21,7 @@ public class ReleaseProjReq implements Serializable{
     private String contact;
     private String contact_mobile;
     private long build_time;
+    private long supervisor_time;
     private String describe;
     private List<String> images;
     private String service_cost;
@@ -32,8 +33,24 @@ public class ReleaseProjReq implements Serializable{
     private String project_type_name;
     private String project_type_class;
     private int project_id;
-
+    private String supervisor_fee;
     private String build_time_string;
+
+    public long getSupervisor_time() {
+        return supervisor_time;
+    }
+
+    public void setSupervisor_time(long supervisor_time) {
+        this.supervisor_time = supervisor_time;
+    }
+
+    public String getSupervisor_fee() {
+        return supervisor_fee;
+    }
+
+    public void setSupervisor_fee(String supervisor_fee) {
+        this.supervisor_fee = supervisor_fee;
+    }
 
     public String getBuild_time_string() {
         return build_time_string;

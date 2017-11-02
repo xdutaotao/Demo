@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+
 /**
  * create by
  */
@@ -34,8 +36,11 @@ public class ReleaseSKillTypeActivity extends BaseActivity implements ReleaseSKi
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
 
-    public static void startActivity(Context context) {
+    private boolean isSkill;
+
+    public static void startActivity(Context context, boolean isSkill) {
         Intent intent = new Intent(context, ReleaseSKillTypeActivity.class);
+        intent.putExtra(INTENT_KEY, isSkill);
         context.startActivity(intent);
     }
 
@@ -47,16 +52,34 @@ public class ReleaseSKillTypeActivity extends BaseActivity implements ReleaseSKi
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "零工信息");
+        isSkill = getIntent().getBooleanExtra(INTENT_KEY, false);
+        if(isSkill){
+            showToolbarBack(toolBar, titleText, "零工信息");
+        }else{
+            showToolbarBack(toolBar, titleText, "维保信息");
+        }
+
 
         myRelease.setOnClickListener(v -> {
-            // 1 零工  0 我发布的
-            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_LINGGONG);
+            if(isSkill){
+                // 1 零工  0 我发布的
+                OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_LINGGONG);
+            }else{
+                // 1 零工  0 我发布的
+                OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RELEASE_WEIBAO);
+            }
+
         });
 
         myGet.setOnClickListener(v -> {
-            //        1 我接的
-            OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RECIEVE_LINGGONG);
+            if(isSkill){
+                //        1 我接的
+                OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RECIEVE_LINGGONG);
+            }else{
+                //        1 我接的
+                OrderCompProjActivity.startActivity(ReleaseSKillTypeActivity.this, Constants.SKILL_RECIEVE_WEIBAO);
+            }
+
         });
     }
 

@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
@@ -30,8 +31,8 @@ public class ReleaseProjThirdPresenter extends BasePresenter<ReleaseProjThirdVie
     }
 
 
-    public void publishProject(Context context, ReleaseProjReq address){
-        mCompositeSubscription.add(model.publishProject(address)
+    public void publishProject(Context context, ReleaseProjReq address, boolean jianli){
+        mCompositeSubscription.add(model.publishProject(address, jianli)
                 .subscribe(new RxSubUtils<ReleaseProjRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(ReleaseProjRes token) {
@@ -50,11 +51,11 @@ public class ReleaseProjThirdPresenter extends BasePresenter<ReleaseProjThirdVie
      * @param context
      * @param address
      */
-    public void urlToBase64(Context context, List<String> address){
-        mCompositeSubscription.add(model.urlToBase64(address)
-                .subscribe(new RxSubUtils<List<String>>(mCompositeSubscription, context) {
+    public void countSupervisorExpenses(Context context, String address){
+        mCompositeSubscription.add(model.countSupervisorExpenses(address)
+                .subscribe(new RxSubUtils<GetPercentRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(List<String> token) {
+                    protected void _onNext(GetPercentRes token) {
                         getView().getBase64List(token);
                     }
 

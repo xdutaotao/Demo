@@ -270,8 +270,12 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             projectTypeLayout.setOnClickListener(this);
             initImagePicker();
             presenter.getPercent(this);
+            if(Constants.addressResult.size() == 0){
+                presenter.getAddressData(this);
+            }else{
+                getAddressData(Constants.addressResult);
+            }
 
-            presenter.getAddressData(this);
         }
 
         presenter.publishOddType();
@@ -318,6 +322,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
+            Constants.addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);

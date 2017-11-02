@@ -70,6 +70,7 @@
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
+                        android:id="@+id/time_text"
                         android:text="施工时间"/>
                     <TextView style="@style/item_right_text"
                         android:id="@+id/time"
@@ -134,6 +135,7 @@
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
+                        android:id="@+id/fee_text"
                         android:text="项目工费"/>
                     <TextView style="@style/item_right_text"
                         android:id="@+id/project_fee"

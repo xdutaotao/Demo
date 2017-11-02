@@ -178,7 +178,7 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
             return;
         }
 
-        if (!agree.isChecked()) {
+        if (type == 0 && !agree.isChecked()) {
             ToastUtil.show("请同意协议");
             return;
         }

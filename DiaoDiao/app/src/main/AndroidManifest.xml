@@ -271,6 +271,7 @@
         <activity android:name=".Activity.HomeSearchActivity" />
         <activity android:name=".Activity.WebViewDetailActivity" />
         <activity android:name=".Activity.WebViewOutActivity" />
+        <activity android:name=".Activity.ReleaseHelpInfoActivity" />
         <activity android:name="com.xunao.diaodiao.wxapi.WXPayEntryActivity"
             android:exported="true"/>
         <activity android:name=".Activity.MessageDetail" />

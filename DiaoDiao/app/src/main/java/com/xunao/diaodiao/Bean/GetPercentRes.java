@@ -11,6 +11,15 @@ public class GetPercentRes {
     private String door_fee;
     private String service_fee;
     private String total_fee;
+    private String supervisor_fee;
+
+    public String getSupervisor_fee() {
+        return supervisor_fee;
+    }
+
+    public void setSupervisor_fee(String supervisor_fee) {
+        this.supervisor_fee = supervisor_fee;
+    }
 
     public String getService_fee() {
         return service_fee;

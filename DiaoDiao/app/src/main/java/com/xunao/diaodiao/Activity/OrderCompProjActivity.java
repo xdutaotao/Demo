@@ -41,7 +41,9 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -100,6 +102,10 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 showToolbarBack(toolBar, titleText, "我接的-零工信息");
             }else if (who == SKILL_RECIEVE_PROJECT){
                 showToolbarBack(toolBar, titleText, "项目信息");
+            }else if(who == SKILL_RELEASE_WEIBAO){
+                showToolbarBack(toolBar, titleText, "我发布的-维保信息");
+            }else if(who == SKILL_RECIEVE_WEIBAO){
+                showToolbarBack(toolBar, titleText, "我接的-维保信息");
             }
 
         }
@@ -113,9 +119,9 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         }else if (type == SKILL_TYPE){
             if (who == SKILL_RELEASE_LINGGONG){
                 //我发的 零工
-                fragments.add(OrderSkillTabFragment.newInstance("待确认"));
-                fragments.add(OrderSkillTabDoingFragment.newInstance("进行中"));
-                fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消"));
+                fragments.add(OrderSkillTabFragment.newInstance("待确认", who));
+                fragments.add(OrderSkillTabDoingFragment.newInstance("进行中", who));
+                fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消", who));
             }else if (who == SKILL_RECIEVE_LINGGONG){
                 //我接的 零工
                 fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
@@ -126,6 +132,11 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
                 fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中", who));
                 fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭", who));
+            }else if(who == SKILL_RELEASE_WEIBAO){
+                //我发的 维保
+                fragments.add(OrderSkillTabFragment.newInstance("待确认", who));
+                fragments.add(OrderSkillTabDoingFragment.newInstance("进行中", who));
+                fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消", who));
             }
 
         }

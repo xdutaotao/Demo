@@ -12,10 +12,9 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
-import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
-import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjThirdPresenter;
 import com.xunao.diaodiao.R;
@@ -23,7 +22,6 @@ import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ReleaseProjThirdView;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +70,10 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     TextView serviceFee;
     @BindView(R.id.all_price)
     TextView allPrice;
+    @BindView(R.id.time_text)
+    TextView timeText;
+    @BindView(R.id.fee_text)
+    TextView feeText;
 
     private ReleaseProjReq req;
     private List<ReleaseProjReq.ExpensesBean> list;
@@ -79,10 +81,13 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     private RecyclerArrayAdapter<String> adapter;
     private RecyclerArrayAdapter<ReleaseProjReq.ExpensesBean> typeAdapter;
 
-    public static void startActivity(Context context, ReleaseProjReq req, boolean flag) {
+    private boolean jianli;
+
+    public static void startActivity(Context context, ReleaseProjReq req, boolean flag, boolean jianli) {
         Intent intent = new Intent(context, ReleaseProjThirdActivity.class);
         intent.putExtra(INTENT_KEY, req);
         intent.putExtra("flag", flag);
+        intent.putExtra("jianli", jianli);
         context.startActivity(intent);
     }
 
@@ -94,11 +99,18 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "确认项目信息");
+        if(jianli){
+            showToolbarBack(toolBar, titleText, "确认监理信息");
+        }else{
+            showToolbarBack(toolBar, titleText, "确认项目信息");
+        }
+
 
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
         list = req.getExpenses();
         pay.setOnClickListener(this);
+
+        jianli = getIntent().getBooleanExtra("jianli", false);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -109,9 +121,9 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            if(adapter.getAllData().size() > 0)
-            PhotoActivity.startActivity(this, adapter.getAllData().get(i),
-                    adapter.getAllData().get(i).contains("http"));
+            if (adapter.getAllData().size() > 0)
+                PhotoActivity.startActivity(this, adapter.getAllData().get(i),
+                        adapter.getAllData().get(i).contains("http"));
 
         });
 
@@ -122,13 +134,13 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
                 baseViewHolder.setVisible(R.id.type_detail, true);
                 baseViewHolder.setVisible(R.id.type_temp, false);
                 baseViewHolder.setText(R.id.type_detail,
-                         s.getAmount() + s.getUnit()+ " x " + s.getUnit_price()  + " = " +s.getTotal_price()+"元");
+                        s.getAmount() + s.getUnit() + " x " + s.getUnit_price() + " = " + s.getTotal_price() + "元");
             }
         };
 
         recyclerView.setAdapter(adapter);
 
-        typeRecyclerView.setLayoutManager(new LinearLayoutManager(this){
+        typeRecyclerView.setLayoutManager(new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -146,42 +158,64 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         adapter.addAll(req.getImages());
 
 
-        for(ReleaseProjReq.ExpensesBean item: list){
-            BigDecimal bigDecimal = new BigDecimal(Float.valueOf(item.getUnit_price()) * Float.valueOf(item.getAmount()));
-            bigDecimal.setScale(2, 4);
-            item.setTotal_price(String.valueOf(bigDecimal.floatValue()));
-        }
-
-        if(list != null && list.size()!=0){
-            typeAdapter.addAll(list);
-        }
-
-
-        projectFee.setText("￥"+req.getProject_fee());
-        serviceFee.setText("￥"+req.getService_cost());
-        allPrice.setText("￥"+req.getTotal_price());
-
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, Constants.DESTORY))
                 .subscribe(s -> {
                     finish();
                 });
 
-        if (getIntent().getBooleanExtra("flag", false)){
+        if (getIntent().getBooleanExtra("flag", false)) {
             pay.setText("发布");
         }
+
+        if(jianli){
+            timeText.setText("监理费");
+            typeRecyclerView.setVisibility(View.GONE);
+            presenter.countSupervisorExpenses(this, req.getSupervisor_fee());
+        }else{
+
+            for (ReleaseProjReq.ExpensesBean item : list) {
+                BigDecimal bigDecimal = new BigDecimal(Float.valueOf(item.getUnit_price()) * Float.valueOf(item.getAmount()));
+                bigDecimal.setScale(2, 4);
+                item.setTotal_price(String.valueOf(bigDecimal.floatValue()));
+            }
+
+            if (list != null && list.size() != 0) {
+                typeAdapter.addAll(list);
+            }
+
+
+            projectFee.setText("￥" + req.getProject_fee());
+            serviceFee.setText("￥" + req.getService_cost());
+            allPrice.setText("￥" + req.getTotal_price());
+
+        }
+
     }
 
     @Override
     public void getData(ReleaseProjRes s) {
-        // 1 项目
-        PayActivity.startActivity(this, s, 1);
+        if(jianli){
+            //监理 2
+            PayActivity.startActivity(this, s, 2);
+        }else{
+            // 1 项目
+            PayActivity.startActivity(this, s, 1);
+        }
+
     }
 
     @Override
-    public void getBase64List(List<String> s) {
-        req.setImages(s);
-        presenter.publishProject(this, req);
+    public void getBase64List(GetPercentRes s) {
+        if(jianli){
+            req.setTotal_price(s.getTotal_fee());
+            req.setSupervisor_fee(s.getSupervisor_fee());
+            req.setService_cost(s.getService_fee());
+
+            allPrice.setText("￥"+s.getTotal_fee());
+            projectFee.setText("￥"+s.getSupervisor_fee());
+            serviceFee.setText("￥"+s.getService_fee());
+        }
     }
 
     @Override
@@ -206,16 +240,19 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                if (!getIntent().getBooleanExtra("flag", false)){
-                    if(req.getImages() != null && (req.getImages().size()>0) &&  (req.getImages().get(0).length() < 100)){
+                if (!getIntent().getBooleanExtra("flag", false)) {
+                    if (req.getImages() != null && (req.getImages().size() > 0) && (req.getImages().get(0).length() < 100)) {
                         List<String> list = new ArrayList<>();
-                        for(String s : req.getImages()){
+                        for (String s : req.getImages()) {
                             list.add(Utils.Bitmap2StrByBase64(s));
                         }
                         req.setImages(list);
                     }
-                    presenter.publishProject(this, req);
-                }else{
+
+                    presenter.publishProject(this, req, jianli);
+
+
+                } else {
                     presenter.updateProject(this, req);
                 }
 

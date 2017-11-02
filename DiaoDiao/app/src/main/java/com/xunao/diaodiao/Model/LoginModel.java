@@ -2155,6 +2155,30 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 监理费用
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> countSupervisorExpenses(String supervisor_fee){
+        String rateKey = "countSupervisorExpenses";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(supervisor_fee)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setSupervisor_fee(supervisor_fee);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 维保服务费用
      * @param
      * @return
@@ -2243,24 +2267,44 @@ public class LoginModel extends BaseModel {
      * @param
      * @return
      */
-    public Observable<ReleaseProjRes> publishProject(ReleaseProjReq req){
+    public Observable<ReleaseProjRes> publishProject(ReleaseProjReq req, boolean jianli){
         String rateKey = "publishProject";
+        if(jianli){
+            rateKey = "publishSupervisor";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getAddress()).append(req.getBuild_time())
-                .append(req.getCity()).append(req.getContact())
-                .append(req.getContact_mobile()).append(req.getDescribe())
-                .append(req.getDistrict()).append(req.getImages())
-                .append(req.getProject_class()).append(req.getProject_fee())
-                .append(req.getProject_type()).append(req.getProvince())
-                .append(req.getService_cost()).append(req.getTitle())
-                .append(req.getTotal_price()).append(type)
-                .append(userid)
-                .append("security");
+
+        if(jianli){
+            sb.append(time+"").append(req.getAddress())
+                    .append(req.getCity()).append(req.getContact())
+                    .append(req.getContact_mobile()).append(req.getDescribe())
+                    .append(req.getDistrict()).append(req.getImages())
+                    .append(req.getProject_class()).append(req.getProject_fee())
+                    .append(req.getProject_type()).append(req.getProvince())
+                    .append(req.getService_cost()).append(req.getSupervisor_fee())
+                    .append(req.getSupervisor_time()).append(req.getTitle())
+                    .append(req.getTotal_price()).append(type)
+                    .append(userid)
+                    .append("security");
+
+        }else{
+            sb.append(time+"").append(req.getAddress()).append(req.getBuild_time())
+                    .append(req.getCity()).append(req.getContact())
+                    .append(req.getContact_mobile()).append(req.getDescribe())
+                    .append(req.getDistrict()).append(req.getImages())
+                    .append(req.getProject_class()).append(req.getProject_fee())
+                    .append(req.getProject_type()).append(req.getProvince())
+                    .append(req.getService_cost()).append(req.getTitle())
+                    .append(req.getTotal_price()).append(type)
+                    .append(userid)
+                    .append("security");
+        }
+
 
         req.setUserid(userid);
         req.setType(type);
@@ -2451,6 +2495,37 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 发布互助
+     * @param
+     * @return
+     */
+    public Observable<ReleaseProjRes> publishMutual(ReleaseSkillReq req){
+        String rateKey = "publishMutual";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getAddress())
+                .append(req.getCity()).append(req.getContact())
+                .append(req.getContact_mobile()).append(req.getDescribe())
+                .append(req.getDistrict()).append(req.getImages())
+                .append(req.getProvince())
+                .append(req.getTitle())
+                .append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 完善信息
      * @param
      * @return
@@ -2606,25 +2681,6 @@ public class LoginModel extends BaseModel {
 
         return config.getRetrofitService().indexSearch(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
-
-
-//        return getCityId().map(integer -> {
-//            StringBuilder sb = new StringBuilder(rateKey);
-//            sb.append(time+"").append(selectCity).append(req.getKeyword())
-//                    .append(req.getLat()).append(req.getLng())
-//                    .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
-//                    .append(req.getProject_type()).append(req.getTime_type())
-//                    .append(req.getType())
-//                    .append(userid)
-//                    .append("security");
-//
-//            req.setCity(selectCity);
-//            req.setVerify(sb.toString());
-//            return req;
-//        }).flatMap(req1 -> {
-//            return config.getRetrofitService().indexSearch(setBody(rateKey, time, req1));
-//        })
-//        .compose(RxUtils.handleResult());
 
     }
 

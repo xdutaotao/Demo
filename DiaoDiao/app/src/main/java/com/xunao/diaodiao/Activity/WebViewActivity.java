@@ -279,7 +279,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             if (TextUtils.equals(LG_DETAIL, btnType)) {
                 ReleaseSkillActivity.startActivity(this);
             } else if (TextUtils.equals(btnType, HOME_DETAIL)) {
-                ReleaseProjActivity.startActivity(this);
+                ReleaseProjActivity.startActivity(this, false);
             }
 
         });

@@ -37,6 +37,7 @@ import butterknife.Unbinder;
 
 public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderSkillDoingView {
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
     Unbinder unbinder;
@@ -48,10 +49,13 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
     private RecyclerArrayAdapter<OrderSkillDoingRes.OddBean> adapter;
     private int page = 1;
 
-    public static OrderSkillTabDoingFragment newInstance(String param1) {
+    private int who;
+
+    public static OrderSkillTabDoingFragment newInstance(String param1, int who) {
         OrderSkillTabDoingFragment fragment = new OrderSkillTabDoingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, who);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +65,7 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            who = getArguments().getInt(ARG_PARAM2);
         }
     }
 

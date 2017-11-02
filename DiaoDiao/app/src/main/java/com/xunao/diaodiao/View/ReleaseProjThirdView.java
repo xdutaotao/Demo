@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.View;
 
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjRes;
 
 import java.util.List;
@@ -9,6 +10,6 @@ import java.util.List;
  */
 public interface ReleaseProjThirdView extends BaseView {
     void getData(ReleaseProjRes s);
-    void getBase64List(List<String> s);
+    void getBase64List(GetPercentRes s);
     void updateProject(Object s);
 }

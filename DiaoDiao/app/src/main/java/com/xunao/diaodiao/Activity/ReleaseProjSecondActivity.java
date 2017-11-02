@@ -26,8 +26,6 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
-import com.xunao.diaodiao.Bean.ReleaseProjReqTemp;
-import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseProjSecondPresenter;
 import com.xunao.diaodiao.R;
@@ -93,6 +91,12 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     TextView contentNum;
     @BindView(R.id.type_recycler_view)
     RecyclerView typeRecyclerView;
+    @BindView(R.id.time_text)
+    TextView timeText;
+    @BindView(R.id.price)
+    EditText price;
+    @BindView(R.id.jianli_fee)
+    RelativeLayout jianliFee;
 
     private ReleaseProjReq req;
     private IOSDialog dialog;
@@ -113,14 +117,17 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     private AddressPicker picker;
 
     private boolean flag = false;
+    private boolean jianli = false;
 
-    public static void startActivity(Context context, ReleaseProjReq req) {
+    public static void startActivity(Context context, ReleaseProjReq req, boolean flag, boolean jianli) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
         intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("flag", flag);
+        intent.putExtra("jianli", jianli);
         context.startActivity(intent);
     }
 
-    public static void startActivity(Context context, ReleaseProjReq req,  boolean flag) {
+    public static void startActivity(Context context, ReleaseProjReq req, boolean flag) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
         intent.putExtra(INTENT_KEY, req);
         intent.putExtra("flag", flag);
@@ -147,7 +154,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
                 } else {
-                    baseViewHolder.setVisible(R.id.delete, flag? false: true);
+                    baseViewHolder.setVisible(R.id.delete, flag ? false : true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
             }
@@ -164,9 +171,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
-            }else{
-                if(pathList.size() > 0)
-                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
+            } else {
+                if (pathList.size() > 0)
+                    PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
         });
         adapter.add(ADD);
@@ -180,9 +187,9 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 200){
+                if (s.length() > 200) {
                     content.setText(s.subSequence(0, 200));
-                }else{
+                } else {
                     contentNum.setText(s.length() + " / 200");
                 }
 
@@ -214,7 +221,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeAdapter.setOnItemClickListener((view, i) -> {
             showDialog(typeAdapter.getAllData().get(i));
         });
-        LinearLayoutManager manager = new LinearLayoutManager(this){
+        LinearLayoutManager manager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -224,14 +231,14 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         typeRecyclerView.setAdapter(typeAdapter);
 
         addressDetailLayout.setOnClickListener(v -> {
-            if (picker != null){
-                if (TextUtils.isEmpty(address.getText())){
+            if (picker != null) {
+                if (TextUtils.isEmpty(address.getText())) {
                     picker.setSelectedItem("上海", "上海", "长宁");
-                }else{
+                } else {
                     String[] addresss = address.getText().toString().split("-");
-                    if (addresss.length == 3){
+                    if (addresss.length == 3) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
-                    }else{
+                    } else {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
                     }
 
@@ -248,17 +255,24 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     finish();
                 });
 
-        time.setText(Utils.getNowDate());
+        time.setText(Utils.getNowDate() + " 00:00");
 
         flag = getIntent().getBooleanExtra("flag", false);
-        if (flag){
+        if (flag) {
             //再次编辑
             title.setText(req.getTitle());
             address.setText(req.getRegion());
             addressDetail.setText(req.getAddress());
             name.setText(req.getContact());
             phone.setText(req.getContact_mobile());
-            time.setText(Utils.millToYearString(req.getBuild_time()));
+            if(jianli){
+                time.setText(Utils.millToYearString(req.getSupervisor_time()));
+                price.setText(req.getSupervisor_fee());
+                price.setFocusable(false);
+            }else{
+                time.setText(Utils.millToYearString(req.getBuild_time()));
+            }
+
             content.setText(req.getDescribe());
             adapter.clear();
             adapter.addAll(req.getImages());
@@ -275,15 +289,26 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             RxBus.getInstance().toObservable(String.class)
                     .filter(s -> TextUtils.equals(s, "update_project"))
                     .subscribe(s -> {
-                       finish();
+                        finish();
                     });
 
-        }else{
+        } else {
             presenter.typeExpenses(req.getProject_class());
             time.setOnClickListener(this);
             initImagePicker();
             presenter.getPercent();
-            presenter.getAddressData(this);
+            if(Constants.addressResult.size() == 0)
+                presenter.getAddressData(this);
+            else
+                getAddressData(Constants.addressResult);
+        }
+
+        jianli = getIntent().getBooleanExtra("jianli", false);
+        if (jianli) {
+            timeText.setText("监理验收时间");
+            typeRecyclerView.setVisibility(View.GONE);
+            jianliFee.setVisibility(View.VISIBLE);
+            showToolbarBack(toolBar, titleText, "发布监理信息");
         }
     }
 
@@ -323,15 +348,15 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     if (county == null) {
                         provinceId = Integer.valueOf(province.getAreaId());
                         cityId = Integer.valueOf(city.getAreaId());
-                        address.setText(province.getAreaName()+"-"+city.getAreaName());
+                        address.setText(province.getAreaName() + "-" + city.getAreaName());
                         //ToastUtil.show(province.getAreaName() + city.getAreaName());
                     } else {
                         provinceId = Integer.valueOf(province.getAreaId());
                         cityId = Integer.valueOf(city.getAreaId());
                         districtId = Integer.valueOf(county.getAreaId());
-                        address.setText(province.getAreaName()+"-"
-                                +city.getAreaName()+"-"
-                                +county.getAreaName());
+                        address.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
 
                         //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     }
@@ -358,21 +383,21 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         price.setHint("最小输入" + temp.getCost());
 
         TextView warning = (TextView) view.findViewById(R.id.warning);
-        if(select.getText().toString().contains("水泥回填")){
+        if (select.getText().toString().contains("水泥回填")) {
             warning.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             warning.setVisibility(View.GONE);
         }
 
-        if (TextUtils.isEmpty(temp.getAmount())){
+        if (TextUtils.isEmpty(temp.getAmount())) {
             amount.setText(temp.getAmount());
         }
 
-        if(select.getText().toString().contains("氟机系统") || select.getText().toString().contains("水机系统")){
+        if (select.getText().toString().contains("氟机系统") || select.getText().toString().contains("水机系统")) {
             amount.setHint("请输入室内机数量");
         }
 
-        if (TextUtils.isEmpty(temp.getUnit_price())){
+        if (TextUtils.isEmpty(temp.getUnit_price())) {
             price.setText(temp.getUnit_price());
         }
 
@@ -454,7 +479,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-                if (TextUtils.isEmpty(address.getText())){
+                if (TextUtils.isEmpty(address.getText())) {
                     ToastUtil.show("选择地区");
                     return;
                 }
@@ -489,61 +514,81 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     return;
                 }
 
-                if (!flag){
-                    List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
-                    req.setProject_fee("0");
-                    for (ReleaseProjReq.ExpensesBean temp : tempList) {
-                        if (TextUtils.isEmpty(temp.getAmount())) {
-                            ToastUtil.show("请输入价格和数量");
-                            return;
+                if(jianli){
+                    if(TextUtils.isEmpty(price.getText().toString())){
+                        ToastUtil.show("监理费不能为空");
+                        return;
+                    }
+                }
+
+                if (!flag) {
+
+                    if(!jianli){
+                        List<ReleaseProjReq.ExpensesBean> releaseProjReqs = new ArrayList<>();
+                        req.setProject_fee("0");
+                        for (ReleaseProjReq.ExpensesBean temp : tempList) {
+                            if (TextUtils.isEmpty(temp.getAmount())) {
+                                ToastUtil.show("请输入价格和数量");
+                                return;
+                            }
+
+                            ReleaseProjReq.ExpensesBean bean = new ReleaseProjReq.ExpensesBean();
+                            bean.setExpenses_id(temp.getExpenses_id());
+                            bean.setUnit_price(temp.getUnit_price());
+                            bean.setAmount(temp.getAmount());
+                            BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
+                                    * Float.valueOf(temp.getAmount()));
+                            bigDecimal.setScale(2, 4);
+                            req.setProject_fee(String.valueOf(Float.valueOf(req.getProject_fee()) +
+                                    bigDecimal.floatValue()));
+                            String totalPrice = String.valueOf(bigDecimal.floatValue());
+                            bean.setTotal_price(totalPrice);
+                            bean.setName(temp.getName());
+                            bean.setUnit(temp.getUnit());
+                            releaseProjReqs.add(bean);
                         }
 
-                        ReleaseProjReq.ExpensesBean bean = new ReleaseProjReq.ExpensesBean();
-                        bean.setExpenses_id(temp.getExpenses_id());
-                        bean.setUnit_price(temp.getUnit_price());
-                        bean.setAmount(temp.getAmount());
-                        BigDecimal bigDecimal = new BigDecimal(Float.valueOf(temp.getUnit_price())
-                                * Float.valueOf(temp.getAmount()));
-                        bigDecimal.setScale(2, 4);
-                        req.setProject_fee(String.valueOf(Float.valueOf(req.getProject_fee()) +
-                                bigDecimal.floatValue()));
-                        String totalPrice = String.valueOf(bigDecimal.floatValue());
-                        bean.setTotal_price(totalPrice);
-                        bean.setName(temp.getName());
-                        bean.setUnit(temp.getUnit());
-                        releaseProjReqs.add(bean);
+                        if (TextUtils.isEmpty(percent)) {
+                            percent = "10";
+                        }
+                        BigDecimal serviceFee = new BigDecimal(Float.valueOf(req.getProject_fee()) / Integer.valueOf(percent));
+                        serviceFee.setScale(2, 4);
+                        req.setService_cost(String.valueOf(serviceFee.floatValue()));
+                        BigDecimal allFee = serviceFee.add(new BigDecimal(Float.valueOf(req.getProject_fee())));
+                        allFee.setScale(2, 4);
+                        req.setTotal_price(String.valueOf(allFee.floatValue()));
+                        req.setExpenses(releaseProjReqs);
                     }
 
-                    if (TextUtils.isEmpty(percent)){
-                        percent = "10";
-                    }
-                    BigDecimal serviceFee = new BigDecimal(Float.valueOf(req.getProject_fee())/Integer.valueOf(percent));
-                    serviceFee.setScale(2, 4);
-                    req.setService_cost(String.valueOf(serviceFee.floatValue()));
-                    BigDecimal allFee = serviceFee.add(new BigDecimal(Float.valueOf(req.getProject_fee())));
-                    allFee.setScale(2, 4);
-                    req.setTotal_price(String.valueOf(allFee.floatValue()));
 
                     req.setAddress(addressDetail.getText().toString());
                     req.setProvince(provinceId);
                     req.setCity(cityId);
                     req.setDistrict(districtId);
-                    req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
+                    if(jianli){
+                        req.setSupervisor_time(Utils.convertTime2long(time.getText().toString()));
+                    }else{
+                        req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
+                    }
+
                     req.setBuild_time_string(time.getText().toString());
-                    if(pathList.size() == 0){
+                    if (pathList.size() == 0) {
                         ToastUtil.show("请添加图片");
                         return;
                     }
                     req.setImages(pathList);
                     req.setDescribe(content.getText().toString());
-                    req.setExpenses(releaseProjReqs);
+
                 }
 
                 req.setTitle(title.getText().toString());
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
 
-                ReleaseProjThirdActivity.startActivity(this, req, flag);
+                if(jianli){
+                    req.setSupervisor_fee(price.getText().toString());
+                }
+                ReleaseProjThirdActivity.startActivity(this, req, flag, jianli);
                 break;
 
             case R.id.time:
@@ -594,7 +639,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
                     @Override
                     public void onTimePicked(String hour, String minute) {
-                        timeLong.append(" " + hour+":"+minute);
+                        timeLong.append(" " + hour + ":" + minute);
                         time.setText(timeLong.toString());
                         req.setBuild_time_string(timeLong.toString());
                     }

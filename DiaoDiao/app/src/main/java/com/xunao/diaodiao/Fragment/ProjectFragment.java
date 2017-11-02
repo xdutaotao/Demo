@@ -174,12 +174,14 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 if (type == COMPANY_TYPE) {
 
                 } else if (type == SKILL_TYPE) {
-                    ReleaseSKillTypeActivity.startActivity(getContext());
+                    ReleaseSKillTypeActivity.startActivity(getContext(), true);
                 }
                 break;
 
             case R.id.wb_layout:
-
+                if(type == SKILL_TYPE){
+                    ReleaseSKillTypeActivity.startActivity(getContext(), false);
+                }
                 break;
 
             case R.id.hz_layout:
@@ -237,7 +239,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             }
         }
         if (!TextUtils.isEmpty(mutual)) {
-            hzDoing.setText(mutual);
+            hzDoing.setText("进行中 "+mutual);
         }
 
         if(type == COMPANY_TYPE){

@@ -107,6 +107,7 @@
 
             <RelativeLayout style="@style/item_layout">
                 <TextView style="@style/item_left_text"
+                    android:id="@+id/time_text"
                     android:text="施工时间"/>
                 <TextView style="@style/edit_personal_edit"
                     android:layout_width="700px"
@@ -168,6 +169,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/type_recycler_view"/>
+
+
+            <RelativeLayout
+                style="@style/item_layout"
+                android:id="@+id/jianli_fee"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="监理费"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入价格"
+                    android:id="@+id/price"
+                    android:inputType="phone"
+                    android:digits="1234567890"
+                    android:layout_marginRight="50px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="元"/>
+            </RelativeLayout>
 
             <View style="@style/item_divider" />
 
