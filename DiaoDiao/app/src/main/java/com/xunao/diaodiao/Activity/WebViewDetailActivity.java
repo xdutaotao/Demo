@@ -44,6 +44,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 
@@ -201,7 +202,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         if (odd != null) {
             url = odd.getUrl();
-            if (who == SKILL_RECIEVE_PROJECT || who == SKILL_RECIEVE_WEIBAO) {
+            if (who == SKILL_RECIEVE_PROJECT || (who == SKILL_RECIEVE_WEIBAO) || (who == SKILL_RECIEVE_JIANLI)) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 if (odd.getEvaluate_status() == 1) {
                     //已评价
@@ -342,9 +343,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             if (who == SKILL_RECIEVE_PROJECT) {
                 RecommandActivity.startActivity(this,
                         odd.getProject_id(), 1);
-            } else {
+            } else if(who == SKILL_RECIEVE_WEIBAO){
                 RecommandActivity.startActivity(this,
-                        odd.getProject_id(), 1);
+                        odd.getMaintenance_id(), 4);
+            }else if(who == SKILL_RECIEVE_JIANLI){
+                RecommandActivity.startActivity(this,
+                        odd.getSupervisor_id(), 2);
             }
 
         });
@@ -353,30 +357,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         share.setOnClickListener(v -> {
 
             showPicDialog();
-//            myShareSDK = new ShareSDK();
-//            myShareSDK.initSDK(this);
-//            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
-//            sp.setShareType(Platform.SHARE_WEBPAGE);
-//            url += "&hd=1";
-//            sp.setUrl(url);
-//            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
-//            sp.setTitleUrl(url);
-//            if(project != null){
-//                sp.setText(project.getTitle());
-//                sp.setTitle(project.getTitle());
-//            }else if(odd != null){
-//                sp.setText(odd.getTitle());
-//                sp.setTitle(odd.getTitle());
-//            }else if(carousel != null){
-//                sp.setText(carousel.getName());
-//                sp.setTitle(carousel.getName());
-//            }else{
-//                sp.setText(title);
-//                sp.setTitle(title);
-//            }
-//
-//            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
-//            wx.share(sp);
 
 
         });

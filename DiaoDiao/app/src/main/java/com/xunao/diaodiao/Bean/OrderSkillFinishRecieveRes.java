@@ -39,6 +39,16 @@ public class OrderSkillFinishRecieveRes implements Serializable{
         this.maintenance = maintenance;
     }
 
+    private List<OddBean> supervisor;
+
+    public List<OddBean> getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(List<OddBean> supervisor) {
+        this.supervisor = supervisor;
+    }
+
     public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
@@ -58,6 +68,15 @@ public class OrderSkillFinishRecieveRes implements Serializable{
         private int project_id;
         private String project_price;
         private int maintenance_id;
+        private int supervisor_id;
+
+        public int getSupervisor_id() {
+            return supervisor_id;
+        }
+
+        public void setSupervisor_id(int supervisor_id) {
+            this.supervisor_id = supervisor_id;
+        }
 
         public int getMaintenance_id() {
             return maintenance_id;

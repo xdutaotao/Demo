@@ -97,10 +97,15 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "上门费");
+                }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                    baseViewHolder.setText(R.id.days, "价格");
                 }
 
                 if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.request, "维保情况");
+                }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
+                    baseViewHolder.setText(R.id.request, "监理情况");
                 }else{
                     baseViewHolder.setText(R.id.request, "项目进度");
                 }
@@ -117,7 +122,10 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                                 homeBean.getProject_id(), who);
                     }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                         WeiBaoProjActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                                homeBean.getMaintenance_id());
+                                homeBean.getMaintenance_id(), who);
+                    }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                        WeiBaoProjActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), who);
                     }
 
 
@@ -138,7 +146,11 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
             }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
+                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.SKILL_RECIEVE_WEIBAO_DOING);
+            }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getSupervisor_id(), WebViewActivity.SKILL_RECIEVE_JIANLI_DOING);
             }
 
 
@@ -178,6 +190,11 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 adapter.stopMore();
 
             adapter.addAll(list.getMaintenance());
+        }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+            if(list.getSupervisor().size() ==0)
+                adapter.stopMore();
+
+            adapter.addAll(list.getSupervisor());
         }
 
 

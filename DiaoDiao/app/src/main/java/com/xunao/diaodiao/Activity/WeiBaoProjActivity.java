@@ -41,6 +41,7 @@ import rx.Observable;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 
 /**
  * create by
@@ -69,11 +70,12 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private int who;
 
-
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProjActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("who", who);
         context.startActivity(intent);
     }
 
@@ -86,7 +88,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "维保进度");
-
+        who = getIntent().getIntExtra("who", 0);
         adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.sign_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, WeiBaoProgRes.WorkBean s) {
@@ -203,13 +205,18 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     private void signAction(){
         GetMoneyReq req = new GetMoneyReq();
         req.setLocation(Constants.address);
-        req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        if(who == SKILL_RECIEVE_JIANLI){
+            req.setSupervisor_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        }else{
+            req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        }
+
         req.setRemark("remark");
         req.setSign_time(System.currentTimeMillis()/1000);
         //是否申请打款
         req.setApply_type(2);
         req.setImages(pathList);
-        presenter.myAcceptMaintenanceSubmit(this, req);
+        presenter.myAcceptMaintenanceSubmit(this, req, who);
     }
 
     private void takePhoto() {
@@ -241,7 +248,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
         if (images.size() > 0){
-            postText.setText("确认签到");
+            postText.setText("提交审核");
             postText.setVisibility(View.VISIBLE);
         }
 

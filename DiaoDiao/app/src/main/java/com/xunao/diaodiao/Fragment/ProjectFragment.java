@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
@@ -168,6 +169,11 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 }
                 break;
             case R.id.jianli_layout:
+                if (type == COMPANY_TYPE) {
+
+                } else if (type == SKILL_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_JIANLI);
+                }
                 break;
 
             case R.id.lg_layout:

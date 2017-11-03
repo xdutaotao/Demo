@@ -84,8 +84,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String RECEIVE_WEIBAO_DETAIL = "receive_release_wb_detail";
+    public static final String RECEIVE_JIANLI_DETAIL = "receive_release_jl_detail";
     public static final String HOME_DETAIL = "home_detail";
     public static final String SKILL_RECIEVE_PROJECT_DOING = "SKILL_RECIEVE_PROJECT_DOING";
+    public static final String SKILL_RECIEVE_WEIBAO_DOING = "SKILL_RECIEVE_WEIBAO_DOING";
+    public static final String SKILL_RECIEVE_JIANLI_DOING = "SKILL_RECIEVE_JIANLI_DOING";
     public static final String HOME_SKILL_DETAIL = "home_skill_detail";
     public static final String COMPANY_PROJ = "company_proj";
     /**
@@ -366,7 +369,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             changeInfo.setText("修改零工信息");
             presenter.getFindLingGongDetail(this, id);
 
-        } else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL) || TextUtils.equals(btnType, RECEIVE_WEIBAO_DETAIL)) {
+        } else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)
+                || TextUtils.equals(btnType, RECEIVE_WEIBAO_DETAIL)
+                || TextUtils.equals(btnType, RECEIVE_JIANLI_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
             apply.setVisibility(View.VISIBLE);
@@ -377,7 +382,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         } else if (TextUtils.equals(btnType, COMPANY_PROJ)) {
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)) {
+        } else if (TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING)
+                || TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)
+                || TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING)) {
             //技术人员 发布项目 进行中
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.GONE);
@@ -406,20 +413,6 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         share.setOnClickListener(v -> {
             showPicDialog();
-
-//            myShareSDK = new ShareSDK();
-//            myShareSDK.initSDK(this);
-//            WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
-//            sp.setShareType(Platform.SHARE_WEBPAGE);
-//            url += "&hd=1";
-//            sp.setUrl(url);
-//            sp.setTitleUrl(url);
-//            sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
-//            sp.setText(title);
-//            sp.setTitle(title);
-//
-//            Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
-//            wx.share(sp);
 
         });
 
@@ -483,7 +476,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (TextUtils.equals(btnType, HOME_DETAIL) ||
                 TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
-                    TextUtils.equals(btnType, HOME_SKILL_DETAIL)) {
+                    TextUtils.equals(btnType, HOME_SKILL_DETAIL) ||
+                        TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
+                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
             getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
@@ -501,7 +496,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (TextUtils.equals(btnType, HOME_DETAIL) ||
                 TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
-                    TextUtils.equals(btnType, HOME_SKILL_DETAIL)) {
+                    TextUtils.equals(btnType, HOME_SKILL_DETAIL)||
+                        TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
+                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
             } else {
@@ -520,7 +517,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
                     if (TextUtils.equals(btnType, HOME_DETAIL) ||
                             TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
-                                TextUtils.equals(btnType, HOME_SKILL_DETAIL)) {
+                                TextUtils.equals(btnType, HOME_SKILL_DETAIL)||
+                                    TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
+                                        TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
                         int types = 0;
                         if (type == 0) {
                             types = 1;
@@ -535,6 +534,16 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         } else {
 
                         }
+
+                        if(TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING)){
+                            //维保
+                            types = 4;
+                        }else if(TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)){
+                            //监理
+                            types = 2;
+                        }
+
+
                         if (!isCollect) {
                             presenter.collectWork(this, getIntent().getIntExtra(ID_KEY, 0), types);
                         } else {

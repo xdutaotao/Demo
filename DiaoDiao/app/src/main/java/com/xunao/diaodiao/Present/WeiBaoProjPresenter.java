@@ -41,8 +41,8 @@ public class WeiBaoProjPresenter extends BasePresenter<WeiBaoProjView> {
                 }));
     }
 
-    public void myAcceptMaintenanceSubmit(Context context, GetMoneyReq req){
-        mCompositeSubscription.add(model.myAcceptMaintenanceSubmit(req)
+    public void myAcceptMaintenanceSubmit(Context context, GetMoneyReq req, int who){
+        mCompositeSubscription.add(model.myAcceptMaintenanceSubmit(req, who)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {

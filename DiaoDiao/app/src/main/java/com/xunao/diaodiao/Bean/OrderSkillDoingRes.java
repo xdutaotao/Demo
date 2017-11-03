@@ -38,6 +38,16 @@ public class OrderSkillDoingRes {
         this.maintenance = maintenance;
     }
 
+    private List<OddBean> supervisor;
+
+    public List<OddBean> getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(List<OddBean> supervisor) {
+        this.supervisor = supervisor;
+    }
+
     public static class OddBean{
         private int odd_id;
         private String title;
@@ -53,6 +63,15 @@ public class OrderSkillDoingRes {
         private String issue_time;
 
         private int maintenance_id;
+        private int supervisor_id;
+
+        public int getSupervisor_id() {
+            return supervisor_id;
+        }
+
+        public void setSupervisor_id(int supervisor_id) {
+            this.supervisor_id = supervisor_id;
+        }
 
         public int getMaintenance_id() {
             return maintenance_id;

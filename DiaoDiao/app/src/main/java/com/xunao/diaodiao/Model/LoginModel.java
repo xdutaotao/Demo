@@ -135,6 +135,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
@@ -1507,6 +1508,8 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectWait";
         }else if(who == SKILL_RECIEVE_WEIBAO){
             rateKey = "myAcceptMaintenanceWait";
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            rateKey = "myAcceptSupervisorWait";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1537,6 +1540,8 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectCancel";
         }else if(who == SKILL_RECIEVE_WEIBAO){
             rateKey = "myAcceptMaintenanceWait";
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            rateKey = "myAcceptSupervisorCancel";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1556,6 +1561,8 @@ public class LoginModel extends BaseModel {
             req.setOdd_id(odd_id);
         }else if(who == SKILL_RECIEVE_WEIBAO){
             req.setMaintenance_id(odd_id);
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            req.setSupervisor_id(odd_id);
         }
 
         req.setVerify(Utils.getMD5(sb.toString()));
@@ -1599,6 +1606,8 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectDoing";
         }else if(who == SKILL_RECIEVE_WEIBAO){
             rateKey = "myAcceptMaintenanceDoing";
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            rateKey = "myAcceptSupervisorDoing";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -2053,18 +2062,29 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 维保 进度 签到
      */
-    public Observable<Object> myAcceptMaintenanceSubmit(GetMoneyReq req){
+    public Observable<Object> myAcceptMaintenanceSubmit(GetMoneyReq req, int who){
         String rateKey = "myAcceptMaintenanceSubmit";
+        if(who == SKILL_RECIEVE_JIANLI){
+            rateKey="myAcceptSupervisorSubmit";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getImages()).append(req.getLocation())
-                .append(req.getMaintenance_id())
-                .append(type).append(userid)
-                .append("security");
+        if(who == SKILL_RECIEVE_JIANLI){
+            sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                    .append(req.getSupervisor_id())
+                    .append(type).append(userid)
+                    .append("security");
+        }else{
+            sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                    .append(req.getMaintenance_id())
+                    .append(type).append(userid)
+                    .append("security");
+        }
+
 
         req.setUserid(userid);
         req.setType(type);

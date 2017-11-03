@@ -96,6 +96,9 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.days, "上门费");
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                    baseViewHolder.setText(R.id.days, "价格");
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                 }
 
                 baseViewHolder.setText(R.id.request, "取消申请");
@@ -110,6 +113,9 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                     }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                         presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
                                 homeBean.getMaintenance_id(), who);
+                    }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                        presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), who);
                     }
 
 
@@ -118,15 +124,10 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-
-
-
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
-
-
             }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
@@ -135,6 +136,10 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.RECEIVE_WEIBAO_DETAIL);
+            }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getSupervisor_id(), WebViewActivity.RECEIVE_JIANLI_DETAIL);
             }
 
         });
@@ -172,6 +177,11 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 adapter.stopMore();
 
             adapter.addAll(list.getMaintenance());
+        }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+            if(list.getSupervisor().size() !=10)
+                adapter.stopMore();
+
+            adapter.addAll(list.getSupervisor());
         }
 
 
