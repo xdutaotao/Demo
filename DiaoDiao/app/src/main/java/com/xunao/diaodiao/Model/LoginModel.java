@@ -141,6 +141,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
@@ -1268,9 +1269,12 @@ public class LoginModel extends BaseModel {
         String rateKey = "applyProject";
         if (types == 0){
 
-        }else{
+        }else if(types == 1){
             rateKey = "applyOdd";
+        }else if(types == 2){
+            rateKey = "applyMaintenance";
         }
+
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         long time = System.currentTimeMillis()/1000;
@@ -1819,6 +1823,34 @@ public class LoginModel extends BaseModel {
     }
 
 
+    public Observable<Object> myPublishMaintenanceSuccess(int id){
+        String rateKey = "myPublishMaintenanceSuccess";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append(id)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setWork_id(id);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myPublishOddSuccess(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
     /**
      * 技术 我发布的 零工 进行中 付款
      */
@@ -2114,6 +2146,32 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     *  我接的 项目 进度 拍照 列表
+     */
+    public Observable<MyPublishOddWorkRes> myPublishMaintenanceWork(int projId){
+        String rateKey = "myPublishMaintenanceWork";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(projId)
+                .append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setMaintenance_id(projId);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().myPublishOddWorkProgress(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
      *  我接的 项目 进度 拍照 提交
      */
     public Observable<String> myAcceptProjectWorkSub(GetMoneyReq req){
@@ -2255,6 +2313,13 @@ public class LoginModel extends BaseModel {
                     .append(req.getProject_id())
                     .append(req.getProject_type())
                     .append(type).append(userid)
+                    .append("security");
+        }else if(who == COMPANY_RELEASE_WEIBAO){
+            rateKey = "myPublishMaintenanceFail";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getImages()).append(req.getProject_id())
+                    .append(req.getReason())
+                    .append(type).append(userid).append(req.getWork_id())
                     .append("security");
         }
 

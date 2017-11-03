@@ -98,6 +98,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                 }
 
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
+                baseViewHolder.setText(R.id.days, "上门费");
 
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");

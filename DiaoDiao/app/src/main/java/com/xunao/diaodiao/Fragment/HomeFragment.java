@@ -276,9 +276,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         };
 
         adapterList.setOnItemClickListener((view1, i) -> {
-            WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterList.getAllData().get(i).getUrl(),
+            WebViewActivity.startActivity(HomeFragment.this.getContext(),
+                    adapterList.getAllData().get(i).getUrl(),
                     adapterList.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_DETAIL);
+                    WebViewActivity.HOME_WEIBAO_DETAIL);
         });
 
         recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()) {

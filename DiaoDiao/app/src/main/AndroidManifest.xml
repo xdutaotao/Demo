@@ -277,6 +277,7 @@
         <activity android:name=".Activity.MessageDetail" />
         <activity android:name=".Activity.PhotoActivity"/>
         <activity android:name=".Activity.WeiBaoProjActivity"/>
+        <activity android:name=".Activity.WeiBaoProgActivity"/>
     </application>
 
 </manifest>

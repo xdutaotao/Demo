@@ -133,12 +133,6 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         presenter.myPublishOddWorkProgress(getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
-//            MyPublicOddFailReq req = new MyPublicOddFailReq();
-//            req.setWork_id(workBeanDoing.getWork_id());
-//            req.setReason("reason");
-//            req.setImages(imageAdapter.getAllData());
-            //presenter.myPublishOddFail(req);
-
             GetMoneyReq req = new GetMoneyReq();
             req.setWork_id(workBeanDoing.getWork_id());
             AppealActivity.startActivity(this, req, SKILL_RELEASE_LINGGONG_NO_PASS);

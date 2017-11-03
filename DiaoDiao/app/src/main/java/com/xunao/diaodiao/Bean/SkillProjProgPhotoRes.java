@@ -18,6 +18,16 @@ public class SkillProjProgPhotoRes {
         this.info = info;
     }
 
+    private List<InfoBean> work;
+
+    public List<InfoBean> getWork() {
+        return work;
+    }
+
+    public void setWork(List<InfoBean> work) {
+        this.work = work;
+    }
+
     public static class InfoBean{
         private long date;
         private String location;
@@ -28,6 +38,42 @@ public class SkillProjProgPhotoRes {
         private String feedback;
         private int work_id;
         private List<String> audit_images;
+        private long sign_time;
+        private int pass;
+        private int paid;
+        private int apply;
+
+        public int getApply() {
+            return apply;
+        }
+
+        public void setApply(int apply) {
+            this.apply = apply;
+        }
+
+        public int getPass() {
+            return pass;
+        }
+
+        public void setPass(int pass) {
+            this.pass = pass;
+        }
+
+        public int getPaid() {
+            return paid;
+        }
+
+        public void setPaid(int paid) {
+            this.paid = paid;
+        }
+
+        public long getSign_time() {
+            return sign_time;
+        }
+
+        public void setSign_time(long sign_time) {
+            this.sign_time = sign_time;
+        }
 
         public long getDate() {
             return date;

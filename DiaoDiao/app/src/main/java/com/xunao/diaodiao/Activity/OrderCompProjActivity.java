@@ -213,7 +213,9 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         linearLayout.setDividerPadding(20);
 
         for(int i=0; i<fragments.size(); i++){
-            if (who == 0){
+            if (who == COMPANY_RELEASE_WEIBAO
+                    || (who == COMPANY_RELEASE_JIANLI) ||
+                        (who == COMPANY_RELEASE_HUZHU) || (who == 0)){
                 tab.getTabAt(i).setText(TAB_TITLE[i]);
             }else{
                 tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);

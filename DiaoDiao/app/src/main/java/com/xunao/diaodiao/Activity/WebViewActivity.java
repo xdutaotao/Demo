@@ -91,6 +91,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String SKILL_RECIEVE_WEIBAO_DOING = "SKILL_RECIEVE_WEIBAO_DOING";
     public static final String SKILL_RECIEVE_JIANLI_DOING = "SKILL_RECIEVE_JIANLI_DOING";
     public static final String HOME_SKILL_DETAIL = "home_skill_detail";
+    public static final String HOME_WEIBAO_DETAIL = "home_weibao_detail";
     public static final String COMPANY_PROJ = "company_proj";
     /**
      * 1项目2监理3零工4维保
@@ -255,7 +256,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             } else if (TextUtils.equals(btnType, HOME_SKILL_DETAIL)) {
                 //零工申请
                 presenter.postProject(this, id, 1);
-            } else {
+            } else if(TextUtils.equals(btnType, HOME_WEIBAO_DETAIL)) {
+                //维保申请
+                presenter.postProject(this, id, 2);
+
+            }else {
                 if (project_type == 0) {
                     //联系发布人
 
@@ -351,7 +356,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             }
         });
 
-        if (TextUtils.equals(HOME_DETAIL, btnType)) {
+        if (TextUtils.equals(HOME_DETAIL, btnType) ||
+                TextUtils.equals(HOME_WEIBAO_DETAIL, btnType)) {
             //首页
             bottomBtnLayout.setVisibility(View.GONE);
             if (isApply) {

@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -101,7 +102,7 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if(who == Constants.SKILL_RELEASE_WEIBAO){
-                        OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                        WeiBaoProgActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
                                 homeBean.getMaintenance_id());
                     }else{
                         OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
