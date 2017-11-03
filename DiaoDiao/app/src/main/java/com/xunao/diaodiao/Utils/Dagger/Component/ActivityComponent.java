@@ -78,7 +78,10 @@ import com.xunao.diaodiao.Fragment.HasRateFragment;
 import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.Fragment.MyComplaintRecordFragment;
 import com.xunao.diaodiao.Fragment.NoRateFragment;
+import com.xunao.diaodiao.Fragment.OrderCompHZFragment;
+import com.xunao.diaodiao.Fragment.OrderCompJLFragment;
 import com.xunao.diaodiao.Fragment.OrderCompTabFragment;
+import com.xunao.diaodiao.Fragment.OrderCompWBFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingRecieveFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabFinishFragment;
@@ -157,6 +160,7 @@ public interface ActivityComponent {
     void inject(HasRateFragment fragment);
     void inject(NoRateFragment fragment);
     void inject(MyComplaintRecordFragment fragment);
+    void inject(OrderCompWBFragment fragment);
     void inject(OrderCompTabFragment fragment);
     void inject(OrderSkillTabFragment fragment);
     void inject(OrderSkillTabDoingFragment fragment);
@@ -164,6 +168,8 @@ public interface ActivityComponent {
     void inject(OrderSkillTabRecieveFragment fragment);
     void inject(OrderSkillTabDoingRecieveFragment fragment);
     void inject(OrderSkillTabFinishRecieveFragment fragment);
+    void inject(OrderCompHZFragment fragment);
+    void inject(OrderCompJLFragment fragment);
     void inject(GetMoneyActivity activity);
     void inject(DocActivity activity);
     void inject(ReleaseSKillTypeActivity activity);

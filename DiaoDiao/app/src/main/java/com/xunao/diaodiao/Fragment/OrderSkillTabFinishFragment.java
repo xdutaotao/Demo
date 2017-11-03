@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
 import com.xunao.diaodiao.Present.OrderSkillFinishPresenter;
 import com.xunao.diaodiao.R;
@@ -84,7 +85,12 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                if(who == Constants.SKILL_RELEASE_WEIBAO){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
+                }else{
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                }
+
                 baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
 
                 if(homeBean.getStatus() == 4){
@@ -101,8 +107,14 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                         baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                             //评价 1 项目 待改
                             if(homeBean.getEvaluate_status() == 2){
-                                RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                                        homeBean.getOdd_id(), 3);
+                                if(who == Constants.SKILL_RELEASE_WEIBAO){
+                                    RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                            homeBean.getOdd_id(), 4);
+                                }else{
+                                    RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                            homeBean.getOdd_id(), 3);
+                                }
+
                             }
 
                         });
@@ -117,12 +129,16 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-//            OrderSkillCompDetailActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-//                    adapter.getAllData().get(i).getOdd_id());
+            if(who == Constants.SKILL_RELEASE_WEIBAO){
+                WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getMaintenance_id());
+            }else{
+                WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id());
+            }
 
-            WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                    adapter.getAllData().get(i).getUrl(),
-                    adapter.getAllData().get(i).getOdd_id());
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -140,10 +156,18 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() != 10)
-            adapter.stopMore();
+        if(who == Constants.SKILL_RELEASE_WEIBAO){
+            if(list.getMaintenance().size() != 10)
+                adapter.stopMore();
 
-        adapter.addAll(list.getOdd());
+            adapter.addAll(list.getMaintenance());
+        }else{
+            if(list.getOdd().size() != 10)
+                adapter.stopMore();
+
+            adapter.addAll(list.getOdd());
+        }
+
 
 
     }
@@ -152,13 +176,13 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillFinish(page);
+        presenter.mySkillFinish(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillFinish(page);
+        presenter.mySkillFinish(page, who);
     }
 
     public String getTitle(){

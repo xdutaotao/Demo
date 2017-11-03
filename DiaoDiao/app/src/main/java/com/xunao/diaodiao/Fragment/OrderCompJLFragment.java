@@ -2,8 +2,6 @@ package com.xunao.diaodiao.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +10,17 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ApplyActivity;
-import com.xunao.diaodiao.Activity.FindProjectActivity;
-import com.xunao.diaodiao.Activity.OrderCompProjDetailActivity;
-import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
-import com.xunao.diaodiao.Activity.ProjectDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
-import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
+import com.xunao.diaodiao.View.OrderCompJLView;
+import com.xunao.diaodiao.Present.OrderCompJLPresenter;
 import com.xunao.diaodiao.View.OrderCompView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,13 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
 /**
- * Description:
- * Created by guzhenfu on 2017/8/19.
+ * create by
  */
-
-public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderCompView {
+public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener, OrderCompView {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.recycler_view)
@@ -51,15 +40,14 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
     private String mParam1;
     private int who;
 
-
     @Inject
     OrderComPresenter presenter;
 
     private RecyclerArrayAdapter<OrderCompRes.Project> adapter;
     private int page = 1;
 
-    public static OrderCompTabFragment newInstance(String param1, int mParam2) {
-        OrderCompTabFragment fragment = new OrderCompTabFragment();
+    public static OrderCompJLFragment newInstance(String param1, int mParam2) {
+        OrderCompJLFragment fragment = new OrderCompJLFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putInt(ARG_PARAM2, mParam2);
@@ -88,7 +76,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
             @Override
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
-                if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     if(homeBean.getEvaluate_status() == 1){
                         baseViewHolder.setText(R.id.evaluation, "查看评价");
                     }else{
@@ -101,31 +89,31 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
 
-                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                     baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     baseViewHolder.setVisible(R.id.time, false);
                 }
 
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
 
-                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
                 }
 
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_fee());
+                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getSupervisor_fee());
 
-                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                     baseViewHolder.setText(R.id.request, "查看");
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                     baseViewHolder.setText(R.id.request, "项目进度");
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     baseViewHolder.setText(R.id.request, "项目进度");
                 }
 
@@ -136,18 +124,18 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                    if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                         //查看申请人  1项目2监理3零工4维保
-                        ApplyActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id(), 1);
-                    }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                        ApplyActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), 2);
+                    }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id(), who);
-                    }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), who);
+                    }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id(), who);
+                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), who);
                     }
 
 
@@ -158,8 +146,8 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                     //评价 1 项目
                     if(homeBean.getEvaluate_status() != 1){
                         //去评价
-                        RecommandActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id(), 1);
+                        RecommandActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), 2);
                     }
                 });
             }
@@ -167,9 +155,8 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
         adapter.setOnItemClickListener((v, i) -> {
             //评价 1 项目
-            WebViewDetailActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                    adapter.getAllData().get(i)
-                    ,who);
+            WebViewDetailActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                    adapter.getAllData().get(i), who);
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -188,10 +175,10 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
         if (page == 1)
             adapter.clear();
 
-        if (list.getProject().size() != 10)
+        if (list.getSupervisor().size() != 10)
             adapter.stopMore();
 
-        adapter.addAll(list.getProject());
+        adapter.addAll(list.getSupervisor());
 
 
     }
@@ -229,6 +216,5 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
         }
 
     }
-
 
 }

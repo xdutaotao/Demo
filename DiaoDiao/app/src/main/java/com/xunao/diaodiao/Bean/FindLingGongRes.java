@@ -18,6 +18,7 @@ public class FindLingGongRes {
 
     private DetailBean detail;
     private OddInfoBean odd;
+    private MaintenanceBean maintenance;
 
     public DetailBean getDetail() {
         return detail;
@@ -33,6 +34,99 @@ public class FindLingGongRes {
 
     public void setOdd(OddInfoBean odd) {
         this.odd = odd;
+    }
+
+    public static class MaintenanceBean{
+        private String title;
+        private String region;
+        private String address;
+        private String contact;
+        private String contact_mobile;
+        private String door_fee;
+        private String door_time;
+        private String describe;
+        private List<String> images;
+        private String service_fee;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public void setContact(String contact) {
+            this.contact = contact;
+        }
+
+        public String getContact_mobile() {
+            return contact_mobile;
+        }
+
+        public void setContact_mobile(String contact_mobile) {
+            this.contact_mobile = contact_mobile;
+        }
+
+        public String getDoor_fee() {
+            return door_fee;
+        }
+
+        public void setDoor_fee(String door_fee) {
+            this.door_fee = door_fee;
+        }
+
+        public String getDoor_time() {
+            return door_time;
+        }
+
+        public void setDoor_time(String door_time) {
+            this.door_time = door_time;
+        }
+
+        public String getDescribe() {
+            return describe;
+        }
+
+        public void setDescribe(String describe) {
+            this.describe = describe;
+        }
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+
+        public String getService_fee() {
+            return service_fee;
+        }
+
+        public void setService_fee(String service_fee) {
+            this.service_fee = service_fee;
+        }
     }
 
     public static class OddInfoBean {

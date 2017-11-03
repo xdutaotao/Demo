@@ -20,6 +20,15 @@ public class FindProjDetailRes implements Serializable{
     private ProjectInfoBean project;
     private DetailBean detail;
     private String url;
+    private ProjectInfoBean mutual;
+
+    public ProjectInfoBean getMutual() {
+        return mutual;
+    }
+
+    public void setMutual(ProjectInfoBean mutual) {
+        this.mutual = mutual;
+    }
 
     public ProjectInfoBean getProject() {
         return project;

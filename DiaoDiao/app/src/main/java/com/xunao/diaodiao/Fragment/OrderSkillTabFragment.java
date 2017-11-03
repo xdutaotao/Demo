@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
 import com.xunao.diaodiao.Present.OrderSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -88,19 +89,37 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+"/天");
+                if(who == Constants.SKILL_RELEASE_WEIBAO){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
+                }else{
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+"/天");
+                }
+
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    ApplyActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                            homeBean.getOdd_id(), 3);
+                    if(who == Constants.SKILL_RELEASE_WEIBAO){
+                        ApplyActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                                homeBean.getMaintenance_id(), 4);
+                    }else{
+                        ApplyActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                                homeBean.getOdd_id(), 3);
+                    }
+
                 });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                    adapter.getAllData().get(i).getUrl(),
-                    adapter.getAllData().get(i).getOdd_id(), WebViewActivity.LG_DETAIL);
+            if(who == Constants.SKILL_RELEASE_WEIBAO){
+                WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.WEIBAO_DETAIL);
+            }else{
+                WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.LG_DETAIL);
+            }
+
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -121,10 +140,18 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
         if (page == 1)
             adapter.clear();
 
-        if(list.getOdd().size() != 10)
-            adapter.stopMore();
+        if(who == Constants.SKILL_RELEASE_LINGGONG){
+            if(list.getOdd().size() != 10)
+                adapter.stopMore();
 
-        adapter.addAll(list.getOdd());
+            adapter.addAll(list.getOdd());
+        }else if(who == Constants.SKILL_RELEASE_WEIBAO){
+            if(list.getMaintenance().size() != 10)
+                adapter.stopMore();
+
+            adapter.addAll(list.getMaintenance());
+        }
+
 
 
     }
@@ -133,13 +160,13 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         page = 1;
-        presenter.mySkillWait(page);
+        presenter.mySkillWait(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillWait(page);
+        presenter.mySkillWait(page, who);
     }
 
     public String getTitle(){
@@ -155,7 +182,12 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
+
     }
 
 

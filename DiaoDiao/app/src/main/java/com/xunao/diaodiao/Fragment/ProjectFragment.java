@@ -31,9 +31,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_HUZHU;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -170,7 +174,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 break;
             case R.id.jianli_layout:
                 if (type == COMPANY_TYPE) {
-
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_JIANLI);
                 } else if (type == SKILL_TYPE) {
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RECIEVE_JIANLI);
                 }
@@ -187,10 +191,17 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             case R.id.wb_layout:
                 if(type == SKILL_TYPE){
                     ReleaseSKillTypeActivity.startActivity(getContext(), false);
+                }else if(type == COMPANY_TYPE){
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_WEIBAO);
                 }
                 break;
 
             case R.id.hz_layout:
+                if (type == COMPANY_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_HUZHU);
+                } else if (type == SKILL_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RELEASE_HUZHU);
+                }
                 break;
 
         }

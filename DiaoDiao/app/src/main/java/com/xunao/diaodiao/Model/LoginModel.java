@@ -131,8 +131,19 @@ import rx.Subscriber;
 import static android.R.attr.id;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
@@ -140,6 +151,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -1217,8 +1229,15 @@ public class LoginModel extends BaseModel {
     /**
      *  项目详情
      */
-    public Observable<FindProjDetailRes> getFindProjDetail(int id){
+    public Observable<FindProjDetailRes> getFindProjDetail(int id, int who){
         String rateKey = "myProjectDetail";
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            rateKey = "allMaintenanceDetail";
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            rateKey = "mySupervisorDetail";
+        }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+            rateKey = "allMutualDetail";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -1230,8 +1249,15 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setProject_id(id);
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            req.setMaintenance_id(id);
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            req.setSupervisor_id(id);
+        }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+            req.setMutual_id(id);
+        }
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getFindProjDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1303,6 +1329,31 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setOdd_id(id);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 维保
+     * @param id
+     * @return
+     */
+    public Observable<FindLingGongRes> getFindWBDetail(int id){
+        String rateKey = "allMaintenanceDetail";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setMaintenance_id(id);
         req.setType(type);
         req.setVerify(sb.toString());
 
@@ -1444,6 +1495,36 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 互助关闭
+     */
+    public Observable<Object> allMutualCancel(int id){
+        String rateKey = "allMutualCancel";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id)
+                .append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setMutual_id(id);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 项目进行中
      */
     public Observable<OrderCompRes> myProjectWait(int page, int who){
@@ -1453,6 +1534,22 @@ public class LoginModel extends BaseModel {
             rateKey = "myProjectDoing";
         }else if (who == COMPANY_RELEASE_PROJECT_DONE){
             rateKey = "myProjectFinish";
+        }else if(who == COMPANY_RELEASE_JIANLI_DOING){
+            rateKey = "mySupervisorDoing";
+        }else if(who == COMPANY_RELEASE_JIANLI_DONE){
+            rateKey = "mySupervisorFinish";
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            rateKey = "mySupervisorWait";
+        }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            rateKey = "allMaintenanceWait";
+        }else if(who == COMPANY_RELEASE_WEIBAO_DOING){
+            rateKey = "allMaintenanceDoing";
+        }else if(who == COMPANY_RELEASE_WEIBAO_DONE){
+            rateKey = "allMaintenanceFinish";
+        }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+            rateKey = "allMutualWait";
+        }else if(who == COMPANY_RELEASE_HUZHU_DONE){
+            rateKey = "allMutualClose";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1468,7 +1565,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myProjectWait(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1477,8 +1574,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我发布的 零工 待确认
      */
-    public Observable<OrderSkillRes> mySkillWait(int page){
+    public Observable<OrderSkillRes> mySkillWait(int page, int who){
         String rateKey = "myPublishOddWait";
+        if(who == SKILL_RELEASE_WEIBAO){
+            rateKey = "allMaintenanceWait";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
@@ -1574,9 +1674,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我发布的 零工 进行中
      */
-    public Observable<OrderSkillDoingRes> mySkillDoing(int page){
+    public Observable<OrderSkillDoingRes> mySkillDoing(int page, int who){
         String rateKey = "myPublishOddDoing";
-
+        if(who == SKILL_RELEASE_WEIBAO){
+            rateKey = "allMaintenanceDoing";
+        }
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -1632,9 +1734,11 @@ public class LoginModel extends BaseModel {
     /**
      * 技术 我发布的 零工 已完成
      */
-    public Observable<OrderSkillFinishRes> mySkillFinish(int page){
+    public Observable<OrderSkillFinishRes> mySkillFinish(int page, int who){
         String rateKey = "myPublishOddFinish";
-
+        if(who == SKILL_RELEASE_WEIBAO){
+            rateKey = "allMaintenanceFinish";
+        }
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);

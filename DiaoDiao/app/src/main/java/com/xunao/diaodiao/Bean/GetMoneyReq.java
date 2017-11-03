@@ -42,6 +42,15 @@ public class GetMoneyReq implements Serializable{
     private int maintenance_id;
     private int apply_type;
     private int supervisor_id;
+    private int mutual_id;
+
+    public int getMutual_id() {
+        return mutual_id;
+    }
+
+    public void setMutual_id(int mutual_id) {
+        this.mutual_id = mutual_id;
+    }
 
     public int getSupervisor_id() {
         return supervisor_id;

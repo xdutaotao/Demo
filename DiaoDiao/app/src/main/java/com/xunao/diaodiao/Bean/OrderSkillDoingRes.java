@@ -64,6 +64,15 @@ public class OrderSkillDoingRes {
 
         private int maintenance_id;
         private int supervisor_id;
+        private String door_fee;
+
+        public String getDoor_fee() {
+            return door_fee;
+        }
+
+        public void setDoor_fee(String door_fee) {
+            this.door_fee = door_fee;
+        }
 
         public int getSupervisor_id() {
             return supervisor_id;

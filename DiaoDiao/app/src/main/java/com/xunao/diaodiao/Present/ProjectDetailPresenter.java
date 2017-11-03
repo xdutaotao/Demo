@@ -63,6 +63,21 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
                     }
                 }));
     }
+    //维保
+    public void getFindWBDetail(Context context, int req){
+        mCompositeSubscription.add(model.getFindWBDetail(req)
+                .subscribe(new RxSubUtils<FindLingGongRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(FindLingGongRes token) {
+                        getView().getLingGongData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
 
 
     //申请项目

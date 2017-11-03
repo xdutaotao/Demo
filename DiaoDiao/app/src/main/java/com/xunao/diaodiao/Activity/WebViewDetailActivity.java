@@ -40,9 +40,17 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
@@ -175,18 +183,36 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         if (project != null) {
             url = project.getUrl();
-            if (who == COMPANY_RELEASE_PROJECT_WAIT) {
+            if (who == COMPANY_RELEASE_PROJECT_WAIT ||
+                    who == COMPANY_RELEASE_WEIBAO_WAIT ||
+                        who == COMPANY_RELEASE_JIANLI_WAIT ||
+                            who == COMPANY_RELEASE_HUZHU_WAIT) {
                 bottomBtnLayout.setVisibility(View.VISIBLE);
                 apply.setVisibility(View.GONE);
                 if (project.getStatus() == 4) {
                     isCancle = true;
                 }
-                presenter.getFindProjDetail(this, project.getProject_id());
-            } else if (who == COMPANY_RELEASE_PROJECT_DOING) {
+                if(who == COMPANY_RELEASE_PROJECT_WAIT){
+                    presenter.getFindProjDetail(this, project.getProject_id(), who);
+                }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+                    presenter.getFindProjDetail(this, project.getSupervisor_id(), who);
+                }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+                    presenter.getFindProjDetail(this, project.getMaintenance_id(), who);
+                }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+                    presenter.getFindProjDetail(this, project.getMutual_id(), who);
+                }
+
+
+            } else if (who == COMPANY_RELEASE_PROJECT_DOING ||
+                            who == COMPANY_RELEASE_WEIBAO_DOING ||
+                                who == COMPANY_RELEASE_JIANLI_DOING ) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.GONE);
 
-            } else if (who == COMPANY_RELEASE_PROJECT_DONE) {
+            } else if (who == COMPANY_RELEASE_PROJECT_DONE ||
+                            who == COMPANY_RELEASE_WEIBAO_DONE ||
+                                who == COMPANY_RELEASE_JIANLI_DONE||
+                                    who == COMPANY_RELEASE_HUZHU_DONE) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 if (project.getEvaluate_status() == 1 || project.getStatus() == 4) {
                     //已评价
@@ -447,7 +473,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
     @Override
     public void myProjectCancel(Object res) {
-        ToastUtil.show("取消项目成功");
+        ToastUtil.show("取消成功");
         finish();
     }
 

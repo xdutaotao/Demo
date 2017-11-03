@@ -81,6 +81,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private String url;
 
     public static final String LG_DETAIL = "release_lg_detail";
+    public static final String WEIBAO_DETAIL = "release_wb_detail";
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
     public static final String RECEIVE_WEIBAO_DETAIL = "receive_release_wb_detail";
@@ -284,6 +285,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 ReleaseSkillActivity.startActivity(this);
             } else if (TextUtils.equals(btnType, HOME_DETAIL)) {
                 ReleaseProjActivity.startActivity(this, false);
+            }else if(TextUtils.equals(btnType, WEIBAO_DETAIL)){
+                ReleaseHelpActivity.startActivity(this);
             }
 
         });
@@ -342,6 +345,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                     req.setRegion(bean.getRegion());
                     ReleaseSkillActivity.startActivity(this, req);
                 }
+            }else if(TextUtils.equals(WEIBAO_DETAIL, btnType)){
+                //维保
+
             }
         });
 
@@ -369,7 +375,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             changeInfo.setText("修改零工信息");
             presenter.getFindLingGongDetail(this, id);
 
-        } else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)
+        }else if(TextUtils.equals(WEIBAO_DETAIL, btnType)) {
+            //维保详情
+            bottomBtnLayout.setVisibility(View.VISIBLE);
+            apply.setVisibility(View.GONE);
+            changeInfo.setText("修改维保信息");
+            presenter.getFindWBDetail(this, id);
+
+        }else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)
                 || TextUtils.equals(btnType, RECEIVE_WEIBAO_DETAIL)
                 || TextUtils.equals(btnType, RECEIVE_JIANLI_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);

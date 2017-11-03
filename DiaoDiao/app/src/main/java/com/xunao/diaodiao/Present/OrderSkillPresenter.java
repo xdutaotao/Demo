@@ -24,8 +24,8 @@ public class OrderSkillPresenter extends BasePresenter<OrderSkillView> {
     OrderSkillPresenter() {
     }
 
-    public void mySkillWait(int page){
-        mCompositeSubscription.add(model.mySkillWait(page)
+    public void mySkillWait(int page, int who){
+        mCompositeSubscription.add(model.mySkillWait(page, who)
                 .subscribe(new RxSubUtils<OrderSkillRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderSkillRes token) {

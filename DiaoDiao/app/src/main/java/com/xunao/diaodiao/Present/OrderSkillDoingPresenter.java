@@ -23,8 +23,8 @@ public class OrderSkillDoingPresenter extends BasePresenter<OrderSkillDoingView>
     OrderSkillDoingPresenter() {
     }
 
-    public void mySkillDoing(int page){
-        mCompositeSubscription.add(model.mySkillDoing(page)
+    public void mySkillDoing(int page, int who){
+        mCompositeSubscription.add(model.mySkillDoing(page, who)
                 .subscribe(new RxSubUtils<OrderSkillDoingRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(OrderSkillDoingRes token) {

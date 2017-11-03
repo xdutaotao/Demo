@@ -42,14 +42,27 @@ public class Constants {
 
     public static final int SKILL_RELEASE_LINGGONG = 0;
     public static final int SKILL_RELEASE_WEIBAO = 10;
+    public static final int SKILL_RELEASE_HUZHU = 100;
     public static final int SKILL_RECIEVE_LINGGONG = 1;
     public static final int SKILL_RECIEVE_WEIBAO = 11;
     public static final int SKILL_RECIEVE_PROJECT = 2;
     public static final int SKILL_RECIEVE_JIANLI = 12;
     public static final int SKILL_RELEASE_PROJECT = 3;
     public static final int COMPANY_RELEASE_PROJECT_WAIT = 4;
+    public static final int COMPANY_RELEASE_JIANLI_WAIT = 44;
+    public static final int COMPANY_RELEASE_WEIBAO_WAIT = 444;
+    public static final int COMPANY_RELEASE_HUZHU_WAIT = 4444;
+    public static final int COMPANY_RELEASE_JIANLI = 14;
+    public static final int COMPANY_RELEASE_WEIBAO = 15;
+    public static final int COMPANY_RELEASE_HUZHU = 16;
     public static final int COMPANY_RELEASE_PROJECT_DOING = 5;
+    public static final int COMPANY_RELEASE_JIANLI_DOING = 55;
+    public static final int COMPANY_RELEASE_WEIBAO_DOING = 555;
+    public static final int COMPANY_RELEASE_HUZHU_DOING = 5555;
     public static final int COMPANY_RELEASE_PROJECT_DONE = 6;
+    public static final int COMPANY_RELEASE_JIANLI_DONE = 66;
+    public static final int COMPANY_RELEASE_WEIBAO_DONE = 666;
+    public static final int COMPANY_RELEASE_HUZHU_DONE = 6666;
 
     public static final int NO_PASS = 9999;
     public static final int SKILL_RELEASE_LINGGONG_NO_PASS = 9998;

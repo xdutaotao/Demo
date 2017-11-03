@@ -16,6 +16,7 @@ import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
 import com.xunao.diaodiao.Present.OrderSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -87,23 +88,41 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                if(who == Constants.SKILL_RELEASE_WEIBAO){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee()+" / 天");
+                }else{
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                }
+
                 if (!TextUtils.isEmpty(homeBean.getTotal_day()))
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
 
                 baseViewHolder.setText(R.id.request, "项目进度");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
-                            homeBean.getOdd_id());
+                    if(who == Constants.SKILL_RELEASE_WEIBAO){
+                        OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                                homeBean.getMaintenance_id());
+                    }else{
+                        OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                                homeBean.getOdd_id());
+                    }
+
                 });
             }
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
-                    adapter.getAllData().get(i).getUrl(),
-                    adapter.getAllData().get(i).getOdd_id());
+            if(who == Constants.SKILL_RELEASE_WEIBAO){
+                WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getMaintenance_id());
+            }else{
+                WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getOdd_id());
+            }
+
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -120,11 +139,18 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
     public void getData(OrderSkillDoingRes list) {
         if (page == 1)
             adapter.clear();
+        if(who == Constants.SKILL_RELEASE_WEIBAO){
+            if(list.getMaintenance().size() != 10)
+                adapter.stopMore();
 
-        if(list.getOdd().size() != 10)
-            adapter.stopMore();
+            adapter.addAll(list.getMaintenance());
+        }else{
+            if(list.getOdd().size() != 10)
+                adapter.stopMore();
 
-        adapter.addAll(list.getOdd());
+            adapter.addAll(list.getOdd());
+        }
+
 
 
     }
@@ -133,13 +159,13 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
     @Override
     public void onRefresh() {
         page=1;
-        presenter.mySkillDoing(page);
+        presenter.mySkillDoing(page, who);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.mySkillDoing(page);
+        presenter.mySkillDoing(page, who);
     }
 
     public String getTitle(){
@@ -155,7 +181,12 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
+
     }
 
 

@@ -18,6 +18,16 @@ public class OrderSkillRes {
         this.odd = odd;
     }
 
+    private List<OddBean> maintenance;
+
+    public List<OddBean> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<OddBean> maintenance) {
+        this.maintenance = maintenance;
+    }
+
     public static class OddBean{
         private int odd_id;
         private String title;
@@ -30,6 +40,24 @@ public class OrderSkillRes {
         private String url;
 
         private String issue_time;
+        private int maintenance_id;
+        private String door_fee;
+
+        public String getDoor_fee() {
+            return door_fee;
+        }
+
+        public void setDoor_fee(String door_fee) {
+            this.door_fee = door_fee;
+        }
+
+        public int getMaintenance_id() {
+            return maintenance_id;
+        }
+
+        public void setMaintenance_id(int maintenance_id) {
+            this.maintenance_id = maintenance_id;
+        }
 
         public String getIssue_time() {
             return issue_time;

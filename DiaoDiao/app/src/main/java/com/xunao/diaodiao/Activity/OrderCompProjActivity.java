@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.xunao.diaodiao.Fragment.BaseFragment;
 import com.xunao.diaodiao.Fragment.BaseTabFragment;
+import com.xunao.diaodiao.Fragment.OrderCompHZFragment;
+import com.xunao.diaodiao.Fragment.OrderCompJLFragment;
 import com.xunao.diaodiao.Fragment.OrderCompTabFragment;
+import com.xunao.diaodiao.Fragment.OrderCompWBFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabDoingRecieveFragment;
 import com.xunao.diaodiao.Fragment.OrderSkillTabFinishFragment;
@@ -34,15 +37,28 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_HUZHU;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_TYPE;
@@ -93,10 +109,20 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
         showToolbarBack(toolBar, titleText, "零工信息");
 
         type = ShareUtils.getValue(TYPE_KEY, 0);
+        who = getIntent().getIntExtra("WHO", 0);
+
         if (type == COMPANY_TYPE){
             showToolbarBack(toolBar, titleText, "项目信息");
+            if(who == COMPANY_RELEASE_JIANLI){
+                showToolbarBack(toolBar, titleText, "监理信息");
+            }else if(who == COMPANY_RELEASE_WEIBAO){
+                showToolbarBack(toolBar, titleText, "维保信息");
+            }else if(who == COMPANY_RELEASE_HUZHU){
+                showToolbarBack(toolBar, titleText, "互助信息");
+            }
+
         }else if (type == SKILL_TYPE){
-            who = getIntent().getIntExtra("WHO", 0);
+
             if (who == SKILL_RELEASE_LINGGONG){
                 showToolbarBack(toolBar, titleText, "我发布的-零工信息");
             }else if (who == SKILL_RECIEVE_LINGGONG){
@@ -109,6 +135,8 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 showToolbarBack(toolBar, titleText, "我接的-维保信息");
             }else if(who == SKILL_RECIEVE_JIANLI){
                 showToolbarBack(toolBar, titleText, "监理信息");
+            }else if(who == SKILL_RELEASE_HUZHU){
+                showToolbarBack(toolBar, titleText, "互助信息");
             }
 
         }
@@ -116,9 +144,24 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
 
         fragments=new ArrayList<>();
         if (type == COMPANY_TYPE){
-            fragments.add(OrderCompTabFragment.newInstance("待确认", COMPANY_RELEASE_PROJECT_WAIT));
-            fragments.add(OrderCompTabFragment.newInstance("进行中", COMPANY_RELEASE_PROJECT_DOING));
-            fragments.add(OrderCompTabFragment.newInstance("已完成/取消", COMPANY_RELEASE_PROJECT_DONE));
+            if(who == COMPANY_RELEASE_WEIBAO){
+                fragments.add(OrderCompWBFragment.newInstance("待确认", COMPANY_RELEASE_WEIBAO_WAIT));
+                fragments.add(OrderCompWBFragment.newInstance("进行中", COMPANY_RELEASE_WEIBAO_DOING));
+                fragments.add(OrderCompWBFragment.newInstance("已完成/取消", COMPANY_RELEASE_WEIBAO_DONE));
+            }else if(who == COMPANY_RELEASE_JIANLI){
+                fragments.add(OrderCompJLFragment.newInstance("待确认", COMPANY_RELEASE_JIANLI_WAIT));
+                fragments.add(OrderCompJLFragment.newInstance("进行中", COMPANY_RELEASE_JIANLI_DOING));
+                fragments.add(OrderCompJLFragment.newInstance("已完成/取消", COMPANY_RELEASE_JIANLI_DONE));
+            }else if(who == COMPANY_RELEASE_HUZHU) {
+                fragments.add(OrderCompHZFragment.newInstance("待确认", COMPANY_RELEASE_HUZHU_WAIT));
+                //fragments.add(OrderCompHZFragment.newInstance("进行中", COMPANY_RELEASE_HUZHU_DOING));
+                fragments.add(OrderCompHZFragment.newInstance("已关闭", COMPANY_RELEASE_HUZHU_DONE));
+            }else {
+                fragments.add(OrderCompTabFragment.newInstance("待确认", COMPANY_RELEASE_PROJECT_WAIT));
+                fragments.add(OrderCompTabFragment.newInstance("进行中", COMPANY_RELEASE_PROJECT_DOING));
+                fragments.add(OrderCompTabFragment.newInstance("已完成/取消", COMPANY_RELEASE_PROJECT_DONE));
+            }
+
         }else if (type == SKILL_TYPE){
             if (who == SKILL_RELEASE_LINGGONG){
                 //我发的 零工
@@ -150,6 +193,10 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
                 fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中", who));
                 fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭", who));
+            }else if(who == SKILL_RELEASE_HUZHU){
+                fragments.add(OrderCompHZFragment.newInstance("待确认", COMPANY_RELEASE_HUZHU_WAIT));
+                //fragments.add(OrderCompHZFragment.newInstance("进行中", COMPANY_RELEASE_HUZHU_DOING));
+                fragments.add(OrderCompHZFragment.newInstance("已关闭", COMPANY_RELEASE_HUZHU_DONE));
             }
 
         }
