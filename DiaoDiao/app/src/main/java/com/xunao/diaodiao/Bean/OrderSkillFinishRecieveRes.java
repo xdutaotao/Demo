@@ -29,6 +29,16 @@ public class OrderSkillFinishRecieveRes implements Serializable{
         this.project = project;
     }
 
+    private List<OddBean> maintenance;
+
+    public List<OddBean> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<OddBean> maintenance) {
+        this.maintenance = maintenance;
+    }
+
     public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
@@ -47,6 +57,15 @@ public class OrderSkillFinishRecieveRes implements Serializable{
 
         private int project_id;
         private String project_price;
+        private int maintenance_id;
+
+        public int getMaintenance_id() {
+            return maintenance_id;
+        }
+
+        public void setMaintenance_id(int maintenance_id) {
+            this.maintenance_id = maintenance_id;
+        }
 
         public int getEvaluate_status() {
             return evaluate_status;

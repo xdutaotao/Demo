@@ -83,8 +83,8 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setVisible(R.id.evaluation, false);
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-                //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+//                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
                 if (who == Constants.SKILL_RECIEVE_LINGGONG){
@@ -93,6 +93,9 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                 }else if(who == Constants.SKILL_RECIEVE_PROJECT){
 //                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price() +"/天");
+                }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                    baseViewHolder.setText(R.id.days, "上门费");
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                 }
 
                 baseViewHolder.setText(R.id.request, "取消申请");
@@ -104,6 +107,9 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                         presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
                                 homeBean.getProject_id(), who);
+                    }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                        presenter.myAcceptOddCancel(OrderSkillTabRecieveFragment.this.getContext(),
+                                homeBean.getMaintenance_id(), who);
                     }
 
 
@@ -124,7 +130,11 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
             }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_PROJ_DETAIL);
+                        adapter.getAllData().get(i).getProject_id(), WebViewActivity.RECEIVE_PROJ_DETAIL);
+            }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.RECEIVE_WEIBAO_DETAIL);
             }
 
         });
@@ -157,6 +167,11 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 
             adapter.addAll(list.getProject());
 
+        } else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+            if(list.getMaintenance().size() !=10)
+                adapter.stopMore();
+
+            adapter.addAll(list.getMaintenance());
         }
 
 
@@ -196,7 +211,12 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
+
     }
 
 

@@ -29,6 +29,16 @@ public class OrderSkillRecieveRes implements Serializable{
         this.project = project;
     }
 
+    private List<OddBean> maintenance;
+
+    public List<OddBean> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<OddBean> maintenance) {
+        this.maintenance = maintenance;
+    }
+
     public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
@@ -37,12 +47,22 @@ public class OrderSkillRecieveRes implements Serializable{
         private String project_type;
         private String total_day;
         private String daily_wage;
-        private int apply_time;
+        private long apply_time;
         private int project_id;
         private String project_price;
         private String url;
 
         private String issue_time;
+
+        private int maintenance_id;
+
+        public int getMaintenance_id() {
+            return maintenance_id;
+        }
+
+        public void setMaintenance_id(int maintenance_id) {
+            this.maintenance_id = maintenance_id;
+        }
 
         public String getIssue_time() {
             return issue_time;
@@ -116,11 +136,11 @@ public class OrderSkillRecieveRes implements Serializable{
             this.daily_wage = daily_wage;
         }
 
-        public int getApply_time() {
+        public long getApply_time() {
             return apply_time;
         }
 
-        public void setApply_time(int apply_count) {
+        public void setApply_time(long apply_count) {
             this.apply_time = apply_count;
         }
 

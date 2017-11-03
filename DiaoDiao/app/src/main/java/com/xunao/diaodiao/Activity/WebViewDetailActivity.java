@@ -45,6 +45,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 
 /**
  * create by
@@ -200,7 +201,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         if (odd != null) {
             url = odd.getUrl();
-            if (who == SKILL_RECIEVE_PROJECT) {
+            if (who == SKILL_RECIEVE_PROJECT || who == SKILL_RECIEVE_WEIBAO) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 if (odd.getEvaluate_status() == 1) {
                     //已评价

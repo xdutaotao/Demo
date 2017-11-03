@@ -137,6 +137,11 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 fragments.add(OrderSkillTabFragment.newInstance("待确认", who));
                 fragments.add(OrderSkillTabDoingFragment.newInstance("进行中", who));
                 fragments.add(OrderSkillTabFinishFragment.newInstance("已完成/取消", who));
+            }else if(who == SKILL_RECIEVE_WEIBAO){
+                //我接的 维保
+                fragments.add(OrderSkillTabRecieveFragment.newInstance("申请中", who));
+                fragments.add(OrderSkillTabDoingRecieveFragment.newInstance("进行中", who));
+                fragments.add(OrderSkillTabFinishRecieveFragment.newInstance("已完成/关闭", who));
             }
 
         }

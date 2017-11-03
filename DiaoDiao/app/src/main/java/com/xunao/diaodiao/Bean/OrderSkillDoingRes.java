@@ -28,6 +28,16 @@ public class OrderSkillDoingRes {
         this.project = project;
     }
 
+    private List<OddBean> maintenance;
+
+    public List<OddBean> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<OddBean> maintenance) {
+        this.maintenance = maintenance;
+    }
+
     public static class OddBean{
         private int odd_id;
         private String title;
@@ -41,6 +51,16 @@ public class OrderSkillDoingRes {
         private int project_id;
         private String project_price;
         private String issue_time;
+
+        private int maintenance_id;
+
+        public int getMaintenance_id() {
+            return maintenance_id;
+        }
+
+        public void setMaintenance_id(int maintenance_id) {
+            this.maintenance_id = maintenance_id;
+        }
 
         public String getIssue_time() {
             return issue_time;

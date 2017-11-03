@@ -39,6 +39,15 @@ public class GetMoneyReq implements Serializable{
     private int device_type;
     private String door_fee;
     private String supervisor_fee;
+    private int maintenance_id;
+
+    public int getMaintenance_id() {
+        return maintenance_id;
+    }
+
+    public void setMaintenance_id(int maintenance_id) {
+        this.maintenance_id = maintenance_id;
+    }
 
     public String getSupervisor_fee() {
         return supervisor_fee;

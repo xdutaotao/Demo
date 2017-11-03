@@ -30,6 +30,7 @@ import butterknife.Unbinder;
 
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 
 
 /**
@@ -94,6 +95,9 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
+                }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                    baseViewHolder.setText(R.id.days, "上门费");
                 }
 
 
@@ -104,8 +108,14 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                     baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
 
                 }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
-                    baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                    if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                        baseViewHolder.setText(R.id.request, "维保情况");
+                        baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                    }else {
+                        baseViewHolder.setText(R.id.request, "项目进度");
+                        baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                    }
+
                 }
 
                 baseViewHolder.setOnClickListener(R.id.time, v -> {
@@ -116,7 +126,11 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                                     homeBean.getProject_id(), 1);
                         }else if(who == SKILL_RECIEVE_LINGGONG){
                             RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                                    homeBean.getProject_id(), 3);
+                                    homeBean.getOdd_id(), 3);
+                        }else if(who == SKILL_RECIEVE_WEIBAO){
+                            //维保 4
+                            RecommandActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getMaintenance_id(), 4);
                         }
 
                     }
@@ -130,21 +144,15 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
         adapter.setOnItemClickListener((v, i) -> {
 
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
-//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
-//                        adapter.getAllData().get(i).getOdd_id());
-
                 WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
 
 
             }else if(who == Constants.SKILL_RECIEVE_PROJECT){
-//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
-//                        adapter.getAllData().get(i).getProject_id());
-
-//                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-//                        adapter.getAllData().get(i).getUrl(),
-//                        adapter.getAllData().get(i).getOdd_id());
+                WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i), who);
+            }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                 WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i), who);
             }
@@ -178,6 +186,11 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
             adapter.addAll(list.getProject());
 
+        }else if( who == Constants.SKILL_RECIEVE_WEIBAO){
+            if(list.getMaintenance().size() ==0)
+                adapter.stopMore();
+
+            adapter.addAll(list.getMaintenance());
         }
 
 
@@ -209,7 +222,12 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
+
     }
 
 

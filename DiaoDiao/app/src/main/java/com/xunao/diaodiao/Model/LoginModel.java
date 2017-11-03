@@ -136,6 +136,7 @@ import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
@@ -1503,6 +1504,8 @@ public class LoginModel extends BaseModel {
         String rateKey = "myAcceptOddWait";
         if (who == SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectWait";
+        }else if(who == SKILL_RECIEVE_WEIBAO){
+            rateKey = "myAcceptMaintenanceWait";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1531,6 +1534,8 @@ public class LoginModel extends BaseModel {
         String rateKey = "myAcceptOddCancel";
         if (who == SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectCancel";
+        }else if(who == SKILL_RECIEVE_WEIBAO){
+            rateKey = "myAcceptMaintenanceWait";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1548,9 +1553,11 @@ public class LoginModel extends BaseModel {
             req.setProject_id(odd_id);
         }else if(who == SKILL_RECIEVE_LINGGONG){
             req.setOdd_id(odd_id);
+        }else if(who == SKILL_RECIEVE_WEIBAO){
+            req.setMaintenance_id(odd_id);
         }
 
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddCancel(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1589,6 +1596,8 @@ public class LoginModel extends BaseModel {
 
         if (who == SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectDoing";
+        }else if(who == SKILL_RECIEVE_WEIBAO){
+            rateKey = "myAcceptMaintenanceDoing";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -1604,7 +1613,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddDoing(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1642,6 +1651,8 @@ public class LoginModel extends BaseModel {
         String rateKey = "myAcceptOddFinish";
         if (who == Constants.SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectFinish";
+        }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+            rateKey = "myAcceptMaintenanceFinish";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }

@@ -90,13 +90,20 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                     if (!TextUtils.isEmpty(homeBean.getTotal_day()))
                         baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
-                }else{
+                }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
+                }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                    baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
+                    baseViewHolder.setText(R.id.days, "上门费");
                 }
 
+                if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                    baseViewHolder.setText(R.id.request, "维保情况");
+                }else{
+                    baseViewHolder.setText(R.id.request, "项目进度");
+                }
 
-                baseViewHolder.setText(R.id.request, "项目进度");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.SKILL_RECIEVE_LINGGONG){
@@ -107,6 +114,8 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                         //技术人员 我接的  项目
                         SkillProjReceiveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getProject_id(), who);
+                    }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+
                     }
 
 
@@ -117,21 +126,17 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
         adapter.setOnItemClickListener((v, i) -> {
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
-//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-//                        adapter.getAllData().get(i).getOdd_id());
-
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
-
             }else if (who == Constants.SKILL_RECIEVE_PROJECT){
-//                OrderSkillCompRecieveDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-//                        adapter.getAllData().get(i).getProject_id());
-
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
-
+                        adapter.getAllData().get(i).getProject_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
+            }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
             }
 
 
@@ -166,6 +171,11 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
             adapter.addAll(list.getProject());
 
+        }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+            if(list.getMaintenance().size() ==0)
+                adapter.stopMore();
+
+            adapter.addAll(list.getMaintenance());
         }
 
 
@@ -197,7 +207,12 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
+
     }
 
 

@@ -83,6 +83,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String LG_DETAIL = "release_lg_detail";
     public static final String RECEIVE_LG_DETAIL = "receive_release_lg_detail";
     public static final String RECEIVE_PROJ_DETAIL = "receive_release_proj_detail";
+    public static final String RECEIVE_WEIBAO_DETAIL = "receive_release_wb_detail";
     public static final String HOME_DETAIL = "home_detail";
     public static final String SKILL_RECIEVE_PROJECT_DOING = "SKILL_RECIEVE_PROJECT_DOING";
     public static final String HOME_SKILL_DETAIL = "home_skill_detail";
@@ -365,7 +366,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             changeInfo.setText("修改零工信息");
             presenter.getFindLingGongDetail(this, id);
 
-        } else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL)) {
+        } else if (TextUtils.equals(btnType, RECEIVE_LG_DETAIL) || TextUtils.equals(btnType, RECEIVE_WEIBAO_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
             apply.setVisibility(View.VISIBLE);
