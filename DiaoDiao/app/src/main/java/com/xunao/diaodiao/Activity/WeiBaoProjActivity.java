@@ -3,7 +3,6 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,25 +10,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
-import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.SignRes;
+import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Common.Constants;
-import com.xunao.diaodiao.Present.SignDetailPresenter;
+import com.xunao.diaodiao.Present.WeiBaoProjPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
-import com.xunao.diaodiao.View.SignDetailView;
+import com.xunao.diaodiao.View.WeiBaoProjView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -44,16 +41,14 @@ import rx.Observable;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.address;
-import static com.xunao.diaodiao.Common.Constants.city;
 
 /**
- * create by 签到  签到详情
+ * create by
  */
-public class SignDetailActivity extends BaseActivity implements SignDetailView {
+public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
     @Inject
-    SignDetailPresenter presenter;
+    WeiBaoProjPresenter presenter;
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -61,7 +56,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
 
-    private RecyclerArrayAdapter<SignRes.SignBean> adapter;
+    private RecyclerArrayAdapter<WeiBaoProgRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
     private RecyclerArrayAdapter<String> footerAdapter;
 
@@ -74,29 +69,27 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
-    private int who;
 
-    public static void startActivity(Context context, int id, int who) {
-        Intent intent = new Intent(context, SignDetailActivity.class);
+
+    public static void startActivity(Context context, int id) {
+        Intent intent = new Intent(context, WeiBaoProjActivity.class);
         intent.putExtra(INTENT_KEY, id);
-        intent.putExtra("WHO", who);
         context.startActivity(intent);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_detail);
+        setContentView(R.layout.activity_wei_bao_proj);
         ButterKnife.bind(this);
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "签到详情");
-        who = getIntent().getIntExtra("WHO", 0);
+        showToolbarBack(toolBar, titleText, "维保进度");
 
-        adapter = new RecyclerArrayAdapter<SignRes.SignBean>(this, R.layout.sign_detail_item) {
+        adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.sign_detail_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, SignRes.SignBean s) {
+            protected void convert(BaseViewHolder baseViewHolder, WeiBaoProgRes.WorkBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
 
                 itemAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
@@ -110,15 +103,12 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getDate())
-                            + " 签到");
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
+                        + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
             }
         };
 
-        if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE){
-
-        }else{
             setFooter();
 
             footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
@@ -151,7 +141,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             footerAdapter.add(ADD);
 
 
-        }
+
 
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -159,26 +149,23 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         recyclerView.setAdapter(adapter);
         initImagePicker();
 
-        presenter.myAcceptProjectSignList(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
+        presenter.myAcceptMaintenanceWork(this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+
+
     }
 
     @Override
     public void getData(Object s) {
-        ToastUtil.show("签到成功");
+        ToastUtil.show("提交成功");
         finish();
     }
 
     @Override
-    public void getList(SignRes list) {
-        if (list.getSign() != null && list.getSign().size() > 0){
-            adapter.addAll(list.getSign());
+    public void getList(WeiBaoProgRes list) {
+        if (list.getWork() != null && list.getWork().size() > 0){
+            adapter.addAll(list.getWork());
         }else{
-            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
-                recyclerView.showEmpty();
-            }else{
-
-            }
-
+            recyclerView.showEmpty();
         }
     }
 
@@ -186,7 +173,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {
-                View view = LayoutInflater.from(SignDetailActivity.this).inflate(R.layout.sign_footer, null);
+                View view = LayoutInflater.from(WeiBaoProjActivity.this).inflate(R.layout.sign_footer, null);
                 RecyclerView recyclerViewFooter = (RecyclerView) view.findViewById(R.id.recycler_view_image);
                 recyclerViewFooter.setAdapter(footerAdapter);
                 return view;
@@ -195,6 +182,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             @Override
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
+                postText.setText("提交审核");
                 postText.setOnClickListener(v -> {
                     signAction();
                 });
@@ -215,9 +203,13 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     private void signAction(){
         GetMoneyReq req = new GetMoneyReq();
         req.setLocation(Constants.address);
-        req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
+        req.setRemark("remark");
+        req.setSign_time(System.currentTimeMillis()/1000);
+        //是否申请打款
+        req.setApply_type(2);
         req.setImages(pathList);
-        presenter.myAcceptProjectSign(this, req);
+        presenter.myAcceptMaintenanceSubmit(this, req);
     }
 
     private void takePhoto() {
@@ -281,6 +273,5 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         super.onDestroy();
         presenter.detachView();
     }
-
 
 }

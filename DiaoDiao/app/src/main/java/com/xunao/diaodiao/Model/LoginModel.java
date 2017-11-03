@@ -88,6 +88,7 @@ import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Bean.WeiXinReq;
 import com.xunao.diaodiao.Bean.WeiXinRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -1944,6 +1945,32 @@ public class LoginModel extends BaseModel {
 
 
     /**
+     *  我接的 维保 进度 列表
+     */
+    public Observable<WeiBaoProgRes> myAcceptMaintenanceWork(int id, int who){
+        String rateKey = "myAcceptMaintenanceWork";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id)
+                .append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setMaintenance_id(id);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().myAcceptMaintenanceWork(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+    /**
      *  我接的 项目 进度 拍照 列表
      */
     public Observable<SkillProjProgPhotoRes> myAcceptProjectWorkList(int projId, int worksId, int who){
@@ -2002,7 +2029,7 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度 签到
      */
-    public Observable<String> myAcceptProjectSign(GetMoneyReq req){
+    public Observable<Object> myAcceptProjectSign(GetMoneyReq req){
         String rateKey = "myAcceptProjectSign";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -2018,6 +2045,30 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setVerify(sb.toString());
+
+        return config.getRetrofitService().myAcceptProjectSign(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  我接的 维保 进度 签到
+     */
+    public Observable<Object> myAcceptMaintenanceSubmit(GetMoneyReq req){
+        String rateKey = "myAcceptMaintenanceSubmit";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getImages()).append(req.getLocation())
+                .append(req.getMaintenance_id())
+                .append(type).append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectSign(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());

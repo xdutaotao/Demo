@@ -9,6 +9,6 @@ import java.util.List;
  * Created by
  */
 public interface SignDetailView extends BaseView {
-    void getData(String s);
+    void getData(Object s);
     void getList(SignRes list);
 }

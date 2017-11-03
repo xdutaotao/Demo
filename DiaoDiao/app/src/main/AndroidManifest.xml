@@ -275,7 +275,8 @@
         <activity android:name="com.xunao.diaodiao.wxapi.WXPayEntryActivity"
             android:exported="true"/>
         <activity android:name=".Activity.MessageDetail" />
-        <activity android:name=".Activity.PhotoActivity"></activity>
+        <activity android:name=".Activity.PhotoActivity"/>
+        <activity android:name=".Activity.WeiBaoProjActivity"/>
     </application>
 
 </manifest>

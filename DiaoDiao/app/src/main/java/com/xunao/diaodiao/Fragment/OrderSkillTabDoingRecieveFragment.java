@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -115,7 +116,8 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                         SkillProjReceiveProgressActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getProject_id(), who);
                     }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
-
+                        WeiBaoProjActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getMaintenance_id());
                     }
 
 

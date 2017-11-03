@@ -40,6 +40,15 @@ public class GetMoneyReq implements Serializable{
     private String door_fee;
     private String supervisor_fee;
     private int maintenance_id;
+    private int apply_type;
+
+    public int getApply_type() {
+        return apply_type;
+    }
+
+    public void setApply_type(int apply_type) {
+        this.apply_type = apply_type;
+    }
 
     public int getMaintenance_id() {
         return maintenance_id;

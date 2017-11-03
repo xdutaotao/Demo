@@ -71,6 +71,7 @@ import com.xunao.diaodiao.Activity.SkillRecieveProjectDetailActivity;
 import com.xunao.diaodiao.Activity.SuggestActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
 import com.xunao.diaodiao.Fragment.AddFragment;
 import com.xunao.diaodiao.Fragment.FriendFragment;
 import com.xunao.diaodiao.Fragment.HasRateFragment;
@@ -182,4 +183,5 @@ public interface ActivityComponent {
     void inject(WebViewDetailActivity activity);
     void inject(PhotoActivity activity);
     void inject(ReleaseHelpInfoActivity activity);
+    void inject(WeiBaoProjActivity activity);
 }

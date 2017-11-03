@@ -60,6 +60,7 @@ import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Bean.WeiXinRes;
 import com.xunao.diaodiao.Model.UserInfo;
 import com.xunao.diaodiao.Present.ProjectRes;
@@ -292,10 +293,13 @@ public interface RetrofitService {
     Observable<BaseBean<MyAcceptProjectWorkRes>> myAcceptProjectWork(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myAcceptProjectSign(@Body RequestBody body);
+    Observable<BaseBean<Object>> myAcceptProjectSign(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<SignRes>> myAcceptProjectSignList(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<WeiBaoProgRes>> myAcceptMaintenanceWork(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<SkillProjProgPhotoRes>> myAcceptProjectWorkList(@Body RequestBody body);

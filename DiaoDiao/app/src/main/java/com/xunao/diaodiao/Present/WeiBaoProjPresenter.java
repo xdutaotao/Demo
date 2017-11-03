@@ -3,13 +3,12 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.GetMoneyReq;
-import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
 import com.xunao.diaodiao.Bean.SignRes;
+import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Model.LoginModel;
-import com.xunao.diaodiao.Model.SignDetailModel;
+import com.xunao.diaodiao.Model.WeiBaoProjModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
-import com.xunao.diaodiao.Utils.ToastUtil;
-import com.xunao.diaodiao.View.SignDetailView;
+import com.xunao.diaodiao.View.WeiBaoProjView;
 
 import javax.inject.Inject;
 
@@ -18,20 +17,20 @@ import rx.Subscriber;
 /**
  * Created by
  */
-public class SignDetailPresenter extends BasePresenter<SignDetailView> {
+public class WeiBaoProjPresenter extends BasePresenter<WeiBaoProjView> {
     @Inject
     LoginModel model;
 
     @Inject
-    SignDetailPresenter() {
+    WeiBaoProjPresenter() {
     }
 
     //列表
-    public void myAcceptProjectSignList(Context context, int req, int who){
-        mCompositeSubscription.add(model.myAcceptProjectSignList(req, who)
-                .subscribe(new RxSubUtils<SignRes>(mCompositeSubscription, context) {
+    public void myAcceptMaintenanceWork(Context context, int req, int who){
+        mCompositeSubscription.add(model.myAcceptMaintenanceWork(req, who)
+                .subscribe(new RxSubUtils<WeiBaoProgRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(SignRes token) {
+                    protected void _onNext(WeiBaoProgRes token) {
                         getView().getList(token);
                     }
 
@@ -42,8 +41,8 @@ public class SignDetailPresenter extends BasePresenter<SignDetailView> {
                 }));
     }
 
-    public void myAcceptProjectSign(Context context, GetMoneyReq req){
-        mCompositeSubscription.add(model.myAcceptProjectSign(req)
+    public void myAcceptMaintenanceSubmit(Context context, GetMoneyReq req){
+        mCompositeSubscription.add(model.myAcceptMaintenanceSubmit(req)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {
