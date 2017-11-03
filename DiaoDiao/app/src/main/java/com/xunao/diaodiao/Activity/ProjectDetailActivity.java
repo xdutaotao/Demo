@@ -144,7 +144,7 @@ public class ProjectDetailActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
 
         if (type == 0) {
-            presenter.getFindProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
+            presenter.getFindProjDetail(this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
         } else if (type == 1) {
             presenter.getFindLingGongDetail(this, getIntent().getIntExtra(INTENT_KEY, 0));
         } else if (type == 2) {

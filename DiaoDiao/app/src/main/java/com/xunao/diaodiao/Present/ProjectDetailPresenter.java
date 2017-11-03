@@ -33,8 +33,8 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
      * @param context
      * @param req
      */
-    public void getFindProjDetail(Context context, int req){
-        mCompositeSubscription.add(model.getFindProjDetail(req)
+    public void getFindProjDetail(Context context, int req, int who){
+        mCompositeSubscription.add(model.getFindProjDetail(req, who)
                 .subscribe(new RxSubUtils<FindProjDetailRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(FindProjDetailRes token) {

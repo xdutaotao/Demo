@@ -415,7 +415,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         if (ShareUtils.getValue(TYPE_KEY, 0) == 1) {
             //公司角色
             apply.setVisibility(View.GONE);
-            presenter.getFindProjDetail(this, id);
+            presenter.getFindProjDetail(this, id, 0);
         }
 
         RxBus.getInstance().toObservable(String.class)
