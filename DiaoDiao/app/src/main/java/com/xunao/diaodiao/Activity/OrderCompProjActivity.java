@@ -217,7 +217,7 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
             if (who == COMPANY_RELEASE_WEIBAO
                     || (who == COMPANY_RELEASE_JIANLI) || (who == 0)){
                 tab.getTabAt(i).setText(TAB_TITLE[i]);
-            }if (who == COMPANY_RELEASE_HUZHU){
+            }else if (who == COMPANY_RELEASE_HUZHU || who ==SKILL_RELEASE_HUZHU){
                 tab.getTabAt(i).setText(TAB_TITLE_HZ[i]);
             } else{
                 tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);

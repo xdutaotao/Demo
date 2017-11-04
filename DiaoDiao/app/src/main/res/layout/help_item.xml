@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:padding="50px"
-    android:layout_marginBottom="50px">
+    android:layout_marginBottom="20px">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,12 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="家里水管坏了，需要一个师傅帮忙"
+            android:id="@+id/title"
             android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:id="@+id/time"
             android:text="今天 16:00"/>
     </RelativeLayout>
 
@@ -32,6 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/address"
             android:text="上海市徐汇区 - 张**"/>
 
         <TextView
@@ -39,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="1.5km"
+            android:id="@+id/distance"
             android:textColor="@color/accept_btn_default"/>
     </RelativeLayout>
 

@@ -126,17 +126,6 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
             RxBus.getInstance().post("release");
             finish();
-//            if(status == 1){
-//                if (type == 0){
-//                    //项目
-//                    ReleaseProjActivity.startActivity(FindProjectActivity.this);
-//                }else if (type == 1){
-//                    //零工
-//                    ReleaseSkillActivity.startActivity(FindProjectActivity.this);
-//                }
-//            }else{
-//                ToastUtil.show("未完善资料");
-//            }
 
         });
 
@@ -156,7 +145,11 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
                 } else if (type == 2) {
                     baseViewHolder.setText(R.id.price_text, "上门费");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
+                }else if(type == 4){
+                    //监理
+                    baseViewHolder.setText(R.id.price_text, "价格");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 }
 
             }
@@ -165,13 +158,19 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         adapter.setOnItemClickListener((view, i) -> {
             if (!TextUtils.isEmpty(User.getInstance().getUserId())) {
                 if (type == 0){
-                    WebViewActivity.startActivity(this, adapter.getAllData().get(i), WebViewActivity.HOME_DETAIL);
-//                    WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
-//                            adapter.getAllData().get(i).getId(), WebViewActivity.HOME_DETAIL);
+                    WebViewActivity.startActivity(this,
+                            adapter.getAllData().get(i), WebViewActivity.HOME_DETAIL);
                 }else if(type == 1){
-                    WebViewActivity.startActivity(this, adapter.getAllData().get(i), WebViewActivity.HOME_SKILL_DETAIL);
-//                    WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
-//                            adapter.getAllData().get(i).getId(), WebViewActivity.HOME_SKILL_DETAIL);
+                    WebViewActivity.startActivity(this,
+                            adapter.getAllData().get(i), WebViewActivity.HOME_SKILL_DETAIL);
+                }else if(type == 2){
+                    //维保
+                    WebViewActivity.startActivity(this,
+                            adapter.getAllData().get(i), WebViewActivity.HOME_WEIBAO_DETAIL);
+                }else if(type == 4){
+                    //监理
+                    WebViewActivity.startActivity(this,
+                            adapter.getAllData().get(i), WebViewActivity.HOME_JIANLI_DETAIL);
                 }
 
 
@@ -368,9 +367,17 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
         }
 
         if (type == 0){
+            //找项目
             adapter.addAll(res.getProject());
         }else if (type == 1){
+            //找零工
             adapter.addAll(res.getOdd());
+        }else if(type == 2){
+            //找维保
+            adapter.addAll(res.getMaintenance());
+        }else if(type == 4){
+            //找维保
+            adapter.addAll(res.getSupervisor());
         }
 
     }

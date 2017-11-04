@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
@@ -100,8 +101,17 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     private WeiBaoDetailRes weiBaoBean;
     private FindLingGongRes oddBean;
 
+    private FindProjectRes.FindProject huzhuProject;
+
     private ShareSDK myShareSDK;
     private String title;
+
+    //暖通公司 项目
+    public static void startActivity(Context context, FindProjectRes.FindProject bean) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("huzhu", bean);
+        context.startActivity(intent);
+    }
 
     //暖通公司 项目
     public static void startActivity(Context context, OrderCompRes.Project bean, int status) {
@@ -185,6 +195,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             //我的收藏
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.GONE);
+        }
+
+        huzhuProject = (FindProjectRes.FindProject) getIntent().getSerializableExtra("huzhu");
+        //互助
+        if(huzhuProject != null){
+            url = huzhuProject.getUrl();
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setVisibility(View.GONE);
         }
 
         if (project != null) {

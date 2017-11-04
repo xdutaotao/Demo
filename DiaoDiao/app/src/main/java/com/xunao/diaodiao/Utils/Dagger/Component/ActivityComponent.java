@@ -22,6 +22,7 @@ import com.xunao.diaodiao.Activity.EditSkillActivity;
 import com.xunao.diaodiao.Activity.FeedBackDetailActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.GetMoneyActivity;
+import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.HelpDetailActivity;
 import com.xunao.diaodiao.Activity.HomeDetailActivity;
 import com.xunao.diaodiao.Activity.HomeSearchActivity;
@@ -192,4 +193,5 @@ public interface ActivityComponent {
     void inject(ReleaseHelpInfoActivity activity);
     void inject(WeiBaoProjActivity activity);
     void inject(WeiBaoProgActivity activity);
+    void inject(HelpActivity activity);
 }

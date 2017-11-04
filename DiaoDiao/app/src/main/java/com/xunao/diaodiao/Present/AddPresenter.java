@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.CitiesBean;
+import com.xunao.diaodiao.Bean.FindProjReq;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -24,18 +26,21 @@ public class AddPresenter extends BasePresenter<AddView> {
     AddPresenter() {
     }
 
-//    public void getRegionId(Context context, List<CitiesBean.DatasBean> address){
-//        mCompositeSubscription.add(model.getRegionId(address)
-//                .subscribe(new RxSubUtils<String>(mCompositeSubscription, context) {
-//                    @Override
-//                    protected void _onNext(String token) {
-//                        getView().getData(token);
-//                    }
-//
-//                    @Override
-//                    protected void _onError(String msg) {
-//                        ToastUtil.show(msg);
-//                    }
-//                }));
-//    }
+
+    public void getMutualList(FindProjReq req, int type){
+        mCompositeSubscription.add(model.getFindProjectList(req, type)
+                .subscribe(new RxSubUtils<FindProjectRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(FindProjectRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
+
 }

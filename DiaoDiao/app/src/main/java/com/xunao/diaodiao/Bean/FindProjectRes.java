@@ -11,6 +11,42 @@ import java.util.List;
 public class FindProjectRes implements Serializable{
     private List<FindProject> project;
     private List<FindProject> odd;
+    private List<FindProject> maintenance;
+    private List<FindProject> supervisor;
+    private List<FindProject> mutual;
+    private List<FindProject> info;
+
+    public List<FindProject> getInfo() {
+        return info;
+    }
+
+    public void setInfo(List<FindProject> info) {
+        this.info = info;
+    }
+
+    public List<FindProject> getMutual() {
+        return mutual;
+    }
+
+    public void setMutual(List<FindProject> mutual) {
+        this.mutual = mutual;
+    }
+
+    public List<FindProject> getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(List<FindProject> supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public List<FindProject> getMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(List<FindProject> maintenance) {
+        this.maintenance = maintenance;
+    }
 
     public List<FindProject> getOdd() {
         return odd;
@@ -31,7 +67,7 @@ public class FindProjectRes implements Serializable{
     public static class FindProject implements Serializable{
         private int id;
         private String title;
-        private int build_time;
+        private long build_time;
         private String desc;
         private String distance;
         private String type;
@@ -42,6 +78,60 @@ public class FindProjectRes implements Serializable{
         private String issue_time;
         private int collected;
         private int apply;
+        private long publish_time;
+        private String name;
+        private String address;
+        private String tel;
+        private String plat_point;
+        private String user_point;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
+        }
+
+        public String getPlat_point() {
+            return plat_point;
+        }
+
+        public void setPlat_point(String plat_point) {
+            this.plat_point = plat_point;
+        }
+
+        public String getUser_point() {
+            return user_point;
+        }
+
+        public void setUser_point(String user_point) {
+            this.user_point = user_point;
+        }
+
+        public long getPublish_time() {
+            return publish_time;
+        }
+
+        public void setPublish_time(long publish_time) {
+            this.publish_time = publish_time;
+        }
 
         public int getCollected() {
             return collected;
@@ -91,11 +181,11 @@ public class FindProjectRes implements Serializable{
             this.title = title;
         }
 
-        public int getBuild_time() {
+        public long getBuild_time() {
             return build_time;
         }
 
-        public void setBuild_time(int build_time) {
+        public void setBuild_time(long build_time) {
             this.build_time = build_time;
         }
 

@@ -19,6 +19,24 @@ public class FindProjReq {
     private int userid;
     private int usertype;
     private int project_type;
+    private String sort;
+    private int district;
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public int getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(int district) {
+        this.district = district;
+    }
 
     public int getProject_type() {
         return project_type;

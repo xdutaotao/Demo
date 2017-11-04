@@ -52,11 +52,10 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.address;
 import static com.xunao.diaodiao.Common.Constants.city;
 
-public class AddressActivity extends BaseActivity implements AddView, CitiesAdapter.MyHotItemClickListener {
+public class AddressActivity extends BaseActivity implements CitiesAdapter.MyHotItemClickListener {
 
 
-    @Inject
-    AddPresenter presenter;
+
     @BindView(R.id.title_text)
     TextView titleText;
     @BindView(R.id.tool_bar)
@@ -93,7 +92,7 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
         setContentView(R.layout.activity_address);
         getActivityComponent().inject(this);
         ButterKnife.bind(this);
-        presenter.attachView(this);
+        //presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "地区选择");
 
@@ -144,10 +143,10 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
 
     }
 
-    @Override
-    public void getData(String s) {
-        showPop();
-    }
+//    @Override
+//    public void getData(String s) {
+//        showPop();
+//    }
 
     private void showPop(){
         View popView = LayoutInflater.from(this).inflate(R.layout.single_recycler_pop, null);
@@ -315,10 +314,10 @@ public class AddressActivity extends BaseActivity implements AddView, CitiesAdap
     }
 
 
-    @Override
-    public void onFailure() {
-
-    }
+//    @Override
+//    public void onFailure() {
+//
+//    }
 
 
 }

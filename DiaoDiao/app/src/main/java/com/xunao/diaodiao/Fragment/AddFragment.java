@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.AddView;
 import com.xunao.diaodiao.Present.AddPresenter;
@@ -60,7 +61,7 @@ public class AddFragment extends BaseFragment implements AddView {
     }
 
     @Override
-    public void getData(String s) {
+    public void getData(FindProjectRes s) {
 
     }
 }

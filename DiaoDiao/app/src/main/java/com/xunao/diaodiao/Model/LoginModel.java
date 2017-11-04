@@ -1178,6 +1178,14 @@ public class LoginModel extends BaseModel {
             case 2:
                 rateKey = "maintenanceList";
                 break;
+
+            case 4:
+                rateKey = "supervisorList";
+                break;
+
+            case 3:
+                rateKey = "mutualList";
+                break;
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
@@ -1189,6 +1197,27 @@ public class LoginModel extends BaseModel {
                 .append("security");
 
         req.setCity(selectCity);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().getProjectList(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  合作商家
+     */
+    public Observable<FindProjectRes> businesses(FindProjReq req){
+        String rateKey = "businesses";
+
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getDistrict()).append(req.getKeyword())
+                .append(req.getPage())
+                .append(req.getPageSize()).append(req.getSort())
+                .append("security");
+
+
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1319,6 +1348,8 @@ public class LoginModel extends BaseModel {
             rateKey = "applyOdd";
         }else if(types == 2){
             rateKey = "applyMaintenance";
+        }else if(types == 4){
+            rateKey = "applySupervisor";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
