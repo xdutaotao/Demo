@@ -1,5 +1,7 @@
 package com.xunao.diaodiao.Present;
 
+import android.content.Context;
+
 import com.xunao.diaodiao.Bean.FindProjReq;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Model.JoinModel;
@@ -22,9 +24,9 @@ public class JoinPresenter extends BasePresenter<JoinView> {
     JoinPresenter() {
     }
 
-    public void businesses(FindProjReq req){
+    public void businesses(Context context, FindProjReq req){
         mCompositeSubscription.add(model.businesses(req)
-                .subscribe(new RxSubUtils<FindProjectRes>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<FindProjectRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(FindProjectRes token) {
                         getView().getData(token);

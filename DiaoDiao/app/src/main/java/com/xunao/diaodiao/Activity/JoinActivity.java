@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -53,6 +54,10 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
     GRecyclerView recyclerView;
     @BindView(R.id.back_icon)
     ImageView backIcon;
+    @BindView(R.id.point_layout)
+    LinearLayout pointLayout;
+    @BindView(R.id.point)
+    TextView point;
 
     private RecyclerArrayAdapter<FindProjectRes.FindProject> adapter;
     private int page = 1;
@@ -91,6 +96,20 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
 
         });
 
+        pointLayout.setOnClickListener(v -> {
+            if (req.getNearby() == 0) {
+                point.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setSort("");
+            } else {
+                point.setTextColor(getResources().getColor(R.color.nav_gray));
+                req.setSort("");
+            }
+
+            page = 1;
+            req.setPage(page);
+            presenter.businesses(JoinActivity.this, req);
+        });
+
         adapter = new RecyclerArrayAdapter<FindProjectRes.FindProject>(this, R.layout.join_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, FindProjectRes.FindProject homeBean) {
@@ -122,13 +141,13 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
         onRefresh();
 
         editText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId== EditorInfo.IME_ACTION_SEARCH ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 req.setKeyword(editText.getText().toString());
                 page = 1;
                 req.setPage(1);
-                presenter.businesses(req);
+                presenter.businesses(this, req);
                 return true;
-            }else{
+            } else {
                 return false;
             }
         });
@@ -141,14 +160,14 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
         page = 1;
         req.setPage(page);
         req.setPageSize(10);
-        presenter.businesses(req);
+        presenter.businesses(this, req);
     }
 
     @Override
     public void onLoadMore() {
         page++;
         req.setPage(page);
-        presenter.businesses(req);
+        presenter.businesses(this , req);
     }
 
     @Override
