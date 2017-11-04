@@ -70,11 +70,19 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
 
     private ReleaseHelpReq req;
     private RecyclerArrayAdapter<String> adapter;
+    private boolean flag;
 
 
     public static void startActivity(Context context, ReleaseHelpReq req) {
         Intent intent = new Intent(context, ReleaseSkillSureInfoActivity.class);
         intent.putExtra(INTENT_KEY, req);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, ReleaseHelpReq req, boolean flag) {
+        Intent intent = new Intent(context, ReleaseSkillSureInfoActivity.class);
+        intent.putExtra(INTENT_KEY, req);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -88,7 +96,7 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
 
         showToolbarBack(toolBar, titleText, "发布维修信息");
 
-
+        flag = getIntent().getBooleanExtra("flag", false);
         req = (ReleaseHelpReq) getIntent().getSerializableExtra(INTENT_KEY);
         title.setText(req.getTitle());
         region.setText(req.getRegion());
@@ -126,16 +134,20 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
                 });
 
         pay.setOnClickListener(v -> {
-
-            if(req.getImages() != null && (req.getImages().size()>0) &&  (req.getImages().get(0).length() < 100)){
-                List<String> list = new ArrayList<>();
-                for(String s : req.getImages()){
-                    list.add(Utils.Bitmap2StrByBase64(s));
+            if(flag){
+                presenter.updateMaintenance(this, req);
+            }else{
+                if(req.getImages() != null && (req.getImages().size()>0) &&  (req.getImages().get(0).length() < 100)){
+                    List<String> list = new ArrayList<>();
+                    for(String s : req.getImages()){
+                        list.add(Utils.Bitmap2StrByBase64(s));
+                    }
+                    req.setImages(list);
                 }
-                req.setImages(list);
+
+                presenter.publishMaintenance(this, req);
             }
 
-            presenter.publishMaintenance(this, req);
         });
 
         RxBus.getInstance().toObservable(String.class)
@@ -144,7 +156,7 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
                     finish();
                 });
         
-        if (getIntent().getBooleanExtra("flag", false)){
+        if (flag){
             pay.setText("发布");
         }
 
@@ -174,5 +186,11 @@ public class ReleaseSkillSureInfoActivity extends BaseActivity implements Releas
     @Override
     public void getData(ReleaseProjRes res) {
         PayActivity.startActivity(ReleaseSkillSureInfoActivity.this, res, 4);
+    }
+
+    @Override
+    public void getData(Object res) {
+        RxBus.getInstance().post(Constants.DESTORY);
+        finish();
     }
 }

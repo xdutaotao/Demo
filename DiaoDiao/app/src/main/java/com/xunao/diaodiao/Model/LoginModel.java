@@ -88,6 +88,7 @@ import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
+import com.xunao.diaodiao.Bean.WeiBaoDetailRes;
 import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Bean.WeiXinReq;
 import com.xunao.diaodiao.Bean.WeiXinRes;
@@ -743,8 +744,11 @@ public class LoginModel extends BaseModel {
      * @param
      * @return
      */
-    public Observable<Object> myProjectCancel(int id){
+    public Observable<Object> myProjectCancel(int id, int who){
         String rateKey = "myProjectCancel";
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            rateKey = "allMaintenanceCancel";
+        }
 
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
@@ -756,7 +760,12 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
-        req.setProject_id(id);
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            req.setMaintenance_id(id);
+        }else{
+            req.setProject_id(id);
+        }
+
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1261,6 +1270,43 @@ public class LoginModel extends BaseModel {
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getFindProjDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  维保详情
+     */
+    public Observable<WeiBaoDetailRes> getFindWBDetail(int id, int who){
+        String rateKey = "myProjectDetail";
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            rateKey = "allMaintenanceDetail";
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            rateKey = "mySupervisorDetail";
+        }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+            rateKey = "allMutualDetail";
+        }
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        long time = System.currentTimeMillis()/1000;
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(id).append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setProject_id(id);
+        if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            req.setMaintenance_id(id);
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            req.setSupervisor_id(id);
+        }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+            req.setMutual_id(id);
+        }
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getFindWBDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 
@@ -3023,6 +3069,38 @@ public class LoginModel extends BaseModel {
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(req.getContact()).append(req.getContact_mobile())
                 .append(req.getOdd_id())
+                .append(req.getTitle()).append(type)
+                .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 更新维保
+     * @param
+     * @return
+     */
+    public Observable<Object> updateMaintenance(ReleaseHelpReq req){
+        String rateKey = "updateMaintenance";
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getContact()).append(req.getContact_mobile())
+                .append(req.getMaintenance_id())
                 .append(req.getTitle()).append(type)
                 .append(userid)
                 .append("security");

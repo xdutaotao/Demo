@@ -103,28 +103,34 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
         maintenanceId = getIntent().getIntExtra(INTENT_KEY, 0);
 
-        adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_progress_item) {
+        adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.weibao_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照签到");
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 维保人员申请完成");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
-                baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
 
                 if (workBean.getPass() == 3) {
                     //审核中
 
-
                 } else if (workBean.getPass() == 2) {
                     //审核未通过
                     baseViewHolder.setText(R.id.content, "审核未通过");
-                    //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
+                    baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                    baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                    baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
                 } else {
                     //审核通过
                     if (workBean.getApply() == 1) {
                         baseViewHolder.setText(R.id.content, "已确认打款");
+                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
                     } else {
                         baseViewHolder.setText(R.id.content, "审核通过");
+                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
                     }
 
                 }
@@ -192,21 +198,21 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
             adapter.addAll(list.getWork());
 
             workBeanDoing = list.getWork().get(list.getWork().size() - 1);
-            if (workBeanDoing.getApply() == 1 && workBeanDoing.getPass() == 1) {
+            if (workBeanDoing.getPass() == 1) {
                 //已确认打款
                 bottomBtnLayout.setVisibility(View.GONE);
             }else if(workBeanDoing.getPass() == 2){
                 bottomBtnLayout.setVisibility(View.GONE);
             }else if(workBeanDoing.getPass() == 3){
                 //审核中
-                adapter.addFooter(new DefaultRecyclerViewItem() {
-                    @Override
-                    public View onCreateView(ViewGroup viewGroup) {
-                        View view = LayoutInflater.from(WeiBaoProgActivity.this)
-                                .inflate(R.layout.company_weibao_footer, null);
-                        return view;
-                    }
-                });
+//                adapter.addFooter(new DefaultRecyclerViewItem() {
+//                    @Override
+//                    public View onCreateView(ViewGroup viewGroup) {
+//                        View view = LayoutInflater.from(WeiBaoProgActivity.this)
+//                                .inflate(R.layout.company_weibao_footer, null);
+//                        return view;
+//                    }
+//                });
             }
         }else {
             recyclerView.showEmpty();

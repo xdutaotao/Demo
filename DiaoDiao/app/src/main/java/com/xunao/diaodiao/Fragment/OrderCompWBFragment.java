@@ -13,6 +13,8 @@ import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -92,7 +94,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
+                    baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setVisible(R.id.time, false);
                 }
@@ -113,9 +115,9 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.request, "查看");
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "维保进度");
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "维保进度");
                 }
 
                 if(homeBean.getStatus() == 4){
@@ -131,12 +133,12 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                                 homeBean.getMaintenance_id(), 4);
                     }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompWBFragment.this.getContext(),
-                                homeBean.getMaintenance_id(), who);
+                        WeiBaoProgActivity.startActivity(OrderCompWBFragment.this.getContext(),
+                                homeBean.getMaintenance_id());
                     }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompWBFragment.this.getContext(),
-                                homeBean.getMaintenance_id(), who);
+                        WeiBaoProgActivity.startActivity(OrderCompWBFragment.this.getContext(),
+                                homeBean.getMaintenance_id());
                     }
 
 

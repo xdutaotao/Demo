@@ -58,4 +58,20 @@ public class ReleaseSkillSureInfoPresenter extends BasePresenter<ReleaseSkillSur
                     }
                 }));
     }
+
+
+    public void updateMaintenance(Context context, ReleaseHelpReq address){
+        mCompositeSubscription.add(model.updateMaintenance(address)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
+                    }
+                }));
+    }
 }

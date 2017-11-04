@@ -488,14 +488,6 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
                     req.setDescribe(content.getText().toString());
                     req.setDescribe(content.getText().toString());
-//                    int oddFee = Integer.valueOf(days.getText().toString()) * Integer.valueOf(fee.getText().toString());
-//                    req.setOdd_fee(String.valueOf(oddFee));
-//                    if (!TextUtils.isEmpty(percent)) {
-//                        float serviceFee = oddFee / Integer.valueOf(percent);
-//                        req.setService_fee(String.valueOf(serviceFee));
-//
-//                        req.setTotal_fee(String.valueOf(oddFee + serviceFee));
-//                    }
                     req.setImages(pathList);
                     ReleaseSkillSecondActivity.startActivity(this, req);
                 }else{

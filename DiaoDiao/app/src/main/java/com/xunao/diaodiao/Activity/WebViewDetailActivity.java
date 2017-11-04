@@ -22,12 +22,15 @@ import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
+import com.xunao.diaodiao.Bean.WeiBaoDetailRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.WebViewDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.WebViewDetailView;
 import com.xunao.diaodiao.Widget.CustomWebView;
 
@@ -48,6 +51,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_WAIT;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
@@ -55,6 +59,7 @@ import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
 
 /**
  * create by
@@ -92,6 +97,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     private boolean isCancle = false;
 
     private FindProjDetailRes projectBean;
+    private WeiBaoDetailRes weiBaoBean;
     private FindLingGongRes oddBean;
 
     private ShareSDK myShareSDK;
@@ -195,9 +201,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 if(who == COMPANY_RELEASE_PROJECT_WAIT){
                     presenter.getFindProjDetail(this, project.getProject_id(), who);
                 }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
-                    presenter.getFindProjDetail(this, project.getSupervisor_id(), who);
+                    presenter.getFindWBDetail(this, project.getMaintenance_id(), who);
                 }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
-                    presenter.getFindProjDetail(this, project.getMaintenance_id(), who);
+                    presenter.getFindProjDetail(this, project.getSupervisor_id(), who);
                 }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
                     presenter.getFindProjDetail(this, project.getMutual_id(), who);
                 }
@@ -316,10 +322,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         againPost.setOnClickListener(v -> {
             //再次快捷发布
-            if (false) {
+            if (who == SKILL_RELEASE_LINGGONG) {
                 ReleaseSkillActivity.startActivity(this);
             } else if (who == COMPANY_RELEASE_PROJECT_WAIT) {
                 ReleaseProjActivity.startActivity(this, false);
+            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+                ReleaseHelpActivity.startActivity(this);
             }
 
         });
@@ -355,11 +363,41 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     ReleaseProjSecondActivity.startActivity(this, req, true);
                 }
 
+            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+                if(weiBaoBean != null){
+                    WeiBaoDetailRes.WBDetailBean bean = weiBaoBean.getDetail();
+                    ReleaseHelpReq req = new ReleaseHelpReq();
+                    req.setProject_type(bean.getProject_type());
+                    req.setProject_class(bean.getProject_class());
+                    req.setTitle(bean.getTitle());
+                    req.setProvince(bean.getProvince());
+                    req.setCity(bean.getCity());
+                    req.setDistrict(bean.getDistrict());
+                    req.setAddress(bean.getAddress());
+                    req.setContact(bean.getContact());
+                    req.setContact_mobile(bean.getContact_mobile());
+                    req.setDescribe(bean.getDescribe());
+                    req.setImages(bean.getImages());
+                    req.setService_fee(bean.getService_fee());
+                    req.setDoor_fee(bean.getDoor_fee());
+                    req.setDoor_time(Utils.convertTime2long(bean.getDoor_time()));
+                    req.setBuildTimeString(bean.getDoor_time());
+                    req.setRegion(bean.getRegion());
+                    req.setEquip_type(weiBaoBean.getMaintenance().getEquip_type());
+                    req.setMaintenance_id(bean.getMaintenance_id());
+                    ReleaseSkillInforActivity.startActivity(this, req, true);
+                }
             }
         });
 
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, "update_project"))
+                .subscribe(s -> {
+                    finish();
+                });
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, Constants.DESTORY))
                 .subscribe(s -> {
                     finish();
                 });
@@ -441,6 +479,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     public boolean onCreateOptionsMenu(Menu menu) {
         if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT) {
             getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+        }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+            menu.findItem(R.id.action_contact).setTitle("取消维保");
         }
 
         return true;
@@ -450,8 +491,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_contact:
-                //取消项目
-                presenter.myProjectCancel(this, project.getProject_id());
+                if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+                    //取消维保
+                    presenter.myProjectCancel(this, project.getMaintenance_id(), who);
+                }else {
+                    //取消项目
+                    presenter.myProjectCancel(this, project.getProject_id(), who);
+                }
+
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -481,5 +528,11 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     public void getData(FindProjDetailRes res) {
         //拿到项目详情
         projectBean = res;
+    }
+
+    @Override
+    public void getData(WeiBaoDetailRes res) {
+        //维保详情
+        weiBaoBean = res;
     }
 }

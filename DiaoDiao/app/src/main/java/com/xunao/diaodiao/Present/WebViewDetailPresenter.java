@@ -1,8 +1,10 @@
 package com.xunao.diaodiao.Present;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
+import com.xunao.diaodiao.Bean.WeiBaoDetailRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.WebViewDetailModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -25,8 +27,8 @@ public class WebViewDetailPresenter extends BasePresenter<WebViewDetailView> {
     }
 
     //取消已经发布的项目
-    public void myProjectCancel(Context context, int id){
-        mCompositeSubscription.add(model.myProjectCancel(id)
+    public void myProjectCancel(Context context, int id, int who){
+        mCompositeSubscription.add(model.myProjectCancel(id, who)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {
@@ -55,7 +57,30 @@ public class WebViewDetailPresenter extends BasePresenter<WebViewDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        if(!TextUtils.isEmpty(s))
+                            ToastUtil.show(s);
+                    }
+                }));
+    }
+
+
+    /**
+     * 维保详情
+     * @param context
+     * @param req
+     */
+    public void getFindWBDetail(Context context, int req, int who){
+        mCompositeSubscription.add(model.getFindWBDetail(req, who)
+                .subscribe(new RxSubUtils<WeiBaoDetailRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(WeiBaoDetailRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        if(!TextUtils.isEmpty(s))
+                            ToastUtil.show(s);
                     }
                 }));
     }

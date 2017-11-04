@@ -84,6 +84,7 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
     private List<BaseFragment> fragments;
     private static final String[] TAB_TITLE = {"待确认", "进行中", "已完成/取消"};
     private static final String[] TAB_TITLE_WHO = {"申请中", "进行中", "已完成/关闭"};
+    private static final String[] TAB_TITLE_HZ = {"待确认","已关闭"};
     private int type = 0;
     private int who = 0;
 
@@ -214,10 +215,11 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
 
         for(int i=0; i<fragments.size(); i++){
             if (who == COMPANY_RELEASE_WEIBAO
-                    || (who == COMPANY_RELEASE_JIANLI) ||
-                        (who == COMPANY_RELEASE_HUZHU) || (who == 0)){
+                    || (who == COMPANY_RELEASE_JIANLI) || (who == 0)){
                 tab.getTabAt(i).setText(TAB_TITLE[i]);
-            }else{
+            }if (who == COMPANY_RELEASE_HUZHU){
+                tab.getTabAt(i).setText(TAB_TITLE_HZ[i]);
+            } else{
                 tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);
             }
 

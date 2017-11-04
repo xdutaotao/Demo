@@ -10,4 +10,5 @@ import com.xunao.diaodiao.View.BaseView;
 public interface ReleaseSkillSureInfoView extends BaseView {
     void getPercent(GetPercentRes res);
     void getData(ReleaseProjRes res);
+    void getData(Object res);
 }

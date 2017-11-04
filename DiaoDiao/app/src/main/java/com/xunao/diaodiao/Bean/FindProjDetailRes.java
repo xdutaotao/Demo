@@ -181,6 +181,7 @@ public class FindProjDetailRes implements Serializable{
     public static class DetailBean{
         private String project_type;
         private String project_class;
+        private String project_brand;
         private String title;
         private int province;
         private int city;
@@ -199,6 +200,41 @@ public class FindProjDetailRes implements Serializable{
         private String region;
         private String project_type_name;
         private String project_type_class;
+        private String door_fee;
+        private String door_time;
+        private int maintenance_id;
+
+        public int getMaintenance_id() {
+            return maintenance_id;
+        }
+
+        public void setMaintenance_id(int maintenance_id) {
+            this.maintenance_id = maintenance_id;
+        }
+
+        public String getProject_brand() {
+            return project_brand;
+        }
+
+        public void setProject_brand(String project_brand) {
+            this.project_brand = project_brand;
+        }
+
+        public String getDoor_fee() {
+            return door_fee;
+        }
+
+        public void setDoor_fee(String door_fee) {
+            this.door_fee = door_fee;
+        }
+
+        public String getDoor_time() {
+            return door_time;
+        }
+
+        public void setDoor_time(String door_time) {
+            this.door_time = door_time;
+        }
 
         public String getProject_type_name() {
             return project_type_name;

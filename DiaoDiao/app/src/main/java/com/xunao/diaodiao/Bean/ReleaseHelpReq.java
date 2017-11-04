@@ -30,6 +30,24 @@ public class ReleaseHelpReq implements Serializable {
     private String buildTimeString;
     private String region;
     private String typeString;
+    private String equip_type;
+    private int maintenance_id;
+
+    public int getMaintenance_id() {
+        return maintenance_id;
+    }
+
+    public void setMaintenance_id(int maintenance_id) {
+        this.maintenance_id = maintenance_id;
+    }
+
+    public String getEquip_type() {
+        return equip_type;
+    }
+
+    public void setEquip_type(String equip_type) {
+        this.equip_type = equip_type;
+    }
 
     public int getProject_brand() {
         return project_brand;

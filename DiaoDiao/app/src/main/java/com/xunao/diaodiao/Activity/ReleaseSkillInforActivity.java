@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,6 +84,8 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
     RecyclerView recyclerView;
     @BindView(R.id.content)
     EditText content;
+    @BindView(R.id.content_num)
+    TextView contentNum;
 
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
@@ -154,28 +158,48 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
         adapter.add(ADD);
         recyclerView.setAdapter(adapter);
 
-        type.setText(ReleaseHelpActivity.projectTypeName+"-"+
-                ReleaseHelpActivity.projectClassName+"-"+
+        type.setText(ReleaseHelpActivity.projectTypeName + "-" +
+                ReleaseHelpActivity.projectClassName + "-" +
                 ReleaseHelpActivity.projectBrandName);
 
         addressLayout.setOnClickListener(this);
         buildTimeLayout.setOnClickListener(this);
-        if (addressResult.size() == 0)
-            presenter.getAddressData(this);
+
         next.setOnClickListener(this);
 
+        content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 200) {
+                    content.setText(s.subSequence(0, 200));
+                } else {
+                    contentNum.setText(content.getText().length() + " / 200");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         req = (ReleaseHelpReq) getIntent().getSerializableExtra("req");
-        if(req == null)
+        if (req == null)
             req = new ReleaseHelpReq();
 
-        if(flag){
+        if (flag) {
             //再次编辑
             title.setText(req.getTitle());
             region.setText(req.getRegion());
             address.setText(req.getAddress());
             name.setText(req.getContact());
             phone.setText(req.getContact_mobile());
-            buildTime.setText(Utils.millToDateString(req.getDoor_time()));
+            buildTime.setText(req.getBuildTimeString());
             fee.setText(req.getDoor_fee());
             content.setText(req.getDescribe());
             adapter.clear();
@@ -187,8 +211,15 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
             content.setFocusable(false);
             fee.setFocusable(false);
 
+            type.setText(req.getEquip_type());
+            req.setTypeString(req.getEquip_type());
+
+        } else {
+            initImagePicker();
+            if (addressResult.size() == 0)
+                presenter.getAddressData(this);
         }
-        initImagePicker();
+
 
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, Constants.DESTORY))
@@ -294,14 +325,16 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
                 req.setTitle(title.getText().toString());
                 req.setContact(name.getText().toString());
                 req.setContact_mobile(phone.getText().toString());
-                if(!flag){
+                if (!flag) {
                     req.setAddress(address.getText().toString());
                     req.setDescribe(content.getText().toString());
                     req.setDoor_fee(fee.getText().toString());
-                    req.setTypeString(ReleaseHelpActivity.projectTypeName+"-"+
-                            ReleaseHelpActivity.projectClassName+"-"+
+                    req.setTypeString(ReleaseHelpActivity.projectTypeName + "-" +
+                            ReleaseHelpActivity.projectClassName + "-" +
                             ReleaseHelpActivity.projectBrandName);
-
+                    req.setEquip_type(ReleaseHelpActivity.projectTypeName + "-" +
+                            ReleaseHelpActivity.projectClassName + "-" +
+                            ReleaseHelpActivity.projectBrandName);
                     req.setBuildTimeString(buildTime.getText().toString());
                     req.setProvince(provinceId);
                     req.setCity(cityId);
@@ -311,10 +344,11 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
                     req.setProject_brand(ReleaseHelpActivity.project_brand);
                     req.setProject_type(ReleaseHelpActivity.project_type);
                     req.setImages(pathList);
+                    ReleaseSkillSureInfoActivity.startActivity(this, req);
+                }else{
+                    ReleaseSkillSureInfoActivity.startActivity(this, req, true);
                 }
 
-
-                ReleaseSkillSureInfoActivity.startActivity(this, req);
                 break;
 
             case R.id.address_layout:

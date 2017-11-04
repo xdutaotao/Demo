@@ -135,6 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="0 / 200"
+                    android:id="@+id/content_num"
                     android:gravity="right|center_vertical"/>
 
             </LinearLayout>

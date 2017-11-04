@@ -129,8 +129,8 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectDetailView> {
                 }));
     }
     //取消已经发布的项目
-    public void myProjectCancel(Context context, int id){
-        mCompositeSubscription.add(model.myProjectCancel(id)
+    public void myProjectCancel(Context context, int id, int who){
+        mCompositeSubscription.add(model.myProjectCancel(id, who)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {

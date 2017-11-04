@@ -577,7 +577,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
             case R.id.action_contact:
                 //取消项目
-                presenter.myProjectCancel(this, id);
+                presenter.myProjectCancel(this, id, 0);
                 break;
         }
         return super.onOptionsItemSelected(item);

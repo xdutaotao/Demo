@@ -79,14 +79,16 @@ public class OrderCompHZFragment extends BaseFragment implements SwipeRefreshLay
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
                 baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
-
+                baseViewHolder.setVisible(R.id.evaluation, false);
+                baseViewHolder.setVisible(R.id.middle_layout, false);
                 if (who == Constants.COMPANY_RELEASE_HUZHU_WAIT){
                     baseViewHolder.setText(R.id.request, "关闭");
+                    baseViewHolder.setText(R.id.days, "");
+                    baseViewHolder.setText(R.id.price, "");
                 }else if (who == Constants.COMPANY_RELEASE_HUZHU_DONE){
                     baseViewHolder.setVisible(R.id.request, false);
+                    baseViewHolder.setVisible(R.id.bottom_layout, false);
                 }
-
-                baseViewHolder.setVisible(R.id.bottom_layout, false);
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.COMPANY_RELEASE_HUZHU_WAIT){
@@ -132,6 +134,7 @@ public class OrderCompHZFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void getData(Object data) {
         ToastUtil.show("关闭成功");
+        onRefresh();
     }
 
 

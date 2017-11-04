@@ -42,6 +42,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
  * create by
@@ -101,6 +102,12 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                     }
                 };
 
+                itemAdapter.setOnItemClickListener((view, i) -> {
+                    if(s.getImages() != null && (s.getImages().size()>0))
+                        PhotoActivity.startActivity(WeiBaoProjActivity.this, s.getImages().get(i),
+                                s.getImages().get(i).contains("http"));
+                });
+
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
@@ -108,6 +115,20 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
                         + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
+
+                if (s.getPass() == 3){
+                    //审核中
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                            + " 审核中");
+                }else if (s.getPass() == 2){
+                    //未通过审核
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                            + " 未通过审核");
+                }else{
+                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                            + " 审核通过");
+                }
+
             }
         };
 
@@ -167,7 +188,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         if (list.getWork() != null && list.getWork().size() > 0){
             adapter.addAll(list.getWork());
         }else{
-            recyclerView.showEmpty();
+            //recyclerView.showEmpty();
         }
     }
 
@@ -184,6 +205,10 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             @Override
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
+                TextView addr = (TextView) view.findViewById(R.id.address);
+                addr.setText(address);
+                TextView time = (TextView) view.findViewById(R.id.time);
+                time.setText(Utils.getNowDateMonth() + " 工作拍照");
                 postText.setText("提交审核");
                 postText.setOnClickListener(v -> {
                     signAction();
