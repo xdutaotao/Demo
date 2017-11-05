@@ -35,6 +35,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_HUZHU;
@@ -82,6 +83,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
     LinearLayout wbLayout;
     @BindView(R.id.hz_layout)
     LinearLayout hzLayout;
+    @BindView(R.id.bg)
+    LinearLayout bg;
 
 
     private String mParam1;
@@ -158,13 +161,27 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         }
 
 
+        if (type == CUSTOM_TYPE) {
+            //普通用户
+            projLayout.setVisibility(View.GONE);
+            lgLayout.setVisibility(View.GONE);
+            hzLayout.setVisibility(View.GONE);
+            jianliLayout.setVisibility(View.GONE);
+            bg.setVisibility(View.VISIBLE);
+        } else {
+            projLayout.setVisibility(View.VISIBLE);
+            lgLayout.setVisibility(View.VISIBLE);
+            hzLayout.setVisibility(View.VISIBLE);
+            jianliLayout.setVisibility(View.VISIBLE);
+            bg.setVisibility(View.GONE);
+        }
 
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.proj_layout:
                 if (type == COMPANY_TYPE) {
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext());
@@ -189,9 +206,11 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 break;
 
             case R.id.wb_layout:
-                if(type == SKILL_TYPE){
+                if (type == SKILL_TYPE) {
                     ReleaseSKillTypeActivity.startActivity(getContext(), false);
-                }else if(type == COMPANY_TYPE){
+                } else if (type == COMPANY_TYPE) {
+                    OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_WEIBAO);
+                }else if(type == CUSTOM_TYPE){
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_WEIBAO);
                 }
                 break;
@@ -201,6 +220,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), COMPANY_RELEASE_HUZHU);
                 } else if (type == SKILL_TYPE) {
                     OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RELEASE_HUZHU);
+                }else if(type == CUSTOM_TYPE){
+                    //OrderCompProjActivity.startActivity(ProjectFragment.this.getContext(), SKILL_RELEASE_HUZHU);
                 }
                 break;
 
@@ -216,18 +237,37 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         mutual = s.getMutual();
 
         if (projectBean != null) {
-            if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
-                projWaiting.setText("待确认 " + projectBean.getProject_wait());
+            if (type == 1) {
+
+                if (!TextUtils.isEmpty(projectBean.getProject_wait())) {
+                    projWaiting.setText("待确认 " + projectBean.getProject_wait());
+                }
+
+            } else if (type == 2) {
+                if (!TextUtils.isEmpty(projectBean.getProject_apply())) {
+                    projWaiting.setText("待确认 " + projectBean.getProject_apply());
+                }
             }
+
             if (!TextUtils.isEmpty(projectBean.getProject_doing())) {
                 projDoing.setText("进行中 " + projectBean.getProject_doing());
             }
         }
         if (supervisorBean != null) {
-            if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
-                jianliWaiting.setText("待确认 " + supervisorBean.getSupervisor_wait());
+            if (type == 1) {
+                //公司
+                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_wait())) {
+                    jianliWaiting.setText("待确认 " + supervisorBean.getSupervisor_wait());
 
+                }
+            } else if (type == 2) {
+                //零工
+                if (!TextUtils.isEmpty(supervisorBean.getSupervisor_apply())) {
+                    jianliWaiting.setText("申请中 " + supervisorBean.getSupervisor_apply());
+
+                }
             }
+
             if (!TextUtils.isEmpty(supervisorBean.getSupervisor_doing())) {
                 jianliDoing.setText("进行中 " + supervisorBean.getSupervisor_doing());
             }
@@ -251,20 +291,27 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
                 wbDoing.setText("进行中 " + maintenanceBean.getMaintenance_doing());
 
             }
-            if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
-                wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());
+
+            if (type == 1) {
+                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
+                    wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());
+                }
+            } else if (type == 2) {
+                if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_apply())) {
+                    wbWaiting.setText("申请中 " + maintenanceBean.getMaintenance_apply());
+                }
             }
+
         }
         if (!TextUtils.isEmpty(mutual)) {
-            hzDoing.setText("进行中 "+mutual);
+            hzDoing.setText("进行中 " + mutual);
         }
 
-        if(type == COMPANY_TYPE){
+        if (type == COMPANY_TYPE) {
             lgLayout.setVisibility(View.GONE);
         }
 
     }
-
 
 
     @Override
@@ -285,6 +332,21 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         if (!hidden) {
 
             type = ShareUtils.getValue(TYPE_KEY, 0);
+            if (type == CUSTOM_TYPE) {
+                //普通用户
+                projLayout.setVisibility(View.GONE);
+                lgLayout.setVisibility(View.GONE);
+                hzLayout.setVisibility(View.GONE);
+                jianliLayout.setVisibility(View.GONE);
+                bg.setVisibility(View.VISIBLE);
+            } else {
+                projLayout.setVisibility(View.VISIBLE);
+                lgLayout.setVisibility(View.VISIBLE);
+                hzLayout.setVisibility(View.VISIBLE);
+                jianliLayout.setVisibility(View.VISIBLE);
+                bg.setVisibility(View.GONE);
+            }
+
             if (TextUtils.isEmpty(User.getInstance().getUserId())) {
                 LoginActivity.startActivity(ProjectFragment.this.getContext());
                 ((MainActivity) getActivity()).goToFragment(1);
@@ -319,7 +381,6 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
         super.onDestroy();
         presenter.detachView();
     }
-
 
 
 }

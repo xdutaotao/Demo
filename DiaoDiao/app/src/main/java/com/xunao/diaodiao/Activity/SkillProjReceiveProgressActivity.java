@@ -62,6 +62,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     private RecyclerArrayAdapter<MyAcceptProjectWorkRes.WorkBean> adapter;
     private String phone;
     private int who;
+    private int applyID;
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, SkillProjReceiveProgressActivity.class);
@@ -269,7 +270,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
             adapter.clear();
             adapter.addAll(worksBean.getWork());
             phone = worksBean.getContact_mobile();
-
+            applyID = worksBean.getApply_id();
         }
 
     }
@@ -294,24 +295,29 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_contact:
+
+//                new IOSDialog(this).builder()
+//                        .setMsg(phone)
+//                        .setPositiveButton("呼叫", v -> {
+//                            if (!TextUtils.isEmpty(phone)){
+//                                Utils.startCallActivity(this, phone);
+//                            }
+//                        })
+//                        .setNegativeButton("取消", null)
+//                        .show();
+
+
+
                 if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
-
-
-
-                    new IOSDialog(this).builder()
-                            .setMsg(phone)
-                            .setPositiveButton("呼叫", v -> {
-                                if (!TextUtils.isEmpty(phone)){
-                                    Utils.startCallActivity(this, phone);
-                                }
-                            })
-                            .setNegativeButton("取消", null)
-                            .show();
+                    //技术员
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(applyID);
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(this, applyPassReq);
 
                 }else{
-                    if (!TextUtils.isEmpty(phone)){
-                        Utils.startCallActivity(this, phone);
-                    }
+                    //公司详情
+                    JoinDetailActivity.startActivity(this, 0);
                 }
 
                 return true;

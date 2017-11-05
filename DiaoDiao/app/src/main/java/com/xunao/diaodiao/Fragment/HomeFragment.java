@@ -346,9 +346,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void onRefresh() {
-        locationAdd.setText(Constants.city);
+        locationAdd.setText(Constants.selectCity);
         //刷新切换城市
-        selectCity = city;
+         city = selectCity;
         presenter.getFirstPage(latData, lngData);
 
 
@@ -367,6 +367,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     private void changeAddress(String address){
         locationAdd.setText(address);
+        Constants.city = address;
         GeocodeSearch geocoderSearch = new GeocodeSearch(getContext());
         geocoderSearch.setOnGeocodeSearchListener(this);
         GeocodeQuery query = new GeocodeQuery(address, Utils.stringToPinyin(address));
@@ -496,26 +497,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
                             DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
                             presenter.apkFileDownload(url, file);
-
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//
-//                                try {
-//                                    Intent i = new Intent(Intent.ACTION_VIEW);
-//                                    i.setData(Uri.parse("market://details?id=com.xunao.diaodiao"));
-//                                    startActivity(i);
-//                                } catch (Exception e) {
-//                                    ToastUtil.show("您的手机上没有安装Android应用市场");
-//                                    e.printStackTrace();
-//                                }
-//
-//                            }else{
-//                                DownloadDialogFactory.getDownloadDialogManager().showDialog(HomeFragment.this.getContext());
-//                                presenter.apkFileDownload(url, file);
-//                            }
-
-
-
-
 
                         })
                         .show();

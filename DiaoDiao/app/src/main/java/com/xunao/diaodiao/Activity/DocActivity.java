@@ -58,7 +58,7 @@ public class DocActivity extends BaseActivity implements DocView {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, DocRes homeBean) {
                 baseViewHolder.setText(R.id.doc_type, homeBean.getName());
-
+                baseViewHolder.setText(R.id.num, "共"+homeBean.getCount()+"篇");
             }
         };
 

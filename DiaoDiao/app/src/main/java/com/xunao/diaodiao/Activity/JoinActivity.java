@@ -165,6 +165,10 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
             }
         };
 
+        adapter.setOnItemClickListener((view, i) -> {
+            JoinDetailActivity.startActivity(this, adapter.getAllData().get(i).getId());
+        });
+
         textAdapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
@@ -250,6 +254,9 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
         page = 1;
         req.setPage(page);
         req.setPageSize(10);
+        req.setLat(Constants.latData);
+        req.setLng(Constants.lngData);
+        req.setCity(Constants.city);
         presenter.businesses(this, req);
     }
 

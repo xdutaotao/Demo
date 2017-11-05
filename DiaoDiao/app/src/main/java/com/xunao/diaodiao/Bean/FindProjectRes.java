@@ -84,6 +84,15 @@ public class FindProjectRes implements Serializable{
         private String tel;
         private String plat_point;
         private String user_point;
+        private String contact_mobile;
+
+        public String getContact_mobile() {
+            return contact_mobile;
+        }
+
+        public void setContact_mobile(String contact_mobile) {
+            this.contact_mobile = contact_mobile;
+        }
 
         public String getName() {
             return name;

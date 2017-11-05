@@ -24,6 +24,15 @@ public class MyAcceptProjectWorkRes {
         private String region;
         private String address;
         private List<WorkBean> work;
+        private int apply_id;
+
+        public int getApply_id() {
+            return apply_id;
+        }
+
+        public void setApply_id(int apply_id) {
+            this.apply_id = apply_id;
+        }
 
         public String getTitle() {
             return title;

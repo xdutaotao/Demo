@@ -28,7 +28,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:id="@+id/name"
-                    android:text="唐萌萌"/>
+                    tools:text="唐萌萌"/>
             </RelativeLayout>
 
             <View style="@style/item_divider"/>
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.0"
+                    tools:text="4.0"
                     android:layout_marginLeft="20px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -73,7 +73,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:id="@+id/work_year"
-                    android:text="3年"/>
+                    tools:text="3年"/>
             </RelativeLayout>
 
             <View style="@style/item_divider"/>
@@ -109,7 +109,7 @@
                 <TextView
                     style="@style/item_right_text"
                     android:id="@+id/project_exper"
-                    android:text="3年"/>
+                    tools:text="3年"/>
             </RelativeLayout>
 
             <View style="@style/item_divider"/>

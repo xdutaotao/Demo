@@ -218,6 +218,8 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
             initImagePicker();
             if (addressResult.size() == 0)
                 presenter.getAddressData(this);
+            else
+                getAddressData(addressResult);
         }
 
 

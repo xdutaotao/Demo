@@ -27,10 +27,10 @@ public class LocationUtils {
                     //可在其中解析amapLocation获取相应内容。
 //                    ToastUtil.show(amapLocation.getProvince());//省信息
 //                    ToastUtil.show(amapLocation.getCity());//城市信息
-                    Constants.city = amapLocation.getCity();
+                    Constants.selectCity = amapLocation.getCity();
                     Constants.address = amapLocation.getDistrict()+amapLocation.getStreet();
-                    if(TextUtils.isEmpty(Constants.selectCity)){
-                        Constants.selectCity = Constants.city;
+                    if(TextUtils.isEmpty(Constants.city)){
+                        Constants.city = Constants.selectCity;
                     }
                     StringBuilder sb = new StringBuilder();
                     sb.append(amapLocation.getCity()).append("#")
@@ -58,7 +58,7 @@ public class LocationUtils {
 
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
-        mLocationOption.setInterval(10000);
+        mLocationOption.setInterval(100000);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //给定位客户端对象设置定位参数

@@ -84,6 +84,13 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setText(R.id.evaluation, "去评价");
                     }
 
+                    if(homeBean.getStatus() == 4){
+                        //已取消
+                        baseViewHolder.setVisible(R.id.evaluation, false);
+                    }else{
+                        baseViewHolder.setVisible(R.id.evaluation, true);
+                    }
+
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
                 }
@@ -121,7 +128,8 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                 if(homeBean.getStatus() == 4){
                     //已取消
                     baseViewHolder.setVisible(R.id.request, false);
-                    baseViewHolder.setVisible(R.id.evaluation, false);
+                }else{
+                    baseViewHolder.setVisible(R.id.request, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
@@ -135,8 +143,8 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                                 homeBean.getSupervisor_id(), who);
                     }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                         //项目进度
-//                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
-//                                homeBean.getSupervisor_id(), who);
+                        WeiBaoProgActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                                homeBean.getSupervisor_id(), who);
                     }
 
 

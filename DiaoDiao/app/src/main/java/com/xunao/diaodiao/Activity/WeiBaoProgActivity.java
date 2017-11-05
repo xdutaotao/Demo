@@ -46,6 +46,7 @@ import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
@@ -103,10 +104,16 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "维保进度");
+        who = getIntent().getIntExtra("who", 0);
+        if(who == COMPANY_RELEASE_JIANLI_DONE ||
+                who == COMPANY_RELEASE_JIANLI_DOING){
+            showToolbarBack(toolBar, titleText, "监理进度");
+        }else{
+            showToolbarBack(toolBar, titleText, "维保进度");
+        }
+
 
         maintenanceId = getIntent().getIntExtra(INTENT_KEY, 0);
-        who = getIntent().getIntExtra("who", 0);
 
         adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.weibao_progress_item) {
             @Override
@@ -117,6 +124,13 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
                 if (workBean.getPass() == 3) {
                     //审核中
+                    if(workBean.getApply() == 2){
+                        //未申请打款
+                        baseViewHolder.setText(R.id.content, "审核中");
+                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                    }
 
                 } else if (workBean.getPass() == 2) {
                     //审核未通过
@@ -199,6 +213,10 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
 
         });
+
+        if(who == COMPANY_RELEASE_JIANLI_DONE){
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
 
     }
 

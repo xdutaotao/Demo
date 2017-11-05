@@ -53,6 +53,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_TYPE;
+import static com.xunao.diaodiao.Common.Constants.CUSTOM_TYPE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
@@ -140,6 +141,8 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 showToolbarBack(toolBar, titleText, "互助信息");
             }
 
+        }else if(type == CUSTOM_TYPE){
+            showToolbarBack(toolBar, titleText, "维保信息");
         }
 
 
@@ -200,6 +203,10 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
                 fragments.add(OrderCompHZFragment.newInstance("已关闭", COMPANY_RELEASE_HUZHU_DONE));
             }
 
+        }else if(type == CUSTOM_TYPE){
+            fragments.add(OrderCompWBFragment.newInstance("待确认", COMPANY_RELEASE_WEIBAO_WAIT));
+            fragments.add(OrderCompWBFragment.newInstance("进行中", COMPANY_RELEASE_WEIBAO_DOING));
+            fragments.add(OrderCompWBFragment.newInstance("已完成/取消", COMPANY_RELEASE_WEIBAO_DONE));
         }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fragments);

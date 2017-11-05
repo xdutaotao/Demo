@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -88,8 +89,13 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "维保进度");
         who = getIntent().getIntExtra("who", 0);
+        if(who == SKILL_RECIEVE_JIANLI){
+            showToolbarBack(toolBar, titleText, "监理进度");
+        }else{
+            showToolbarBack(toolBar, titleText, "维保进度");
+        }
+
         adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.sign_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, WeiBaoProgRes.WorkBean s) {
@@ -169,7 +175,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         recyclerView.setAdapter(adapter);
         initImagePicker();
 
-        presenter.myAcceptMaintenanceWork(this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+        presenter.myAcceptMaintenanceWork(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
 
         getMoney.setOnClickListener(v -> {
             signAction(1);

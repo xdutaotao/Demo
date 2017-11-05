@@ -212,12 +212,12 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         hotCities = new ArrayList<>();
-        hotCities.add("北京");
-        hotCities.add("上海");
-        hotCities.add("广州");
-        hotCities.add("杭州");
-        hotCities.add("南京");
-        hotCities.add("深圳");
+        hotCities.add("北京市");
+        hotCities.add("上海市");
+        hotCities.add("广州市");
+        hotCities.add("杭州市");
+        hotCities.add("南京市");
+        hotCities.add("深圳市");
 
         Observable.create(new Observable.OnSubscribe<List<CitiesBean.DatasBean>>() {
             @Override
@@ -285,7 +285,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
     private void returnHome(String data){
         Intent intent = new Intent();
         intent.putExtra(INTENT_KEY, data);
-        selectCity = data;
+        //selectCity = data;
         setResult(RESULT_OK, intent);
         finish();
     }

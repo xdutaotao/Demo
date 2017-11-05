@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:background="@color/white"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:padding="20px"
-    android:layout_margin="20px">
+    android:padding="50px"
+    android:layout_marginBottom="20px"
+    android:background="@color/white">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="采暖施工规范"
-        android:drawablePadding="20px"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/name"
-        android:drawableTop="@drawable/img_cainuanshigong"/>
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="采暖资料"
+            android:id="@+id/doc_type"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="11111"
+            android:visibility="gone"
+            android:layout_marginTop="10px"
+            android:id="@+id/num"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_arrow"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

@@ -96,27 +96,6 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
         wxLogin.setOnClickListener(this);
         back.setOnClickListener(this);
 
-//        name.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (TextUtils.isEmpty(s) && TextUtils.isEmpty(pwd.getText())){
-//                    login.setAlpha(0.2f);
-//                }else{
-//                    login.setAlpha(1.0f);
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, "WeiXin"))
                 .subscribe(s -> {

@@ -85,6 +85,12 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setText(R.id.evaluation, "去评价");
                     }
 
+                    if(homeBean.getStatus() == 4){
+                        baseViewHolder.setVisible(R.id.evaluation, false);
+                    }else{
+                        baseViewHolder.setVisible(R.id.evaluation, true);
+                    }
+
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
                 }
@@ -123,7 +129,8 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                 if(homeBean.getStatus() == 4){
                     //已取消
                     baseViewHolder.setVisible(R.id.request, false);
-                    baseViewHolder.setText(R.id.evaluation, "已取消");
+                }else{
+                    baseViewHolder.setVisible(R.id.request, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {

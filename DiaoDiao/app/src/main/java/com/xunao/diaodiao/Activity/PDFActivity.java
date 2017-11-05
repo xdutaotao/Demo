@@ -152,23 +152,31 @@ public class PDFActivity extends BaseActivity implements PDFView, OnPageChangeLi
 //        pdf.fromFile(file)
 //                .load();
 
-//        pdf.fromUri(Uri.fromFile(file))
-//                .defaultPage(pageNumber)
-//                .enableDoubletap(true)
-//                .onDraw(this)
-//                .onPageChange(this)
-//                .enableAnnotationRendering(true)
-//                .onLoad(this)
-//                .enableDoubletap(true)
-//                .load();
-
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
-            startActivity(intent);
-            finish();
-        } catch (Exception e) {
-            ToastUtil.show("请安装pdf阅读器查看");
+
+            pdf.fromUri(Uri.fromFile(file))
+                    .defaultPage(pageNumber)
+                    .enableDoubletap(true)
+                    .onDraw(this)
+                    .onPageChange(this)
+                    .enableAnnotationRendering(true)
+                    .onLoad(this)
+                    .enableDoubletap(true)
+                    .load();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
+
+//        try {
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromFile(file));
+//            startActivity(intent);
+//            finish();
+//        } catch (Exception e) {
+//            ToastUtil.show("请安装pdf阅读器查看");
+//        }
 
 
 //        pdf.fromFile(file)

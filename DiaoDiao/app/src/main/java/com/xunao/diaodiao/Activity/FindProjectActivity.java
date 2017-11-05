@@ -355,7 +355,34 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
             }
         });
 
-        presenter.getTypeInfo();
+        if(type == 2){
+            //找维保
+            List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+
+            TypeInfoRes.Type_Info type_info = new TypeInfoRes.Type_Info();
+            type_info.setTitle("全部");
+            type_info.setId("0");
+            type_info.setParent_id("0");
+            itemData.add(type_info);
+
+            TypeInfoRes.Type_Info type_info1 = new TypeInfoRes.Type_Info();
+            type_info1.setTitle("维修");
+            type_info1.setId("1");
+            type_info1.setParent_id("0");
+            itemData.add(type_info1);
+
+            TypeInfoRes.Type_Info type_info2 = new TypeInfoRes.Type_Info();
+            type_info2.setTitle("保养");
+            type_info2.setId("2");
+            type_info2.setParent_id("0");
+            itemData.add(type_info2);
+
+
+            projAdapter.addAll(itemData);
+        }else{
+            presenter.getTypeInfo();
+        }
+
         presenter.checkFinish();
         onRefresh();
     }
@@ -389,8 +416,13 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
     @Override
     public void getNoMore(String msg) {
-        ToastUtil.show(msg);
-        adapter.stopMore();
+//        ToastUtil.show(msg);
+//        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
     }
 
     @Override
@@ -401,20 +433,41 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
     @Override
     public void getProjType(TypeInfoRes res) {
-        List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+        if(type == 2){
+            //找维保
+            List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
 
-        TypeInfoRes.Type_Info type_info = new TypeInfoRes.Type_Info();
-        type_info.setTitle("全部");
-        type_info.setId("0");
-        type_info.setParent_id("0");
-        itemData.add(type_info);
+            TypeInfoRes.Type_Info type_info = new TypeInfoRes.Type_Info();
+            type_info.setTitle("全部");
+            type_info.setId("0");
+            type_info.setParent_id("0");
+            itemData.add(type_info);
 
-        for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
-            if (Integer.valueOf(typeInfo.getParent_id()) == 0){
-                itemData.add(typeInfo);
+            for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
+                if (Integer.valueOf(typeInfo.getParent_id()) == 0){
+                    itemData.add(typeInfo);
+                }
             }
+            projAdapter.addAll(itemData);
+        }else{
+            List<TypeInfoRes.Type_Info> itemData = new ArrayList<>();
+
+            TypeInfoRes.Type_Info type_info = new TypeInfoRes.Type_Info();
+            type_info.setTitle("全部");
+            type_info.setId("0");
+            type_info.setParent_id("0");
+            itemData.add(type_info);
+
+            for (TypeInfoRes.Type_Info typeInfo : res.getType_info()){
+                if (Integer.valueOf(typeInfo.getParent_id()) == 0){
+                    itemData.add(typeInfo);
+                }
+            }
+            projAdapter.addAll(itemData);
         }
-        projAdapter.addAll(itemData);
+
+
+
 
     }
 
@@ -440,7 +493,11 @@ public class FindProjectActivity extends BaseActivity implements FindProjectView
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
     }
 
     @Override

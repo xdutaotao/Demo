@@ -202,7 +202,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         if(huzhuProject != null){
             url = huzhuProject.getUrl();
             bottomBtnLayout.setVisibility(View.GONE);
-            apply.setVisibility(View.GONE);
+            apply.setVisibility(View.VISIBLE);
+            apply.setText("联系他");
         }
 
         if (project != null) {
@@ -292,13 +293,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                             @Override
                             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                                 super.shouldOverrideUrlLoading(view, url);
-                                if (url.contains("action=1")) {
-                                    //项目
-                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
-                                } else if (url.contains("action=2")) {
-                                    //零工
-                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
-                                }
+//                                if (url.contains("action=1")) {
+//                                    //项目
+//                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+//                                } else if (url.contains("action=2")) {
+//                                    //零工
+//                                    JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+//                                }
                                 return true;
                             }
                         })
@@ -318,13 +319,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                         @Override
                         public boolean shouldOverrideUrlLoading(WebView view, String url) {
                             super.shouldOverrideUrlLoading(view, url);
-                            if (url.contains("action=1")) {
-                                //项目
-                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
-                            } else if (url.contains("action=2")) {
-                                //零工
-                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
-                            }
+//                            if (url.contains("action=1")) {
+//                                //项目
+//                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+//                            } else if (url.contains("action=2")) {
+//                                //零工
+//                                JoinDetailActivity.startActivity(WebViewDetailActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+//                            }
                             return true;
                         }
                     })
@@ -431,6 +432,16 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             }else if(who == SKILL_RECIEVE_JIANLI){
                 RecommandActivity.startActivity(this,
                         odd.getSupervisor_id(), 2);
+            }
+
+            if (TextUtils.equals("联系他", apply.getText().toString())){
+                new IOSDialog(WebViewDetailActivity.this).builder()
+                        .setMsg(huzhuProject.getContact_mobile())
+                        .setNegativeButton("呼叫", v1 -> {
+                            Utils.startCallActivity(this, huzhuProject.getContact_mobile());
+                        })
+                        .setPositiveButton("取消", null)
+                        .show();
             }
 
         });

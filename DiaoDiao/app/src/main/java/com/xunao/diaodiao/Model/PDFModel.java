@@ -34,6 +34,7 @@ public class PDFModel extends BaseModel {
                 subscriber.onCompleted();
             }
         })
+        .sample(500, TimeUnit.MILLISECONDS)
         .compose(RxUtils.applyIOToMainThreadSchedulers());
     }
 }

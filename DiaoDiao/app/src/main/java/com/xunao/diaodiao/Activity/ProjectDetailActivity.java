@@ -152,7 +152,7 @@ public class ProjectDetailActivity extends BaseActivity {
         }
 
         companyName.setOnClickListener(v -> {
-            JoinDetailActivity.startActivity(this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+            JoinDetailActivity.startActivity(this, getIntent().getIntExtra(INTENT_KEY, 0));
         });
 
         post.setOnClickListener(v -> {

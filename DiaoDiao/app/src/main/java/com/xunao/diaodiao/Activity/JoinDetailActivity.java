@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.View.JoinDetailView;
 
 import javax.inject.Inject;
@@ -23,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -45,6 +49,10 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     TextView address;
     @BindView(R.id.score)
     TextView score;
+    @BindView(R.id.say_layout)
+    LinearLayout sayLayout;
+    @BindView(R.id.contact)
+    Button contact;
 
     private RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean> adapter;
     private RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean> oddAdapter;
@@ -52,10 +60,9 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     private int type;
     private int page = 1;
 
-    public static void startActivity(Context context, int id, int type) {
+    public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, JoinDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
-        intent.putExtra("TYPE", type);
         context.startActivity(intent);
     }
 
@@ -69,9 +76,9 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
         showToolbarBack(toolBar, titleText, "公司介绍");
 
-        type = getIntent().getIntExtra("TYPE", 0);
+        type = ShareUtils.getValue(TYPE_KEY, 0);
 
-        if (type == 0){
+        if (type == 0) {
             //项目
             adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
                 @Override
@@ -83,7 +90,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             };
 
             recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        }else if(type == 2){
+        } else if (type == 2) {
             //零工
             oddAdapter = new RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
                 @Override
@@ -96,7 +103,6 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
             recyclerView.setAdapterDefaultConfig(oddAdapter, this, this);
         }
-
 
 
         onRefresh();
@@ -152,7 +158,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             ratingStar.setRating(Float.valueOf(s.getOdd_info().getPoint()));
         }
 
-        if (s.getEvaluate_Info() == null){
+        if (s.getEvaluate_Info() == null) {
             recyclerView.showEmpty();
             return;
         }
@@ -167,11 +173,16 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
     @Override
     public void onFailure() {
-        if (type == 0){
-            adapter.stopMore();
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
         }else{
-            oddAdapter.stopMore();
+            if (type == 0) {
+                adapter.stopMore();
+            } else {
+                oddAdapter.stopMore();
+            }
         }
+
 
     }
 

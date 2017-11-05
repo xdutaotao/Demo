@@ -1189,14 +1189,14 @@ public class LoginModel extends BaseModel {
         }
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(selectCity).append(req.getKeyword()).append(req.getLat())
+        sb.append(time+"").append(city).append(req.getKeyword()).append(req.getLat())
                 .append(req.getLng()).append(req.getNearby())
                 .append(req.getPage())
                 .append(req.getPageSize()).append(req.getTime_type())
                 .append(req.getType())
                 .append("security");
 
-        req.setCity(selectCity);
+        req.setCity(city);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1212,7 +1212,9 @@ public class LoginModel extends BaseModel {
 
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getDistrict()).append(req.getKeyword())
+        sb.append(time+"").append(req.getCity())
+                .append(req.getDistrict()).append(req.getKeyword())
+                .append(req.getLat()).append(req.getLng())
                 .append(req.getNearby())
                 .append(req.getPage())
                 .append(req.getPageSize()).append(req.getSort())
@@ -1924,7 +1926,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setWork_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myPublishOddSuccess(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2174,6 +2176,9 @@ public class LoginModel extends BaseModel {
      */
     public Observable<WeiBaoProgRes> myAcceptMaintenanceWork(int id, int who){
         String rateKey = "myAcceptMaintenanceWork";
+        if(who == SKILL_RECIEVE_JIANLI){
+            rateKey = "myAcceptSupervisorWork";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
@@ -2187,7 +2192,12 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setMaintenance_id(id);
+        if(who == SKILL_RECIEVE_JIANLI){
+            req.setSupervisor_id(id);
+        }else{
+            req.setMaintenance_id(id);
+        }
+
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptMaintenanceWork(setBody(rateKey, time, req))
@@ -2230,7 +2240,8 @@ public class LoginModel extends BaseModel {
      */
     public Observable<MyPublishOddWorkRes> myPublishMaintenanceWork(int projId, int who){
         String rateKey = "myPublishMaintenanceWork";
-        if(who == COMPANY_RELEASE_JIANLI_DOING){
+        if(who == COMPANY_RELEASE_JIANLI_DOING ||
+                who == COMPANY_RELEASE_JIANLI_DONE){
             rateKey = "mySupervisorWork";
         }
 
@@ -2246,7 +2257,13 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setMaintenance_id(projId);
+        if(who == COMPANY_RELEASE_JIANLI_DOING ||
+                who == COMPANY_RELEASE_JIANLI_DONE){
+            req.setSupervisor_id(projId);
+        }else{
+            req.setMaintenance_id(projId);
+        }
+
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myPublishOddWorkProgress(setBody(rateKey, time, req))
@@ -3010,7 +3027,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(selectCity).append(req.getKeyword())
+        sb.append(time+"").append(city).append(req.getKeyword())
                 .append(req.getLat()).append(req.getLng())
                 .append(req.getNearby()).append(req.getPage()).append(req.getPageSize())
                 .append(req.getProject_type()).append(req.getTime_type())
@@ -3018,7 +3035,7 @@ public class LoginModel extends BaseModel {
                 .append(userid)
                 .append("security");
 
-        req.setCity(selectCity);
+        req.setCity(city);
         req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().indexSearch(setBody(rateKey, time, req))

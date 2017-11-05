@@ -215,10 +215,10 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         super.shouldOverrideUrlLoading(view, url);
                         if (url.contains("action=1")) {
                             //项目
-                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
+                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0));
                         } else if (url.contains("action=2")) {
                             //零工
-                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0), 2);
+                            JoinDetailActivity.startActivity(WebViewActivity.this, getIntent().getIntExtra(INTENT_KEY, 0));
                         }
 
                         //collectID =

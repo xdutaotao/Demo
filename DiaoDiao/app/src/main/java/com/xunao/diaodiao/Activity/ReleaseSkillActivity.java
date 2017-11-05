@@ -442,10 +442,15 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         return;
                     }
 
-                    if (Integer.valueOf(price) > Integer.valueOf(fee.getText().toString())) {
-                        ToastUtil.show("日薪不能低于" + price);
-                        return;
+                    try {
+                        if (Integer.valueOf(price) > Integer.valueOf(fee.getText().toString().trim())) {
+                            ToastUtil.show("日薪不能低于" + price);
+                            return;
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
+
 
                     if (TextUtils.isEmpty(days.getText())) {
                         ToastUtil.show("工作天数不能为空");

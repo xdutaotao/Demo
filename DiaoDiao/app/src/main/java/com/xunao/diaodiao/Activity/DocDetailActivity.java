@@ -4,9 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
@@ -33,18 +32,13 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
 
     @Inject
     DocDetailPresenter presenter;
-    @BindView(R.id.type_image)
-    ImageView typeImage;
-    @BindView(R.id.edit_text)
-    EditText editText;
-    @BindView(R.id.cancle_action)
-    ImageView cancleAction;
-    @BindView(R.id.back)
-    TextView back;
+    @BindView(R.id.title_text)
+    TextView titleText;
+    @BindView(R.id.tool_bar)
+    Toolbar toolBar;
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
-    @BindView(R.id.back_icon)
-    ImageView backIcon;
+
 
     private RecyclerArrayAdapter<DocRes> adapter;
     private int page = 1;
@@ -63,15 +57,12 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        backIcon.setOnClickListener(v -> {
-            finish();
-        });
-        back.setVisibility(View.GONE);
+        showToolbarBack(toolBar, titleText, "");
 
         adapter = new RecyclerArrayAdapter<DocRes>(this, R.layout.doc_detail_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, DocRes homeBean) {
-                baseViewHolder.setText(R.id.name, homeBean.getTitle());
+                baseViewHolder.setText(R.id.doc_type, homeBean.getTitle());
             }
         };
 
@@ -90,7 +81,7 @@ public class DocDetailActivity extends BaseActivity implements DocDetailView, Sw
             adapter.clear();
 
 
-        if(list.size() != 10){
+        if (list.size() != 10) {
             adapter.stopMore();
         }
 

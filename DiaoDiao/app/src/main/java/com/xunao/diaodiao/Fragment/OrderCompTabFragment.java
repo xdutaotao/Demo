@@ -95,6 +95,13 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                         baseViewHolder.setText(R.id.evaluation, "去评价");
                     }
 
+                    if(homeBean.getStatus() == 4){
+                        //已取消
+                        baseViewHolder.setVisible(R.id.evaluation, false);
+                    }else{
+                        baseViewHolder.setVisible(R.id.evaluation, true);
+                    }
+
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
                 }
@@ -132,7 +139,8 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 if(homeBean.getStatus() == 4){
                     //已取消
                     baseViewHolder.setVisible(R.id.request, false);
-                    baseViewHolder.setVisible(R.id.evaluation, false);
+                }else{
+                    baseViewHolder.setVisible(R.id.request, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {

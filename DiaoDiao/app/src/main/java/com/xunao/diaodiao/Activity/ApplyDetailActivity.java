@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Common.Constants;
@@ -86,6 +88,10 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
             presenter.getApplyPass(req);
         });
 
+        if(req.getProject_id() == 1000){
+            agree.setVisibility(View.GONE);
+        }
+
 
         adapter = new RecyclerArrayAdapter<ApplyDetailRes.EvaluateBean>(this, R.layout.apply_detail_item) {
             @Override
@@ -106,8 +112,14 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         recyclerView.setAdapter(adapter);
 
         contactHi.setOnClickListener(v -> {
-            if (res!=null)
-                Utils.startCallActivity(this, res.getMobile());
+            new IOSDialog(ApplyDetailActivity.this).builder()
+                    .setMsg(res.getMobile())
+                    .setNegativeButton("呼叫", v1 -> {
+                        Utils.startCallActivity(this, res.getMobile());
+                    })
+                    .setPositiveButton("取消", null)
+                    .show();
+
         });
     }
 
