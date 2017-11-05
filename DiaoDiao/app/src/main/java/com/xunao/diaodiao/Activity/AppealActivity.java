@@ -42,6 +42,7 @@ import butterknife.ButterKnife;
 import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
@@ -111,7 +112,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
 
         req = (GetMoneyReq) getIntent().getSerializableExtra(INTENT_KEY);
         who = getIntent().getIntExtra("WHO", 0);
-        if (who == SKILL_RELEASE_LINGGONG_NO_PASS || who == COMPANY_RELEASE_WEIBAO) {
+        if (who == SKILL_RELEASE_LINGGONG_NO_PASS ||
+                who == COMPANY_RELEASE_WEIBAO ||
+                    who == COMPANY_RELEASE_JIANLI) {
             showToolbarBack(toolBar, titleText, "输入不通过原因");
             post.setText("提交审核");
             reason.setText("不通过的原因");
@@ -242,7 +245,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
 
             }else if (who == SKILL_RELEASE_LINGGONG_NO_PASS){
                 req.setReason(content.getText().toString());
-            } else if(who == COMPANY_PROJECT_NO_PASS || who == COMPANY_RELEASE_WEIBAO){
+            } else if(who == COMPANY_PROJECT_NO_PASS
+                    || who == COMPANY_RELEASE_WEIBAO
+                    || who == COMPANY_RELEASE_JIANLI){
                 req.setReason(content.getText().toString());
             }else if(who == JIA_TYPE){
                 req.setContent(content.getText().toString());

@@ -18,12 +18,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
+            android:id="@+id/address_layout"
             android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="徐汇区"
+                android:id="@+id/address"
                 android:drawablePadding="10px"
                 android:drawableRight="@drawable/icon_xiala"/>
 
@@ -66,6 +68,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/distance_layout"
             android:orientation="horizontal"
             android:gravity="center">
 
@@ -73,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="距离"
+                android:id="@+id/distance"
                 android:drawablePadding="10px"
                 android:drawableRight="@drawable/icon_shaixan"/>
 

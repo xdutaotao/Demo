@@ -26,6 +26,15 @@ public class MessageListRes implements Serializable{
         private int info_type;
         private String url;
         private int is_read;
+        private String create_time;
+
+        public String getCreate_time() {
+            return create_time;
+        }
+
+        public void setCreate_time(String create_time) {
+            this.create_time = create_time;
+        }
 
         public String getContent() {
             return content;

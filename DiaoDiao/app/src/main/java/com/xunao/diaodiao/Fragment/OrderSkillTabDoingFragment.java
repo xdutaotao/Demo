@@ -103,7 +103,7 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if(who == Constants.SKILL_RELEASE_WEIBAO){
                         WeiBaoProgActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
-                                homeBean.getMaintenance_id());
+                                homeBean.getMaintenance_id(), who);
                     }else{
                         OrderProjProgressActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
                                 homeBean.getOdd_id());

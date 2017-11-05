@@ -73,16 +73,22 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
                 baseViewHolder.setText(R.id.days, s.getExperience()+"年工作经验");
 
                 RatingBar bar = ((RatingBar)baseViewHolder.getConvertView().findViewById(R.id.rating_star));
-                bar.setRating(Float.valueOf(s.getPoint()));
-                bar.setIsIndicator(true);
+                try {
+                    bar.setRating(Float.valueOf(s.getPoint()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
-                baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    ApplyPassReq req = new ApplyPassReq();
-                    req.setTechnician_id(s.getTechnician_id());
-                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    req.setProject_type(projectType);
-                    presenter.getApplyPass(req);
-                });
+                bar.setIsIndicator(true);
+                baseViewHolder.setVisible(R.id.request, false);
+
+//                baseViewHolder.setOnClickListener(R.id.request, v -> {
+//                    ApplyPassReq req = new ApplyPassReq();
+//                    req.setTechnician_id(s.getTechnician_id());
+//                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+//                    req.setProject_type(projectType);
+//                    presenter.getApplyPass(req);
+//                });
             }
         };
 

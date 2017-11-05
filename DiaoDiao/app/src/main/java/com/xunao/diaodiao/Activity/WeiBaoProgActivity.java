@@ -44,6 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
@@ -84,10 +86,12 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
     private static final int IMAGE_PICKER = 8888;
 
     private MyPublishOddWorkRes.WorkBean workBeanDoing;
+    private int who;
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProgActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("who", who);
         context.startActivity(intent);
     }
 
@@ -102,6 +106,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
         showToolbarBack(toolBar, titleText, "维保进度");
 
         maintenanceId = getIntent().getIntExtra(INTENT_KEY, 0);
+        who = getIntent().getIntExtra("who", 0);
 
         adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.weibao_progress_item) {
             @Override
@@ -165,12 +170,17 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        presenter.myPublishMaintenanceWork(this, maintenanceId);
+        presenter.myPublishMaintenanceWork(this, maintenanceId, who);
 
         noPass.setOnClickListener(v -> {
             GetMoneyReq req = new GetMoneyReq();
             req.setWork_id(workBeanDoing.getWork_id());
-            AppealActivity.startActivity(this, req, COMPANY_RELEASE_WEIBAO);
+            if(who == COMPANY_RELEASE_JIANLI_DOING){
+                AppealActivity.startActivity(this, req, COMPANY_RELEASE_JIANLI);
+            }else{
+                AppealActivity.startActivity(this, req, COMPANY_RELEASE_WEIBAO);
+            }
+
         });
 
         pass.setOnClickListener(v -> {
@@ -179,7 +189,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                     .setTitle("点击确认打款给对方")
                     .setMsg("打款给对方了")
                     .setPositiveButton("确认", v1 -> {
-                        presenter.myPublishMaintenanceSuccess(this, workBeanDoing.getWork_id());
+                        presenter.myPublishMaintenanceSuccess(this, workBeanDoing.getWork_id(), who);
                     })
                     .setNegativeButton("取消", v1 -> {
 

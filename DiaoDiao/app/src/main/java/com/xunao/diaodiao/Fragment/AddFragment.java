@@ -10,9 +10,12 @@ import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.View.AddView;
 import com.xunao.diaodiao.Present.AddPresenter;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.Province;
 
 /**
  * create by
@@ -62,6 +65,11 @@ public class AddFragment extends BaseFragment implements AddView {
 
     @Override
     public void getData(FindProjectRes s) {
+
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> s) {
 
     }
 }

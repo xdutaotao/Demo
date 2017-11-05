@@ -49,6 +49,7 @@
                     style="@style/edit_personal_edit"
                     android:id="@+id/phone"
                     android:inputType="phone"
+                    android:digits="1234567890"
                     android:hint="请输入联系电话"/>
 
             </RelativeLayout>
@@ -164,14 +165,17 @@
                     android:id="@+id/person_num"
                     android:inputType="phone"
                     android:digits="1234567890"
-                    android:layout_marginRight="60px"/>
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/textView"
+                    android:layout_toStartOf="@+id/textView" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="人"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:id="@+id/textView" />
 
             </RelativeLayout>
 

@@ -165,27 +165,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
         showToolbarBack(toolBar, titleText, "完善资料");
 
-//        contactCode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String str = Utils.stringFilter(contactCode.getText().toString());
-//                if(!str.equals(contactCode.getText().toString())){
-//                    contactCode.setText(str);
-//                    contactCode.setSelection(str.length());
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
         if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
             PersonalRes.CompanyInfo info = (PersonalRes.CompanyInfo) getIntent().getSerializableExtra(INTENT_KEY);
             name.setText(info.getName());
@@ -449,34 +428,40 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 firstDelete.setVisibility(View.GONE);
                 firstIv.setVisibility(View.GONE);
                 firstPic.setVisibility(View.VISIBLE);
+                firstUrl="";
                 break;
 
             case R.id.second_delete:
                 secondDelete.setVisibility(View.GONE);
                 secondIv.setVisibility(View.GONE);
                 secondPic.setVisibility(View.VISIBLE);
+                secondUrl="";
                 break;
 
             case R.id.third_delete:
                 thirdDelete.setVisibility(View.GONE);
                 thirdIv.setVisibility(View.GONE);
                 thirdPic.setVisibility(View.VISIBLE);
+                thirdUrl="";
                 break;
 
             case R.id.one_delete:
                 oneDelete.setVisibility(View.GONE);
                 oneIv.setVisibility(View.GONE);
                 onePic.setVisibility(View.VISIBLE);
+                oneUrl="";
                 break;
 
             case R.id.code_delete:
                 Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
                 codeDelete.setVisibility(View.GONE);
+                codeUrl="";
                 break;
 
             case R.id.code_reverse_delete:
                 Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
                 codeReverseDelete.setVisibility(View.GONE);
+                codeReverseUrl="";
                 break;
 
             case R.id.code:

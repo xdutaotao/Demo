@@ -25,8 +25,8 @@ public class WeiBaoProgPresenter extends BasePresenter<WeiBaoProgView> {
     }
 
     //列表
-    public void myPublishMaintenanceWork(Context context, int prjID){
-        mCompositeSubscription.add(model.myPublishMaintenanceWork(prjID)
+    public void myPublishMaintenanceWork(Context context, int prjID, int who){
+        mCompositeSubscription.add(model.myPublishMaintenanceWork(prjID, who)
                 .subscribe(new RxSubUtils<MyPublishOddWorkRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(MyPublishOddWorkRes token) {
@@ -40,8 +40,8 @@ public class WeiBaoProgPresenter extends BasePresenter<WeiBaoProgView> {
                 }));
     }
 
-    public void myPublishMaintenanceSuccess(Context context, int page){
-        mCompositeSubscription.add(model.myPublishMaintenanceSuccess(page)
+    public void myPublishMaintenanceSuccess(Context context, int page, int who){
+        mCompositeSubscription.add(model.myPublishMaintenanceSuccess(page, who)
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {

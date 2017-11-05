@@ -351,6 +351,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                     req.setTotal_fee(bean.getTotal_fee());
                     req.setImages(bean.getImages());
                     req.setRegion(bean.getRegion());
+                    req.setPeople_numbers(bean.getPeople_numbers());
                     ReleaseSkillActivity.startActivity(this, req);
                 }
             }else if(TextUtils.equals(WEIBAO_DETAIL, btnType)){

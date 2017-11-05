@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
@@ -19,7 +20,6 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
-import com.xunao.diaodiao.Bean.SignRes;
 import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.WeiBaoProjPresenter;
@@ -38,8 +38,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DOING;
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_PROJECT_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -57,6 +55,8 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
     GRecyclerView recyclerView;
+    @BindView(R.id.get_money)
+    Button getMoney;
 
     private RecyclerArrayAdapter<WeiBaoProgRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
@@ -103,7 +103,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 };
 
                 itemAdapter.setOnItemClickListener((view, i) -> {
-                    if(s.getImages() != null && (s.getImages().size()>0))
+                    if (s.getImages() != null && (s.getImages().size() > 0))
                         PhotoActivity.startActivity(WeiBaoProjActivity.this, s.getImages().get(i),
                                 s.getImages().get(i).contains("http"));
                 });
@@ -116,15 +116,15 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                         + " 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
 
-                if (s.getPass() == 3){
+                if (s.getPass() == 3) {
                     //审核中
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
                             + " 审核中");
-                }else if (s.getPass() == 2){
+                } else if (s.getPass() == 2) {
                     //未通过审核
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
                             + " 未通过审核");
-                }else{
+                } else {
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
                             + " 审核通过");
                 }
@@ -132,39 +132,36 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             }
         };
 
-            setFooter();
+        setFooter();
 
-            footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
-                @Override
-                protected void convert(BaseViewHolder baseViewHolder, String s) {
-                    if (TextUtils.equals(ADD, s)){
-                        baseViewHolder.setVisible(R.id.delete, false);
-                        baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
-                    }else{
-                        baseViewHolder.setVisible(R.id.delete, true);
-                        baseViewHolder.setImageUrl(R.id.image, s);
-                    }
+        footerAdapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, String s) {
+                if (TextUtils.equals(ADD, s)) {
+                    baseViewHolder.setVisible(R.id.delete, false);
+                    baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
+                } else {
+                    baseViewHolder.setVisible(R.id.delete, true);
+                    baseViewHolder.setImageUrl(R.id.image, s);
                 }
-            };
+            }
+        };
 
-            footerAdapter.setOnItemClickListener((view, i) -> {
-                view.findViewById(R.id.delete).setOnClickListener(v -> {
-                    imageItems.remove(i);
-                    footerAdapter.remove(i);
-                    if (!footerAdapter.getAllData().contains(ADD)) {
-                        footerAdapter.add(ADD);
-                    }
-                });
-
-                if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                    //selectPhoto();
-                    takePhoto();
+        footerAdapter.setOnItemClickListener((view, i) -> {
+            view.findViewById(R.id.delete).setOnClickListener(v -> {
+                imageItems.remove(i);
+                footerAdapter.remove(i);
+                if (!footerAdapter.getAllData().contains(ADD)) {
+                    footerAdapter.add(ADD);
                 }
             });
-            footerAdapter.add(ADD);
 
-
-
+            if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
+                //selectPhoto();
+                takePhoto();
+            }
+        });
+        footerAdapter.add(ADD);
 
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -174,7 +171,9 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
         presenter.myAcceptMaintenanceWork(this, getIntent().getIntExtra(INTENT_KEY, 0), 0);
 
-
+        getMoney.setOnClickListener(v -> {
+            signAction(1);
+        });
     }
 
     @Override
@@ -185,14 +184,14 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
     @Override
     public void getList(WeiBaoProgRes list) {
-        if (list.getWork() != null && list.getWork().size() > 0){
+        if (list.getWork() != null && list.getWork().size() > 0) {
             adapter.addAll(list.getWork());
-        }else{
+        } else {
             //recyclerView.showEmpty();
         }
     }
 
-    private void setFooter(){
+    private void setFooter() {
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {
@@ -211,7 +210,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 time.setText(Utils.getNowDateMonth() + " 工作拍照");
                 postText.setText("提交审核");
                 postText.setOnClickListener(v -> {
-                    signAction();
+                    signAction(2);
                 });
             }
         });
@@ -227,20 +226,21 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         imagePicker.setSelectLimit(10);
     }
 
-    private void signAction(){
+    private void signAction(int action) {
         GetMoneyReq req = new GetMoneyReq();
         req.setLocation(Constants.address);
-        if(who == SKILL_RECIEVE_JIANLI){
+        if (who == SKILL_RECIEVE_JIANLI) {
             req.setSupervisor_id(getIntent().getIntExtra(INTENT_KEY, 0));
-        }else{
+        } else {
             req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
         }
 
         req.setRemark("remark");
-        req.setSign_time(System.currentTimeMillis()/1000);
+        req.setSign_time(System.currentTimeMillis() / 1000);
         //是否申请打款
-        req.setApply_type(2);
-        req.setImages(pathList);
+        req.setApply_type(action);
+        if(action == 2)
+            req.setImages(pathList);
         presenter.myAcceptMaintenanceSubmit(this, req, who);
     }
 
@@ -272,7 +272,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     }
 
     private void setResultToAdapter(ArrayList<ImageItem> images) {
-        if (images.size() > 0){
+        if (images.size() > 0) {
             postText.setText("提交审核");
             postText.setVisibility(View.VISIBLE);
         }

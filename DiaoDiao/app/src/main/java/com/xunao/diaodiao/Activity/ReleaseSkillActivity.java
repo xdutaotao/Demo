@@ -3,20 +3,17 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.zhouwei.library.CustomPopWindow;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
@@ -95,6 +92,8 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     RelativeLayout projectTypeLayout;
     @BindView(R.id.address_layout)
     RelativeLayout addressLayout;
+    @BindView(R.id.num)
+    EditText num;
 
     private String ADD = "ADD";
     List<String> pathList = new ArrayList<>();
@@ -172,7 +171,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     baseViewHolder.setVisible(R.id.delete, false);
                     baseViewHolder.setImageResource(R.id.image, R.drawable.icon_paishe);
                 } else {
-                    baseViewHolder.setVisible(R.id.delete, req!=null ? false: true);
+                    baseViewHolder.setVisible(R.id.delete, req != null ? false : true);
                     baseViewHolder.setImageUrl(R.id.image, s);
                 }
             }
@@ -189,9 +188,9 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
             if (TextUtils.equals(adapter.getAllData().get(i), ADD)) {
                 selectPhoto();
-            }else{
-                if(pathList.size() > 0)
-                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
+            } else {
+                if (pathList.size() > 0)
+                    PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
             }
 
         });
@@ -214,14 +213,14 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
 
 
         addressLayout.setOnClickListener(v -> {
-            if (picker != null){
-                if (TextUtils.isEmpty(address.getText())){
+            if (picker != null) {
+                if (TextUtils.isEmpty(address.getText())) {
                     picker.setSelectedItem("上海", "上海", "长宁");
-                }else{
+                } else {
                     String[] addresss = address.getText().toString().split("-");
-                    if (addresss.length == 3){
+                    if (addresss.length == 3) {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
-                    }else{
+                    } else {
                         picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
                     }
 
@@ -237,7 +236,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                 });
 
 
-        if (req != null){
+        if (req != null) {
             title.setText(req.getTitle());
             address.setText(req.getRegion());
             addressDetail.setText(req.getAddress());
@@ -252,12 +251,14 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             content.setText(req.getDescribe());
             adapter.clear();
             adapter.addAll(req.getImages());
+            num.setText(req.getPeople_numbers());
 
             addressLayout.setOnClickListener(null);
             addressDetail.setFocusable(false);
             days.setFocusable(false);
             fee.setFocusable(false);
             content.setFocusable(false);
+            num.setFocusable(false);
 
             RxBus.getInstance().toObservable(String.class)
                     .filter(s -> TextUtils.equals(s, "update_project"))
@@ -265,14 +266,14 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         finish();
                     });
 
-        }else{
+        } else {
             projTimeLayout.setOnClickListener(this);
             projectTypeLayout.setOnClickListener(this);
             initImagePicker();
             presenter.getPercent(this);
-            if(Constants.addressResult.size() == 0){
+            if (Constants.addressResult.size() == 0) {
                 presenter.getAddressData(this);
-            }else{
+            } else {
                 getAddressData(Constants.addressResult);
             }
 
@@ -296,10 +297,10 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     public void getProjectType(ProjectTypeRes res) {
         this.res = res;
 
-        for(ProjectTypeRes.TypeBean bean: res.getTypes()){
+        for (ProjectTypeRes.TypeBean bean : res.getTypes()) {
             data.add(bean.getName());
-            if(req != null){
-                if(bean.getId() == Integer.valueOf(req.getProject_type())) {
+            if (req != null) {
+                if (bean.getId() == Integer.valueOf(req.getProject_type())) {
                     projectType.setText(bean.getName());
                     req.setProject_type_string(bean.getName());
                 }
@@ -420,13 +421,13 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                 }
 
 
-                if (this.req == null){
+                if (this.req == null) {
                     if (TextUtils.isEmpty(projectType.getText())) {
                         ToastUtil.show("类型不能为空");
                         return;
                     }
 
-                    if (TextUtils.isEmpty(address.getText())){
+                    if (TextUtils.isEmpty(address.getText())) {
                         ToastUtil.show("选择地区");
                         return;
                     }
@@ -441,13 +442,18 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                         return;
                     }
 
-                    if(Integer.valueOf(price) > Integer.valueOf(fee.getText().toString())){
-                        ToastUtil.show("日薪不能低于"+price);
+                    if (Integer.valueOf(price) > Integer.valueOf(fee.getText().toString())) {
+                        ToastUtil.show("日薪不能低于" + price);
                         return;
                     }
 
                     if (TextUtils.isEmpty(days.getText())) {
                         ToastUtil.show("工作天数不能为空");
+                        return;
+                    }
+
+                    if (TextUtils.isEmpty(num.getText())) {
+                        ToastUtil.show("零工人数不能为空");
                         return;
                     }
 
@@ -472,10 +478,11 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     req.setDistrict(districtId);
                     req.setRegion(address.getText().toString());
                     req.setAddress(addressDetail.getText().toString());
+                    req.setPeople_numbers(Integer.valueOf(num.getText().toString()));
 
-                    for(ProjectTypeRes.TypeBean bean: res.getTypes()){
-                        if(TextUtils.equals(bean.getName(), projectType.getText().toString())){
-                            req.setProject_type(bean.getId()+"");
+                    for (ProjectTypeRes.TypeBean bean : res.getTypes()) {
+                        if (TextUtils.equals(bean.getName(), projectType.getText().toString())) {
+                            req.setProject_type(bean.getId() + "");
                         }
                     }
 
@@ -490,13 +497,12 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     req.setDescribe(content.getText().toString());
                     req.setImages(pathList);
                     ReleaseSkillSecondActivity.startActivity(this, req);
-                }else{
+                } else {
                     req.setTitle(title.getText().toString());
                     req.setContact(contact.getText().toString());
                     req.setContact_mobile(phone.getText().toString());
                     ReleaseSkillSecondActivity.startActivity(this, req, true);
                 }
-
 
 
                 break;
@@ -550,7 +556,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                 timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
                     @Override
                     public void onTimePicked(String hour, String minute) {
-                        timeLong.append(" " + hour+":"+minute);
+                        timeLong.append(" " + hour + ":" + minute);
                         time.setText(timeLong.toString());
                         //req.setBuild_time_string(timeLong.toString());
                     }

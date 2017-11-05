@@ -28,6 +28,7 @@ import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditSkillPresenter;
 import com.xunao.diaodiao.R;
@@ -270,7 +271,11 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 picker.show();
             }
         });
-        presenter.getAddressData(this);
+        if(Constants.addressResult.size() == 0)
+            presenter.getAddressData(this);
+        else
+            getAddressData(Constants.addressResult);
+
         presenter.getTypeInfo();
     }
 
@@ -407,6 +412,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
+            Constants.addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);
@@ -465,11 +471,13 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             case R.id.code_delete:
                 Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
                 codeDelete.setVisibility(View.GONE);
+                codeUrl="";
                 break;
 
             case R.id.code_reverse_delete:
                 Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
                 codeReverseDelete.setVisibility(View.GONE);
+                codeReverseUrl="";
                 break;
 
             case R.id.certification:
@@ -485,6 +493,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             case R.id.certi_delete:
                 Glide.with(this).load(R.drawable.shangchuan).into(certification);
                 certiDelete.setVisibility(View.GONE);
+                certifyUrl="";
                 break;
         }
     }

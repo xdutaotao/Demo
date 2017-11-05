@@ -72,6 +72,8 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
     TextView allPrice;
     @BindView(R.id.pay)
     TextView pay;
+    @BindView(R.id.num)
+    TextView num;
 
     private ReleaseSkillReq req;
     private RecyclerArrayAdapter<String> adapter;
@@ -111,9 +113,9 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            if(adapter.getAllData() != null && (adapter.getAllData().size() > 0))
-            PhotoActivity.startActivity(this, adapter.getAllData().get(i),
-                    adapter.getAllData().get(i).contains("http"));
+            if (adapter.getAllData() != null && (adapter.getAllData().size() > 0))
+                PhotoActivity.startActivity(this, adapter.getAllData().get(i),
+                        adapter.getAllData().get(i).contains("http"));
 
         });
 
@@ -132,6 +134,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         time.setText(req.getBuild_time_string());
         describe.setText(req.getDescribe());
         adapter.addAll(req.getImages());
+        num.setText(req.getPeople_numbers());
 
         pay.setOnClickListener(this);
 
@@ -142,33 +145,33 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
                     finish();
                 });
 
-        if (flag){
-            projectFee.setText("￥"+req.getOdd_fee());
-            serviceFee.setText("￥"+req.getService_fee());
-            allPrice.setText("￥"+req.getTotal_fee());
+        if (flag) {
+            projectFee.setText("￥" + req.getOdd_fee());
+            serviceFee.setText("￥" + req.getService_fee());
+            allPrice.setText("￥" + req.getTotal_fee());
 
             pay.setText("发布");
 
-        }else{
+        } else {
             presenter.countOddExpenses(this, req);
         }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.pay:
-                if (!flag){
-                    if(req.getImages().get(0).length() < 100){
+                if (!flag) {
+                    if (req.getImages().get(0).length() < 100) {
                         List<String> list = new ArrayList<>();
-                        for(String s : req.getImages()){
+                        for (String s : req.getImages()) {
                             list.add(Utils.Bitmap2StrByBase64(s));
                         }
                         req.setImages(list);
                     }
 
                     presenter.publishOdd(this, req);
-                }else{
+                } else {
                     presenter.updateOdd(this, req);
                 }
 
@@ -204,9 +207,9 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
 
     @Override
     public void getData(OddFeeRes res) {
-        projectFee.setText("￥"+res.getOdd_fee());
-        serviceFee.setText("￥"+res.getService_fee());
-        allPrice.setText("￥"+res.getTotal_fee());
+        projectFee.setText("￥" + res.getOdd_fee());
+        serviceFee.setText("￥" + res.getService_fee());
+        allPrice.setText("￥" + res.getTotal_fee());
 
         req.setService_fee(res.getService_fee());
         req.setTotal_fee(res.getTotal_fee());

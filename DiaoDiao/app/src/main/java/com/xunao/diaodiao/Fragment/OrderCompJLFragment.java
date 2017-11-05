@@ -13,6 +13,7 @@ import com.xunao.diaodiao.Activity.ApplyActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -130,12 +131,12 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                                 homeBean.getSupervisor_id(), 2);
                     }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                        WeiBaoProgActivity.startActivity(OrderCompJLFragment.this.getContext(),
                                 homeBean.getSupervisor_id(), who);
                     }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
-                                homeBean.getSupervisor_id(), who);
+//                        SkillProjReceiveProgressActivity.startActivity(OrderCompJLFragment.this.getContext(),
+//                                homeBean.getSupervisor_id(), who);
                     }
 
 

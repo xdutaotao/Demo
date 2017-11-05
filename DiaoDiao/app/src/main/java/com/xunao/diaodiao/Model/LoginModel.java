@@ -1213,6 +1213,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         StringBuilder sb = new StringBuilder(rateKey);
         sb.append(time+"").append(req.getDistrict()).append(req.getKeyword())
+                .append(req.getNearby())
                 .append(req.getPage())
                 .append(req.getPageSize()).append(req.getSort())
                 .append("security");
@@ -1900,9 +1901,11 @@ public class LoginModel extends BaseModel {
     }
 
 
-    public Observable<Object> myPublishMaintenanceSuccess(int id){
+    public Observable<Object> myPublishMaintenanceSuccess(int id, int who){
         String rateKey = "myPublishMaintenanceSuccess";
-
+        if(who == COMPANY_RELEASE_JIANLI_DOING){
+            rateKey = "mySupervisorSuccess";
+        }
         int userid;
         if(TextUtils.isEmpty(User.getInstance().getUserId())){
             userid = 0;
@@ -2225,8 +2228,11 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度 拍照 列表
      */
-    public Observable<MyPublishOddWorkRes> myPublishMaintenanceWork(int projId){
+    public Observable<MyPublishOddWorkRes> myPublishMaintenanceWork(int projId, int who){
         String rateKey = "myPublishMaintenanceWork";
+        if(who == COMPANY_RELEASE_JIANLI_DOING){
+            rateKey = "mySupervisorWork";
+        }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         int type = ShareUtils.getValue("TYPE", 0);
@@ -2393,6 +2399,13 @@ public class LoginModel extends BaseModel {
                     .append("security");
         }else if(who == COMPANY_RELEASE_WEIBAO){
             rateKey = "myPublishMaintenanceFail";
+            sb.append(rateKey);
+            sb.append(time+"").append(req.getImages()).append(req.getProject_id())
+                    .append(req.getReason())
+                    .append(type).append(userid).append(req.getWork_id())
+                    .append("security");
+        }else if(who == COMPANY_RELEASE_JIANLI){
+            rateKey = "mySupervisorFail";
             sb.append(rateKey);
             sb.append(time+"").append(req.getImages()).append(req.getProject_id())
                     .append(req.getReason())
@@ -2808,6 +2821,7 @@ public class LoginModel extends BaseModel {
                 .append(req.getCity()).append(req.getContact())
                 .append(req.getContact_mobile()).append(req.getDaily_wage()).append(req.getDescribe())
                 .append(req.getDistrict()).append(req.getImages()).append(req.getOdd_fee())
+                .append(req.getPeople_numbers())
                 .append(req.getProject_type()).append(req.getProvince())
                 .append(req.getService_fee()).append(req.getTitle())
                 .append(req.getTotal_day()).append(req.getTotal_fee()).append(type)

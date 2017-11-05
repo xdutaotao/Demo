@@ -30,9 +30,18 @@ public class ReleaseSkillReq implements Serializable{
     private String verify;
     private String build_time_string;
     private String project_type_string;
+    private int people_numbers;
 
     private String odd_id;
     private String region;
+
+    public int getPeople_numbers() {
+        return people_numbers;
+    }
+
+    public void setPeople_numbers(int people_numbers) {
+        this.people_numbers = people_numbers;
+    }
 
     public String getProject_type_string() {
         return project_type_string;

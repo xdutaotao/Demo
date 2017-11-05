@@ -45,6 +45,7 @@
                     android:layout_marginRight="50px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/time"
                     android:text="5月18日 16：30"/>
 
             </RelativeLayout>

@@ -70,6 +70,7 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
             protected void convert(BaseViewHolder baseViewHolder, MessageListRes.MessageBean s) {
                 baseViewHolder.setText(R.id.title, s.getTitle());
                 baseViewHolder.setText(R.id.look, s.getContent());
+                baseViewHolder.setText(R.id.time, s.getCreate_time());
 
                 if(s.getIs_read() == 2){
                     //未读

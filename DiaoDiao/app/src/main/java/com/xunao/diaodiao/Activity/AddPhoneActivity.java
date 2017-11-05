@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,6 +55,10 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
     Button addPhoneBtn;
     @BindView(R.id.pwd)
     EditText pwd;
+    @BindView(R.id.agree)
+    CheckBox agree;
+    @BindView(R.id.agree_content)
+    TextView agreeContent;
 
     private Subscription subscriber;
 
@@ -86,6 +91,11 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
 
             if (TextUtils.isEmpty(pwd.getText())) {
                 ToastUtil.show("请输入密码");
+                return;
+            }
+
+            if (!agree.isChecked()) {
+                ToastUtil.show("请同意协议");
                 return;
             }
 
@@ -124,6 +134,10 @@ public class AddPhoneActivity extends BaseActivity implements AddPhoneView {
             }
 
 
+        });
+
+        agreeContent.setOnClickListener(v -> {
+            PDFActivity.startActivity(this, "协议", "协议");
         });
     }
 

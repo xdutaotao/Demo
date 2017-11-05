@@ -16,7 +16,7 @@
 
         <EditText
             style="@style/edit_personal_edit"
-            android:hint="3年"
+            android:hint="请输入用户名"
             android:id="@+id/name"/>
 
     </RelativeLayout>
@@ -32,8 +32,9 @@
 
         <EditText
             style="@style/edit_personal_edit"
-            android:hint="185"
+            android:hint="请输入手机号"
             android:inputType="phone"
+            android:digits="1234567890"
             android:id="@+id/phone"/>
 
     </RelativeLayout>
@@ -67,7 +68,7 @@
 
         <EditText
             style="@style/edit_personal_edit"
-            android:hint="3年"
+            android:hint="请输入地址"
             android:id="@+id/address_detail"/>
 
     </RelativeLayout>

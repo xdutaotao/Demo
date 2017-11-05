@@ -332,6 +332,15 @@ public class FindLingGongRes {
         private int city;
         private int district;
         private String total_fee;
+        private int people_numbers;
+
+        public int getPeople_numbers() {
+            return people_numbers;
+        }
+
+        public void setPeople_numbers(int people_numbers) {
+            this.people_numbers = people_numbers;
+        }
 
         public String getTotal_fee() {
             return total_fee;
