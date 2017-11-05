@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -13,11 +15,13 @@ import android.widget.TextView;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ShareUtils;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.JoinDetailView;
 
 import javax.inject.Inject;
@@ -59,10 +63,18 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     //首页type
     private int type;
     private int page = 1;
+    private String phone;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, JoinDetailActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, int id, String flag) {
+        Intent intent = new Intent(context, JoinDetailActivity.class);
+        intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("flag", flag);
         context.startActivity(intent);
     }
 
@@ -75,60 +87,87 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "公司介绍");
+        phone = getIntent().getStringExtra("flag");
 
-        type = ShareUtils.getValue(TYPE_KEY, 0);
-
-        if (type == 0) {
-            //项目
-            adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
-                @Override
-                protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
-                    baseViewHolder.setText(R.id.content, homeBean.getContent());
-                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
-                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
-                }
-            };
-
-            recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        } else if (type == 2) {
-            //零工
-            oddAdapter = new RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
-                @Override
-                protected void convert(BaseViewHolder baseViewHolder, GetOddInfoRes.EvaluateInfoBean homeBean) {
-                    baseViewHolder.setText(R.id.content, homeBean.getContent());
-                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
-                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
-                }
-            };
-
-            recyclerView.setAdapterDefaultConfig(oddAdapter, this, this);
+        if(!TextUtils.isEmpty(phone)){
+            sayLayout.setVisibility(View.GONE);
+            contact.setVisibility(View.VISIBLE);
         }
+//        type = ShareUtils.getValue(TYPE_KEY, 0);
+//
+//        if (type == 0) {
+//            //项目
+//            adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
+//                @Override
+//                protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
+//                    baseViewHolder.setText(R.id.content, homeBean.getContent());
+//                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
+//                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
+//                }
+//            };
+//
+//            recyclerView.setAdapterDefaultConfig(adapter, this, this);
+//        } else if (type == 2) {
+//            //零工
+//            oddAdapter = new RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
+//                @Override
+//                protected void convert(BaseViewHolder baseViewHolder, GetOddInfoRes.EvaluateInfoBean homeBean) {
+//                    baseViewHolder.setText(R.id.content, homeBean.getContent());
+//                    baseViewHolder.setText(R.id.head_info, homeBean.getName());
+//                    baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
+//                }
+//            };
+//
+//            recyclerView.setAdapterDefaultConfig(oddAdapter, this, this);
+//        }
 
+        adapter = new RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean>(this, R.layout.join_detail_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, JoinDetailRes.EvaluateInfoBean homeBean) {
+                baseViewHolder.setText(R.id.content, homeBean.getContent());
+                baseViewHolder.setText(R.id.head_info, homeBean.getName());
+                baseViewHolder.setImageUrl(R.id.head_icon, homeBean.getHead_img());
+            }
+        };
+
+        recyclerView.setAdapterDefaultConfig(adapter, this, this);
 
         onRefresh();
 
-
+        contact.setOnClickListener(v -> {
+            new IOSDialog(this).builder()
+                        .setMsg(phone)
+                        .setPositiveButton("呼叫", v1 -> {
+                            if (!TextUtils.isEmpty(phone)){
+                                Utils.startCallActivity(this, phone);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+        });
     }
 
     @Override
     public void onRefresh() {
         page = 1;
-        if (type == 0) {
-            presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        } else if (type == 1) {
-            //零工
-            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        }
+        presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        if (type == 0) {
+//            presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        } else if (type == 1) {
+//            //零工
+//            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        }
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        if (type == 0) {
-            presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        } else if (type == 1) {
-            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
-        }
+        presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        if (type == 0) {
+//            presenter.getCompanyInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        } else if (type == 1) {
+//            presenter.getOddInfo(getIntent().getIntExtra(INTENT_KEY, 0), page);
+//        }
     }
 
     @Override

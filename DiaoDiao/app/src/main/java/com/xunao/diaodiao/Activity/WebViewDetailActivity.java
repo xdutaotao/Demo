@@ -30,6 +30,7 @@ import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.WebViewDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
+import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.WebViewDetailView;
@@ -61,6 +62,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -453,6 +455,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
 
         });
+
+        if (ShareUtils.getValue(TYPE_KEY, 0) == 3) {
+            //公司角色
+            apply.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
 
     }
 

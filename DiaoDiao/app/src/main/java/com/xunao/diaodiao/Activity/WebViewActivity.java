@@ -429,6 +429,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 //            presenter.getFindProjDetail(this, id, 0);
 //        }
 
+        if (ShareUtils.getValue(TYPE_KEY, 0) == 3) {
+            //公司角色
+            apply.setVisibility(View.GONE);
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
+
         RxBus.getInstance().toObservable(String.class)
                 .filter(s -> TextUtils.equals(s, "update_project"))
                 .subscribe(s -> {

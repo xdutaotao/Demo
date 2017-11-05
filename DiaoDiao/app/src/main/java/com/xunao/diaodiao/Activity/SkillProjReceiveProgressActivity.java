@@ -63,6 +63,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     private String phone;
     private int who;
     private int applyID;
+    private int id;
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, SkillProjReceiveProgressActivity.class);
@@ -271,6 +272,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
             adapter.addAll(worksBean.getWork());
             phone = worksBean.getContact_mobile();
             applyID = worksBean.getApply_id();
+            id = worksBean.getId();
         }
 
     }
@@ -317,7 +319,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
                 }else{
                     //公司详情
-                    JoinDetailActivity.startActivity(this, 0);
+                    JoinDetailActivity.startActivity(this, id);
                 }
 
                 return true;

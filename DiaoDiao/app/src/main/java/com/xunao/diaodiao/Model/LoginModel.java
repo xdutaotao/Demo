@@ -1456,8 +1456,8 @@ public class LoginModel extends BaseModel {
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
-        req.setUserid(userid);
-        req.setId(id);
+        req.setUserid(id);
+        //req.setId(id);
         req.setPage(page);
         req.setPageSize(10);
         req.setVerify(sb.toString());

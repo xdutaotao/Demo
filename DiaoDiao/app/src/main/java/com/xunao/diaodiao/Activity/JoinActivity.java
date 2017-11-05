@@ -166,6 +166,10 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
         };
 
         adapter.setOnItemClickListener((view, i) -> {
+            if(TextUtils.isEmpty(User.getInstance().getUserId())){
+                ToastUtil.show("请登录");
+                return;
+            }
             JoinDetailActivity.startActivity(this, adapter.getAllData().get(i).getId());
         });
 
