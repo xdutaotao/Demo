@@ -25,9 +25,9 @@ public class SkillProjReceiveProgressPresenter extends BasePresenter<SkillProjRe
     SkillProjReceiveProgressPresenter() {
     }
 
-    public void myAcceptProjectWork(Context context, int req, int who){
+    public void myAcceptProjectWork(int req, int who){
         mCompositeSubscription.add(model.myAcceptProjectWork(req, who)
-                .subscribe(new RxSubUtils<MyAcceptProjectWorkRes>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<MyAcceptProjectWorkRes>(mCompositeSubscription) {
                     @Override
                     protected void _onNext(MyAcceptProjectWorkRes token) {
                         getView().getData(token);
@@ -35,7 +35,7 @@ public class SkillProjReceiveProgressPresenter extends BasePresenter<SkillProjRe
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }
