@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.View;
 
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.View.BaseView;
@@ -14,5 +15,6 @@ import cn.qqtheme.framework.entity.Province;
 public interface EditSkillView extends BaseView {
     void getData(LoginResBean bean);
     void getData(TypeInfoRes bean);
+    void getData(CheckFinishRes bean);
     void getAddressData(ArrayList<Province> bean);
 }

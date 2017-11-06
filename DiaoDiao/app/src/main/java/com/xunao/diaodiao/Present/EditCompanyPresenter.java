@@ -2,7 +2,9 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
@@ -57,6 +59,26 @@ public class EditCompanyPresenter extends BasePresenter<EditCompanyView> {
                     @Override
                     protected void _onError(String msg) {
                         ToastUtil.show(msg);
+                    }
+                }));
+    }
+
+    /**
+     * 审核
+     */
+    public void checkFinish(){
+        mCompositeSubscription.add(model.checkFinish()
+                .subscribe(new RxSubUtils<CheckFinishRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(CheckFinishRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String msg) {
+                        if (!TextUtils.equals(msg, "网络错误"))
+                            msg = "请求失败";
+                        getView().onFailure();
                     }
                 }));
     }

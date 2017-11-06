@@ -24,6 +24,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
@@ -115,6 +116,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
     private int provinceId, cityId, districtId;
     private AddressPicker picker;
+    private boolean canChange;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditSkillActivity.class);
@@ -277,6 +279,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             getAddressData(Constants.addressResult);
 
         presenter.getTypeInfo();
+        presenter.checkFinish();
     }
 
     @Override
@@ -390,7 +393,6 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
             req.setCertificate(Utils.Bitmap2StrByBase64(certifyUrl));
 
         presenter.fillSkillInfor(this, req);
-
     }
 
     @Override
@@ -410,9 +412,15 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     }
 
     @Override
+    public void getData(CheckFinishRes bean) {
+        canChange = bean.getStatus() == 1 ? false : true;
+    }
+
+    @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
-            Constants.addressResult.addAll(result);
+            if(Constants.addressResult.size() == 0)
+                Constants.addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);
@@ -469,15 +477,21 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 break;
 
             case R.id.code_delete:
-                Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
-                codeDelete.setVisibility(View.GONE);
-                codeUrl="";
+                if(canChange){
+                    Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
+                    codeDelete.setVisibility(View.GONE);
+                    codeUrl="";
+                }
+
                 break;
 
             case R.id.code_reverse_delete:
-                Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
-                codeReverseDelete.setVisibility(View.GONE);
-                codeReverseUrl="";
+                if(canChange){
+                    Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
+                    codeReverseDelete.setVisibility(View.GONE);
+                    codeReverseUrl="";
+                }
+
                 break;
 
             case R.id.certification:
@@ -491,9 +505,12 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 break;
 
             case R.id.certi_delete:
-                Glide.with(this).load(R.drawable.shangchuan).into(certification);
-                certiDelete.setVisibility(View.GONE);
-                certifyUrl="";
+                if(canChange){
+                    Glide.with(this).load(R.drawable.shangchuan).into(certification);
+                    certiDelete.setVisibility(View.GONE);
+                    certifyUrl="";
+                }
+
                 break;
         }
     }

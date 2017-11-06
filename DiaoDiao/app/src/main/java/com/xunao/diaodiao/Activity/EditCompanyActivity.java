@@ -23,9 +23,11 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.MainActivity;
 import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.EditCompanyPresenter;
@@ -142,7 +144,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     private StringBuilder timeLong;
 
     FillCompanyReq req = new FillCompanyReq();
-
+    private boolean canChange = false;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, EditCompanyActivity.class);
@@ -271,9 +273,6 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             checkBoxSingle.setChecked(true);
         }
 
-        checkBoxAll.setOnCheckedChangeListener(this);
-        checkBoxSingle.setOnCheckedChangeListener(this);
-
         firstPic.setOnClickListener(this);
         secondPic.setOnClickListener(this);
         thirdPic.setOnClickListener(this);
@@ -351,8 +350,10 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
 
         });
-
-        presenter.getAddressData(this);
+        if(Constants.addressResult.size() == 0)
+            presenter.getAddressData(this);
+        else
+            getAddressData(Constants.addressResult);
 
         oneIv.setOnClickListener(this);
         firstIv.setOnClickListener(this);
@@ -360,11 +361,15 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         thirdIv.setOnClickListener(this);
         code.setOnClickListener(this);
         codeReverse.setOnClickListener(this);
+
+        presenter.checkFinish();
     }
 
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
+            if(Constants.addressResult.size() == 0)
+                Constants.addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);
@@ -425,43 +430,61 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
                 break;
 
             case R.id.first_delete:
-                firstDelete.setVisibility(View.GONE);
-                firstIv.setVisibility(View.GONE);
-                firstPic.setVisibility(View.VISIBLE);
-                firstUrl="";
+                if(canChange){
+                    firstDelete.setVisibility(View.GONE);
+                    firstIv.setVisibility(View.GONE);
+                    firstPic.setVisibility(View.VISIBLE);
+                    firstUrl="";
+                }
+
                 break;
 
             case R.id.second_delete:
-                secondDelete.setVisibility(View.GONE);
-                secondIv.setVisibility(View.GONE);
-                secondPic.setVisibility(View.VISIBLE);
-                secondUrl="";
+                if(canChange){
+                    secondDelete.setVisibility(View.GONE);
+                    secondIv.setVisibility(View.GONE);
+                    secondPic.setVisibility(View.VISIBLE);
+                    secondUrl="";
+                }
+
                 break;
 
             case R.id.third_delete:
-                thirdDelete.setVisibility(View.GONE);
-                thirdIv.setVisibility(View.GONE);
-                thirdPic.setVisibility(View.VISIBLE);
-                thirdUrl="";
+                if(canChange){
+                    thirdDelete.setVisibility(View.GONE);
+                    thirdIv.setVisibility(View.GONE);
+                    thirdPic.setVisibility(View.VISIBLE);
+                    thirdUrl="";
+                }
+
                 break;
 
             case R.id.one_delete:
-                oneDelete.setVisibility(View.GONE);
-                oneIv.setVisibility(View.GONE);
-                onePic.setVisibility(View.VISIBLE);
-                oneUrl="";
+                if(canChange){
+                    oneDelete.setVisibility(View.GONE);
+                    oneIv.setVisibility(View.GONE);
+                    onePic.setVisibility(View.VISIBLE);
+                    oneUrl="";
+                }
+
                 break;
 
             case R.id.code_delete:
-                Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
-                codeDelete.setVisibility(View.GONE);
-                codeUrl="";
+                if(canChange){
+                    Glide.with(this).load(R.drawable.shangchuan_zheng).into(code);
+                    codeDelete.setVisibility(View.GONE);
+                    codeUrl="";
+                }
+
                 break;
 
             case R.id.code_reverse_delete:
-                Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
-                codeReverseDelete.setVisibility(View.GONE);
-                codeReverseUrl="";
+                if(canChange){
+                    Glide.with(this).load(R.drawable.shangchuan_fan).into(codeReverse);
+                    codeReverseDelete.setVisibility(View.GONE);
+                    codeReverseUrl="";
+                }
+
                 break;
 
             case R.id.code:
@@ -654,6 +677,15 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
     public void getData(LoginResBean bean) {
         ToastUtil.show("完善成功");
         MainActivity.startActivity(this);
+    }
+
+    @Override
+    public void getData(CheckFinishRes bean) {
+        canChange = bean.getStatus() == 1 ? false : true;
+        if(canChange){
+            checkBoxAll.setOnCheckedChangeListener(this);
+            checkBoxSingle.setOnCheckedChangeListener(this);
+        }
     }
 
     private void getPicPath() {
