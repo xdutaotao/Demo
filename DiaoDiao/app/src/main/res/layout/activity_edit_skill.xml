@@ -165,6 +165,7 @@
                     android:id="@+id/person_num"
                     android:inputType="phone"
                     android:digits="1234567890"
+                    android:layout_marginRight="50px"
                     android:layout_alignParentTop="true"
                     android:layout_toLeftOf="@+id/textView"
                     android:layout_toStartOf="@+id/textView" />
