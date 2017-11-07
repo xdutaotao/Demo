@@ -128,7 +128,7 @@
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"
-                        android:text="管理费 (10%)"/>
+                        android:text="平台服务费"/>
                     <TextView style="@style/item_right_text"
                         android:id="@+id/service_fee"
                         tools:text="￥3000"/>

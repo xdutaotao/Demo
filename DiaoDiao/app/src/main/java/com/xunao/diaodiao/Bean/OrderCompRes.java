@@ -66,7 +66,7 @@ public class OrderCompRes {
         private String supervisor_fee;
         private int supervisor_id;
         private int maintenance_id;
-        private int door_fee;
+        private String door_fee;
         private int mutual_id;
 
         public int getMutual_id() {
@@ -77,11 +77,11 @@ public class OrderCompRes {
             this.mutual_id = mutual_id;
         }
 
-        public int getDoor_fee() {
+        public String getDoor_fee() {
             return door_fee;
         }
 
-        public void setDoor_fee(int door_fee) {
+        public void setDoor_fee(String door_fee) {
             this.door_fee = door_fee;
         }
 
