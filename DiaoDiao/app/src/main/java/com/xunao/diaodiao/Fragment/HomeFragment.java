@@ -207,16 +207,16 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 1);
                     break;
                 case 2:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 2);
-                    break;
+//                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 2);
+//                    break;
                 case 3:
-                    HelpActivity.startActivity(HomeFragment.this.getActivity());
-                    break;
+//                    HelpActivity.startActivity(HomeFragment.this.getActivity());
+//                    break;
                 case 4:
-                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 4);
-                    break;
+//                    FindProjectActivity.startActivity(HomeFragment.this.getActivity(), 4);
+//                    break;
                 case 5:
-                    JoinActivity.startActivity(HomeFragment.this.getActivity());
+//                    JoinActivity.startActivity(HomeFragment.this.getActivity());
                     //ToastUtil.show("敬请期待");
                     break;
             }

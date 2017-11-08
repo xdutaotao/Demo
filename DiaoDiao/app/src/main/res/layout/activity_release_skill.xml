@@ -172,11 +172,11 @@
 
                 <TextView
                     style="@style/item_left_text"
-                    android:text="零工人数"/>
+                    android:text="施工人数"/>
 
                 <EditText
                     style="@style/edit_personal_edit"
-                    android:hint="请输入零工人数"
+                    android:hint="请输入施工人数"
                     android:inputType="phone"
                     android:digits="1234567890"
                     android:id="@+id/num"/>

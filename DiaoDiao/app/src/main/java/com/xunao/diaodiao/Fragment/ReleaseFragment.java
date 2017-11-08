@@ -296,11 +296,11 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
 
             case R.id.release_help_info:
                 //
-                ReleaseHelpInfoActivity.startActivity(getContext());
+//                ReleaseHelpInfoActivity.startActivity(getContext());
                 break;
 
             case R.id.release_skill_info:
-                ReleaseHelpActivity.startActivity(getContext());
+//                ReleaseHelpActivity.startActivity(getContext());
                 break;
 
             case R.id.skill_release_skill_info:
@@ -308,15 +308,15 @@ public class ReleaseFragment extends BaseFragment implements View.OnClickListene
                 break;
 
             case R.id.skill_release_help_info:
-                ReleaseHelpInfoActivity.startActivity(getContext());
+//                ReleaseHelpInfoActivity.startActivity(getContext());
                 break;
 
             case R.id.skill_release_weibao_info:
-                ReleaseHelpActivity.startActivity(getContext());
+//                ReleaseHelpActivity.startActivity(getContext());
                 break;
 
             case R.id.custom_release_weibao_info:
-                ReleaseHelpActivity.startActivity(getContext());
+//                ReleaseHelpActivity.startActivity(getContext());
                 break;
         }
     }
