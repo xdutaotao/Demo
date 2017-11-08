@@ -295,7 +295,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
         imagePicker.setSaveRectangle(true);
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);
         imagePicker.setMultiMode(false);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
     }
 
 

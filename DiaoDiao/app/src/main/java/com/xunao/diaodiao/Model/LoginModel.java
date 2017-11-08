@@ -3194,7 +3194,8 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getDaily_wage()).append(req.getTotal_day())
+        sb.append(time+"").append(req.getDaily_wage()).append(req.getPeople_numbers())
+                .append(req.getTotal_day())
                 .append("security");
 
         req.setVerify(sb.toString());

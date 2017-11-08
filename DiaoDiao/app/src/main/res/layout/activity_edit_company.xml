@@ -177,6 +177,7 @@
                     style="@style/edit_personal_edit"
                     android:id="@+id/contact_phone"
                     android:inputType="phone"
+                    android:digits="0123456789"
                     android:maxLength="11"
                     android:hint="请输入联系人电话"/>
 

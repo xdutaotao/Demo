@@ -150,7 +150,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
 
-        presenter.checkFinish();
         presenter.getTypeInfo();
     }
 
@@ -158,6 +157,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     protected void onResume() {
         super.onResume();
         presenter.getPersonalInfo(this);
+        presenter.checkFinish();
     }
 
     @Override

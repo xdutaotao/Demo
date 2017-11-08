@@ -134,7 +134,7 @@
                     android:layout_marginRight="60px"
                     android:id="@+id/year"
                     android:inputType="phone"
-                    android:digits="123456789"
+                    android:digits="0123456789"
                     android:hint="请输入工作经验"/>
 
                 <TextView

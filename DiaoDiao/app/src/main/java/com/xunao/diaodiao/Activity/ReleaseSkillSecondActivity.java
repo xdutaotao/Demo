@@ -134,7 +134,7 @@ public class ReleaseSkillSecondActivity extends BaseActivity implements ReleaseS
         time.setText(req.getBuild_time_string());
         describe.setText(req.getDescribe());
         adapter.addAll(req.getImages());
-        num.setText(req.getPeople_numbers());
+        num.setText(req.getPeople_numbers()+"");
 
         pay.setOnClickListener(this);
 

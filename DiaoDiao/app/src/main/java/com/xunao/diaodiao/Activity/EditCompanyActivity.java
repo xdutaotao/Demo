@@ -403,7 +403,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         imagePicker.setSaveRectangle(true);
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);
         imagePicker.setMultiMode(false);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
     }
 
     @Override
