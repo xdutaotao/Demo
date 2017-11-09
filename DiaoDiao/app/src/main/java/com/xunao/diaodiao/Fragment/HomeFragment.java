@@ -217,7 +217,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //                    break;
                 case 5:
 //                    JoinActivity.startActivity(HomeFragment.this.getActivity());
-                    //ToastUtil.show("敬请期待");
+                    ToastUtil.show("敬请期待");
                     break;
             }
         });
