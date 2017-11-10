@@ -194,6 +194,8 @@ public class SearchFragment extends BaseFragment implements SearchView, View.OnC
         bean.setType(User.getInstance().getUserInfo().getPerson().getType());
         bean.setVipRes(User.getInstance().getUserInfo().getPerson().getVIP());
         bean.setSort(0);
+        if(User.getInstance().getUserInfo() != null &&
+                User.getInstance().getUserInfo().getProject() != null)
         bean.setProject(User.getInstance().getUserInfo().getProject().getProject());
     }
 

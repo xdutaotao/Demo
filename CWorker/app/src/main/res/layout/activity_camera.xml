@@ -39,8 +39,8 @@
             android:textColor="@android:color/white"/>
 
         <ImageView
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="260px"
+            android:layout_height="260px"
             android:src="@drawable/photo_btn"
             android:id="@+id/take_photo"
             android:layout_centerInParent="true"/>

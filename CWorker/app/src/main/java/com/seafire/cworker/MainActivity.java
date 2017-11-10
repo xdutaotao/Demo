@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                 map.put("latitude", data[2]);
                                 Constants.post = true;
 
-                                if (User.getInstance().getUserInfo() != null &&
+                                if (User.getInstance().getUserInfo() != null && User.getInstance().getUserInfo().getProject() != null &&
                                         User.getInstance().getUserInfo().getPerson().getType() != 2){
                                     //不是超级管理员  比较距离
                                     changeAddress(User.getInstance().getUserInfo().getProject().getAddress());
