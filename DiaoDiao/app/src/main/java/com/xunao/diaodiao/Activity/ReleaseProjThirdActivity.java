@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -74,6 +75,10 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
     TextView timeText;
     @BindView(R.id.fee_text)
     TextView feeText;
+    @BindView(R.id.proj_type)
+    TextView projType;
+    @BindView(R.id.proj_type_layout)
+    RelativeLayout projTypeLayout;
 
     private ReleaseProjReq req;
     private List<ReleaseProjReq.ExpensesBean> list;
@@ -99,18 +104,21 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        if(jianli){
-            showToolbarBack(toolBar, titleText, "确认监理信息");
-        }else{
-            showToolbarBack(toolBar, titleText, "确认项目信息");
-        }
+        jianli = getIntent().getBooleanExtra("jianli", false);
 
 
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
         list = req.getExpenses();
         pay.setOnClickListener(this);
 
-        jianli = getIntent().getBooleanExtra("jianli", false);
+        if (jianli) {
+            showToolbarBack(toolBar, titleText, "确认监理信息");
+            projTypeLayout.setVisibility(View.VISIBLE);
+            projType.setText(req.getProject_type_class());
+        } else {
+            showToolbarBack(toolBar, titleText, "确认项目信息");
+            projTypeLayout.setVisibility(View.GONE);
+        }
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -168,11 +176,11 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
             pay.setText("发布");
         }
 
-        if(jianli){
+        if (jianli) {
             timeText.setText("监理费");
             typeRecyclerView.setVisibility(View.GONE);
             presenter.countSupervisorExpenses(this, req.getSupervisor_fee());
-        }else{
+        } else {
 
             for (ReleaseProjReq.ExpensesBean item : list) {
                 BigDecimal bigDecimal = new BigDecimal(Float.valueOf(item.getUnit_price()) * Float.valueOf(item.getAmount()));
@@ -195,10 +203,10 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
 
     @Override
     public void getData(ReleaseProjRes s) {
-        if(jianli){
+        if (jianli) {
             //监理 2
             PayActivity.startActivity(this, s, 2);
-        }else{
+        } else {
             // 1 项目
             PayActivity.startActivity(this, s, 1);
         }
@@ -207,14 +215,14 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
 
     @Override
     public void getBase64List(GetPercentRes s) {
-        if(jianli){
+        if (jianli) {
             req.setTotal_price(s.getTotal_fee());
             req.setSupervisor_fee(s.getSupervisor_fee());
             req.setService_cost(s.getService_fee());
 
-            allPrice.setText("￥"+s.getTotal_fee());
-            projectFee.setText("￥"+s.getSupervisor_fee());
-            serviceFee.setText("￥"+s.getService_fee());
+            allPrice.setText("￥" + s.getTotal_fee());
+            projectFee.setText("￥" + s.getSupervisor_fee());
+            serviceFee.setText("￥" + s.getService_fee());
         }
     }
 

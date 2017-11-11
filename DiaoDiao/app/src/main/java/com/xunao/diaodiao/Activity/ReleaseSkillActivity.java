@@ -251,7 +251,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
             content.setText(req.getDescribe());
             adapter.clear();
             adapter.addAll(req.getImages());
-            num.setText(req.getPeople_numbers());
+            num.setText(req.getPeople_numbers()+"");
 
             addressLayout.setOnClickListener(null);
             addressDetail.setFocusable(false);

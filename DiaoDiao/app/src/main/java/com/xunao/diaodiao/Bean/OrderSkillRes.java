@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class OrderSkillRes {
         this.maintenance = maintenance;
     }
 
-    public static class OddBean{
+    public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
         private long publish_time;

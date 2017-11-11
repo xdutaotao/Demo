@@ -26,19 +26,32 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="120px"
                 android:orientation="horizontal"
                 android:layout_marginLeft="50px"
                 android:layout_marginBottom="50px">
 
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="40px"
-                    style="@style/foodRatingBar"
+                <!--<RatingBar-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40px"-->
+                    <!--style="@style/foodRatingBar"-->
+                    <!--android:id="@+id/rating_star"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="40px"/>-->
+
+                <com.xunao.diaodiao.Widget.RatingBar
                     android:id="@+id/rating_star"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="40px"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    app:starCount="5"
+                    app:starEmpty="@drawable/pinfeng2"
+                    app:starFill="@drawable/pinfeng"
+                    app:starImageSize="60px"
+                    app:starPadding="40px"
+                    app:starStep="0"
+                    app:stepSize="Full"
+                    android:layout_gravity="center_vertical"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,6 +59,7 @@
                     android:text="0"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/percent"
                     android:layout_alignRight="@+id/rating_star"/>
 

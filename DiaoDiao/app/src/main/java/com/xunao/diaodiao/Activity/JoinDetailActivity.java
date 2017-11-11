@@ -174,16 +174,16 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     public void getData(JoinDetailRes s) {
         if (page == 1) {
             adapter.clear();
-            name.setText(s.getCompany_info().getName());
-            address.setText(s.getCompany_info().getAddress());
-            score.setText(s.getCompany_info().getPoint());
-            ratingStar.setRating(Float.valueOf(s.getCompany_info().getPoint()));
+            name.setText(s.getInfo().getTitle());
+            address.setText(s.getInfo().getRegion());
+            score.setText(s.getInfo().getPoint());
+            ratingStar.setRating(Float.valueOf(s.getInfo().getPoint()));
         }
 
-        if (s.getEvaluate_Info().size() == 0) {
+        if (s.getEvaluates().size() == 0) {
             adapter.stopMore();
         } else {
-            adapter.addAll(s.getEvaluate_Info());
+            adapter.addAll(s.getEvaluates());
         }
     }
 

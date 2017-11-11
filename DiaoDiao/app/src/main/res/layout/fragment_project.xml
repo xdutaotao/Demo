@@ -42,6 +42,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/accept_btn_apply"
+                            android:background="@drawable/btn_nav_bg"
+                            android:id="@+id/proj_apply"
+                            android:text="申请中 0"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:textColor="@color/accept_btn_default"
                             android:background="@drawable/btn_little_blue_bg"
                             android:id="@+id/proj_waiting"
@@ -85,6 +93,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/accept_btn_apply"
+                            android:background="@drawable/btn_nav_bg"
+                            android:id="@+id/jianli_apply"
+                            android:text="申请中 0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -142,14 +158,6 @@
                             android:id="@+id/lg_waiting"
                             android:text="待确认 0"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/accept_btn_default"
-                            android:background="@drawable/btn_little_blue_bg"
-                            android:id="@+id/lg_apply"
-                            android:layout_marginLeft="10px"
-                            android:text="申请中 0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -159,6 +167,15 @@
                             android:text="进行中 0"
                             android:id="@+id/lg_doing"
                             android:layout_marginLeft="10px"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/accept_btn_apply"
+                            android:background="@drawable/btn_nav_bg"
+                            android:id="@+id/lg_apply"
+                            android:layout_marginLeft="10px"
+                            android:text="申请中 0"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -206,7 +223,17 @@
                             android:textColor="@color/colorPrimary"
                             android:text="进行中 0"
                             android:id="@+id/wb_doing"
-                            android:layout_marginLeft="40px"/>
+                            android:layout_marginLeft="10px"/>
+
+                        <TextView
+                            android:id="@+id/wb_apply"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10px"
+                            android:background="@drawable/btn_nav_bg"
+                            android:text="申请中 0"
+                            android:textColor="@color/accept_btn_apply" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -242,10 +269,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/btn_orenge_bg"
-                            android:textColor="@color/colorPrimary"
-                            android:text="进行中 0"
-                            android:id="@+id/hz_doing"/>
+                            android:background="@drawable/btn_little_blue_bg"
+                            android:textColor="@color/accept_btn_default"
+                            android:text="待确认 0"
+                            android:id="@+id/hz_waiting"/>
                     </LinearLayout>
 
                 </LinearLayout>

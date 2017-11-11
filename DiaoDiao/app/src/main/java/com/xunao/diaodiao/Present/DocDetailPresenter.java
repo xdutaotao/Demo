@@ -34,7 +34,7 @@ public class DocDetailPresenter extends BasePresenter<DocDetailView> {
 
                     @Override
                     public void _onError(String s) {
-                        ToastUtil.show(s);
+                        getView().onFailure();
                     }
                 }));
     }

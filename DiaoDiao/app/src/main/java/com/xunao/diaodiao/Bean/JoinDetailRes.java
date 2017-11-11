@@ -14,24 +14,25 @@ public class JoinDetailRes {
      * evaluate_Info : [{"name":"宇**","content":"第一","head_img":"http://admintest.diao-diao.com/upload/20170912204135_head307.jpg"},{"name":"宇**","content":"第二","head_img":"http://admintest.diao-diao.com/upload/20170912204135_head307.jpg"}]
      */
 
-    private CompanyInfoBean company_info;
-    private List<EvaluateInfoBean> evaluate_Info;
+    private CompanyInfoBean info;
+    private List<EvaluateInfoBean> evaluates;
 
-    public CompanyInfoBean getCompany_info() {
-        return company_info;
+    public CompanyInfoBean getInfo() {
+        return info;
     }
 
-    public void setCompany_info(CompanyInfoBean company_info) {
-        this.company_info = company_info;
+    public void setInfo(CompanyInfoBean info) {
+        this.info = info;
     }
 
-    public List<EvaluateInfoBean> getEvaluate_Info() {
-        return evaluate_Info;
+    public List<EvaluateInfoBean> getEvaluates() {
+        return evaluates;
     }
 
-    public void setEvaluate_Info(List<EvaluateInfoBean> evaluate_Info) {
-        this.evaluate_Info = evaluate_Info;
+    public void setEvaluates(List<EvaluateInfoBean> evaluates) {
+        this.evaluates = evaluates;
     }
+
 
     public static class CompanyInfoBean {
         /**
@@ -40,24 +41,24 @@ public class JoinDetailRes {
          * point : 4
          */
 
-        private String name;
-        private String address;
+        private String title;
+        private String region;
         private String point;
 
-        public String getName() {
-            return name;
+        public String getTitle() {
+            return title;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public String getAddress() {
-            return address;
+        public String getRegion() {
+            return region;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setRegion(String region) {
+            this.region = region;
         }
 
         public String getPoint() {

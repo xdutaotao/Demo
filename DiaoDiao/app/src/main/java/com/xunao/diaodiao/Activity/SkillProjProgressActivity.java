@@ -100,7 +100,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private int stage = 0;
     private int who;
     //审核状态
-    private int status = 0;
+    //private int status = 0;
     private int projStatus = 0;
     private boolean photoPost;
     GetMoneyReq req;
@@ -127,7 +127,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
         worksid = getIntent().getIntExtra("WORKSID", 0);
-        adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.sign_detail_item) {
+        adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.weibao_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, SkillProjProgPhotoRes.InfoBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
@@ -150,20 +150,62 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
                 baseViewHolder.setText(R.id.time, Utils.millToYearString(s.getDate()));
                 baseViewHolder.setText(R.id.address, s.getLocation());
-                if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
-                    //审核中
-                    status = 3;
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-                            + (stage == 1 ? " 第一阶段审核" : " 第二阶段审核"));
-                }else if (s.getAudit_status() == 2 && (s.getAudit() == 1 || s.getAudit() == 2)){
-                    //未通过审核
-                    status = 2;
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-                            + " 未通过审核");
+
+
+                if(s.getAudit() == 0){
+                    //工作拍照
+                    baseViewHolder.setVisible(R.id.item_bottom, false);
+                    baseViewHolder.setVisible(R.id.image_layout, true);
+                }else if(s.getAudit() == 1){
+                    //第一阶段
+                    baseViewHolder.setVisible(R.id.image_layout, false);
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
+                    if(s.getAudit_status() == 3){
+                        //审核中
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第一阶段审核中");
+                    }else if(s.getAudit_status() == 2){
+                        //未通过审核
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第一阶段提交审核未通过");
+                    }else {
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第一阶段提交审核通过");
+                    }
                 }else{
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-                            + " 工作拍照");
+                    //第二阶段
+                    baseViewHolder.setVisible(R.id.image_layout, false);
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
+                    if(s.getAudit_status() == 3){
+                        //审核中
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第二阶段审核中");
+                    }else if(s.getAudit_status() == 2){
+                        //未通过审核
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第二阶段提交审核未通过");
+                    }else {
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "第二阶段提交审核通过");
+                    }
                 }
+
+
+//                if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
+//                    //审核中
+//                    //status = 3;
+//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+//                            + (stage == 1 ? " 第一阶段审核" : " 第二阶段审核"));
+//                }else if (s.getAudit_status() == 2 && (s.getAudit() == 1 || s.getAudit() == 2)){
+//                    //未通过审核
+//                    //status = 2;
+//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+//                            + " 未通过审核");
+//                }else{
+//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
+//                            + " 工作拍照");
+//                }
+
             }
         };
 
@@ -249,14 +291,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 //暖通公司
                 bottomBtnLayout.setVisibility(View.VISIBLE);
 
-                adapter.addFooter(new DefaultRecyclerViewItem() {
-                    @Override
-                    public View onCreateView(ViewGroup viewGroup) {
-                        View view = LayoutInflater.from(SkillProjProgressActivity.this)
-                                .inflate(R.layout.company_project_footer, null);
-                        return view;
-                    }
-                });
+//                adapter.addFooter(new DefaultRecyclerViewItem() {
+//                    @Override
+//                    public View onCreateView(ViewGroup viewGroup) {
+//                        View view = LayoutInflater.from(SkillProjProgressActivity.this)
+//                                .inflate(R.layout.company_project_footer, null);
+//                        return view;
+//                    }
+//                });
                 //不通过
                 noPass.setOnClickListener(v -> {
                     AppealActivity.startActivity(SkillProjProgressActivity.this,
@@ -270,14 +312,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
             }else{
                 //技术人员
-                adapter.addFooter(new DefaultRecyclerViewItem() {
-                    @Override
-                    public View onCreateView(ViewGroup viewGroup) {
-                        View view = LayoutInflater.from(viewGroup.getContext())
-                                .inflate(R.layout.status_footer, null);
-                        return view;
-                    }
-                });
+//                adapter.addFooter(new DefaultRecyclerViewItem() {
+//                    @Override
+//                    public View onCreateView(ViewGroup viewGroup) {
+//                        View view = LayoutInflater.from(viewGroup.getContext())
+//                                .inflate(R.layout.status_footer, null);
+//                        return view;
+//                    }
+//                });
 
                 bottomBtnLayout.setVisibility(View.GONE);
                 post.setVisibility(View.GONE);
@@ -318,16 +360,16 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 });
 
             }
-            adapter.addFooter(new DefaultRecyclerViewItem() {
-                @Override
-                public View onCreateView(ViewGroup viewGroup) {
-                    View view = LayoutInflater.from(viewGroup.getContext())
-                            .inflate(R.layout.status_footer, null);
-                    ((TextView)(view.findViewById(R.id.status)))
-                            .setText("暖通公司审核未通过");
-                    return view;
-                }
-            });
+//            adapter.addFooter(new DefaultRecyclerViewItem() {
+//                @Override
+//                public View onCreateView(ViewGroup viewGroup) {
+//                    View view = LayoutInflater.from(viewGroup.getContext())
+//                            .inflate(R.layout.status_footer, null);
+//                    ((TextView)(view.findViewById(R.id.status)))
+//                            .setText("暖通公司审核未通过");
+//                    return view;
+//                }
+//            });
 
 
             //noPassInfoBean = s;
@@ -336,7 +378,10 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             //项目结束
             bottomBtnLayout.setVisibility(View.GONE);
             post.setVisibility(View.GONE);
-        }else{
+        }
+
+        if(ShareUtils.getValue(TYPE_KEY, 0) == 2){
+            //零工
             setFooter();
         }
 

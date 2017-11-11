@@ -89,21 +89,35 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                    if(homeBean.getEvaluate_status() == 1){
-                        baseViewHolder.setText(R.id.evaluation, "查看评价");
-                    }else{
-                        baseViewHolder.setText(R.id.evaluation, "去评价");
-                    }
 
                     if(homeBean.getStatus() == 4){
                         //已取消
+
+                        baseViewHolder.setVisible(R.id.time, true);
+                        baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
                     }else{
-                        baseViewHolder.setVisible(R.id.evaluation, true);
+                        baseViewHolder.setText(R.id.request, "查看");
+
+
+                        if(homeBean.getEvaluate_status() == 1){
+                            //已评价
+                            baseViewHolder.setVisible(R.id.time, true);
+                            baseViewHolder.setText(R.id.time, "已评价");
+                            baseViewHolder.setVisible(R.id.evaluation, false);
+                        }else{
+                            //未评价
+                            baseViewHolder.setVisible(R.id.time, false);
+                            baseViewHolder.setVisible(R.id.evaluation, true);
+                            baseViewHolder.setText(R.id.evaluation, "去评价");
+                            baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
+                        }
+
                     }
 
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
+                    baseViewHolder.setVisible(R.id.time, true);
                 }
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
@@ -113,7 +127,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
                     baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                    baseViewHolder.setVisible(R.id.time, false);
+                    //baseViewHolder.setVisible(R.id.time, false);
                 }
 
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
@@ -133,17 +147,18 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
                     baseViewHolder.setText(R.id.request, "项目进度");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                    baseViewHolder.setText(R.id.request, "项目进度");
+
+                    if(homeBean.getStatus() == 4){
+                        //已取消
+                        baseViewHolder.setText(R.id.request, "查看");
+                    }else{
+                        baseViewHolder.setText(R.id.request, "项目进度");
+                    }
                 }
 
-                if(homeBean.getStatus() == 4){
-                    //已取消
-                    baseViewHolder.setVisible(R.id.request, false);
-                }else{
-                    baseViewHolder.setVisible(R.id.request, true);
-                }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
+
                     if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
                         //查看申请人  1项目2监理3零工4维保
                         ApplyActivity.startActivity(OrderCompTabFragment.this.getContext(),
@@ -154,12 +169,18 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                                 homeBean.getProject_id(), who);
                     }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
                         //项目进度
-                        SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
-                                homeBean.getProject_id(), who);
+                        if(homeBean.getStatus() == 4){
+                            //已取消
+                            WebViewDetailActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                                    homeBean,who);
+                        }else{
+                            SkillProjReceiveProgressActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                                    homeBean.getProject_id(), who);
+                        }
+
                     }
 
 
-                    //OrderProjProgressActivity.startActivity(OrderCompTabFragment.this.getContext());
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {

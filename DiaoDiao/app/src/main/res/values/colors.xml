@@ -94,6 +94,7 @@
     <color name="accept_btn_pressed">#7393F4</color>
     <color name="refuse_btn_default">#ea6e76</color>
     <color name="refuse_btn_pressed">#af5258</color>
+    <color name="accept_btn_apply">#9A9B99</color>
 
     <!-- 灰色 -->
 

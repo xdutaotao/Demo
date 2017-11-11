@@ -22,6 +22,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <RelativeLayout style="@style/item_layout"
+                    android:id="@+id/proj_type_layout">
+                    <TextView style="@style/item_left_text"
+                        android:text="项目类型"/>
+                    <TextView style="@style/item_right_text"
+                        android:text=""
+                        android:id="@+id/proj_type"/>
+                </RelativeLayout>
+                <View style="@style/item_divider" />
 
                 <RelativeLayout style="@style/item_layout">
                     <TextView style="@style/item_left_text"

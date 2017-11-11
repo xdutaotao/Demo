@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -87,20 +89,26 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                 baseViewHolder.setVisible(R.id.distance, false);
                 if(who == Constants.SKILL_RELEASE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
+                    baseViewHolder.setText(R.id.days, "上门费");
                 }else{
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
+                    baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
                 }
 
-                baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+
 
                 if(homeBean.getStatus() == 4){
                     //已取消
+                    baseViewHolder.setVisible(R.id.time, true);
                     baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setVisible(R.id.evaluation, false);
                 }else{
                     //已完成
                     baseViewHolder.setText(R.id.request, "项目进度");
                     if (homeBean.getEvaluate_status() == 2){
                         //未评价
+                        baseViewHolder.setVisible(R.id.time, false);
+                        baseViewHolder.setVisible(R.id.evaluation, true);
                         baseViewHolder.setText(R.id.evaluation, "去评价");
                         baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
 
@@ -109,7 +117,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                             if(homeBean.getEvaluate_status() == 2){
                                 if(who == Constants.SKILL_RELEASE_WEIBAO){
                                     RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                                            homeBean.getOdd_id(), 4);
+                                            homeBean.getMaintenance_id(), 4);
                                 }else{
                                     RecommandActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                                             homeBean.getOdd_id(), 3);
@@ -120,10 +128,36 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                         });
 
                     }else{
-                        baseViewHolder.setText(R.id.time, "查看评价");
-//                    baseViewHolder.setText(R.id.time, "去评价");
+                        //已评价
+                        baseViewHolder.setVisible(R.id.time, true);
+                        baseViewHolder.setText(R.id.time, "已评价");
+                        baseViewHolder.setVisible(R.id.evaluation, false);
                     }
                 }
+
+
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    if(homeBean.getStatus() != 4){
+                        if(who == Constants.SKILL_RELEASE_WEIBAO){
+                            WeiBaoProgActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                    homeBean.getMaintenance_id(), who);
+                        }else{
+                            OrderProjProgressActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                    homeBean.getOdd_id());
+                        }
+                    }else{
+                        //查看
+                        if(who == Constants.SKILL_RELEASE_WEIBAO){
+                            WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                    homeBean.getUrl(),
+                                    homeBean.getMaintenance_id());
+                        }else{
+                            WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                                    homeBean.getUrl(),
+                                    homeBean.getOdd_id());
+                        }
+                    }
+                });
 
             }
         };

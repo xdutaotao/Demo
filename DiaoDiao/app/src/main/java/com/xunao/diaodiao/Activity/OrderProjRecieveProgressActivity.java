@@ -107,23 +107,31 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                         + workBean.getRemark());
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
                 String content = "";
-                if (workBean.getPass() == 1) {
-                    //审核通过
-                    if (workBean.getApply() == 1) {
-                        //已打款
-                        baseViewHolder.setText(R.id.content, "已打款");
-                    }
-                    //bottomBtnLayout.setVisibility(View.GONE);
-                } else if (workBean.getPass() == 2) {
-                    baseViewHolder.setText(R.id.content, "审核未通过");
-                    //bottomBtnLayout.setVisibility(View.VISIBLE);
-                    //adapter.removeAllFooter();
-                    //workBeanNoPass = workBean;
-                } else {
-                    baseViewHolder.setText(R.id.content, "审核中");
-                    //bottomBtnLayout.setVisibility(View.GONE);
-                }
 
+                if(workBean.getApply() == 2){
+                    //工作拍照
+                    baseViewHolder.setVisible(R.id.image_layout, true);
+                    baseViewHolder.setVisible(R.id.item_bottom, false);
+                }else{
+                    //申请打款
+                    baseViewHolder.setVisible(R.id.image_layout, false);
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
+
+                    if (workBean.getPass() == 1) {
+                        //审核通过
+                        baseViewHolder.setText(R.id.content, "已打款");
+                        //bottomBtnLayout.setVisibility(View.GONE);
+                    } else if (workBean.getPass() == 2) {
+                        baseViewHolder.setText(R.id.content, "审核未通过");
+                        //bottomBtnLayout.setVisibility(View.VISIBLE);
+                        //adapter.removeAllFooter();
+                        //workBeanNoPass = workBean;
+                    } else {
+                        baseViewHolder.setText(R.id.content, "审核中");
+                        //bottomBtnLayout.setVisibility(View.GONE);
+                    }
+
+                }
 
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
@@ -133,6 +141,11 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                             baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
                         }
                     };
+
+                    imageAdapter.setOnItemClickListener((view, i) -> {
+                        PhotoActivity.startActivity(OrderProjRecieveProgressActivity.this, workBean.getImages().get(i),
+                                workBean.getImages().get(i).contains("http"));
+                    });
 
                     recyclerViewImages.setAdapter(imageAdapter);
                     imageAdapter.clear();
@@ -200,8 +213,6 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         });
         initImagePicker();
 
-        setFooter();
-
     }
 
     private void postProgress(int apply_type){
@@ -244,16 +255,24 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             if(workBeanNoPass.getPass() == 2){
                 //审核未通过
                 bottomBtnLayout.setVisibility(View.VISIBLE);
-
+                setFooter();
             }else if(workBeanNoPass.getPass() == 3){
                 //审核中
                 bottomBtnLayout.setVisibility(View.GONE);
-                adapter.removeAllFooter();
+                //setFooter();
             }else{
                 bottomBtnLayout.setVisibility(View.GONE);
 
             }
+
+            if(workBeanNoPass.getApply() == 1 &&
+                    workBeanNoPass.getPaid() == 1){
+                //已经打款
+                adapter.removeAllFooter();
+            }
         }
+
+
 
     }
 

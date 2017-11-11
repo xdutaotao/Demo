@@ -83,23 +83,41 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
                 baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
 
-                if (workBean.getPass() == 3) {
-                    //审核中
+                if(workBean.getApply() == 2){
+                    //未申请打款
+                    baseViewHolder.setVisible(R.id.item_bottom, false);
+                    baseViewHolder.setVisible(R.id.image_layout, true);
 
+                }else{
+                    //申请打款
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
+                    baseViewHolder.setVisible(R.id.image_layout, false);
 
-                } else if (workBean.getPass() == 2) {
-                    //审核未通过
-                    baseViewHolder.setText(R.id.content, "审核未通过");
-                    //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
-                } else {
-                    //审核通过
-                    if (workBean.getApply() == 1) {
-                        baseViewHolder.setText(R.id.content, "已确认打款");
+                    if (workBean.getPass() == 3) {
+                        //审核中
+                        baseViewHolder.setText(R.id.content, "审核中");
+
+                    } else if (workBean.getPass() == 2) {
+                        //审核未通过
+                        baseViewHolder.setText(R.id.content, "审核未通过");
+                        //baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
                     } else {
+                        //审核通过
+//                        if (workBean.getApply() == 1) {
+//                            baseViewHolder.setText(R.id.content, "已确认打款");
+//                        } else {
+//                            baseViewHolder.setText(R.id.content, "审核通过");
+//                        }
+
                         baseViewHolder.setText(R.id.content, "审核通过");
+
                     }
 
                 }
+
+
+
+
 
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);

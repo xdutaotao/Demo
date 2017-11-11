@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
@@ -28,6 +27,7 @@ import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.SuggestView;
 import com.xunao.diaodiao.Widget.GlideImageLoader;
+import com.xunao.diaodiao.Widget.RatingBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,9 +127,10 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
             }
         });
 
-        ratingStar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        ratingStar.setClickable(true);
+        ratingStar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            public void onRatingChange(float rating) {
                 percent.setText(String.valueOf(rating));
             }
         });

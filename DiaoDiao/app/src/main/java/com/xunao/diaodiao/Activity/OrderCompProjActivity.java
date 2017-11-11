@@ -227,7 +227,12 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
             }else if (who == COMPANY_RELEASE_HUZHU || who ==SKILL_RELEASE_HUZHU){
                 tab.getTabAt(i).setText(TAB_TITLE_HZ[i]);
             } else{
-                tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);
+                if(who == SKILL_RELEASE_WEIBAO){
+                    tab.getTabAt(i).setText(TAB_TITLE[i]);
+                }else{
+                    tab.getTabAt(i).setText(TAB_TITLE_WHO[i]);
+                }
+
             }
 
         }

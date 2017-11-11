@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
+import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
+import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
+import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -108,10 +113,21 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 if (homeBean.getStatus() == 1){
                     //已完成
                     baseViewHolder.setText(R.id.request, "查看");
-                    baseViewHolder.setText(R.id.time, homeBean.getEvaluate_status() == 1 ? "查看评价" : "去评价");
-                    baseViewHolder.setTextColorRes(R.id.time, R.color.accept_btn_default);
 
-                }else{
+
+                    if(homeBean.getEvaluate_status() == 1){
+                        //已评价
+                        baseViewHolder.setVisible(R.id.time, true);
+                        baseViewHolder.setText(R.id.time, "已评价");
+                        baseViewHolder.setVisible(R.id.evaluation, false);
+                    }else{
+                        //未评价
+                        baseViewHolder.setVisible(R.id.time, false);
+                        baseViewHolder.setVisible(R.id.evaluation, true);
+                        baseViewHolder.setText(R.id.evaluation, "去评价");
+                        baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
+                    }
+
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
                         baseViewHolder.setText(R.id.request, "维保情况");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
@@ -123,9 +139,15 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                     }
 
+                }else{
+                    //已取消
+                    baseViewHolder.setVisible(R.id.time, true);
+                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setVisible(R.id.evaluation, false);
+
                 }
 
-                baseViewHolder.setOnClickListener(R.id.time, v -> {
+                baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                     //评价 1 项目
                     if(homeBean.getEvaluate_status() != 1){
                         if(who == SKILL_RECIEVE_PROJECT){
@@ -146,6 +168,44 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
                     }
 
+                });
+
+
+                baseViewHolder.setOnClickListener(R.id.request, v -> {
+                    if(homeBean.getStatus() == 1){
+                        //进度
+                        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                            //技术人员 我接的 零工
+                            OrderProjRecieveProgressActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getOdd_id());
+                        }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                            //技术人员 我接的  项目
+                            SkillProjReceiveProgressActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getProject_id(), who);
+                        }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                            WeiBaoProjActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getMaintenance_id(), who);
+                        }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                            WeiBaoProjActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getSupervisor_id(), who);
+                        }
+                    }else{
+                        //查看
+                        if (who == Constants.SKILL_RECIEVE_LINGGONG){
+                            WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getUrl(),
+                                    homeBean.getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+                        }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                            WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean, who);
+                        }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                            WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean, who);
+                        }else if(who == Constants.SKILL_RECIEVE_JIANLI){
+                            WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean, who);
+                        }
+                    }
                 });
 
 

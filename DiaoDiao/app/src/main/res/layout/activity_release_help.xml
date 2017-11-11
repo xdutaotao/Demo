@@ -64,7 +64,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="600px"/>
+        android:layout_height="800px"/>
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
@@ -76,7 +76,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="600px"/>
+        android:layout_height="800px"/>
 
 
     <View style="@style/item_divider"/>

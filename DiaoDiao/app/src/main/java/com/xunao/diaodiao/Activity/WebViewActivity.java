@@ -20,6 +20,7 @@ import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
 import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
+import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.ReleaseSkillReq;
 import com.xunao.diaodiao.Common.Constants;
@@ -356,7 +357,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 }
             }else if(TextUtils.equals(WEIBAO_DETAIL, btnType)){
                 //维保
+                ReleaseHelpReq req = new ReleaseHelpReq();
 
+                ReleaseSkillInforActivity.startActivity(this, req, true);
             }
         });
 

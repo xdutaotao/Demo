@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Model.ReleaseSkillInforModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -38,6 +39,23 @@ public class ReleaseSkillInforPresenter extends BasePresenter<ReleaseSkillInforV
                     @Override
                     protected void _onError(String msg) {
                         ToastUtil.show(msg);
+                    }
+                }));
+    }
+
+
+    //最低单价
+    public void publishMaintenancePrice(Context context){
+        mCompositeSubscription.add(model.publishMaintenancePrice()
+                .subscribe(new RxSubUtils<GetPercentRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(GetPercentRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        getView().onFailure();
                     }
                 }));
     }

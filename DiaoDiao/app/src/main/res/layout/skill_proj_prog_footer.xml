@@ -5,8 +5,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="20px"
-    android:paddingRight="50px"
+    android:paddingLeft="40px"
+    android:paddingRight="20px"
     android:background="@color/activity_background">
 
     <LinearLayout

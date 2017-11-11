@@ -1447,7 +1447,7 @@ public class LoginModel extends BaseModel {
 
 
     public Observable<JoinDetailRes> getCompanyInfo(int id, int page){
-        String rateKey = "companyInfo";
+        String rateKey = "businessInfo";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
         long time = System.currentTimeMillis()/1000;
@@ -1456,8 +1456,7 @@ public class LoginModel extends BaseModel {
                 .append("security");
 
         GetMoneyReq req = new GetMoneyReq();
-        req.setUserid(id);
-        //req.setId(id);
+        req.setCompany_id(id);
         req.setPage(page);
         req.setPageSize(10);
         req.setVerify(sb.toString());
@@ -2852,6 +2851,36 @@ public class LoginModel extends BaseModel {
         return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
+
+
+    /**
+     * 维保最低单价
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> publishMaintenancePrice(){
+        String rateKey = "publishMaintenancePrice";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().publishOddPrice(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
+
 
     /**
      * 发布互助

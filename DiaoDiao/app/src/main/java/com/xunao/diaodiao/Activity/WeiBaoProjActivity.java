@@ -118,22 +118,26 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
-                        + " 工作拍照");
-                baseViewHolder.setText(R.id.address, s.getLocation());
 
-                if (s.getPass() == 3) {
-                    //审核中
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                            + " 审核中");
-                } else if (s.getPass() == 2) {
-                    //未通过审核
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                            + " 未通过审核");
-                } else {
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                            + " 审核通过");
+                baseViewHolder.setText(R.id.address, s.getLocation());
+                if(s.getApply() == 1){
+                    if (s.getPass() == 3) {
+                        //审核中
+                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                                + " 审核中");
+                    } else if (s.getPass() == 2) {
+                        //未通过审核
+                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                                + " 未通过审核");
+                    } else {
+                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
+                                + " 审核通过");
+                    }
+                }else{
+                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
+                            + " 工作拍照");
                 }
+
 
             }
         };
@@ -192,6 +196,14 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     public void getList(WeiBaoProgRes list) {
         if (list.getWork() != null && list.getWork().size() > 0) {
             adapter.addAll(list.getWork());
+
+            WeiBaoProgRes.WorkBean workBean = list.getWork().get(list.getWork().size() - 1);
+            if(workBean.getApply() == 1 && workBean.getPass() == 3){
+                //审核中
+                adapter.removeAllFooter();
+                getMoney.setVisibility(View.GONE);
+            }
+
         } else {
             //recyclerView.showEmpty();
         }
@@ -241,7 +253,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
         }
 
-        req.setRemark("remark");
+        req.setRemark("");
         req.setSign_time(System.currentTimeMillis() / 1000);
         //是否申请打款
         req.setApply_type(action);
@@ -303,7 +315,8 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
     @Override
     public void onFailure() {
-
+//        getMoney.setVisibility(View.GONE);
+//        adapter.removeAllFooter();
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.GetPercentRes;
 import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ReleaseSkillInforPresenter;
@@ -229,6 +230,8 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
                     finish();
                 });
 
+        presenter.publishMaintenancePrice(this);
+
     }
 
     private void initImagePicker() {
@@ -272,6 +275,11 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
             });
         }
 
+    }
+
+    @Override
+    public void getData(GetPercentRes res) {
+        fee.setHint(res.getPrice());
     }
 
 

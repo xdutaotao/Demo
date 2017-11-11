@@ -15,6 +15,7 @@ import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
+import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -30,6 +31,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 
 
 /**
@@ -89,7 +93,7 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                if(who == Constants.SKILL_RELEASE_WEIBAO){
+                if(who == SKILL_RELEASE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
                 }else{
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+"/天");
@@ -97,7 +101,7 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
 
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
-                    if(who == Constants.SKILL_RELEASE_WEIBAO){
+                    if(who == SKILL_RELEASE_WEIBAO){
                         ApplyActivity.startActivity(OrderSkillTabFragment.this.getContext(),
                                 homeBean.getMaintenance_id(), 4);
                     }else{
@@ -110,10 +114,14 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
         };
 
         adapter.setOnItemClickListener((v, i) -> {
-            if(who == Constants.SKILL_RELEASE_WEIBAO){
-                WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                        adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.WEIBAO_DETAIL);
+            if(who == SKILL_RELEASE_WEIBAO){
+//                WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getUrl(),
+//                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.WEIBAO_DETAIL);
+
+                WebViewDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
+                        adapter.getAllData().get(i), COMPANY_RELEASE_WEIBAO_WAIT);
+
             }else{
                 WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
@@ -145,7 +153,7 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 adapter.stopMore();
 
             adapter.addAll(list.getOdd());
-        }else if(who == Constants.SKILL_RELEASE_WEIBAO){
+        }else if(who == SKILL_RELEASE_WEIBAO){
             if(list.getMaintenance().size() != 10)
                 adapter.stopMore();
 

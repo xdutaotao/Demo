@@ -122,37 +122,47 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 维保人员申请完成");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
 
-                if (workBean.getPass() == 3) {
-                    //审核中
-                    if(workBean.getApply() == 2){
-                        //未申请打款
-                        baseViewHolder.setText(R.id.content, "审核中");
-                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
-                    }
+                if(workBean.getApply() == 2){
+                    //工作牌照
+                    baseViewHolder.setVisible(R.id.item_bottom, false);
+                }else{
+                    //申请打款
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
 
-                } else if (workBean.getPass() == 2) {
-                    //审核未通过
-                    baseViewHolder.setText(R.id.content, "审核未通过");
-                    baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                    baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                    baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
-                } else {
-                    //审核通过
-                    if (workBean.getApply() == 1) {
-                        baseViewHolder.setText(R.id.content, "已确认打款");
+                    if (workBean.getPass() == 3) {
+                        //审核中
+//                        if(workBean.getApply() == 2){
+//                            //未申请打款
+//                            baseViewHolder.setText(R.id.content, "审核中");
+//                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+//                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+//                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+//                        }
+
+                    } else if (workBean.getPass() == 2) {
+                        //审核未通过
+                        baseViewHolder.setText(R.id.content, "审核未通过");
                         baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
                         baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
                         baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
                     } else {
-                        baseViewHolder.setText(R.id.content, "审核通过");
-                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                        //审核通过
+                        if (workBean.getApply() == 1) {
+                            baseViewHolder.setText(R.id.content, "已确认打款");
+                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                        } else {
+                            baseViewHolder.setText(R.id.content, "审核通过");
+                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
+                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                        }
+
                     }
 
                 }
+
 
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
@@ -226,13 +236,19 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
             adapter.addAll(list.getWork());
 
             workBeanDoing = list.getWork().get(list.getWork().size() - 1);
-            if (workBeanDoing.getPass() == 1) {
-                //已确认打款
+            if(workBeanDoing.getApply() == 2){
+                //工作牌照
                 bottomBtnLayout.setVisibility(View.GONE);
-            }else if(workBeanDoing.getPass() == 2){
-                bottomBtnLayout.setVisibility(View.GONE);
-            }else if(workBeanDoing.getPass() == 3){
-                //审核中
+            }else{
+                //申请打款
+                if (workBeanDoing.getPass() == 1) {
+                    //已确认打款
+                    bottomBtnLayout.setVisibility(View.GONE);
+                }else if(workBeanDoing.getPass() == 2){
+                    bottomBtnLayout.setVisibility(View.GONE);
+                }else if(workBeanDoing.getPass() == 3){
+                    //审核中
+                    bottomBtnLayout.setVisibility(View.VISIBLE);
 //                adapter.addFooter(new DefaultRecyclerViewItem() {
 //                    @Override
 //                    public View onCreateView(ViewGroup viewGroup) {
@@ -241,7 +257,9 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 //                        return view;
 //                    }
 //                });
+                }
             }
+
         }else {
             recyclerView.showEmpty();
             bottomBtnLayout.setVisibility(View.GONE);
@@ -257,7 +275,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
     @Override
     public void onFailure() {
-
+        recyclerView.showEmpty();
     }
 
     @Override

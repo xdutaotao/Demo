@@ -23,6 +23,7 @@ import com.xunao.diaodiao.Bean.HomeResponseBean;
 import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
+import com.xunao.diaodiao.Bean.OrderSkillRes;
 import com.xunao.diaodiao.Bean.ReleaseHelpReq;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
 import com.xunao.diaodiao.Bean.WeiBaoDetailRes;
@@ -102,11 +103,21 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     private FindProjDetailRes projectBean;
     private WeiBaoDetailRes weiBaoBean;
     private FindLingGongRes oddBean;
+    private OrderSkillRes.OddBean skillWBBean;
 
     private FindProjectRes.FindProject huzhuProject;
 
     private ShareSDK myShareSDK;
     private String title;
+
+    //技术人员 发布维保
+    public static void startActivity(Context context, OrderSkillRes.OddBean bean, int who) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("weibao", bean);
+        intent.putExtra("who", who);
+        context.startActivity(intent);
+    }
+
 
     //暖通公司 项目
     public static void startActivity(Context context, FindProjectRes.FindProject bean) {
@@ -185,6 +196,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         carousel = (HomeResponseBean.Carousel) getIntent().getSerializableExtra("carousel");
         messageBean = (MessageListRes.MessageBean) getIntent().getSerializableExtra("message");
         advertisement = (HomeResponseBean.Advertisement) getIntent().getSerializableExtra("advertisement");
+        skillWBBean = (OrderSkillRes.OddBean) getIntent().getSerializableExtra("weibao");
+
 
         url = getIntent().getStringExtra("favorite");
         String notification = getIntent().getStringExtra("notification");
@@ -279,6 +292,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.GONE);
             share.setVisibility(View.GONE);
+        }
+
+        if(skillWBBean != null){
+            url = skillWBBean.getUrl();
+            bottomBtnLayout.setVisibility(View.VISIBLE);
+            changeInfo.setText("修改维保信息");
+            apply.setVisibility(View.GONE);
+            presenter.getFindWBDetail(this,skillWBBean.getMaintenance_id(),COMPANY_RELEASE_WEIBAO_WAIT);
         }
 
 

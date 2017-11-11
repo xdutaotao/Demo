@@ -74,7 +74,11 @@ public class DocActivity extends BaseActivity implements DocView {
 
     @Override
     public void onFailure() {
-        adapter.stopMore();
+        if (adapter.getAllData().size() > 0) {
+            adapter.stopMore();
+        } else {
+            recyclerView.showEmpty();
+        }
     }
 
     @Override
