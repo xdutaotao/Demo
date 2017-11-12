@@ -15,9 +15,8 @@
             <TextView
                 android:layout_width="640px"
                 android:layout_height="wrap_content"
-                android:text="地暖 50*100=5000"
-                android:maxLines="1"
-                android:ellipsize="end"
+                android:text="地暖50*100="
+                android:maxLines="2"
                 android:id="@+id/title"
                 android:textColor="@color/light_blank"/>
 

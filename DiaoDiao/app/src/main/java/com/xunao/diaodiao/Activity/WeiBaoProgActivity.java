@@ -119,15 +119,17 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 维保人员申请完成");
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 工作拍照");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
 
                 if(workBean.getApply() == 2){
                     //工作牌照
                     baseViewHolder.setVisible(R.id.item_bottom, false);
+                    baseViewHolder.setVisible(R.id.image_layout, true);
                 }else{
                     //申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, true);
+                    baseViewHolder.setVisible(R.id.image_layout, false);
 
                     if (workBean.getPass() == 3) {
                         //审核中

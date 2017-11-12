@@ -251,6 +251,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     showToolbarBack(toolBar, titleText, "修改监理信息");
                     presenter.getFindProjDetail(this, project.getSupervisor_id(), who);
                 }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
+                    bottomBtnLayout.setVisibility(View.GONE);
                     presenter.getFindProjDetail(this, project.getMutual_id(), who);
                 }
 
@@ -263,8 +264,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
             } else if (who == COMPANY_RELEASE_PROJECT_DONE ||
                             who == COMPANY_RELEASE_WEIBAO_DONE ||
-                                who == COMPANY_RELEASE_JIANLI_DONE||
-                                    who == COMPANY_RELEASE_HUZHU_DONE) {
+                                who == COMPANY_RELEASE_JIANLI_DONE) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 if (project.getEvaluate_status() == 1 || project.getStatus() == 4) {
                     //已评价
@@ -274,6 +274,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     apply.setText("去评价");
                 }
 
+            }else if(who == COMPANY_RELEASE_HUZHU_DONE){
+                bottomBtnLayout.setVisibility(View.GONE);
+                apply.setVisibility(View.GONE);
             }
         }
 

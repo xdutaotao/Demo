@@ -272,8 +272,8 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         if (res.getWorks() != null) {
             MyAcceptProjectWorkRes.WorksBean worksBean = res.getWorks();
             title.setText(worksBean.getTitle());
-            address.setText(worksBean.getAddress());
-            addressDetail.setText(worksBean.getRegion());
+            addressDetail.setText(worksBean.getAddress());
+            address.setText(worksBean.getRegion());
             adapter.clear();
             adapter.addAll(worksBean.getWork());
             phone = worksBean.getContact_mobile();
@@ -289,11 +289,11 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         if (ShareUtils.getValue(TYPE_KEY, 0) == 1) {
             //暖通公司角色
             getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("施工人员");
+            menu.findItem(R.id.action_contact).setTitle("联系施工人员");
         } else {
             //技术员
             getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("暖通公司");
+            menu.findItem(R.id.action_contact).setTitle("联系暖通公司");
         }
 
         return true;

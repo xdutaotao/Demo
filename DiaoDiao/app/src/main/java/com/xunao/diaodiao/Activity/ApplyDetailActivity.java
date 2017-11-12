@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RatingBar;
@@ -55,7 +56,7 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
     @BindView(R.id.proj_detail)
     TextView projDetail;
     @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.contact_hi)
     TextView contactHi;
     @BindView(R.id.agree)
@@ -110,6 +111,7 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         };
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
 
         contactHi.setOnClickListener(v -> {
             new IOSDialog(ApplyDetailActivity.this).builder()

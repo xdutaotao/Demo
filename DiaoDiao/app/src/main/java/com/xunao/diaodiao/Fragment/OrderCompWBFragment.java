@@ -78,6 +78,8 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
             @Override
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
 
                     if(homeBean.getStatus() == 4){
@@ -87,16 +89,8 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
 
-                        if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
-                            baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                        }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                            baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
-                        }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                            baseViewHolder.setVisible(R.id.time, false);
-                        }
-
                     }else{
-                        baseViewHolder.setText(R.id.request, "查看");
+                        baseViewHolder.setText(R.id.request, "维保进度");
 
 
                         if(homeBean.getEvaluate_status() == 1){
@@ -118,13 +112,6 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setVisible(R.id.evaluation, false);
                     baseViewHolder.setVisible(R.id.time, true);
 
-                    if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
-                        baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                    }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                        baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
-                    }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                        baseViewHolder.setVisible(R.id.time, false);
-                    }
                 }
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
@@ -133,21 +120,15 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
 
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
+                    baseViewHolder.setText(R.id.request, "查看");
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
+                    baseViewHolder.setText(R.id.request, "维保进度");
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
                 }
 
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
-
-                if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
-                    baseViewHolder.setText(R.id.request, "查看");
-                }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                    baseViewHolder.setText(R.id.request, "维保进度");
-                }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                    baseViewHolder.setText(R.id.request, "维保进度");
-                }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){

@@ -77,6 +77,9 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
             @Override
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getSupervisor_fee());
+
                 if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     if(homeBean.getStatus() == 4){
                         //已取消
@@ -85,16 +88,8 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
 
-                        if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
-                            baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                        }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
-                            baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
-                        }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
-                            baseViewHolder.setVisible(R.id.time, false);
-                        }
-
                     }else{
-                        baseViewHolder.setText(R.id.request, "查看");
+                        baseViewHolder.setText(R.id.request, "监理进度");
 
 
                         if(homeBean.getEvaluate_status() == 1){
@@ -117,14 +112,6 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setVisible(R.id.evaluation, false);
                     baseViewHolder.setVisible(R.id.time, true);
 
-                    if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
-                        baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                    }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
-                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
-                    }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
-                        baseViewHolder.setVisible(R.id.time, false);
-                    }
-
                 }
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
@@ -132,20 +119,13 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
 
                 if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
-                    baseViewHolder.setVisible(R.id.distance, false);
-                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
-                    baseViewHolder.setVisible(R.id.distance, false);
-                }
-
-                baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getSupervisor_fee());
-
-                if (who == Constants.COMPANY_RELEASE_JIANLI_WAIT){
                     baseViewHolder.setText(R.id.request, "查看");
-                }else if (who == Constants.COMPANY_RELEASE_JIANLI_DOING){
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setVisible(R.id.distance, true);
+                }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
+                    baseViewHolder.setVisible(R.id.distance, false);
+                    baseViewHolder.setText(R.id.request, "监理进度");
                 }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setVisible(R.id.distance, false);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {

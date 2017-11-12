@@ -190,22 +190,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     }
                 }
 
-
-//                if (s.getAudit_status() == 3 && (s.getAudit() == 1 || s.getAudit() == 2)){
-//                    //审核中
-//                    //status = 3;
-//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-//                            + (stage == 1 ? " 第一阶段审核" : " 第二阶段审核"));
-//                }else if (s.getAudit_status() == 2 && (s.getAudit() == 1 || s.getAudit() == 2)){
-//                    //未通过审核
-//                    //status = 2;
-//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-//                            + " 未通过审核");
-//                }else{
-//                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getDate())
-//                            + " 工作拍照");
-//                }
-
             }
         };
 
@@ -290,15 +274,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
                 //暖通公司
                 bottomBtnLayout.setVisibility(View.VISIBLE);
-
-//                adapter.addFooter(new DefaultRecyclerViewItem() {
-//                    @Override
-//                    public View onCreateView(ViewGroup viewGroup) {
-//                        View view = LayoutInflater.from(SkillProjProgressActivity.this)
-//                                .inflate(R.layout.company_project_footer, null);
-//                        return view;
-//                    }
-//                });
                 //不通过
                 noPass.setOnClickListener(v -> {
                     AppealActivity.startActivity(SkillProjProgressActivity.this,
@@ -312,15 +287,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
             }else{
                 //技术人员
-//                adapter.addFooter(new DefaultRecyclerViewItem() {
-//                    @Override
-//                    public View onCreateView(ViewGroup viewGroup) {
-//                        View view = LayoutInflater.from(viewGroup.getContext())
-//                                .inflate(R.layout.status_footer, null);
-//                        return view;
-//                    }
-//                });
-
+                adapter.removeAllFooter();
                 bottomBtnLayout.setVisibility(View.GONE);
                 post.setVisibility(View.GONE);
             }
@@ -335,6 +302,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 //技术人员
                 bottomBtnLayout.setVisibility(View.VISIBLE);
                 post.setVisibility(View.GONE);
+                setFooter();
                 noPass.setText("申诉");
                 pass.setText("再次提交");
 
@@ -360,28 +328,17 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 });
 
             }
-//            adapter.addFooter(new DefaultRecyclerViewItem() {
-//                @Override
-//                public View onCreateView(ViewGroup viewGroup) {
-//                    View view = LayoutInflater.from(viewGroup.getContext())
-//                            .inflate(R.layout.status_footer, null);
-//                    ((TextView)(view.findViewById(R.id.status)))
-//                            .setText("暖通公司审核未通过");
-//                    return view;
-//                }
-//            });
-
-
-            //noPassInfoBean = s;
 
         }else if(projStatus == 1) {
             //项目结束
             bottomBtnLayout.setVisibility(View.GONE);
             post.setVisibility(View.GONE);
-        }
-
-        if(ShareUtils.getValue(TYPE_KEY, 0) == 2){
-            //零工
+        }else if(projStatus == 0){
+            if (stage == 2) {
+                post.setText("第二阶段提交审核");
+            } else {
+                post.setText("第一阶段提交审核");
+            }
             setFooter();
         }
 
@@ -463,6 +420,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             }else if (s.getAudit_status() == 1 && s.getAudit() == 2){
                 //项目结束
                 projStatus = 1;
+            }else if(s.getAudit() == 0){
+                //正常状态
+                projStatus = 0;
             }
 
             workid = s.getWork_id();

@@ -112,7 +112,7 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
                 if (homeBean.getStatus() == 1){
                     //已完成
-                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setText(R.id.request, "项目进度");
 
 
                     if(homeBean.getEvaluate_status() == 1){
