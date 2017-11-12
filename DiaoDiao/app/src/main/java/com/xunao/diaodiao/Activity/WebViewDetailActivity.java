@@ -237,6 +237,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
                     presenter.getFindWBDetail(this, project.getMaintenance_id(), who);
                 }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+                    showToolbarBack(toolBar, titleText, "修改监理信息");
                     presenter.getFindProjDetail(this, project.getSupervisor_id(), who);
                 }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
                     presenter.getFindProjDetail(this, project.getMutual_id(), who);
@@ -370,6 +371,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 ReleaseProjActivity.startActivity(this, false);
             }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
                 ReleaseHelpActivity.startActivity(this);
+            }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+                ReleaseProjActivity.startActivity(this, true);
             }
 
         });
@@ -428,6 +431,32 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     req.setEquip_type(weiBaoBean.getMaintenance().getEquip_type());
                     req.setMaintenance_id(bean.getMaintenance_id());
                     ReleaseSkillInforActivity.startActivity(this, req, true);
+                }
+            }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+                if(projectBean != null){
+                    FindProjDetailRes.DetailBean bean = projectBean.getDetail();
+                    ReleaseProjReq req = new ReleaseProjReq();
+                    req.setProject_type(bean.getProject_type());
+                    req.setProject_class(bean.getProject_class());
+                    req.setTitle(bean.getTitle());
+                    req.setProvince(bean.getProvince());
+                    req.setCity(bean.getCity());
+                    req.setDistrict(bean.getDistrict());
+                    req.setAddress(bean.getAddress());
+                    req.setContact(bean.getContact());
+                    req.setContact_mobile(bean.getContact_mobile());
+                    //req.setBuild_time(bean.getSupervisor_time());
+                    //req.setBuild_time_string(Utils.getStrTime(bean.getSupervisor_time()));
+                    req.setDescribe(bean.getDescribe());
+                    req.setImages(bean.getImages());
+                    req.setService_cost(bean.getService_cost());
+                    req.setSupervisor_fee(bean.getSupervisor_fee());
+                    req.setTotal_price(bean.getTotal_price());
+
+                    req.setRegion(bean.getRegion());
+                    req.setProject_type_class(bean.getProject_type_class());
+                    req.setProject_type_name(bean.getProject_type_name());
+                    ReleaseProjSecondActivity.startActivity(this, req, true, true);
                 }
             }
         });

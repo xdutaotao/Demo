@@ -146,6 +146,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
         req = (ReleaseProjReq) getIntent().getSerializableExtra(INTENT_KEY);
         select.setText(req.getProject_type_class());
         next.setOnClickListener(this);
+        jianli = getIntent().getBooleanExtra("jianli", false);
 
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image_delete) {
             @Override
@@ -271,14 +272,15 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 price.setFocusable(false);
             }else{
                 time.setText(Utils.millToYearString(req.getBuild_time()));
+                tempList.clear();
+                tempList.addAll(req.getExpenses());
+                typeAdapter.addAll(tempList);
             }
 
             content.setText(req.getDescribe());
             adapter.clear();
             adapter.addAll(req.getImages());
-            tempList.clear();
-            tempList.addAll(req.getExpenses());
-            typeAdapter.addAll(tempList);
+
 
             addressDetailLayout.setOnClickListener(null);
             addressDetail.setFocusable(false);
@@ -303,7 +305,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                 getAddressData(Constants.addressResult);
         }
 
-        jianli = getIntent().getBooleanExtra("jianli", false);
+
         if (jianli) {
             timeText.setText("监理验收时间");
             typeRecyclerView.setVisibility(View.GONE);

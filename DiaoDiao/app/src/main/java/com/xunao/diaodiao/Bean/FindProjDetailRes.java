@@ -203,6 +203,33 @@ public class FindProjDetailRes implements Serializable{
         private String door_fee;
         private String door_time;
         private int maintenance_id;
+        private int supervisor_id;
+        private String supervisor_time;
+        private String supervisor_fee;
+
+        public int getSupervisor_id() {
+            return supervisor_id;
+        }
+
+        public void setSupervisor_id(int supervisor_id) {
+            this.supervisor_id = supervisor_id;
+        }
+
+        public String getSupervisor_time() {
+            return supervisor_time;
+        }
+
+        public void setSupervisor_time(String supervisor_time) {
+            this.supervisor_time = supervisor_time;
+        }
+
+        public String getSupervisor_fee() {
+            return supervisor_fee;
+        }
+
+        public void setSupervisor_fee(String supervisor_fee) {
+            this.supervisor_fee = supervisor_fee;
+        }
 
         public int getMaintenance_id() {
             return maintenance_id;
