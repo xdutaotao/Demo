@@ -195,6 +195,8 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             @Override
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
+                TextView time = (TextView) view.findViewById(R.id.time);
+                time.setText(Utils.getNowDateMonth() + " 签到");
                 postText.setOnClickListener(v -> {
                     signAction();
                 });

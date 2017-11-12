@@ -111,7 +111,7 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
         };
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
-        recyclerView.setNestedScrollingEnabled(false);
+        //recyclerView.setNestedScrollingEnabled(false);
 
         contactHi.setOnClickListener(v -> {
             new IOSDialog(ApplyDetailActivity.this).builder()
