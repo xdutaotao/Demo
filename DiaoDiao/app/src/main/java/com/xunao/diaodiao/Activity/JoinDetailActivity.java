@@ -19,6 +19,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
+import com.xunao.diaodiao.Fragment.HomeFragment;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.Utils;
@@ -151,7 +152,9 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
         companyAddress.setOnClickListener(v -> {
             if(!TextUtils.isEmpty(url)){
-                WebViewDetailActivity.startActivity(this, url, 0);
+                //WebViewDetailActivity.startActivity(this, url, 0);
+                WebViewOutActivity.startActivity(JoinDetailActivity.this,
+                        url);
             }
 
         });

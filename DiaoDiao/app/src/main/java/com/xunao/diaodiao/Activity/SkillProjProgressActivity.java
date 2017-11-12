@@ -513,19 +513,20 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 ToastUtil.show("请选择照片");
                 return;
             }
-
-
+            req.setImages(pathList);
+            req.setRemark(postRemark.getText().toString());
+            req.setLocation(address);
         }else{
             photoPost = false;
         }
 
-        req.setImages(pathList);
-        req.setLocation(address);
+
+
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
 
         req.setWorks_id(worksid);
         req.setSign_time(System.currentTimeMillis()/1000);
-        req.setRemark(postRemark.getText().toString());
+
         req.setAudit(audit);
         presenter.myAcceptProjectWorkSub(this, req);
     }

@@ -263,6 +263,11 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 adapter.stopMore();
 
             adapter.addAll(list.getMaintenance());
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            if(list.getSupervisor().size() == 0)
+                adapter.stopMore();
+
+            adapter.addAll(list.getSupervisor());
         }
 
 

@@ -80,6 +80,12 @@ android {
         targetCompatibility javaVersion
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 }
 
 repositories {
@@ -162,6 +168,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile files('libs/AMap_Location_V3.6.1_20171012.jar')
+    compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')
 }
 
 //compile 'com.tencent.bugly:crashreport:latest.release'

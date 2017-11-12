@@ -37,6 +37,9 @@ import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.WebViewDetailView;
 import com.xunao.diaodiao.Widget.CustomWebView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -311,15 +314,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             presenter.getFindWBDetail(this,skillWBBean.getMaintenance_id(),COMPANY_RELEASE_WEIBAO_WAIT);
         }
 
-
-        if(TextUtils.isEmpty(url)){
-            url = getIntent().getStringExtra("company");
-            if(!TextUtils.isEmpty(url)){
-                bottomBtnLayout.setVisibility(View.GONE);
-                apply.setVisibility(View.GONE);
-            }
-
-        }
         if (carousel != null) {
             if (carousel.getType() == 1) {
                 //站外
@@ -329,6 +323,13 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.GONE);
                 webView.loadUrl(url)
+                        .setWebChromeClient(webView.new GWebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                super.onReceivedTitle(view, title);
+                                WebViewDetailActivity.this.title = title;
+                            }
+                        })
                         .setWebViewClient(webView.new GWebViewClient() {
                             @Override
                             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -342,18 +343,25 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 //                                }
                                 return true;
                             }
-                        })
-                        .setWebChromeClient(webView.new GWebChromeClient(){
-                            @Override
-                            public void onReceivedTitle(WebView view, String title) {
-                                super.onReceivedTitle(view, title);
-                                WebViewDetailActivity.this.title = title;
-                            }
                         });
+
 
             }
 
-        } else {
+        }else if(TextUtils.isEmpty(url)){
+            url = getIntent().getStringExtra("company");
+            if(!TextUtils.isEmpty(url)){
+                //url = "https://map.baidu.com/mobile/webapp/index/index/foo=bar/vt=map";
+                webView.getWebView().loadUrl(url);
+                //url = URLEncoder.encode(url, "utf-8");
+
+                bottomBtnLayout.setVisibility(View.GONE);
+                apply.setVisibility(View.GONE);
+                share.setVisibility(View.GONE);
+            }
+
+        }
+        else {
             webView.loadUrl(url)
                     .setWebViewClient(webView.new GWebViewClient() {
                         @Override

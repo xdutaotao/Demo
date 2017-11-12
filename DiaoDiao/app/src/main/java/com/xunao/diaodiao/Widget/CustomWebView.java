@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -240,11 +241,12 @@ public class CustomWebView extends FrameLayout {
             }
             // 设置是否显示网络图像---true,封锁网络图片，不显示 false----允许显示网络图片
             webSettings.setBlockNetworkImage(false);
+            webSettings.setBlockNetworkLoads(false);
             webSettings.setJavaScriptEnabled(true);// 访问页面中有JavaScript,必须设置支持JavaScript
             webSettings.setDefaultTextEncodingName("UTF-8");
             webSettings.setLoadsImagesAutomatically(true); // 设置自动加载图片
             //webview无限向下滑动 webview大量空白区域 内容无法填充webview
-//            webSettings.setUseWideViewPort(true); // 将图片调整到适合WebView大小
+            webSettings.setUseWideViewPort(true); // 将图片调整到适合WebView大小
 
             webSettings.setDatabaseEnabled(true);// 启用数据库
             webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
@@ -358,6 +360,11 @@ public class CustomWebView extends FrameLayout {
             }
         }
 
+        @Override
+        public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+            callback.invoke(origin, true, false);
+            super.onGeolocationPermissionsShowPrompt(origin, callback);
+        }
     }
 
     public interface OnLoadFinishListener{

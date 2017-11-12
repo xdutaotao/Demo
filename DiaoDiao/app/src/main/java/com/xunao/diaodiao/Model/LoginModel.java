@@ -1854,6 +1854,8 @@ public class LoginModel extends BaseModel {
             rateKey = "myAcceptProjectFinish";
         }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
             rateKey = "myAcceptMaintenanceFinish";
+        }else if(who == SKILL_RECIEVE_JIANLI){
+            rateKey = "myAcceptSupervisorFinish";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }

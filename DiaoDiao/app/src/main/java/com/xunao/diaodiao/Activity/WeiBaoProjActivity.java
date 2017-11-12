@@ -220,7 +220,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             }
 
         } else {
-            setFooter();
+            //setFooter();
         }
     }
 
@@ -272,8 +272,15 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         req.setSign_time(System.currentTimeMillis() / 1000);
         //是否申请打款
         req.setApply_type(action);
-        if(action == 2)
+
+        if(action == 2) {
+            if(pathList.size() == 0){
+                ToastUtil.show("请上传图片");
+                return;
+            }
+
             req.setImages(pathList);
+        }
         presenter.myAcceptMaintenanceSubmit(this, req, who);
     }
 

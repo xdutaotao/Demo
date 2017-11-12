@@ -42,6 +42,7 @@ import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
+import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 
 /**
  * 技术员  我接的  零工
@@ -204,7 +205,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             req.setProject_type(3);
             req.setImages(pathList);
             AppealActivity.startActivity(
-                    OrderProjRecieveProgressActivity.this, req, NO_PASS);
+                    OrderProjRecieveProgressActivity.this, req, YI_TYPE);
         });
 
         giveMoney.setOnClickListener(v -> {
@@ -218,11 +219,21 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     private void postProgress(int apply_type){
         MyAcceptOddSubmitReq req = new MyAcceptOddSubmitReq();
         req.setOdd_id(getIntent().getIntExtra(INTENT_KEY, 0));
-        req.setRemark("工作拍照");
         req.setApply_type(apply_type);
-        req.setSign_time(System.currentTimeMillis()/1000);
-        req.setLocation(Constants.address);
-        req.setImages(pathList);
+        if(apply_type == 1){
+            //申请打款
+
+        }else{
+            req.setRemark("工作拍照");
+            req.setSign_time(System.currentTimeMillis()/1000);
+            req.setLocation(Constants.address);
+            if(pathList.size() == 0){
+                ToastUtil.show("请上传图片");
+                return;
+            }
+            req.setImages(pathList);
+        }
+
         presenter.myAcceptOddSubmit(this, req);
     }
 
