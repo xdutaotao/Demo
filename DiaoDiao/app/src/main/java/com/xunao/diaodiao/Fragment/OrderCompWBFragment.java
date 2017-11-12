@@ -79,32 +79,55 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
             protected void convert(BaseViewHolder baseViewHolder, OrderCompRes.Project homeBean) {
                 baseViewHolder.setText(R.id.item_content, homeBean.getTitle());
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                    if(homeBean.getEvaluate_status() == 1){
-                        baseViewHolder.setText(R.id.evaluation, "已评价");
-                    }else{
-                        baseViewHolder.setText(R.id.evaluation, "去评价");
-                    }
 
                     if(homeBean.getStatus() == 4){
+                        //已取消
+
+                        baseViewHolder.setVisible(R.id.time, true);
+                        baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
+
+                        if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
+                            baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                        }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
+                            baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                        }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
+                            baseViewHolder.setVisible(R.id.time, false);
+                        }
+
                     }else{
-                        baseViewHolder.setVisible(R.id.evaluation, true);
+                        baseViewHolder.setText(R.id.request, "查看");
+
+
+                        if(homeBean.getEvaluate_status() == 1){
+                            //已评价
+                            baseViewHolder.setVisible(R.id.time, true);
+                            baseViewHolder.setText(R.id.time, "已评价");
+                            baseViewHolder.setVisible(R.id.evaluation, false);
+                        }else{
+                            //未评价
+                            baseViewHolder.setVisible(R.id.time, false);
+                            baseViewHolder.setVisible(R.id.evaluation, true);
+                            baseViewHolder.setText(R.id.evaluation, "去评价");
+                            baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
+                        }
+
                     }
 
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
+                    baseViewHolder.setVisible(R.id.time, true);
+
+                    if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
+                        baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                    }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
+                        baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                    }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
+                        baseViewHolder.setVisible(R.id.time, false);
+                    }
                 }
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-
-                if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                }else if(who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
-                    baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
-                }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
-                    baseViewHolder.setVisible(R.id.time, false);
-                }
-
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setText(R.id.days, "上门费");
 
@@ -124,13 +147,6 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setText(R.id.request, "维保进度");
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setText(R.id.request, "维保进度");
-                }
-
-                if(homeBean.getStatus() == 4){
-                    //已取消
-                    baseViewHolder.setVisible(R.id.request, false);
-                }else{
-                    baseViewHolder.setVisible(R.id.request, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {

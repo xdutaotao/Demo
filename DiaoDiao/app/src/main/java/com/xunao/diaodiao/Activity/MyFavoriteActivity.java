@@ -65,22 +65,24 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
         adapter = new RecyclerArrayAdapter<MyFavoriteRes.Project>(this, R.layout.my_favorite_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyFavoriteRes.Project s) {
-                if (TextUtils.equals(s.getClasses(), "项目")){
+                if (s.getInfo_type() == 1){
                     baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_xiangmu);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
                     baseViewHolder.setText(R.id.price, "￥ "+s.getProject_fee());
                     baseViewHolder.setText(R.id.type, s.getType());
-                }else if (TextUtils.equals(s.getClasses(), "零工")){
+                }else if (s.getInfo_type() == 3){
+                    //零工
                     baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_lingong);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
-                    //baseViewHolder.setText(R.id.price_text, "共"+s.getTotal_day()+"天");
-                    baseViewHolder.setText(R.id.price, "￥ "+s.getProject_fee() + "/天");
+                    baseViewHolder.setText(R.id.price_text, "共"+s.getTotal_day()+"天");
+                    baseViewHolder.setText(R.id.price, "￥ "+s.getDaily_wage() + "/天");
                     baseViewHolder.setVisible(R.id.type, false);
-                }else{
+                }else if(s.getInfo_type() == 2){
+                    //监理
                     baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_jianli);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
@@ -92,6 +94,9 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
                         baseViewHolder.setText(R.id.price, "￥ "+s.getProject_fee());
                     }
                     baseViewHolder.setText(R.id.type, s.getType());
+                }else if(s.getInfo_type() == 4){
+                    //维保
+
                 }
 
                 baseViewHolder.setOnClickListener(R.id.shou_cang, v -> {
@@ -127,11 +132,8 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
         if (page == 1)
             adapter.clear();
 
-        if (data.getProject() == null){
-            adapter.stopMore();
-        }else{
-            adapter.addAll(data.getProject());
-        }
+        adapter.addAll(data.getListInfo());
+
     }
 
     @Override
@@ -142,7 +144,11 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
 
     @Override
     public void onFailure() {
-
+        if(adapter.getAllData().size() == 0){
+            recyclerView.showEmpty();
+        }else{
+            adapter.stopMore();
+        }
     }
 
     @Override

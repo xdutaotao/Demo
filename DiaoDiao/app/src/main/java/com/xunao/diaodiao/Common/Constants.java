@@ -63,6 +63,7 @@ public class Constants {
     public static final int COMPANY_RELEASE_JIANLI_DONE = 66;
     public static final int COMPANY_RELEASE_WEIBAO_DONE = 666;
     public static final int COMPANY_RELEASE_HUZHU_DONE = 6666;
+    public static final int HOME_HZ = 7171;
 
     public static final int NO_PASS = 9999;
     public static final int SKILL_RELEASE_LINGGONG_NO_PASS = 9998;
@@ -96,7 +97,7 @@ public class Constants {
 
     //承接项目类型
     public static List<TypeInfoRes.Type_Info> projectTypeList = new ArrayList<>();
-    public static final String tel = "15921561300";
+    public static final String tel = "021-64435670";
     public static ArrayList<Province> addressResult = new ArrayList<>();
 
 

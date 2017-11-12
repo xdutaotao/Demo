@@ -267,7 +267,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             name.setText(req.getContact());
             phone.setText(req.getContact_mobile());
             if(jianli){
-                time.setText(Utils.millToYearString(req.getSupervisor_time()));
+                time.setText(req.getBuild_time_string());
                 price.setText(req.getSupervisor_fee());
                 price.setFocusable(false);
             }else{
@@ -307,10 +307,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
 
         if (jianli) {
-            timeText.setText("监理验收时间");
+            timeText.setText("验收开始时间");
             typeRecyclerView.setVisibility(View.GONE);
             jianliFee.setVisibility(View.VISIBLE);
             showToolbarBack(toolBar, titleText, "发布监理信息");
+            content.setHint("请详细描述项目情况及需求");
         }
     }
 

@@ -14,6 +14,15 @@ public class HomeResponseBean implements Serializable{
     private List<Project> project;
     private List<Project> odd;
     private List<Project> maintenance;
+    private List<Project> mutual;
+
+    public List<Project> getMutual() {
+        return mutual;
+    }
+
+    public void setMutual(List<Project> mutual) {
+        this.mutual = mutual;
+    }
 
     public List<Carousel> getCarousel() {
         return carousel;

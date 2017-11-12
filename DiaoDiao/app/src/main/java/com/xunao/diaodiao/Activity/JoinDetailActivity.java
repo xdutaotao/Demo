@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.GRecyclerView;
@@ -20,7 +21,6 @@ import com.xunao.diaodiao.Bean.GetOddInfoRes;
 import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Present.JoinDetailPresenter;
 import com.xunao.diaodiao.R;
-import com.xunao.diaodiao.Utils.ShareUtils;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.JoinDetailView;
 
@@ -30,7 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
  * create by
@@ -57,6 +56,8 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     LinearLayout sayLayout;
     @BindView(R.id.contact)
     Button contact;
+    @BindView(R.id.company_address)
+    RelativeLayout companyAddress;
 
     private RecyclerArrayAdapter<JoinDetailRes.EvaluateInfoBean> adapter;
     private RecyclerArrayAdapter<GetOddInfoRes.EvaluateInfoBean> oddAdapter;
@@ -64,6 +65,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     private int type;
     private int page = 1;
     private String phone;
+    private String url;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, JoinDetailActivity.class);
@@ -89,7 +91,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         showToolbarBack(toolBar, titleText, "公司介绍");
         phone = getIntent().getStringExtra("flag");
 
-        if(!TextUtils.isEmpty(phone)){
+        if (!TextUtils.isEmpty(phone)) {
             sayLayout.setVisibility(View.GONE);
             contact.setVisibility(View.VISIBLE);
         }
@@ -136,14 +138,22 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
         contact.setOnClickListener(v -> {
             new IOSDialog(this).builder()
-                        .setMsg(phone)
-                        .setPositiveButton("呼叫", v1 -> {
-                            if (!TextUtils.isEmpty(phone)){
-                                Utils.startCallActivity(this, phone);
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
+                    .setMsg(phone)
+                    .setPositiveButton("呼叫", v1 -> {
+                        if (!TextUtils.isEmpty(phone)) {
+                            Utils.startCallActivity(this, phone);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        });
+
+
+        companyAddress.setOnClickListener(v -> {
+            if(!TextUtils.isEmpty(url)){
+                WebViewDetailActivity.startActivity(this, url, 0);
+            }
+
         });
     }
 
@@ -178,6 +188,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             address.setText(s.getInfo().getRegion());
             score.setText(s.getInfo().getPoint());
             ratingStar.setRating(Float.valueOf(s.getInfo().getPoint()));
+            url = s.getInfo().getMap();
         }
 
         if (s.getEvaluates().size() == 0) {
@@ -212,9 +223,9 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
 
     @Override
     public void onFailure() {
-        if(adapter.getAllData().size() == 0){
+        if (adapter.getAllData().size() == 0) {
             recyclerView.showEmpty();
-        }else{
+        } else {
             if (type == 0) {
                 adapter.stopMore();
             } else {

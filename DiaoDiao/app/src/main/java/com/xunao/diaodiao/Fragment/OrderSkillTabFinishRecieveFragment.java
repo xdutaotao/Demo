@@ -128,6 +128,12 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                         baseViewHolder.setTextColorRes(R.id.evaluation, R.color.accept_btn_default);
                     }
 
+                }else{
+                    //已取消
+                    baseViewHolder.setVisible(R.id.time, true);
+                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setVisible(R.id.evaluation, false);
+
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
                         baseViewHolder.setText(R.id.request, "维保情况");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
@@ -138,12 +144,6 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                         baseViewHolder.setText(R.id.request, "项目进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                     }
-
-                }else{
-                    //已取消
-                    baseViewHolder.setVisible(R.id.time, true);
-                    baseViewHolder.setText(R.id.request, "查看");
-                    baseViewHolder.setVisible(R.id.evaluation, false);
 
                 }
 

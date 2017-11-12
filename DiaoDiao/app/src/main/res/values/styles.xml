@@ -611,6 +611,9 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:textColor">#7f7f7f</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxEms">16</item>
     </style>
 
     <style name="item_divider">

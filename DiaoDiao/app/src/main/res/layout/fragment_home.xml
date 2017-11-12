@@ -232,6 +232,46 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/recycler_view_list"/>
 
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140px"
+                    android:gravity="center_vertical"
+                    android:padding="20px"
+                    android:layout_marginTop="10px"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="互助推荐"
+                        android:gravity="center"
+                        android:drawablePadding="10px"
+                        android:layout_marginLeft="20px"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/icon_weibao"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@drawable/turn_right"
+                        android:id="@+id/more_four"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_height="2px"
+                    android:layout_marginLeft="50px"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/divider_line"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view_hz"/>
+
             </LinearLayout>
 
         </ScrollView>

@@ -232,6 +232,14 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
 
         presenter.publishMaintenancePrice(this);
 
+        if(ReleaseHelpActivity.project_type == 1){
+            //请详细描述故障情况
+            content.setHint("请详细描述故障情况");
+        }else{
+            //保养
+            content.setHint("请详细描述您的需求");
+        }
+
     }
 
     private void initImagePicker() {

@@ -489,8 +489,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code:
                 if (codeDelete.getVisibility() == View.GONE) {
-                    //getPicPath();
-                    selectPhoto();
+                    getPicPath();
+//                    selectPhoto();
                     SELECT_TYPE = 4;
                 }else{
                     PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
@@ -500,8 +500,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code_reverse:
                 if (codeReverseDelete.getVisibility() == View.GONE) {
-                    //getPicPath();
-                    selectPhoto();
+                    getPicPath();
+//                    selectPhoto();
                     SELECT_TYPE = 5;
                 }else{
                     PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
@@ -685,6 +685,12 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
         if(canChange){
             checkBoxAll.setOnCheckedChangeListener(this);
             checkBoxSingle.setOnCheckedChangeListener(this);
+        }else{
+            checkBoxAll.setChecked(checkBoxAll.isChecked());
+            checkBoxSingle.setChecked(checkBoxSingle.isChecked());
+            checkBoxSingle.setClickable(false);
+            checkBoxAll.setClickable(false);
+            contactCode.setFocusable(false);
         }
     }
 

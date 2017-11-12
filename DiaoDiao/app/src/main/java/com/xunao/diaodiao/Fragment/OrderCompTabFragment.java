@@ -96,6 +96,15 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                         baseViewHolder.setVisible(R.id.time, true);
                         baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
+
+                        if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                            baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                        }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                            baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
+                        }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                            //baseViewHolder.setVisible(R.id.time, false);
+                        }
+
                     }else{
                         baseViewHolder.setText(R.id.request, "查看");
 
@@ -118,18 +127,18 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }else{
                     baseViewHolder.setVisible(R.id.evaluation, false);
                     baseViewHolder.setVisible(R.id.time, true);
+
+                    if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
+                        baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
+                    }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
+                    }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
+                        //baseViewHolder.setVisible(R.id.time, false);
+                    }
+
                 }
 
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
-
-                if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
-                    baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
-                }else if(who == Constants.COMPANY_RELEASE_PROJECT_DOING){
-                    baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(homeBean.getBuild_time())+" 开始");
-                }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
-                    //baseViewHolder.setVisible(R.id.time, false);
-                }
-
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
 
                 if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){

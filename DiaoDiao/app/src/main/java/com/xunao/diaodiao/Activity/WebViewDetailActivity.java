@@ -179,6 +179,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         context.startActivity(intent);
     }
 
+    //合作商家
+    public static void startActivity(Context context, String url, int who) {
+        Intent intent = new Intent(context, WebViewDetailActivity.class);
+        intent.putExtra("company", url);
+        intent.putExtra("companyInfo", who);
+        context.startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -304,6 +312,14 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         }
 
 
+        if(TextUtils.isEmpty(url)){
+            url = getIntent().getStringExtra("company");
+            if(!TextUtils.isEmpty(url)){
+                bottomBtnLayout.setVisibility(View.GONE);
+                apply.setVisibility(View.GONE);
+            }
+
+        }
         if (carousel != null) {
             if (carousel.getType() == 1) {
                 //站外
@@ -445,8 +461,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     req.setAddress(bean.getAddress());
                     req.setContact(bean.getContact());
                     req.setContact_mobile(bean.getContact_mobile());
-                    //req.setBuild_time(bean.getSupervisor_time());
-                    //req.setBuild_time_string(Utils.getStrTime(bean.getSupervisor_time()));
+                    req.setSupervisor_time(Utils.convertTime2long(bean.getSupervisor_time()));
+                    req.setBuild_time_string(bean.getSupervisor_time());
                     req.setDescribe(bean.getDescribe());
                     req.setImages(bean.getImages());
                     req.setService_cost(bean.getService_cost());

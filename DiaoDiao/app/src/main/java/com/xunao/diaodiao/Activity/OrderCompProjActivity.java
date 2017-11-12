@@ -85,7 +85,7 @@ public class OrderCompProjActivity extends BaseActivity implements OrderCompProj
     private List<BaseFragment> fragments;
     private static final String[] TAB_TITLE = {"待确认", "进行中", "已完成/取消"};
     private static final String[] TAB_TITLE_WHO = {"申请中", "进行中", "已完成/关闭"};
-    private static final String[] TAB_TITLE_HZ = {"待确认","已关闭"};
+    private static final String[] TAB_TITLE_HZ = {"已发布","已关闭"};
     private int type = 0;
     private int who = 0;
 

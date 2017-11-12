@@ -7,10 +7,9 @@
 
     <include layout="@layout/tool_bar_center" />
 
-    <com.gzfgeh.swipeheader.SwipeRefreshLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipe">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,6 +54,6 @@
                 android:layout_marginBottom="200px"
                 android:id="@+id/sign"/>
         </LinearLayout>
-    </com.gzfgeh.swipeheader.SwipeRefreshLayout>
+    </ScrollView>
 
 </LinearLayout>

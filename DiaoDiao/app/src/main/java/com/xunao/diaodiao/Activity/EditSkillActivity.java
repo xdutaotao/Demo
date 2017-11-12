@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -414,6 +415,10 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     @Override
     public void getData(CheckFinishRes bean) {
         canChange = bean.getStatus() == 1 ? false : true;
+        if(!canChange){
+            //不能更改
+            personCode.setFocusable(false);
+        }
     }
 
     @Override
@@ -460,7 +465,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 if(codeDelete.getVisibility() == View.VISIBLE){
                     PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
                 }else{
-                    selectPhoto();
+                    //selectPhoto();
+                    getPicPath();
                     SELECT_TYPE = 4;
                 }
 
@@ -470,7 +476,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 if(codeReverseDelete.getVisibility() == View.VISIBLE){
                     PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
                 }else{
-                    selectPhoto();
+                    //selectPhoto();
+                    getPicPath();
                     SELECT_TYPE = 5;
                 }
 
@@ -513,6 +520,25 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
                 break;
         }
+    }
+
+    private void getPicPath() {
+        new IOSDialog(this).builder()
+                .setCancelable(true)
+                .setTitle("拍照", v -> {
+                    selectCamera();
+                })
+                .setMsg("相册", v -> {
+                    selectPhoto();
+                })
+                .setMsgSize(R.dimen.dialog_msg_size)
+                .setMsgColor("#333333")
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    private void selectCamera() {
+        CameraActivity.startActivityForResult(this, imageItems.size());
     }
 
 

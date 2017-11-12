@@ -2,26 +2,17 @@ package com.xunao.diaodiao.Fragment;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,28 +35,22 @@ import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.HelpActivity;
 import com.xunao.diaodiao.Activity.HomeSearchActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
-import com.xunao.diaodiao.Activity.LoginActivity;
 import com.xunao.diaodiao.Activity.SearchResultActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Activity.WebViewOutActivity;
-import com.xunao.diaodiao.Bean.CitiesBean;
+import com.xunao.diaodiao.Bean.FindProjectRes;
 import com.xunao.diaodiao.Bean.HomeProjBean;
 import com.xunao.diaodiao.Bean.HomeResponseBean;
-import com.xunao.diaodiao.Bean.SearchBean;
 import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Common.ApiConstants;
 import com.xunao.diaodiao.Common.Constants;
-import com.xunao.diaodiao.MainActivity;
-import com.xunao.diaodiao.Model.User;
 import com.xunao.diaodiao.Present.HomePresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.LocationUtils;
 import com.xunao.diaodiao.Utils.PermissionsUtils;
 import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.RxUtils;
-import com.xunao.diaodiao.Utils.ShareUtils;
-import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.HomeView;
 import com.xunao.diaodiao.Widget.DownloadDialog.DownloadDialogFactory;
@@ -82,15 +67,12 @@ import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
-import static com.xunao.diaodiao.Common.Constants.LOGIN_AGAIN;
-import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.city;
 import static com.xunao.diaodiao.Common.Constants.latData;
 import static com.xunao.diaodiao.Common.Constants.lngData;
 import static com.xunao.diaodiao.Common.Constants.selectCity;
 
-public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, GeocodeSearch.OnGeocodeSearchListener
-{
+public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener, GeocodeSearch.OnGeocodeSearchListener {
     private static final String ARG_PARAM1 = "param1";
     public static final int REQUEST_KEY = 8888;
     @BindView(R.id.more_one)
@@ -127,6 +109,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     TextView document;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
+    @BindView(R.id.more_four)
+    TextView moreFour;
+    @BindView(R.id.recycler_view_hz)
+    RecyclerView recyclerViewHz;
 
     private HomeResponseBean homeResponseBean;
 
@@ -140,6 +126,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private RecyclerArrayAdapter<HomeResponseBean.Project> adapter;
     private RecyclerArrayAdapter<HomeResponseBean.Project> adapterSkill;
     private RecyclerArrayAdapter<HomeResponseBean.Project> adapterList;
+    private RecyclerArrayAdapter<HomeResponseBean.Project> adapterHz;
 
     public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
@@ -235,7 +222,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ " + s.getPrice());
             }
         };
 
@@ -253,14 +240,16 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice()+"/天");
+                baseViewHolder.setText(R.id.price, " ￥ " + s.getPrice() + "/天");
             }
         };
 
         adapterSkill.setOnItemClickListener((view1, i) -> {
-            WebViewActivity.startActivity(HomeFragment.this.getContext(), adapterSkill.getAllData().get(i).getUrl(),
+            WebViewActivity.startActivity(HomeFragment.this.getContext(),
+                    adapterSkill.getAllData().get(i).getUrl(),
                     adapterSkill.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_SKILL_DETAIL);
+                    WebViewActivity.HOME_SKILL_DETAIL,
+                    adapterList.getAllData().get(i).getCollected());
         });
 
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
@@ -271,7 +260,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
-                baseViewHolder.setText(R.id.price, " ￥ "+s.getPrice());
+                baseViewHolder.setText(R.id.price, " ￥ " + s.getPrice());
             }
         };
 
@@ -279,8 +268,35 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             WebViewActivity.startActivity(HomeFragment.this.getContext(),
                     adapterList.getAllData().get(i).getUrl(),
                     adapterList.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_WEIBAO_DETAIL);
+                    WebViewActivity.HOME_WEIBAO_DETAIL, adapterList.getAllData().get(i).getCollected());
         });
+
+
+        adapterHz = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.help_item) {
+            @Override
+            protected void convert(BaseViewHolder baseViewHolder, HomeResponseBean.Project homeBean) {
+                baseViewHolder.setText(R.id.title, homeBean.getTitle());
+                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+                baseViewHolder.setText(R.id.address, homeBean.getDesc());
+                baseViewHolder.setText(R.id.distance, homeBean.getDistance());
+            }
+        };
+
+        adapterHz.setOnItemClickListener((view1, i) -> {
+            WebViewActivity.startActivity(HomeFragment.this.getContext(),
+                    adapterList.getAllData().get(i).getUrl(),
+                    adapterList.getAllData().get(i).getId(),
+                    WebViewActivity.HOME_HZ_DETAIL, adapterList.getAllData().get(i).getCollected());
+        });
+
+
+        recyclerViewHz.setLayoutManager(new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recyclerViewHz.setAdapter(adapterHz);
 
         recyclerViewClassic.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
@@ -332,6 +348,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             FindProjectActivity.startActivity(HomeFragment.this.getContext(), 2);
         });
 
+        moreFour.setOnClickListener(v -> {
+            HelpActivity.startActivity(HomeFragment.this.getContext());
+        });
+
         presenter.getUpdateVersion();
         presenter.checkApp();
 
@@ -348,7 +368,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void onRefresh() {
         locationAdd.setText(Constants.selectCity);
         //刷新切换城市
-         city = selectCity;
+        city = selectCity;
         presenter.getFirstPage(latData, lngData);
 
 
@@ -359,13 +379,13 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if(presenter != null)
+            if (presenter != null)
                 presenter.getFirstPage(latData, lngData);
         }
     }
 
 
-    private void changeAddress(String address){
+    private void changeAddress(String address) {
         locationAdd.setText(address);
         Constants.city = address;
         GeocodeSearch geocoderSearch = new GeocodeSearch(getContext());
@@ -381,8 +401,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-        if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size()>0){
-            LatLonPoint point =  geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
+        if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size() > 0) {
+            LatLonPoint point = geocodeResult.getGeocodeAddressList().get(0).getLatLonPoint();
             presenter.getFirstPage(getContext(), String.valueOf(point.getLatitude()),
                     String.valueOf(point.getLongitude()));
         }
@@ -392,8 +412,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            if (requestCode == REQUEST_KEY){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_KEY) {
                 changeAddress(data.getStringExtra(INTENT_KEY));
             }
         }
@@ -408,7 +428,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void getData(HomeResponseBean bean) {
         homeResponseBean = bean;
         swipe.setRefreshing(false);
-        if(bean.getCarousel() != null){
+        if (bean.getCarousel() != null) {
             List<BannerInfo> bannerInfos = new ArrayList<>();
             for (int i = 0; i < bean.getCarousel().size(); i++) {
                 BannerInfo info = new BannerInfo();
@@ -421,46 +441,51 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             imageCycleView.setImageResources(bannerInfos, (bannerInfo, i, view) -> {
 
 
-                if(bean.getCarousel().get(i).getType() == 1){
+                if (bean.getCarousel().get(i).getType() == 1) {
                     WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
                             bean.getCarousel().get(i).getLink());
-                }else{
+                } else {
                     WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
                             bean.getCarousel().get(i));
                 }
             });
         }
 
-        if(bean.getProject() != null){
+        if (bean.getProject() != null) {
             adapter.clear();
             adapter.addAll(bean.getProject());
         }
 
-        if(bean.getOdd() != null){
+        if (bean.getOdd() != null) {
             adapterSkill.clear();
             adapterSkill.addAll(bean.getOdd());
         }
 
-        if(bean.getMaintenance() != null){
+        if (bean.getMaintenance() != null) {
             adapterList.clear();
             adapterList.addAll(bean.getMaintenance());
         }
 
-        if(bean.getAdvertisement() != null){
+        if (bean.getAdvertisement() != null) {
             Glide.with(this).load(bean.getAdvertisement().get(0).getImage())
                     .placeholder(R.drawable.banner02)
                     .into(banner);
-        }else{
+        } else {
             Glide.with(this).load("")
                     .placeholder(R.drawable.banner02)
                     .into(banner);
         }
 
+        if(bean.getMutual() != null){
+            adapterHz.clear();
+            adapterHz.addAll(bean.getMutual());
+        }
+
         banner.setOnClickListener(v -> {
-            if(bean.getAdvertisement().get(0).getType() == 1){
+            if (bean.getAdvertisement().get(0).getType() == 1) {
                 WebViewOutActivity.startActivity(HomeFragment.this.getContext(),
                         bean.getAdvertisement().get(0).getLink());
-            }else{
+            } else {
                 WebViewDetailActivity.startActivity(HomeFragment.this.getContext(),
                         bean.getAdvertisement().get(0));
             }
@@ -472,7 +497,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void getData(String bean) {
         //ToastUtil.show(bean);
-        if(!TextUtils.equals(bean, "1")){
+        if (!TextUtils.equals(bean, "1")) {
             System.exit(0);
         }
     }
@@ -480,9 +505,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void getData(UpdateInfo s) {
-        if (TextUtils.equals(s.getVersion(), Utils.getVersionCode())){
+        if (TextUtils.equals(s.getVersion(), Utils.getVersionCode())) {
             return;
-        }else{
+        } else {
             file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), ApiConstants.APPFILENAME);
             url = s.getDownload_url();
             if (url != null) {   //有更新的包
@@ -526,7 +551,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                         intent, "application/vnd.android.package-archive", file, true);
                 startActivity(intent);
 
-            }else {
+            } else {
                 Utils.installApk(HomeFragment.this.getContext(), file);
             }
 

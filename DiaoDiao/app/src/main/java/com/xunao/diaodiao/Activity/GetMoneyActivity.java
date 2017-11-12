@@ -154,6 +154,11 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
             return;
         }
 
+        if (Float.valueOf(money) - 100f < 0){
+            ToastUtil.show("提现金额不能低于100元，低于100元请联系客服 ");
+            return;
+        }
+
 
         GetCashRes res = new GetCashRes();
         res.setCash(money);

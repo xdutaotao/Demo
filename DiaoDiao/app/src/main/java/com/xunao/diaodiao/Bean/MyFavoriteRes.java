@@ -8,52 +8,15 @@ import java.util.List;
  */
 
 public class MyFavoriteRes {
-    private List<Project> project;
-    private List<Project> supervisor;
-    private List<Project> odd;
-    private List<Project> maintenance;
-    private List<Project> mutual;
+    private List<Project> listInfo;
 
-    public List<Project> getSupervisor() {
-        return supervisor;
+    public List<Project> getListInfo() {
+        return listInfo;
     }
 
-    public void setSupervisor(List<Project> supervisor) {
-        this.supervisor = supervisor;
+    public void setListInfo(List<Project> listInfo) {
+        this.listInfo = listInfo;
     }
-
-    public List<Project> getOdd() {
-        return odd;
-    }
-
-    public void setOdd(List<Project> odd) {
-        this.odd = odd;
-    }
-
-    public List<Project> getMaintenance() {
-        return maintenance;
-    }
-
-    public void setMaintenance(List<Project> maintenance) {
-        this.maintenance = maintenance;
-    }
-
-    public List<Project> getMutual() {
-        return mutual;
-    }
-
-    public void setMutual(List<Project> mutual) {
-        this.mutual = mutual;
-    }
-
-    public List<Project> getProject() {
-        return project;
-    }
-
-    public void setProject(List<Project> project) {
-        this.project = project;
-    }
-
 
     public static class Project {
         private int id;
@@ -69,7 +32,15 @@ public class MyFavoriteRes {
         private int total_day;
         private String daily_wage;
         private String door_fee;
+        private int info_type;
 
+        public int getInfo_type() {
+            return info_type;
+        }
+
+        public void setInfo_type(int info_type) {
+            this.info_type = info_type;
+        }
 
         public String getSupervisor_fee() {
             return supervisor_fee;

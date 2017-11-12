@@ -37,7 +37,7 @@ import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
  * 项目进度
  * create by
  */
-public class SkillProjReceiveProgressActivity extends BaseActivity implements SkillProjReceiveProgressView, SwipeRefreshLayout.OnRefreshListener {
+public class SkillProjReceiveProgressActivity extends BaseActivity implements SkillProjReceiveProgressView {
 
     @Inject
     SkillProjReceiveProgressPresenter presenter;
@@ -55,8 +55,8 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
     RecyclerView recyclerView;
     @BindView(R.id.sign)
     Button sign;
-    @BindView(R.id.swipe)
-    com.gzfgeh.swipeheader.SwipeRefreshLayout swipe;
+//    @BindView(R.id.swipe)
+//    com.gzfgeh.swipeheader.SwipeRefreshLayout swipe;
 
     private RecyclerArrayAdapter<MyAcceptProjectWorkRes.WorkBean> adapter;
     private String phone;
@@ -244,7 +244,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         };
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
-        swipe.setOnRefreshListener(this);
+        //swipe.setOnRefreshListener(this);
 
 
         sign.setOnClickListener(v -> {
@@ -254,21 +254,21 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         });
     }
 
-    @Override
-    public void onRefresh() {
-        presenter.myAcceptProjectWork(getIntent().getIntExtra(INTENT_KEY, 0), who);
-    }
+//    @Override
+//    public void onRefresh() {
+//        presenter.myAcceptProjectWork(getIntent().getIntExtra(INTENT_KEY, 0), who);
+//    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        onRefresh();
-
+        //onRefresh();
+        presenter.myAcceptProjectWork(getIntent().getIntExtra(INTENT_KEY, 0), who);
     }
 
     @Override
     public void getData(MyAcceptProjectWorkRes res) {
-        swipe.setRefreshing(false);
+        //swipe.setRefreshing(false);
         if (res.getWorks() != null) {
             MyAcceptProjectWorkRes.WorksBean worksBean = res.getWorks();
             title.setText(worksBean.getTitle());

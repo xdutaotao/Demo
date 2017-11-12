@@ -130,6 +130,7 @@ import rx.Observable;
 import rx.Subscriber;
 
 import static android.R.attr.id;
+import static com.xunao.diaodiao.Activity.WebViewActivity.HOME_HZ_DETAIL;
 import static com.xunao.diaodiao.Common.Constants.CACHE_DIR;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_PROJECT_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU;
@@ -146,6 +147,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
+import static com.xunao.diaodiao.Common.Constants.HOME_HZ;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
@@ -1279,6 +1281,8 @@ public class LoginModel extends BaseModel {
             rateKey = "mySupervisorDetail";
         }else if(who == COMPANY_RELEASE_HUZHU_WAIT){
             rateKey = "allMutualDetail";
+        }else if(who == HOME_HZ){
+            rateKey = "mutualDetail";
         }
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }

@@ -44,6 +44,15 @@ public class JoinDetailRes {
         private String title;
         private String region;
         private String point;
+        private String map;
+
+        public String getMap() {
+            return map;
+        }
+
+        public void setMap(String map) {
+            this.map = map;
+        }
 
         public String getTitle() {
             return title;

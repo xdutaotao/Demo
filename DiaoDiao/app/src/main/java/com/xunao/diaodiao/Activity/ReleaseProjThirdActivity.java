@@ -177,7 +177,7 @@ public class ReleaseProjThirdActivity extends BaseActivity implements ReleasePro
         }
 
         if (jianli) {
-            timeText.setText("监理验收时间");
+            timeText.setText("验收开始时间");
             feeText.setText("监理费");
             projectFee.setText(req.getSupervisor_fee());
             typeRecyclerView.setVisibility(View.GONE);

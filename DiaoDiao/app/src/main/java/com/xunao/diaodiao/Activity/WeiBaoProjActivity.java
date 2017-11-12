@@ -55,7 +55,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.get_money)
     Button getMoney;
 
@@ -96,7 +96,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             showToolbarBack(toolBar, titleText, "维保进度");
         }
 
-        adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.sign_detail_item) {
+        adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.weibao_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, WeiBaoProgRes.WorkBean s) {
                 RecyclerView recyclerView = (RecyclerView) baseViewHolder.getConvertView().findViewById(R.id.recycler_view_item);
@@ -116,24 +116,35 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
-                itemAdapter.addAll(s.getImages());
+                if(s.getImages() != null && s.getImages().size()>0)
+                    itemAdapter.addAll(s.getImages());
 
 
                 baseViewHolder.setText(R.id.address, s.getLocation());
+
+
                 if(s.getApply() == 1){
+                    //申请打款
+                    baseViewHolder.setVisible(R.id.image_layout, false);
+                    baseViewHolder.setVisible(R.id.item_bottom, true);
+
                     if (s.getPass() == 3) {
                         //审核中
-                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                                + " 审核中");
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "审核中");
+
                     } else if (s.getPass() == 2) {
                         //未通过审核
-                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                                + " 未通过审核");
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "未通过审核");
+
                     } else {
-                        baseViewHolder.setText(R.id.time, Utils.getNowDateMonth(s.getSign_time())
-                                + " 审核通过");
+                        baseViewHolder.setVisible(R.id.content, false);
+                        baseViewHolder.setText(R.id.content_time, "审核通过");
                     }
                 }else{
+                    baseViewHolder.setVisible(R.id.item_bottom, false);
+                    baseViewHolder.setVisible(R.id.image_layout, true);
                     baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
                             + " 工作拍照");
                 }
@@ -202,10 +213,14 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 //审核中
                 adapter.removeAllFooter();
                 getMoney.setVisibility(View.GONE);
+            }else if(workBean.getApply() == 1 && workBean.getPass() == 1){
+                //审核通过
+                adapter.removeAllFooter();
+                getMoney.setVisibility(View.GONE);
             }
 
         } else {
-            //recyclerView.showEmpty();
+            setFooter();
         }
     }
 

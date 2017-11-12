@@ -48,6 +48,8 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_WAIT;
+import static com.xunao.diaodiao.Common.Constants.HOME_HZ;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class WebViewActivity extends BaseActivity implements ProjectDetailView {
@@ -93,6 +95,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public static final String SKILL_RECIEVE_JIANLI_DOING = "SKILL_RECIEVE_JIANLI_DOING";
     public static final String HOME_SKILL_DETAIL = "home_skill_detail";
     public static final String HOME_WEIBAO_DETAIL = "home_weibao_detail";
+    public static final String HOME_HZ_DETAIL = "HOME_HZ_DETAIL";
     public static final String HOME_JIANLI_DETAIL = "home_jianli_detail";
     public static final String COMPANY_PROJ = "company_proj";
     /**
@@ -264,6 +267,19 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
             }else if(TextUtils.equals(btnType, HOME_JIANLI_DETAIL)) {
                 presenter.postProject(this, id, 4);
+            }else if(TextUtils.equals(btnType, HOME_HZ_DETAIL)) {
+                if(projectBean != null){
+                    new IOSDialog(this).builder()
+                            .setMsg(projectBean.getMutual().getContact_mobile())
+                            .setNegativeButton("取消", null)
+                            .setNegativeBtnColor(R.color.accept_btn_default)
+                            .setPositiveBtnColor(R.color.accept_btn_default)
+                            .setPositiveButton("呼叫", v1 -> {
+                                Utils.startCallActivity(this, projectBean.getMutual().getContact_mobile());
+                            })
+                            .show();
+                }
+
             }else {
                 if (project_type == 0) {
                     //联系发布人
@@ -401,7 +417,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 || TextUtils.equals(btnType, RECEIVE_JIANLI_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
-            apply.setVisibility(View.VISIBLE);
+            apply.setVisibility(View.GONE);
         } else if (TextUtils.equals(btnType, RECEIVE_PROJ_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setText("联系发布人");
@@ -415,7 +431,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             //技术人员 发布项目 进行中
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.GONE);
-        } else {
+        } else if(TextUtils.equals(btnType, HOME_HZ_DETAIL)) {
+            //互助
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setText("联系他");
+            apply.setVisibility(View.VISIBLE);
+            presenter.getFindProjDetail(this, id, COMPANY_RELEASE_HUZHU_WAIT);
+
+        }else {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.GONE);
         }
@@ -511,7 +534,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
                     TextUtils.equals(btnType, HOME_SKILL_DETAIL) ||
                         TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
-                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
+                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING) ||
+                                TextUtils.equals(btnType, HOME_WEIBAO_DETAIL)) {
             getMenuInflater().inflate(R.menu.menu_proj_detail, menu);
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
@@ -531,7 +555,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
                     TextUtils.equals(btnType, HOME_SKILL_DETAIL)||
                         TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
-                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
+                            TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING) ||
+                                TextUtils.equals(btnType, HOME_WEIBAO_DETAIL)) {
             if (isCollect) {
                 menu.findItem(R.id.action_like).setIcon(R.drawable.icon_shoucang02_fill);
             } else {
@@ -552,7 +577,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                             TextUtils.equals(btnType, SKILL_RECIEVE_PROJECT_DOING) ||
                                 TextUtils.equals(btnType, HOME_SKILL_DETAIL)||
                                     TextUtils.equals(btnType, SKILL_RECIEVE_WEIBAO_DOING) ||
-                                        TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)) {
+                                        TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING) ||
+                                            TextUtils.equals(btnType, HOME_WEIBAO_DETAIL)){
                         int types = 0;
                         if (type == 0) {
                             types = 1;
@@ -574,6 +600,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                         }else if(TextUtils.equals(btnType, SKILL_RECIEVE_JIANLI_DOING)){
                             //监理
                             types = 2;
+                        }else if(TextUtils.equals(btnType, HOME_WEIBAO_DETAIL)){
+                            //首页维保
+                            types = 4;
                         }
 
 

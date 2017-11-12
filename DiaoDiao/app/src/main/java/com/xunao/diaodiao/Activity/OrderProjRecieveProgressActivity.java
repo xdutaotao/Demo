@@ -248,22 +248,29 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     public void getData(MyPublishOddWorkRes res) {
         if (res.getWork() == null || res.getWork().size() == 0) {
             bottomBtnLayout.setVisibility(View.GONE);
-
+            setFooter();
         } else {
             adapter.addAll(res.getWork());
             workBeanNoPass = res.getWork().get(res.getWork().size()-1);
-            if(workBeanNoPass.getPass() == 2){
-                //审核未通过
-                bottomBtnLayout.setVisibility(View.VISIBLE);
-                setFooter();
-            }else if(workBeanNoPass.getPass() == 3){
-                //审核中
-                bottomBtnLayout.setVisibility(View.GONE);
-                //setFooter();
+            if(workBeanNoPass.getApply() == 1){
+                //申请打款
+                if(workBeanNoPass.getPass() == 2){
+                    //审核未通过
+                    bottomBtnLayout.setVisibility(View.VISIBLE);
+                    setFooter();
+                }else if(workBeanNoPass.getPass() == 3){
+                    //审核中
+                    bottomBtnLayout.setVisibility(View.GONE);
+                    //setFooter();
+                }else{
+                    bottomBtnLayout.setVisibility(View.GONE);
+
+                }
             }else{
                 bottomBtnLayout.setVisibility(View.GONE);
-
+                setFooter();
             }
+
 
             if(workBeanNoPass.getApply() == 1 &&
                     workBeanNoPass.getPaid() == 1){
@@ -290,6 +297,12 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             public void onBindView(View view) {
                 post = (TextView) view.findViewById(R.id.post);
                 applyMoney = (TextView) view.findViewById(R.id.apply_money);
+                TextView time = (TextView) view.findViewById(R.id.time);
+                time.setText(Utils.getNowDateMonth());
+                if(workBeanNoPass != null && (workBeanNoPass.getApply() == 1) && workBeanNoPass.getPass() == 2){
+                    //拒绝
+                    applyMoney.setVisibility(View.GONE);
+                }
                 post.setOnClickListener(v -> {
                     //提交进度
                     postProgress(2);

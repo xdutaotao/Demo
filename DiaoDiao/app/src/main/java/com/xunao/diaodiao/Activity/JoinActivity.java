@@ -125,11 +125,11 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
 
         pointLayout.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(req.getSort())) {
-                point.setTextColor(getResources().getColor(R.color.colorAccent));
+                point.setTextColor(getResources().getColor(R.color.nav_gray));
                 req.setSort("");
             } else {
-                point.setTextColor(getResources().getColor(R.color.nav_gray));
-                req.setSort("asc");
+                point.setTextColor(getResources().getColor(R.color.colorAccent));
+                req.setSort("desc");
             }
 
             page = 1;
