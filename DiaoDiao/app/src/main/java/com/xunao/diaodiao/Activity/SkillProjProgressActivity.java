@@ -104,6 +104,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private int projStatus = 0;
     private boolean photoPost;
     GetMoneyReq req;
+    private int type;
 
     public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
@@ -127,6 +128,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
         worksid = getIntent().getIntExtra("WORKSID", 0);
+        type = ShareUtils.getValue(TYPE_KEY, 0);
         adapter = new RecyclerArrayAdapter<SkillProjProgPhotoRes.InfoBean>(this, R.layout.weibao_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, SkillProjProgPhotoRes.InfoBean s) {
@@ -148,7 +150,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
 
-                baseViewHolder.setText(R.id.time, Utils.millToYearString(s.getDate()));
+                baseViewHolder.setText(R.id.time, Utils.millToYearString(s.getDate()) +" 拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
 
 
@@ -160,32 +162,47 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     //第一阶段
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getDate())+" 审核");
                     if(s.getAudit_status() == 3){
                         //审核中
-                        baseViewHolder.setVisible(R.id.content, false);
-                        baseViewHolder.setText(R.id.content_time, "第一阶段审核中");
+                        //baseViewHolder.setVisible(R.id.content, false);
+
+                        if(type == 1){
+                            //公司
+                            baseViewHolder.setText(R.id.content_time, "第一阶段提交待我确认，确认通过后将工费汇给对方(7天后自动打款)");
+                        }else{
+                            baseViewHolder.setText(R.id.content_time, "第一阶段审核中");
+                        }
                     }else if(s.getAudit_status() == 2){
                         //未通过审核
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "第一阶段提交审核未通过");
                     }else {
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "第一阶段提交审核通过");
                     }
                 }else{
                     //第二阶段
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getDate()));
                     if(s.getAudit_status() == 3){
                         //审核中
-                        baseViewHolder.setVisible(R.id.content, false);
-                        baseViewHolder.setText(R.id.content_time, "第二阶段审核中");
+                        //baseViewHolder.setVisible(R.id.content, false);
+
+                        if(type == 1){
+                            //公司
+                            baseViewHolder.setText(R.id.content_time, "第二阶段提交待我确认，确认通过后将工费汇给对方(7天后自动打款)");
+                        }else{
+                            baseViewHolder.setText(R.id.content_time, "第二阶段审核中");
+                        }
+
                     }else if(s.getAudit_status() == 2){
                         //未通过审核
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "第二阶段提交审核未通过");
                     }else {
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "第二阶段提交审核通过");
                     }
                 }

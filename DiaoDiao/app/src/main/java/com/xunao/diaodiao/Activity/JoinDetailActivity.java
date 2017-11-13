@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,7 +48,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     @BindView(R.id.rating_star)
     RatingBar ratingStar;
     @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.name)
     TextView name;
     @BindView(R.id.address)
@@ -93,8 +95,11 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         phone = getIntent().getStringExtra("flag");
 
         if (!TextUtils.isEmpty(phone)) {
-            sayLayout.setVisibility(View.GONE);
+            //sayLayout.setVisibility(View.GONE);
             contact.setVisibility(View.VISIBLE);
+        }else{
+            contact.setVisibility(View.GONE);
+            sayLayout.setVisibility(View.GONE);
         }
 //        type = ShareUtils.getValue(TYPE_KEY, 0);
 //
@@ -133,7 +138,8 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             }
         };
 
-        recyclerView.setAdapterDefaultConfig(adapter, this, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         onRefresh();
 
@@ -212,7 +218,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
         }
 
         if (s.getEvaluate_Info() == null) {
-            recyclerView.showEmpty();
+            //recyclerView.showEmpty();
             return;
         }
 
@@ -227,7 +233,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     @Override
     public void onFailure() {
         if (adapter.getAllData().size() == 0) {
-            recyclerView.showEmpty();
+            //recyclerView.showEmpty();
         } else {
             if (type == 0) {
                 adapter.stopMore();

@@ -314,7 +314,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
                 } else {
                     //公司详情
-                    JoinDetailActivity.startActivity(this, id);
+                    JoinDetailActivity.startActivity(this, id, phone);
                 }
 
                 return true;

@@ -130,6 +130,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                     //申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, true);
                     baseViewHolder.setVisible(R.id.image_layout, false);
+                    baseViewHolder.setText(R.id.content, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
 
                     if (workBean.getPass() == 3) {
                         //审核中
@@ -143,22 +144,13 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
                     } else if (workBean.getPass() == 2) {
                         //审核未通过
-                        baseViewHolder.setText(R.id.content, "审核未通过");
-                        baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                        baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                        baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                        baseViewHolder.setText(R.id.content_time, "审核未通过");
                     } else {
                         //审核通过
                         if (workBean.getApply() == 1) {
-                            baseViewHolder.setText(R.id.content, "已确认打款");
-                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                            baseViewHolder.setText(R.id.content_time, "已确认打款");
                         } else {
-                            baseViewHolder.setText(R.id.content, "审核通过");
-                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
+                            baseViewHolder.setText(R.id.content_time, "审核通过");
                         }
 
                     }

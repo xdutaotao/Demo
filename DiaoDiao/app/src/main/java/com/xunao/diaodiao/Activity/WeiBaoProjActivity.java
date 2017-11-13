@@ -127,19 +127,19 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getSign_time()) +" 审核");
                     if (s.getPass() == 3) {
                         //审核中
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "审核中");
 
                     } else if (s.getPass() == 2) {
                         //未通过审核
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "未通过审核");
 
                     } else {
-                        baseViewHolder.setVisible(R.id.content, false);
+                        //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "审核通过");
                     }
                 }else{

@@ -86,6 +86,7 @@ import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
 import com.xunao.diaodiao.Bean.WeiBaoDetailRes;
@@ -3207,6 +3208,41 @@ public class LoginModel extends BaseModel {
         req.setVerify(sb.toString());
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    public Observable<SkillRes> goodSkills(int action){
+        String rateKey = "goodSkills";
+        if(action == 1){
+            //评论标签
+            rateKey = "evaluateTag";
+        }else if(action == 2){
+            //申诉
+            rateKey = "appealTag";
+        }else{
+
+        }
+
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type)
+                .append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(sb.toString());
+
+        return config.getRetrofitService().goodSkills(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
     }
 

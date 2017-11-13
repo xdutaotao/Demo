@@ -57,6 +57,7 @@ import com.xunao.diaodiao.Bean.SkillProjDetailRes;
 import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
 import com.xunao.diaodiao.Bean.SkillProjRecieveDetailRes;
 import com.xunao.diaodiao.Bean.SkillRecieveProjDetailRes;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Bean.UpdateInfo;
 import com.xunao.diaodiao.Bean.UpdateVersionBean;
@@ -348,6 +349,9 @@ public interface RetrofitService {
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<Object>> updateProject(@Body RequestBody body);
+
+    @POST(ApiConstants.BASE_URL_INDEX)
+    Observable<BaseBean<SkillRes>> goodSkills(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<MaintenanceTypeRes>> maintenanceType(@Body RequestBody body);

@@ -105,7 +105,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "
-                        + workBean.getRemark());
+                        + "拍照");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
                 String content = "";
 
@@ -117,18 +117,18 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time()) +"审核");
                     if (workBean.getPass() == 1) {
                         //审核通过
-                        baseViewHolder.setText(R.id.content, "已打款");
+                        baseViewHolder.setText(R.id.content_time, "已打款");
                         //bottomBtnLayout.setVisibility(View.GONE);
                     } else if (workBean.getPass() == 2) {
-                        baseViewHolder.setText(R.id.content, "审核未通过");
+                        baseViewHolder.setText(R.id.content_time, "审核未通过");
                         //bottomBtnLayout.setVisibility(View.VISIBLE);
                         //adapter.removeAllFooter();
                         //workBeanNoPass = workBean;
                     } else {
-                        baseViewHolder.setText(R.id.content, "审核中");
+                        baseViewHolder.setText(R.id.content_time, "审核中");
                         //bottomBtnLayout.setVisibility(View.GONE);
                     }
 
