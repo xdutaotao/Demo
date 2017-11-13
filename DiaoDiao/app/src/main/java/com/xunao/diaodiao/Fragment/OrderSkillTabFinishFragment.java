@@ -30,6 +30,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_DONE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO_DONE;
+
 
 /**
  * Description:
@@ -150,11 +154,15 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                         if(who == Constants.SKILL_RELEASE_WEIBAO){
                             WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                                     homeBean.getUrl(),
-                                    homeBean.getMaintenance_id());
+                                    homeBean.getMaintenance_id(),
+                                    (homeBean.getStatus() != 4 && (homeBean.getEvaluate_status() == 2))
+                                            ? SKILL_RELEASE_WEIBAO_DONE:0);
                         }else{
                             WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                                     homeBean.getUrl(),
-                                    homeBean.getOdd_id());
+                                    homeBean.getOdd_id(),
+                                    (homeBean.getStatus() != 4 && (homeBean.getEvaluate_status() == 2))
+                                            ? SKILL_RELEASE_LINGGONG_DONE:0);
                         }
                     }
                 });
@@ -166,11 +174,17 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
             if(who == Constants.SKILL_RELEASE_WEIBAO){
                 WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getMaintenance_id());
+                        adapter.getAllData().get(i).getMaintenance_id(),
+                        (adapter.getAllData().get(i).getStatus() != 4 &&
+                                (adapter.getAllData().get(i).getEvaluate_status() == 2 ))
+                                ? SKILL_RELEASE_WEIBAO_DONE:0);
             }else{
                 WebViewActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id());
+                        adapter.getAllData().get(i).getOdd_id(),
+                        (adapter.getAllData().get(i).getStatus() != 4 &&
+                                (adapter.getAllData().get(i).getEvaluate_status() == 2 ))
+                                ? SKILL_RELEASE_LINGGONG_DONE:0);
             }
 
         });

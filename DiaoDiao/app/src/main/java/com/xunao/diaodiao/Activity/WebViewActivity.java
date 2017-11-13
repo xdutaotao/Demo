@@ -50,6 +50,9 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_HUZHU_WAIT;
 import static com.xunao.diaodiao.Common.Constants.HOME_HZ;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_DONE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 public class WebViewActivity extends BaseActivity implements ProjectDetailView {
@@ -280,6 +283,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                             .show();
                 }
 
+            }else if(project_type == SKILL_RELEASE_WEIBAO_DONE) {
+                //维保
+                RecommandActivity.startActivity(this, id, 4);
+            }else if(project_type == SKILL_RELEASE_LINGGONG_DONE) {
+                RecommandActivity.startActivity(this, id, 2);
             }else {
                 if (project_type == 0) {
                     //联系发布人
@@ -476,6 +484,13 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 || (ShareUtils.getValue(TYPE_KEY, 0) == 0)){
             apply.setVisibility(View.GONE);
             bottomBtnLayout.setVisibility(View.GONE);
+        }
+
+        if(project_type == SKILL_RELEASE_WEIBAO_DONE ||
+                project_type == SKILL_RELEASE_LINGGONG_DONE){
+            bottomBtnLayout.setVisibility(View.GONE);
+            apply.setVisibility(View.VISIBLE);
+            apply.setText("去评价");
         }
 
     }

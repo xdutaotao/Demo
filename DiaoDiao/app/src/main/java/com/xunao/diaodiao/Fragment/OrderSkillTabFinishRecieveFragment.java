@@ -192,9 +192,13 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                     }else{
                         //查看
                         if (who == Constants.SKILL_RECIEVE_LINGGONG){
-                            WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                                    homeBean.getUrl(),
-                                    homeBean.getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+//                            WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+//                                    homeBean.getUrl(),
+//                                    homeBean.getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+
+                            WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean, who);
+
                         }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                             WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
                                     homeBean, who);
@@ -215,9 +219,13 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
         adapter.setOnItemClickListener((v, i) -> {
 
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
-                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                        adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+//                WebViewActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+//                        adapter.getAllData().get(i).getUrl(),
+//                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+
+                WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                        adapter.getAllData().get(i), who);
+
             }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i), who);

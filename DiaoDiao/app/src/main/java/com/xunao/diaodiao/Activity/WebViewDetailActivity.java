@@ -63,6 +63,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
@@ -283,7 +284,10 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         if (odd != null) {
             url = odd.getUrl();
-            if (who == SKILL_RECIEVE_PROJECT || (who == SKILL_RECIEVE_WEIBAO) || (who == SKILL_RECIEVE_JIANLI)) {
+            if (who == SKILL_RECIEVE_PROJECT ||
+                    (who == SKILL_RECIEVE_WEIBAO) ||
+                        (who == SKILL_RECIEVE_JIANLI) ||
+                            (who == SKILL_RECIEVE_LINGGONG)) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 if (odd.getEvaluate_status() == 1) {
                     //已评价
@@ -511,6 +515,18 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             }else if(who == SKILL_RECIEVE_JIANLI){
                 RecommandActivity.startActivity(this,
                         odd.getSupervisor_id(), 2);
+            }else if(who == COMPANY_RELEASE_PROJECT_DONE){
+                RecommandActivity.startActivity(this,
+                        project.getProject_id(), 1);
+            }else if(who == COMPANY_RELEASE_JIANLI_DONE){
+                RecommandActivity.startActivity(this,
+                        project.getSupervisor_id(), 2);
+            }else if(who == COMPANY_RELEASE_WEIBAO_DONE){
+                RecommandActivity.startActivity(this,
+                        project.getMaintenance_id(), 4);
+            }else if(who == SKILL_RECIEVE_LINGGONG){
+                RecommandActivity.startActivity(this,
+                        odd.getOdd_id(), 3);
             }
 
             if (TextUtils.equals("联系他", apply.getText().toString())){

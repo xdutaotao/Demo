@@ -42,6 +42,8 @@ public class Constants {
 
     public static final int SKILL_RELEASE_LINGGONG = 0;
     public static final int SKILL_RELEASE_WEIBAO = 10;
+    public static final int SKILL_RELEASE_WEIBAO_DONE = 1110;
+    public static final int SKILL_RELEASE_LINGGONG_DONE = 11110;
     public static final int SKILL_RELEASE_HUZHU = 100;
     public static final int SKILL_RECIEVE_LINGGONG = 1;
     public static final int SKILL_RECIEVE_WEIBAO = 11;
