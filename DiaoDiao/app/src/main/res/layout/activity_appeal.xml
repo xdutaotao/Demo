@@ -66,8 +66,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="200px"
-                android:paddingLeft="50px"
+                android:layout_height="wrap_content"
+                android:padding="20px"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/select_skill_item"
                 android:id="@+id/recycler_view_reason"/>
 
             <View style="@style/item_divider" />

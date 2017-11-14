@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -268,6 +270,15 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     WebViewActivity.startActivity(this, req.getUrl());
                     finish();
                 })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        RxBus.getInstance().post(Constants.DESTORY);
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false)
                 .show();
     }
 
@@ -348,6 +359,15 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 wechat.setChecked(isChecked);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
