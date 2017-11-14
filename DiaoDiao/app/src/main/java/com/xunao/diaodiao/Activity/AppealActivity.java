@@ -24,6 +24,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Present.AppealPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxBus;
@@ -80,7 +81,7 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
     @BindView(R.id.appeal_type)
     LinearLayout appealType;
 
-    private RecyclerArrayAdapter<String> adapter;
+    private RecyclerArrayAdapter<SkillRes.SkillBean> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
     public static final String APPEAL = "appeal";
 
@@ -141,12 +142,12 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             appealType.setVisibility(View.GONE);
         }
 
-        adapter = new RecyclerArrayAdapter<String>(this, R.layout.select_skill_item) {
+        adapter = new RecyclerArrayAdapter<SkillRes.SkillBean>(this, R.layout.select_skill_item) {
             @Override
-            protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setText(R.id.skill_text, s);
+            protected void convert(BaseViewHolder baseViewHolder, SkillRes.SkillBean s) {
+                baseViewHolder.setText(R.id.skill_text, s.getName());
 
-                if (skillsName.toString().contains(s)) {
+                if (skillsName.toString().contains(s.getName())) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                 } else {
@@ -155,14 +156,14 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s)) {
+                    if (skillsName.toString().contains(s.getName())) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
                         ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s);
+                        skillsName.remove(s.getName());
                     } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
                         ((TextView) v).setTextColor(Color.WHITE);
-                        skillsName.add(s);
+                        skillsName.add(s.getName());
                     }
 
                     content.setText(skillsName.toString().subSequence(1,
@@ -199,16 +200,14 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             }
         });
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerViewReason.setLayoutManager(manager);
+//        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        recyclerViewReason.setLayoutManager(manager);
         recyclerViewReason.setAdapter(adapter);
 
         recyclerView.setAdapter(imageAdapter);
         imageAdapter.add(ADD);
         initImagePicker();
-
-        adapter.addAll(reasonList);
 
 
         content.addTextChangedListener(new TextWatcher() {
@@ -262,6 +261,9 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
             presenter.myProjectWorkFail(AppealActivity.this, req, who);
         });
 
+        presenter.goodSkills(this);
+        reason.setVisibility(View.GONE);
+        recyclerViewReason.setVisibility(View.GONE);
     }
 
     @Override
@@ -290,6 +292,11 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
         RxBus.getInstance().post("appeal");
         ToastUtil.show("提交成功");
         finish();
+    }
+
+    @Override
+    public void getData(SkillRes s) {
+        adapter.addAll(s.getTags());
     }
 
     private void selectPhoto() {

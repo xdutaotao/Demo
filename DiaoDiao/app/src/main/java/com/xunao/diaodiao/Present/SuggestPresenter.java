@@ -3,6 +3,7 @@ package com.xunao.diaodiao.Present;
 import android.content.Context;
 
 import com.xunao.diaodiao.Bean.EvaluateReq;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -58,6 +59,22 @@ public class SuggestPresenter extends BasePresenter<SuggestView> {
                 .subscribe(new RxSubUtils<TypeInfoRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(TypeInfoRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+    //评论
+    public void goodSkills(Context context){
+        mCompositeSubscription.add(model.goodSkills(1)
+                .subscribe(new RxSubUtils<SkillRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(SkillRes token) {
                         getView().getData(token);
                     }
 

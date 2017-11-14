@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.SuggestPresenter;
 import com.xunao.diaodiao.R;
@@ -96,6 +97,11 @@ public class SuggestActivity extends BaseActivity implements SuggestView {
     public void getData(Object s) {
         ToastUtil.show("发送成功!");
         finish();
+    }
+
+    @Override
+    public void getData(SkillRes s) {
+
     }
 
     @Override

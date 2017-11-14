@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyAcceptProjectWorkRes;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Model.AppealModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
@@ -30,6 +31,22 @@ public class AppealPresenter extends BasePresenter<AppealView> {
                 .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(Object token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
+                    }
+                }));
+    }
+
+    //申诉
+    public void goodSkills(Context context){
+        mCompositeSubscription.add(model.goodSkills(2)
+                .subscribe(new RxSubUtils<SkillRes>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(SkillRes token) {
                         getView().getData(token);
                     }
 

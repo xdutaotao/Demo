@@ -72,6 +72,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="评价"
+                android:id="@+id/reason"
+                android:visibility="gone"
                 android:padding="50px"/>
 
             <android.support.v7.widget.RecyclerView
@@ -81,6 +83,7 @@
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="4"
                 tools:listitem="@layout/select_skill_item"
+                android:visibility="gone"
                 android:id="@+id/type_recycler_view"/>
 
             <View style="@style/item_divider" />

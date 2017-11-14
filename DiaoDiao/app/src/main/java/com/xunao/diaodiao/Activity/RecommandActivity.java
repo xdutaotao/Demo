@@ -20,6 +20,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.xunao.diaodiao.Bean.EvaluateReq;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.SuggestPresenter;
 import com.xunao.diaodiao.R;
@@ -203,6 +204,7 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
         typeRecyclerView.setAdapter(typeAdapter);
 
         presenter.getTypeInfo(this);
+        presenter.goodSkills(this);
     }
 
     private void initImagePicker() {
@@ -264,6 +266,11 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
     public void getData(Object s) {
         ToastUtil.show("提交成功");
         finish();
+    }
+
+    @Override
+    public void getData(SkillRes s) {
+
     }
 
     @Override
