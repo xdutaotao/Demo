@@ -1263,7 +1263,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setType(type);
         req.setUserid(userid);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
 
         return config.getRetrofitService().projectDetail(setBody(rateKey, time, req))
@@ -1394,7 +1394,7 @@ public class LoginModel extends BaseModel {
         req.setProject_id(id);
         req.setUser_type(type);
         req.setProject_type(types);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().collectWork(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1419,7 +1419,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setOdd_id(id);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1444,7 +1444,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setMaintenance_id(id);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getFindLingGongDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1464,7 +1464,7 @@ public class LoginModel extends BaseModel {
         req.setCompany_id(id);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getCompanyInfo(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1486,7 +1486,7 @@ public class LoginModel extends BaseModel {
         req.setId(id);
         req.setPageSize(10);
         req.setPage(page);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getOddInfo(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1507,7 +1507,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setOdd_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().mySkillProjDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1528,7 +1528,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setOdd_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().mySkillProjRecieveDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1552,7 +1552,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setContent(content);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().submitSuggest(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1681,7 +1681,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().mySkillWait(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1713,7 +1713,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddWait(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1780,7 +1780,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().mySkillDoing(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1840,7 +1840,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().mySkillFinish(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1872,7 +1872,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setPage(page);
         req.setPageSize(10);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddFinish(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1902,7 +1902,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setWork_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myPublishOddSuccess(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1957,7 +1957,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myPublishOddFail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -1982,7 +1982,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setOdd_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myPublishOddWorkProgress(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2006,7 +2006,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setOdd_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddWork(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2028,7 +2028,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptOddSubmit(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2055,7 +2055,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setProject_id(id);
         req.setProject_type(projType);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getApplyList(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2077,7 +2077,7 @@ public class LoginModel extends BaseModel {
 
         GetMoneyReq req = new GetMoneyReq();
         req.setTechnician_id(id+"");
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getApplyDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2115,7 +2115,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setProject_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectDetail(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2142,7 +2142,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setProject_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectWork(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2170,7 +2170,7 @@ public class LoginModel extends BaseModel {
         req.setUserid(userid);
         req.setType(type);
         req.setProject_id(id);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectSignList(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2235,7 +2235,7 @@ public class LoginModel extends BaseModel {
         req.setType(type);
         req.setProject_id(projId);
         req.setWorks_id(worksId);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectWorkList(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2295,7 +2295,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectWorkSub(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2321,7 +2321,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myAcceptProjectSign(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2464,7 +2464,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().myProjectWorkPass(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2488,7 +2488,7 @@ public class LoginModel extends BaseModel {
 
         GetMoneyReq req = new GetMoneyReq();
         req.setType_ids(s);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().typeExpenses(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2512,7 +2512,7 @@ public class LoginModel extends BaseModel {
 
         GetMoneyReq req = new GetMoneyReq();
         req.setProject_type(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2620,7 +2620,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setType(type);
         req.setUserid(userid);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().publishOddType(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2732,7 +2732,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().balancePay(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2853,7 +2853,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2880,7 +2880,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().publishOddPrice(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2914,7 +2914,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().publishProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -2945,7 +2945,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().checkFinish(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3140,7 +3140,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3173,7 +3173,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3205,7 +3205,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3240,7 +3240,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().goodSkills(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3269,7 +3269,7 @@ public class LoginModel extends BaseModel {
                 .append(req.getTotal_day())
                 .append("security");
 
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().countOddExpenses(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3293,7 +3293,7 @@ public class LoginModel extends BaseModel {
 
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().updateProject(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
@@ -3321,7 +3321,7 @@ public class LoginModel extends BaseModel {
         GetMoneyReq req = new GetMoneyReq();
         req.setUserid(userid);
         req.setType(type);
-        req.setVerify(sb.toString());
+        req.setVerify(Utils.getMD5(sb.toString()));
 
         return config.getRetrofitService().maintenanceType(setBody(rateKey, time, req))
                 .compose(RxUtils.handleResult());
