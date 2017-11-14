@@ -105,7 +105,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultVi
 
     @Override
     public void fail(String msg) {
-        ToastUtil.show(msg);
+        //ToastUtil.show(msg);
         if (adapter.getAllData().size() == 0)
             recyclerView.setVisibility(View.GONE);
         else

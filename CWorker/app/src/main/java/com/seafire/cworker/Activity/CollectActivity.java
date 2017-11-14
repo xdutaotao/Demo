@@ -924,32 +924,28 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             stringLength = dataString.length();
 
 
-            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                 ToastUtil.show("外包装长不能为空");
                 return;
             }
 
             dataString = outWidth.getText().toString();
             stringLength = dataString.length();
-            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                 ToastUtil.show("外包装宽不能为空");
                 return;
             }
 
             dataString = outHeight.getText().toString();
             stringLength = dataString.length();
-            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                 ToastUtil.show("外包装高不能为空");
                 return;
             }
 
             dataString = outWeight.getText().toString();
             stringLength = dataString.length();
-            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                    TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+            if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                 ToastUtil.show("毛重不能为空");
                 return;
             }
@@ -962,32 +958,28 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             if (singleLayout.getVisibility() == View.VISIBLE) {
                 dataString = singleLength.getText().toString();
                 stringLength = dataString.length();
-                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ) {
                     ToastUtil.show("单个包装长不能为空");
                     return;
                 }
 
                 dataString = singleWidth.getText().toString();
                 stringLength = dataString.length();
-                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                     ToastUtil.show("单个包装宽不能为空");
                     return;
                 }
 
                 dataString = singleHeight.getText().toString();
                 stringLength = dataString.length();
-                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
                     ToastUtil.show("单个包装高不能为空");
                     return;
                 }
 
                 dataString = singleWeight.getText().toString();
                 stringLength = dataString.length();
-                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                        TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+                if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ) {
                     ToastUtil.show("单个包装重不能为空");
                     return;
                 }
@@ -1003,32 +995,28 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         dataString = length.getText().toString();
         stringLength = dataString.length();
-        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
             ToastUtil.show("零件长不能为空");
             return;
         }
 
         dataString = width.getText().toString();
         stringLength = dataString.length();
-        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
             ToastUtil.show("零件宽不能为空");
             return;
         }
 
         dataString = height.getText().toString();
         stringLength = dataString.length();
-        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
             ToastUtil.show("零件高不能为空");
             return;
         }
 
         dataString = weight.getText().toString();
         stringLength = dataString.length();
-        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0")) ||
-                TextUtils.equals(dataString.substring(0, stringLength - 2), "0")) {
+        if (TextUtils.isEmpty(dataString) || (stringLength == 1 && TextUtils.equals(dataString, "0"))) {
             ToastUtil.show("净重不能为空");
             return;
         }

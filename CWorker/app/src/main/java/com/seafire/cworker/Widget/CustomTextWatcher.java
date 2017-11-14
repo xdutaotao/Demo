@@ -68,7 +68,8 @@ public class CustomTextWatcher implements TextWatcher {
             }
         } else {
             //editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-            drawable.setVisibility(View.GONE);
+            if(drawable != null)
+                drawable.setVisibility(View.GONE);
         }
         if (isNumPoint){
 
