@@ -138,19 +138,23 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+                        adapter.getAllData().get(i).getOdd_id(),
+                        WebViewActivity.RECEIVE_LG_DETAIL, "110");
             }else if (who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getProject_id(), WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
+                        adapter.getAllData().get(i).getProject_id(),
+                        WebViewActivity.SKILL_RECIEVE_PROJECT_DOING, "110");
             }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.SKILL_RECIEVE_WEIBAO_DOING);
+                        adapter.getAllData().get(i).getMaintenance_id(),
+                        WebViewActivity.SKILL_RECIEVE_WEIBAO_DOING, "110");
             }else if(who == Constants.SKILL_RECIEVE_JIANLI){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getSupervisor_id(), WebViewActivity.SKILL_RECIEVE_JIANLI_DOING);
+                        adapter.getAllData().get(i).getSupervisor_id(),
+                        WebViewActivity.SKILL_RECIEVE_JIANLI_DOING, "110");
             }
 
 

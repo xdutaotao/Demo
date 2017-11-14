@@ -115,13 +115,13 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
 
         adapter.setOnItemClickListener((v, i) -> {
             if(who == Constants.SKILL_RELEASE_WEIBAO){
-                WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                WebViewActivity.startPhoneActivity(OrderSkillTabDoingFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getMaintenance_id());
+                        adapter.getAllData().get(i).getMaintenance_id(), "110");
             }else{
-                WebViewActivity.startActivity(OrderSkillTabDoingFragment.this.getContext(),
+                WebViewActivity.startPhoneActivity(OrderSkillTabDoingFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id());
+                        adapter.getAllData().get(i).getOdd_id(), "110");
             }
 
         });

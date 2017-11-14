@@ -113,6 +113,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
     private ShareSDK myShareSDK;
     private String title;
+    private String phone;
 
     //技术人员 发布维保
     public static void startActivity(Context context, OrderSkillRes.OddBean bean, int who) {
@@ -210,7 +211,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         advertisement = (HomeResponseBean.Advertisement) getIntent().getSerializableExtra("advertisement");
         skillWBBean = (OrderSkillRes.OddBean) getIntent().getSerializableExtra("weibao");
 
-
         url = getIntent().getStringExtra("favorite");
         String notification = getIntent().getStringExtra("notification");
         if(!TextUtils.isEmpty(notification)){
@@ -231,6 +231,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.VISIBLE);
             apply.setText("联系他");
+            phone = huzhuProject.getContact_mobile();
         }
 
         if (project != null) {
@@ -261,8 +262,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                             who == COMPANY_RELEASE_WEIBAO_DOING ||
                                 who == COMPANY_RELEASE_JIANLI_DOING ) {
                 bottomBtnLayout.setVisibility(View.GONE);
-                apply.setVisibility(View.GONE);
-
+                apply.setVisibility(View.VISIBLE);
+                apply.setText("联系他");
+                phone = "110";
             } else if (who == COMPANY_RELEASE_PROJECT_DONE ||
                             who == COMPANY_RELEASE_WEIBAO_DONE ||
                                 who == COMPANY_RELEASE_JIANLI_DONE) {
@@ -530,13 +532,16 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             }
 
             if (TextUtils.equals("联系他", apply.getText().toString())){
-                new IOSDialog(WebViewDetailActivity.this).builder()
-                        .setMsg(huzhuProject.getContact_mobile())
-                        .setNegativeButton("呼叫", v1 -> {
-                            Utils.startCallActivity(this, huzhuProject.getContact_mobile());
-                        })
-                        .setPositiveButton("取消", null)
-                        .show();
+                if(!TextUtils.isEmpty(phone)){
+                    new IOSDialog(WebViewDetailActivity.this).builder()
+                            .setMsg(phone)
+                            .setNegativeButton("呼叫", v1 -> {
+                                Utils.startCallActivity(this, phone);
+                            })
+                            .setPositiveButton("取消", null)
+                            .show();
+                }
+
             }
 
         });

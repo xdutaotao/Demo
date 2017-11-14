@@ -199,28 +199,28 @@ public class LoginActivity extends BaseActivity implements LoginView, View.OnCli
                     finish();
                     dialog.dismiss();
 
-//                    String username = JMessageClient.getMyInfo().getUserName();
-//                    String appKey = JMessageClient.getMyInfo().getAppKey();
-//                    UserEntry user = UserEntry.getUser(username, appKey);
-//                    if (null == user) {
-//                        user = new UserEntry(username, appKey);
-//                        user.save();
-//                    }
-//                    JMessageClient.getMyInfo().setNickname(User.getInstance().getUserInfo().getPerson().getName());
-//                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, JMessageClient.getMyInfo(), new BasicCallback() {
-//                        @Override
-//                        public void gotResult(final int status, final String desc) {
-//                            dialog.dismiss();
-//                            if (status == 0) {
-//                                ToastUtil.show("登录成功");
-//                                finish();
-//                            } else {
-//                                ToastUtil.show("登录成功");
-//                                finish();
-//                                //HandleResponseCode.onHandle(LoginActivity.this, status, false);
-//                            }
-//                        }
-//                    });
+                    String username = JMessageClient.getMyInfo().getUserName();
+                    String appKey = JMessageClient.getMyInfo().getAppKey();
+                    UserEntry user = UserEntry.getUser(username, appKey);
+                    if (null == user) {
+                        user = new UserEntry(username, appKey);
+                        user.save();
+                    }
+                    JMessageClient.getMyInfo().setNickname(User.getInstance().getUserInfo().getPerson().getName());
+                    JMessageClient.updateMyInfo(UserInfo.Field.nickname, JMessageClient.getMyInfo(), new BasicCallback() {
+                        @Override
+                        public void gotResult(final int status, final String desc) {
+                            dialog.dismiss();
+                            if (status == 0) {
+                                ToastUtil.show("登录成功");
+                                finish();
+                            } else {
+                                ToastUtil.show("登录成功");
+                                finish();
+                                //HandleResponseCode.onHandle(LoginActivity.this, status, false);
+                            }
+                        }
+                    });
 
                 } else {
                     dialog.dismiss();

@@ -105,7 +105,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         email.setText(userInfo.getPerson().getEmail());
         address.setText(userInfo.getPerson().getAddress());
         addressLayout.setOnClickListener(v -> {
-            AddressActivity.startActivityForResult(PersonalActivity.this, address.getText().toString());
+            AddressActivity.startActivityForResult(PersonalActivity.this, userInfo.getPerson().getAddress());
         });
 
         headLayout.setOnClickListener(this);

@@ -114,6 +114,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     private ShareSDK myShareSDK;
     private String title;
     private int collectID;
+    private String phone;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -154,6 +155,25 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         intent.putExtra(INTENT_KEY, url);
         intent.putExtra(ID_KEY, id);
         intent.putExtra("BTN_TYPE", btnType);
+        context.startActivity(intent);
+    }
+
+    //底部没有button
+    public static void startActivity(Context context, String url, int id, String btnType, String phone) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(ID_KEY, id);
+        intent.putExtra("BTN_TYPE", btnType);
+        intent.putExtra("phone", phone);
+        context.startActivity(intent);
+    }
+
+    //底部没有button
+    public static void startPhoneActivity(Context context, String url, int id, String btnType) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra(INTENT_KEY, url);
+        intent.putExtra(ID_KEY, id);
+        intent.putExtra("phone", btnType);
         context.startActivity(intent);
     }
 
@@ -201,7 +221,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         btnType = getIntent().getStringExtra("BTN_TYPE");
         project_type = getIntent().getIntExtra("project_type", 0);
         url = getIntent().getStringExtra(INTENT_KEY);
-
+        phone = getIntent().getStringExtra("phone");
 
         findProject = (FindProjectRes.FindProject) getIntent().getSerializableExtra("project_bean");
         if (findProject != null) {
@@ -291,16 +311,18 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             }else {
                 if (project_type == 0) {
                     //联系发布人
+//                    if(!TextUtils.isEmpty(phone)){
+//                        new IOSDialog(this).builder()
+//                                .setMsg(phone)
+//                                .setNegativeButton("取消", null)
+//                                .setNegativeBtnColor(R.color.accept_btn_default)
+//                                .setPositiveBtnColor(R.color.accept_btn_default)
+//                                .setPositiveButton("呼叫", v1 -> {
+//                                    Utils.startCallActivity(this, phone);
+//                                })
+//                                .show();
+//                    }
 
-                    new IOSDialog(this).builder()
-                            .setMsg(Constants.tel)
-                            .setNegativeButton("取消", null)
-                            .setNegativeBtnColor(R.color.accept_btn_default)
-                            .setPositiveBtnColor(R.color.accept_btn_default)
-                            .setPositiveButton("呼叫", v1 -> {
-                                Utils.startCallActivity(this, Constants.tel);
-                            })
-                            .show();
 
 
                 } else if (project_type == 1) {
@@ -309,6 +331,19 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 }
 
             }
+
+            if(!TextUtils.isEmpty(phone)){
+                new IOSDialog(this).builder()
+                        .setMsg(phone)
+                        .setNegativeButton("取消", null)
+                        .setNegativeBtnColor(R.color.accept_btn_default)
+                        .setPositiveBtnColor(R.color.accept_btn_default)
+                        .setPositiveButton("呼叫", v1 -> {
+                            Utils.startCallActivity(this, phone);
+                        })
+                        .show();
+            }
+
 
         });
 
@@ -491,6 +526,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.VISIBLE);
             apply.setText("去评价");
+        }
+
+        if(!TextUtils.isEmpty(phone)){
+            apply.setVisibility(View.VISIBLE);
+            apply.setText("联系他");
         }
 
     }
