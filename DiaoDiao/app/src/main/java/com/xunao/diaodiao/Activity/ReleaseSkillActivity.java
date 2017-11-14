@@ -291,6 +291,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
     @Override
     public void getPrice(GetPercentRes res) {
         price = res.getPrice();
+        fee.setHint("填写日薪(不低于"+price+"元)");
     }
 
     @Override
@@ -443,7 +444,7 @@ public class ReleaseSkillActivity extends BaseActivity implements ReleaseSkillVi
                     }
 
                     try {
-                        if (Integer.valueOf(price) > Integer.valueOf(fee.getText().toString().trim())) {
+                        if (Float.valueOf(price) > Float.valueOf(fee.getText().toString().trim())) {
                             ToastUtil.show("日薪不能低于" + price);
                             return;
                         }

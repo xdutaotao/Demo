@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -63,6 +63,8 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
     TextView contentNum;
     @BindView(R.id.type_recycler_view)
     RecyclerView typeRecyclerView;
+    @BindView(R.id.reason)
+    TextView reason;
     private int projectId;
 
     private String ADD = "ADD";
@@ -169,28 +171,27 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
         adapter.add(ADD);
 
 
-
         typeAdapter = new RecyclerArrayAdapter<TypeInfoRes.Type_Info>(this, R.layout.select_skill_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, TypeInfoRes.Type_Info s) {
                 baseViewHolder.setText(R.id.skill_text, s.getTitle());
 
-                if (skillsName.toString().contains(s.getId())){
+                if (skillsName.toString().contains(s.getId())) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
-                }else{
+                } else {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s.getId())){
+                    if (skillsName.toString().contains(s.getId())) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
-                        ((TextView)v).setTextColor(getResources().getColor(R.color.gray));
+                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
                         skillsName.remove(s.getId());
-                    }else{
+                    } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
-                        ((TextView)v).setTextColor(Color.WHITE);
+                        ((TextView) v).setTextColor(Color.WHITE);
                         skillsName.add(s.getId());
                     }
                 });
@@ -198,11 +199,13 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
         };
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        typeRecyclerView.setLayoutManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        typeRecyclerView.setLayoutManager(linearLayoutManager);
         typeRecyclerView.setAdapter(typeAdapter);
 
+        reason.setVisibility(View.GONE);
+        typeRecyclerView.setVisibility(View.GONE);
         presenter.getTypeInfo(this);
         presenter.goodSkills(this);
     }

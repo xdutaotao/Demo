@@ -262,8 +262,8 @@ public class AppealActivity extends BaseActivity implements AppealView, Compound
         });
 
         presenter.goodSkills(this);
-        reason.setVisibility(View.GONE);
-        recyclerViewReason.setVisibility(View.GONE);
+//        reason.setVisibility(View.GONE);
+//        recyclerViewReason.setVisibility(View.GONE);
     }
 
     @Override
