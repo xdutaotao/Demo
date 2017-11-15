@@ -545,8 +545,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         sp.setUrl(url);
         sp.setTitleUrl(url);
         sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+
+        sp.setText("我分享了来自调调居服的"+title+"信息，快来看看吧！");
         title = "调调居服分享信息";
-        sp.setText("我分享了来自调调居服*******的信息，快来看看吧！");
         sp.setTitle(title);
 
         Platform wx = myShareSDK.getPlatform (Wechat.NAME);
@@ -562,8 +563,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         sp.setUrl(url);
         sp.setTitleUrl(url);
         sp.setImageUrl("http://api.diao-diao.com/images/logo.png");
+        sp.setText("我分享了来自调调居服的"+title+"信息，快来看看吧！");
         title = "调调居服分享信息";
-        sp.setText("我分享了来自调调居服*******的信息，快来看看吧！");
         sp.setTitle(title);
 
         Platform wx = myShareSDK.getPlatform (WechatMoments.NAME);
