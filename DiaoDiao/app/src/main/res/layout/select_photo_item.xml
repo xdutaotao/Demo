@@ -10,6 +10,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:padding="30px"
-        android:src="@drawable/ic_launcher_round" />
+        android:src="@drawable/zhanwei" />
 
 </RelativeLayout>

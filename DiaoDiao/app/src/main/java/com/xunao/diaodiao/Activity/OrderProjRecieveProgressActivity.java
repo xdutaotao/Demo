@@ -113,6 +113,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                     //工作拍照
                     baseViewHolder.setVisible(R.id.image_layout, true);
                     baseViewHolder.setVisible(R.id.item_bottom, false);
+                    baseViewHolder.setText(R.id.remark, workBean.getRemark());
                 }else{
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);

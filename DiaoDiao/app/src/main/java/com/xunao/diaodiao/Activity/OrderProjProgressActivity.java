@@ -87,7 +87,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                     //未申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, false);
                     baseViewHolder.setVisible(R.id.image_layout, true);
-
+                    baseViewHolder.setText(R.id.remark, workBean.getRemark());
                 }else{
                     //申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, true);
@@ -108,10 +108,6 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                     }
 
                 }
-
-
-
-
 
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);

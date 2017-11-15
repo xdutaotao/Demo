@@ -158,6 +158,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     //工作拍照
                     baseViewHolder.setVisible(R.id.item_bottom, false);
                     baseViewHolder.setVisible(R.id.image_layout, true);
+                    baseViewHolder.setText(R.id.remark, s.getRemark());
                 }else if(s.getAudit() == 1){
                     //第一阶段
                     baseViewHolder.setVisible(R.id.image_layout, false);
