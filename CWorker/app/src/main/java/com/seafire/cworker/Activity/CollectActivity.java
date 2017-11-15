@@ -533,6 +533,8 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             }
         });
 
+        number.setOnFocusChangeListener(this);
+
         name.setOnClickListener(v -> {
             if (TextUtils.isEmpty(name.getText().toString())) {
                 return;
