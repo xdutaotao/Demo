@@ -96,6 +96,23 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
                     baseViewHolder.setText(R.id.type, s.getType());
                 }else if(s.getInfo_type() == 4){
                     //维保
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_jianli);
+                    baseViewHolder.setText(R.id.title, s.getTitle());
+                    baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
+                    baseViewHolder.setText(R.id.address, s.getAddress());
+                    if (TextUtils.isEmpty(s.getProject_fee())){
+                        baseViewHolder.setVisible(R.id.price, false);
+                        baseViewHolder.setVisible(R.id.price_text, false);
+                    }else{
+                        baseViewHolder.setText(R.id.price, "￥ "+s.getProject_fee());
+                    }
+                    baseViewHolder.setText(R.id.type, s.getType());
+                }else if(s.getInfo_type() == 5){
+                    //互助
+//                    baseViewHolder.setText(R.id.title, s.getTitle());
+//                    baseViewHolder.setText(R.id.time, s.get());
+//                    baseViewHolder.setText(R.id.address, s.getAddress());
+//                    baseViewHolder.setText(R.id.distance, s.getD());
 
                 }
 
