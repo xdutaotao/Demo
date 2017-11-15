@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Model.EditSkillModel;
 import com.xunao.diaodiao.Model.LoginModel;
@@ -95,6 +96,21 @@ public class EditSkillPresenter extends BasePresenter<EditSkillView> {
                         if (!TextUtils.equals(msg, "网络错误"))
                             msg = "请求失败";
                         getView().onFailure();
+                    }
+                }));
+    }
+
+    public void goodSkills(){
+        mCompositeSubscription.add(model.goodSkills(0)
+                .subscribe(new RxSubUtils<SkillRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(SkillRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        ToastUtil.show(s);
                     }
                 }));
     }

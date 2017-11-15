@@ -29,6 +29,7 @@ import com.xunao.diaodiao.Bean.CheckFinishRes;
 import com.xunao.diaodiao.Bean.FillSkillReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Bean.SkillRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Model.User;
@@ -103,6 +104,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     RelativeLayout addressLayout;
 
     private RecyclerArrayAdapter<TypeInfoRes.Type_Info> adapter;
+//    private RecyclerArrayAdapter<SkillRes.SkillBean> adapter;
     private List<TypeInfoRes.Type_Info> listData = new ArrayList<>();
 
     private List<String> skillsName = new ArrayList<>();
@@ -166,6 +168,37 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 });
             }
         };
+
+
+
+//        adapter = new RecyclerArrayAdapter<SkillRes.SkillBean>(this, R.layout.select_skill_item) {
+//            @Override
+//            protected void convert(BaseViewHolder baseViewHolder, SkillRes.SkillBean s) {
+//                baseViewHolder.setText(R.id.skill_text, s.getName());
+//
+//                if (skillsName.toString().contains(s.getId()+"")) {
+//                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
+//                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
+//                } else {
+//                    baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blank_bg);
+//                    baseViewHolder.setTextColorRes(R.id.skill_text, R.color.gray);
+//                }
+//
+//                baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
+//                    if (skillsName.toString().contains(s.getId()+"")) {
+//                        v.setBackgroundResource(R.drawable.btn_blank_bg);
+//                        ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
+//                        skillsName.remove(s.getId());
+//                    } else {
+//                        v.setBackgroundResource(R.drawable.btn_blue_bg);
+//                        ((TextView) v).setTextColor(Color.WHITE);
+//                        skillsName.add(s.getId()+"");
+//                    }
+//                });
+//            }
+//        };
+
+
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -281,6 +314,7 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
 
         presenter.getTypeInfo();
         presenter.checkFinish();
+        presenter.goodSkills();
     }
 
     @Override
@@ -400,6 +434,11 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
     public void getData(LoginResBean bean) {
         finish();
         ToastUtil.show("完善完成");
+    }
+
+    @Override
+    public void getData(SkillRes bean) {
+        //adapter.addAll(bean.getSkills());
     }
 
     @Override
