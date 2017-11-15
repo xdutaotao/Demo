@@ -107,11 +107,43 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+            //WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+            int type = adapter.getAllData().get(i).getInfo_type();
+            if(type == 1){
+                //项目
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_DETAIL, 1);
+            }else if(type == 2){
+                //监理
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_DETAIL, 1);
+            }else if(type == 3){
+                //零工
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_SKILL_DETAIL, 1);
+            }else if(type == 4){
+                //维保
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_WEIBAO_DETAIL, 1);
+            }else if(type == 5){
+                //互助
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_HZ_DETAIL, 1);
+            }
+
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         onRefresh();
     }
 
