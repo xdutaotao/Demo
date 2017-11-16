@@ -44,6 +44,7 @@ import butterknife.ButterKnife;
 import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 
@@ -334,7 +335,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setTitle("联系他");
+        menu.findItem(R.id.action_contact).setTitle("申诉");
         return true;
     }
 
@@ -343,10 +344,10 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         switch (item.getItemId()) {
             case R.id.action_contact:
 
-                ApplyPassReq applyPassReq = new ApplyPassReq();
-                applyPassReq.setTechnician_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                applyPassReq.setProject_id(1000);
-                ApplyDetailActivity.startActivity(this, applyPassReq);
+                req.setProject_type(3);
+                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                AppealActivity.startActivity(this,
+                        req, YI_TYPE);
 
 
                 return true;

@@ -148,6 +148,8 @@
                 android:textColor="@color/accept_btn_default"
                 android:text="通过后将工钱汇入零工账户"/>
 
+
+
         </LinearLayout>
 
 

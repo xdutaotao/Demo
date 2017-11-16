@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderSkillDoingPresenter;
@@ -29,6 +31,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 
 
 /**
@@ -104,11 +108,25 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
 
                 if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.request, "维保情况");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
                     baseViewHolder.setText(R.id.request, "监理情况");
+                    baseViewHolder.setVisible(R.id.contact, true);
+                }else if(who == SKILL_RECIEVE_LINGGONG) {
+                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else{
                     baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setVisible(R.id.contact, false);
                 }
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(homeBean.getTechnician_id());
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                            applyPassReq);
+                });
 
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {

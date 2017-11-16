@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -165,6 +167,16 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                                             ? SKILL_RELEASE_LINGGONG_DONE:0);
                         }
                     }
+                });
+
+                baseViewHolder.setVisible(R.id.contact, true);
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(homeBean.getTechnician_id());
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
+                            applyPassReq);
                 });
 
             }

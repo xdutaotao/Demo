@@ -10,10 +10,12 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ApplyActivity;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -121,11 +123,14 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
                     baseViewHolder.setText(R.id.request, "查看");
                     baseViewHolder.setVisible(R.id.distance, true);
+                    baseViewHolder.setVisible(R.id.contact, false);
                 }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
                     baseViewHolder.setText(R.id.request, "监理进度");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
@@ -155,6 +160,16 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                                 homeBean.getSupervisor_id(), 2);
                     }
                 });
+
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(homeBean.getTechnician_id());
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(OrderCompJLFragment.this.getContext(),
+                            applyPassReq);
+                });
+
             }
         };
 

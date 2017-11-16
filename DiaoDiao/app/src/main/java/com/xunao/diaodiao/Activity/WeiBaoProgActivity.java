@@ -54,6 +54,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
@@ -94,6 +95,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
     private MyPublishOddWorkRes.WorkBean workBeanDoing;
     private int who;
     private int supervisor_id;
+    GetMoneyReq req;
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProgActivity.class);
@@ -219,6 +221,9 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
             bottomBtnLayout.setVisibility(View.GONE);
         }
 
+        req = new GetMoneyReq();
+        req.setProject_id(maintenanceId);
+
     }
 
     @Override
@@ -258,17 +263,8 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (who == COMPANY_RELEASE_JIANLI_DOING  ||
-                who == COMPANY_RELEASE_JIANLI_DONE) {
-            //暖通公司角色  监理
-            getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("联系他");
-        } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
-                    who == COMPANY_RELEASE_WEIBAO_DONE){
-            //技术员
-            getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("联系他");
-        }
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        menu.findItem(R.id.action_contact).setTitle("申诉");
 
         return true;
     }
@@ -278,23 +274,19 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
         switch (item.getItemId()) {
             case R.id.action_contact:
 
+
+
                 if (who == COMPANY_RELEASE_JIANLI_DOING  ||
                         who == COMPANY_RELEASE_JIANLI_DONE) {
                     //暖通公司角色  监理
-                    ApplyPassReq applyPassReq = new ApplyPassReq();
-                    applyPassReq.setTechnician_id(supervisor_id);
-                    applyPassReq.setProject_id(who);
-                    ApplyDetailActivity.startActivity(this, applyPassReq);
-                } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
+                    req.setProject_type(2);
+                }else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
                         who == COMPANY_RELEASE_WEIBAO_DONE){
-                    //维保
-                    ApplyPassReq applyPassReq = new ApplyPassReq();
-                    applyPassReq.setTechnician_id(supervisor_id);
-                    applyPassReq.setProject_id(who);
-                    ApplyDetailActivity.startActivity(this, applyPassReq);
-
-                    //JoinDetailActivity.startActivity(this, id, phone);
+                    req.setProject_type(4);
                 }
+
+                AppealActivity.startActivity(this,
+                        req, JIA_TYPE);
 
                 return true;
         }

@@ -35,6 +35,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
 /**
@@ -65,6 +66,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     private RecyclerArrayAdapter<String> imageAdapter;
     private LinearLayoutManager manager;
     private int apply_id;
+    GetMoneyReq req;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderProjProgressActivity.class);
@@ -170,7 +172,8 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
 
 
         });
-
+        req = new GetMoneyReq();
+        req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
 
     }
 
@@ -211,7 +214,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setTitle("联系他");
+        menu.findItem(R.id.action_contact).setTitle("申诉");
         return true;
     }
 
@@ -220,11 +223,9 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         switch (item.getItemId()) {
             case R.id.action_contact:
 
-                ApplyPassReq applyPassReq = new ApplyPassReq();
-                applyPassReq.setTechnician_id(apply_id);
-                applyPassReq.setProject_id(1000);
-                ApplyDetailActivity.startActivity(this, applyPassReq);
-
+                req.setProject_type(3);
+                AppealActivity.startActivity(this,
+                        req, JIA_TYPE);
 
                 return true;
         }

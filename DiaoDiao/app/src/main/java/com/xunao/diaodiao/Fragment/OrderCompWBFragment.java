@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Activity.ApplyActivity;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -121,11 +124,14 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
                     baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setVisible(R.id.contact, false);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
                     baseViewHolder.setText(R.id.request, "维保进度");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }
 
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());
@@ -156,6 +162,15 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                         RecommandActivity.startActivity(OrderCompWBFragment.this.getContext(),
                                 homeBean.getMaintenance_id(), 4);
                     }
+                });
+
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(homeBean.getTechnician_id());
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(OrderCompWBFragment.this.getContext(),
+                            applyPassReq);
                 });
             }
         };

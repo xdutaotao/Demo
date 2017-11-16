@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
+import com.xunao.diaodiao.Activity.JoinDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.RecommandActivity;
@@ -17,6 +19,7 @@ import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProgActivity;
 import com.xunao.diaodiao.Activity.WeiBaoProjActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRecieveRes;
 import com.xunao.diaodiao.Bean.OrderSkillFinishRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -98,21 +101,34 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 if (who == Constants.SKILL_RECIEVE_LINGGONG){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
+                    baseViewHolder.setVisible(R.id.contact, false);
                 }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "上门费");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_JIANLI){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }
 
 
                 if (homeBean.getStatus() == 1){
                     //已完成
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    if(who == Constants.SKILL_RECIEVE_WEIBAO){
+                        baseViewHolder.setText(R.id.request, "维保情况");
+
+                    }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
+                        baseViewHolder.setText(R.id.request, "监理进度");
+
+                    }else {
+                        baseViewHolder.setText(R.id.request, "项目进度");
+
+                    }
 
 
                     if(homeBean.getEvaluate_status() == 1){
@@ -137,15 +153,25 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
                         baseViewHolder.setText(R.id.request, "维保情况");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+
                     }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
                         baseViewHolder.setText(R.id.request, "监理进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+
                     }else {
                         baseViewHolder.setText(R.id.request, "项目进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
+
                     }
 
                 }
+
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    JoinDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                            homeBean.getProject_id(),
+                            "110");
+                });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
                     //评价 1 项目

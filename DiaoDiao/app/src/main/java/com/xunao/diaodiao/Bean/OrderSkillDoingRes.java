@@ -65,6 +65,15 @@ public class OrderSkillDoingRes {
         private int maintenance_id;
         private int supervisor_id;
         private String door_fee;
+        private int technician_id;
+
+        public int getTechnician_id() {
+            return technician_id;
+        }
+
+        public void setTechnician_id(int technician_id) {
+            this.technician_id = technician_id;
+        }
 
         public String getDoor_fee() {
             return door_fee;

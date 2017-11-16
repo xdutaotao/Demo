@@ -68,6 +68,15 @@ public class OrderCompRes {
         private int maintenance_id;
         private String door_fee;
         private int mutual_id;
+        private int technician_id;
+
+        public int getTechnician_id() {
+            return technician_id;
+        }
+
+        public void setTechnician_id(int technician_id) {
+            this.technician_id = technician_id;
+        }
 
         public int getMutual_id() {
             return mutual_id;

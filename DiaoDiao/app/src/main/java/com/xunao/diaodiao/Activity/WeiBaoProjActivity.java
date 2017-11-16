@@ -48,6 +48,8 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
 
 /**
@@ -80,6 +82,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
     private TextView postText;
     private int who;
+    private GetMoneyReq req = new GetMoneyReq();
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProjActivity.class);
@@ -344,7 +347,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setTitle("联系他");
+        menu.findItem(R.id.action_contact).setTitle("申诉");
         return true;
     }
 
@@ -353,22 +356,18 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         switch (item.getItemId()) {
             case R.id.action_contact:
 
-                if (who == COMPANY_RELEASE_JIANLI_DOING  ||
-                        who == COMPANY_RELEASE_JIANLI_DONE) {
+                if (who == SKILL_RECIEVE_JIANLI) {
                     //暖通公司角色  监理
-                    ApplyPassReq applyPassReq = new ApplyPassReq();
-//                    applyPassReq.setTechnician_id(supervisor_id);
-                    applyPassReq.setProject_id(who);
-                    ApplyDetailActivity.startActivity(this, applyPassReq);
-                } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
-                        who == COMPANY_RELEASE_WEIBAO_DONE){
+                    req.setProject_type(2);
+                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                    AppealActivity.startActivity(this,
+                            req, YI_TYPE);
+                } else if(who == SKILL_RECIEVE_WEIBAO){
                     //维保
-                    ApplyPassReq applyPassReq = new ApplyPassReq();
-//                    applyPassReq.setTechnician_id(supervisor_id);
-                    applyPassReq.setProject_id(who);
-                    ApplyDetailActivity.startActivity(this, applyPassReq);
-
-                    //JoinDetailActivity.startActivity(this, id, phone);
+                    req.setProject_type(4);
+                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                    AppealActivity.startActivity(this,
+                            req, YI_TYPE);
                 }
 
                 return true;
