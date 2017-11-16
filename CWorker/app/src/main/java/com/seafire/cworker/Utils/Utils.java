@@ -583,12 +583,12 @@ public class Utils {
      * 截取字符串 去掉后面单位
      */
     public static float subText(@NonNull String s){
-        if (s.length() < 3){
-            return 0;
-        }
+//        if (s.length() < 3){
+//            return 0;
+//        }
 
         int length = s.length();
-        return Float.valueOf(s.substring(0, length-2));
+        return Float.valueOf(s);
     }
 
     /**

@@ -139,22 +139,22 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getOdd_id(),
-                        WebViewActivity.RECEIVE_LG_DETAIL, "110");
+                        WebViewActivity.RECEIVE_LG_DETAIL);
             }else if (who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getProject_id(),
-                        WebViewActivity.SKILL_RECIEVE_PROJECT_DOING, "110");
+                        WebViewActivity.SKILL_RECIEVE_PROJECT_DOING);
             }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getMaintenance_id(),
-                        WebViewActivity.SKILL_RECIEVE_WEIBAO_DOING, "110");
+                        WebViewActivity.SKILL_RECIEVE_WEIBAO_DOING);
             }else if(who == Constants.SKILL_RECIEVE_JIANLI){
                 WebViewActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
                         adapter.getAllData().get(i).getSupervisor_id(),
-                        WebViewActivity.SKILL_RECIEVE_JIANLI_DOING, "110");
+                        WebViewActivity.SKILL_RECIEVE_JIANLI_DOING);
             }
 
 

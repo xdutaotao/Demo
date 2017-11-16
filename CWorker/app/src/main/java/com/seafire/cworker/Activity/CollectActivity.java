@@ -263,7 +263,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     private List<String> historyPathList = new ArrayList<>();
 
     private boolean isNumberSearch = false;
-    private boolean numHasFocus = false;
+    //private boolean numHasFocus = false;
     private RecyclerArrayAdapter<String> recyclerArrayAdapter;
 
     public static void startActivity(Context context) {
@@ -330,20 +330,20 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         recyclerView.setAdapter(adapter);
         submit.setOnClickListener(this);
 
-//        scrollView.setOnTouchListener((v, event) -> {
-//
-//            if (event.getAction() == MotionEvent.ACTION_MOVE && !numHasFocus) {
-//                v.getParent().requestDisallowInterceptTouchEvent(true);
-//                scrollView.setFocusable(true);
-//                scrollView.setFocusableInTouchMode(true);
-//                clearFocus();
-//            } else {
-//                v.getParent().requestDisallowInterceptTouchEvent(false);
-//                scrollView.clearFocus();
-//                getFocus();
-//            }
-//            return false;
-//        });
+        scrollView.setOnTouchListener((v, event) -> {
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE ) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                scrollView.setFocusable(true);
+                scrollView.setFocusableInTouchMode(true);
+                clearFocus();
+            } else {
+                v.getParent().requestDisallowInterceptTouchEvent(false);
+                scrollView.clearFocus();
+                getFocus();
+            }
+            return false;
+        });
 
         if (getIntent().getSerializableExtra(INTENT_KEY) == null) {
             adapter.add(ADD);
@@ -1230,8 +1230,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                 if (!hasFocus) {
                     numberTv.setTextColor(normalColor);
                     if (!TextUtils.isEmpty(number.getText().toString())) {
-                        if (!isNumberSearch && numHasFocus) {
-                            numHasFocus = false;
+                        if (!isNumberSearch ) {
                             presenter.getPartInfoByCode(this, number.getText().toString(), User.getInstance().getUserInfo().getPerson().getProject());
                         }
                     } else {
@@ -1253,12 +1252,12 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
 
         }
 
-        if (v.getId() != R.id.number) {
-            numHasFocus = false;
-            if (hasFocus) {
-                isNumberSearch = false;
-            }
-        }
+//        if (v.getId() != R.id.number) {
+//            numHasFocus = false;
+//            if (hasFocus) {
+//                isNumberSearch = false;
+//            }
+//        }
     }
 
     @Override
@@ -1267,7 +1266,6 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
             switch (v.getId()) {
 
                 case R.id.number:
-                    numHasFocus = true;
                     changeUI(event, number, numberTv);
                     break;
 
