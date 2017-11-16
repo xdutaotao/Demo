@@ -28,7 +28,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 
 /**
  * create by
@@ -89,7 +94,10 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
             presenter.getApplyPass(req);
         });
 
-        if(req.getProject_id() == 1000){
+        int who = req.getProject_id();
+        if(who == 1000 || who == COMPANY_RELEASE_JIANLI_DONE ||
+                who == COMPANY_RELEASE_JIANLI_DOING || who == COMPANY_RELEASE_WEIBAO_DOING
+                    || who == COMPANY_RELEASE_WEIBAO_DONE || who == SKILL_RELEASE_WEIBAO){
             agree.setVisibility(View.GONE);
         }
 

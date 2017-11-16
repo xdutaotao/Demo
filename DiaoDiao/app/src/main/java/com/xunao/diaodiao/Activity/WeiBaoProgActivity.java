@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import com.gzfgeh.iosdialog.IOSDialog;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
 import com.xunao.diaodiao.Bean.SkillProjProgPhotoRes;
@@ -48,6 +51,8 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
@@ -88,6 +93,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
     private MyPublishOddWorkRes.WorkBean workBeanDoing;
     private int who;
+    private int supervisor_id;
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProgActivity.class);
@@ -135,13 +141,6 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
 
                     if (workBean.getPass() == 3) {
                         //审核中
-//                        if(workBean.getApply() == 2){
-//                            //未申请打款
-//                            baseViewHolder.setText(R.id.content, "审核中");
-//                            baseViewHolder.setTextColorRes(R.id.content, R.color.accept_btn_default);
-//                            baseViewHolder.setText(R.id.content_time, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
-//                            baseViewHolder.setTextColorRes(R.id.content_time, R.color.nav_gray);
-//                        }
 
                     } else if (workBean.getPass() == 2) {
                         //审核未通过
@@ -155,10 +154,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                         }
 
                     }
-
                 }
-
-
                 if (workBean.getImages() != null && workBean.getImages().size() > 0) {
                     RecyclerView recyclerViewImages = baseViewHolder.getView(R.id.recycler_view_item);
 
@@ -231,6 +227,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
             adapter.addAll(list.getWork());
 
             workBeanDoing = list.getWork().get(list.getWork().size() - 1);
+            supervisor_id = workBeanDoing.getApply_id();
             if(workBeanDoing.getApply() == 2){
                 //工作牌照
                 bottomBtnLayout.setVisibility(View.GONE);
@@ -244,14 +241,6 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                 }else if(workBeanDoing.getPass() == 3){
                     //审核中
                     bottomBtnLayout.setVisibility(View.VISIBLE);
-//                adapter.addFooter(new DefaultRecyclerViewItem() {
-//                    @Override
-//                    public View onCreateView(ViewGroup viewGroup) {
-//                        View view = LayoutInflater.from(WeiBaoProgActivity.this)
-//                                .inflate(R.layout.company_weibao_footer, null);
-//                        return view;
-//                    }
-//                });
                 }
             }
 
@@ -265,6 +254,51 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
     public void passData(Object res) {
         ToastUtil.show("打款成功");
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (who == COMPANY_RELEASE_JIANLI_DOING  ||
+                who == COMPANY_RELEASE_JIANLI_DONE) {
+            //暖通公司角色  监理
+            getMenuInflater().inflate(R.menu.menu_collect, menu);
+            menu.findItem(R.id.action_contact).setTitle("联系他");
+        } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
+                    who == COMPANY_RELEASE_WEIBAO_DONE){
+            //技术员
+            getMenuInflater().inflate(R.menu.menu_collect, menu);
+            menu.findItem(R.id.action_contact).setTitle("联系他");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+
+                if (who == COMPANY_RELEASE_JIANLI_DOING  ||
+                        who == COMPANY_RELEASE_JIANLI_DONE) {
+                    //暖通公司角色  监理
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(supervisor_id);
+                    applyPassReq.setProject_id(who);
+                    ApplyDetailActivity.startActivity(this, applyPassReq);
+                } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
+                        who == COMPANY_RELEASE_WEIBAO_DONE){
+                    //维保
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(supervisor_id);
+                    applyPassReq.setProject_id(who);
+                    ApplyDetailActivity.startActivity(this, applyPassReq);
+
+                    //JoinDetailActivity.startActivity(this, id, phone);
+                }
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

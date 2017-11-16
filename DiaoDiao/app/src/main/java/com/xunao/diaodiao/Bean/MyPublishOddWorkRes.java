@@ -27,6 +27,25 @@ public class MyPublishOddWorkRes {
         private int paid;
         private List<String> images;
         private int apply;
+        private int supervisor_id;
+        private int apply_id;
+
+        public int getApply_id() {
+            return apply_id;
+        }
+
+        public void setApply_id(int apply_id) {
+            this.apply_id = apply_id;
+        }
+
+        public int getSupervisor_id() {
+
+            return supervisor_id;
+        }
+
+        public void setSupervisor_id(int supervisor_id) {
+            this.supervisor_id = supervisor_id;
+        }
 
         public int getWork_id() {
             return work_id;

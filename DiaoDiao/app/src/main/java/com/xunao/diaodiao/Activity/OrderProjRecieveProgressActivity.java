@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -20,6 +22,7 @@ import com.gzfgeh.defaultInterface.DefaultRecyclerViewItem;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.MyAcceptOddSubmitReq;
 import com.xunao.diaodiao.Bean.MyPublishOddWorkRes;
@@ -326,6 +329,29 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                 });
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        menu.findItem(R.id.action_contact).setTitle("联系他");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+
+                ApplyPassReq applyPassReq = new ApplyPassReq();
+                applyPassReq.setTechnician_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                applyPassReq.setProject_id(1000);
+                ApplyDetailActivity.startActivity(this, applyPassReq);
+
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

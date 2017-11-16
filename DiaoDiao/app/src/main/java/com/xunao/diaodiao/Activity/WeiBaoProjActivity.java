@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -39,6 +42,10 @@ import butterknife.ButterKnife;
 import rx.Observable;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
+import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -332,6 +339,41 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                     }
 
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        menu.findItem(R.id.action_contact).setTitle("联系他");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+
+                if (who == COMPANY_RELEASE_JIANLI_DOING  ||
+                        who == COMPANY_RELEASE_JIANLI_DONE) {
+                    //暖通公司角色  监理
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+//                    applyPassReq.setTechnician_id(supervisor_id);
+                    applyPassReq.setProject_id(who);
+                    ApplyDetailActivity.startActivity(this, applyPassReq);
+                } else if(who == COMPANY_RELEASE_WEIBAO_DOING ||
+                        who == COMPANY_RELEASE_WEIBAO_DONE){
+                    //维保
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+//                    applyPassReq.setTechnician_id(supervisor_id);
+                    applyPassReq.setProject_id(who);
+                    ApplyDetailActivity.startActivity(this, applyPassReq);
+
+                    //JoinDetailActivity.startActivity(this, id, phone);
+                }
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
