@@ -96,23 +96,18 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
                     baseViewHolder.setText(R.id.type, s.getType());
                 }else if(s.getInfo_type() == 4){
                     //维保
-                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_jianli);
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_weibao);
                     baseViewHolder.setText(R.id.title, s.getTitle());
                     baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
                     baseViewHolder.setText(R.id.address, s.getAddress());
-                    if (TextUtils.isEmpty(s.getProject_fee())){
-                        baseViewHolder.setVisible(R.id.price, false);
-                        baseViewHolder.setVisible(R.id.price_text, false);
-                    }else{
-                        baseViewHolder.setText(R.id.price, "￥ "+s.getProject_fee());
-                    }
-                    baseViewHolder.setText(R.id.type, s.getType());
-                }else if(s.getInfo_type() == 5){
-                    //互助
-//                    baseViewHolder.setText(R.id.title, s.getTitle());
-//                    baseViewHolder.setText(R.id.time, s.get());
-//                    baseViewHolder.setText(R.id.address, s.getAddress());
-//                    baseViewHolder.setText(R.id.distance, s.getD());
+                    baseViewHolder.setText(R.id.price_text, "上门费");
+                    baseViewHolder.setText(R.id.price, "￥ "+s.getDaily_wage());
+
+                }else {
+                    baseViewHolder.setBackgroundRes(R.id.bg, R.drawable.bg_huzhu);
+                    baseViewHolder.setText(R.id.title, s.getTitle());
+                    baseViewHolder.setImageResource(R.id.shou_cang, R.drawable.icon_shoucang02_fill);
+                    baseViewHolder.setText(R.id.address, s.getAddress());
 
                 }
 
@@ -124,11 +119,43 @@ public class MyFavoriteActivity extends BaseActivity implements MyFavoriteView, 
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+            //WebViewDetailActivity.startActivity(this, adapter.getAllData().get(i).getUrl());
+            int type = adapter.getAllData().get(i).getInfo_type();
+            if(type == 1){
+                //项目
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_DETAIL, 1);
+            }else if(type == 2){
+                //监理
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_DETAIL, 1);
+            }else if(type == 3){
+                //零工
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_SKILL_DETAIL, 1);
+            }else if(type == 4){
+                //维保
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_WEIBAO_DETAIL, 1);
+            }else if(type == 5){
+                //互助
+                WebViewActivity.startActivity(this, adapter.getAllData().get(i).getUrl(),
+                        adapter.getAllData().get(i).getId(),
+                        WebViewActivity.HOME_HZ_DETAIL, 1);
+            }
+
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         onRefresh();
     }
 
