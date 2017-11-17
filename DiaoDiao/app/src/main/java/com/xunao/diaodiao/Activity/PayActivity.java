@@ -173,7 +173,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         fee.setText("￥ " + req.getTotal_fee() + "元");
         balance.setText("当前余额：" + req.getBalance() + "元");
         pay.setOnClickListener(this);
-        current.setOnCheckedChangeListener(this);
+        //current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
         wechat.setOnCheckedChangeListener(this);
         current.setChecked(true);
@@ -342,19 +342,19 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
         switch (buttonView.getId()) {
             case R.id.current:
-                current.setChecked(isChecked);
+                //current.setChecked(isChecked);
                 zhifubao.setChecked(!isChecked);
                 wechat.setChecked(!isChecked);
                 break;
 
             case R.id.zhifubao:
-                current.setChecked(!isChecked);
+                //current.setChecked(!isChecked);
                 zhifubao.setChecked(isChecked);
                 wechat.setChecked(!isChecked);
                 break;
 
             case R.id.wechat:
-                current.setChecked(!isChecked);
+                //current.setChecked(!isChecked);
                 zhifubao.setChecked(!isChecked);
                 wechat.setChecked(isChecked);
                 break;

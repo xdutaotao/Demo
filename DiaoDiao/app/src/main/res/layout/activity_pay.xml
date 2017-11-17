@@ -59,6 +59,10 @@
             android:layout_height="wrap_content"
             android:button="@null"
             android:id="@+id/current"
+            android:checked="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:drawablePadding="10px"
             android:drawableRight="@drawable/checkbox_style"
             android:layout_gravity="center_vertical"/>
