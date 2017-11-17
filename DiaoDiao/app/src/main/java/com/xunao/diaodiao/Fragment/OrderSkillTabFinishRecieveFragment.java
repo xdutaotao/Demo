@@ -168,15 +168,34 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
 
                 baseViewHolder.setOnClickListener(R.id.contact, v -> {
-                    JoinDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                            homeBean.getPublish_id(),
-                            "----");
 
-//                    ApplyPassReq applyPassReq = new ApplyPassReq();
-//                    applyPassReq.setTechnician_id(homeBean.getPublish_id());
-//                    applyPassReq.setProject_id(1000);
-//                    ApplyDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-//                            applyPassReq);
+                    if(who == SKILL_RECIEVE_WEIBAO){
+                        if(homeBean.getPublish_type() == 1){
+                            //公司发布
+                            JoinDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    homeBean.getPublish_id(),
+                                    "----");
+                        }else{
+                            ApplyPassReq applyPassReq = new ApplyPassReq();
+                            applyPassReq.setTechnician_id(homeBean.getPublish_id());
+                            applyPassReq.setProject_id(1000);
+                            ApplyDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                    applyPassReq);
+                        }
+                    }else if(who == SKILL_RECIEVE_LINGGONG) {
+                        ApplyPassReq applyPassReq = new ApplyPassReq();
+                        applyPassReq.setTechnician_id(homeBean.getPublish_id());
+                        applyPassReq.setProject_id(1000);
+                        ApplyDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                applyPassReq);
+                    }else{
+                        JoinDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+                                homeBean.getPublish_id(),
+                                "----");
+                    }
+
+
+
 
 
                 });

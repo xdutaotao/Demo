@@ -67,6 +67,15 @@ public class OrderSkillDoingRes {
         private String door_fee;
         private int technician_id;
         private int publish_id;
+        private int publish_type;
+
+        public int getPublish_type() {
+            return publish_type;
+        }
+
+        public void setPublish_type(int publish_type) {
+            this.publish_type = publish_type;
+        }
 
         public int getPublish_id() {
             return publish_id;

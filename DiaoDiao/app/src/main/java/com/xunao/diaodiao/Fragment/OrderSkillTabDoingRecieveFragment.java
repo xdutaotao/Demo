@@ -128,7 +128,21 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                         JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 homeBean.getPublish_id(),
                                 "----");
-                    }else if(who == Constants.SKILL_RECIEVE_LINGGONG || who == Constants.SKILL_RECIEVE_WEIBAO){
+                    }else if( who == Constants.SKILL_RECIEVE_WEIBAO){
+                        if(homeBean.getPublish_type() == 1){
+                            //公司发布
+                            JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                    homeBean.getPublish_id(),
+                                    "----");
+                        }else{
+                            ApplyPassReq applyPassReq = new ApplyPassReq();
+                            applyPassReq.setTechnician_id(homeBean.getPublish_id());
+                            applyPassReq.setProject_id(1000);
+                            ApplyDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                    applyPassReq);
+                        }
+
+                    }else if( who == Constants.SKILL_RECIEVE_LINGGONG){
                         ApplyPassReq applyPassReq = new ApplyPassReq();
                         applyPassReq.setTechnician_id(homeBean.getPublish_id());
                         applyPassReq.setProject_id(1000);

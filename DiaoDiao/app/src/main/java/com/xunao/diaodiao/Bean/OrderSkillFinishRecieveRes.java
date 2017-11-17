@@ -70,6 +70,15 @@ public class OrderSkillFinishRecieveRes implements Serializable{
         private int maintenance_id;
         private int supervisor_id;
         private int publish_id;
+        private int publish_type;
+
+        public int getPublish_type() {
+            return publish_type;
+        }
+
+        public void setPublish_type(int publish_type) {
+            this.publish_type = publish_type;
+        }
 
         public int getPublish_id() {
             return publish_id;
