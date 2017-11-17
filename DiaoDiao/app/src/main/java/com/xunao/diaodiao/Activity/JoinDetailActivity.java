@@ -48,7 +48,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     @BindView(R.id.rating_star)
     RatingBar ratingStar;
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    GRecyclerView recyclerView;
     @BindView(R.id.name)
     TextView name;
     @BindView(R.id.address)
@@ -138,8 +138,9 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             }
         };
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapterDefaultConfig(adapter, this, this);
 
         onRefresh();
 
@@ -198,9 +199,10 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
             score.setText(s.getInfo().getPoint());
             ratingStar.setRating(Float.valueOf(s.getInfo().getPoint()));
             url = s.getInfo().getMap();
+            phone = s.getInfo().getContact_mobile();
         }
 
-        if (s.getEvaluates().size() == 0) {
+        if (s.getEvaluates() == null || s.getEvaluates().size() == 0) {
             adapter.stopMore();
         } else {
             adapter.addAll(s.getEvaluates());
@@ -233,7 +235,7 @@ public class JoinDetailActivity extends BaseActivity implements JoinDetailView, 
     @Override
     public void onFailure() {
         if (adapter.getAllData().size() == 0) {
-            //recyclerView.showEmpty();
+            recyclerView.showEmpty();
         } else {
             if (type == 0) {
                 adapter.stopMore();

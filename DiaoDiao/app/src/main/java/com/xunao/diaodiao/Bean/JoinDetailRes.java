@@ -45,6 +45,15 @@ public class JoinDetailRes {
         private String region;
         private String point;
         private String map;
+        private String contact_mobile;
+
+        public String getContact_mobile() {
+            return contact_mobile;
+        }
+
+        public void setContact_mobile(String contact_mobile) {
+            this.contact_mobile = contact_mobile;
+        }
 
         public String getMap() {
             return map;

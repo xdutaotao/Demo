@@ -11,6 +11,8 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ApplyDetailActivity;
+import com.xunao.diaodiao.Activity.JoinActivity;
+import com.xunao.diaodiao.Activity.JoinDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
 import com.xunao.diaodiao.Activity.OrderProjRecieveProgressActivity;
 import com.xunao.diaodiao.Activity.OrderSkillCompRecieveDetailActivity;
@@ -107,10 +109,10 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 }
 
                 if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                    baseViewHolder.setText(R.id.request, "维保情况");
+                    baseViewHolder.setText(R.id.request, "维保进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
-                    baseViewHolder.setText(R.id.request, "监理情况");
+                    baseViewHolder.setText(R.id.request, "监理进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == SKILL_RECIEVE_LINGGONG) {
                     baseViewHolder.setText(R.id.request, "项目进度");
@@ -121,11 +123,20 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 }
 
                 baseViewHolder.setOnClickListener(R.id.contact, v -> {
-                    ApplyPassReq applyPassReq = new ApplyPassReq();
-                    applyPassReq.setTechnician_id(homeBean.getTechnician_id());
-                    applyPassReq.setProject_id(1000);
-                    ApplyDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                            applyPassReq);
+
+                    if(who == Constants.SKILL_RECIEVE_JIANLI){
+                        JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getPublish_id(),
+                                "----");
+                    }else if(who == Constants.SKILL_RECIEVE_LINGGONG || who == Constants.SKILL_RECIEVE_WEIBAO){
+                        ApplyPassReq applyPassReq = new ApplyPassReq();
+                        applyPassReq.setTechnician_id(homeBean.getPublish_id());
+                        applyPassReq.setProject_id(1000);
+                        ApplyDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                applyPassReq);
+                    }
+
+
                 });
 
 

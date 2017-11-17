@@ -69,6 +69,15 @@ public class OrderSkillFinishRecieveRes implements Serializable{
         private String project_price;
         private int maintenance_id;
         private int supervisor_id;
+        private int publish_id;
+
+        public int getPublish_id() {
+            return publish_id;
+        }
+
+        public void setPublish_id(int publish_id) {
+            this.publish_id = publish_id;
+        }
 
         public int getSupervisor_id() {
             return supervisor_id;

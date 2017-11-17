@@ -7,6 +7,7 @@ import com.xunao.diaodiao.Bean.JoinDetailRes;
 import com.xunao.diaodiao.Model.JoinDetailModel;
 import com.xunao.diaodiao.Model.LoginModel;
 import com.xunao.diaodiao.Utils.RxSubUtils;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.JoinDetailView;
 
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class JoinDetailPresenter extends BasePresenter<JoinDetailView> {
 
                     @Override
                     public void _onError(String s) {
+                        ToastUtil.show(s);
                         getView().onFailure();
                     }
                 }));

@@ -108,9 +108,11 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                     baseViewHolder.setVisible(R.id.time, true);
                     baseViewHolder.setText(R.id.request, "查看");
                     baseViewHolder.setVisible(R.id.evaluation, false);
+                    baseViewHolder.setVisible(R.id.contact, false);
                 }else{
                     //已完成
                     baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setVisible(R.id.contact, true);
                     if (homeBean.getEvaluate_status() == 2){
                         //未评价
                         baseViewHolder.setVisible(R.id.time, false);
@@ -168,8 +170,6 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                         }
                     }
                 });
-
-                baseViewHolder.setVisible(R.id.contact, true);
 
                 baseViewHolder.setOnClickListener(R.id.contact, v -> {
                     ApplyPassReq applyPassReq = new ApplyPassReq();

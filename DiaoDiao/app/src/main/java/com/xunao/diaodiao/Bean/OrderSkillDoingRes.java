@@ -66,6 +66,15 @@ public class OrderSkillDoingRes {
         private int supervisor_id;
         private String door_fee;
         private int technician_id;
+        private int publish_id;
+
+        public int getPublish_id() {
+            return publish_id;
+        }
+
+        public void setPublish_id(int publish_id) {
+            this.publish_id = publish_id;
+        }
 
         public int getTechnician_id() {
             return technician_id;

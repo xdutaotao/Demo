@@ -120,7 +120,7 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 if (homeBean.getStatus() == 1){
                     //已完成
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                        baseViewHolder.setText(R.id.request, "维保情况");
+                        baseViewHolder.setText(R.id.request, "维保进度");
 
                     }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
                         baseViewHolder.setText(R.id.request, "监理进度");
@@ -151,7 +151,7 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                     baseViewHolder.setVisible(R.id.evaluation, false);
 
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                        baseViewHolder.setText(R.id.request, "维保情况");
+                        baseViewHolder.setText(R.id.request, "维保进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
 
                     }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
@@ -169,8 +169,16 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
                 baseViewHolder.setOnClickListener(R.id.contact, v -> {
                     JoinDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
-                            homeBean.getProject_id(),
-                            "110");
+                            homeBean.getPublish_id(),
+                            "----");
+
+//                    ApplyPassReq applyPassReq = new ApplyPassReq();
+//                    applyPassReq.setTechnician_id(homeBean.getPublish_id());
+//                    applyPassReq.setProject_id(1000);
+//                    ApplyDetailActivity.startActivity(OrderSkillTabFinishRecieveFragment.this.getContext(),
+//                            applyPassReq);
+
+
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {
