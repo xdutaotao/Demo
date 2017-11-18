@@ -180,11 +180,21 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         fee.setText("￥ " + req.getTotal_fee() + "元");
         balance.setText("当前余额：" + req.getBalance() + "元");
         current.setChecked(true);
-//        if(Float.valueOf(req.getBalance()) > 0){
-//            current.setChecked(true);
-//        }else{
-//            current.setChecked(false);
-//        }
+        if(Float.valueOf(req.getBalance()) > Float.valueOf(req.getTotal_fee())){
+            zhifubao.setChecked(false);
+            zhifubao.setFocusable(false);
+            zhifubao.setFocusableInTouchMode(false);
+            zhifubao.setClickable(false);
+
+            wechat.setChecked(false);
+            wechat.setFocusable(false);
+            wechat.setFocusableInTouchMode(false);
+            wechat.setClickable(false);
+
+            payFeeReq.setIs_combination(0);
+        }else{
+            payFeeReq.setIs_combination(1);
+        }
 
         pay.setOnClickListener(this);
         //current.setOnCheckedChangeListener(this);
@@ -363,9 +373,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     @Override
     protected void onResume() {
         super.onResume();
-        if(isWeixin){
-            paySuccess(new Object());
-        }else if(wxFail){
+        if(wxFail){
             //销毁订单
             payFeeReq.setOrder_no(req.getOrder_no());
             //1项目2监理3零工4维保

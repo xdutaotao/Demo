@@ -2725,7 +2725,8 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getOrder_no())
+        sb.append(time+"").append(req.getIs_combination())
+                .append(req.getOrder_no())
                 .append(req.getPay_fee()).append(req.getProject_type())
                 .append(type)
                 .append(userid)

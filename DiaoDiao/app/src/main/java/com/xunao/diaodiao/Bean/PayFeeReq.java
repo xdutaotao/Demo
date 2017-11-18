@@ -15,6 +15,15 @@ public class PayFeeReq {
     private String price;
     private String ip;
     private String balance;
+    private int is_combination;
+
+    public int getIs_combination() {
+        return is_combination;
+    }
+
+    public void setIs_combination(int is_combination) {
+        this.is_combination = is_combination;
+    }
 
     public String getBalance() {
         return balance;
