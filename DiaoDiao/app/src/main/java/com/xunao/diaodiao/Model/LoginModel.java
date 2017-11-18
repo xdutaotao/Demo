@@ -13,6 +13,7 @@ import com.xunao.diaodiao.Bean.AddressBeanReq;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
+import com.xunao.diaodiao.Bean.BalancePayRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseRequestBean;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
@@ -2716,7 +2717,7 @@ public class LoginModel extends BaseModel {
      * @param req
      * @return
      */
-    public Observable<Object> balancePay(PayFeeReq req){
+    public Observable<BalancePayRes> balancePay(PayFeeReq req){
         String rateKey = "balancePay";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
@@ -2770,7 +2771,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getOrder_no())
+        sb.append(time+"").append(req.getBalance()).append(req.getOrder_no())
                 .append(req.getPrice())
                 .append("security");
 
@@ -2786,7 +2787,7 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
 
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getIp())
+        sb.append(time+"").append(req.getBalance()).append(req.getIp())
                 .append(req.getOrder_no()).append(req.getPrice())
                 .append("security");
 
@@ -2817,6 +2818,36 @@ public class LoginModel extends BaseModel {
         sb.append(time+"").append(req.getOrder_no())
                 .append(req.getProject_type()).append(type)
                 .append(userid)
+                .append("security");
+
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().cancelPublish(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 取消支付
+     * @param req
+     * @return
+     */
+    public Observable<Object> destoryOrder(PayFeeReq req){
+        String rateKey = "destoryOrder";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+        int type = ShareUtils.getValue("TYPE", 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getOrder_no())
+                .append(req.getProject_type())
                 .append("security");
 
         req.setUserid(userid);

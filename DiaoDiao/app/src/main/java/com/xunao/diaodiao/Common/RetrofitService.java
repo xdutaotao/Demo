@@ -4,6 +4,7 @@ package com.xunao.diaodiao.Common;
 import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
+import com.xunao.diaodiao.Bean.BalancePayRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BaseResponseBean;
 import com.xunao.diaodiao.Bean.CashRecordRes;
@@ -336,7 +337,7 @@ public interface RetrofitService {
     Observable<BaseBean<ReleaseProjRes>> publishProject(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<Object>> balancePay(@Body RequestBody body);
+    Observable<BaseBean<BalancePayRes>> balancePay(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
     Observable<BaseBean<PayRes>> aliPay(@Body RequestBody body);

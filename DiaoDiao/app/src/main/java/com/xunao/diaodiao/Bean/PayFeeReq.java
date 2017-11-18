@@ -14,6 +14,15 @@ public class PayFeeReq {
     private int project_type;
     private String price;
     private String ip;
+    private String balance;
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 
     public String getIp() {
         return ip;

@@ -2,6 +2,7 @@ package com.xunao.diaodiao.Present;
 
 import android.content.Context;
 
+import com.xunao.diaodiao.Bean.BalancePayRes;
 import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.ReleaseProjReq;
@@ -34,15 +35,15 @@ public class PayPresenter extends BasePresenter<PayView> {
      */
     public void balancePay(Context context, PayFeeReq address){
         mCompositeSubscription.add(model.balancePay(address)
-                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                .subscribe(new RxSubUtils<BalancePayRes>(mCompositeSubscription, context) {
                     @Override
-                    protected void _onNext(Object token) {
+                    protected void _onNext(BalancePayRes token) {
                         getView().getData(token);
                     }
 
                     @Override
                     protected void _onError(String msg) {
-                        getView().onFailure();
+                        getView().onFail(msg);
                     }
                 }));
     }
@@ -115,6 +116,26 @@ public class PayPresenter extends BasePresenter<PayView> {
                     @Override
                     protected void _onNext(Object token) {
                         getView().canclePublish(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show("取消订单失败");
+                    }
+                }));
+    }
+
+    /**
+     * 取消订单
+     * @param context
+     * @param address
+     */
+    public void destoryOrder(Context context, PayFeeReq address){
+        mCompositeSubscription.add(model.destoryOrder(address)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().destoryOrder(token);
                     }
 
                     @Override

@@ -24,6 +24,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xunao.diaodiao.Bean.AuthResult;
+import com.xunao.diaodiao.Bean.BalancePayRes;
 import com.xunao.diaodiao.Bean.PayFeeReq;
 import com.xunao.diaodiao.Bean.PayRes;
 import com.xunao.diaodiao.Bean.PayResult;
@@ -81,6 +82,7 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     private static final int SDK_AUTH_FLAG = 2;
 
     public static boolean isWeixin = false;
+    public static boolean wxFail = false;
     /**
      * 支付宝支付业务：入参app_id
      */
@@ -124,6 +126,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        //销毁订单
+                        payFeeReq.setOrder_no(req.getOrder_no());
+                        //1项目2监理3零工4维保
+                        payFeeReq.setProject_type(projType);
+                        presenter.destoryOrder(PayActivity.this, payFeeReq);
                     }
                     break;
                 }
@@ -172,11 +179,18 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
         fee.setText("￥ " + req.getTotal_fee() + "元");
         balance.setText("当前余额：" + req.getBalance() + "元");
+        current.setChecked(true);
+//        if(Float.valueOf(req.getBalance()) > 0){
+//            current.setChecked(true);
+//        }else{
+//            current.setChecked(false);
+//        }
+
         pay.setOnClickListener(this);
         //current.setOnCheckedChangeListener(this);
         zhifubao.setOnCheckedChangeListener(this);
         wechat.setOnCheckedChangeListener(this);
-        current.setChecked(true);
+
         canclePay.setOnClickListener(this);
 
         RxBus.getInstance().toObservable(String.class)
@@ -199,27 +213,41 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay:
-                if (current.isChecked()) {
-
-                    payFeeReq.setOrder_no(req.getOrder_no());
-                    payFeeReq.setPay_fee(req.getTotal_fee());
-                    //1项目2监理3零工4维保
-                    payFeeReq.setProject_type(projType);
-                    presenter.balancePay(this, payFeeReq);
-
-                } else if (zhifubao.isChecked()) {
-                    payFeeReq.setOrder_no(req.getOrder_no());
-                    payFeeReq.setPrice(req.getTotal_fee());
-                    presenter.aliPay(this, payFeeReq);
-
+                if (zhifubao.isChecked()) {
+                    if(Float.valueOf(req.getBalance()) > 0){
+                        payFeeReq.setOrder_no(req.getOrder_no());
+                        payFeeReq.setPay_fee(req.getTotal_fee());
+                        //1项目2监理3零工4维保
+                        payFeeReq.setProject_type(projType);
+                        presenter.balancePay(this, payFeeReq);
+                    }else{
+                        payFeeReq.setOrder_no(req.getOrder_no());
+                        payFeeReq.setPrice(req.getTotal_fee());
+                        payFeeReq.setBalance(req.getBalance());
+                        presenter.aliPay(this, payFeeReq);
+                    }
 
                 } else if (wechat.isChecked()) {
                     //weixinPay();
                     //ToastUtil.show("敬请期待");
-                    payFeeReq.setOrder_no(req.getOrder_no());
-                    payFeeReq.setPrice(req.getTotal_fee());
-                    payFeeReq.setIp(Utils.getHostIP());
-                    presenter.wxPay(this, payFeeReq);
+                    if(Float.valueOf(req.getBalance()) > 0){
+                        payFeeReq.setOrder_no(req.getOrder_no());
+                        payFeeReq.setPay_fee(req.getTotal_fee());
+                        //1项目2监理3零工4维保
+                        payFeeReq.setProject_type(projType);
+                        presenter.balancePay(this, payFeeReq);
+                    }else{
+                        payFeeReq.setOrder_no(req.getOrder_no());
+                        payFeeReq.setPrice(req.getTotal_fee());
+                        payFeeReq.setIp(Utils.getHostIP());
+                        payFeeReq.setBalance(req.getBalance());
+                        presenter.wxPay(this, payFeeReq);
+                    }
+
+                }else {
+                    if(Float.valueOf(req.getBalance()) < Float.valueOf(req.getTotal_fee())){
+                        ToastUtil.show("余额不足");
+                    }
                 }
 
 
@@ -238,8 +266,21 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
 
 
     @Override
-    public void getData(Object s) {
-        presenter.paySuccess(this, payFeeReq);
+    public void getData(BalancePayRes s) {
+        //余额支付成功
+        //presenter.paySuccess(this, payFeeReq);
+        if(zhifubao.isChecked()){
+            payFeeReq.setOrder_no(req.getOrder_no());
+            payFeeReq.setPrice(s.getFee());
+            payFeeReq.setBalance(req.getBalance());
+            presenter.aliPay(this, payFeeReq);
+        }else if(wechat.isChecked()){
+            payFeeReq.setOrder_no(req.getOrder_no());
+            payFeeReq.setPrice(s.getFee());
+            payFeeReq.setIp(Utils.getHostIP());
+            payFeeReq.setBalance(req.getBalance());
+            presenter.wxPay(this, payFeeReq);
+        }
     }
 
     @Override
@@ -324,13 +365,35 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
         super.onResume();
         if(isWeixin){
             paySuccess(new Object());
+        }else if(wxFail){
+            //销毁订单
+            payFeeReq.setOrder_no(req.getOrder_no());
+            //1项目2监理3零工4维保
+            payFeeReq.setProject_type(projType);
+            presenter.destoryOrder(PayActivity.this, payFeeReq);
         }
     }
 
     @Override
     public void canclePublish(Object s) {
         ToastUtil.show("取消订单成功");
+        isWeixin = false;
+        wxFail = false;
         RxBus.getInstance().post(Constants.DESTORY);
+    }
+
+    @Override
+    public void destoryOrder(Object s) {
+        ToastUtil.show("撤销订单成功");
+        isWeixin = false;
+        wxFail = false;
+        finish();
+    }
+
+    @Override
+    public void onFail(String s) {
+        //余额支付失败
+        ToastUtil.show(s);
     }
 
     @Override

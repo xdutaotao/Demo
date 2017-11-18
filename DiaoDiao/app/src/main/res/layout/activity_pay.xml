@@ -12,7 +12,7 @@
         <TextView style="@style/item_right_text"
             android:textColor="@color/red"
             android:id="@+id/fee"
-            android:text="采暖系统水处理"/>
+            tools:text="采暖系统水处理"/>
     </RelativeLayout>
 
     <TextView
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前余额：3000元"
+                tools:text="当前余额：3000元"
                 android:id="@+id/balance"/>
         </LinearLayout>
 
@@ -100,13 +100,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前余额：3000元"
-                android:visibility="gone"/>
+                android:text="推荐有支付宝的账号的用户使用" />
         </LinearLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="20px"
             android:button="@null"
             android:drawablePadding="10px"
             android:id="@+id/zhifubao"
@@ -146,13 +146,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前余额：3000元"
-                android:visibility="gone"/>
+                android:text="推荐安装微信5.0及以上的版本使用"
+                />
         </LinearLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="20px"
             android:button="@null"
             android:id="@+id/wechat"
             android:drawablePadding="10px"
