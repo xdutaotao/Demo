@@ -440,6 +440,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 apply.setVisibility(View.GONE);
             } else {
                 apply.setVisibility(View.VISIBLE);
+                if(ShareUtils.getValue(TYPE_KEY, 0) == 1){
+                    apply.setVisibility(View.GONE);
+                }else{
+                    apply.setVisibility(View.VISIBLE);
+                }
             }
         } else if (TextUtils.equals(LG_DETAIL, btnType)) {
             //零工详情
@@ -459,11 +464,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 || TextUtils.equals(btnType, RECEIVE_WEIBAO_DETAIL)
                 || TextUtils.equals(btnType, RECEIVE_JIANLI_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
-            apply.setText("联系发布人");
+            apply.setText("联系ta");
             apply.setVisibility(View.GONE);
         } else if (TextUtils.equals(btnType, RECEIVE_PROJ_DETAIL)) {
             bottomBtnLayout.setVisibility(View.GONE);
-            apply.setText("联系发布人");
+            apply.setText("联系ta");
             apply.setVisibility(View.VISIBLE);
         } else if (TextUtils.equals(btnType, COMPANY_PROJ)) {
             apply.setVisibility(View.GONE);
@@ -477,7 +482,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         } else if(TextUtils.equals(btnType, HOME_HZ_DETAIL)) {
             //互助
             bottomBtnLayout.setVisibility(View.GONE);
-            apply.setText("联系他");
+            apply.setText("联系ta");
             apply.setVisibility(View.VISIBLE);
             presenter.getFindProjDetail(this, id, COMPANY_RELEASE_HUZHU_WAIT);
 
@@ -530,7 +535,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
         if(!TextUtils.isEmpty(phone)){
             apply.setVisibility(View.VISIBLE);
-            apply.setText("联系他");
+            apply.setText("联系ta");
         }
 
     }

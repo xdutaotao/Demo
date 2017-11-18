@@ -33,6 +33,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
                     public void _onError(String s) {
 //                        if (!TextUtils.equals(s, "网络错误"))
 //                            s = "手机号已经注册";
+                        if(TextUtils.isEmpty(s)){
+                            s = "修改失败";
+                        }
                         ToastUtil.show(s);
                     }
                 }));

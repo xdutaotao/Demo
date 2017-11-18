@@ -14,5 +14,6 @@ import cn.qqtheme.framework.entity.Province;
 public interface ReleaseProjSecondView extends BaseView {
     void getData(ExpensesInfoRes res);
     void getPercent(GetPercentRes res);
+    void getLowProce(GetPercentRes res);
     void getAddressData(ArrayList<Province> res);
 }

@@ -60,6 +60,22 @@ public class ReleaseProjSecondPresenter extends BasePresenter<ReleaseProjSecondV
                 }));
     }
 
+    //最低监理费
+    public void publishSupervisorPrice(){
+        mCompositeSubscription.add(model.publishSupervisorPrice()
+                .subscribe(new RxSubUtils<GetPercentRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(GetPercentRes token) {
+                        getView().getLowProce(token);
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+                        ToastUtil.show(msg);
+                    }
+                }));
+    }
+
     //省市区
     public void getAddressData(Context context){
         mCompositeSubscription.add(model.getAddressData()

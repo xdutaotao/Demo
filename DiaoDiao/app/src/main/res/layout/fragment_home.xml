@@ -249,7 +249,7 @@
                         android:drawablePadding="10px"
                         android:layout_marginLeft="20px"
                         android:layout_centerVertical="true"
-                        android:drawableLeft="@drawable/icon_weibao"/>
+                        android:drawableLeft="@drawable/help"/>
 
                     <TextView
                         android:layout_width="wrap_content"

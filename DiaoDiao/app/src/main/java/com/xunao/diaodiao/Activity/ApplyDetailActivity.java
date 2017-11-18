@@ -19,6 +19,7 @@ import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.ApplyDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.ApplyDetailView;
@@ -32,6 +33,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
+import static com.xunao.diaodiao.Common.Constants.DESTORY;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
 
@@ -99,6 +101,8 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
                 who == COMPANY_RELEASE_JIANLI_DOING || who == COMPANY_RELEASE_WEIBAO_DOING
                     || who == COMPANY_RELEASE_WEIBAO_DONE || who == SKILL_RELEASE_WEIBAO){
             agree.setVisibility(View.GONE);
+            contactHi.setBackgroundResource(R.color.colorAccent);
+            contactHi.setTextColor(getResources().getColor(R.color.white));
         }
 
 
@@ -150,6 +154,7 @@ public class ApplyDetailActivity extends BaseActivity implements ApplyDetailView
     @Override
     public void getPass(Object s) {
         ToastUtil.show("申请成功");
+        RxBus.getInstance().post(DESTORY);
         finish();
     }
 

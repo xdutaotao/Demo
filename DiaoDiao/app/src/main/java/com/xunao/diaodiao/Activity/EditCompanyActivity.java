@@ -175,6 +175,12 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             address.setText(info.getRegion());
             addressDetail.setText(info.getAddress());
             contactName.setText(info.getContact());
+
+
+            contactName.setClickable(false);
+            contactName.setFocusable(false);
+            contactName.setFocusableInTouchMode(false);
+
             phone.setText(info.getTel());
             buildTime.setText(Utils.millToYearString(info.getEstablish_time()));
             provinceId = info.getProvince();
@@ -489,8 +495,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code:
                 if (codeDelete.getVisibility() == View.GONE) {
-                    getPicPath();
-//                    selectPhoto();
+                    //getPicPath();
+                    selectPhoto();
                     SELECT_TYPE = 4;
                 }else{
                     PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
@@ -500,8 +506,8 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
 
             case R.id.code_reverse:
                 if (codeReverseDelete.getVisibility() == View.GONE) {
-                    getPicPath();
-//                    selectPhoto();
+                    //getPicPath();
+                    selectPhoto();
                     SELECT_TYPE = 5;
                 }else{
                     PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));

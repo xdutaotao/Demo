@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.ApplyProjRes;
 import com.xunao.diaodiao.Present.ApplyPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.RxBus;
 import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.ApplyView;
 
@@ -23,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.xunao.diaodiao.Common.Constants.DESTORY;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 
 /**
@@ -102,6 +105,12 @@ public class ApplyActivity extends BaseActivity implements ApplyView, SwipeRefre
 
         recyclerView.setAdapterDefaultConfig(adapter, this);
         onRefresh();
+
+        RxBus.getInstance().toObservable(String.class)
+                .filter(s -> TextUtils.equals(s, DESTORY))
+                .subscribe(s -> {
+                    finish();
+                });
     }
 
     @Override

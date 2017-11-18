@@ -2520,6 +2520,31 @@ public class LoginModel extends BaseModel {
     }
 
     /**
+     * 服务费用
+     * @param
+     * @return
+     */
+    public Observable<GetPercentRes> publishSupervisorPrice(){
+        String rateKey = "publishSupervisorPrice";
+
+        int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }
+        int type = ShareUtils.getValue("TYPE", 0);
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(type).append(userid)
+                .append("security");
+
+        GetMoneyReq req = new GetMoneyReq();
+        req.setUserid(userid);
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getPercent(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
      * 监理费用
      * @param
      * @return

@@ -118,6 +118,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
 
     private boolean flag = false;
     private boolean jianli = false;
+    private float lowPrice;
 
     public static void startActivity(Context context, ReleaseProjReq req, boolean flag, boolean jianli) {
         Intent intent = new Intent(context, ReleaseProjSecondActivity.class);
@@ -312,6 +313,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
             jianliFee.setVisibility(View.VISIBLE);
             showToolbarBack(toolBar, titleText, "发布监理信息");
             content.setHint("请详细描述项目情况及需求");
+            presenter.publishSupervisorPrice();
         }
     }
 
@@ -335,6 +337,12 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     @Override
     public void getPercent(GetPercentRes res) {
         percent = res.getPercent();
+    }
+
+    @Override
+    public void getLowProce(GetPercentRes res) {
+        lowPrice = Float.valueOf(res.getPrice());
+        price.setHint("请输入监理费最低("+res.getPrice()+")");
     }
 
     @Override
@@ -522,6 +530,11 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                         ToastUtil.show("监理费不能为空");
                         return;
                     }
+
+                    if(lowPrice > Float.valueOf(price.getText().toString())){
+                        ToastUtil.show("监理费输入太少");
+                        return;
+                    }
                 }
 
                 if (!flag) {
@@ -570,6 +583,7 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
                     req.setDistrict(districtId);
                     if(jianli){
                         req.setSupervisor_time(Utils.convertTime2long(time.getText().toString()));
+
                     }else{
                         req.setBuild_time(Utils.convertTime2long(time.getText().toString()));
                     }

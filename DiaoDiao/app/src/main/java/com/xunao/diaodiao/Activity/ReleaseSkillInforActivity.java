@@ -287,7 +287,7 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
 
     @Override
     public void getData(GetPercentRes res) {
-        fee.setHint(res.getPrice());
+        fee.setHint("请输入上门费，最低（"+res.getPrice()+"）");
     }
 
 

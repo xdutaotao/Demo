@@ -136,18 +136,6 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
         //getCode.setBackgroundResource(R.drawable.btn_code_not);
 
         if (TextUtils.equals(getCode.getText().toString(), "获取验证码")) {
-            subscriber = Observable.interval(1, TimeUnit.SECONDS)
-                    .compose(RxUtils.applyIOToMainThreadSchedulers())
-                    .subscribe(aLong -> {
-                        if (subscriber != null) {
-                            if (aLong >= 60) {
-                                stopTime();
-                            } else {
-                                getCode.setText((60 - aLong) + " s");
-                            }
-                        }
-
-                    });
             presenter.checkPhone(this, phoneInput.getText().toString());
         } else {
 
@@ -205,6 +193,18 @@ public class CheckPhoneActivity extends BaseActivity implements RegisterView, Vi
     @Override
     public void getData(Object result) {
         ToastUtil.show("获取验证码成功");
+        subscriber = Observable.interval(1, TimeUnit.SECONDS)
+                .compose(RxUtils.applyIOToMainThreadSchedulers())
+                .subscribe(aLong -> {
+                    if (subscriber != null) {
+                        if (aLong >= 60) {
+                            stopTime();
+                        } else {
+                            getCode.setText((60 - aLong) + " s");
+                        }
+                    }
+
+                });
 
     }
 

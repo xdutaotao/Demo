@@ -504,8 +504,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 if(codeDelete.getVisibility() == View.VISIBLE){
                     PhotoActivity.startActivity(this, codeUrl, codeUrl.contains("http"));
                 }else{
-                    //selectPhoto();
-                    getPicPath();
+                    selectPhoto();
+                    //getPicPath();
                     SELECT_TYPE = 4;
                 }
 
@@ -515,8 +515,8 @@ public class EditSkillActivity extends BaseActivity implements EditSkillView, Vi
                 if(codeReverseDelete.getVisibility() == View.VISIBLE){
                     PhotoActivity.startActivity(this, codeReverseUrl, codeReverseUrl.contains("http"));
                 }else{
-                    //selectPhoto();
-                    getPicPath();
+                    selectPhoto();
+                    //getPicPath();
                     SELECT_TYPE = 5;
                 }
 

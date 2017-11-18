@@ -142,7 +142,7 @@
 
                     <TextView
                         style="@style/project_text"
-                        android:text="零工信息"
+                        android:text="我的零工信息"
                         android:textSize="50px"/>
 
                     <LinearLayout
@@ -200,7 +200,7 @@
 
                     <TextView
                         style="@style/project_text"
-                        android:text="维保信息"
+                        android:text="我的维保信息"
                         android:textSize="50px"/>
 
                     <LinearLayout
@@ -258,7 +258,7 @@
 
                     <TextView
                         style="@style/project_text"
-                        android:text="互助信息"
+                        android:text="我的互助信息"
                         android:textSize="50px"/>
 
                     <LinearLayout

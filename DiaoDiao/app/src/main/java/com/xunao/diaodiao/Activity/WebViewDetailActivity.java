@@ -230,7 +230,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             url = huzhuProject.getUrl();
             bottomBtnLayout.setVisibility(View.GONE);
             apply.setVisibility(View.VISIBLE);
-            apply.setText("联系他");
+            apply.setText("联系ta");
             phone = huzhuProject.getContact_mobile();
         }
 
@@ -263,7 +263,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                                 who == COMPANY_RELEASE_JIANLI_DOING ) {
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.VISIBLE);
-                apply.setText("联系他");
+                apply.setText("联系ta");
                 phone = "110";
             } else if (who == COMPANY_RELEASE_PROJECT_DONE ||
                             who == COMPANY_RELEASE_WEIBAO_DONE ||
@@ -531,7 +531,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                         odd.getOdd_id(), 3);
             }
 
-            if (TextUtils.equals("联系他", apply.getText().toString())){
+            if (TextUtils.equals("联系ta", apply.getText().toString())){
                 if(!TextUtils.isEmpty(phone)){
                     new IOSDialog(WebViewDetailActivity.this).builder()
                             .setMsg(phone)
