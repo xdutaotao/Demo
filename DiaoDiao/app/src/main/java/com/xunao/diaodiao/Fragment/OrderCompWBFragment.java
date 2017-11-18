@@ -94,7 +94,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
 
                     }else{
                         baseViewHolder.setText(R.id.request, "维保进度");
-
+                        baseViewHolder.setVisible(R.id.contact, true);
 
                         if(homeBean.getEvaluate_status() == 1){
                             //已评价
@@ -123,7 +123,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
 
                 if (who == Constants.COMPANY_RELEASE_WEIBAO_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setText(R.id.request, "申请人员");
                     baseViewHolder.setVisible(R.id.contact, false);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
@@ -131,7 +131,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
-                    baseViewHolder.setVisible(R.id.contact, true);
+
                 }
 
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());

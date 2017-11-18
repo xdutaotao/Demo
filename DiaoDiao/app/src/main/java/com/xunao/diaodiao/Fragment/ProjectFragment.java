@@ -340,7 +340,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
         }
         if (!TextUtils.isEmpty(mutual)) {
-            hzWaiting.setText("待确认 " + mutual);
+            hzWaiting.setText("已发布 " + mutual);
         }
 
         if (type == COMPANY_TYPE) {

@@ -9,12 +9,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="添加银行卡"
+        android:text="添加银行卡  （建议优先绑定建行卡）"
         android:paddingLeft="50px"
         android:paddingTop="60px"
         android:paddingBottom="60px"
         android:textColor="@color/black"
-        android:textSize="50px"
+        android:textSize="40px"
         android:drawablePadding="50px"
         android:drawableLeft="@drawable/icon_addcard"/>
 

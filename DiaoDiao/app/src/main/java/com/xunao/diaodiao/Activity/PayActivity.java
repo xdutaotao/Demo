@@ -257,7 +257,13 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
                 }else {
                     if(Float.valueOf(req.getBalance()) < Float.valueOf(req.getTotal_fee())){
                         ToastUtil.show("余额不足");
+                        return;
                     }
+                    payFeeReq.setOrder_no(req.getOrder_no());
+                    payFeeReq.setPay_fee(req.getTotal_fee());
+                    //1项目2监理3零工4维保
+                    payFeeReq.setProject_type(projType);
+                    presenter.balancePay(this, payFeeReq);
                 }
 
 
@@ -290,6 +296,8 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
             payFeeReq.setIp(Utils.getHostIP());
             payFeeReq.setBalance(req.getBalance());
             presenter.wxPay(this, payFeeReq);
+        }else{
+            presenter.paySuccess(this, payFeeReq);
         }
     }
 

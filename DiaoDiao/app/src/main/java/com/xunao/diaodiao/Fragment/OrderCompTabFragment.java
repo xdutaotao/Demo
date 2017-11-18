@@ -129,7 +129,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
 
                 if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
-                    baseViewHolder.setText(R.id.request, "查看");
+                    baseViewHolder.setText(R.id.request, "申请人员");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
                     baseViewHolder.setText(R.id.request, "项目进度");

@@ -87,6 +87,7 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
 //                baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
+
                 if (who == Constants.SKILL_RECIEVE_LINGGONG){
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage() +"/天");

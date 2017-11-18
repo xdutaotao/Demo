@@ -82,52 +82,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_zhifubao"
-            android:layout_gravity="center_vertical"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginLeft="50px"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="支付宝支付"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="推荐有支付宝的账号的用户使用" />
-        </LinearLayout>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20px"
-            android:button="@null"
-            android:drawablePadding="10px"
-            android:id="@+id/zhifubao"
-            android:drawableRight="@drawable/checkbox_style"
-            android:layout_gravity="center_vertical"/>
-
-    </LinearLayout>
-
-    <View style="@style/item_divider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="240px"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="50px">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:src="@drawable/icon_weixinzhifu"
             android:layout_gravity="center_vertical"/>
 
@@ -162,6 +116,53 @@
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
+
+    <View style="@style/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240px"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="50px">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_zhifubao"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="50px"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付宝支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐有支付宝的账号的用户使用" />
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20px"
+            android:button="@null"
+            android:drawablePadding="10px"
+            android:id="@+id/zhifubao"
+            android:drawableRight="@drawable/checkbox_style"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
 
     <View
         android:layout_width="wrap_content"

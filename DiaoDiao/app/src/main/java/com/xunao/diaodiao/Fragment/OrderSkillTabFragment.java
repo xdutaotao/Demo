@@ -92,6 +92,7 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
                 baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 //baseViewHolder.setText(R.id.time, Utils.strToDateLong(homeBean.getPublish_time()));
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
+                baseViewHolder.setText(R.id.request, "申请人员");
                 baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
                 if(who == SKILL_RELEASE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDoor_fee());

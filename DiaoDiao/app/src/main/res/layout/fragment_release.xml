@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="找技术人员维修"/>
+                    android:text="找技术人员维修和保养"/>
             </LinearLayout>
 
             <ImageView
@@ -100,7 +100,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="求助、多余材料分享"/>
+                    android:text="紧急求助/多余材料分享"/>
             </LinearLayout>
 
             <ImageView
@@ -131,7 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="找监理"/>
+                    android:text="找监理监控施工质量"/>
             </LinearLayout>
 
             <ImageView
@@ -203,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="找技术人员维修"/>
+                    android:text="找技术人员维修和保养"/>
             </LinearLayout>
 
             <ImageView
@@ -234,7 +234,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="求助/多余材料分享"/>
+                    android:text="紧急求助/多余材料分享"/>
             </LinearLayout>
 
             <ImageView
@@ -273,7 +273,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="找技术人员维修"/>
+                    android:text="找技术人员维修和保养"/>
             </LinearLayout>
 
             <ImageView

@@ -100,7 +100,7 @@
     <Button
         style="@style/login_btn_style"
         android:layout_marginTop="-160px"
-        android:text="联系他"
+        android:text="联系ta"
         android:id="@+id/contact"/>
 
 </LinearLayout>

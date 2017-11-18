@@ -286,15 +286,8 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (ShareUtils.getValue(TYPE_KEY, 0) == 1) {
-            //暖通公司角色
-            getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("联系施工人员");
-        } else {
-            //技术员
-            getMenuInflater().inflate(R.menu.menu_collect, menu);
-            menu.findItem(R.id.action_contact).setTitle("联系暖通公司");
-        }
+        getMenuInflater().inflate(R.menu.menu_collect, menu);
+        menu.findItem(R.id.action_contact).setIcon(R.drawable.phone);
 
         return true;
     }
