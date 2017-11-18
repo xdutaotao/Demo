@@ -379,6 +379,9 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
             //1项目2监理3零工4维保
             payFeeReq.setProject_type(projType);
             presenter.destoryOrder(PayActivity.this, payFeeReq);
+        }else if(isWeixin){
+            //微信支付
+            paySuccess(new Object());
         }
     }
 

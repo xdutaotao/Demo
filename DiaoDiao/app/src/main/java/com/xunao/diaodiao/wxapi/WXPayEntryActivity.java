@@ -53,7 +53,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             if(resp.errCode == 0){
                 ToastUtil.show("支付成功");
                 PayActivity.isWeixin = true;
-                RxBus.getInstance().post("weixinpay");
+                //RxBus.getInstance().post("weixinpay");
             }else{
                 PayActivity.wxFail = true;
                 ToastUtil.show("支付失败");
