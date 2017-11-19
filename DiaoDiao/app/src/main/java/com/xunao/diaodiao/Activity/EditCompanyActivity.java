@@ -176,10 +176,12 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             addressDetail.setText(info.getAddress());
             contactName.setText(info.getContact());
 
+            if(!TextUtils.isEmpty(contactName.getText())){
+                contactName.setClickable(false);
+                contactName.setFocusable(false);
+                contactName.setFocusableInTouchMode(false);
+            }
 
-            contactName.setClickable(false);
-            contactName.setFocusable(false);
-            contactName.setFocusableInTouchMode(false);
 
             phone.setText(info.getTel());
             buildTime.setText(Utils.millToYearString(info.getEstablish_time()));

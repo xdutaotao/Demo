@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -560,6 +561,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
             bottomBtnLayout.setVisibility(View.GONE);
         }
 
+        webView.getWebView().addJavascriptInterface(new AndroidtoJs(), "AndroidToJS");
+
     }
 
     private void showPicDialog() {
@@ -671,5 +674,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     public void getData(WeiBaoDetailRes res) {
         //维保详情
         weiBaoBean = res;
+    }
+
+    public class AndroidtoJs extends Object{
+        @JavascriptInterface
+        public void goToMap(String url) {
+            WebViewOutActivity.startActivity(WebViewDetailActivity.this, url);
+        }
     }
 }

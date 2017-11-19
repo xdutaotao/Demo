@@ -104,8 +104,8 @@
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:hint="请设置6-16位字符登录密码"
-                    android:maxLength="11"
                     android:paddingLeft="80px"
+                    android:maxLength="16"
                     style="@style/edit_style" />
             </RelativeLayout>
 
@@ -128,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:hint="请再次输入登录密码"
                     android:inputType="textPassword"
-                    android:maxLength="11"
+                    android:maxLength="16"
                     android:paddingLeft="80px"
                     style="@style/edit_style" />
             </RelativeLayout>

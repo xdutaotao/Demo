@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -538,6 +539,8 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             apply.setText("联系ta");
         }
 
+        webView.getWebView().addJavascriptInterface(new AndroidtoJs(), "AndroidToJS");
+
     }
 
     private void friend(){
@@ -738,6 +741,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     public void myProjectCancel(Object s) {
         ToastUtil.show("取消项目成功");
         finish();
+    }
+
+
+    public class AndroidtoJs extends Object{
+        @JavascriptInterface
+        public void goToMap(String url) {
+            WebViewOutActivity.startActivity(WebViewActivity.this, url);
+        }
     }
 
 }

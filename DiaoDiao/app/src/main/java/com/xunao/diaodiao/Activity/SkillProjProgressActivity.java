@@ -234,8 +234,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             });
 
             if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                //selectPhoto();
-                takePhoto();
+                selectPhoto();
+                //takePhoto();
             }else{
                 if(pathList.size() > 0)
                 PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
@@ -475,7 +475,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         imagePicker.setCrop(false);
         imagePicker.setSaveRectangle(true);
         imagePicker.setMultiMode(true);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
         imagePicker.setSelectLimit(10);
         imagePicker.setOutPutX(100);
         imagePicker.setOutPutY(100);

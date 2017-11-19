@@ -64,9 +64,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
      */
     public void forgetPwd(Context context, String phone, String pwd, String code, int type){
         mCompositeSubscription.add(model.forgetPwd(phone, pwd, code, type)
-                .subscribe(new RxSubUtils<String>(mCompositeSubscription,context) {
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription,context) {
                     @Override
-                    protected void _onNext(String token) {
+                    protected void _onNext(Object token) {
                         getView().getData(token);
                     }
 

@@ -249,7 +249,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     adapterSkill.getAllData().get(i).getUrl(),
                     adapterSkill.getAllData().get(i).getId(),
                     WebViewActivity.HOME_SKILL_DETAIL,
-                    adapterList.getAllData().get(i).getCollected());
+                    adapterSkill.getAllData().get(i).getCollected());
         });
 
         adapterList = new RecyclerArrayAdapter<HomeResponseBean.Project>(getContext(), R.layout.home_vertical_list) {
@@ -268,7 +268,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             WebViewActivity.startActivity(HomeFragment.this.getContext(),
                     adapterList.getAllData().get(i).getUrl(),
                     adapterList.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_WEIBAO_DETAIL, adapterList.getAllData().get(i).getCollected());
+                    WebViewActivity.HOME_WEIBAO_DETAIL,
+                    adapterList.getAllData().get(i).getCollected());
         });
 
 
@@ -284,9 +285,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         adapterHz.setOnItemClickListener((view1, i) -> {
             WebViewActivity.startActivity(HomeFragment.this.getContext(),
-                    adapterList.getAllData().get(i).getUrl(),
-                    adapterList.getAllData().get(i).getId(),
-                    WebViewActivity.HOME_HZ_DETAIL, adapterList.getAllData().get(i).getCollected());
+                    adapterHz.getAllData().get(i).getUrl(),
+                    adapterHz.getAllData().get(i).getId(),
+                    WebViewActivity.HOME_HZ_DETAIL,
+                    adapterHz.getAllData().get(i).getCollected());
         });
 
 

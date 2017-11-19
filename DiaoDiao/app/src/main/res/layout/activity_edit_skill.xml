@@ -189,13 +189,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="承接项目类型"
+                android:text="擅长技能"
                 android:layout_margin="50px"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="40px"
+                android:scrollbars="horizontal"
                 android:id="@+id/recycler_view"/>
 
             <View

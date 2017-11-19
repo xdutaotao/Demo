@@ -125,7 +125,7 @@ public interface RetrofitService {
     Observable<BaseBean<LoginResBean>> fillInfor(@Body RequestBody body);
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> forgetPwd(@Body RequestBody body);
+    Observable<BaseBean<Object>> forgetPwd(@Body RequestBody body);
 
 
     @POST(ApiConstants.BASE_URL_INDEX)

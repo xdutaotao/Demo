@@ -367,7 +367,7 @@ public class LoginModel extends BaseModel {
      * @param phone
      * @return
      */
-    public Observable<String> forgetPwd(String phone, String pwd, String code, int type){
+    public Observable<Object> forgetPwd(String phone, String pwd, String code, int type){
         String actionName = "";
         switch (type){
             case 0:
