@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20px"
                 android:id="@+id/remark"
+                android:layout_marginTop="20px"
                 android:layout_marginBottom="20px"
                 tools:text="06-29 签到"/>
 

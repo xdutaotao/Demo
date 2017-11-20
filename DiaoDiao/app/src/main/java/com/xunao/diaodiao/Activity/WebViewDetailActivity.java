@@ -3,9 +3,11 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -569,18 +571,20 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     }
 
     private void showPicDialog() {
-        new IOSDialog(this).builder()
-                .setCancelable(true)
-                .setTitle("朋友圈", v -> {
-                    friends();
-                })
-                .setMsg("好友", v -> {
-                    friend();
-                })
-                .setMsgSize(R.dimen.dialog_msg_size)
-                .setMsgColor("#333333")
-                .setNegativeButton("取消", null)
-                .show();
+//        new IOSDialog(this).builder()
+//                .setCancelable(true)
+//                .setTitle("朋友圈", v -> {
+//                    friends();
+//                })
+//                .setMsg("好友", v -> {
+//                    friend();
+//                })
+//                .setMsgSize(R.dimen.dialog_msg_size)
+//                .setMsgColor("#333333")
+//                .setNegativeButton("取消", null)
+//                .show();
+
+        showBottomSheetDialog();
     }
 
     private void friend(){
@@ -696,5 +700,26 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         public void goToMap(String url) {
             WebViewOutActivity.startActivity(WebViewDetailActivity.this, url);
         }
+    }
+
+    private void showBottomSheetDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.bottom_share_sheet_dialog, null);
+        LinearLayout friends = (LinearLayout) view.findViewById(R.id.friends);
+        friends.setOnClickListener(v -> {
+            friends();
+            dialog.dismiss();
+        });
+
+        LinearLayout friend = (LinearLayout) view.findViewById(R.id.friend);
+        friend.setOnClickListener(v -> {
+            friend();
+            dialog.dismiss();
+        });
+
+
+        dialog.setContentView(view);
+        dialog.show();
     }
 }

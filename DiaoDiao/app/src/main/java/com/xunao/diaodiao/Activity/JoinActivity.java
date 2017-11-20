@@ -250,6 +250,8 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
             presenter.businesses(this, req);
         });
 
+        address.setText("全部");
+
 
     }
 
@@ -261,6 +263,8 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
         req.setLat(Constants.latData);
         req.setLng(Constants.lngData);
         req.setCity(Constants.city);
+        req.setNearby(1);
+        distance.setTextColor(getResources().getColor(R.color.colorAccent));
         presenter.businesses(this, req);
     }
 
@@ -290,7 +294,8 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
 
     @Override
     public void getAddressData(ArrayList<Province> res) {
-        Constants.addressResult.addAll(res);
+        if(Constants.addressResult.size() == 0)
+            Constants.addressResult.addAll(res);
         for(Province province : res){
             if(TextUtils.equals(province.getAreaName(), Constants.city)){
                 if(province.getAreaName().contains("市")){
@@ -302,8 +307,8 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
                                 addressList.add(county.getAreaName());
                             }
                             textAdapter.addAll(addressList);
-                            address.setText(addressList.get(0));
-                            selectCity = address.getText().toString();
+                            //address.setText(addressList.get(0));
+                            //selectCity = address.getText().toString();
                             return;
                         }
                     }

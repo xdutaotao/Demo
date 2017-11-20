@@ -13,15 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.WeiBaoProgRes;
 import com.xunao.diaodiao.Common.Constants;
@@ -41,11 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI;
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DOING;
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_JIANLI_DONE;
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
-import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
@@ -67,6 +62,12 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     RecyclerView recyclerView;
     @BindView(R.id.get_money)
     Button getMoney;
+    @BindView(R.id.no_pass)
+    TextView noPass;
+    @BindView(R.id.pass)
+    TextView pass;
+    @BindView(R.id.bottom_btn_layout)
+    LinearLayout bottomBtnLayout;
 
     private RecyclerArrayAdapter<WeiBaoProgRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
@@ -81,8 +82,10 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private EditText remark;
     private int who;
     private GetMoneyReq req = new GetMoneyReq();
+    private boolean isPost = false;
 
     public static void startActivity(Context context, int id, int who) {
         Intent intent = new Intent(context, WeiBaoProjActivity.class);
@@ -100,11 +103,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         presenter.attachView(this);
 
         who = getIntent().getIntExtra("who", 0);
-        if(who == SKILL_RECIEVE_JIANLI){
-            showToolbarBack(toolBar, titleText, "监理进度");
-        }else{
-            showToolbarBack(toolBar, titleText, "维保进度");
-        }
+        showToolbarBack(toolBar, titleText, "工作进度");
 
         adapter = new RecyclerArrayAdapter<WeiBaoProgRes.WorkBean>(this, R.layout.weibao_progress_item) {
             @Override
@@ -126,18 +125,18 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
 
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.clear();
-                if(s.getImages() != null && s.getImages().size()>0)
+                if (s.getImages() != null && s.getImages().size() > 0)
                     itemAdapter.addAll(s.getImages());
 
 
                 baseViewHolder.setText(R.id.address, s.getLocation());
 
 
-                if(s.getApply() == 1){
+                if (s.getApply() == 1) {
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getSign_time()) +" 审核");
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getSign_time()) + " 审核");
                     if (s.getPass() == 3) {
                         //审核中
                         //baseViewHolder.setVisible(R.id.content, false);
@@ -152,7 +151,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                         //baseViewHolder.setVisible(R.id.content, false);
                         baseViewHolder.setText(R.id.content_time, "审核通过");
                     }
-                }else{
+                } else {
                     baseViewHolder.setVisible(R.id.item_bottom, false);
                     baseViewHolder.setVisible(R.id.image_layout, true);
                     baseViewHolder.setText(R.id.time, Utils.strToDateLong(s.getSign_time())
@@ -188,8 +187,8 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             });
 
             if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                //selectPhoto();
-                takePhoto();
+                selectPhoto();
+                //takePhoto();
             }
         });
         footerAdapter.add(ADD);
@@ -205,12 +204,42 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         getMoney.setOnClickListener(v -> {
             signAction(1);
         });
+
+        noPass.setOnClickListener(v -> {
+            //申诉
+            if (who == SKILL_RECIEVE_JIANLI) {
+                //暖通公司角色  监理
+                req.setProject_type(2);
+                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                AppealActivity.startActivity(this,
+                        req, YI_TYPE);
+            } else if (who == SKILL_RECIEVE_WEIBAO) {
+                //维保
+                req.setProject_type(4);
+                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+                AppealActivity.startActivity(this,
+                        req, YI_TYPE);
+            }
+
+        });
+
+        pass.setOnClickListener(v -> {
+            signAction(1);
+        });
+
+
+
     }
 
     @Override
     public void getData(Object s) {
         ToastUtil.show("提交成功");
-        finish();
+        if (isPost) {
+            presenter.myAcceptMaintenanceWork(this, getIntent().getIntExtra(INTENT_KEY, 0), who);
+        } else {
+            finish();
+        }
+
     }
 
     @Override
@@ -219,19 +248,30 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             adapter.addAll(list.getWork());
 
             WeiBaoProgRes.WorkBean workBean = list.getWork().get(list.getWork().size() - 1);
-            if(workBean.getApply() == 1 && workBean.getPass() == 3){
+            if (workBean.getApply() == 1 && workBean.getPass() == 3) {
                 //审核中
                 adapter.removeAllFooter();
                 getMoney.setVisibility(View.GONE);
-            }else if(workBean.getApply() == 1 && workBean.getPass() == 1){
+                bottomBtnLayout.setVisibility(View.GONE);
+            } else if (workBean.getApply() == 1 && workBean.getPass() == 1) {
                 //审核通过
                 adapter.removeAllFooter();
+                getMoney.setVisibility(View.GONE);
+                bottomBtnLayout.setVisibility(View.GONE);
+            }else if(workBean.getApply() == 1 && workBean.getPass() == 2){
+                //审核不通过
+                bottomBtnLayout.setVisibility(View.VISIBLE);
                 getMoney.setVisibility(View.GONE);
             }
 
         } else {
             //setFooter();
         }
+
+        footerAdapter.clear();
+        footerAdapter.add(ADD);
+        pathList.clear();
+        imageItems.clear();
     }
 
     private void setFooter() {
@@ -251,7 +291,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 addr.setText(address);
                 TextView time = (TextView) view.findViewById(R.id.time);
                 time.setText(Utils.getNowDateMonth() + " 工作拍照");
-                postText.setText("提交审核");
+                remark = (EditText) view.findViewById(R.id.remark);
                 postText.setOnClickListener(v -> {
                     signAction(2);
                 });
@@ -265,7 +305,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         imagePicker.setCrop(false);
         imagePicker.setSaveRectangle(true);
         imagePicker.setMultiMode(true);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
         imagePicker.setSelectLimit(10);
     }
 
@@ -278,18 +318,20 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             req.setMaintenance_id(getIntent().getIntExtra(INTENT_KEY, 0));
         }
 
-        req.setRemark("");
         req.setSign_time(System.currentTimeMillis() / 1000);
         //是否申请打款
         req.setApply_type(action);
 
-        if(action == 2) {
-            if(pathList.size() == 0){
+        if (action == 2) {
+            if (pathList.size() == 0) {
                 ToastUtil.show("请上传图片");
                 return;
             }
-
+            isPost = true;
             req.setImages(pathList);
+            req.setRemark(remark.getText().toString());
+        } else {
+            isPost = false;
         }
         presenter.myAcceptMaintenanceSubmit(this, req, who);
     }
@@ -344,42 +386,10 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                 });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setTitle("申诉");
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_contact:
-
-                if (who == SKILL_RECIEVE_JIANLI) {
-                    //暖通公司角色  监理
-                    req.setProject_type(2);
-                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    AppealActivity.startActivity(this,
-                            req, YI_TYPE);
-                } else if(who == SKILL_RECIEVE_WEIBAO){
-                    //维保
-                    req.setProject_type(4);
-                    req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                    AppealActivity.startActivity(this,
-                            req, YI_TYPE);
-                }
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override
     public void onFailure() {
-//        getMoney.setVisibility(View.GONE);
-//        adapter.removeAllFooter();
     }
 
     @Override

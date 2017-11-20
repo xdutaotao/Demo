@@ -72,19 +72,29 @@
             android:id="@+id/recycler_view_image"
             tools:listitem="@layout/select_photo_item"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginTop="20px"
+            android:id="@+id/remark"
+            android:hint="添加工作备注"
+            android:padding="20px"
+            android:textSize="40px"
+            android:layout_marginBottom="10px"
+            android:background="@drawable/btn_blank_bg"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="50px"
+            android:layout_marginTop="20px"
             android:layout_marginBottom="50px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="仅提交"
+                android:text="图片上传"
                 android:id="@+id/post"
-                android:visibility="gone"
                 android:textColor="@color/colorAccent"
                 android:gravity="center"
                 android:layout_marginRight="50px"

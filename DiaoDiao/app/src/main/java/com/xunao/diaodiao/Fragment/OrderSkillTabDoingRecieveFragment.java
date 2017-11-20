@@ -150,7 +150,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                                 applyPassReq);
                     }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                         JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
-                                homeBean.getPublish_id());
+                                homeBean.getPublish_id(), "---");
                     }
 
 

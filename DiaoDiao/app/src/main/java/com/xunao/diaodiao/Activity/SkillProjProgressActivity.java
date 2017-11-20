@@ -123,7 +123,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "工作拍照");
+        showToolbarBack(toolBar, titleText, "工作进度");
 
         who = getIntent().getIntExtra("WHO", 0);
         stage = getIntent().getIntExtra("STAGE", 0);
@@ -322,7 +322,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 post.setVisibility(View.GONE);
                 setFooter();
                 noPass.setText("申诉");
-                pass.setText("再次提交");
+                pass.setText("再次申请");
 
                 //电话投诉
                 noPass.setOnClickListener(v -> {
@@ -404,12 +404,15 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     @Override
     public void getData(Object s) {
         ToastUtil.show("提交成功");
-        finish();
+
         //刷新列表
-//        if(photoPost){
-//            presenter.myAcceptProjectWorkList(this,
-//                    getIntent().getIntExtra(INTENT_KEY, 0), worksid, who);
-//        }
+        if(photoPost){
+            presenter.myAcceptProjectWorkList(this,
+                    getIntent().getIntExtra(INTENT_KEY, 0), worksid, who);
+        }else{
+            //申请打款
+            finish();
+        }
 
 
     }
@@ -466,6 +469,10 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
         }
 
+        imageItems.clear();
+        pathList.clear();
+        footerAdapter.clear();
+        footerAdapter.add(ADD);
 
     }
 

@@ -167,6 +167,8 @@ public class App  extends android.support.multidex.MultiDexApplication{
             builder.detectFileUriExposure();
         }
 
+        //MobSDK.init(this, "你的AppKey", "你的AppSecret");
+
     }
 
     private void initPicker() {

@@ -3,15 +3,20 @@ package com.xunao.diaodiao.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +25,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMMin;
+import com.umeng.socialize.media.UMWeb;
 import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
@@ -548,11 +554,12 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 TextUtils.equals("联系ta", apply.getText())){
             apply.setVisibility(View.GONE);
         }
+
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
     }
 
     private void friend(){
-        myShareSDK = new ShareSDK();
-        myShareSDK.initSDK(this);
         //WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
         Wechat.ShareParams sp = new Wechat.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
@@ -570,8 +577,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     }
 
     private void friends(){
-        myShareSDK = new ShareSDK();
-        myShareSDK.initSDK(this);
+
         WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
         url += "&hd=1";
@@ -588,33 +594,33 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     private void showPicDialog() {
 //        url += "&hd=1";
-//        UMMin umMin = new UMMin(url);
-//        UMImage image = new UMImage(WebViewActivity.this, "http://api.diao-diao.com/images/logo.png");
-//        umMin.setThumb(image);
-//        umMin.setTitle("调调居服分享信息");
-//        umMin.setDescription("我分享了来自调调居服的"+title+"信息，快来看看吧！");
-//        //umMin.setPath("pages/page10007/xxxxxx");
-//        //umMin.setUserName("xx_xxx");
+//        UMImage thumb =  new UMImage(this, R.mipmap.ic_launcher);
+//        UMWeb web = new UMWeb(url);
+//        web.setTitle("调调居服分享信息");//标题
+//        web.setThumb(thumb);  //缩略图
+//        web.setDescription("我分享了来自调调居服的"+title+"信息，快来看看吧！");//描述
 //
 //        new ShareAction(WebViewActivity.this)
-//                .withMedia(umMin)
+//                .withMedia(web)
 //                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
 //                .setCallback(null)
 //                .open();
 
+        showBottomSheetDialog();
 
-        new IOSDialog(this).builder()
-                .setCancelable(true)
-                .setTitle("朋友圈", v -> {
-                    friends();
-                })
-                .setMsg("好友", v -> {
-                    friend();
-                })
-                .setMsgSize(R.dimen.dialog_msg_size)
-                .setMsgColor("#333333")
-                .setNegativeButton("取消", null)
-                .show();
+
+//        new IOSDialog(this).builder()
+//                .setCancelable(true)
+//                .setTitle("朋友圈", v -> {
+//                    friends();
+//                })
+//                .setMsg("好友", v -> {
+//                    friend();
+//                })
+//                .setMsgSize(R.dimen.dialog_msg_size)
+//                .setMsgColor("#333333")
+//                .setNegativeButton("取消", null)
+//                .show();
     }
 
     @Override
@@ -782,6 +788,27 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         public void goToMap(String url) {
             WebViewOutActivity.startActivity(WebViewActivity.this, url);
         }
+    }
+
+    private void showBottomSheetDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.bottom_share_sheet_dialog, null);
+        LinearLayout friends = (LinearLayout) view.findViewById(R.id.friends);
+        friends.setOnClickListener(v -> {
+            friends();
+            dialog.dismiss();
+        });
+
+        LinearLayout friend = (LinearLayout) view.findViewById(R.id.friend);
+        friend.setOnClickListener(v -> {
+            friend();
+            dialog.dismiss();
+        });
+
+
+        dialog.setContentView(view);
+        dialog.show();
     }
 
 }

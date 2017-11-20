@@ -35,6 +35,7 @@
             style="@style/item_right_text"
             android:id="@+id/address"
             tools:text="闵行区万科时一区"
+            android:textColor="#638cf5"
             android:layout_alignBaseline="@+id/textView2"
             android:layout_alignBottom="@+id/textView2"
             android:layout_alignParentRight="true"

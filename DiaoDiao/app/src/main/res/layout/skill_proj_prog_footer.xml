@@ -98,7 +98,7 @@
             android:layout_height="100px"
             android:id="@+id/post"
             android:background="@drawable/btn02"
-            android:text="提交"
+            android:text="图片上传"
             android:textColor="@color/colorAccent"/>
     </LinearLayout>
 

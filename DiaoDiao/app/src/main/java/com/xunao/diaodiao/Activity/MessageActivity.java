@@ -154,6 +154,7 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
     @Override
     public void deteleMsg(Object res) {
         ToastUtil.show("删除成功");
+        onRefresh();
     }
 
     @Override
