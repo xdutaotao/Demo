@@ -9,9 +9,17 @@ import java.util.List;
 
 public class GetMoneyRes {
     private String balance;
+    private int has_binding;
 
     private List<MoneyDetail> changes;
 
+    public int getHas_binding() {
+        return has_binding;
+    }
+
+    public void setHas_binding(int has_binding) {
+        this.has_binding = has_binding;
+    }
 
     public String getBalance() {
         return balance;

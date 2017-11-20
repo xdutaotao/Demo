@@ -402,7 +402,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
 
     @Override
-    public void getData(String s) {
+    public void getData(Object s) {
         ToastUtil.show("提交成功");
         finish();
         //刷新列表

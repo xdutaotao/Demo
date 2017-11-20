@@ -105,20 +105,21 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setVisible(R.id.status_btn, false);
                     baseViewHolder.setVisible(R.id.status_text, true);
                     baseViewHolder.setVisible(R.id.status, false);
+                    baseViewHolder.setVisible(R.id.middle_text, false);
                     if (who == SKILL_RECIEVE_PROJECT) {
                         baseViewHolder.setVisible(R.id.middle_btn, true);
-                        baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, false);
 
 
                     } else if (who == COMPANY_RELEASE_PROJECT_DOING) {
                         baseViewHolder.setVisible(R.id.middle_btn, false);
-                        baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
 
                     } else if (who == COMPANY_RELEASE_PROJECT_DONE) {
                         baseViewHolder.setVisible(R.id.middle_btn, false);
-                        baseViewHolder.setVisible(R.id.middle_text, false);
+                        baseViewHolder.setVisible(R.id.middle, true);
+                    }else{
+                        baseViewHolder.setVisible(R.id.middle_btn, true);
                         baseViewHolder.setVisible(R.id.middle, true);
                     }
 
@@ -141,17 +142,18 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
                         baseViewHolder.setText(R.id.middle, "已完成");
+                        baseViewHolder.setVisible(R.id.status_text, false);
                         if (who == SKILL_RECIEVE_PROJECT) {
                             baseViewHolder.setVisible(R.id.status_btn, true);
-                            baseViewHolder.setVisible(R.id.status_text, false);
                             baseViewHolder.setVisible(R.id.status, false);
                         } else if (who == COMPANY_RELEASE_PROJECT_DOING) {
                             baseViewHolder.setVisible(R.id.status_btn, false);
-                            baseViewHolder.setVisible(R.id.status_text, false);
                             baseViewHolder.setVisible(R.id.status, true);
                         } else if (who == COMPANY_RELEASE_PROJECT_DONE) {
                             baseViewHolder.setVisible(R.id.status_btn, false);
-                            baseViewHolder.setVisible(R.id.status_text, false);
+                            baseViewHolder.setVisible(R.id.status, true);
+                        }else{
+                            baseViewHolder.setVisible(R.id.status_btn, true);
                             baseViewHolder.setVisible(R.id.status, true);
                         }
 
@@ -218,6 +220,16 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setVisible(R.id.status_btn, false);
                     baseViewHolder.setVisible(R.id.status_text, true);
                     baseViewHolder.setVisible(R.id.status, false);
+                }else{
+                    baseViewHolder.setText(R.id.progress, "第一阶段审核不通过");
+                    baseViewHolder.setVisible(R.id.middle_btn, true);
+                    baseViewHolder.setVisible(R.id.middle_text, true);
+                    baseViewHolder.setVisible(R.id.middle, true);
+                    baseViewHolder.setText(R.id.middle, "审核不通过");
+
+                    baseViewHolder.setVisible(R.id.status_btn, true);
+                    baseViewHolder.setVisible(R.id.status_text, true);
+                    baseViewHolder.setVisible(R.id.status, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.middle_btn, v -> {
@@ -286,8 +298,8 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setIcon(R.drawable.phone);
+//        getMenuInflater().inflate(R.menu.menu_collect, menu);
+//        menu.findItem(R.id.action_contact).setIcon(R.drawable.phone);
 
         return true;
     }

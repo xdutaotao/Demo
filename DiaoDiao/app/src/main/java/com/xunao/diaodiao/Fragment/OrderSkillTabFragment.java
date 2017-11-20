@@ -34,6 +34,7 @@ import butterknife.Unbinder;
 
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO_WAIT;
 
 
 /**
@@ -121,12 +122,13 @@ public class OrderSkillTabFragment extends BaseFragment implements SwipeRefreshL
 //                        adapter.getAllData().get(i).getMaintenance_id(), WebViewActivity.WEIBAO_DETAIL);
 
                 WebViewDetailActivity.startActivity(OrderSkillTabFragment.this.getContext(),
-                        adapter.getAllData().get(i), COMPANY_RELEASE_WEIBAO_WAIT);
+                        adapter.getAllData().get(i), SKILL_RELEASE_WEIBAO_WAIT);
 
             }else{
                 WebViewActivity.startActivity(OrderSkillTabFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.LG_DETAIL);
+                        adapter.getAllData().get(i).getOdd_id(),
+                        WebViewActivity.LG_DETAIL);
             }
 
         });

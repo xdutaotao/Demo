@@ -341,11 +341,7 @@ public class Utils {
         Date date = new Date(time*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String result = formatter.format(date);
-        String[] results = result.split(" ");
-        if (TextUtils.equals(results[0], getNowDate())){
-            results[0] = "今天";
-        }
-        return results[0]+" "+results[1];
+        return result;
     }
 
     public static String millToDateString(long time) {

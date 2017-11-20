@@ -16,6 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gzfgeh.iosdialog.IOSDialog;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMMin;
 import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.FindLingGongRes;
 import com.xunao.diaodiao.Bean.FindProjDetailRes;
@@ -540,7 +544,10 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         }
 
         webView.getWebView().addJavascriptInterface(new AndroidtoJs(), "AndroidToJS");
-
+        if(TextUtils.isEmpty(phone) &&
+                TextUtils.equals("联系ta", apply.getText())){
+            apply.setVisibility(View.GONE);
+        }
     }
 
     private void friend(){
@@ -580,6 +587,22 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     }
 
     private void showPicDialog() {
+//        url += "&hd=1";
+//        UMMin umMin = new UMMin(url);
+//        UMImage image = new UMImage(WebViewActivity.this, "http://api.diao-diao.com/images/logo.png");
+//        umMin.setThumb(image);
+//        umMin.setTitle("调调居服分享信息");
+//        umMin.setDescription("我分享了来自调调居服的"+title+"信息，快来看看吧！");
+//        //umMin.setPath("pages/page10007/xxxxxx");
+//        //umMin.setUserName("xx_xxx");
+//
+//        new ShareAction(WebViewActivity.this)
+//                .withMedia(umMin)
+//                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+//                .setCallback(null)
+//                .open();
+
+
         new IOSDialog(this).builder()
                 .setCancelable(true)
                 .setTitle("朋友圈", v -> {
@@ -610,6 +633,9 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             }
         } else if (TextUtils.equals(btnType, COMPANY_PROJ)) {
             getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+        }else if(TextUtils.equals(btnType, LG_DETAIL)){
+            getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+            menu.findItem(R.id.action_contact).setTitle("取消零工");
         }
 
         return true;
@@ -686,7 +712,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
             case R.id.action_contact:
                 //取消项目
-                presenter.myProjectCancel(this, id, 0);
+                if(TextUtils.equals(btnType, LG_DETAIL)){
+                    //取消零工
+                    presenter.myProjectCancel(this, id, 1);
+                }else{
+                    //取消项目
+                    presenter.myProjectCancel(this, id, 0);
+                }
+
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -739,7 +772,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
 
     @Override
     public void myProjectCancel(Object s) {
-        ToastUtil.show("取消项目成功");
+        ToastUtil.show("取消成功");
         finish();
     }
 

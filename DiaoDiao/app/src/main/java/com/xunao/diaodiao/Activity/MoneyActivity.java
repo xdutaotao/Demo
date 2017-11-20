@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.GetMoneyRes;
 import com.xunao.diaodiao.Present.MoneyPresenter;
 import com.xunao.diaodiao.R;
@@ -41,6 +42,7 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
     TextView money;
     @BindView(R.id.get_money)
     TextView getMoney;
+    private int has_binding;
 
     private RecyclerArrayAdapter<GetMoneyRes.MoneyDetail> adapter;
 
@@ -78,7 +80,21 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
 
 
         getMoney.setOnClickListener(v -> {
-            GetMoneyActivity.startActivity(MoneyActivity.this, money.getText().toString());
+            if(has_binding == 1){
+                //已绑定
+                GetMoneyActivity.startActivity(MoneyActivity.this, money.getText().toString());
+            }else{
+                new IOSDialog(this).builder()
+                        .setMsg("请先绑定银行卡")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("去绑定", v1 -> {
+                            AddBankActivity.startActivity(this);
+                        })
+                        .show();
+            }
+
+
+
         });
 
     }
@@ -94,6 +110,7 @@ public class MoneyActivity extends BaseActivity implements MoneyView {
         money.setText(res.getBalance());
         adapter.clear();
         adapter.addAll(res.getChanges());
+        has_binding = res.getHas_binding();
     }
 
 

@@ -158,6 +158,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
@@ -752,6 +753,12 @@ public class LoginModel extends BaseModel {
         String rateKey = "myProjectCancel";
         if(who == COMPANY_RELEASE_WEIBAO_WAIT){
             rateKey = "allMaintenanceCancel";
+        }else if(who == 1){
+            rateKey = "myPublishOddCancel";
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            rateKey = "mySupervisorCancel";
+        }else if(who == SKILL_RELEASE_WEIBAO_WAIT){
+            rateKey = "allMaintenanceCancel";
         }
 
         long time = System.currentTimeMillis()/1000;
@@ -765,6 +772,12 @@ public class LoginModel extends BaseModel {
         req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
         req.setType(type);
         if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            req.setMaintenance_id(id);
+        }else if(who == 1){
+            req.setOdd_id(id);
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT) {
+            req.setSupervisor_id(id);
+        }else if(who == SKILL_RELEASE_WEIBAO_WAIT) {
             req.setMaintenance_id(id);
         }else{
             req.setProject_id(id);
@@ -1129,6 +1142,37 @@ public class LoginModel extends BaseModel {
 
         MessageListReq req = new MessageListReq();
         req.setMessage_id(msgID);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().readMessage(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     *  阅读消息
+     */
+    public Observable<Object> cancelMessage(int msgID){
+        String rateKey = "cancelMessage";
+
+        long time = System.currentTimeMillis()/1000;
+        int userid;
+        if(TextUtils.isEmpty(User.getInstance().getUserId())){
+            userid = 0;
+        }else{
+            userid = Integer.valueOf(User.getInstance().getUserId());
+        }
+
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(msgID)
+                .append("security");
+
+        MessageListReq req = new MessageListReq();
+        req.setMessage_id(msgID);
+        req.setUserid(userid);
+        req.setType(type);
         req.setVerify(Utils.getMD5(sb.toString()));
 
 
@@ -1728,7 +1772,7 @@ public class LoginModel extends BaseModel {
         if (who == SKILL_RECIEVE_PROJECT){
             rateKey = "myAcceptProjectCancel";
         }else if(who == SKILL_RECIEVE_WEIBAO){
-            rateKey = "myAcceptMaintenanceWait";
+            rateKey = "myAcceptMaintenanceCancel";
         }else if(who == SKILL_RECIEVE_JIANLI){
             rateKey = "myAcceptSupervisorCancel";
         }
@@ -2281,7 +2325,7 @@ public class LoginModel extends BaseModel {
     /**
      *  我接的 项目 进度 拍照 提交
      */
-    public Observable<String> myAcceptProjectWorkSub(GetMoneyReq req){
+    public Observable<Object> myAcceptProjectWorkSub(GetMoneyReq req){
         String rateKey = "myAcceptProjectWorkSub";
 
         int userid;         if(TextUtils.isEmpty(User.getInstance().getUserId())){             userid = 0;         }else{             userid = Integer.valueOf(User.getInstance().getUserId());         }

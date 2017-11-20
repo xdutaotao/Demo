@@ -59,7 +59,7 @@
             android:drawablePadding="10px"
             android:drawableLeft="@drawable/dinwei"
             android:layout_marginBottom="20px"
-            android:text="上海"/>
+            tools:text="上海"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -68,6 +68,14 @@
             app:spanCount="4"
             android:id="@+id/recycler_view_image"
             tools:listitem="@layout/select_photo_item"/>
+
+        <EditText
+            style="@style/edit_personal_layout"
+            android:layout_height="100px"
+            android:hint="添加工作备注"
+            android:maxLines="1"
+            android:id="@+id/remark"
+            android:background="@drawable/btn_blank_bg"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -79,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="仅提交"
+                android:text="图片上传"
                 android:id="@+id/post"
                 android:textColor="@color/colorAccent"
                 android:gravity="center"

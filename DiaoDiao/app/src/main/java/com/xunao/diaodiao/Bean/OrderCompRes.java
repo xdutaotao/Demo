@@ -69,6 +69,15 @@ public class OrderCompRes {
         private String door_fee;
         private int mutual_id;
         private int technician_id;
+        private int apply_id;
+
+        public int getApply_id() {
+            return apply_id;
+        }
+
+        public void setApply_id(int apply_id) {
+            this.apply_id = apply_id;
+        }
 
         public int getTechnician_id() {
             return technician_id;

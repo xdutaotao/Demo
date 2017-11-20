@@ -126,7 +126,8 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
 
         List<String> data = new ArrayList<>();
         data.add("借记卡");
-        data.add("信用卡");
+        //data.add("信用卡");
+        bankType.setText("借记卡");
 
         selectCardType.setOnClickListener(v -> {
             singlePicker = new SinglePicker<>(this, data);
@@ -198,11 +199,12 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
 
         //区分标志
         req.setTrade_no("");
-        if(TextUtils.equals("信用卡", bankType.getText())){
-            req.setCard_type(102);
-        }else{
-            req.setCard_type(101);
-        }
+//        if(TextUtils.equals("信用卡", bankType.getText())){
+//            req.setCard_type(102);
+//        }else{
+//            req.setCard_type(101);
+//        }
+        req.setCard_type(101);
         presenter.bindingCardGetVerify(this, req);
 
     }

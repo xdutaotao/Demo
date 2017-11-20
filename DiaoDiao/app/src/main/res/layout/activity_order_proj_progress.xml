@@ -41,11 +41,17 @@
                     android:id="@+id/address_detail"
                     android:text="采暖系统水处理"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recycler_view"/>
+            </RelativeLayout>
 
 
             <Button style="@style/login_btn_style"

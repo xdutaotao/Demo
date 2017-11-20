@@ -68,6 +68,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_LINGGONG;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_PROJECT;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_WEIBAO_WAIT;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 
 /**
@@ -265,7 +266,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 bottomBtnLayout.setVisibility(View.GONE);
                 apply.setVisibility(View.VISIBLE);
                 apply.setText("联系ta");
-                phone = "110";
+                //phone = "110";
             } else if (who == COMPANY_RELEASE_PROJECT_DONE ||
                             who == COMPANY_RELEASE_WEIBAO_DONE ||
                                 who == COMPANY_RELEASE_JIANLI_DONE) {
@@ -403,7 +404,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 ReleaseSkillActivity.startActivity(this);
             } else if (who == COMPANY_RELEASE_PROJECT_WAIT) {
                 ReleaseProjActivity.startActivity(this, false);
-            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT ||
+                        who == SKILL_RELEASE_WEIBAO_WAIT){
                 ReleaseHelpActivity.startActivity(this);
             }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
                 ReleaseProjActivity.startActivity(this, true);
@@ -442,7 +444,8 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                     ReleaseProjSecondActivity.startActivity(this, req, true);
                 }
 
-            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
+            }else if(who == COMPANY_RELEASE_WEIBAO_WAIT ||
+                        who == SKILL_RELEASE_WEIBAO_WAIT){
                 if(weiBaoBean != null){
                     WeiBaoDetailRes.WBDetailBean bean = weiBaoBean.getDetail();
                     ReleaseHelpReq req = new ReleaseHelpReq();
@@ -622,6 +625,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         }else if(who == COMPANY_RELEASE_WEIBAO_WAIT){
             getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
             menu.findItem(R.id.action_contact).setTitle("取消维保");
+        }else if(who == COMPANY_RELEASE_JIANLI_WAIT){
+            getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+            menu.findItem(R.id.action_contact).setTitle("取消监理");
+        }else if(who ==SKILL_RELEASE_WEIBAO_WAIT){
+            getMenuInflater().inflate(R.menu.menu_web_view_proj, menu);
+            menu.findItem(R.id.action_contact).setTitle("取消维保");
         }
 
         return true;
@@ -634,6 +643,12 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
                 if(who == COMPANY_RELEASE_WEIBAO_WAIT){
                     //取消维保
                     presenter.myProjectCancel(this, project.getMaintenance_id(), who);
+                }else if(who == COMPANY_RELEASE_JIANLI_WAIT) {
+                    //取消监理
+                    presenter.myProjectCancel(this, project.getSupervisor_id(), who);
+                }else if(who == SKILL_RELEASE_WEIBAO_WAIT) {
+                    //取消维保
+                    presenter.myProjectCancel(this, skillWBBean.getMaintenance_id(), who);
                 }else {
                     //取消项目
                     presenter.myProjectCancel(this, project.getProject_id(), who);

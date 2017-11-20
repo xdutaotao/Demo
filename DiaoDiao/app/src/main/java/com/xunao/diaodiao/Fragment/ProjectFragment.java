@@ -270,7 +270,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
 
             } else if (type == 2) {
                 if (!TextUtils.isEmpty(projectBean.getProject_apply())) {
-                    projWaiting.setText("申请中 " + projectBean.getProject_apply());
+                    projApply.setText("申请中 " + projectBean.getProject_apply());
                 }
             }
 

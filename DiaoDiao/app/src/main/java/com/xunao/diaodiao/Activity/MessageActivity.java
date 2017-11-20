@@ -16,10 +16,12 @@ import android.widget.TextView;
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.MessageListRes;
 import com.xunao.diaodiao.Bean.TypeInfoRes;
 import com.xunao.diaodiao.Present.MessagePresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.ToastUtil;
 import com.xunao.diaodiao.View.MessageView;
 
 import java.util.ArrayList;
@@ -76,6 +78,10 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
                     //未读
                     baseViewHolder.setTextColorRes(R.id.look, R.color.accept_btn_default);
                 }
+
+                if(s.getInfo_type() == 3){
+                    baseViewHolder.setText(R.id.title, "我的消息");
+                }
 //                ForegroundColorSpan span = new ForegroundColorSpan(getResources().getColor(R.color.accept_btn_default));
 //                builder = new SpannableStringBuilder(s.getContent());
 //                builder.setSpan(span, s.getContent().toString().length()-4,
@@ -84,8 +90,32 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         };
 
         adapter.setOnItemClickListener((view, i) -> {
-            select = adapter.getAllData().get(i);
-            presenter.readMessage(this, adapter.getAllData().get(i).getMessage_id());
+            if(adapter.getAllData().get(i).getInfo_type() == 3){
+                //不跳转
+
+            }else{
+                select = adapter.getAllData().get(i);
+                presenter.readMessage(this, adapter.getAllData().get(i).getMessage_id());
+            }
+
+        });
+
+        adapter.setOnItemLongClickListener(new RecyclerArrayAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(int i) {
+
+                new IOSDialog(MessageActivity.this).builder()
+                        .setMsg("删除消息")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("删除", v -> {
+                            presenter.cancelMessage(MessageActivity.this,
+                                    adapter.getAllData().get(i).getMessage_id());
+                        })
+                        .show();
+
+
+                return false;
+            }
         });
 
         recyclerView.setAdapterDefaultConfig(adapter, this, this);
@@ -119,6 +149,11 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
         }else{
             MessageDetail.startActivity(this, select.getContent());
         }
+    }
+
+    @Override
+    public void deteleMsg(Object res) {
+        ToastUtil.show("删除成功");
     }
 
     @Override

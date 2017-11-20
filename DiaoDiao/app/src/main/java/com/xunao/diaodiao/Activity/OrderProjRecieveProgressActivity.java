@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -86,6 +87,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
 
     private GetMoneyReq req = new GetMoneyReq();
     private TextView post, applyMoney;
+    private EditText remark;
     private MyPublishOddWorkRes.WorkBean workBeanNoPass;
 
     public static void startActivity(Context context, int id) {
@@ -133,7 +135,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                         //adapter.removeAllFooter();
                         //workBeanNoPass = workBean;
                     } else {
-                        baseViewHolder.setText(R.id.content_time, "审核中");
+                        baseViewHolder.setText(R.id.content_time, "申请打款");
                         //bottomBtnLayout.setVisibility(View.GONE);
                     }
 
@@ -214,8 +216,8 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         });
 
         giveMoney.setOnClickListener(v -> {
-            //再次提交
-            postProgress(2);
+            //再次提交 和 申请打款一样
+            postProgress(1);
         });
         initImagePicker();
 
@@ -229,7 +231,9 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             //申请打款
 
         }else{
-            req.setRemark("工作拍照");
+            if(!TextUtils.isEmpty(remark.getText().toString())){
+                req.setRemark(remark.getText().toString());
+            }
             req.setSign_time(System.currentTimeMillis()/1000);
             req.setLocation(Constants.address);
             if(pathList.size() == 0){
@@ -248,7 +252,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         imagePicker.setCrop(false);
         imagePicker.setSaveRectangle(true);
         imagePicker.setMultiMode(true);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
         imagePicker.setSelectLimit(10);
         imagePicker.setOutPutY(100);
         imagePicker.setOutPutX(100);
@@ -315,6 +319,9 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                 applyMoney = (TextView) view.findViewById(R.id.apply_money);
                 TextView time = (TextView) view.findViewById(R.id.time);
                 time.setText(Utils.getNowDateMonth());
+                TextView addr = (TextView) view.findViewById(R.id.address);
+                addr.setText(Constants.address);
+                remark = (EditText) view.findViewById(R.id.remark);
                 if(workBeanNoPass != null && (workBeanNoPass.getApply() == 1) && workBeanNoPass.getPass() == 2){
                     //拒绝
                     applyMoney.setVisibility(View.GONE);
@@ -332,28 +339,28 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_collect, menu);
-        menu.findItem(R.id.action_contact).setTitle("申诉");
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_contact:
-
-                req.setProject_type(3);
-                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-                AppealActivity.startActivity(this,
-                        req, YI_TYPE);
-
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_collect, menu);
+//        menu.findItem(R.id.action_contact).setTitle("申诉");
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_contact:
+//
+//                req.setProject_type(3);
+//                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
+//                AppealActivity.startActivity(this,
+//                        req, YI_TYPE);
+//
+//
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void passData(Object s) {

@@ -312,7 +312,7 @@ public interface RetrofitService {
 
 
     @POST(ApiConstants.BASE_URL_INDEX)
-    Observable<BaseBean<String>> myAcceptProjectWorkSub(@Body RequestBody body);
+    Observable<BaseBean<Object>> myAcceptProjectWorkSub(@Body RequestBody body);
 
 
     @POST(ApiConstants.BASE_URL_INDEX)

@@ -12,6 +12,7 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ApplyActivity;
+import com.xunao.diaodiao.Activity.ApplyDetailActivity;
 import com.xunao.diaodiao.Activity.FindProjectActivity;
 import com.xunao.diaodiao.Activity.OrderCompProjDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
@@ -20,6 +21,7 @@ import com.xunao.diaodiao.Activity.RecommandActivity;
 import com.xunao.diaodiao.Activity.SkillProjReceiveProgressActivity;
 import com.xunao.diaodiao.Activity.WebViewActivity;
 import com.xunao.diaodiao.Activity.WebViewDetailActivity;
+import com.xunao.diaodiao.Bean.ApplyPassReq;
 import com.xunao.diaodiao.Bean.OrderCompRes;
 import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.OrderComPresenter;
@@ -97,11 +99,11 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                         baseViewHolder.setVisible(R.id.time, true);
                         baseViewHolder.setText(R.id.request, "查看");
                         baseViewHolder.setVisible(R.id.evaluation, false);
-
+                        baseViewHolder.setVisible(R.id.contact, false);
 
                     }else{
                         baseViewHolder.setText(R.id.request, "项目进度");
-
+                        baseViewHolder.setVisible(R.id.contact, true);
 
                         if(homeBean.getEvaluate_status() == 1){
                             //已评价
@@ -131,6 +133,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                     baseViewHolder.setText(R.id.distance, homeBean.getApply_count()+" 人申请");
                     baseViewHolder.setText(R.id.request, "申请人员");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
+                    baseViewHolder.setVisible(R.id.contact, true);
                     baseViewHolder.setVisible(R.id.distance, false);
                     baseViewHolder.setText(R.id.request, "项目进度");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
@@ -138,8 +141,6 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }
 
                 baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_fee());
-
-
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
 
                     if (who == Constants.COMPANY_RELEASE_PROJECT_WAIT){
@@ -164,6 +165,14 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                     }
 
 
+                });
+
+                baseViewHolder.setOnClickListener(R.id.contact, v -> {
+                    ApplyPassReq applyPassReq = new ApplyPassReq();
+                    applyPassReq.setTechnician_id(homeBean.getApply_id());
+                    applyPassReq.setProject_id(1000);
+                    ApplyDetailActivity.startActivity(OrderCompTabFragment.this.getContext(),
+                            applyPassReq);
                 });
 
                 baseViewHolder.setOnClickListener(R.id.evaluation, v -> {

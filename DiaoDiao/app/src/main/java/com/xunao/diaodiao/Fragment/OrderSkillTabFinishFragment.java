@@ -151,7 +151,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                                     homeBean.getMaintenance_id(), who);
                         }else{
                             OrderProjProgressActivity.startActivity(OrderSkillTabFinishFragment.this.getContext(),
-                                    homeBean.getOdd_id());
+                                    homeBean.getOdd_id(), SKILL_RELEASE_LINGGONG_DONE);
                         }
                     }else{
                         //查看

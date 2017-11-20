@@ -36,6 +36,7 @@ import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DOING;
 import static com.xunao.diaodiao.Common.Constants.COMPANY_RELEASE_WEIBAO_DONE;
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
 import static com.xunao.diaodiao.Common.Constants.JIA_TYPE;
+import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_DONE;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RELEASE_LINGGONG_NO_PASS;
 
 /**
@@ -65,12 +66,19 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
     private RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean> adapter;
     private RecyclerArrayAdapter<String> imageAdapter;
     private LinearLayoutManager manager;
-    private int apply_id;
+    private int apply_id, who;
     GetMoneyReq req;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderProjProgressActivity.class);
         intent.putExtra(INTENT_KEY, id);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, int id, int who) {
+        Intent intent = new Intent(context, OrderProjProgressActivity.class);
+        intent.putExtra(INTENT_KEY, id);
+        intent.putExtra("who", who);
         context.startActivity(intent);
     }
 
@@ -84,7 +92,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         presenter.attachView(this);
 
         showToolbarBack(toolBar, titleText, "项目进度");
-
+        who = getIntent().getIntExtra("who", 0);
         adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
@@ -105,7 +113,7 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                     baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time())+" 审核");
                     if (workBean.getPass() == 3) {
                         //审核中
-                        baseViewHolder.setText(R.id.content_time, "审核中");
+                        baseViewHolder.setText(R.id.content_time, "申请打款");
 
                     } else if (workBean.getPass() == 2) {
                         //审核未通过
@@ -184,15 +192,26 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
 
             workBeanDoing = res.getWork().get(res.getWork().size() - 1);
             apply_id = workBeanDoing.getApply_id();
-            if (workBeanDoing.getApply() == 1 && workBeanDoing.getPass() == 1) {
-                //已确认打款
+            if(workBeanDoing.getApply() == 2){
+                //未申请打款
                 bottomBtnLayout.setVisibility(View.GONE);
-            }else if(workBeanDoing.getPass() == 2){
-                bottomBtnLayout.setVisibility(View.GONE);
+            }else if(workBeanDoing.getApply() == 1){
+                //申请打款
+                if (workBeanDoing.getPass() == 1) {
+                    //已确认打款
+                    bottomBtnLayout.setVisibility(View.GONE);
+                }else if(workBeanDoing.getPass() == 2){
+                    bottomBtnLayout.setVisibility(View.GONE);
+                }
             }
+
 
         } else {
             recyclerView.showEmpty();
+            bottomBtnLayout.setVisibility(View.GONE);
+        }
+
+        if(who == SKILL_RELEASE_LINGGONG_DONE){
             bottomBtnLayout.setVisibility(View.GONE);
         }
 

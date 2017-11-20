@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:paddingTop="50px"
-    android:paddingLeft="50px"
+    android:paddingLeft="20px"
     android:paddingRight="50px"
     android:layout_marginBottom="4px">
 

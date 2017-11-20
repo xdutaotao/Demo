@@ -55,5 +55,21 @@ public class MessagePresenter extends BasePresenter<MessageView> {
                 }));
     }
 
+    //删除消息
+    public void cancelMessage(Context context, int page){
+        mCompositeSubscription.add(model.cancelMessage(page)
+                .subscribe(new RxSubUtils<Object>(mCompositeSubscription, context) {
+                    @Override
+                    protected void _onNext(Object token) {
+                        getView().deteleMsg(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
 
 }

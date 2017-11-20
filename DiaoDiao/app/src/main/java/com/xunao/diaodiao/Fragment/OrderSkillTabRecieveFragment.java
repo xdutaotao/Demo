@@ -128,7 +128,8 @@ public class OrderSkillTabRecieveFragment extends BaseFragment implements SwipeR
             if (who == Constants.SKILL_RECIEVE_LINGGONG){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),
-                        adapter.getAllData().get(i).getOdd_id(), WebViewActivity.RECEIVE_LG_DETAIL);
+                        adapter.getAllData().get(i).getOdd_id(),
+                        WebViewActivity.RECEIVE_LG_DETAIL);
             }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                 WebViewActivity.startActivity(OrderSkillTabRecieveFragment.this.getContext(),
                         adapter.getAllData().get(i).getUrl(),

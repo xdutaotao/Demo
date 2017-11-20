@@ -50,6 +50,7 @@ public class Constants {
     public static final int SKILL_RECIEVE_PROJECT = 2;
     public static final int SKILL_RECIEVE_JIANLI = 12;
     public static final int SKILL_RELEASE_PROJECT = 3;
+    public static final int SKILL_RELEASE_WEIBAO_WAIT = 3333333;
     public static final int COMPANY_RELEASE_PROJECT_WAIT = 4;
     public static final int COMPANY_RELEASE_JIANLI_WAIT = 44;
     public static final int COMPANY_RELEASE_WEIBAO_WAIT = 444;

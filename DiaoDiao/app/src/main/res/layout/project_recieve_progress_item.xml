@@ -82,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20px"
                 android:id="@+id/remark"
-                android:visibility="gone"
                 android:layout_marginBottom="20px"
                 tools:text="06-29 签到"/>
         </LinearLayout>
@@ -127,23 +126,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:padding="50px"
+            android:paddingLeft="50px"
+            android:paddingTop="20px"
+            android:paddingBottom="20px"
             android:layout_marginTop="50px"
             android:layout_marginLeft="50px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/content_time"
-                android:text="06-29 审核"
-                android:layout_marginBottom="20px"/>
+                android:id="@+id/content"
+                android:layout_marginBottom="20px"
+                android:text="通过后将工钱汇入零工账户"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/content"
+                android:id="@+id/content_time"
                 android:textColor="@color/accept_btn_default"
-                android:text="通过后将工钱汇入零工账户"/>
+                android:text="06-29 审核"
+                android:layout_marginBottom="20px"/>
+
+
 
         </LinearLayout>
 

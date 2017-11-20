@@ -119,7 +119,7 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else{
                     baseViewHolder.setText(R.id.request, "项目进度");
-                    baseViewHolder.setVisible(R.id.contact, false);
+                    baseViewHolder.setVisible(R.id.contact, true);
                 }
 
                 baseViewHolder.setOnClickListener(R.id.contact, v -> {
@@ -148,6 +148,9 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                         applyPassReq.setProject_id(1000);
                         ApplyDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                 applyPassReq);
+                    }else if(who == Constants.SKILL_RECIEVE_PROJECT){
+                        JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                homeBean.getPublish_id());
                     }
 
 
