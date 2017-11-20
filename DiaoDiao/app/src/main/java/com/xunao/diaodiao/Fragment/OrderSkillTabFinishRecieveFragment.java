@@ -97,23 +97,24 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
 
                 baseViewHolder.setText(R.id.name, homeBean.getProject_type());
                 baseViewHolder.setVisible(R.id.distance, false);
+                baseViewHolder.setVisible(R.id.contact, false);
 
                 if (who == Constants.SKILL_RECIEVE_LINGGONG){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getDaily_wage()+" / 天");
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
-                    baseViewHolder.setVisible(R.id.contact, true);
+                    //baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_PROJECT){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
-                    baseViewHolder.setVisible(R.id.contact, false);
+                    //baseViewHolder.setVisible(R.id.contact, false);
                 }else if(who == Constants.SKILL_RECIEVE_WEIBAO){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "上门费");
-                    baseViewHolder.setVisible(R.id.contact, true);
+                    //baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_JIANLI){
                     baseViewHolder.setText(R.id.price, " ￥ "+homeBean.getProject_price());
                     baseViewHolder.setText(R.id.days, "价格");
-                    baseViewHolder.setVisible(R.id.contact, true);
+                    //baseViewHolder.setVisible(R.id.contact, true);
                 }
 
 

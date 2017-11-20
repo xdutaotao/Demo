@@ -94,7 +94,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
 
                     }else{
                         baseViewHolder.setText(R.id.request, "维保进度");
-                        baseViewHolder.setVisible(R.id.contact, true);
+                        baseViewHolder.setVisible(R.id.contact, false);
 
                         if(homeBean.getEvaluate_status() == 1){
                             //已评价
