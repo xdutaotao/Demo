@@ -1194,6 +1194,10 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return "";
         }
+
+        if(TextUtils.isEmpty(locationProvider)){
+            locationProvider = LocationManager.NETWORK_PROVIDER;
+        }
         Location location = locationManager.getLastKnownLocation(locationProvider);
         if (location != null) {
             //不为空,显示地理位置经纬度

@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/white"
-            android:padding="50px"
+            android:padding="20px"
             android:layout_marginTop="50px"
             android:layout_marginLeft="50px">
 
@@ -138,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/content"
+                android:layout_marginBottom="20px"
                 android:textColor="@color/nav_gray"
                 android:text="7天 自动通过"/>
 

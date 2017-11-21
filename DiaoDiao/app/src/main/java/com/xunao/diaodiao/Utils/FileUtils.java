@@ -959,12 +959,19 @@ public class FileUtils {
 
 			is = conn.getInputStream();
 //             如果相等的话表示当前的sdcard挂载在手机上并且是可用的
-//			if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//				return;
-//			}
-//			if (!file.exists()){
-//				file.createNewFile();
-//			}
+			if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+				return;
+			}
+
+			if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
+				if (!file.getParentFile().mkdirs()){
+					throw new IOException("创建文件夹失败");
+				}
+			}
+
+			if (!file.exists()){
+				file.createNewFile();
+			}
 
 			fos=new FileOutputStream(file);
 			bis = new BufferedInputStream(is);

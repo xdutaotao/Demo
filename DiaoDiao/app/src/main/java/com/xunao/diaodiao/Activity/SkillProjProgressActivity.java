@@ -55,6 +55,7 @@ import static com.xunao.diaodiao.Common.Constants.NO_PASS;
 import static com.xunao.diaodiao.Common.Constants.TYPE_KEY;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
+import static com.xunao.diaodiao.Common.Constants.city;
 
 /**
  * 审核 项目进度
@@ -150,7 +151,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 itemAdapter.clear();
                 itemAdapter.addAll(s.getImages());
 
-                baseViewHolder.setText(R.id.time, Utils.millToYearString(s.getDate()) +" 拍照");
+                baseViewHolder.setText(R.id.time, Utils.millToDateString(s.getDate()) +" 工作拍照");
                 baseViewHolder.setText(R.id.address, s.getLocation());
 
 
@@ -163,7 +164,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     //第一阶段
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getDate())+" 审核");
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getDate()));
                     if(s.getAudit_status() == 3){
                         //审核中
                         //baseViewHolder.setVisible(R.id.content, false);
@@ -332,17 +333,19 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
                 //再次提交
                 pass.setOnClickListener(v -> {
-                    bottomBtnLayout.setVisibility(View.GONE);
-                    post.setVisibility(View.VISIBLE);
-                    adapter.removeAllFooter();
+//                    bottomBtnLayout.setVisibility(View.GONE);
+//                    post.setVisibility(View.VISIBLE);
+//                    adapter.removeAllFooter();
+//
+//                    if (stage == 2) {
+//                        post.setText("第二阶段提交审核");
+//                    } else {
+//                        post.setText("第一阶段提交审核");
+//                    }
+//
+//                    setFooter();
 
-                    if (stage == 2) {
-                        post.setText("第二阶段提交审核");
-                    } else {
-                        post.setText("第一阶段提交审核");
-                    }
-
-                    setFooter();
+                    signAction(stage);
                 });
 
             }
@@ -381,9 +384,9 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                     postText = (TextView) view.findViewById(R.id.post);
                     postRemark = (EditText) view.findViewById(R.id.remark);
                     TextView time = (TextView) view.findViewById(R.id.time);
-                    time.setText(Utils.getNowDateMonth());
+                    time.setText(Utils.getNowDateMonth() + "工作拍照");
                     TextView address = (TextView) view.findViewById(R.id.address);
-                    address.setText(Constants.address);
+                    address.setText(Constants.city + Constants.address);
                     View headLine = view.findViewById(R.id.head_line);
                     if (adapter.getAllData().size() == 0) {
                         headLine.setBackgroundColor(getResources().getColor(R.color.activity_background));
@@ -500,7 +503,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             }
             req.setImages(pathList);
             req.setRemark(postRemark.getText().toString());
-            req.setLocation(address);
+            req.setLocation(city+address);
         }else{
             photoPost = false;
         }

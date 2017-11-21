@@ -260,7 +260,7 @@ public class Utils {
      * @return
      */
     public static String getNowDateMonth(){
-        SimpleDateFormat sd = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String date = sd.format(new Date(System.currentTimeMillis()));
         return date;
     }

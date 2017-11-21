@@ -46,6 +46,7 @@ import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_JIANLI;
 import static com.xunao.diaodiao.Common.Constants.SKILL_RECIEVE_WEIBAO;
 import static com.xunao.diaodiao.Common.Constants.YI_TYPE;
 import static com.xunao.diaodiao.Common.Constants.address;
+import static com.xunao.diaodiao.Common.Constants.city;
 
 /**
  * create by
@@ -136,7 +137,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getSign_time()) + " 审核");
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(s.getSign_time()));
                     if (s.getPass() == 3) {
                         //审核中
                         //baseViewHolder.setVisible(R.id.content, false);
@@ -145,7 +146,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
                     } else if (s.getPass() == 2) {
                         //未通过审核
                         //baseViewHolder.setVisible(R.id.content, false);
-                        baseViewHolder.setText(R.id.content_time, "未通过审核");
+                        baseViewHolder.setText(R.id.content_time, "审核未通过未打款");
 
                     } else {
                         //baseViewHolder.setVisible(R.id.content, false);
@@ -288,7 +289,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
                 TextView addr = (TextView) view.findViewById(R.id.address);
-                addr.setText(address);
+                addr.setText(city+address);
                 TextView time = (TextView) view.findViewById(R.id.time);
                 time.setText(Utils.getNowDateMonth() + " 工作拍照");
                 remark = (EditText) view.findViewById(R.id.remark);

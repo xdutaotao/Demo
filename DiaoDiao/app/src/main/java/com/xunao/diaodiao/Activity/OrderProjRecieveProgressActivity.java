@@ -89,6 +89,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
     private TextView post, applyMoney;
     private EditText remark;
     private MyPublishOddWorkRes.WorkBean workBeanNoPass;
+    private boolean isPost = false;
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, OrderProjRecieveProgressActivity.class);
@@ -111,7 +112,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
                 baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " "
-                        + "拍照");
+                        + "工作拍照");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
                 String content = "";
 
@@ -124,13 +125,13 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
                     //申请打款
                     baseViewHolder.setVisible(R.id.image_layout, false);
                     baseViewHolder.setVisible(R.id.item_bottom, true);
-                    baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time()) +"审核");
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time()));
                     if (workBean.getPass() == 1) {
                         //审核通过
                         baseViewHolder.setText(R.id.content_time, "已打款");
                         //bottomBtnLayout.setVisibility(View.GONE);
                     } else if (workBean.getPass() == 2) {
-                        baseViewHolder.setText(R.id.content_time, "审核未通过");
+                        baseViewHolder.setText(R.id.content_time, "审核未通过未打款");
                         //bottomBtnLayout.setVisibility(View.VISIBLE);
                         //adapter.removeAllFooter();
                         //workBeanNoPass = workBean;
@@ -203,7 +204,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         signAdapter.add(ADD);
 
 
-        presenter.myAcceptOddWork(getIntent().getIntExtra(INTENT_KEY, 0));
+        presenter.myAcceptOddWork(this, getIntent().getIntExtra(INTENT_KEY, 0));
 
         pass.setOnClickListener(v -> {
             //申诉
@@ -229,18 +230,19 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         req.setApply_type(apply_type);
         if(apply_type == 1){
             //申请打款
-
+            isPost = false;
         }else{
             if(!TextUtils.isEmpty(remark.getText().toString())){
                 req.setRemark(remark.getText().toString());
             }
             req.setSign_time(System.currentTimeMillis()/1000);
-            req.setLocation(Constants.address);
+            req.setLocation(Constants.city + Constants.address);
             if(pathList.size() == 0){
                 ToastUtil.show("请上传图片");
                 return;
             }
             req.setImages(pathList);
+            isPost = true;
         }
 
         presenter.myAcceptOddSubmit(this, req);
@@ -299,7 +301,10 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             }
         }
 
-
+        pathList.clear();
+        imageItems.clear();
+        signAdapter.clear();
+        signAdapter.add(ADD);
 
     }
 
@@ -339,33 +344,17 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_collect, menu);
-//        menu.findItem(R.id.action_contact).setTitle("申诉");
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_contact:
-//
-//                req.setProject_type(3);
-//                req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
-//                AppealActivity.startActivity(this,
-//                        req, YI_TYPE);
-//
-//
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     public void passData(Object s) {
         ToastUtil.show("提交成功");
-        finish();
+        if(isPost){
+            //提交审核
+            presenter.myAcceptOddWork(this, getIntent().getIntExtra(INTENT_KEY, 0));
+        }else{
+            //申请打款
+            finish();
+        }
+
     }
 
     @Override

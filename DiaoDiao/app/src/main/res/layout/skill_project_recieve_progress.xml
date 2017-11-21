@@ -48,7 +48,7 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:id="@+id/give_money"
-                android:text="再次提交"/>
+                android:text="再次申请"/>
 
         </LinearLayout>
 

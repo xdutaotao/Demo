@@ -1016,6 +1016,12 @@ public class FileUtils {
 			if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 				return;
 			}
+
+			if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
+				if (!file.getParentFile().mkdirs()){
+					throw new IOException("创建文件夹失败");
+				}
+			}
 			if (!file.exists()){
 				file.createNewFile();
 			}

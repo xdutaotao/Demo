@@ -139,7 +139,7 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
                     //申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, true);
                     baseViewHolder.setVisible(R.id.image_layout, false);
-                    baseViewHolder.setText(R.id.content, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                    baseViewHolder.setText(R.id.content, Utils.strToDateLong(workBean.getSign_time()));
 
                     if (workBean.getPass() == 3) {
                         //审核中

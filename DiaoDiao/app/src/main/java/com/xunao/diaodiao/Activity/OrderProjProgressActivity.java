@@ -91,15 +91,15 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "项目进度");
+        showToolbarBack(toolBar, titleText, "工作进度");
         who = getIntent().getIntExtra("who", 0);
         adapter = new RecyclerArrayAdapter<MyPublishOddWorkRes.WorkBean>(this, R.layout.project_progress_item) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, MyPublishOddWorkRes.WorkBean workBean) {
 
-                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 拍照");
+                baseViewHolder.setText(R.id.time, Utils.strToDateLong(workBean.getSign_time()) + " 工作拍照");
                 baseViewHolder.setText(R.id.address, workBean.getLocation());
-                baseViewHolder.setText(R.id.content, Utils.strToDateLong(workBean.getSign_time()) + " 审核");
+                baseViewHolder.setText(R.id.content, Utils.strToDateLong(workBean.getSign_time()));
 
                 if(workBean.getApply() == 2){
                     //未申请打款
@@ -110,14 +110,14 @@ public class OrderProjProgressActivity extends BaseActivity implements OrderProj
                     //申请打款
                     baseViewHolder.setVisible(R.id.item_bottom, true);
                     baseViewHolder.setVisible(R.id.image_layout, false);
-                    baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time())+" 审核");
+                    baseViewHolder.setText(R.id.content, Utils.millToDateString(workBean.getSign_time()));
                     if (workBean.getPass() == 3) {
                         //审核中
                         baseViewHolder.setText(R.id.content_time, "申请打款");
 
                     } else if (workBean.getPass() == 2) {
                         //审核未通过
-                        baseViewHolder.setText(R.id.content_time, "审核未通过");
+                        baseViewHolder.setText(R.id.content_time, "审核未通过未打款");
                     } else {
                         //审核通过
 

@@ -24,9 +24,9 @@ public class OrderProjRecieveProgressPresenter extends BasePresenter<OrderProjRe
     }
 
     //进度列表
-    public void myAcceptOddWork(int page){
+    public void myAcceptOddWork(Context context, int page){
         mCompositeSubscription.add(model.myAcceptOddWork(page)
-                .subscribe(new RxSubUtils<MyPublishOddWorkRes>(mCompositeSubscription) {
+                .subscribe(new RxSubUtils<MyPublishOddWorkRes>(mCompositeSubscription, context) {
                     @Override
                     protected void _onNext(MyPublishOddWorkRes token) {
                         getView().getData(token);

@@ -201,7 +201,7 @@ public class FriendFragment extends BaseFragment implements ItemClickListener, F
             type = " -- 管理员";
         }
         sex.setText("性别:"+(bean.getSex()==0?"女":"男"));
-        project.setText("所属项目:"+bean.getProName());
+        project.setText("所属项目:"+bean.getProject());
         phone.setText("手机:"+bean.getMobile());
         new IOSDialog(getContext()).builder()
                 .setTitle(bean.getName()+type)
