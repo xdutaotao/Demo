@@ -13,9 +13,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1203,7 +1205,28 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
     }
 
     private void setEditTextChangedListener() {
-        information.addTextChangedListener(new CustomTextWatcher(modleNum, false) {
+//        information.addTextChangedListener(new CustomTextWatcher(information, false) {
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                int num = information.getText().toString().length();
+//                if (num > 0) {
+//                    if (num < 100) {
+//                        infoNum.setText(num + "/100");
+//                        infoNum.setTextColor(getResources().getColor(R.color.nav_gray));
+//                    } else {
+//                        infoNum.setText("100/100");
+//                        infoNum.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+//                    }
+//                }
+//            }
+//        });
+
+        information.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int num = information.getText().toString().length();
@@ -1216,6 +1239,11 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
                         infoNum.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                     }
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -1427,7 +1455,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         allHeight.setInputType(InputType.TYPE_NULL);
         allLength.setInputType(InputType.TYPE_NULL);
 
-        information.setInputType(InputType.TYPE_NULL);
+        //information.setInputType(InputType.TYPE_NULL);
     }
 
     private void getFocus() {
@@ -1452,7 +1480,7 @@ public class CollectActivity extends BaseActivity implements CollectView, View.O
         allHeight.setInputType(8194);
         allLength.setInputType(8194);
 
-        information.setInputType(8194);
+        //information.setInputType(8194);
     }
 
     @Override

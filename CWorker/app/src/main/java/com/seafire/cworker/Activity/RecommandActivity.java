@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -103,6 +104,18 @@ public class RecommandActivity extends BaseActivity {
             tabs.getTabAt(i).setText(tabList.get(i).getName());
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.putExtra(INTENT_KEY, (Serializable) changeList);
+            setResult(RESULT_OK, intent);
+            finish();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

@@ -120,7 +120,7 @@ public class HomeDetailActivity extends BaseActivity implements PDFView {
                 name = System.currentTimeMillis() + "." + suffixName;
             }
 
-            file = new File(Environment.getExternalStorageDirectory()+"/cwork/", name);
+            file = new File(Environment.getExternalStorageDirectory()+"/cworker/", name);
             if(file.exists()){
                 startNewActivity();
             }else{

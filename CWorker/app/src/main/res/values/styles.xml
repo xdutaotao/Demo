@@ -76,7 +76,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginLeft">400px</item>
-        <item name="android:layout_marginRight">80px</item>
+        <item name="android:layout_marginRight">100px</item>
         <item name="android:inputType">numberDecimal|number</item>
     </style>
 
