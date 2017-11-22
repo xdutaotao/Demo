@@ -33,6 +33,15 @@ public class MyFavoriteRes {
         private String daily_wage;
         private String door_fee;
         private int info_type;
+        private String price;
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
 
         public int getInfo_type() {
             return info_type;

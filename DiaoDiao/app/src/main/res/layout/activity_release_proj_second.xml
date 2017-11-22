@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400px"
                     android:background="@null"
-                    android:hint="简单描述项目,以及对施工人员的要求"
+                    android:hint="请详细描写施工要求，如材料品牌，包工方式（清包/半包/全包）"
                     android:textColorHint="#D2D2D2"
                     android:id="@+id/content"
                     android:gravity="top"

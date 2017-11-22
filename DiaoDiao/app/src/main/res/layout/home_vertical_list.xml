@@ -62,6 +62,7 @@
     <View
         android:layout_height="2px"
         android:layout_marginTop="20px"
+        android:id="@+id/divide_view"
         android:layout_width="match_parent"
         android:background="@drawable/divider_line"/>
 
@@ -70,6 +71,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/bottom_layout"
         android:layout_marginTop="30px">
 
         <TextView
@@ -84,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="￥120"
-            android:textSize="60px"
+            android:textSize="50px"
             android:textColor="@color/colorPrimary"
             android:id="@+id/price"/>
 

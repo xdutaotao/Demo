@@ -59,7 +59,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     @BindView(R.id.recycler_view)
-    GRecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     private RecyclerArrayAdapter<SignRes.SignBean> adapter;
     private RecyclerArrayAdapter<String> itemAdapter;
@@ -74,6 +74,7 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     private static final int IMAGE_PICKER = 8888;
 
     private TextView postText;
+    private EditText remark;
     private int who;
 
     public static void startActivity(Context context, int id, int who) {
@@ -172,13 +173,6 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
     public void getList(SignRes list) {
         if (list.getSign() != null && list.getSign().size() > 0){
             adapter.addAll(list.getSign());
-        }else{
-            if (who == COMPANY_RELEASE_PROJECT_DOING || who == COMPANY_RELEASE_PROJECT_DONE) {
-                recyclerView.showEmpty();
-            }else{
-
-            }
-
         }
     }
 
@@ -195,10 +189,11 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
             @Override
             public void onBindView(View view) {
                 postText = (TextView) view.findViewById(R.id.post);
+                remark = (EditText) view.findViewById(R.id.remark);
                 TextView time = (TextView) view.findViewById(R.id.time);
                 time.setText(Utils.getNowDate() + " 签到");
                 TextView addr = (TextView) view.findViewById(R.id.address);
-                addr.setText(Constants.address);
+                addr.setText(city+Constants.address);
                 postText.setOnClickListener(v -> {
                     signAction();
                 });
@@ -212,15 +207,16 @@ public class SignDetailActivity extends BaseActivity implements SignDetailView {
         imagePicker.setCrop(false);
         imagePicker.setSaveRectangle(true);
         imagePicker.setMultiMode(true);
-        imagePicker.setShowCamera(false);
+        imagePicker.setShowCamera(true);
         imagePicker.setSelectLimit(10);
     }
 
     private void signAction(){
         GetMoneyReq req = new GetMoneyReq();
-        req.setLocation(Constants.address);
+        req.setLocation(city+Constants.address);
         req.setProject_id(getIntent().getIntExtra(INTENT_KEY, 0));
         req.setImages(pathList);
+        req.setRemark(remark.getText().toString());
         presenter.myAcceptProjectSign(this, req);
     }
 

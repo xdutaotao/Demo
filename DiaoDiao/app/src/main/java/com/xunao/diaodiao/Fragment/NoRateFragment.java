@@ -73,18 +73,28 @@ public class NoRateFragment extends BaseFragment implements MyRatingView, SwipeR
                     baseViewHolder.setText(R.id.rating_name, s.getTitle());
                     baseViewHolder.setText(R.id.address, s.getAddress());
                     baseViewHolder.setText(R.id.type, s.getType());
-                    if (s.getProject_id() == 1){
-                        //发单人
-                        baseViewHolder.setText(R.id.project_detail, "项目进度");
+                    baseViewHolder.setVisible(R.id.project_detail, false);
+                    if (s.getProject_type() == 1){
+                        //项目
                         baseViewHolder.setText(R.id.price_detail, "价格");
-                        baseViewHolder.setText(R.id.price, "￥"+s.getPrice());
+                        baseViewHolder.setText(R.id.price, " ￥"+s.getPrice());
+                    }else if(s.getProject_type() == 4) {
+                        //维保
+                        baseViewHolder.setText(R.id.price_detail, "上门费");
+                        baseViewHolder.setText(R.id.price, " ￥"+s.getDaily_wage());
+                    }else if(s.getProject_type() == 2) {
+                        //监理
+                        baseViewHolder.setText(R.id.price_detail, "价格");
+                        baseViewHolder.setText(R.id.price, " ￥"+s.getPrice());
+                    }else if(s.getProject_type() == 3) {
+                        //零工
+                        baseViewHolder.setText(R.id.price_detail, "共"+s.getTotal_day()+"天");
+                        baseViewHolder.setText(R.id.price, " ￥"+s.getDaily_wage()+"/天");
                     }else{
                         baseViewHolder.setText(R.id.project_detail, "维保进度");
                         baseViewHolder.setText(R.id.price_detail, "上门费");
-                        baseViewHolder.setText(R.id.price, "￥"+s.getDaily_wage());
+                        baseViewHolder.setText(R.id.price, " ￥"+s.getDaily_wage());
                     }
-
-                    baseViewHolder.setVisible(R.id.project_detail, false);
 
                 }
             };

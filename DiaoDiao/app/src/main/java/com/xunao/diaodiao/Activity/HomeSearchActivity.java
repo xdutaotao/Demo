@@ -80,7 +80,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
     private FindProjReq req;
     private int page = 1;
 
-    private String projectType="";
+    private String projectType="全部";
     private String timeType="";
 
     private RecyclerArrayAdapter<HomeSearchRes.ProjectBean> adapter;
@@ -116,22 +116,29 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
                 baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
                 baseViewHolder.setText(R.id.name, homeBean.getType());
                 baseViewHolder.setText(R.id.distance, homeBean.getDistance());
+                baseViewHolder.setVisible(R.id.bottom_layout, true);
+                baseViewHolder.setVisible(R.id.divide_view, true);
                 if (homeBean.getProject_type() == 1) {
                     //项目
+                    baseViewHolder.setText(R.id.price_text, "价格");
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 } else if (homeBean.getProject_type() == 2) {
                     //监理
                     //baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 } else if (homeBean.getProject_type() == 3) {
                     //零工
-                    baseViewHolder.setText(R.id.price_text, "上门费");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                    baseViewHolder.setText(R.id.price, homeBean.getPrice());
+                    baseViewHolder.setVisible(R.id.price_text, false);
                 }else if (homeBean.getProject_type() == 4){
                     //维保
-
+                    baseViewHolder.setVisible(R.id.price_text, false);
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
                 }else if (homeBean.getProject_type() == 5){
                     //资料库
+                    baseViewHolder.setText(R.id.name, homeBean.getTitle());
+                    baseViewHolder.setVisible(R.id.bottom_layout, false);
+                    baseViewHolder.setVisible(R.id.divide_view, false);
                 }
 
             }
@@ -199,7 +206,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
             popWindow.dissmiss();
             if (TextUtils.equals(projAdapter.getAllData().get(i), projectType)){
                 projType.setTextColor(getResources().getColor(R.color.nav_gray));
-                projectType = "";
+                projectType = "全部";
             }else{
                 projType.setTextColor(getResources().getColor(R.color.colorAccent));
                 projectType = projAdapter.getAllData().get(i);
@@ -207,7 +214,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
 
             page = 1;
             req.setPage(page);
-            req.setType(i+1);
+            req.setType(i);
             presenter.indexSearch(HomeSearchActivity.this, req);
 
         });
@@ -253,6 +260,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         });
 
         List<String> typeData = new ArrayList<>();
+        typeData.add("全部");
         typeData.add("项目");
         typeData.add("监理");
         typeData.add("零工");
@@ -262,7 +270,7 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
         projTypeLayout.setOnClickListener(v -> {
             popRecyclerView.setAdapter(projAdapter);
 
-            if (TextUtils.equals(projectType, "")){
+            if (TextUtils.equals(projectType, "全部")){
                 projType.setTextColor(getResources().getColor(R.color.nav_gray));
             }else{
                 projType.setTextColor(getResources().getColor(R.color.colorAccent));
