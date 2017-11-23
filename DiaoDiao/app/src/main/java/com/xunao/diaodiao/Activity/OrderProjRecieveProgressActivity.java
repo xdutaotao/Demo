@@ -194,10 +194,12 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
             });
 
             if (TextUtils.equals(signAdapter.getAllData().get(i), ADD)) {
-                selectPhoto();
+                //selectPhoto();
+                takePhoto();
             }else{
                 if(pathList.size() > 0)
-                    PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
+                    PhotoActivity.startActivity(this, imageItems.get(i).path,
+                            pathList.get(i).contains("http"));
             }
         });
         signAdapter.clear();
@@ -258,6 +260,12 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         imagePicker.setSelectLimit(10);
         imagePicker.setOutPutY(100);
         imagePicker.setOutPutX(100);
+    }
+
+    private void takePhoto() {
+        Intent intent = new Intent(this, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        startActivityForResult(intent, IMAGE_PICKER);
     }
 
     private void selectPhoto() {

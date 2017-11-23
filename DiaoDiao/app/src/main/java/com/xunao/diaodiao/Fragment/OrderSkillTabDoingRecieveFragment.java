@@ -109,16 +109,16 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                 }
 
                 if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                    baseViewHolder.setText(R.id.request, "维保进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
-                    baseViewHolder.setText(R.id.request, "监理进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if(who == SKILL_RECIEVE_LINGGONG) {
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else{
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }
 

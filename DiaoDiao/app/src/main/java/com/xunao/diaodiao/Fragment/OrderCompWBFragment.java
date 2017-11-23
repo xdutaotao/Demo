@@ -93,7 +93,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setVisible(R.id.evaluation, false);
 
                     }else{
-                        baseViewHolder.setText(R.id.request, "维保进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setVisible(R.id.contact, false);
 
                         if(homeBean.getEvaluate_status() == 1){
@@ -127,7 +127,7 @@ public class OrderCompWBFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setVisible(R.id.contact, false);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
-                    baseViewHolder.setText(R.id.request, "维保进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if (who == Constants.COMPANY_RELEASE_WEIBAO_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);

@@ -111,7 +111,7 @@ public class OrderSkillTabFinishFragment extends BaseFragment implements SwipeRe
                     baseViewHolder.setVisible(R.id.contact, false);
                 }else{
                     //已完成
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, false);
                     if (homeBean.getEvaluate_status() == 2){
                         //未评价

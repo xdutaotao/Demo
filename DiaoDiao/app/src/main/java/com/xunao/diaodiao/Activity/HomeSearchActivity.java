@@ -136,9 +136,15 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
                 }else if (homeBean.getProject_type() == 5){
                     //资料库
+                    baseViewHolder.setVisible(R.id.item_content, false);
                     baseViewHolder.setText(R.id.name, homeBean.getTitle());
                     baseViewHolder.setVisible(R.id.bottom_layout, false);
                     baseViewHolder.setVisible(R.id.divide_view, false);
+                    baseViewHolder.setVisible(R.id.middle_layout, false);
+                    baseViewHolder.setOnClickListener(R.id.name, v -> {
+                        PDFActivity.startActivity(HomeSearchActivity.this,
+                                homeBean.getTitle(), homeBean.getFile());
+                    });
                 }
 
             }

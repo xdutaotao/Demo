@@ -100,7 +100,7 @@ public class OrderSkillTabDoingFragment extends BaseFragment implements SwipeRef
                 if (!TextUtils.isEmpty(homeBean.getTotal_day()))
                     baseViewHolder.setText(R.id.days, "共"+homeBean.getTotal_day()+"天");
 
-                baseViewHolder.setText(R.id.request, "项目进度");
+                baseViewHolder.setText(R.id.request, "工作进度");
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     if(who == Constants.SKILL_RELEASE_WEIBAO){

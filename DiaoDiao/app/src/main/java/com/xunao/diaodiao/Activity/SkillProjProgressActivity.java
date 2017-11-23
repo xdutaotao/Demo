@@ -106,6 +106,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
     private boolean photoPost;
     GetMoneyReq req;
     private int type;
+    private boolean isDetele;
 
     public static void startActivity(Context context, int id, int worksid, int stage, int who) {
         Intent intent = new Intent(context, SkillProjProgressActivity.class);
@@ -171,7 +172,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
                         if(type == 1){
                             //公司
-                            baseViewHolder.setText(R.id.content_time, "第一阶段提交待我确认，确认通过后将工费汇给对方(7天后自动打款)");
+                            baseViewHolder.setText(R.id.content_time, "第一阶段提交待我确认，确认通过后将工费汇给对方(3天后自动打款)");
                         }else{
                             baseViewHolder.setText(R.id.content_time, "第一阶段审核中");
                         }
@@ -194,7 +195,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
                         if(type == 1){
                             //公司
-                            baseViewHolder.setText(R.id.content_time, "第二阶段提交待我确认，确认通过后将工费汇给对方(7天后自动打款)");
+                            baseViewHolder.setText(R.id.content_time, "第二阶段提交待我确认，确认通过后将工费汇给对方(3天后自动打款)");
                         }else{
                             baseViewHolder.setText(R.id.content_time, "第二阶段审核中");
                         }
@@ -226,6 +227,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         };
 
         footerAdapter.setOnItemClickListener((view, i) -> {
+            isDetele = false;
             view.findViewById(R.id.delete).setOnClickListener(v -> {
                 imageItems.remove(i);
                 footerAdapter.remove(i);
@@ -235,11 +237,14 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             });
 
             if (TextUtils.equals(footerAdapter.getAllData().get(i), ADD)) {
-                selectPhoto();
-                //takePhoto();
+                //selectPhoto();
+                takePhoto();
             }else{
-                if(pathList.size() > 0)
-                PhotoActivity.startActivity(this, pathList.get(i), pathList.get(i).contains("http"));
+                if(pathList.size() > 0 ){
+                    PhotoActivity.startActivity(this, imageItems.get(i).path,
+                            pathList.get(i).contains("http"));
+                }
+
             }
         });
         footerAdapter.add(ADD);
@@ -267,7 +272,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         }else{
             //技术人员
             if (stage == 2) {
-                post.setText("第二阶段提交审核");
+                post.setText("第二阶段申请付款");
             } else {
                 post.setText("第一阶段提交审核");
             }
@@ -333,18 +338,6 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
 
                 //再次提交
                 pass.setOnClickListener(v -> {
-//                    bottomBtnLayout.setVisibility(View.GONE);
-//                    post.setVisibility(View.VISIBLE);
-//                    adapter.removeAllFooter();
-//
-//                    if (stage == 2) {
-//                        post.setText("第二阶段提交审核");
-//                    } else {
-//                        post.setText("第一阶段提交审核");
-//                    }
-//
-//                    setFooter();
-
                     signAction(stage);
                 });
 
@@ -356,7 +349,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             post.setVisibility(View.GONE);
         }else if(projStatus == 0){
             if (stage == 2) {
-                post.setText("第二阶段提交审核");
+                post.setText("第二阶段申请付款");
             } else {
                 post.setText("第一阶段提交审核");
             }

@@ -121,13 +121,13 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                 if (homeBean.getStatus() == 1){
                     //已完成
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                        baseViewHolder.setText(R.id.request, "维保进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
 
                     }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
-                        baseViewHolder.setText(R.id.request, "监理进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
 
                     }else {
-                        baseViewHolder.setText(R.id.request, "项目进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
 
                     }
 
@@ -152,15 +152,15 @@ public class OrderSkillTabFinishRecieveFragment extends BaseFragment implements 
                     baseViewHolder.setVisible(R.id.evaluation, false);
 
                     if(who == Constants.SKILL_RECIEVE_WEIBAO){
-                        baseViewHolder.setText(R.id.request, "维保进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
 
                     }else if(who == Constants.SKILL_RECIEVE_JIANLI) {
-                        baseViewHolder.setText(R.id.request, "监理进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
 
                     }else {
-                        baseViewHolder.setText(R.id.request, "项目进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setText(R.id.time, homeBean.getIssue_time());
 
                     }
