@@ -10,14 +10,18 @@ public class GithubRepoPageProcessor implements PageProcessor {
 	private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
 
 	public void process(Page page) {
-		page.addTargetRequests(page.getHtml().links().regex("(https://www.jandan\\.net/\\w+/\\w+)").all());
-		page.putField("author", page.getUrl().regex("https://www.jandan\\.net/(\\w+)/.*").toString());
-		page.putField("name", page.getHtml().xpath("//ol[@class='commentlist']/li//a[@class='view_img_link']/@href").toString());
-		if (page.getResultItems().get("name")==null){
-			//skip this page
-			page.setSkip(true);
-		}
-		page.putField("readme", page.getHtml().xpath("//div[@id='readme']/tidyText()"));
+//		page.addTargetRequests(page.getHtml().links().regex("(https://www.jandan\\.net/\\w+/\\w+)").all());
+//		page.putField("author", page.getUrl().regex("https://www.jandan\\.net/(\\w+)/.*").toString());
+//		page.putField("name", page.getHtml().xpath("//ol[@class='commentlist']/li//a[@class='view_img_link']/@href").get());
+//		if (page.getResultItems().get("name")==null){
+//			//skip this page
+//			page.setSkip(true);
+//		}
+//		page.putField("readme", page.getHtml().xpath("//div[@id='readme']/tidyText()"));
+
+
+		String url = page.getHtml().xpath("//ol[@class='commentlist']/li//a[@class='view_img_link']/@href").get();
+		System.out.printf("url: "+url);
 	}
 
 	public Site getSite() {
@@ -26,7 +30,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
 
 	public static void main(String[] args) {
 		Spider.create(new GithubRepoPageProcessor())
-				.addUrl("https://www.jandan.net")
+				.addUrl("http://jandan.net/ooxx/page-0#comments")
 				.thread(5)
 				.run();
 	}

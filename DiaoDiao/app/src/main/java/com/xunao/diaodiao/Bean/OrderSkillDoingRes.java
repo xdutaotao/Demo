@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by guzhenfu on 2017/9/18.
  */
 
-public class OrderSkillDoingRes {
+public class OrderSkillDoingRes implements Serializable{
     private List<OddBean> odd;
 
     public List<OddBean> getOdd() {
@@ -48,7 +49,7 @@ public class OrderSkillDoingRes {
         this.supervisor = supervisor;
     }
 
-    public static class OddBean{
+    public static class OddBean implements Serializable{
         private int odd_id;
         private String title;
         private long publish_time;

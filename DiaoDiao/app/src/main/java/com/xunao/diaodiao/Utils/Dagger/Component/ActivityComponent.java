@@ -14,6 +14,7 @@ import com.xunao.diaodiao.Activity.CheckEmailActivity;
 import com.xunao.diaodiao.Activity.CollectActivity;
 import com.xunao.diaodiao.Activity.ComplaintRecordActivity;
 import com.xunao.diaodiao.Activity.ComponyPersonalActivity;
+import com.xunao.diaodiao.Activity.CustomerDetailActivity;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.DocDetailActivity;
 import com.xunao.diaodiao.Activity.EditCompanyActivity;
@@ -194,4 +195,5 @@ public interface ActivityComponent {
     void inject(WeiBaoProjActivity activity);
     void inject(WeiBaoProgActivity activity);
     void inject(HelpActivity activity);
+    void inject(CustomerDetailActivity activity);
 }

@@ -9,13 +9,41 @@ import java.util.List;
 
 public class ApplyDetailRes {
     private String name;
+    private String address;
     private String point;
+    private String contact_mobile;
+
     private String experience;
     private String project_type;
     private int project_amount;
     private String evaluate;
     private String mobile;
     private List<EvaluateBean> evaluates;
+    private List<EvaluateBean> evaluate_Info;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContact_mobile() {
+        return contact_mobile;
+    }
+
+    public void setContact_mobile(String contact_mobile) {
+        this.contact_mobile = contact_mobile;
+    }
+
+    public List<EvaluateBean> getEvaluate_Info() {
+        return evaluate_Info;
+    }
+
+    public void setEvaluate_Info(List<EvaluateBean> evaluate_Info) {
+        this.evaluate_Info = evaluate_Info;
+    }
 
     public String getName() {
         return name;

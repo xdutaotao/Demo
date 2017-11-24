@@ -2129,6 +2129,24 @@ public class LoginModel extends BaseModel {
     }
 
 
+    public Observable<ApplyDetailRes> maintenanceInfo(GetMoneyReq req){
+        String rateKey = "maintenanceInfo";
+
+        long time = System.currentTimeMillis()/1000;
+
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getId()).append(req.getPage())
+                .append(req.getPageSize()).append(req.getType())
+                .append(req.getUserid())
+                .append("security");
+
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+        return config.getRetrofitService().getApplyDetail(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+
     public Observable<Object> getApplyPass(ApplyPassReq req){
         String rateKey = "applyPass";
 

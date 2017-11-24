@@ -1,0 +1,57 @@
+[framework] 2017-11-23 23:16:12,626 - us.codecraft.webmagic.scheduler.QueueScheduler -0    [main] DEBUG us.codecraft.webmagic.scheduler.QueueScheduler  - push to queue http://jandan.net/ooxx/page-0#comments
+  [framework] 2017-11-23 23:16:13,452 - us.codecraft.webmagic.Spider -826  [main] INFO  us.codecraft.webmagic.Spider  - Spider jandan.net started!
+  [framework] 2017-11-23 23:16:13,581 - org.apache.http.client.protocol.RequestAddCookies -955  [pool-1-thread-1] DEBUG org.apache.http.client.protocol.RequestAddCookies  - CookieSpec selected: standard
+  [framework] 2017-11-23 23:16:13,600 - org.apache.http.client.protocol.RequestAuthCache -974  [pool-1-thread-1] DEBUG org.apache.http.client.protocol.RequestAuthCache  - Auth cache not set in the context
+  [framework] 2017-11-23 23:16:13,602 - org.apache.http.impl.conn.PoolingHttpClientConnectionManager -976  [pool-1-thread-1] DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager  - Connection request: [route: {}->http://jandan.net:80][total kept alive: 0; route allocated: 0 of 100; total allocated: 0 of 5]
+  [framework] 2017-11-23 23:16:13,658 - org.apache.http.impl.conn.PoolingHttpClientConnectionManager -1032 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager  - Connection leased: [id: 0][route: {}->http://jandan.net:80][total kept alive: 0; route allocated: 1 of 100; total allocated: 1 of 5]
+  [framework] 2017-11-23 23:16:13,661 - org.apache.http.impl.execchain.MainClientExec -1035 [pool-1-thread-1] DEBUG org.apache.http.impl.execchain.MainClientExec  - Opening connection {}->http://jandan.net:80
+  [framework] 2017-11-23 23:16:13,697 - org.apache.http.impl.conn.DefaultHttpClientConnectionOperator -1071 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.DefaultHttpClientConnectionOperator  - Connecting to jandan.net/124.14.9.234:80
+  [framework] 2017-11-23 23:16:13,712 - org.apache.http.impl.conn.DefaultHttpClientConnectionOperator -1086 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.DefaultHttpClientConnectionOperator  - Connection established 192.168.3.6:62391<->124.14.9.234:80
+  [framework] 2017-11-23 23:16:13,713 - org.apache.http.impl.conn.DefaultManagedHttpClientConnection -1087 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.DefaultManagedHttpClientConnection  - http-outgoing-0: set socket timeout to 5000
+  [framework] 2017-11-23 23:16:13,713 - org.apache.http.impl.execchain.MainClientExec -1087 [pool-1-thread-1] DEBUG org.apache.http.impl.execchain.MainClientExec  - Executing request GET /ooxx/page-0 HTTP/1.1
+  [framework] 2017-11-23 23:16:13,713 - org.apache.http.impl.execchain.MainClientExec -1087 [pool-1-thread-1] DEBUG org.apache.http.impl.execchain.MainClientExec  - Target auth state: UNCHALLENGED
+  [framework] 2017-11-23 23:16:13,714 - org.apache.http.impl.execchain.MainClientExec -1088 [pool-1-thread-1] DEBUG org.apache.http.impl.execchain.MainClientExec  - Proxy auth state: UNCHALLENGED
+  [framework] 2017-11-23 23:16:13,719 - org.apache.http.headers -1093 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 >> GET /ooxx/page-0 HTTP/1.1
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.headers -1094 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 >> Accept-Encoding: gzip
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.headers -1094 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 >> Host: jandan.net
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.headers -1094 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 >> Connection: Keep-Alive
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.headers -1094 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 >> User-Agent: 
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "GET /ooxx/page-0 HTTP/1.1[\r][\n]"
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "Accept-Encoding: gzip[\r][\n]"
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "Host: jandan.net[\r][\n]"
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "Connection: Keep-Alive[\r][\n]"
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "User-Agent: [\r][\n]"
+  [framework] 2017-11-23 23:16:13,720 - org.apache.http.wire -1094 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 >> "[\r][\n]"
+  [framework] 2017-11-23 23:16:13,732 - org.apache.http.wire -1106 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "HTTP/1.1 403 Forbidden[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Server: marco/1.9[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Date: Thu, 23 Nov 2017 15:05:55 GMT[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Content-Type: text/html[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Content-Length: 166[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "Via: M.gwn-sh-sha-228[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "X-Request-Id: 7d2b8a2c599c368c4456b1081e9fa345[\r][\n]"
+  [framework] 2017-11-23 23:16:13,733 - org.apache.http.wire -1107 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "<html>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "<head><title>403 Forbidden</title></head>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "<body bgcolor="white">[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "<center><h1>403 Forbidden</h1></center>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "<hr><center>marco/1.9</center>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "</body>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,734 - org.apache.http.wire -1108 [pool-1-thread-1] DEBUG org.apache.http.wire  - http-outgoing-0 << "</html>[\r][\n]"
+  [framework] 2017-11-23 23:16:13,756 - org.apache.http.headers -1130 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << HTTP/1.1 403 Forbidden
+  [framework] 2017-11-23 23:16:13,756 - org.apache.http.headers -1130 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Server: marco/1.9
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Date: Thu, 23 Nov 2017 15:05:55 GMT
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Content-Type: text/html
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Content-Length: 166
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Connection: keep-alive
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << Via: M.gwn-sh-sha-228
+  [framework] 2017-11-23 23:16:13,757 - org.apache.http.headers -1131 [pool-1-thread-1] DEBUG org.apache.http.headers  - http-outgoing-0 << X-Request-Id: 7d2b8a2c599c368c4456b1081e9fa345
+  [framework] 2017-11-23 23:16:13,772 - org.apache.http.impl.execchain.MainClientExec -1146 [pool-1-thread-1] DEBUG org.apache.http.impl.execchain.MainClientExec  - Connection can be kept alive indefinitely
+  [framework] 2017-11-23 23:16:13,783 - org.apache.http.impl.conn.PoolingHttpClientConnectionManager -1157 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager  - Connection [id: 0][route: {}->http://jandan.net:80] can be kept alive indefinitely
+  [framework] 2017-11-23 23:16:13,783 - org.apache.http.impl.conn.PoolingHttpClientConnectionManager -1157 [pool-1-thread-1] DEBUG org.apache.http.impl.conn.PoolingHttpClientConnectionManager  - Connection released: [id: 0][route: {}->http://jandan.net:80][total kept alive: 1; route allocated: 1 of 100; total allocated: 1 of 5]
+  [framework] 2017-11-23 23:16:14,080 - us.codecraft.webmagic.utils.CharsetUtils -1454 [pool-1-thread-1] DEBUG us.codecraft.webmagic.utils.CharsetUtils  - Auto get charset: null
+  [framework] 2017-11-23 23:16:14,080 - us.codecraft.webmagic.downloader.HttpClientDownloader -1454 [pool-1-thread-1] WARN  us.codecraft.webmagic.downloader.HttpClientDownloader  - Charset autodetect failed, use UTF-8 as charset. Please specify charset in Site.setCharset()
+  [framework] 2017-11-23 23:16:14,083 - us.codecraft.webmagic.downloader.HttpClientDownloader -1457 [pool-1-thread-1] INFO  us.codecraft.webmagic.downloader.HttpClientDownloader  - downloading page success http://jandan.net/ooxx/page-0#comments
+  [framework] 2017-11-23 23:16:14,085 - us.codecraft.webmagic.Spider -1459 [pool-1-thread-1] INFO  us.codecraft.webmagic.Spider  - page status code error, page http://jandan.net/ooxx/page-0#comments , code: 403
+  [framework] 2017-11-23 23:16:14,192 - us.codecraft.webmagic.Spider -1566 [main] INFO  us.codecraft.webmagic.Spider  - Spider jandan.net closed! 1 pages downloaded.
+  

@@ -11,6 +11,7 @@ import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Activity.ApplyDetailActivity;
+import com.xunao.diaodiao.Activity.CustomerDetailActivity;
 import com.xunao.diaodiao.Activity.JoinActivity;
 import com.xunao.diaodiao.Activity.JoinDetailActivity;
 import com.xunao.diaodiao.Activity.OrderProjProgressActivity;
@@ -134,6 +135,10 @@ public class OrderSkillTabDoingRecieveFragment extends BaseFragment implements S
                             JoinDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
                                     homeBean.getPublish_id(),
                                     "----");
+                        }else if(homeBean.getPublish_type() == 3) {
+                            //家庭用户
+                            CustomerDetailActivity.startActivity(OrderSkillTabDoingRecieveFragment.this.getContext(),
+                                    homeBean);
                         }else{
                             ApplyPassReq applyPassReq = new ApplyPassReq();
                             applyPassReq.setTechnician_id(homeBean.getPublish_id());
