@@ -140,7 +140,7 @@
                 android:id="@+id/content"
                 android:layout_marginBottom="20px"
                 android:textColor="@color/nav_gray"
-                android:text="7天 自动通过"/>
+                android:text="3天 自动通过"/>
 
             <TextView
                 android:layout_width="wrap_content"

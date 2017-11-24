@@ -593,34 +593,7 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
     }
 
     private void showPicDialog() {
-//        url += "&hd=1";
-//        UMImage thumb =  new UMImage(this, R.mipmap.ic_launcher);
-//        UMWeb web = new UMWeb(url);
-//        web.setTitle("调调居服分享信息");//标题
-//        web.setThumb(thumb);  //缩略图
-//        web.setDescription("我分享了来自调调居服的"+title+"信息，快来看看吧！");//描述
-//
-//        new ShareAction(WebViewActivity.this)
-//                .withMedia(web)
-//                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-//                .setCallback(null)
-//                .open();
-
         showBottomSheetDialog();
-
-
-//        new IOSDialog(this).builder()
-//                .setCancelable(true)
-//                .setTitle("朋友圈", v -> {
-//                    friends();
-//                })
-//                .setMsg("好友", v -> {
-//                    friend();
-//                })
-//                .setMsgSize(R.dimen.dialog_msg_size)
-//                .setMsgColor("#333333")
-//                .setNegativeButton("取消", null)
-//                .show();
     }
 
     @Override
@@ -787,6 +760,11 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
         @JavascriptInterface
         public void goToMap(String url) {
             WebViewOutActivity.startActivity(WebViewActivity.this, url);
+        }
+
+        @JavascriptInterface
+        public void goToInfo(String url){
+
         }
     }
 

@@ -571,19 +571,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     }
 
     private void showPicDialog() {
-//        new IOSDialog(this).builder()
-//                .setCancelable(true)
-//                .setTitle("朋友圈", v -> {
-//                    friends();
-//                })
-//                .setMsg("好友", v -> {
-//                    friend();
-//                })
-//                .setMsgSize(R.dimen.dialog_msg_size)
-//                .setMsgColor("#333333")
-//                .setNegativeButton("取消", null)
-//                .show();
-
         showBottomSheetDialog();
     }
 
@@ -699,6 +686,11 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         @JavascriptInterface
         public void goToMap(String url) {
             WebViewOutActivity.startActivity(WebViewDetailActivity.this, url);
+        }
+
+        @JavascriptInterface
+        public void goToInfo(String url){
+
         }
     }
 
