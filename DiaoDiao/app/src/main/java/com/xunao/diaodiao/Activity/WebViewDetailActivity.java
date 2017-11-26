@@ -692,6 +692,20 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
         public void goToInfo(String url){
 
         }
+
+        @JavascriptInterface
+        public void goToCall(String url){
+            new IOSDialog(WebViewDetailActivity.this).builder()
+                    .setMsg(url)
+                    .setNegativeButton("取消", null)
+                    .setNegativeBtnColor(R.color.accept_btn_default)
+                    .setPositiveBtnColor(R.color.accept_btn_default)
+                    .setPositiveButton("呼叫", v1 -> {
+                        Utils.startCallActivity(WebViewDetailActivity.this, url);
+                    })
+                    .show();
+        }
+
     }
 
     private void showBottomSheetDialog() {

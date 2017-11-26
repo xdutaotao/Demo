@@ -176,6 +176,8 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             bg.setVisibility(View.VISIBLE);
 
             wbApply.setVisibility(View.GONE);
+            wbDoing.setVisibility(View.VISIBLE);
+            wbWaiting.setVisibility(View.VISIBLE);
         } else if(type == COMPANY_TYPE){
             //公司
             projLayout.setVisibility(View.VISIBLE);
@@ -331,7 +333,7 @@ public class ProjectFragment extends BaseFragment implements ProjectView, View.O
             }else{
                 //家庭用户
                 if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_doing())) {
-                    wbDoing.setText("申请中 " + maintenanceBean.getMaintenance_doing());
+                    wbDoing.setText("进行中 " + maintenanceBean.getMaintenance_doing());
                 }
                 if (!TextUtils.isEmpty(maintenanceBean.getMaintenance_wait())) {
                     wbWaiting.setText("待确认 " + maintenanceBean.getMaintenance_wait());

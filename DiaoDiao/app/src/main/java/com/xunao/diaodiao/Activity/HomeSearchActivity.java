@@ -124,12 +124,12 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 } else if (homeBean.getProject_type() == 2) {
                     //监理
-                    baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage());
+                    baseViewHolder.setText(R.id.price_text, "价格");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 } else if (homeBean.getProject_type() == 3) {
                     //零工
                     baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage());
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage()+"/天");
                 }else if (homeBean.getProject_type() == 4){
                     //维保
                     baseViewHolder.setText(R.id.price_text, "上门费");

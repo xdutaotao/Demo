@@ -113,12 +113,13 @@ public class WeiBaoProgActivity extends BaseActivity implements WeiBaoProgView {
         presenter.attachView(this);
 
         who = getIntent().getIntExtra("who", 0);
-        if(who == COMPANY_RELEASE_JIANLI_DONE ||
-                who == COMPANY_RELEASE_JIANLI_DOING){
-            showToolbarBack(toolBar, titleText, "监理进度");
-        }else{
-            showToolbarBack(toolBar, titleText, "维保进度");
-        }
+        showToolbarBack(toolBar, titleText, "工作进度");
+//        if(who == COMPANY_RELEASE_JIANLI_DONE ||
+//                who == COMPANY_RELEASE_JIANLI_DOING){
+//            showToolbarBack(toolBar, titleText, "监理进度");
+//        }else{
+//            showToolbarBack(toolBar, titleText, "维保进度");
+//        }
 
 
         maintenanceId = getIntent().getIntExtra(INTENT_KEY, 0);

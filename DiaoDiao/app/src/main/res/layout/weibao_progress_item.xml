@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/content_time"
                 android:textColor="@color/accept_btn_default"
-                android:text="待我确认，确认后上门费汇至维保人员账户"
+                android:text="申请打款（3天后自动通过）"
                 android:layout_marginBottom="20px"/>
 
 
