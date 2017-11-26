@@ -138,7 +138,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
                 itemAdapter = new RecyclerArrayAdapter<String>(baseViewHolder.getContext(), R.layout.single_image) {
                     @Override
                     protected void convert(BaseViewHolder baseViewHolder, String s) {
-                        baseViewHolder.setImageUrl(R.id.image, s, R.drawable.head_icon_boby);
+                        baseViewHolder.setImageUrl(R.id.image, s, R.drawable.zhanwei);
                     }
                 };
 
@@ -250,6 +250,7 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
         footerAdapter.add(ADD);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
+        //manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
@@ -355,6 +356,8 @@ public class SkillProjProgressActivity extends BaseActivity implements SkillProj
             }
             setFooter();
         }
+
+        recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
     }
 

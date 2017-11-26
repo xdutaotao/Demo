@@ -76,7 +76,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="200px"
+            android:layout_height="wrap_content"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="4"
             android:id="@+id/recycler_view_image"

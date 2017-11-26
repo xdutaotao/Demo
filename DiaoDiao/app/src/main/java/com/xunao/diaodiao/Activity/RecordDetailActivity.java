@@ -70,9 +70,15 @@ public class RecordDetailActivity extends BaseActivity implements RecordDetailVi
         adapter = new RecyclerArrayAdapter<String>(this, R.layout.single_image) {
             @Override
             protected void convert(BaseViewHolder baseViewHolder, String s) {
-                baseViewHolder.setImageUrl(R.id.image, s);
+                baseViewHolder.setImageUrl(R.id.image, s, R.drawable.zhanwei);
+
+                baseViewHolder.setOnClickListener(R.id.image, v -> {
+                    PhotoActivity.startActivity(RecordDetailActivity.this, s, s.contains("http"));
+                });
             }
         };
+
+
 
         recyclerView.setAdapter(adapter);
 

@@ -461,7 +461,10 @@ public class PayActivity extends BaseActivity implements View.OnClickListener, C
     @Override
     public void onDestroy() {
         super.onDestroy();
+        isWeixin = false;
+        wxFail = false;
         presenter.detachView();
+
     }
 
 }

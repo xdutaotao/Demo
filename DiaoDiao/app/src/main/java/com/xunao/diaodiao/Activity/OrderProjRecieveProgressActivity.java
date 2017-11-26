@@ -314,6 +314,7 @@ public class OrderProjRecieveProgressActivity extends BaseActivity implements Or
         signAdapter.clear();
         signAdapter.add(ADD);
 
+        recyclerView.scrollToPosition(adapter.getItemCount()-1);
     }
 
     private void setFooter(){

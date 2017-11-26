@@ -125,28 +125,28 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
         switch (v.getId()) {
             case R.id.login:
                 if (TextUtils.isEmpty(name.getText())) {
-                    ToastUtil.show("不能为空");
+                    ToastUtil.show("用户名不能为空");
                     return;
                 }
 
                 if (TextUtils.isEmpty(phone.getText())) {
-                    ToastUtil.show("不能为空");
+                    ToastUtil.show("手机号不能为空");
                     return;
                 }
 
                 if (TextUtils.isEmpty(address.getText())) {
-                    ToastUtil.show("不能为空");
+                    ToastUtil.show("地区不能为空");
                     return;
                 }
 
                 if (TextUtils.isEmpty(addressDetail.getText())) {
-                    ToastUtil.show("不能为空");
+                    ToastUtil.show("地址不能为空");
                     return;
                 }
                 FillNormalReq req = new FillNormalReq();
                 req.setName(name.getText().toString());
                 req.setMobile(phone.getText().toString());
-                req.setAddress(address.getText().toString());
+                req.setAddress(addressDetail.getText().toString());
                 req.setProvince(provinceId);
                 req.setCity(cityId);
                 req.setDistrict(districtId);

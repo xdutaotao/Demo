@@ -273,6 +273,7 @@ public class WeiBaoProjActivity extends BaseActivity implements WeiBaoProjView {
         footerAdapter.add(ADD);
         pathList.clear();
         imageItems.clear();
+        recyclerView.scrollToPosition(adapter.getItemCount()-1);
     }
 
     private void setFooter() {

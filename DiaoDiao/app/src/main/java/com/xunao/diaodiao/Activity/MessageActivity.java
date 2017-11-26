@@ -110,6 +110,8 @@ public class MessageActivity extends BaseActivity implements MessageView, SwipeR
                         .setPositiveButton("删除", v -> {
                             presenter.cancelMessage(MessageActivity.this,
                                     adapter.getAllData().get(i).getMessage_id());
+//                            ToastUtil.show("删除成功");
+//                            onRefresh();
                         })
                         .show();
 
