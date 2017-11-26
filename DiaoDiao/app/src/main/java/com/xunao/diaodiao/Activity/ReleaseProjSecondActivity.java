@@ -348,7 +348,8 @@ public class ReleaseProjSecondActivity extends BaseActivity implements ReleasePr
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
-            addressResult.addAll(result);
+            if(addressResult.size() == 0)
+                addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);

@@ -79,7 +79,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
         getActivityComponent().inject(this);
         presenter.attachView(this);
 
-        showToolbarBack(toolBar, titleText, "项目进度");
+        showToolbarBack(toolBar, titleText, "工作进度");
 
         who = getIntent().getIntExtra("WHO", 0);
         if (who == COMPANY_RELEASE_PROJECT_DONE || who == COMPANY_RELEASE_PROJECT_DOING) {
@@ -92,6 +92,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                 baseViewHolder.setText(R.id.title, workBean.getTitle());
                 if (workBean.getStage1() == 0) {
                     baseViewHolder.setText(R.id.progress, "第一阶段未开始");
+                    baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                     baseViewHolder.setText(R.id.middle_text, "未开始");
                     baseViewHolder.setVisible(R.id.middle_btn, false);
                     baseViewHolder.setVisible(R.id.middle, false);
@@ -102,6 +103,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setVisible(R.id.status, false);
                 } else if (workBean.getStage1() == 1) {
                     baseViewHolder.setText(R.id.progress, "第一阶段进行中");
+                    baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                     baseViewHolder.setVisible(R.id.status_btn, false);
                     baseViewHolder.setVisible(R.id.status_text, true);
                     baseViewHolder.setVisible(R.id.status, false);
@@ -127,6 +129,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     //第一阶段完成了
                     if (workBean.getStage2() == 0) {
                         baseViewHolder.setText(R.id.progress, "第一阶段已完成");
+                        baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                         baseViewHolder.setVisible(R.id.middle_btn, false);
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
@@ -137,7 +140,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                         baseViewHolder.setVisible(R.id.status, false);
                     } else if (workBean.getStage2() == 1) {
                         baseViewHolder.setText(R.id.progress, "第二阶段进行中");
-
+                        baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                         baseViewHolder.setVisible(R.id.middle_btn, false);
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
@@ -161,7 +164,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     } else if (workBean.getStage2() == 2) {
                         //第二阶段已完成
                         baseViewHolder.setText(R.id.progress, "第二阶段已完成");
-
+                        baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                         baseViewHolder.setVisible(R.id.middle_btn, false);
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
@@ -187,6 +190,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     } else if (workBean.getStage2() == 4) {
                         //审核失败
                         baseViewHolder.setText(R.id.progress, "第二阶段审核不通过");
+                        baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                         baseViewHolder.setVisible(R.id.middle_btn, false);
                         baseViewHolder.setVisible(R.id.middle_text, false);
                         baseViewHolder.setVisible(R.id.middle, true);
@@ -212,6 +216,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setVisible(R.id.status, false);
                 } else if (workBean.getStage1() == 4) {
                     baseViewHolder.setText(R.id.progress, "第一阶段审核不通过");
+                    baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                     baseViewHolder.setVisible(R.id.middle_btn, false);
                     baseViewHolder.setVisible(R.id.middle_text, false);
                     baseViewHolder.setVisible(R.id.middle, true);
@@ -222,6 +227,7 @@ public class SkillProjReceiveProgressActivity extends BaseActivity implements Sk
                     baseViewHolder.setVisible(R.id.status, false);
                 }else{
                     baseViewHolder.setText(R.id.progress, "第一阶段审核不通过");
+                    baseViewHolder.setTextColorRes(R.id.progress, R.color.accept_btn_default);
                     baseViewHolder.setVisible(R.id.middle_btn, true);
                     baseViewHolder.setVisible(R.id.middle_text, true);
                     baseViewHolder.setVisible(R.id.middle, true);

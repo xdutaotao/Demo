@@ -321,14 +321,14 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
     public void onRefresh() {
         page = 1;
         req.setPage(page);
-        presenter.indexSearch(this, req);
+        presenter.indexSearch(req);
     }
 
     @Override
     public void onLoadMore() {
         page++;
         req.setPage(page);
-        presenter.indexSearch(this, req);
+        presenter.indexSearch(req);
     }
 
     @Override

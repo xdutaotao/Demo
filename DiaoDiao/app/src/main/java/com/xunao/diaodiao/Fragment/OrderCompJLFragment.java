@@ -91,7 +91,7 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                         baseViewHolder.setVisible(R.id.evaluation, false);
 
                     }else{
-                        baseViewHolder.setText(R.id.request, "监理进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setVisible(R.id.contact, false);
 
                         if(homeBean.getEvaluate_status() == 1){
@@ -126,7 +126,7 @@ public class OrderCompJLFragment extends BaseFragment implements SwipeRefreshLay
                     baseViewHolder.setVisible(R.id.contact, false);
                 }else if(who == Constants.COMPANY_RELEASE_JIANLI_DOING){
                     baseViewHolder.setVisible(R.id.distance, false);
-                    baseViewHolder.setText(R.id.request, "监理进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                     baseViewHolder.setVisible(R.id.contact, true);
                 }else if (who == Constants.COMPANY_RELEASE_JIANLI_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);

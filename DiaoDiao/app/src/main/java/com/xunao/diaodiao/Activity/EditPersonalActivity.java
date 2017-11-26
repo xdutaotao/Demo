@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.xunao.diaodiao.Bean.FillNormalReq;
 import com.xunao.diaodiao.Bean.LoginResBean;
 import com.xunao.diaodiao.Bean.PersonalRes;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.EditPersonalPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.ToastUtil;
@@ -31,6 +32,7 @@ import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.AddressPicker;
 
 import static com.xunao.diaodiao.Common.Constants.INTENT_KEY;
+import static com.xunao.diaodiao.Common.Constants.addressResult;
 
 /**
  * create by
@@ -83,12 +85,15 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
         login.setOnClickListener(this);
 
         if (getIntent().getSerializableExtra(INTENT_KEY) != null) {
-            PersonalRes.FamilyInfo info = new PersonalRes.FamilyInfo();
+            PersonalRes.FamilyInfo info = (PersonalRes.FamilyInfo) getIntent().getSerializableExtra(INTENT_KEY);
             name.setText(info.getName());
             phone.setText(info.getMobile());
-            //address.setText(info.getAddress());
+            address.setText(info.getRegion());
             //addressDetail.setText(info.getProvince() + info.getCity() + info.getDistrict() + "");
             addressDetail.setText(info.getAddress());
+            provinceId = info.getProvince();
+            cityId = info.getCity();
+            districtId = info.getDistrict();
         }
 
         addressLayout.setOnClickListener(v -> {
@@ -107,6 +112,12 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
                 picker.show();
             }
         });
+
+
+        if(Constants.addressResult.size() == 0)
+            presenter.getAddressData(this);
+        else
+            getAddressData(Constants.addressResult);
     }
 
     @Override
@@ -155,6 +166,8 @@ public class EditPersonalActivity extends BaseActivity implements EditPersonalVi
     @Override
     public void getAddressData(ArrayList<Province> result) {
         if (result.size() > 0) {
+            if(addressResult.size() == 0)
+                addressResult.addAll(result);
             picker = new AddressPicker(this, result);
             picker.setHideProvince(false);
             picker.setHideCounty(false);

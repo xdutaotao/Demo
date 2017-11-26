@@ -102,7 +102,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                         baseViewHolder.setVisible(R.id.contact, false);
 
                     }else{
-                        baseViewHolder.setText(R.id.request, "项目进度");
+                        baseViewHolder.setText(R.id.request, "工作进度");
                         baseViewHolder.setVisible(R.id.contact, false);
 
                         if(homeBean.getEvaluate_status() == 1){
@@ -135,7 +135,7 @@ public class OrderCompTabFragment extends BaseFragment implements SwipeRefreshLa
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DOING){
                     baseViewHolder.setVisible(R.id.contact, true);
                     baseViewHolder.setVisible(R.id.distance, false);
-                    baseViewHolder.setText(R.id.request, "项目进度");
+                    baseViewHolder.setText(R.id.request, "工作进度");
                 }else if (who == Constants.COMPANY_RELEASE_PROJECT_DONE){
                     baseViewHolder.setVisible(R.id.distance, false);
                 }

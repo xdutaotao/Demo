@@ -26,6 +26,21 @@ public class HomeSearchPresenter extends BasePresenter<HomeSearchView> {
     }
 
 
+    public void indexSearch(FindProjReq req){
+        mCompositeSubscription.add(model.indexSearch(req)
+                .subscribe(new RxSubUtils<HomeSearchRes>(mCompositeSubscription) {
+                    @Override
+                    protected void _onNext(HomeSearchRes token) {
+                        getView().getData(token);
+                    }
+
+                    @Override
+                    public void _onError(String s) {
+                        getView().onFailure();
+                    }
+                }));
+    }
+
     public void indexSearch(Context context, FindProjReq req){
         mCompositeSubscription.add(model.indexSearch(req)
                 .subscribe(new RxSubUtils<HomeSearchRes>(mCompositeSubscription, context) {

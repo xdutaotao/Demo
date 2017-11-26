@@ -336,7 +336,7 @@ public class ReleaseSkillInforActivity extends BaseActivity implements ReleaseSk
                 }
 
                 if (adapter.getAllData().size() == 0) {
-                    ToastUtil.show("图纸不能为空");
+                    ToastUtil.show("请上传照片");
                     return;
                 }
 
