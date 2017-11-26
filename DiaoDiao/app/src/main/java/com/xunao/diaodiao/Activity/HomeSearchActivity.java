@@ -124,16 +124,16 @@ public class HomeSearchActivity extends BaseActivity implements HomeSearchView, 
                     baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 } else if (homeBean.getProject_type() == 2) {
                     //监理
-                    //baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
+                    baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage());
                 } else if (homeBean.getProject_type() == 3) {
                     //零工
-                    baseViewHolder.setText(R.id.price, homeBean.getPrice());
-                    baseViewHolder.setVisible(R.id.price_text, false);
+                    baseViewHolder.setText(R.id.price_text, "共" + homeBean.getTotal_day() + "天");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getDaily_wage());
                 }else if (homeBean.getProject_type() == 4){
                     //维保
-                    baseViewHolder.setVisible(R.id.price_text, false);
-                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice() + " / 天");
+                    baseViewHolder.setText(R.id.price_text, "上门费");
+                    baseViewHolder.setText(R.id.price, " ￥ " + homeBean.getPrice());
                 }else if (homeBean.getProject_type() == 5){
                     //资料库
                     baseViewHolder.setVisible(R.id.item_content, false);

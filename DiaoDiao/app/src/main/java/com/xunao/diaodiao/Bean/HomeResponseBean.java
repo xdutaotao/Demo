@@ -144,6 +144,15 @@ public class HomeResponseBean implements Serializable{
         private String url;
         private String issue_time;
         private int collected;
+        private int total_day;
+
+        public int getTotal_day() {
+            return total_day;
+        }
+
+        public void setTotal_day(int total_day) {
+            this.total_day = total_day;
+        }
 
         public int getCollected() {
             return collected;

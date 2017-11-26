@@ -152,6 +152,7 @@ public class JoinActivity extends BaseActivity implements JoinView, SwipeRefresh
                 baseViewHolder.setText(R.id.time, homeBean.getUser_point());
                 baseViewHolder.setText(R.id.address, homeBean.getAddress());
                 baseViewHolder.setText(R.id.days, homeBean.getTel());
+                baseViewHolder.setText(R.id.distance, homeBean.getDistance());
 
                 baseViewHolder.setOnClickListener(R.id.request, v -> {
                     new IOSDialog(JoinActivity.this).builder()

@@ -240,6 +240,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
+                baseViewHolder.setText(R.id.price_text, "共"+s.getTotal_day()+"天");
                 baseViewHolder.setText(R.id.price, " ￥ " + s.getPrice() + "/天");
             }
         };
@@ -260,6 +261,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 baseViewHolder.setText(R.id.time, s.getIssue_time());
                 baseViewHolder.setText(R.id.name, s.getType());
                 baseViewHolder.setText(R.id.distance, s.getDistance());
+                baseViewHolder.setText(R.id.price_text, "上门费");
                 baseViewHolder.setText(R.id.price, " ￥ " + s.getPrice());
             }
         };

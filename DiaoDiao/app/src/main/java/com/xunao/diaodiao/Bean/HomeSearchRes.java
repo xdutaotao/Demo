@@ -32,6 +32,24 @@ public class HomeSearchRes {
         private String file;
         private int collected;
         private int apply;
+        private String total_day;
+        private String daily_wage;
+
+        public String getTotal_day() {
+            return total_day;
+        }
+
+        public void setTotal_day(String total_day) {
+            this.total_day = total_day;
+        }
+
+        public String getDaily_wage() {
+            return daily_wage;
+        }
+
+        public void setDaily_wage(String daily_wage) {
+            this.daily_wage = daily_wage;
+        }
 
         public int getCollected() {
             return collected;

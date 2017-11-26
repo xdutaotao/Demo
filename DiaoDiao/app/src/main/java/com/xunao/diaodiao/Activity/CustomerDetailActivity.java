@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.iosdialog.IOSDialog;
 import com.xunao.diaodiao.Bean.ApplyDetailRes;
 import com.xunao.diaodiao.Bean.GetMoneyReq;
 import com.xunao.diaodiao.Bean.OrderSkillDoingRes;
 import com.xunao.diaodiao.Present.CustomerDetailPresenter;
 import com.xunao.diaodiao.R;
+import com.xunao.diaodiao.Utils.Utils;
 import com.xunao.diaodiao.View.CustomerDetailView;
 
 import javax.inject.Inject;
@@ -48,6 +52,9 @@ public class CustomerDetailActivity extends BaseActivity implements CustomerDeta
     RecyclerView recyclerView;
 
     OrderSkillDoingRes.OddBean bean;
+    @BindView(R.id.contact)
+    Button contact;
+    private String phone;
 
     private RecyclerArrayAdapter<ApplyDetailRes.EvaluateBean> adapter;
 
@@ -78,7 +85,7 @@ public class CustomerDetailActivity extends BaseActivity implements CustomerDeta
             }
         };
 
-        LinearLayoutManager manager = new LinearLayoutManager(this){
+        LinearLayoutManager manager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -90,9 +97,27 @@ public class CustomerDetailActivity extends BaseActivity implements CustomerDeta
         GetMoneyReq req = new GetMoneyReq();
         req.setId(bean.getMaintenance_id());
         req.setUserid(bean.getPublish_id());
+        req.setType(bean.getPublish_type());
         req.setPage(1);
         req.setPageSize(10);
         presenter.maintenanceInfo(this, req);
+
+        address.setOnClickListener(v -> {
+
+        });
+
+        contact.setText("联系ta");
+        contact.setOnClickListener(v -> {
+            new IOSDialog(this).builder()
+                    .setMsg(phone)
+                    .setPositiveButton("呼叫", v1 -> {
+                        if (!TextUtils.isEmpty(phone)) {
+                            Utils.startCallActivity(this, phone);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        });
     }
 
     @Override
@@ -102,7 +127,11 @@ public class CustomerDetailActivity extends BaseActivity implements CustomerDeta
         ratingStar.setIsIndicator(true);
         time.setText(res.getPoint());
         address.setText(res.getAddress());
-        adapter.addAll(res.getEvaluate_Info());
+        if (res.getEvaluate_Info().size() > 0)
+            adapter.addAll(res.getEvaluate_Info());
+
+        phone = res.getContact_mobile();
+
     }
 
 

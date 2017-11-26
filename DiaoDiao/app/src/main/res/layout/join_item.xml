@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="30px"
     android:layout_marginBottom="10px"
@@ -42,12 +43,33 @@
             android:id="@+id/time"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="上海市徐汇区万科路"
-        android:layout_marginTop="20px"
-        android:id="@+id/address"/>
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="上海市徐汇区万科路"
+            android:layout_weight="1"
+            android:maxEms="16"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginTop="20px"
+            android:id="@+id/address"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="上海市徐汇区万科路"
+            android:textColor="@color/accept_btn_default"
+            android:layout_marginTop="20px"
+            android:id="@+id/distance"/>
+    </LinearLayout>
+
 
 
     <View
@@ -75,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn02"
-            android:text="立即联系"
+            android:text="联系ta"
             android:textColor="@color/colorPrimary"
             android:gravity="center"
             android:id="@+id/request"/>
