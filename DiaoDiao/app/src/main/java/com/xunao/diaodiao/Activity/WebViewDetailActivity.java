@@ -568,6 +568,9 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
 
         webView.getWebView().addJavascriptInterface(new AndroidtoJs(), "AndroidToJS");
 
+        myShareSDK = new ShareSDK();
+        myShareSDK.initSDK(this);
+
     }
 
     private void showPicDialog() {
@@ -575,8 +578,7 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     }
 
     private void friend(){
-        myShareSDK = new ShareSDK();
-        myShareSDK.initSDK(this);
+
         //WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
         Wechat.ShareParams sp = new Wechat.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
@@ -593,8 +595,6 @@ public class WebViewDetailActivity extends BaseActivity implements WebViewDetail
     }
 
     private void friends(){
-        myShareSDK = new ShareSDK();
-        myShareSDK.initSDK(this);
         WechatMoments.ShareParams sp=new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
         url += "&hd=1";

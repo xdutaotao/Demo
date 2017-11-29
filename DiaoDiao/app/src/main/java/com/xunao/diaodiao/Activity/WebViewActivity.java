@@ -321,18 +321,6 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
                 RecommandActivity.startActivity(this, id, 2);
             }else {
                 if (project_type == 0) {
-                    //联系发布人
-//                    if(!TextUtils.isEmpty(phone)){
-//                        new IOSDialog(this).builder()
-//                                .setMsg(phone)
-//                                .setNegativeButton("取消", null)
-//                                .setNegativeBtnColor(R.color.accept_btn_default)
-//                                .setPositiveBtnColor(R.color.accept_btn_default)
-//                                .setPositiveButton("呼叫", v1 -> {
-//                                    Utils.startCallActivity(this, phone);
-//                                })
-//                                .show();
-//                    }
 
 
 
@@ -508,11 +496,14 @@ public class WebViewActivity extends BaseActivity implements ProjectDetailView {
             apply.setText("去评价");
         }
 
-//        if (ShareUtils.getValue(TYPE_KEY, 0) == 1) {
-//            //公司角色
-//            apply.setVisibility(View.GONE);
-//            presenter.getFindProjDetail(this, id, 0);
-//        }
+        if (ShareUtils.getValue(TYPE_KEY, 0) == 1) {
+            //公司角色
+            if(!TextUtils.equals(btnType, HOME_HZ_DETAIL)){
+                apply.setVisibility(View.GONE);
+            }
+
+            //presenter.getFindProjDetail(this, id, 0);
+        }
 
         if (ShareUtils.getValue(TYPE_KEY, 0) == 3) {
             //公司角色
