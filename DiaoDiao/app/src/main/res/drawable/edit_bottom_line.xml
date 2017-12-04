@@ -1,6 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/edit_bottom_line_nor" android:state_focused="false"/>
-    <item android:drawable="@drawable/edit_bottom_line_select" android:state_focused="true"/>
-
-</selector>
