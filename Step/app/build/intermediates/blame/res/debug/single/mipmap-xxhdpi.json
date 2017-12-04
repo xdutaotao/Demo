@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\settle_accounts_bt_bg.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\settle_accounts_bt_bg.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\cb_selected_plan.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\cb_selected_plan.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\home_statistical.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\home_statistical.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\bg_create_group.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\bg_create_group.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_bg_short.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_bg_short.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\btn_submit_bg.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\btn_submit_bg.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\logo.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\logo.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\cb_normal_plan.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\cb_normal_plan.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\home_question_mark.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\home_question_mark.png"
+    },
+    {
+        "merged": "F:\\Demo\\Step\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\arrow_back_white.png",
+        "source": "F:\\Demo\\Step\\app\\src\\main\\res\\mipmap-xxhdpi\\arrow_back_white.png"
+    }
+]

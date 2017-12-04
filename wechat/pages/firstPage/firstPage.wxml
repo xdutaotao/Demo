@@ -1,0 +1,50 @@
+<!--firstPage.wxml-->
+<view class="container">
+  
+  <view  bindtap="bindViewTap" class="userinfo"> 
+    <text style="color: #fff; font-size: 25px;">今日步数</text> 
+
+    <view class="circle-box">
+      <canvas class="circle"  canvas-id="canvasBgCircle">
+      </canvas>
+       <canvas class="circle"  canvas-id="canvasCircle">
+      </canvas> 
+
+      <text style="color: #fff; font-size: 25px">{{todayStep}}</text> 
+
+    </view>
+
+    
+    <view class='stepstatus'>
+      <text style='color: #fff'>{{distance}}公里</text>
+      <text style='color: #fff'>{{kaka}}卡</text>
+      <text style='color: #fff'>{{time}}分钟</text>
+    </view>
+  </view>
+
+
+  <view class="usermotto">
+    <view class='bottomTab'>
+      <image src='../../images/home_fill_light.png' style='width: 25px; height: 25px;'></image>
+      <text style='color: #15abc4; font-size: 14px'>首页</text>
+    </view>
+
+    <view class='bottomTab' bindtap="goSecondTab">
+      <image src='../../images/medal_white.png' style='width: 25px; height: 25px;'></image>
+      <text style='color: #ffffff; font-size: 14px'>排名</text>
+    </view>
+
+    <view class='bottomTab' bindtap="goThirdTab">
+      <image src='../../images/plane_white.png' style='width: 25px; height: 25px;'></image>
+      <text style='color: #ffffff; font-size: 14px'>积分</text>
+    </view>
+
+    <view class='bottomTab' bindtap="goFourthTab">
+      <image src='../../images/remind_white.png' style='width: 25px; height: 25px;'></image>
+      <text style='color: #ffffff; font-size: 14px'>公告</text>
+    </view>
+    
+  </view>    
+
+</view>
+

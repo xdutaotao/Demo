@@ -1,0 +1,163 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:2:1-74:12
+	package
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:3:5-37
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.VIBRATE
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:6:5-66
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:6:22-63
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:7:5-73
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:7:22-70
+uses-feature#android.hardware.sensor.accelerometer
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:9:5-74
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:9:19-71
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:12:5-84
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:12:22-81
+uses-feature#android.hardware.sensor.stepcounter
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:14:5-16:35
+	android:required
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:16:9-32
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:15:9-59
+uses-feature#android.hardware.sensor.stepdetector
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:17:5-19:35
+	android:required
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:19:9-32
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:18:9-60
+application
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:21:5-72:19
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\guzhenfu\.android\build-cache\a17ec31ba3604d32b2c54238f4263287d0f447d4\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\guzhenfu\.android\build-cache\1792845884042b9ad21e182f67865be71d596792\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\guzhenfu\.android\build-cache\2903bcdff1a3321c7341261b239d21dd9e194fe8\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\guzhenfu\.android\build-cache\8a210b1d4aba09a45855a1af2ad6198e003f6811\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\guzhenfu\.android\build-cache\3cef51b95c2134836881dbc79c5f023f9e58f416\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\guzhenfu\.android\build-cache\44057fba68886cef4d247d4597628a96f698c8c3\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\guzhenfu\.android\build-cache\f9eb8544e1c5f2dfc14165ba610f4d82c9a51a6f\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\guzhenfu\.android\build-cache\b7c17fff766c1f5960830ee46ec4d591e0d4da85\output\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\guzhenfu\.android\build-cache\a942fca3702d31ea445697a371c561fedd2c1ea0\output\AndroidManifest.xml:25:5-20
+MERGED from [com.orhanobut:logger:1.8] C:\Users\guzhenfu\.android\build-cache\207d75776ee5520cef339522f32e4640d26ac0e1\output\AndroidManifest.xml:11:5-47
+	android:label
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:25:9-41
+	android:supportsRtl
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:26:9-35
+	android:allowBackup
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:23:9-35
+	android:icon
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:24:9-36
+	android:theme
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:27:9-40
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:22:9-42
+activity#cn.bluemobi.dylan.step.activity.MainActivity
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:28:9-34:20
+	android:launchMode
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:28:57-88
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:28:19-56
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:29:13-33:29
+action#android.intent.action.MAIN
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:30:17-69
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:30:25-66
+category#android.intent.category.LAUNCHER
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:32:17-77
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:32:27-74
+activity#cn.bluemobi.dylan.step.activity.SetPlanActivity
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:35:9-37:72
+	android:theme
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:37:13-69
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:36:13-53
+activity#cn.bluemobi.dylan.step.activity.HistoryActivity
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:38:9-40:72
+	android:theme
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:40:13-69
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:39:13-53
+service#cn.bluemobi.dylan.step.step.service.StepService
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:42:9-55:19
+	android:priority
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:44:13-36
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:43:13-53
+intent-filter#android.intent.action.ACTION_POWER_CONNECTED+android.intent.action.ACTION_POWER_DISCONNECTED+android.intent.action.ACTION_TIME_TICK+android.intent.action.BOOT_COMPLETED+android.intent.action.DATE_CHANGED+android.intent.action.MEDIA_MOUNTED+android.intent.action.USER_PRESENT
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:45:13-54:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:47:17-79
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:47:25-76
+action#android.intent.action.DATE_CHANGED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:48:17-77
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:48:25-74
+action#android.intent.action.MEDIA_MOUNTED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:49:17-78
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:49:25-75
+action#android.intent.action.USER_PRESENT
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:50:17-77
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:50:25-74
+action#android.intent.action.ACTION_TIME_TICK
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:51:17-81
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:51:25-78
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:52:17-87
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:52:25-84
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:53:17-90
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:53:25-87
+service#cn.bluemobi.dylan.step.pedometer.StepsDetectService
+ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:56:9-70:19
+	android:process
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:59:13-83
+	android:priority
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:58:13-36
+	android:name
+		ADDED from F:\Demo\Step\app\src\main\AndroidManifest.xml:57:13-57
+uses-sdk
+INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\guzhenfu\.android\build-cache\a17ec31ba3604d32b2c54238f4263287d0f447d4\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\guzhenfu\.android\build-cache\1792845884042b9ad21e182f67865be71d596792\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\guzhenfu\.android\build-cache\2903bcdff1a3321c7341261b239d21dd9e194fe8\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\guzhenfu\.android\build-cache\8a210b1d4aba09a45855a1af2ad6198e003f6811\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\guzhenfu\.android\build-cache\3cef51b95c2134836881dbc79c5f023f9e58f416\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\guzhenfu\.android\build-cache\44057fba68886cef4d247d4597628a96f698c8c3\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\guzhenfu\.android\build-cache\f9eb8544e1c5f2dfc14165ba610f4d82c9a51a6f\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\guzhenfu\.android\build-cache\b7c17fff766c1f5960830ee46ec4d591e0d4da85\output\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\guzhenfu\.android\build-cache\a942fca3702d31ea445697a371c561fedd2c1ea0\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.orhanobut:logger:1.8] C:\Users\guzhenfu\.android\build-cache\207d75776ee5520cef339522f32e4640d26ac0e1\output\AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.0.0] C:\Users\guzhenfu\.android\build-cache\a17ec31ba3604d32b2c54238f4263287d0f447d4\output\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml
+		INJECTED from F:\Demo\Step\app\src\main\AndroidManifest.xml

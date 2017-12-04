@@ -1,0 +1,31 @@
+<!--pages/login/login.wxml-->
+
+<view class='contain'>
+  <view class='phoneLayout'>
+    <text style='margin-right: 10px'>手机号</text>
+    <input placeholder='请输入您的手机号码' type='number' bindinput="listenerPhoneInput"></input>
+  </view>
+
+  <view style='width: 100%; height:1px; background: #f3f3f3'></view>
+
+  <view class='codeLayout'>
+    <text style='margin-right: 10px'>验证码</text>
+    <input placeholder='请输入验证码' style='width: 150px; ' type='number' bindinput="listenerCodeInput"></input>
+    <view style='height: 100%; width: 2px; background: #f3f3f3'></view>
+    <text class='codeText' bindtap='getCode'>{{codeText}}</text>
+  </view>
+
+   <view style='width: 100%; height:1px; background: #f3f3f3'></view>
+
+  <button style='margin-top: 20px; width: 100%; background: #15abc4; color: #ffffff' bindtap="goLogin">绑定</button>
+
+  <view class="toast_content_box" wx:if="{{isShowToast}}">  
+  <view class="toast_content">  
+    <view class="toast_content_text">  
+      {{toastText}}  
+    </view>  
+    </view>  
+  </view>
+
+</view>
+

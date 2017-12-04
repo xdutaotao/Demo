@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="F:\Demo\Step\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="F:\Demo\Step\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_ae552fc6b34870dd92c201352bc0c29f7ebf90ec\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\Demo\Step\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e0a657aa1a9e4055ed979d35f284d44cfadb9d57">
+        <dex dex="F:\Demo\Step\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_9edbf61ea3c48dcfb7a1ee919ac7e4b35536463a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\guzhenfu\.android\build-cache\207d75776ee5520cef339522f32e4640d26ac0e1\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="905a1a3170bf8e5f07e14217f5bdc2348f1425ca">
+        <dex dex="F:\Demo\Step\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f4b1ec8e3439c4ecbac9a7b331c5afdb8f9a1077\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\Demo\Step\app\libs\lite-orm-1.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bf59a1eca660fa671d66922676c035846c94e5d5">
+        <dex dex="F:\Demo\Step\app\build\intermediates\transforms\dex\debug\folders\1000\2\lite-orm-1.7.0_c724fda1ac8c238741db8e9577fd0d6560dbcdd2\classes.dex" />
+    </item>
+
+</items>

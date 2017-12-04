@@ -1,0 +1,48 @@
+<view class='mainContain'>
+  <view class='switchContain'>
+    <text class="{{currentTab==0 ? 'personRankSelect' : 'personRank'}}"  bindtap="changeState" data-current="0">个人排行榜</text>
+    <text class="{{currentTab==1 ? 'teamRankSelect' : 'teamRank'}}" bindtap="changeState" data-current="1">小组排行榜</text>
+
+  </view>
+
+  <view class="userinfo">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  
+  <view class="dividerWidth"></view>
+  <view class="listClass">
+      <text class="rankClass">第{{myRank}}名</text>
+      <image src="{{myAvatar}}" class="headClass" background-size="cover"></image>
+      <text>{{myName}}</text>
+      <text style='flex:1'></text>
+      <text class="stepCntClass">{{myScore}}步</text>
+    </view>
+    <view class="dividerWidth"></view>
+
+  <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
+    <view class="listClass">
+      <text class="rankClass">{{item.m_id}}</text>
+      <image src="{{item.avatar}}" class="headClass" background-size="cover"></image>
+      <text>{{item.nickname}}</text>
+      <text style='flex:1'></text>
+      <text class="stepCntClass">{{item.all_score}}步</text>
+    </view>
+    <view class="divider"></view>
+  </block>
+
+
+<!-- <view class="cus-table-tab">
+                <span class="{{currentTab==0 ? 'active' : ''}}" bindtap="changeState" data-current="0">全部</span>
+                <span class="{{currentTab==1 ? 'active' : ''}}" bindtap="changeState" data-current="1">PP</span>
+                <span class="{{currentTab==2 ? 'active' : ''}}" bindtap="changeState" data-current="2">PE</span>
+                <span class="{{currentTab==3 ? 'active' : ''}}" bindtap="changeState" data-current="3">更多</span>
+            </view> -->
+
+</view>
+
+
+
+
+
+

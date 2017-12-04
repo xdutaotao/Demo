@@ -1,0 +1,45 @@
+<view class='mainContain'>
+
+     <view class="userinfo">
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>  
+  
+  <view class="dividerWidth"></view>
+   <view class="listClass">
+        <text class="rankClass">第{{myRank}}名</text>
+         <image src="{{myAvatar}}" class="headClass" background-size="cover"></image> 
+        <text>{{myName}}</text>
+        <text style='flex:1'></text>
+        <text class="stepCntClass">{{myScore}}分</text>
+      </view>
+      <view class="dividerWidth"></view>
+
+  
+    <block wx:for="{{list}}" wx:key="{{index}}" wx:for-item="item" class="blockClass">
+      <view class="listClass">
+        <text class="rankClass">{{item.m_id}}</text>
+         <image src="{{item.avatar}}" class="headClass" background-size="cover"></image> 
+        <text>{{item.nickname}}</text>
+        <text style='flex:1'></text>
+        <text class="stepCntClass">{{item.all_score}}分</text>
+      </view>
+      <view class="divider"></view>
+    </block>
+
+     <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
+      </view> 
+
+  
+
+
+
+</view>
+
+
+
+
+
+
