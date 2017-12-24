@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>nav布局 在线演示 DIVCSS5</title>
+    <style>
+        ul,li{ padding:0; margin:0;list-style:none}
+        .nav{border:1px solid #000; width:510px; overflow:hidden}
+        .nav li{ line-height:22px; float:left; padding:0 5px;}
+        .nav li a:hover{ color:#F00}
+        /* 对class=nav设置黑色边框，鼠标滑过超链接文字为红色 */
+
+        nav{ border:1px solid #F00; width:520px; }
+        nav li{line-height:22px; float:left; padding:0 6px;}
+        nav li a{ color:#F00}
+        /* 对nav设置红色边框，超链接位置为红色 */
+
+        nav.bg{ background:#CCC}
+        nav.bg li a{ color:#090}
+        /* 对nav设置class=bg，设置背景为灰色，超链接位置为绿色 */
+    </style>
+</head>
+<body>
+<p>传统 div ul li布局导航条效果</p>
+<div class="nav">
+    <ul>
+        <li><a href="http://www.divcss5.com/">网站首页</a></li>
+        <li><a href="http://www.divcss5.com/html/">HTML教程</a></li>
+        <li><a href="http://www.divcss5.com/htmlrumen/">HTML入门</a></li>
+        <li><a href="http://www.divcss5.com/html5/">HTML5教程</a></li>
+        <li><a href="http://www.divcss5.com/rumen/">CSS教程</a></li>
+        <li><a href="http://www.divcss5.com/cssrumen/">CSS入门</a></li>
+    </ul>
+</div>
+<p>html5 nav ul li布局导航条没有对nav加id和class 同时设置nav li a超链接文字字体颜色为红色字和红色框效果</p>
+<nav>
+    <ul>
+        <li><a href="http://www.divcss5.com/">网站首页</a></li>
+        <li><a href="http://www.divcss5.com/html/">HTML教程</a></li>
+        <li><a href="http://www.divcss5.com/htmlrumen/">HTML入门</a></li>
+        <li><a href="http://www.divcss5.com/html5/">HTML5教程</a></li>
+        <li><a href="http://www.divcss5.com/rumen/">CSS教程</a></li>
+        <li><a href="http://www.divcss5.com/cssrumen/">CSS入门</a></li>
+    </ul>
+</nav>
+<p>html5 nav ul li布局另外加class=bg设置背景为灰黑色,超链接文字字体颜色为绿色</p>
+<nav class="bg">
+    <ul>
+        <li><a href="http://www.divcss5.com/">网站首页</a></li>
+        <li><a href="http://www.divcss5.com/html/">HTML教程</a></li>
+        <li><a href="http://www.divcss5.com/htmlrumen/">HTML入门</a></li>
+        <li><a href="http://www.divcss5.com/html5/">HTML5教程</a></li>
+        <li><a href="http://www.divcss5.com/rumen/">CSS教程</a></li>
+        <li><a href="http://www.divcss5.com/cssrumen/">CSS入门</a></li>
+    </ul>
+</nav>
+</body>
+</html>
