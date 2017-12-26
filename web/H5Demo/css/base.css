@@ -1,0 +1,48 @@
+/*reset.css*/
+html{color: #000;background: #fff;overflow-y: scroll;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;}
+html *{outline: 0;-webkit-text-size-adjust: none;-webkit-tap-highlight-color: rgba(0,0,0,0)}
+html,body{width:100%;height:100%;font-family: sans-serif;font-size:14px;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin: 0;padding: 0}
+input,select,textarea{font-size: 100%}
+table{border-collapse: collapse;border-spacing: 0}
+fieldset,img{border: 0}
+abbr,acronym{border: 0;font-variant: normal}
+del{text-decoration: line-through}
+address,caption,cite,code,dfn,em,th,var{font-style: normal;font-weight: 500}
+ol,ul{list-style: none}
+caption,th{text-align: left}
+h1,h2,h3,h4,h5,h6{font-size: 100%;font-weight: 500}
+q:before,q:after{content: ''}
+sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline}
+sup{top: -.5em}
+sub{bottom: -.25em}
+a:hover{text-decoration: none;}
+ins,a{text-decoration: none}
+
+
+/** common **/
+html{height:100%;}
+body{font-family: "Microsoft YaHei",Arial;min-height:100%;-webkit-font-smoothing: antialiased;color:#333;min-height:100%;}
+button{border:0px;text-align: center;cursor: pointer;display: inline-block;}
+button,input,select,textarea{font-family: Microsoft YaHei;}
+input:active{border:1px solid #000;}
+input[type=text],textarea,select,input[type=password]{padding-left:10px;box-sizing: border-box;border:1px solid #cfd6e2;}
+input[type=button]{border:1px solid #cfd6e2;cursor: pointer;}
+a{color:#333;}
+a:hover{color:#009997;}
+.fl{float: left}
+.fr{float: right}
+.hide{display: none;}
+.show{display: block;}
+.clearfix:after{content:''; display:block; height:0; clear:both;}
+.clearfix{zoom:1;}
+
+
+
+
+
+
+
+
+
+
