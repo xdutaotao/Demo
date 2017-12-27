@@ -16,6 +16,31 @@
         .content{background-color: #999999}
 
         .inner button{padding: 10px 20px; margin-top: 20px; border: none; }
+
+        .inner h1{margin-top: 200px;}
+        .inner h2{margin-top: 300px;}
+
+        .greenWrap{background-color: green; color: white;}
+        .greenWrap div{text-align: center; padding-top: 200px;}
+
+        .greenWrap h2{margin: 40px 0px;}
+
+        .icon-group{padding-bottom: 200px;}
+        .icon-group span{border: solid 2px #01a1c5; width: 80px; height: 80px;
+            display: inline-block; margin: 20px; transform: rotate(40deg)}
+
+
+        .group{background-color: #01a1c5; color: white;}
+
+
+        .first >div{float: left;}
+        .first .img_wrap{width: 45%;}
+        .first .img_wrap img{width: 100%;}
+        .first .text_wrap{width: 55%; text-align: center; position: relative;
+                    top: 200px; left: 50px;}
+        .first .text_wrap *{max-width: 80%;}
+
+        .group:nth-child(1){background-color: #999999}
     </style>
 </head>
 <body>
@@ -34,11 +59,60 @@
     </header>
 
     <div class="content">
-        <div class="inner">
+        <section class="inner">
             <h1>顾振福</h1>
             <p>顾振福顾振福顾振福顾振福顾振福顾顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福振福顾振福顾振福顾振福</p>
             <button>联系我</button>
-        </div>
+
+            <h2>更多</h2>
+        </section>
+
+        <section class="greenWrap">
+            <div>
+                <h1>标题1</h1>
+                <h2>副标题</h2>
+                <p>顾振福顾振福顾振福顾振福顾振福顾顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福振福顾振福顾振福顾振福</p>
+            </div>
+
+            <div class="icon-group">
+                <span>item</span>
+                <span>item</span>
+                <span>item</span>
+            </div>
+
+        </section>
+
+        <section class="group">
+            
+            <div class="first clearfix">
+                <div class="img_wrap">
+                    <img src="img/1.png" alt="">
+                </div>
+
+                <div class="text_wrap">
+                    <h1>顾振福</h1>
+                    <p>顾振福顾振福顾振福顾振福顾振福顾顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福振福顾振福顾振福顾振福</p>
+                </div>
+
+            </div>
+
+            <div class="first clearfix">
+
+
+                <div class="text_wrap">
+                    <h1>顾振福</h1>
+                    <p>顾振福顾振福顾振福顾振福顾振福顾顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福顾振福振福顾振福顾振福顾振福</p>
+                </div>
+
+                <div class="img_wrap">
+                    <img src="img/1.png" alt="">
+                </div>
+
+            </div>
+            
+        </section>
+
+
     </div>
 
     <footer>
