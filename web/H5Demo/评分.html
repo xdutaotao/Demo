@@ -16,8 +16,8 @@
 
     .rating .rating-item{
         float: left;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         margin: 0 10px;
         background: url('img/pinfeng2.png') no-repeat;
         cursor: pointer;
@@ -39,12 +39,35 @@
 </body>
 <script src="js/jquery-2.1.1.min.js"></script>
     <script>
+        var num = 2;
+        $item = $('#rating').find('.rating-item');
+        $parent = $('#rating');
+        
         var lightOn = function (num) {
 
-            $('#rating').find('.rating-item').each(function (index) {
-
+            $item.each(function (index) {
+                if(index < num){
+                    $(this).css('background-image','url(img/pinfeng.png)');
+                }else{
+                    $(this).css('background-image','url(img/pinfeng2.png)');
+                }
             })
         }
+
+        lightOn(num);
+        
+        $item.on('mouseover', function () {
+           lightOn($(this).index()+1);
+            //num = $(this).index()+1;
+        })
+        .on('click', function () {
+            num = $(this).index()+1;
+        });
+
+
+        $parent.on('mouseout', function () {
+            lightOn(num);
+        })
 
     </script>
 
