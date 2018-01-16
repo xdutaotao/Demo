@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="姓名"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/name"
+                        android:hint="请输入真实姓名,方便后续申请项目"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="联系电话"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/phone"
+                        android:inputType="phone|number"
+                        android:maxLength="11"
+                        android:hint="请输入联系电话"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="所在区域"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/address"
+                        android:hint="请输入所在区域"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="常住地址"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/address_detail"
+                        android:hint="请输入常住地址"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="工作经验"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="760px"
+                        android:background="@null"
+                        android:layout_marginRight="10px"
+                        android:gravity="right|center_vertical"
+                        android:textSize="40px"
+                        android:id="@+id/year"
+                        android:textColorHint="@color/edit_hint_color"
+                        android:hint="请输入工作年限"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="年"/>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/select_item_text"
+                    android:layout_margin="50px"
+                    android:layout_gravity="center_vertical"
+                    android:text="擅长技能"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view"/>
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_marginLeft="50px"-->
+                    <!--android:layout_marginBottom="50px">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="水泥回填"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:background="@drawable/btn_blue_bg"-->
+                        <!--android:padding="20px"-->
+                        <!--android:layout_margin="20px"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="家电维修"-->
+                        <!--android:textColor="@color/gray"-->
+                        <!--android:background="@drawable/btn_blank_bg"-->
+                        <!--android:padding="20px"-->
+                        <!--android:layout_margin="20px"/>-->
+                <!--</LinearLayout>-->
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自我评价（提供给项目发起人查看）"
+                android:paddingLeft="50px"
+                android:paddingTop="50px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:orientation="vertical"
+                android:layout_margin="50px"
+                android:background="@drawable/edit_gray_bg">
+
+                <EditText
+                    android:id="@+id/information"
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:gravity="start"
+                    android:maxLength="100"
+                    android:padding="50px"
+                    android:textColorHint="@color/nav_gray"
+                    android:background="@null"
+                    android:textSize="50px" />
+
+                <TextView
+                    android:id="@+id/info_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingRight="50px"
+                    android:text="0/200" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/go_in_app"
+                android:text="进入应用"
+                style="@style/login_btn_style"
+                android:layout_marginTop="100px"
+                android:layout_marginBottom="200px"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

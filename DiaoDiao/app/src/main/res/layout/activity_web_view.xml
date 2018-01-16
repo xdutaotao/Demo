@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.xunao.diaodiao.Widget.CustomWebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="140px"
+            android:id="@+id/web_view"/>
+
+        <Button style="@style/login_btn_style"
+            android:layout_alignParentBottom="true"
+            android:text="立即申请"
+            android:id="@+id/apply"
+            android:layout_marginBottom="10px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:orientation="horizontal"
+            android:id="@+id/bottom_btn_layout"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/change_info"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:text="修改项目信息"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/again_post"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="再次快捷发布"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:id="@+id/share"
+            android:src="@drawable/share"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="180px"
+            android:layout_marginRight="60px"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
+
+
+
+

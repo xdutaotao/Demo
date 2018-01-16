@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <include layout="@layout/big_edit_text" />
+
+
+    <Button
+        style="@style/login_btn_style"
+        android:layout_marginTop="100px"
+        android:id="@+id/login"
+        android:text="提交意见"/>
+
+</LinearLayout>

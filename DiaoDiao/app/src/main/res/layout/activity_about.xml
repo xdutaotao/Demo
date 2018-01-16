@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xunao.diaodiao.Activity.AboutActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_logo"
+        android:layout_margin="100px"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     平台简介"
+        android:textSize="40px"
+        android:textStyle="bold"
+        android:textColor="@color/nav_gray"
+        android:layout_gravity="center"
+        android:padding="30px"
+        android:layout_marginBottom="50px"
+        android:id="@+id/version"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="      调调居服平台——隶属于“逐日环保（上海）科技有限公司”。专注于舒适家居系统领域、国内领先技术工程师调度平台；“调调”始终坚持以降低建筑能耗，提高人居环境，方便万千家庭为己任；我们的目标是：将“调调”打造成一个科学高效、安全可靠、诚信共赢、开放包容的互联网居家服务平台。"
+        android:textColor="@color/nav_gray"
+        android:layout_gravity="center"
+        android:padding="30px"/>
+
+
+
+</LinearLayout>

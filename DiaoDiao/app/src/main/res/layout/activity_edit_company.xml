@@ -1,0 +1,471 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司名称"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/name"
+                    android:hint="请输入公司名称"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout"
+                android:id="@+id/address_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司地区"/>
+
+                <TextView
+                    style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
+                    android:id="@+id/address"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司地址"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入公司地址"
+                    android:id="@+id/address_detail"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout"
+                >
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入公司电话"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:digits="1234567890"
+                    android:id="@+id/phone"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout"
+                android:id="@+id/build_time_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="成立时间"/>
+
+                <TextView
+                    style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
+                    android:id="@+id/build_time"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系人姓名"
+                    android:id="@+id/contact_name"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人身份证号码"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/contact_code"
+                    android:maxLength="18"
+                    android:hint="请输入联系人身份证号码"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系人电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/contact_phone"
+                    android:inputType="phone"
+                    android:digits="0123456789"
+                    android:maxLength="11"
+                    android:hint="请输入联系人电话"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="公司认证"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="10px"
+                    android:drawableLeft="@drawable/single_checkbox_style"
+                    android:text="三证合一"
+                    android:id="@+id/check_box_all"
+                    android:layout_marginRight="300px"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawablePadding="10px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/check_box_single"
+                    android:drawableLeft="@drawable/single_checkbox_style"
+                    android:text="三证分开"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="50px"
+                android:id="@+id/all_layout">
+
+                <RelativeLayout
+                    android:layout_width="260px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/first_iv"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/first_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工商营业执照"
+                        android:id="@+id/first_pic"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="20px"
+                    android:layout_marginRight="20px"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/second_iv"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/second_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="组织机构代码证"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/second_pic"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="260px"
+                    android:layout_height="300px"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:layout_width="240px"
+                        android:layout_height="240px"
+                        android:id="@+id/third_iv"
+                        android:scaleType="fitXY"
+                        android:visibility="gone"
+                        android:layout_marginLeft="50px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/third_delete"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="税务登记证"
+                        android:id="@+id/third_pic"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="right"
+                        android:drawablePadding="20px"
+                        android:drawableTop="@drawable/img_add"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="240px"
+            android:layout_height="300px"
+            android:layout_margin="50px"
+            android:id="@+id/one_layout"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="三证合一"
+                android:gravity="center"
+                android:id="@+id/one_pic"
+                android:layout_gravity="center"
+                android:drawablePadding="20px"
+                android:scaleType="fitXY"
+                android:minHeight="200px"
+                android:drawableTop="@drawable/img_add"/>
+
+            <ImageView
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:src="@drawable/icon_shanchu"
+                android:id="@+id/one_delete"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300px"
+                android:id="@+id/one_iv"
+                android:visibility="gone"
+                android:padding="20px"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="50px"/>
+
+        </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="联系人实名认证(添加身份证正、反面照片)"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="50px">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="20px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="300px"
+                        android:src="@drawable/shangchuan_zheng"
+                        android:minHeight="200px"
+                        android:id="@+id/code"
+                        android:scaleType="fitXY"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/code_delete"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="20px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="300px"
+                        android:src="@drawable/shangchuan_fan"
+                        android:id="@+id/code_reverse"
+                        android:scaleType="fitXY"
+                        android:minHeight="200px"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/code_reverse_delete"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+            <Button
+                style="@style/login_btn_style"
+                android:id="@+id/login"
+                android:text="提交审核"
+                android:layout_marginBottom="100px"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

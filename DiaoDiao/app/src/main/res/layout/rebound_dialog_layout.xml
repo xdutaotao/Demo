@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:alpha="0.7"
+    android:padding="30px"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:layout_width="400px"
+        android:layout_height="400px"
+        android:id="@+id/pop_image"
+        android:src="@drawable/ic_launcher_round"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="2"
+        android:maxLength="8"
+        android:text="我的我的我的我的"
+        android:textSize="70px"
+        android:id="@+id/pop_tv"
+        android:textColor="@color/colorPrimary"/>
+
+</LinearLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="560px">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/bg"
+        android:background="@drawable/bg_xiangmu">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150px"
+            android:layout_marginTop="100px"
+            android:layout_marginRight="80px"
+            android:layout_marginBottom="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="徐汇区xx小区地暖项目,速度接单"
+                android:id="@+id/title"
+                android:textSize="50px"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_shoucang02_fill"
+                android:id="@+id/shou_cang"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上海市徐汇区 - 上海暖通公司"
+            android:id="@+id/address"
+            android:layout_marginLeft="150px"
+            android:layout_marginBottom="50px"/>
+
+        <View
+            android:layout_height="2px"
+            android:layout_marginLeft="150px"
+            android:layout_marginRight="50px"
+            android:layout_width="match_parent"
+            android:background="@drawable/divider_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:layout_marginRight="80px"
+            android:layout_marginLeft="150px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/price_text"
+                android:text="价格"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/price"
+                android:textSize="50px"
+                android:text="￥12000"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="采暖系统"
+                android:id="@+id/type"
+                android:textColor="@color/accept_btn_pressed"
+                android:layout_weight="1"
+                android:gravity="right"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

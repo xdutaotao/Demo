@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="40px"
+    android:paddingRight="20px"
+    android:id="@+id/sign_layout"
+    android:background="@color/activity_background">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View android:layout_width="2px"
+            android:layout_height="80px"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_jingdu"/>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingLeft="20px"
+        android:layout_marginTop="50px"
+        android:layout_marginLeft="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            android:padding="20px"
+            android:text="06-29 签到"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20px"
+            android:id="@+id/address"
+            android:drawablePadding="10px"
+            android:drawableLeft="@drawable/dinwei"
+            android:layout_marginBottom="20px"
+            tools:text="上海"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="4"
+            android:id="@+id/recycler_view_image"
+            tools:listitem="@layout/select_photo_item"/>
+
+        <EditText
+            style="@style/edit_personal_layout"
+            android:layout_height="100px"
+            android:hint="添加工作备注"
+            android:maxLines="1"
+            android:id="@+id/remark"
+            android:background="@drawable/btn_blank_bg"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50px"
+            android:layout_marginBottom="50px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图片上传"
+                android:id="@+id/post"
+                android:textColor="@color/colorAccent"
+                android:gravity="center"
+                android:layout_marginRight="50px"
+                android:background="@drawable/btn02"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="申请打款"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/apply_money"
+                android:background="@drawable/btn_code"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

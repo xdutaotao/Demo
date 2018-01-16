@@ -1,0 +1,199 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/activity_background">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    style="@style/item_layout">
+
+                    <TextView
+                        style="@style/item_left_text"
+                        android:text="姓名"/>
+
+                    <TextView
+                        style="@style/item_right_text"
+                        android:id="@+id/name"
+                        tools:text="唐萌萌"/>
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+
+                <RelativeLayout
+                    style="@style/item_layout">
+
+                    <TextView
+                        style="@style/item_left_text"
+                        android:text="评分"/>
+
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="40px"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        style="@style/foodRatingBar"
+                        android:id="@+id/rating_star"
+                        android:layout_marginRight="80px"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="4.0"
+                        android:layout_marginLeft="20px"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/time"/>
+
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+
+                <RelativeLayout
+                    style="@style/item_layout">
+
+                    <TextView
+                        style="@style/item_left_text"
+                        android:text="工作经验"/>
+
+                    <TextView
+                        style="@style/item_right_text"
+                        android:id="@+id/work_year"
+                        tools:text="3年"/>
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="50px"
+                    android:background="@color/white">
+
+
+                    <TextView
+                        style="@style/item_left_text"
+                        android:text="擅长技能"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/skill_content"/>
+                </LinearLayout>
+
+                <View style="@style/item_divider"/>
+
+                <RelativeLayout
+                    style="@style/item_layout">
+
+                    <TextView
+                        style="@style/item_left_text"
+                        android:text="项目经历"/>
+
+                    <TextView
+                        style="@style/item_right_text"
+                        android:id="@+id/project_exper"
+                        tools:text="3年"/>
+                </RelativeLayout>
+
+                <View style="@style/item_divider"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="50px"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="50px"
+                        android:text="自我评价"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. 需要工作经验丰富的"
+                        android:id="@+id/proj_detail"
+                        android:layout_centerVertical="true"
+                        android:textColor="#7f7f7f"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20px"
+                    android:background="@color/divider"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="其他人评价"
+                    android:padding="50px"
+                    android:textColor="@color/black"/>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_view"
+                    android:background="@color/white"
+                    android:layout_marginBottom="200px"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="联系ta"
+                android:id="@+id/contact_hi"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="申请通过"
+                android:id="@+id/agree"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

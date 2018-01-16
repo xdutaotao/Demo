@@ -1,0 +1,182 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'android-apt'
+
+def javaVersion = JavaVersion.VERSION_1_8
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.xunao.diaodiao"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 211
+        versionName "2.1.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'x86'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "f1d14b768f8a00a00de66677", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./keystore/xunao.jks")
+                storePassword "xunao123456"
+                keyAlias "key_diaodiao"
+                keyPassword "xunao123456"
+                v2SigningEnabled false
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+
+        debug {
+            try {
+                storeFile file("./keystore/xunao.jks")
+                storePassword "xunao123456"
+                keyAlias "key_diaodiao"
+                keyPassword "xunao123456"
+                v2SigningEnabled false
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile name: 'SMSSDK-2.1.4', ext: 'aar'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版
+
+    //noinspection GradleCompatible
+    compile files('libs/tm-extractors-0.4.jar')
+    // 此处以JMessage 2.2.0 版本为例。
+
+    // 此处以JCore 1.1.3 版本为例。
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    compile files('libs/pinyin4j-2.5.0.jar')
+    compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    compile files('libs/MobCommons-2016.0426.1819.jar')
+    compile files('libs/MobTools-2016.0426.1819.jar')
+    compile files('libs/ShareSDK-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.7.2.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.2.jar')
+    compile files('libs/alipaySdk-20170922.jar')
+    compile project(':PushSDK')
+    compile files('libs/AMap_Location_V3.6.1_20171012.jar')
+    compile files('libs/Android_Map3D_SDK_V5.5.0_20171107.jar')
+    compile files('libs/umeng_shareboard_widget.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_social_tool.jar')
+    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+    compile 'com.github.gzfgeh:SwipeBack:v1.0.3'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:support-vector-drawable:25.0.0'
+    compile 'io.reactivex:rxjava:1.1.4'
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.google.dagger:dagger:2.0.2'
+    compile 'com.zhy:autolayout:1.4.5'
+    compile 'com.github.gzfgeh:GRecyclerView:v1.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.github.gzfgeh:IOSDialog:v1.2.7'
+    compile 'com.github.gzfgeh:ViewPageCycle:v1.0.6'
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
+    compile 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+    compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
+    compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
+    compile 'com.lzy.widget:imagepicker:0.6.1'
+    compile 'com.facebook.rebound:rebound:0.3.8'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'top.zibin:Luban:1.0.9'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'cn.jiguang.sdk:jmessage:2.2.0'
+    compile 'cn.jiguang.sdk:jcore:1.1.3'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.amap.api:location:latest.integration'
+    compile 'com.amap.api:search:latest.integration'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.zhy.base:fileprovider:1.0.0'
+    testCompile 'junit:junit:4.12'
+    apt 'com.google.dagger:dagger-compiler:2.0.2'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+}
+
+//compile 'com.tencent.bugly:crashreport:latest.release'
+//compile 'com.tencent.bugly:nativecrashreport:latest.release'

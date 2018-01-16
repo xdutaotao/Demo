@@ -1,0 +1,17 @@
+*.iml
+.gradle
+.idea
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.classpath
+.project
+Readme
+build.xml
+gradlew
+gradlew.bat
+app/build/
+JChat/build
+PushSDK/build

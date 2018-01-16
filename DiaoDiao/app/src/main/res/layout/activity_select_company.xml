@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xunao.diaodiao.Activity.AboutActivity">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司名称"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/name"
+                        android:hint="请输入公司名称"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司地区"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/address"
+                        android:hint="请输入公司地区"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司地址"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/address_detail"
+                        android:hint="请输入公司地址"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="公司电话"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/phone"
+                        android:inputType="phone|number"
+                        android:maxLength="11"
+                        android:hint="请输入公司电话"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="联系人"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/contact"
+                        android:hint="请输入联系人"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/select_layout">
+
+                <LinearLayout
+                    style="@style/select_item_layout">
+
+                    <TextView
+                        style="@style/select_item_text"
+                        android:text="联系人电话"/>
+
+                    <EditText
+                        style="@style/select_item_edit"
+                        android:id="@+id/contact_phone"
+                        android:inputType="phone|number"
+                        android:maxLength="11"
+                        android:hint="请输入联系人电话"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/select_item_view"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/go_in_app"
+                android:text="进入应用"
+                style="@style/login_btn_style"
+                android:layout_marginTop="150px"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>

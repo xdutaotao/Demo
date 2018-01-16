@@ -1,0 +1,259 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="项目标题" />
+
+                <EditText
+                    android:id="@+id/title"
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入项目标题" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/address_layout"
+                style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="项目地区" />
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/edit_personal_edit"
+                    android:drawablePadding="10px"
+                    android:drawableRight="@drawable/icon_arrow" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="项目地址" />
+
+                <EditText
+                    android:id="@+id/address_detail"
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入项目地址" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/project_type_layout"
+                style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="项目类型" />
+
+                <TextView
+                    android:id="@+id/project_type"
+                    style="@style/edit_personal_edit"
+                    android:drawablePadding="10px"
+                    android:drawableRight="@drawable/icon_arrow" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="联系人" />
+
+                <EditText
+                    android:id="@+id/contact"
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入联系人" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="联系电话" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    style="@style/edit_personal_edit"
+                    android:digits="1234567890"
+                    android:maxLength="11"
+                    android:hint="请输入联系电话"
+                    android:inputType="phone" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="日薪" />
+
+                <EditText
+                    android:id="@+id/fee"
+                    style="@style/edit_personal_edit"
+                    android:layout_marginRight="50px"
+                    android:digits="1234567890"
+                    android:hint="填写日薪(不低于300元)"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="元" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="工作天数" />
+
+                <EditText
+                    android:id="@+id/days"
+                    style="@style/edit_personal_edit"
+                    android:layout_marginRight="50px"
+                    android:digits="1234567890"
+                    android:hint=""
+                    android:inputType="phone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="天" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="施工人数" />
+
+                <EditText
+                    android:id="@+id/num"
+                    style="@style/edit_personal_edit"
+                    android:digits="1234567890"
+                    android:hint="请输入施工人数"
+                    android:inputType="phone" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <RelativeLayout
+                android:id="@+id/proj_time_layout"
+                style="@style/item_layout">
+
+                <TextView
+                    style="@style/item_left_text"
+                    android:text="施工时间" />
+
+                <TextView
+                    android:id="@+id/time"
+                    style="@style/edit_personal_edit"
+                    android:layout_marginRight="70px"
+                    android:text="到时间自动取消，工费退款到余额"
+                    android:textColor="@color/nav_gray" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_rili" />
+            </RelativeLayout>
+
+            <View style="@style/item_divider" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40px"
+                android:background="@drawable/edit_gray_bg"
+                android:orientation="vertical"
+                android:padding="40px">
+
+                <EditText
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="简单零工的工作内容"
+                    android:textColorHint="#D2D2D2" />
+
+                <TextView
+                    android:id="@+id/content_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:text="0 / 200" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="50px"
+                android:text="添加图纸(不超过10张)" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/select_skill_item" />
+
+            <View style="@style/item_divider" />
+
+            <Button
+                android:id="@+id/next"
+                style="@style/login_btn_style"
+                android:layout_marginBottom="100px"
+                android:layout_marginTop="100px"
+                android:text="下一步" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

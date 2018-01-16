@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加银行卡  （建议优先绑定建行卡）"
+        android:paddingLeft="50px"
+        android:paddingTop="60px"
+        android:paddingBottom="60px"
+        android:textColor="@color/black"
+        android:textSize="40px"
+        android:drawablePadding="50px"
+        android:drawableLeft="@drawable/icon_addcard"/>
+
+</LinearLayout>

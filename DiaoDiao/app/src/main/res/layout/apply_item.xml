@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30px"
+    android:layout_marginBottom="10px"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="季婷婷"
+            android:textSize="50px"
+            android:textColor="@color/light_blank"
+            android:id="@+id/address"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="详情"
+            android:drawablePadding="20px"
+            android:drawableRight="@drawable/arrow"
+            android:textColor="@color/accept_btn_pressed"
+            android:id="@+id/time"
+            android:gravity="right"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:orientation="horizontal">
+
+        <RatingBar
+            android:id="@+id/rating_star"
+            style="@style/foodRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="40px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="80px" />
+
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/rating_star"
+            android:layout_centerVertical="true"
+            android:text="5.0" />
+    </LinearLayout>
+
+    <View
+        android:layout_height="2px"
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"
+        android:background="@drawable/divider_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3年工作经验"
+            android:id="@+id/days"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn02"
+            android:text="申请通过"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:id="@+id/request"/>
+    </LinearLayout>
+
+</LinearLayout>

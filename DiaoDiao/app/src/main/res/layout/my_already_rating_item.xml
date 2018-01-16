@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="40px"
+    android:layout_marginBottom="20px"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="徐汇区xx小区地暖项目，速度接单"
+            android:textColor="@color/black"
+            android:textSize="45px"
+            android:id="@+id/rating_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:id="@+id/rating_text"
+            android:textColor="@color/accept_btn_default"
+            android:drawableRight="@drawable/icon_arrow01"
+            android:drawablePadding="20px"
+            android:text="查看评价"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上海市徐汇区 莫林小区334号"
+        android:layout_marginTop="30px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="水暖处理 采光处理"
+        android:layout_marginTop="60px"
+        android:textColor="@color/accept_btn_default"/>
+
+    <View
+        android:layout_height="2px"
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"
+        android:background="@drawable/divider_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="￥12000"
+            android:textColor="@color/colorAccent"
+            android:textSize="50px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn02"
+            android:text="项目进度"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

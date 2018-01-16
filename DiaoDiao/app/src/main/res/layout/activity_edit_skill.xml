@@ -1,0 +1,360 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="姓名"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/name"
+                    android:hint="姓名"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="联系电话"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/phone"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:digits="1234567890"
+                    android:hint="请输入联系电话"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="身份证号"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/person_code"
+                    android:maxLength="18"
+                    android:hint="请输入身份证号"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout"
+                android:id="@+id/address_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="常住地区"/>
+
+                <TextView
+                    style="@style/edit_personal_edit"
+                    android:drawableRight="@drawable/icon_arrow"
+                    android:drawablePadding="10px"
+                    android:id="@+id/address"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="常住地址"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:id="@+id/address_detail"
+                    android:hint="请输入常住地址"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="工作经验"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:layout_marginRight="60px"
+                    android:id="@+id/year"
+                    android:inputType="phone"
+                    android:digits="0123456789"
+                    android:hint="请输入工作经验"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                style="@style/edit_personal_layout">
+
+                <TextView
+                    style="@style/edit_personal_text"
+                    android:text="团队人数"/>
+
+                <EditText
+                    style="@style/edit_personal_edit"
+                    android:hint="请输入团队人数"
+                    android:id="@+id/person_num"
+                    android:inputType="phone"
+                    android:digits="1234567890"
+                    android:layout_marginRight="50px"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/textView"
+                    android:layout_toStartOf="@+id/textView" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="人"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/textView" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="擅长技能"
+                android:layout_margin="50px"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="40px"
+                android:scrollbars="horizontal"
+                android:id="@+id/recycler_view"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自我评价(提供给项目发起人查看)"
+                android:layout_marginLeft="50px"
+                android:layout_marginTop="50px"/>
+
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_gray_bg"
+                android:layout_margin="40px"
+                android:padding="40px">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="400px"
+                    android:background="@null"
+                    android:hint="请输入自我评价"
+                    android:id="@+id/information"
+                    android:textColorHint="#D2D2D2"
+                    android:gravity="top"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/infor_num"
+                    android:text="0 / 200"
+                    android:gravity="right|center_vertical"/>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="联系人实名认证(添加身份证正、反面照片)"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="50px">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="300px"
+                        android:src="@drawable/shangchuan_zheng"
+                        android:minHeight="200px"
+                        android:scaleType="fitXY"
+                        android:id="@+id/code"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/code_delete"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="300px"
+                        android:src="@drawable/shangchuan_fan"
+                        android:id="@+id/code_reverse"
+                        android:scaleType="fitXY"
+                        android:minHeight="200px"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:layout_width="60px"
+                        android:layout_height="60px"
+                        android:src="@drawable/icon_shanchu"
+                        android:id="@+id/code_reverse_delete"
+                        android:layout_alignParentRight="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="50px"
+                android:text="资质证书(若有则添加)"/>
+
+            <RelativeLayout
+                android:layout_width="600px"
+                android:layout_height="wrap_content"
+                android:padding="50px">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="300px"
+                    android:minHeight="200px"
+                    android:src="@drawable/shangchuan"
+                    android:id="@+id/certification"
+                    android:scaleType="fitXY"
+                    android:padding="20px"/>
+
+                <ImageView
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:src="@drawable/icon_shanchu"
+                    android:id="@+id/certi_delete"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="50px"
+                android:background="@color/divider"/>
+
+            <Button
+                style="@style/login_btn_style"
+                android:id="@+id/login"
+                android:text="提交审核"
+                android:layout_marginBottom="100px"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>
