@@ -1,0 +1,146 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/tool_bar_center" />
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="开户人"/>
+
+        <TextView
+            style="@style/edit_personal_edit"
+            android:id="@+id/name"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_bank">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="选择银行"/>
+
+        <TextView
+            style="@style/edit_personal_edit"
+            android:id="@+id/bank_name"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡号"/>
+
+        <TextView
+            style="@style/edit_personal_edit"
+            android:id="@+id/card"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_card_type">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡类型"/>
+
+        <TextView
+            style="@style/edit_personal_edit"
+            android:id="@+id/bank_type"
+            android:text="借记卡"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+
+    <RelativeLayout
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_card_addr">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡所在地区"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_addr"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/icon_arrow"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+
+
+    <RelativeLayout
+        style="@style/edit_personal_layout"
+        android:id="@+id/select_card_item">
+
+        <TextView
+            style="@style/edit_personal_text"
+            android:text="银行卡所属支行"/>
+
+        <EditText
+            style="@style/edit_personal_edit"
+            android:id="@+id/bank_item"
+            android:hint="请输入银行卡所属支行"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="50px"
+        android:background="@color/divider"/>
+
+
+    <Button
+        style="@style/login_btn_style"
+        android:id="@+id/post"
+        android:layout_marginTop="100px"
+        android:layout_marginBottom="100px"
+        android:text="提交"/>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.xunao.diaodiao.Bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by GUZHENFU on 2017/9/11 10:19.
  */
 
-public class BankListRes {
+public class BankListRes implements Serializable{
     private List<BankCard> bankCard;
     private List<ListBean> list;
 
@@ -48,12 +49,66 @@ public class BankListRes {
         }
     }
 
-    public static class BankCard{
+    public static class BankCard implements Serializable{
         private String card;
         private String card_name;
         private String card_type;
         private String img;
         private String card_num;
+        private String name;
+        private String bank_branch;
+        private String bank_info;
+        private int province;
+        private int city;
+        private int district;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getBank_branch() {
+            return bank_branch;
+        }
+
+        public void setBank_branch(String bank_branch) {
+            this.bank_branch = bank_branch;
+        }
+
+        public String getBank_info() {
+            return bank_info;
+        }
+
+        public void setBank_info(String bank_info) {
+            this.bank_info = bank_info;
+        }
+
+        public int getProvince() {
+            return province;
+        }
+
+        public void setProvince(int province) {
+            this.province = province;
+        }
+
+        public int getCity() {
+            return city;
+        }
+
+        public void setCity(int city) {
+            this.city = city;
+        }
+
+        public int getDistrict() {
+            return district;
+        }
+
+        public void setDistrict(int district) {
+            this.district = district;
+        }
 
         public String getCard_num() {
             return card_num;

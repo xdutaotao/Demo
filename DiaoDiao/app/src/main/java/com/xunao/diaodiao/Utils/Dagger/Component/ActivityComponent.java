@@ -17,6 +17,7 @@ import com.xunao.diaodiao.Activity.ComponyPersonalActivity;
 import com.xunao.diaodiao.Activity.CustomerDetailActivity;
 import com.xunao.diaodiao.Activity.DocActivity;
 import com.xunao.diaodiao.Activity.DocDetailActivity;
+import com.xunao.diaodiao.Activity.EditBankActivity;
 import com.xunao.diaodiao.Activity.EditCompanyActivity;
 import com.xunao.diaodiao.Activity.EditPersonalActivity;
 import com.xunao.diaodiao.Activity.EditSkillActivity;
@@ -196,4 +197,5 @@ public interface ActivityComponent {
     void inject(WeiBaoProgActivity activity);
     void inject(HelpActivity activity);
     void inject(CustomerDetailActivity activity);
+    void inject(EditBankActivity activity);
 }

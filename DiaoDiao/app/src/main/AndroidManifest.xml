@@ -303,6 +303,7 @@
         <activity android:name=".Activity.WeiBaoProjActivity" />
         <activity android:name=".Activity.WeiBaoProgActivity" />
         <activity android:name=".Activity.CustomerDetailActivity" />
+        <activity android:name=".Activity.EditBankActivity" />
         <activity android:name=".Activity.ImageGridWrapActivity"
             android:screenOrientation="portrait"/>
     </application>

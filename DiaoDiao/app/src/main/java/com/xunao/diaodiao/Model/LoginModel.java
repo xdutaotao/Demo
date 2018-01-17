@@ -25,6 +25,7 @@ import com.xunao.diaodiao.Bean.CityBean;
 import com.xunao.diaodiao.Bean.CollectRes;
 import com.xunao.diaodiao.Bean.DocReq;
 import com.xunao.diaodiao.Bean.DocRes;
+import com.xunao.diaodiao.Bean.EditBankReq;
 import com.xunao.diaodiao.Bean.EvaluateReq;
 import com.xunao.diaodiao.Bean.ExpensesInfoRes;
 import com.xunao.diaodiao.Bean.FillCompanyReq;
@@ -940,16 +941,50 @@ public class LoginModel extends BaseModel {
         long time = System.currentTimeMillis()/1000;
         int type = ShareUtils.getValue(TYPE_KEY, 0);
         StringBuilder sb = new StringBuilder(rateKey);
-        sb.append(time+"").append(req.getCard()).append(req.getCard_type());
+        sb.append(time+"");
         if (!isCode){
-            sb.append(req.getCode());
+            sb.append(req.getBank_branch());
+        }
+        sb.append(req.getBank_name()).append(req.getCard()).append(req.getCard_type());
+        if (!isCode){
+            sb.append(req.getCity()).append(req.getCode()).append(req.getDistrict());
         }
         sb.append(req.getIdentity_card())
-                .append(req.getMobile()).append(req.getBank_name());
+                .append(req.getMobile());
         if(!isCode){
-            sb.append(req.getTrade_no());
+            sb.append(req.getProvince()).append(req.getTrade_no());
         }
         sb.append(req.getType())
+                .append(User.getInstance().getUserId())
+                .append("security");
+
+
+        req.setUserid(Integer.valueOf(User.getInstance().getUserId()));
+        req.setType(type);
+        req.setVerify(Utils.getMD5(sb.toString()));
+
+
+        return config.getRetrofitService().bindingCard(setBody(rateKey, time, req))
+                .compose(RxUtils.handleResult());
+    }
+
+    /**
+     * 银行卡列表
+     * @return
+     */
+    public Observable<Object> updateBankcard(EditBankReq req){
+        String rateKey = "updateBankcard";
+
+
+        long time = System.currentTimeMillis()/1000;
+        int type = ShareUtils.getValue(TYPE_KEY, 0);
+        StringBuilder sb = new StringBuilder(rateKey);
+        sb.append(time+"").append(req.getBank_branch())
+                .append(req.getCard())
+                .append(req.getCity())
+                .append(req.getDistrict())
+                .append(req.getProvince())
+                .append(req.getType())
                 .append(User.getInstance().getUserId())
                 .append("security");
 

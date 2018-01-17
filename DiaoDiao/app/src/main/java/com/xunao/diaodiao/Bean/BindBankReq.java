@@ -16,7 +16,43 @@ public class BindBankReq {
     private String trade_no;
     private String code;
     private int card_type;
+    private int province;
+    private int city;
+    private int district;
+    private String bank_branch;
     private String verify;
+
+    public int getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(int district) {
+        this.district = district;
+    }
+
+    public int getProvince() {
+        return province;
+    }
+
+    public void setProvince(int province) {
+        this.province = province;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public void setCity(int city) {
+        this.city = city;
+    }
+
+    public String getBank_branch() {
+        return bank_branch;
+    }
+
+    public void setBank_branch(String bank_branch) {
+        this.bank_branch = bank_branch;
+    }
 
     public String getName() {
         return name;

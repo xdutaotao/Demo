@@ -69,6 +69,10 @@ public class BankActivity extends BaseActivity implements BankView {
             }
         };
 
+        adapter.setOnItemClickListener((view, i) -> {
+            EditBankActivity.startActivity(this, adapter.getAllData().get(i));
+        });
+
         adapter.addFooter(new RecyclerArrayAdapter.ItemView() {
             @Override
             public View onCreateView(ViewGroup viewGroup) {

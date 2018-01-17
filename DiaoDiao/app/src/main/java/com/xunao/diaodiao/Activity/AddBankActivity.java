@@ -21,6 +21,7 @@ import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.xunao.diaodiao.Bean.AddBankRes;
 import com.xunao.diaodiao.Bean.BankListRes;
 import com.xunao.diaodiao.Bean.BindBankReq;
+import com.xunao.diaodiao.Common.Constants;
 import com.xunao.diaodiao.Present.AddBankPresenter;
 import com.xunao.diaodiao.R;
 import com.xunao.diaodiao.Utils.RxUtils;
@@ -36,6 +37,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import rx.Observable;
 import rx.Subscription;
@@ -73,6 +78,14 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
     TextView bankType;
     @BindView(R.id.select_card_type)
     RelativeLayout selectCardType;
+    @BindView(R.id.bank_addr)
+    TextView bankAddr;
+    @BindView(R.id.select_card_addr)
+    RelativeLayout selectCardAddr;
+    @BindView(R.id.bank_item)
+    EditText bankItem;
+    @BindView(R.id.select_card_item)
+    RelativeLayout selectCardItem;
 
     private RecyclerArrayAdapter<BankListRes.ListBean> adapter;
     private List<String> selectNames = new ArrayList<>();
@@ -82,6 +95,9 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
 
     private String trade_no;
     private Subscription subscriber;
+
+    private int provinceId, cityId, districtId;
+    private AddressPicker picker;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AddBankActivity.class);
@@ -149,6 +165,30 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             });
             singlePicker.show();
         });
+
+        selectCardAddr.setOnClickListener(v -> {
+
+            if (picker != null){
+                if (TextUtils.isEmpty(bankAddr.getText())){
+                    picker.setSelectedItem("上海", "上海", "长宁");
+                }else{
+                    String[] addresss = bankAddr.getText().toString().split("-");
+                    if (addresss.length == 3){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[2]);
+                    }else if(addresss.length > 0){
+                        picker.setSelectedItem(addresss[0], addresss[1], addresss[1]);
+                    }
+
+                }
+                picker.show();
+            }
+        });
+
+        if(Constants.addressResult.size() == 0)
+            presenter.getAddressData(this);
+        else
+            getAddressData(Constants.addressResult);
+
     }
 
     @Override
@@ -174,7 +214,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             return;
         }
 
-        if(!Utils.isIDCardValidate(personCode.getText().toString())){
+        if (!Utils.isIDCardValidate(personCode.getText().toString())) {
             ToastUtil.show("身份证输入错误");
             return;
         }
@@ -184,7 +224,7 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             return;
         }
 
-        if(!Utils.isPhone(phone.getText().toString())){
+        if (!Utils.isPhone(phone.getText().toString())) {
             ToastUtil.show("手机号输入错误");
             return;
         }
@@ -246,6 +286,16 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
             return;
         }
 
+        if (TextUtils.isEmpty(bankAddr.getText().toString())) {
+            ToastUtil.show("银行卡所在地不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(bankItem.getText().toString())) {
+            ToastUtil.show("银行卡所属支行不能为空");
+            return;
+        }
+
 
         BindBankReq req = new BindBankReq();
         req.setName(name.getText().toString());
@@ -255,11 +305,15 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
         req.setCode(phoneCode.getText().toString());
         req.setIdentity_card(personCode.getText().toString());
         req.setTrade_no(trade_no);
-        if(TextUtils.equals("信用卡", bankType.getText())){
+        if (TextUtils.equals("信用卡", bankType.getText())) {
             req.setCard_type(102);
-        }else{
+        } else {
             req.setCard_type(101);
         }
+        req.setBank_branch(bankItem.getText().toString().trim());
+        req.setProvince(provinceId);
+        req.setCity(cityId);
+        req.setDistrict(districtId);
         presenter.bindingCard(this, req);
     }
 
@@ -314,6 +368,38 @@ public class AddBankActivity extends BaseActivity implements AddBankView, View.O
     @Override
     public void getBankList(BankListRes res) {
         adapter.addAll(res.getList());
+    }
+
+    @Override
+    public void getAddressData(ArrayList<Province> result) {
+        if (result.size() > 0) {
+            if(Constants.addressResult.size() == 0)
+                Constants.addressResult.addAll(result);
+            picker = new AddressPicker(this, result);
+            picker.setHideProvince(false);
+            picker.setHideCounty(false);
+            picker.setColumnWeight(0.8f, 1.0f, 1.0f);
+            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                @Override
+                public void onAddressPicked(Province province, City city, County county) {
+                    if (county == null) {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        bankAddr.setText(province.getAreaName() + "-" + city.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName());
+                    } else {
+                        provinceId = Integer.valueOf(province.getAreaId());
+                        cityId = Integer.valueOf(city.getAreaId());
+                        districtId = Integer.valueOf(county.getAreaId());
+                        bankAddr.setText(province.getAreaName() + "-"
+                                + city.getAreaName() + "-"
+                                + county.getAreaName());
+                        //ToastUtil.show(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    }
+                }
+            });
+        }
+
     }
 
 
