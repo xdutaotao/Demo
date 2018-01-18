@@ -177,7 +177,7 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
             protected void convert(BaseViewHolder baseViewHolder, SkillRes.SkillBean s) {
                 baseViewHolder.setText(R.id.skill_text, s.getName());
 
-                if (skillsName.toString().contains(s.getId())) {
+                if (skillsName.toString().contains(s.getName())) {
                     baseViewHolder.setBackgroundRes(R.id.skill_text, R.drawable.btn_blue_bg);
                     baseViewHolder.setTextColorRes(R.id.skill_text, R.color.white);
                 } else {
@@ -186,14 +186,14 @@ public class RecommandActivity extends BaseActivity implements SuggestView {
                 }
 
                 baseViewHolder.setOnClickListener(R.id.skill_text, v -> {
-                    if (skillsName.toString().contains(s.getId())) {
+                    if (skillsName.toString().contains(s.getName())) {
                         v.setBackgroundResource(R.drawable.btn_blank_bg);
                         ((TextView) v).setTextColor(getResources().getColor(R.color.gray));
-                        skillsName.remove(s.getId());
+                        skillsName.remove(s.getName());
                     } else {
                         v.setBackgroundResource(R.drawable.btn_blue_bg);
                         ((TextView) v).setTextColor(Color.WHITE);
-                        skillsName.add(s.getId());
+                        skillsName.add(s.getName());
 
                         content.setText(skillsName.toString().subSequence(1,
                                 skillsName.toString().length()-1));
