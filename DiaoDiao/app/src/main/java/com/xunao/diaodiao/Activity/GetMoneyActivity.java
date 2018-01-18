@@ -92,7 +92,7 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
 
         if (!TextUtils.isEmpty(getIntent().getStringExtra(INTENT_KEY))) {
             moneyUser.setText("可提现金额 " +
-                    new DecimalFormat("#.00").format(Float.valueOf(getIntent().getStringExtra(INTENT_KEY))) + "元");
+                    new DecimalFormat("#0.00").format(Float.valueOf(getIntent().getStringExtra(INTENT_KEY))) + "元");
         }
 
         adapter = new RecyclerArrayAdapter<BankListRes.BankCard>(this, R.layout.add_bank_item) {
@@ -134,7 +134,7 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
 
             case R.id.get_all_money:
                 //postMoney(getIntent().getStringExtra(INTENT_KEY));
-                inputMoney.setText(moneyUser.getText());
+                inputMoney.setText(getIntent().getStringExtra(INTENT_KEY));
                 break;
 
             case R.id.get_money:
@@ -231,6 +231,9 @@ public class GetMoneyActivity extends BaseActivity implements GetMoneyView, View
         super.onDestroy();
         presenter.detachView();
     }
+
+
+
 
 
 }
