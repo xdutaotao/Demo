@@ -570,7 +570,7 @@ public class EditCompanyActivity extends BaseActivity implements EditCompanyView
             return;
         }
 
-        if(!Utils.isPhone(phone.getText().toString())){
+        if(!Utils.isPhone(contactPhone.getText().toString())){
             ToastUtil.show("手机号输入错误");
             return;
         }

@@ -1147,6 +1147,15 @@ public class Utils {
         } else {
             return false;
         }
+
+//        String num = "[1][34578]\\d{9}";
+//        if (TextUtils.isEmpty(str)) {
+//            return false;
+//        } else {
+//            //matches():字符串是否在给定的正则表达式匹配
+//            return str.matches(num);
+//        }
+
     }
 
 
