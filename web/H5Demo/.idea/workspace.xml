@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list id="57e6bb5d-e00b-492d-b2d2-4a38ccf65b96" name="New changelist" comment="" />
     <list default="true" id="d4129b3c-2faa-4807-ad77-bcaef564c955" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/flexible.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/base.css" afterPath="$PROJECT_DIR$/css/base.css" />
     </list>
     <ignored path="chat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +37,8 @@
       <file leaf-file-name="flexible.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/flexible.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="228">
+              <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -91,7 +91,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1280" />
+    <option name="x" value="4" />
+    <option name="width" value="1276" />
     <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -241,7 +242,7 @@
       <workItem from="1514119137847" duration="15871000" />
       <workItem from="1514890917503" duration="3026000" />
       <workItem from="1521203867975" duration="2802000" />
-      <workItem from="1521641896146" duration="645000" />
+      <workItem from="1521641896146" duration="848000" />
     </task>
     <task id="LOCAL-00001" summary="add file">
       <created>1512134561060</created>
@@ -320,11 +321,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521295715127</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add flexible.js">
+      <created>1521642593047</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1521642593047</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29134000" />
+    <option name="totallyTimeSpent" value="29337000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -378,7 +386,8 @@
     <MESSAGE value="记录 2017-12-31" />
     <MESSAGE value="js 设计模式" />
     <MESSAGE value="viewport" />
-    <option name="LAST_COMMIT_MESSAGE" value="viewport" />
+    <MESSAGE value="add flexible.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="add flexible.js" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -568,8 +577,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/flexible.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="228">
+          <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
           <folding />
         </state>
       </provider>
