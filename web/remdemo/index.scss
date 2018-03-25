@@ -1,0 +1,20 @@
+@function px2rem($px) {
+    $rem: 37.5px;
+    @return ($px / $rem)+rem;
+}
+
+html {
+    background-color: #f8f8f8;
+}
+
+.head {
+    background-color: red;
+    height: px2rem(40px);
+    width: 100%;
+    .head_item {
+        margin-left: px2rem(23px);
+        color: white;
+        float: left;
+        line-height: px2rem(40px);
+    }
+}
