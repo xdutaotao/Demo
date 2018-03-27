@@ -71,7 +71,7 @@
 /***/ (function(module, exports) {
 
 function hello() {
-
+    alert('str')
 }
 
 /***/ })
