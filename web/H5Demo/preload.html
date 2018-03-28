@@ -23,6 +23,20 @@
             color: #333;
             border: 1px solid #ccc
         }
+        
+        .loading {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            text-align: center;
+        }
+        
+        .progress {
+            margin-top: 300px;
+        }
     </style>
 
 </head>
@@ -36,9 +50,13 @@
         </p>
     </div>
 
+    <div class="loading">
+        <p class="progress">0%</p>
+    </div>
+
     <script src="js/jquery-2.1.1.min.js"></script>
     <script>
-        let imgs = [
+        var imgs = [
             "http://img.my.csdn.net/uploads/201508/05/1438760758_3497.jpg",
             "http://img.my.csdn.net/uploads/201508/05/1438760758_6667.jpg",
             "http://img.my.csdn.net/uploads/201508/05/1438760757_3588.jpg",
@@ -59,6 +77,17 @@
             }
             document.title = (index + 1) + '/' + len;
             $("#img").attr('src', imgs[index]);
+        })
+
+        var $progress = $('.progress');
+        $.each(imgs, function(i, src) {
+            var img = new Image();
+            $(img).on('load', function() {
+                $progress.html(Math.round((i + 1) / len * 100) + '%');
+                if (i == len) {
+                    $('.loading').hide();
+                }
+            })
         })
     </script>
 </body>
