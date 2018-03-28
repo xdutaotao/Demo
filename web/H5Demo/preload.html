@@ -55,6 +55,7 @@
     </div>
 
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/preload.js"></script>
     <script>
         var imgs = [
             "http://img.my.csdn.net/uploads/201508/05/1438760758_3497.jpg",
@@ -82,17 +83,13 @@
         })
 
         var $progress = $('.progress');
-        $.each(imgs, function(i, src) {
-            var img = new Image();
-            $(img).on('load error', function() {
+        $.preload(imgs, {
+            each: function(count) {
                 $progress.html(Math.round((count + 1) / len * 100) + '%');
-
-                if (count + 1 >= len) {
-                    $('.loading').hide();
-                }
-                count++;
-            })
-            img.src = src;
+            },
+            all: function() {
+                $('.loading').hide();
+            }
         })
     </script>
 </body>

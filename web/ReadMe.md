@@ -44,7 +44,11 @@
                 count++;
             })
 
-            
+2018-03-28:
+	现象：$.extend()的一些用法
+	解决办法：
+		$.extend(src) 该方法就是将src合并到jquery的全局对象中去  
+		$.fn.extend(src) 该方法将src合并到jquery的实例对象中去  
 
 
 
