@@ -31,4 +31,29 @@
 					}
 				})
 			$.each jQuery提供的each方法是对参数一提供的对象的中所有的子元素逐一进行方法调用
-				
+2018-03-28:
+	现象：image有load和 error 事件
+	解决方法：
+			var img = new Image();
+            $(img).on('load error', function() {
+                $progress.html(Math.round((count + 1) / len * 100) + '%');
+
+                if (count + 1 >= len) {
+                    $('.loading').hide();
+                }
+                count++;
+            })
+
+            
+
+
+
+
+
+
+
+
+
+
+
+

@@ -68,7 +68,9 @@
         ];
 
         var index = 0,
-            len = imgs.length;
+            len = imgs.length,
+            count = 0;
+
         $('.btn').on('click', function() {
             if ('prev' === $(this).data('control')) {
                 index = Math.max(0, --index);
@@ -82,12 +84,15 @@
         var $progress = $('.progress');
         $.each(imgs, function(i, src) {
             var img = new Image();
-            $(img).on('load', function() {
-                $progress.html(Math.round((i + 1) / len * 100) + '%');
-                if (i == len) {
+            $(img).on('load error', function() {
+                $progress.html(Math.round((count + 1) / len * 100) + '%');
+
+                if (count + 1 >= len) {
                     $('.loading').hide();
                 }
+                count++;
             })
+            img.src = src;
         })
     </script>
 </body>
