@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>QQ 加载</title>
+    <link rel="stylesheet" href="./css/base.css">
+</head>
+
+<style>
+    .box {
+        margin: 150px 0 0 200px;
+    }
+    
+    .loading {
+        display: none;
+        width: 600px;
+        padding: 2px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        text-align: center;
+    }
+</style>
+
+<body>
+
+    <div class="box">
+        <a href="javascript:;" id="fact-btn">打开表情</a>
+        <p class="loading">表情加载中，请稍后。。。</p>
+    </div>
+
+    <script src="./js/jquery-2.1.1.min.js"></script>
+    <script>
+        $('.fact-btn').on('click', function(e) {
+            e.stopPropagation();
+            $('.loading').show();
+        })
+    </script>
+</body>
+
+</html>
