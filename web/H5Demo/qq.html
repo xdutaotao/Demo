@@ -15,12 +15,16 @@
     }
     
     .loading {
-        display: none;
+        display: block;
         width: 600px;
         padding: 2px;
         border: 1px solid #ccc;
         background-color: #fff;
         text-align: center;
+    }
+    
+    .panel {
+        display: none;
     }
 </style>
 
@@ -28,14 +32,16 @@
 
     <div class="box">
         <a href="javascript:;" id="fact-btn">打开表情</a>
-        <p class="loading">表情加载中，请稍后。。。</p>
+        <div class="panel">
+            <p class="loading">表情加载中，请稍后。。。</p>
+        </div>
     </div>
 
     <script src="./js/jquery-2.1.1.min.js"></script>
     <script>
         $('.fact-btn').on('click', function(e) {
             e.stopPropagation();
-            $('.loading').show();
+            $('.panel').show();
         })
     </script>
 </body>
