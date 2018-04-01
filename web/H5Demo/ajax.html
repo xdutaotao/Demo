@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Ajax</title>
     <script src="js/jquery-2.1.1.min.js"></script>
 </head>
+
 <body>
 
     <button onclick="getPerson()">getPerson</button>
@@ -12,23 +14,26 @@
 
 </body>
 
-    <script>
+<script>
+    console.log(typeof $);
+    console.log(typeof Object);
+    console.log($.trim(" abc "));
 
-        function getPerson() {
-            for(var i=0; i<1000; i++){
-                $.post("http://localhost:8080/MvcDemo/home/getPerson",{name:"gzfgeh"},function(data){
-                    alert(data);
-                });
-            }
-        }
-
-        function user() {
-            $.post("http://localhost:8080/MvcDemo/home/user",{},function(data){
+    function getPerson() {
+        for (var i = 0; i < 1000; i++) {
+            $.post("http://localhost:8080/MvcDemo/home/getPerson", {
+                name: "gzfgeh"
+            }, function(data) {
                 alert(data);
             });
         }
+    }
 
-
-    </script>
+    function user() {
+        $.post("http://localhost:8080/MvcDemo/home/user", {}, function(data) {
+            alert(data);
+        });
+    }
+</script>
 
 </html>
