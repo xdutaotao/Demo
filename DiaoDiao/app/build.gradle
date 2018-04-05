@@ -161,7 +161,7 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'top.zibin:Luban:1.0.9'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:multidex:1.0.1'
     compile 'cn.jiguang.sdk:jmessage:2.2.0'
     compile 'cn.jiguang.sdk:jcore:1.1.3'
