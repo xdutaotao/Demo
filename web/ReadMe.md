@@ -68,7 +68,23 @@
 	作用域中变量的值是在执行过程中产生的确定的，而作用域却是在函数创建时就确定了
 	作用域中变量的值是在执行过程中产生的确定的，而作用域却是在函数创建时就确定了
 	作用域中变量的值是在执行过程中产生的确定的，而作用域却是在函数创建时就确定了	
-
+2018-04-08:
+	apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；
+	apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；
+	apply 、 call 、bind 三者都可以利用后续参数传参；
+	bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
+2018-04-08:
+	var vegetables = ['Cabbage', 'Turnip', 'Radish', 'Carrot'];
+	console.log(vegetables); 
+	// ["Cabbage", "Turnip", "Radish", "Carrot"]
+	var pos = 1, n = 2;
+	var removedItems = vegetables.splice(pos, n);
+	console.log(vegetables); 
+	// ["Cabbage", "Carrot"] (the original array is changed)
+	console.log(removedItems); 
+	// ["Turnip", "Radish"]
+	var shallowCopy = fruits.slice(); // this is how to make a copy
+	// ["Strawberry", "Mango"]
 
 
 
