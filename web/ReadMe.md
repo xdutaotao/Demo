@@ -85,7 +85,8 @@
 	// ["Turnip", "Radish"]
 	var shallowCopy = fruits.slice(); // this is how to make a copy
 	// ["Strawberry", "Mango"]
-
+2018-04-12：
+	一个promise链式遇到异常就会停止，查看链式的底端，寻找catch处理程序来代替当前执行
 
 
 
