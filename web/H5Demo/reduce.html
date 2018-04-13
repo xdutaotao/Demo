@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [1, 2, 3, 4, 5];
+        arr.reduce((pre, cur, index, arr) => {
+            console.log(pre, cur, index);
+            return pre;
+        })
+
+        let objArr = [{
+            name: "g",
+            age: 12
+        }, {
+            name: "z",
+            age: 2
+        }, {
+            name: "f",
+            age: 2
+        }, {
+            name: "g",
+            age: 12
+        }, {
+            name: "e",
+            age: 122
+        }, {
+            name: "h",
+            age: 11
+        }, ]
+
+        let sum = objArr.reduce((pre, cur) => {
+            return pre + cur.name;
+        }, "");
+        console.log(sum);
+    </script>
+</body>
+
+</html>
