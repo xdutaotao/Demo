@@ -89,6 +89,25 @@
 	一个promise链式遇到异常就会停止，查看链式的底端，寻找catch处理程序来代替当前执行
 2018-04-18:
 	input 不好居中就隐藏，然后设置z-index，后面加上span，这样看起来他们俩个融合了，然后就是input添加点击事件，span添加样式	
+2018-04-19:
+	this绑定四种规则: 
+		默认绑定：没有上下文环境的，就默认为window环境
+		隐含绑定：有上下文环境的	，就默认为上下文环境 obj.foo();
+		明确绑定: call()  bind()
+		new绑定: new Objec()
+
+	例子：
+		function foo() {
+		    console.log(this.a);
+		}
+		var obj = {
+		    a: 2,
+		    foo: foo
+		};
+		obj.foo();
+		var bar = obj.foo; // 函数引用！
+		var a = "oops, global"; // `a` 也是一个全局对象的属性
+		bar(); // "oops, global"	
 
 
 
