@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+
+    <div id="root">
+        <h1 v-text="msg"></h1>
+        <div v-html="content" @click="handlerClick"></div>
+        <div :title="'my'+title">鼠标</div>
+
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <div>{{fullName}}</div>
+        <div>{{count}}</div>
+
+        <div v-show="vshow">vue show test</div>
+        <button @click="handleToggle">toggle</button>
+        <ul>
+            <todo-item v-for="(item, index) in list" :key="index" :content="item">
+            </todo-item>
+        </ul>
+    </div>
+    <script>
+        // Vue.component('todo-item', {
+        //     template: '<li>item</li>'
+        // })
+
+        var todoItem = {
+            props: ['content'],
+            template: '<li>{{content}}</li>'
+        }
+
+
+        new Vue({
+            el: "#root",
+            components: {
+                'todo-item': todoItem
+            },
+            data: {
+                msg: "hello world !",
+                content: "<h2>你好</h2>",
+                title: "title",
+                firstName: '',
+                lastName: '',
+                count: 0,
+                vshow: false,
+                list: [1, 2, 3],
+            },
+            methods: {
+                handlerClick: function() {
+                    this.msg = "hello";
+                },
+                handleToggle: function() {
+                    this.vshow = !this.vshow;
+                }
+            },
+            computed: {
+                fullName: function() {
+                    return this.firstName + this.lastName;
+                }
+            },
+            watch: {
+                firstName: function() {
+                    this.count++;
+                },
+                lastName: function() {
+                    this.count++;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
