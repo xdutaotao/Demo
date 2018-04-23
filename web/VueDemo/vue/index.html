@@ -24,7 +24,7 @@
         <div v-show="vshow">vue show test</div>
         <button @click="handleToggle">toggle</button>
         <ul>
-            <todo-item v-for="(item, index) in list" :key="index" :content="item">
+            <todo-item v-for="(item, index) in list" :key="index" :content="item" @delete="handleDelete" :index="index">
             </todo-item>
         </ul>
     </div>
@@ -35,7 +35,12 @@
 
         var todoItem = {
             props: ['content'],
-            template: '<li>{{content}}</li>'
+            template: '<li @click="handleClick">{{content}}</li>',
+            methods: {
+                handleClick: function() {
+                    this.$emit('delete', this.index);
+                }
+            }
         }
 
 
@@ -60,6 +65,9 @@
                 },
                 handleToggle: function() {
                     this.vshow = !this.vshow;
+                },
+                handleDelete: function(index) {
+                    this.list.splice(index, 1);
                 }
             },
             computed: {
