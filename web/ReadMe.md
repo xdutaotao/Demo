@@ -107,7 +107,9 @@
 		obj.foo();
 		var bar = obj.foo; // 函数引用！
 		var a = "oops, global"; // `a` 也是一个全局对象的属性
-		bar(); // "oops, global"	
+		bar(); // "oops, global"
+
+2018-04-19: 后悔去了民生, 因为和钰翔集团 一个月差5千左右			
 
 
 
