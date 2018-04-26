@@ -11,6 +11,8 @@
         :content="item"
         @delete="handleDelete(index)"></todo-item>
   </ul>
+
+    <login></login>
 </div>
   
 </template>
@@ -18,10 +20,12 @@
 <script>
 
 import TodoItem from './components/TodoItem'
+import Login from './components/login'
 
 export default {
   components: {
-    'todo-item': TodoItem
+    'todo-item': TodoItem,
+    'login': Login
   },
   data: function(){
     return {
