@@ -13,6 +13,9 @@
   </ul>
 
     <login></login>
+
+    <label><input type="checkbox"><span></span></label>
+
 </div>
   
 </template>
@@ -47,4 +50,10 @@ export default {
 </script>
 
 <style>
+
+
+
+
+
+
 </style>
